@@ -22,6 +22,7 @@ void LCDWrapperClass<_COLS, _ROWS>::begin(){
 template <uint8_t _COLS, uint8_t _ROWS>
 void LCDWrapperClass<_COLS, _ROWS>::update(){
 switch(_state){
+  /* TODO
   case LCDWrapper::CLEAR:
     this->clear();
     break;
@@ -50,7 +51,7 @@ switch(_state){
   case LCDWrapper::BUSY:
     this->setRow(0, "Busy");
     break;
-  
+  */
 }
 }
 
