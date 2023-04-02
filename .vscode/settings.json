@@ -1,5 +1,6 @@
 {
   "files.associations": {
+    "*.embeddedhtml": "html",
     "cstdint": "cpp",
     "array": "cpp",
     "*.tcc": "cpp",
@@ -44,6 +45,11 @@
     "chrono": "cpp",
     "ratio": "cpp",
     "string": "cpp",
-    "*.tpp": "cpp"
+    "*.tpp": "cpp",
+    "atomic": "cpp",
+    "iterator": "cpp",
+    "memory_resource": "cpp",
+    "optional": "cpp",
+    "random": "cpp"
   }
 }
