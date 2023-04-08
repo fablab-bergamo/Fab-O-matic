@@ -26,6 +26,7 @@ void setup()
 {
   Serial.begin(115200); // Initialize serial communications with the PC for debugging.
   Serial.println("Starting setup!");
+  delay(100);
   board.init();
 
   Serial.println(F("Scan PICC to see UID, SAK, type, and data blocks..."));

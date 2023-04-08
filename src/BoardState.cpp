@@ -9,10 +9,11 @@
 #include "MFRC522Debug.h"
 #include "pins.h"
 #include "secrets.h"
+#include <SPI.h>
 
 BoardState::BoardState() {
-  MFRC522DriverPinSimple ss_pin(pins::mfrc522::ss_pin); // Configurable, see typical pin layout above.
-  MFRC522DriverSPI driver{ss_pin}; // Create SPI driver.
+  MFRC522DriverPinSimple cs_pin(pins::mfrc522::cs_pin); // Configurable, see typical pin layout above.
+  MFRC522DriverSPI driver{cs_pin}; // Create SPI driver.
   // MFRC522DriverI2C driver{}; // Create I2C driver.
   MFRC522 mfrc522{driver}; // Create MFRC522 instance.
   LCDConfig config_lcd(pins::lcd::rs_pin, pins::lcd::en_pin, pins::lcd::d0_pin, pins::lcd::d1_pin, pins::lcd::d2_pin, pins::lcd::d3_pin);
@@ -31,8 +32,16 @@ BoardState::BoardState() {
 
 void BoardState::init()
 {
-    this->getRfid().PCD_Init(); // Init MFRC522 board.
+    Serial.println("Initializing LCD...");
     this->getLCD().begin();
+    delay(100);
+    Serial.println("Initializing SPI...");
+    SPI.begin(pins::mfrc522::sck_pin, pins::mfrc522::miso_pin, pins::mfrc522::mosi_pin, pins::mfrc522::cs_pin);
+    delay(100);
+    Serial.println("Initializing RFID...");
+    this->getRfid().PCD_Init(); // Init MFRC522 board.
+    delay(100);
+    Serial.print("Board init complete");
 }
 
 Machine BoardState::getMachine()
