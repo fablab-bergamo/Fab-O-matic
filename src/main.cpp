@@ -28,7 +28,7 @@ LCDWrapper<conf::lcd::COLS, conf::lcd::ROWS> LCD(pins::lcd::rs_pin, pins::lcd::e
 
 FabServer server(secrets::machine_data::whitelist, secrets::wifi::ssid, secrets::wifi::password);
 
-Machine machine(secrets::machine_data::machine_id, Machine::PRINTER3D, conf::machine::CONTROL_PIN_1, false);
+Machine machine(secrets::machine_data::machine_id, Machine::PRINTER3D, pins::relay::ch1_pin, false);
 
 FabMember candidate_user = FabMember();
 
@@ -38,6 +38,7 @@ static bool ready_for_a_new_card = true;
 
 void setup()
 {
+  Serial.println("Starting!");
 
   Serial.begin(115200); // Initialize serial communications with the PC for debugging.
   LCD.begin();
