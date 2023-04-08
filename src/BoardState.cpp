@@ -15,8 +15,8 @@ BoardState::BoardState() {
   MFRC522DriverSPI driver{ss_pin}; // Create SPI driver.
   // MFRC522DriverI2C driver{}; // Create I2C driver.
   MFRC522 mfrc522{driver}; // Create MFRC522 instance.
-
-  LCDWrapperType LCD(pins::lcd::rs_pin, pins::lcd::en_pin, pins::lcd::d0_pin, pins::lcd::d1_pin, pins::lcd::d2_pin, pins::lcd::d3_pin);
+  LCDConfig config_lcd(pins::lcd::rs_pin, pins::lcd::en_pin, pins::lcd::d0_pin, pins::lcd::d1_pin, pins::lcd::d2_pin, pins::lcd::d3_pin);
+  LCDWrapperType LCD(config_lcd);
   FabServer server(secrets::machine_data::whitelist, secrets::wifi::ssid, secrets::wifi::password);
   MachineConfig config1(secrets::machine_data::machine_id, MachineType::PRINTER3D, pins::relay::ch1_pin, false);
   Machine machine(config1);
