@@ -5,9 +5,9 @@
 #include "FabServer.h"
 #include "Machine.h"
 #include "LCDWrapper.h"
-#include "MFRC522v2.h"
 #include "BoardStatus.h"
 #include "conf.h"
+#include "RFIDWrapper.h"
 
 typedef LCDWrapper<conf::lcd::COLS, conf::lcd::ROWS> LCDWrapperType;
 
@@ -19,7 +19,7 @@ private:
     FabServer *server;
     LCDWrapperType *lcd;
     BoardStatus state;
-    MFRC522 *rfid;
+    RFIDWrapper *rfid;
 
 public:
     BoardState();
@@ -27,7 +27,7 @@ public:
     FabMember getMember();
     FabServer getServer();
     LCDWrapperType getLCD();
-    MFRC522 getRfid();
+    RFIDWrapper getRfid();
 
     void init();
     void changeStatus(BoardStatus newStatus);

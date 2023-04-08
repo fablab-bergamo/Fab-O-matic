@@ -3,19 +3,13 @@
 
 #include "BoardState.h"
 #include "LCDWrapper.h"
-#include "MFRC522v2.h"
-#include "MFRC522DriverSPI.h"
-#include "MFRC522DriverPinSimple.h"
-#include "MFRC522Debug.h"
+#include "RFIDWrapper.h"
 #include "pins.h"
 #include "secrets.h"
 #include <SPI.h>
 
 BoardState::BoardState() {
-  MFRC522DriverPinSimple cs_pin(pins::mfrc522::cs_pin); // Configurable, see typical pin layout above.
-  MFRC522DriverSPI driver{cs_pin}; // Create SPI driver.
-  // MFRC522DriverI2C driver{}; // Create I2C driver.
-  MFRC522 mfrc522{driver}; // Create MFRC522 instance.
+  RFIDWrapper rfid(pins::mfrc522::cs_pin);
   LCDConfig config_lcd(pins::lcd::rs_pin, pins::lcd::en_pin, pins::lcd::d0_pin, pins::lcd::d1_pin, pins::lcd::d2_pin, pins::lcd::d3_pin);
   LCDWrapperType LCD(config_lcd);
   FabServer server(secrets::machine_data::whitelist, secrets::wifi::ssid, secrets::wifi::password);
@@ -23,7 +17,7 @@ BoardState::BoardState() {
   Machine machine(config1);
   FabMember current_user = FabMember();
 
-  this->rfid = &mfrc522;
+  this->rfid = &rfid;
   this->lcd = &LCD;
   this->machine = &machine;
   this->member = &current_user;
@@ -35,11 +29,8 @@ void BoardState::init()
     Serial.println("Initializing LCD...");
     this->getLCD().begin();
     delay(100);
-    Serial.println("Initializing SPI...");
-    SPI.begin(pins::mfrc522::sck_pin, pins::mfrc522::miso_pin, pins::mfrc522::mosi_pin, pins::mfrc522::cs_pin);
-    delay(100);
     Serial.println("Initializing RFID...");
-    this->getRfid().PCD_Init(); // Init MFRC522 board.
+    this->getRfid().init(); // Init MFRC522 board.
     delay(100);
     Serial.print("Board init complete");
 }
@@ -64,7 +55,7 @@ LCDWrapperType BoardState::getLCD()
     return *this->lcd;
 }
 
-MFRC522 BoardState::getRfid()
+RFIDWrapper BoardState::getRfid()
 {
     return *this->rfid;
 }
