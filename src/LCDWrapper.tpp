@@ -24,17 +24,34 @@ void LCDWrapper<_COLS, _ROWS>::begin()
 }
 
 template <uint8_t _COLS, uint8_t _ROWS>
-void LCDWrapper<_COLS, _ROWS>::update(FabServer server, FabMember user)
+std::string LCDWrapper<_COLS, _ROWS>::convertSecondsToHHMMSS(unsigned long milliseconds)
 {
+  //! since something something does not support to_string we have to resort to ye olde cstring stuff
+  char buffer[9];
+  unsigned long seconds = milliseconds / 1000;
+  snprintf(buffer, sizeof(buffer), "%02d:%02d:%02d", (int)(seconds / 3600), (int)((seconds % 3600) / 60), (int)(seconds % 60));
+
+  std::string result(buffer);
+  return result;
+}
+
+template <uint8_t _COLS, uint8_t _ROWS>
+void LCDWrapper<_COLS, _ROWS>::update(FabServer server, FabMember user, Machine machine)
+{
+  char buffer[conf::lcd::COLS];
+
   switch (_state)
   {
-  /* TODO */
   case LCDState::CLEAR:
     this->clear();
     break;
   case LCDState::FREE:
     this->setRow(0, server.isOnline() ? "Disponibile" : "OFFLINE");
     this->setRow(1, "Avvicina carta");
+    break;
+  case LCDState::ALREADY_IN_USE:
+    this->setRow(0, "In uso da");
+    this->setRow(1, machine.getActiveUser().getName());
     break;
   case LCDState::LOGGED_IN:
     this->setRow(0, "Inizio uso");
@@ -54,10 +71,19 @@ void LCDWrapper<_COLS, _ROWS>::update(FabServer server, FabMember user)
   case LCDState::CONNECTED:
     this->setRow(0, "Connected");
     break;
+  case LCDState::IN_USE:
+    snprintf(buffer, sizeof(buffer), "Ciao %s", machine.getActiveUser().getName());
+    this->setRow(0, buffer);
+    this->setRow(1, this->convertSecondsToHHMMSS(machine.getUsageTime()));
+    break;
   case LCDState::BUSY:
     this->setRow(0, "Busy");
     break;
+  case LCDState::OFFLINE:
+    this->setRow(0, "OFFLINE MODE");
+    break;
   }
+  this->_update_chars();
 }
 
 template <uint8_t _COLS, uint8_t _ROWS>
@@ -122,7 +148,6 @@ bool LCDWrapper<_COLS, _ROWS>::_needsUpdate()
 {
   if (this->_current != this->_buffer)
   {
-
     Serial.println("buffer dump:");
     for (auto i = 0; i < _ROWS; i++)
     {
@@ -150,7 +175,7 @@ void LCDWrapper<_COLS, _ROWS>::setRow(uint8_t row, std::string text)
   if (row < _ROWS)
   {
     this->_buffer[row].fill({0});
-    for (auto i = 0; i < _COLS; i++)
+    for (auto i = 0; i < text.length(); i++)
     {
       this->_buffer[row][i] = text[i];
     }
