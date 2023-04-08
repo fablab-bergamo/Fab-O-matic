@@ -27,6 +27,10 @@ void setup()
   Serial.begin(115200); // Initialize serial communications with the PC for debugging.
   Serial.println("Starting setup!");
   delay(100);
+  Serial.println("Initializing SPI");
+  SPI.begin(pins::mfrc522::sck_pin, pins::mfrc522::miso_pin, pins::mfrc522::mosi_pin, pins::mfrc522::cs_pin);
+  delay(100);
+
   board.init();
 
   Serial.println(F("Scan PICC to see UID, SAK, type, and data blocks..."));
@@ -46,17 +50,18 @@ void loop()
   delay(100);
 
   // check if there is a card
-  if (board.getRfid().PICC_IsNewCardPresent())
+  if (board.getRfid().IsNewCardPresent())
   {
     // if there is a "new" card (could be the same that stayed in the field)
-    if (!board.getRfid().PICC_ReadCardSerial() || !ready_for_a_new_card)
+    if (!board.getRfid().ReadCardSerial() || !ready_for_a_new_card)
     {
       return;
     }
     ready_for_a_new_card = false;
 
     // Acquire the UID of the card
-    auto uid = board.getRfid().uid.uidByte;
+    byte uid[10];
+    board.getRfid().SetUid(uid);
 
     if (board.getMachine().isFree())
     {
@@ -90,7 +95,7 @@ void loop()
   }
   else
   {
-    Serial.println(board.getRfid().PICC_IsNewCardPresent() ? "New card" : "No card");
+    Serial.println(board.getRfid().IsNewCardPresent() ? "New card" : "No card");
     ready_for_a_new_card = true; // we should get SOME "no card" before flipping this flag
     // print status on lcd screen
 

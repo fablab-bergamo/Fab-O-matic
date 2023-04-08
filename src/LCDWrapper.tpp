@@ -18,7 +18,7 @@ LCDWrapper<_COLS, _ROWS>::LCDWrapper(LCDConfig config) :
 template <uint8_t _COLS, uint8_t _ROWS>
 void LCDWrapper<_COLS, _ROWS>::begin()
 {
-  this->lcd.begin(_ROWS, _COLS);
+  this->lcd.begin(_COLS, _ROWS);
   this->lcd.createChar(0, this->antenna_char);
   this->lcd.createChar(1, this->connection_char);
   this->lcd.createChar(2, this->noconnection_char);
