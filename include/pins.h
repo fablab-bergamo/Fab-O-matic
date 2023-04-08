@@ -8,7 +8,7 @@ namespace pins
 #ifdef PINS_ESP32
   namespace mfrc522 /* RFID reader SPI interface pins definition */
   {
-    constexpr uint8_t ss_pin = 5U; 
+    constexpr uint8_t cs_pin = 5U; 
     constexpr uint8_t mosi_pin = 11U;
     constexpr uint8_t miso_pin = 12U;
     constexpr uint8_t sck_pin = 13U;
@@ -33,21 +33,21 @@ namespace pins
 #ifdef PINS_ESP32S3
   namespace mfrc522 /* RFID reader SPI interface pins definition */
   {
-    constexpr uint8_t ss_pin = 10U; 
-    constexpr uint8_t mosi_pin = 11U;
-    constexpr uint8_t miso_pin = 13U;
-    constexpr uint8_t sck_pin = 12U;
-    constexpr uint8_t reset_pin = 4U;
+    constexpr uint8_t cs_pin = 42U;  /* Chip Select */
+    constexpr uint8_t mosi_pin = 40U; /* Master Out Slave In*/
+    constexpr uint8_t miso_pin = 41U; /* Master In Slave Out*/
+    constexpr uint8_t sck_pin = 39U; /* Serial clock */
+    constexpr uint8_t reset_pin = 10U;
   }
   namespace lcd /* LCD parallel interface pins definition */
   {
-    constexpr uint8_t rs_pin = 4U;
+    constexpr uint8_t rs_pin = 10U;
     constexpr uint8_t en_pin = 5U;
     constexpr uint8_t d0_pin = 6U;
     constexpr uint8_t d1_pin = 7U;
     constexpr uint8_t d2_pin = 8U;
     constexpr uint8_t d3_pin = 9U;
-    constexpr uint8_t bl_pin = 10U;
+    constexpr uint8_t bl_pin = 12U;
   }
   namespace relay
   {
