@@ -8,6 +8,7 @@
 #include "Machine.h"
 #include "FabServer.h"
 #include "LCDWrapper.h"
+#include "BoardState.h"
 
 #include <cstdint>
 #include <string>
@@ -18,44 +19,24 @@
 #include <WiFi.h>
 #include "conf.h"
 
-MFRC522DriverPinSimple ss_pin(pins::mfrc522::ss_pin); // Configurable, see typical pin layout above.
-
-MFRC522DriverSPI driver{ss_pin}; // Create SPI driver.
-// MFRC522DriverI2C driver{}; // Create I2C driver.
-MFRC522 mfrc522{driver}; // Create MFRC522 instance.
-
-LCDWrapper<conf::lcd::COLS, conf::lcd::ROWS> LCD(pins::lcd::rs_pin, pins::lcd::en_pin, pins::lcd::d0_pin, pins::lcd::d1_pin, pins::lcd::d2_pin, pins::lcd::d3_pin);
-
-FabServer server(secrets::machine_data::whitelist, secrets::wifi::ssid, secrets::wifi::password);
-
-Machine machine(secrets::machine_data::machine_id, Machine::PRINTER3D, pins::relay::ch1_pin, false);
-
-FabMember candidate_user = FabMember();
-
 static bool ready_for_a_new_card = true;
-
-
+static BoardState board;
 
 void setup()
 {
-  Serial.println("Starting!");
-
   Serial.begin(115200); // Initialize serial communications with the PC for debugging.
-  LCD.begin();
-
-  mfrc522.PCD_Init(); // Init MFRC522 board.
+  Serial.println("Starting setup!");
+  board.init();
 
   Serial.println(F("Scan PICC to see UID, SAK, type, and data blocks..."));
-
-  // connection to wifi
-  LCD.state(LCDState::CONNECTING);
-  LCD.update(server, candidate_user, machine);
   
-  LCD.showConnection(true);
-  LCD.setConnectionState(server.isOnline());
+  // connection to wifi
+  board.changeStatus(BoardStatus::CONNECTING);
+  
+  board.getLCD().showConnection(true);
+  board.getLCD().setConnectionState(board.getServer().isOnline());
 
-  LCD.state(server.isOnline() ? LCDState::CONNECTED : LCDState::OFFLINE);
-  LCD.update(server, candidate_user, machine);
+  board.changeStatus(board.getServer().isOnline() ? BoardStatus::CONNECTED : BoardStatus::OFFLINE);
   delay(1000);
 }
 
@@ -64,50 +45,43 @@ void loop()
   delay(100);
 
   // check if there is a card
-  if (mfrc522.PICC_IsNewCardPresent())
+  if (board.getRfid().PICC_IsNewCardPresent())
   {
     // if there is a "new" card (could be the same that stayed in the field)
-    if (!mfrc522.PICC_ReadCardSerial() || !ready_for_a_new_card)
+    if (!board.getRfid().PICC_ReadCardSerial() || !ready_for_a_new_card)
     {
       return;
     }
     ready_for_a_new_card = false;
 
     // Acquire the UID of the card
-    candidate_user.setUidFromArray(mfrc522.uid.uidByte);
+    auto uid = board.getRfid().uid.uidByte;
 
-    if (machine.isFree())
+    if (board.getMachine().isFree())
     {
       // machine is free
-      if (server.isAuthorized(candidate_user))
+      if (board.authorize(uid))
       {
-        machine.login(candidate_user);
-        LCD.state(LCDState::LOGGED_IN);
-        LCD.update(server, candidate_user, machine);
-        delay(1000);
+        Serial.println("Login successfull");
+      } else {
+        Serial.println("Login failed");
       }
-      else
-      {
-        LCD.state(LCDState::LOGIN_DENIED);
-        LCD.update(server, candidate_user, machine);
-        delay(1000);
-      }
+      delay(1000);
     }
     else
     {
       // machine is busy
-      if (machine.getActiveUser().getUid() == candidate_user.getUid())
+      FabMember member(uid);
+
+      if (board.getMachine().getActiveUser().getUid() == member.getUid())
       {
         // we can logout. we should require that the card stays in the field for some seconds, to prevent accidental logout. maybe sound a buzzer?
-        machine.logout();
-        LCD.state(LCDState::LCDStateType::LOGOUT);
-        LCD.update(server, candidate_user, machine);
+        board.logout();
       }
       else
       {
         // user is not the same, display who is using it
-        LCD.state(LCDState::ALREADY_IN_USE);
-        LCD.update(server, candidate_user, machine);
+        board.changeStatus(BoardStatus::ALREADY_IN_USE);
         delay(1000);
       }
       delay(1000);
@@ -115,19 +89,17 @@ void loop()
   }
   else
   {
-    Serial.println(mfrc522.PICC_IsNewCardPresent() ? "New card" : "No card");
+    Serial.println(board.getRfid().PICC_IsNewCardPresent() ? "New card" : "No card");
     ready_for_a_new_card = true; // we should get SOME "no card" before flipping this flag
     // print status on lcd screen
 
-    if (!machine.isFree())
+    if (!board.getMachine().isFree())
     {
-      LCD.state(LCDState::IN_USE);
-      LCD.update(server, candidate_user, machine);
+      board.changeStatus(BoardStatus::IN_USE);
     }
     else
     {
-      LCD.state(LCDState::FREE);
-      LCD.update(server, candidate_user, machine);
+      board.changeStatus(BoardStatus::FREE);
     }
   }
   // select the card

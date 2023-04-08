@@ -17,13 +17,14 @@ private:
 
 public:
   FabMember();
+  FabMember(const uint8_t * uid);
   ~FabMember() = default;
 
-  void setUidFromArray(const uint8_t *uid); // tested
-  void setUid(card::uid_t uid);             // tested
-  card::uid_t getUid();                     // tested
-  void setName(std::string name);           // tested
-  std::string getName();                    // tested
+  void setUidFromArray(const uint8_t *uid);
+  void setUid(card::uid_t uid);             
+  card::uid_t getUid() const;                    
+  void setName(std::string name);
+  std::string getName();
 
   // define the copy constructor for FabMember
   FabMember &operator=(const FabMember &member);
