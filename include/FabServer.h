@@ -9,9 +9,9 @@
 class FabServer
 {
 private:
-  std::array<card::uid_t, conf::whitelist::LEN> _whitelist;
-  const std::string _ssid;
-  const std::string _password;
+  const std::string wifi_ssid;
+  const std::string wifi_password;
+  const std::array<card::uid_t, conf::whitelist::LEN> whitelist;
   bool online;
   bool serverQuery(const FabMember &member_card) const;
   bool isWhiteListed(const FabMember &member_card) const;

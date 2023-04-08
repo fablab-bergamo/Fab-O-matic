@@ -3,10 +3,8 @@
 
 #include <cstdint>
 
-Machine::Machine(MachineConfig user_conf) : config(user_conf)
+Machine::Machine(MachineConfig user_conf) : config(user_conf), active(false), usage_start_timestamp(0)
 {
-  this->active = false;
-  this->usage_start_timestamp = 0;
   this->current_user = FabMember();
   pinMode(this->config.control_pin, OUTPUT);
   digitalWrite(this->config.control_pin, this->config.control_pin_active_low ? HIGH : LOW);
