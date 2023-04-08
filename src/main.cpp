@@ -34,16 +34,7 @@ FabMember candidate_user = FabMember();
 
 static bool ready_for_a_new_card = true;
 
-std::string convertSecondsToHHMMSS(unsigned long milliseconds)
-{
-  //! since something something does not support to_string we have to resort to ye olde cstring stuff
-  char buffer[9];
-  unsigned long seconds = milliseconds / 1000;
-  snprintf(buffer, sizeof(buffer), "%02d:%02d:%02d", (int)(seconds / 3600), (int)((seconds % 3600) / 60), (int)(seconds % 60));
 
-  std::string result(buffer);
-  return result;
-}
 
 void setup()
 {
@@ -56,13 +47,14 @@ void setup()
   Serial.println(F("Scan PICC to see UID, SAK, type, and data blocks..."));
 
   // connection to wifi
-  LCD.setRow(0, "Connettendo...");
-  LCD.update(server, candidate_user);
-  // server.connect();
+  LCD.state(LCDState::CONNECTING);
+  LCD.update(server, candidate_user, machine);
+  
   LCD.showConnection(true);
   LCD.setConnectionState(server.isOnline());
-  LCD.setRow(1, server.isOnline() ? "CONNECTED" : "OFFLINE MODE");
-  LCD.update(server, candidate_user);
+
+  LCD.state(server.isOnline() ? LCDState::CONNECTED : LCDState::OFFLINE);
+  LCD.update(server, candidate_user, machine);
   delay(1000);
 }
 
@@ -89,16 +81,14 @@ void loop()
       if (server.isAuthorized(candidate_user))
       {
         machine.login(candidate_user);
-        LCD.setRow(0, "Inizio uso");
-        LCD.setRow(1, candidate_user.getName());
-        LCD.update(server, candidate_user);
+        LCD.state(LCDState::LOGGED_IN);
+        LCD.update(server, candidate_user, machine);
         delay(1000);
       }
       else
       {
-        LCD.setRow(0, "Negato");
-        LCD.setRow(1, "Carta sconosciuta");
-        LCD.update(server, candidate_user);
+        LCD.state(LCDState::LOGIN_DENIED);
+        LCD.update(server, candidate_user, machine);
         delay(1000);
       }
     }
@@ -110,14 +100,13 @@ void loop()
         // we can logout. we should require that the card stays in the field for some seconds, to prevent accidental logout. maybe sound a buzzer?
         machine.logout();
         LCD.state(LCDState::LCDStateType::LOGOUT);
-        LCD.update(server, candidate_user);
+        LCD.update(server, candidate_user, machine);
       }
       else
       {
-        // user is not the same
-        LCD.setRow(0, "Negato");
-        LCD.setRow(1, "In uso");
-        LCD.update(server, candidate_user);
+        // user is not the same, display who is using it
+        LCD.state(LCDState::ALREADY_IN_USE);
+        LCD.update(server, candidate_user, machine);
         delay(1000);
       }
       delay(1000);
@@ -131,17 +120,13 @@ void loop()
 
     if (!machine.isFree())
     {
-      char buffer[conf::lcd::COLS];
-      snprintf(buffer, sizeof(buffer), "Ciao %s", machine.getActiveUser().getName().c_str());
-      LCD.setRow(0, buffer);
-      LCD.setRow(1, convertSecondsToHHMMSS(machine.getUsageTime()));
-      LCD.update(server, candidate_user);
+      LCD.state(LCDState::IN_USE);
+      LCD.update(server, candidate_user, machine);
     }
     else
     {
-      LCD.setRow(0, server.isOnline() ? "Disponibile" : "OFFLINE");
-      LCD.setRow(1, "Avvicina carta");
-      LCD.update(server, candidate_user);
+      LCD.state(LCDState::FREE);
+      LCD.update(server, candidate_user, machine);
     }
   }
   // select the card
