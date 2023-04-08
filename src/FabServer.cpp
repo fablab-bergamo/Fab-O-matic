@@ -16,9 +16,11 @@ bool FabServer::isAuthorized(FabMember &member_card)
   }
   else
   {
-    bool answer = this->_isWhiteListed(member_card);
-    member_card.setName("MEMBER");
-    return this->_isWhiteListed(member_card);
+    if (this->_isWhiteListed(member_card)) {
+      member_card.setName("MEMBER");
+      return true;
+    }
+    return false;
   }
 }
 
@@ -46,6 +48,7 @@ bool FabServer::_isWhiteListed(FabMember member_card)
 
 bool FabServer::_serverQuery(FabMember member_card)
 {
+  /* TODO */
   if (member_card.getUid() == 0x11223344)
   {
     return true;
