@@ -8,23 +8,22 @@ FabServer::FabServer(const std::array<card::uid_t, 10> whitelist, const std::str
   online = false;
 }
 
-bool FabServer::isAuthorized(FabMember &member_card)
+bool FabServer::isAuthorized(const FabMember &member_card) const
 {
   if (this->isOnline())
   {
-    return this->_serverQuery(member_card);
+    return this->serverQuery(member_card);
   }
   else
   {
-    if (this->_isWhiteListed(member_card)) {
-      member_card.setName("MEMBER");
+    if (this->isWhiteListed(member_card)) {
       return true;
     }
     return false;
   }
 }
 
-bool FabServer::isOnline()
+bool FabServer::isOnline() const
 {
   return online;
 }
@@ -34,7 +33,7 @@ void FabServer::setOnline(bool online)
   this->online = online;
 }
 
-bool FabServer::_isWhiteListed(FabMember member_card)
+bool FabServer::isWhiteListed(const FabMember &member_card) const
 {
   for (int i = 0; i < this->_whitelist.size(); i++)
   {
@@ -46,7 +45,7 @@ bool FabServer::_isWhiteListed(FabMember member_card)
   return false;
 }
 
-bool FabServer::_serverQuery(FabMember member_card)
+bool FabServer::serverQuery(const FabMember &member_card) const
 {
   /* TODO */
   if (member_card.getUid() == 0x11223344)

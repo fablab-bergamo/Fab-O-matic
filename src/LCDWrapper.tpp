@@ -4,23 +4,24 @@
 #include "LCDWrapper.h"
 
 template <uint8_t _COLS, uint8_t _ROWS>
-LCDWrapper<_COLS, _ROWS>::LCDWrapper(uint8_t rs, uint8_t enable, uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3) : _lcd(rs, enable, d0, d1, d2, d3)
+LCDWrapper<_COLS, _ROWS>::LCDWrapper(uint8_t rs, uint8_t enable, uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3) : 
+  lcd(rs, enable, d0, d1, d2, d3), 
+  backlight_pin(255),
+  backlight_active_low(false),
+  show_connection_status(false),
+  connection_status(false)
 {
-  _backlight_pin = 255;
-  _backlight_active_low = false;
-  _show_connection_status = false;
-  _connection_status = false;
-  _buffer.fill({0});
-  _current.fill({0});
+  buffer.fill({0});
+  current.fill({0});
 }
 
 template <uint8_t _COLS, uint8_t _ROWS>
 void LCDWrapper<_COLS, _ROWS>::begin()
 {
-  this->_lcd.begin(_ROWS, _COLS);
-  this->_lcd.createChar(0, _antenna_char);
-  this->_lcd.createChar(1, _connection_char);
-  this->_lcd.createChar(2, _noconnection_char);
+  this->lcd.begin(_ROWS, _COLS);
+  this->lcd.createChar(0, this->antenna_char);
+  this->lcd.createChar(1, this->connection_char);
+  this->lcd.createChar(2, this->noconnection_char);
 }
 
 template <uint8_t _COLS, uint8_t _ROWS>
@@ -32,133 +33,123 @@ std::string LCDWrapper<_COLS, _ROWS>::convertSecondsToHHMMSS(unsigned long milli
   snprintf(buffer, sizeof(buffer), "%02d:%02d:%02d", (int)(seconds / 3600), (int)((seconds % 3600) / 60), (int)(seconds % 60));
 
   std::string result(buffer);
-  return result;
+  return {result};
 }
 
 template <uint8_t _COLS, uint8_t _ROWS>
-void LCDWrapper<_COLS, _ROWS>::update(FabServer server, FabMember user, Machine machine)
+void LCDWrapper<_COLS, _ROWS>::update(BoardStatus status, FabServer server, FabMember user, Machine machine)
 {
   char buffer[conf::lcd::COLS];
 
-  switch (_state)
+  switch (status)
   {
-  case LCDState::CLEAR:
+  case BoardStatus::CLEAR:
     this->clear();
     break;
-  case LCDState::FREE:
+  case BoardStatus::FREE:
     this->setRow(0, server.isOnline() ? "Disponibile" : "OFFLINE");
     this->setRow(1, "Avvicina carta");
     break;
-  case LCDState::ALREADY_IN_USE:
+  case BoardStatus::ALREADY_IN_USE:
     this->setRow(0, "In uso da");
     this->setRow(1, machine.getActiveUser().getName());
     break;
-  case LCDState::LOGGED_IN:
+  case BoardStatus::LOGGED_IN:
     this->setRow(0, "Inizio uso");
     this->setRow(1, user.getName());
     break;
-  case LCDState::LOGIN_DENIED:
+  case BoardStatus::LOGIN_DENIED:
     this->setRow(0, "Negato");
     this->setRow(1, "Carta sconosciuta");
     break;
-  case LCDState::LOGOUT:
+  case BoardStatus::LOGOUT:
     this->setRow(0, "Arrivederci");
     this->setRow(1, user.getName());
     break;
-  case LCDState::CONNECTING:
+  case BoardStatus::CONNECTING:
     this->setRow(0, "Connecting");
     break;
-  case LCDState::CONNECTED:
+  case BoardStatus::CONNECTED:
     this->setRow(0, "Connected");
     break;
-  case LCDState::IN_USE:
+  case BoardStatus::IN_USE:
     snprintf(buffer, sizeof(buffer), "Ciao %s", machine.getActiveUser().getName());
     this->setRow(0, buffer);
     this->setRow(1, this->convertSecondsToHHMMSS(machine.getUsageTime()));
     break;
-  case LCDState::BUSY:
+  case BoardStatus::BUSY:
     this->setRow(0, "Busy");
     break;
-  case LCDState::OFFLINE:
+  case BoardStatus::OFFLINE:
     this->setRow(0, "OFFLINE MODE");
     break;
   }
-  this->_update_chars();
+  this->update_chars();
 }
 
 template <uint8_t _COLS, uint8_t _ROWS>
 void LCDWrapper<_COLS, _ROWS>::clear()
 {
-  this->_lcd.clear();
+  this->lcd.clear();
 }
 
-template <uint8_t _COLS, uint8_t _ROWS>
-void LCDWrapper<_COLS, _ROWS>::state(LCDState::LCDStateType state)
-{
-  this->_state = state;
-}
 
 template <uint8_t _COLS, uint8_t _ROWS>
-void LCDWrapper<_COLS, _ROWS>::_update_chars()
+void LCDWrapper<_COLS, _ROWS>::update_chars()
 {
-  if (this->_needsUpdate())
+  if (this->needsUpdate())
   {
-    this->_lcd.clear();
-    this->_lcd.setCursor(0, 0);
+    this->lcd.clear();
+    this->lcd.setCursor(0, 0);
 
     char why_arduino_has_not_implemented_liquidcrystal_print_from_char_array_yet[16];
-    for (auto i = 0; i < _COLS; i++)
-    {
-      why_arduino_has_not_implemented_liquidcrystal_print_from_char_array_yet[i] = this->_buffer[0][i];
-    }
-    this->_lcd.print(why_arduino_has_not_implemented_liquidcrystal_print_from_char_array_yet);
+    memcpy(why_arduino_has_not_implemented_liquidcrystal_print_from_char_array_yet, this->buffer[0], _COLS);
+    
+    this->lcd.print(why_arduino_has_not_implemented_liquidcrystal_print_from_char_array_yet);
 
-    if (this->_show_connection_status)
+    if (this->show_connection_status)
     {
-      this->_lcd.setCursor(14, 0);
-      this->_lcd.write((uint8_t)0);
-      this->_lcd.write(this->_connection_status ? (uint8_t)1 : (uint8_t)2);
+      this->lcd.setCursor(14, 0);
+      this->lcd.write((uint8_t)0);
+      this->lcd.write(this->connection_status ? (uint8_t)1 : (uint8_t)2);
     }
 
-    this->_lcd.setCursor(0, 1);
-    for (auto i = 0; i < _COLS; i++)
-    {
-      why_arduino_has_not_implemented_liquidcrystal_print_from_char_array_yet[i] = this->_buffer[1][i];
-    }
-    this->_lcd.print(why_arduino_has_not_implemented_liquidcrystal_print_from_char_array_yet);
+    this->lcd.setCursor(0, 1);
+    memcpy(why_arduino_has_not_implemented_liquidcrystal_print_from_char_array_yet, this->buffer[1], _COLS);
+    this->lcd.print(why_arduino_has_not_implemented_liquidcrystal_print_from_char_array_yet);
 
-    _current = _buffer;
+    current = buffer;
   }
 }
 
 template <uint8_t _COLS, uint8_t _ROWS>
 void LCDWrapper<_COLS, _ROWS>::setConnectionState(bool connected)
 {
-  this->_connection_status = connected;
+  this->connection_status = connected;
 }
 
 template <uint8_t _COLS, uint8_t _ROWS>
 void LCDWrapper<_COLS, _ROWS>::showConnection(bool show)
 {
-  this->_show_connection_status = show;
+  this->show_connection_status = show;
 }
 
 template <uint8_t _COLS, uint8_t _ROWS>
-bool LCDWrapper<_COLS, _ROWS>::_needsUpdate()
+bool LCDWrapper<_COLS, _ROWS>::needsUpdate()
 {
-  if (this->_current != this->_buffer)
+  if (this->current != this->buffer)
   {
     Serial.println("buffer dump:");
     for (auto i = 0; i < _ROWS; i++)
     {
       for (auto j = 0; j < _COLS; j++)
       {
-        Serial.print(this->_buffer[i][j]);
+        Serial.print(this->buffer[i][j]);
       }
       Serial.println();
       for (auto j = 0; j < _COLS; j++)
       {
-        Serial.print(this->_current[i][j]);
+        Serial.print(this->current[i][j]);
       }
       Serial.println();
       Serial.println();
@@ -174,10 +165,10 @@ void LCDWrapper<_COLS, _ROWS>::setRow(uint8_t row, std::string text)
 {
   if (row < _ROWS)
   {
-    this->_buffer[row].fill({0});
+    this->buffer[row].fill({0});
     for (auto i = 0; i < text.length(); i++)
     {
-      this->_buffer[row][i] = text[i];
+      this->buffer[row][i] = text[i];
     }
   }
 }

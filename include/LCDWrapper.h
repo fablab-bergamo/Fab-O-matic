@@ -1,53 +1,34 @@
 #ifndef _LCD_WRAPPER_H_
 #define _LCD_WRAPPER_H_
 
-#include "LiquidCrystal.h"
 #include <array>
-
-namespace LCDState
-{
-  typedef enum
-  {
-    CLEAR = 0x0,
-    FREE = 0x1,
-    LOGGED_IN = 0x2,
-    LOGIN_DENIED = 0x3,
-    BUSY = 0x4,
-    LOGOUT = 0x5,
-    CONNECTING = 0x6,
-    CONNECTED = 0x7,
-    ALREADY_IN_USE = 0x8,
-    IN_USE = 0x9,
-    OFFLINE = 0x10
-  } LCDStateType;
-}
+#include "LiquidCrystal.h"
+#include "BoardStatus.h"
 
 template <uint8_t _COLS, uint8_t _ROWS>
 class LCDWrapper
 {
 private:
-  LiquidCrystal _lcd;
+  LiquidCrystal lcd;
 
-  LCDState::LCDStateType _state;
+  uint8_t backlight_pin;
+  bool backlight_active_low;
 
-  uint8_t _backlight_pin;
-  bool _backlight_active_low;
+  bool show_connection_status;
+  bool connection_status;
 
-  bool _show_connection_status;
-  bool _connection_status;
+  void backlightOn();
+  void backlightOff();
 
-  void _backlightOn();
-  void _backlightOff();
+  std::array<std::array<char, _COLS>, _ROWS> buffer;
+  std::array<std::array<char, _COLS>, _ROWS> current;
 
-  std::array<std::array<char, _COLS>, _ROWS> _buffer;
-  std::array<std::array<char, _COLS>, _ROWS> _current;
+  bool needsUpdate();
+  void update_chars();
 
-  bool _needsUpdate();
-  void _update_chars();
-
-  uint8_t _antenna_char[8] = {0x15, 0x0E, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04};
-  uint8_t _connection_char[8] = {0x00, 0x00, 0x01, 0x01, 0x05, 0x05, 0x15, 0x15};
-  uint8_t _noconnection_char[8] = {0x00, 0x00, 0x11, 0x0A, 0x04, 0x0A, 0x11, 0x00};
+  uint8_t antenna_char[8] = {0x15, 0x0E, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04} ;
+  uint8_t connection_char[8] = {0x00, 0x00, 0x01, 0x01, 0x05, 0x05, 0x15, 0x15};
+  uint8_t noconnection_char[8] = {0x00, 0x00, 0x11, 0x0A, 0x04, 0x0A, 0x11, 0x00};
 
   void setRow(uint8_t row, std::string text);
   std::string convertSecondsToHHMMSS(unsigned long millis);
@@ -59,9 +40,8 @@ public:
 
   void begin();
 
-  void update(FabServer server, FabMember user, Machine machine);
+  void update(BoardStatus status, FabServer server, FabMember user, Machine machine);
   void clear();
-  void state(LCDState::LCDStateType state);
   void setConnectionState(bool connected);
   void showConnection(bool show);
 };

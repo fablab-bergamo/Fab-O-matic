@@ -1,0 +1,19 @@
+#ifndef _BOARDSTATUS_H_
+#define _BOARDSTATUS_H_
+
+enum class BoardStatus
+{
+  CLEAR,
+  FREE,
+  LOGGED_IN,
+  LOGIN_DENIED,
+  BUSY,
+  LOGOUT,
+  CONNECTING,
+  CONNECTED,
+  ALREADY_IN_USE,
+  IN_USE,
+  OFFLINE
+};
+
+#endif

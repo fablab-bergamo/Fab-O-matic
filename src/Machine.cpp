@@ -3,40 +3,33 @@
 
 #include <cstdint>
 
-Machine::Machine(
-    MachineIDType machine_id,
-    MachineType machine_type,
-    uint8_t control_pin,
-    bool control_pin_active_low) : _machine_id(machine_id),
-                                   _machine_type(machine_type),
-                                   _control_pin(control_pin),
-                                   _control_pin_active_low(control_pin_active_low)
+Machine::Machine(MachineConfig user_conf) : config(user_conf)
 {
-  _active = false;
-  _usage_start_timestamp = 0;
-  _current_user = FabMember();
-  pinMode(_control_pin, OUTPUT);
-  digitalWrite(_control_pin, _control_pin_active_low ? HIGH : LOW);
+  this->active = false;
+  this->usage_start_timestamp = 0;
+  this->current_user = FabMember();
+  pinMode(this->config.control_pin, OUTPUT);
+  digitalWrite(this->config.control_pin, this->config.control_pin_active_low ? HIGH : LOW);
 }
 
-Machine::MachineIDType Machine::getMachineId()
+u_int16_t Machine::getMachineId()
 {
-  return _machine_id;
+  return this->config.machine_id;
 }
 
 bool Machine::isFree()
 {
-  return !_active;
+  return !this->active;
 }
 
 bool Machine::login(FabMember user)
 {
-  if (isFree())
+  if (this->isFree())
   {
-    this->_active = true;
-    this->_current_user = user;
-    this->_turnOn();
-    this->_usage_start_timestamp = millis();
+    this->active = true;
+    this->current_user = user;
+    this->power(true);
+    this->usage_start_timestamp = millis();
     return true;
   }
   return false;
@@ -44,57 +37,45 @@ bool Machine::login(FabMember user)
 
 void Machine::logout()
 {
-  if (_active)
+  if (this->active)
   {
-    _active = false;
-    this->_turnOff();
+    active = false;
+    this->power(false);
   }
 }
 
-void Machine::_turnOn()
+void Machine::power(bool value)
 {
-  if (_control_pin_active_low)
+  if (this->config.control_pin_active_low)
   {
-    digitalWrite(_control_pin, LOW);
+    digitalWrite(this->config.control_pin, value ? LOW : HIGH);
   }
   else
   {
-    digitalWrite(_control_pin, HIGH);
-  }
-}
-
-void Machine::_turnOff()
-{
-  if (_control_pin_active_low)
-  {
-    digitalWrite(_control_pin, HIGH);
-  }
-  else
-  {
-    digitalWrite(_control_pin, LOW);
+    digitalWrite(this->config.control_pin, value ? LOW : HIGH);
   }
 }
 
 FabMember Machine::getActiveUser()
 {
-  return _current_user;
+  return this->current_user;
 }
 
 unsigned long Machine::getUsageTime()
 {
-  if (_active)
+  if (this->active)
   {
-    return millis() - _usage_start_timestamp;
+    return millis() - this->usage_start_timestamp;
   }
   return 0;
 }
 
 bool Machine::operator==(const Machine &v) const
 {
-  return (_machine_id == v._machine_id);
+  return (this->config.machine_id == v.config.machine_id);
 }
 
 bool Machine::operator!=(const Machine &v) const
 {
-  return (_machine_id != v._machine_id);
+  return (this->config.machine_id != v.config.machine_id);
 }

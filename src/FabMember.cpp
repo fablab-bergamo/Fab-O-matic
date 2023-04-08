@@ -18,11 +18,12 @@
 // take that, little endian!
 #define to32b(arr) *(card::uid_t *)arr
 
-FabMember::FabMember()
+FabMember::FabMember() : member_uid(0x0), holder_name("?") {}
+
+FabMember::FabMember(const u_int8_t *uid) : holder_name("?")
 {
   // variable init
-  FabMember::member_uid = 0x0;
-  FabMember::holder_name = "?";
+  this->member_uid = to32l(uid);
 }
 
 FabMember &FabMember::operator=(const FabMember &member)
@@ -44,7 +45,7 @@ void FabMember::setUid(card::uid_t uid)
   FabMember::member_uid = uid;
 }
 
-card::uid_t FabMember::getUid()
+card::uid_t FabMember::getUid() const
 {
   return FabMember::member_uid;
 }

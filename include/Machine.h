@@ -6,34 +6,38 @@
 
 #include "FabMember.h"
 
+enum class MachineType
+{
+  INVALID,
+  PRINTER3D,
+  LASER,
+  CNC,
+  EXTRA1,
+  EXTRA2
+};
+
+struct MachineConfig
+{
+  uint16_t machine_id;
+  MachineType machine_type;
+  uint8_t control_pin;
+  bool control_pin_active_low;
+public:
+  MachineConfig() : machine_id(0), machine_type(MachineType::INVALID), control_pin(0), control_pin_active_low(false) {};
+  MachineConfig(uint16_t id, MachineType type, uint8_t pin, bool active_low): machine_id(id), machine_type(type), control_pin(pin), control_pin_active_low(active_low) {}
+};
+
 class Machine
 {
-public:
-  typedef uint32_t MachineIDType;
-  typedef enum enum_MachineType
-  {
-    INVALID = 0x0,
-    PRINTER3D = 0x1,
-    LASER = 0x2,
-    CNC = 0x3,
-    EXTRA1 = 0xFE,
-    EXTRA2 = 0xFF
-  } MachineType;
-
 private:
-  MachineIDType _machine_id = INVALID;
-  MachineType _machine_type = INVALID;
-  uint8_t _control_pin = -1;
-  bool _control_pin_active_low = false;
-
-  bool _active;
-  FabMember _current_user;
-  void _turnOn();
-  void _turnOff();
-  uint32_t _usage_start_timestamp;
+  MachineConfig config;
+  bool active;
+  FabMember current_user;
+  void power(bool on_or_off);
+  uint32_t usage_start_timestamp;
 
 public:
-  Machine(MachineIDType machine_id, MachineType machine_type, uint8_t control_pin, bool control_pin_active_low);
+  Machine(MachineConfig config);
   ~Machine() = default;
   bool isFree();
   void begin();
@@ -42,7 +46,7 @@ public:
   bool login(FabMember user); // if the machine is not active, login the user
   void logout();              // if the machine is active, check if the card belongs to the user that is logged in and logout the user
   unsigned long getUsageTime();
-  MachineIDType getMachineId();
+  uint16_t getMachineId();
   bool operator==(const Machine &v) const;
   bool operator!=(const Machine& v) const;
 };
