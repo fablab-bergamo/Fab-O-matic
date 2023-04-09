@@ -25,10 +25,10 @@ void setup()
   board.init();
 
   Serial.println(F("Scan PICC to see UID, SAK, type, and data blocks..."));
-  
+
   // connection to wifi
   board.changeStatus(BoardState::Status::CONNECTING);
-  
+
   Board::lcd.showConnection(true);
   Board::lcd.setConnectionState(Board::server.isOnline());
 
@@ -60,7 +60,9 @@ void loop()
       if (board.authorize(uid))
       {
         Serial.println("Login successfull");
-      } else {
+      }
+      else
+      {
         Serial.println("Login failed");
       }
       delay(1000);

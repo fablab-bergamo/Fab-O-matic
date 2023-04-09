@@ -40,6 +40,7 @@ public:
     BoardState(BoardState &&) = default;
     // move assignment
     BoardState &operator=(BoardState &&) = default;
+
 private:
     Status status;
     FabMember member;

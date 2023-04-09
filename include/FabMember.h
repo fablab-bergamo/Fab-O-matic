@@ -17,12 +17,12 @@ private:
 
 public:
   FabMember();
-  FabMember(const uint8_t * uid);
+  FabMember(const uint8_t *uid);
   ~FabMember() = default;
 
   void setUidFromArray(const uint8_t *uid);
-  void setUid(card::uid_t uid);             
-  card::uid_t getUid() const;                    
+  void setUid(card::uid_t uid);
+  card::uid_t getUid() const;
   void setName(std::string name);
   std::string getName() const;
 

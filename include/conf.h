@@ -11,7 +11,7 @@ namespace conf
     }
     namespace lcd
     {
-        constexpr uint8_t ROWS = 2U; /* Number of rows for LCD */
+        constexpr uint8_t ROWS = 2U;  /* Number of rows for LCD */
         constexpr uint8_t COLS = 16U; /* Number of cols for LCD */
     }
 }
