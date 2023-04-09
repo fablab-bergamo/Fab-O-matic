@@ -25,12 +25,13 @@ private:
 
   bool needsUpdate();
 
-  uint8_t antenna_char[8] = {0x15, 0x0E, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04} ;
+  uint8_t antenna_char[8] = {0x15, 0x0E, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04};
   uint8_t connection_char[8] = {0x00, 0x00, 0x01, 0x01, 0x05, 0x05, 0x15, 0x15};
   uint8_t noconnection_char[8] = {0x00, 0x00, 0x11, 0x0A, 0x04, 0x0A, 0x11, 0x00};
 
 public:
-  struct Config {
+  struct Config
+  {
     uint8_t rs;
     uint8_t enable;
     uint8_t d0;
@@ -39,7 +40,8 @@ public:
     uint8_t d3;
     uint8_t backlight_pin;
     bool backlight_active_low;
-    Config(uint8_t rs, uint8_t enable, uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3, uint8_t backlight_pin=-1, bool backlight_active_low=false) {
+    Config(uint8_t rs, uint8_t enable, uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3, uint8_t backlight_pin = -1, bool backlight_active_low = false)
+    {
       this->rs = rs;
       this->enable = enable;
       this->d0 = d0;

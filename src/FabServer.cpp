@@ -3,11 +3,10 @@
 #include <string>
 #include <cstdint>
 
-FabServer::FabServer(const std::array<card::uid_t, conf::whitelist::LEN> whitelist, const std::string ssid, const std::string password) : 
-  whitelist(whitelist),
-  wifi_ssid(ssid), 
-  wifi_password(password), 
-  online(false) {}
+FabServer::FabServer(const std::array<card::uid_t, conf::whitelist::LEN> whitelist, const std::string ssid, const std::string password) : whitelist(whitelist),
+                                                                                                                                          wifi_ssid(ssid),
+                                                                                                                                          wifi_password(password),
+                                                                                                                                          online(false) {}
 
 bool FabServer::isAuthorized(const FabMember &member_card) const
 {
@@ -17,7 +16,8 @@ bool FabServer::isAuthorized(const FabMember &member_card) const
   }
   else
   {
-    if (this->isWhiteListed(member_card)) {
+    if (this->isWhiteListed(member_card))
+    {
       return true;
     }
     return false;

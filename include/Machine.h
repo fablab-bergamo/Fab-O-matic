@@ -24,11 +24,11 @@ public:
   };
   struct Config
   {
-    MachineID machine_id {0};
-    MachineType machine_type {MachineType::INVALID};
+    MachineID machine_id{0};
+    MachineType machine_type{MachineType::INVALID};
     uint8_t control_pin{0};
-    bool control_pin_active_low {false};
-    Config(MachineID id, MachineType type, uint8_t pin, bool act_low): machine_id(id), machine_type(type), control_pin(pin), control_pin_active_low(act_low) {}
+    bool control_pin_active_low{false};
+    Config(MachineID id, MachineType type, uint8_t pin, bool act_low) : machine_id(id), machine_type(type), control_pin(pin), control_pin_active_low(act_low) {}
   };
   Machine(Config config);
   ~Machine() = default;
@@ -41,7 +41,8 @@ public:
   unsigned long getUsageTime();
   Machine::MachineID getMachineId();
   bool operator==(const Machine &v) const;
-  bool operator!=(const Machine& v) const;
+  bool operator!=(const Machine &v) const;
+
 private:
   const Config config;
   bool active;

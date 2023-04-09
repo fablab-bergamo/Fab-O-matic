@@ -2,8 +2,10 @@
 #define _PINS_H_
 
 #include <cstdint>
-struct pins_config {
-  struct mfrc522_config { /* SPI RFID chip pins definition */
+struct pins_config
+{
+  struct mfrc522_config
+  { /* SPI RFID chip pins definition */
     uint8_t cs_pin;
     uint8_t mosi_pin;
     uint8_t miso_pin;
@@ -33,9 +35,9 @@ struct pins_config {
 };
 
 #ifdef PINS_ESP32
-  constexpr pins_config pins{{5U,11U,12U,13U,4U},{13U,12U,14U,27U,26U,25U,9U},{2U,4U}};
+constexpr pins_config pins{{5U, 11U, 12U, 13U, 4U}, {13U, 12U, 14U, 27U, 26U, 25U, 9U}, {2U, 4U}};
 #endif
 #ifdef PINS_ESP32S3
-  constexpr pins_config pins{{42U,40U,41U,39U,10U},{10U,5U,6U,7U,8U,9U,12U},{2U,3U}};
+constexpr pins_config pins{{42U, 40U, 41U, 39U, 10U}, {10U, 5U, 6U, 7U, 8U, 9U, 12U}, {2U, 3U}};
 #endif
 #endif

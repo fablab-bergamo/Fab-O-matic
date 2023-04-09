@@ -6,12 +6,11 @@
 #include "LCDWrapper.h"
 
 template <uint8_t _COLS, uint8_t _ROWS>
-LCDWrapper<_COLS, _ROWS>::LCDWrapper(Config config) : 
-  lcd(config.rs, config.enable, config.d0, config.d1, config.d2, config.d3), 
-  backlight_pin(config.backlight_pin),
-  backlight_active_low(config.backlight_active_low),
-  show_connection_status(false),
-  connection_status(false)
+LCDWrapper<_COLS, _ROWS>::LCDWrapper(Config config) : lcd(config.rs, config.enable, config.d0, config.d1, config.d2, config.d3),
+                                                      backlight_pin(config.backlight_pin),
+                                                      backlight_active_low(config.backlight_active_low),
+                                                      show_connection_status(false),
+                                                      connection_status(false)
 {
   buffer.fill({0});
   current.fill({0});
@@ -43,7 +42,6 @@ void LCDWrapper<_COLS, _ROWS>::clear()
   this->lcd.clear();
 }
 
-
 template <uint8_t _COLS, uint8_t _ROWS>
 void LCDWrapper<_COLS, _ROWS>::update_chars()
 {
@@ -54,7 +52,7 @@ void LCDWrapper<_COLS, _ROWS>::update_chars()
 
     char why_arduino_has_not_implemented_liquidcrystal_print_from_char_array_yet[16];
     memcpy(why_arduino_has_not_implemented_liquidcrystal_print_from_char_array_yet, &this->buffer[0], _COLS);
-    
+
     this->lcd.print(why_arduino_has_not_implemented_liquidcrystal_print_from_char_array_yet);
 
     if (this->show_connection_status)
