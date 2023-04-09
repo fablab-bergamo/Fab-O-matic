@@ -27,13 +27,10 @@ public:
   void setOnline(bool online);
 
   // Rule of 5 https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rc-five
-  FabServer(FabServer const &) = delete;
-  // copy constructor
-  // FabServer(const FabServer &) = delete;
-  // move constructor
-  FabServer(FabServer &&) = default;
-  // move assignment
-  FabServer &operator=(FabServer &&) = default;
+  FabServer(const FabServer&) = delete; // copy constructor
+  FabServer& operator=(const FabServer&) = delete;
+  FabServer(FabServer&&) = delete; // move constructor
+  FabServer& operator=(FabServer&&) = delete; // move assignment
 };
 
 #endif // _SERVER_H_
