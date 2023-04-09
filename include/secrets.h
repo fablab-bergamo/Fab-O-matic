@@ -12,7 +12,7 @@ namespace secrets
   namespace machine_data
   {
     const std::string machine_name = "EXAMPLE_MACHINE";
-    static constexpr uint16_t machine_id = (uint16_t)12345678; /* Machine connected to the ESP32 */
+    static constexpr Machine::MachineID machine_id = {45678}; /* Machine connected to the ESP32 */
     static constexpr std::array<card::uid_t, conf::whitelist::LEN> whitelist /* List of RFID tags whitelisted, regardless of connection */
     {
         0xF6F07894,
