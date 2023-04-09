@@ -24,7 +24,7 @@ public:
   void setUid(card::uid_t uid);             
   card::uid_t getUid() const;                    
   void setName(std::string name);
-  std::string getName();
+  std::string getName() const;
 
   // define the copy constructor for FabMember
   FabMember &operator=(const FabMember &member);
