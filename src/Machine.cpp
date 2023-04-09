@@ -10,7 +10,7 @@ Machine::Machine(Config user_conf) : config(user_conf), active(false), usage_sta
   digitalWrite(this->config.control_pin, this->config.control_pin_active_low ? HIGH : LOW);
 }
 
-u_int16_t Machine::getMachineId()
+Machine::MachineID Machine::getMachineId()
 {
   return this->config.machine_id;
 }
@@ -70,10 +70,10 @@ unsigned long Machine::getUsageTime()
 
 bool Machine::operator==(const Machine &v) const
 {
-  return (this->config.machine_id == v.config.machine_id);
+  return (this->config.machine_id.id == v.config.machine_id.id);
 }
 
 bool Machine::operator!=(const Machine &v) const
 {
-  return (this->config.machine_id != v.config.machine_id);
+  return (this->config.machine_id.id != v.config.machine_id.id);
 }

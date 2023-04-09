@@ -34,8 +34,7 @@ std::string LCDWrapper<_COLS, _ROWS>::convertSecondsToHHMMSS(unsigned long milli
   unsigned long seconds = milliseconds / 1000;
   snprintf(buffer, sizeof(buffer), "%02d:%02d:%02d", (int)(seconds / 3600), (int)((seconds % 3600) / 60), (int)(seconds % 60));
 
-  std::string result(buffer);
-  return {result};
+  return {buffer};
 }
 
 template <uint8_t _COLS, uint8_t _ROWS>
