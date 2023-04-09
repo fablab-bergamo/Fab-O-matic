@@ -3,9 +3,7 @@
 
 #include <array>
 #include "LiquidCrystal.h"
-#include "BoardStatus.h"
-
-
+#include "BoardState.h"
 
 template <uint8_t _COLS, uint8_t _ROWS>
 class LCDWrapper
@@ -26,14 +24,10 @@ private:
   std::array<std::array<char, _COLS>, _ROWS> current;
 
   bool needsUpdate();
-  void update_chars();
 
   uint8_t antenna_char[8] = {0x15, 0x0E, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04} ;
   uint8_t connection_char[8] = {0x00, 0x00, 0x01, 0x01, 0x05, 0x05, 0x15, 0x15};
   uint8_t noconnection_char[8] = {0x00, 0x00, 0x11, 0x0A, 0x04, 0x0A, 0x11, 0x00};
-
-  void setRow(uint8_t row, std::string text);
-  std::string convertSecondsToHHMMSS(unsigned long millis);
 
 public:
   struct Config {
@@ -59,11 +53,12 @@ public:
   LCDWrapper(Config config);
 
   void begin();
-
-  void update(BoardStatus status, FabMember user);
   void clear();
   void setConnectionState(bool connected);
   void showConnection(bool show);
+  void setRow(uint8_t row, std::string text);
+  std::string convertSecondsToHHMMSS(unsigned long millis);
+  void update_chars();
 };
 
 #include "LCDWrapper.tpp"

@@ -1,15 +1,3 @@
-#include "MFRC522v2.h"
-#include "MFRC522DriverSPI.h"
-#include "MFRC522DriverPinSimple.h"
-#include "MFRC522Debug.h"
-
-#include "pins.h"
-#include "secrets.h"
-#include "Machine.h"
-#include "FabServer.h"
-#include "LCDWrapper.h"
-#include "BoardState.h"
-
 #include <cstdint>
 #include <string>
 #include <array>
@@ -17,10 +5,13 @@
 
 #include <LiquidCrystal.h>
 #include <WiFi.h>
-#include "conf.h"
+
+#include "Board.h"
+#include "BoardState.h"
+#include "pins.h"
 
 static bool ready_for_a_new_card = true;
-static Board::BoardState board;
+static BoardState board;
 
 void setup()
 {
@@ -36,12 +27,12 @@ void setup()
   Serial.println(F("Scan PICC to see UID, SAK, type, and data blocks..."));
   
   // connection to wifi
-  board.changeStatus(BoardStatus::CONNECTING);
+  board.changeStatus(BoardState::Status::CONNECTING);
   
-  board.getLCD().showConnection(true);
-  board.getLCD().setConnectionState(board.getServer().isOnline());
+  Board::lcd.showConnection(true);
+  Board::lcd.setConnectionState(Board::server.isOnline());
 
-  board.changeStatus(board.getServer().isOnline() ? BoardStatus::CONNECTED : BoardStatus::OFFLINE);
+  board.changeStatus(Board::server.isOnline() ? BoardState::Status::CONNECTED : BoardState::Status::OFFLINE);
   delay(1000);
 }
 
@@ -50,10 +41,10 @@ void loop()
   delay(100);
 
   // check if there is a card
-  if (board.getRfid().IsNewCardPresent())
+  if (Board::rfid.IsNewCardPresent())
   {
     // if there is a "new" card (could be the same that stayed in the field)
-    if (!board.getRfid().ReadCardSerial() || !ready_for_a_new_card)
+    if (!Board::rfid.ReadCardSerial() || !ready_for_a_new_card)
     {
       return;
     }
@@ -61,9 +52,9 @@ void loop()
 
     // Acquire the UID of the card
     byte uid[10];
-    board.getRfid().SetUid(uid);
+    Board::rfid.SetUid(uid);
 
-    if (board.getMachine().isFree())
+    if (Board::machine.isFree())
     {
       // machine is free
       if (board.authorize(uid))
@@ -79,7 +70,7 @@ void loop()
       // machine is busy
       FabMember member(uid);
 
-      if (board.getMachine().getActiveUser().getUid() == member.getUid())
+      if (Board::machine.getActiveUser().getUid() == member.getUid())
       {
         // we can logout. we should require that the card stays in the field for some seconds, to prevent accidental logout. maybe sound a buzzer?
         board.logout();
@@ -87,7 +78,7 @@ void loop()
       else
       {
         // user is not the same, display who is using it
-        board.changeStatus(BoardStatus::ALREADY_IN_USE);
+        board.changeStatus(BoardState::Status::ALREADY_IN_USE);
         delay(1000);
       }
       delay(1000);
@@ -95,17 +86,17 @@ void loop()
   }
   else
   {
-    Serial.println(board.getRfid().IsNewCardPresent() ? "New card" : "No card");
+    Serial.println(Board::rfid.IsNewCardPresent() ? "New card" : "No card");
     ready_for_a_new_card = true; // we should get SOME "no card" before flipping this flag
     // print status on lcd screen
 
-    if (!board.getMachine().isFree())
+    if (!Board::machine.isFree())
     {
-      board.changeStatus(BoardStatus::IN_USE);
+      board.changeStatus(BoardState::Status::IN_USE);
     }
     else
     {
-      board.changeStatus(BoardStatus::FREE);
+      board.changeStatus(BoardState::Status::FREE);
     }
   }
   // select the card

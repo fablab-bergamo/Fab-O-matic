@@ -1,5 +1,4 @@
 #include "FabServer.h"
-#include "secrets.h"
 
 #include <string>
 #include <cstdint>
