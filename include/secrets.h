@@ -16,7 +16,7 @@ namespace secrets
     static constexpr std::array<card::uid_t, conf::whitelist::LEN> whitelist /* List of RFID tags whitelisted, regardless of connection */
         {
             0xF6F07894,
-            0xAABBCCDD,
+            0xE5435C83,
             0xAABBCCDD,
             0xAABBCCDD,
             0xAABBCCDD,

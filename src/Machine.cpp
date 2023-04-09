@@ -10,12 +10,12 @@ Machine::Machine(Config user_conf) : config(user_conf), active(false), usage_sta
   digitalWrite(this->config.control_pin, this->config.control_pin_active_low ? HIGH : LOW);
 }
 
-Machine::MachineID Machine::getMachineId()
+Machine::MachineID Machine::getMachineId() const
 {
   return this->config.machine_id;
 }
 
-bool Machine::isFree()
+bool Machine::isFree() const
 {
   return !this->active;
 }
@@ -46,7 +46,7 @@ void Machine::power(bool value)
 {
   if (this->config.control_pin_active_low)
   {
-    digitalWrite(this->config.control_pin, value ? LOW : HIGH);
+    digitalWrite(this->config.control_pin, value ? HIGH : LOW);
   }
   else
   {
@@ -59,7 +59,7 @@ FabMember Machine::getActiveUser()
   return this->current_user;
 }
 
-unsigned long Machine::getUsageTime()
+unsigned long Machine::getUsageTime() const
 {
   if (this->active)
   {
