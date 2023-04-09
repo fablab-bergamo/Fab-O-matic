@@ -1,8 +1,9 @@
 #include <cstdint>
 #include <string>
 #include <array>
-#include "LCDWrapper.h"
+
 #include "BoardState.h"
+#include "LCDWrapper.h"
 
 template <uint8_t _COLS, uint8_t _ROWS>
 LCDWrapper<_COLS, _ROWS>::LCDWrapper(Config config) : 
@@ -35,57 +36,6 @@ std::string LCDWrapper<_COLS, _ROWS>::convertSecondsToHHMMSS(unsigned long milli
 
   std::string result(buffer);
   return {result};
-}
-
-template <uint8_t _COLS, uint8_t _ROWS>
-void LCDWrapper<_COLS, _ROWS>::update(BoardStatus status, FabMember user)
-{
-  char buffer[conf::lcd::COLS];
-
-  switch (status)
-  {
-  case BoardStatus::CLEAR:
-    this->clear();
-    break;
-  case BoardStatus::FREE:
-    this->setRow(0, Board::server.isOnline() ? "Disponibile" : "OFFLINE");
-    this->setRow(1, "Avvicina carta");
-    break;
-  case BoardStatus::ALREADY_IN_USE:
-    this->setRow(0, "In uso da");
-    this->setRow(1, Board::machine.getActiveUser().getName());
-    break;
-  case BoardStatus::LOGGED_IN:
-    this->setRow(0, "Inizio uso");
-    this->setRow(1, user.getName());
-    break;
-  case BoardStatus::LOGIN_DENIED:
-    this->setRow(0, "Negato");
-    this->setRow(1, "Carta sconosciuta");
-    break;
-  case BoardStatus::LOGOUT:
-    this->setRow(0, "Arrivederci");
-    this->setRow(1, user.getName());
-    break;
-  case BoardStatus::CONNECTING:
-    this->setRow(0, "Connecting");
-    break;
-  case BoardStatus::CONNECTED:
-    this->setRow(0, "Connected");
-    break;
-  case BoardStatus::IN_USE:
-    snprintf(buffer, sizeof(buffer), "Ciao %s", Board::machine.getActiveUser().getName());
-    this->setRow(0, buffer);
-    this->setRow(1, this->convertSecondsToHHMMSS(Board::machine.getUsageTime()));
-    break;
-  case BoardStatus::BUSY:
-    this->setRow(0, "Busy");
-    break;
-  case BoardStatus::OFFLINE:
-    this->setRow(0, "OFFLINE MODE");
-    break;
-  }
-  this->update_chars();
 }
 
 template <uint8_t _COLS, uint8_t _ROWS>

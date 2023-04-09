@@ -2,55 +2,46 @@
 #define _BOARDSTATE_H_
 
 #include "FabMember.h"
-#include "FabServer.h"
-#include "Machine.h"
-#include "LCDWrapper.h"
-#include "BoardStatus.h"
-#include "conf.h"
-#include "RFIDWrapper.h"
-#include "pins.h"
-#include "secrets.h"
+#include "Arduino.h"
 
-typedef LCDWrapper<conf::lcd::COLS, conf::lcd::ROWS> LCDWrapperType;
-
-namespace Board
+class BoardState
 {
-    // Variables
-    static RFIDWrapper rfid(pins::mfrc522::cs_pin);
-    static LCDWrapperType::Config config_lcd(pins::lcd::rs_pin, pins::lcd::en_pin, pins::lcd::d0_pin, pins::lcd::d1_pin, pins::lcd::d2_pin, pins::lcd::d3_pin);
-    static LCDWrapperType lcd(config_lcd);
-    static FabServer server(secrets::machine_data::whitelist, secrets::wifi::ssid, secrets::wifi::password);
-    static Machine::Config config1(secrets::machine_data::machine_id, Machine::MachineType::PRINTER3D, pins::relay::ch1_pin, false);
-    static Machine machine(config1);
-
-    class BoardState 
+public:
+    enum class Status
     {
-    private:
-        BoardStatus state;
-        FabMember member;
-
-    public:
-        BoardState();
-        Machine getMachine();
-        FabMember getMember();
-        FabServer getServer();
-        LCDWrapperType getLCD();
-        RFIDWrapper getRfid();
-
-        void init();
-        void changeStatus(BoardStatus newStatus);
-        void update();
-        bool authorize(byte uid[10]);
-        void logout();
-
-        // copy reference
-        BoardState &operator=(const BoardState &member) = delete;
-        // copy constructor
-        BoardState(const BoardState &) = delete;
-        // move constructor
-        BoardState(BoardState &&) = default;
-        // move assignment
-        BoardState &operator=(BoardState &&) = default;
+        CLEAR,
+        FREE,
+        LOGGED_IN,
+        LOGIN_DENIED,
+        BUSY,
+        LOGOUT,
+        CONNECTING,
+        CONNECTED,
+        ALREADY_IN_USE,
+        IN_USE,
+        OFFLINE
     };
-}
+
+    BoardState();
+    Status getStatus();
+    FabMember getMember();
+
+    void init();
+    void changeStatus(Status newStatus);
+    void update();
+    bool authorize(byte uid[10]);
+    void logout();
+
+    // copy reference
+    BoardState &operator=(const BoardState &member) = delete;
+    // copy constructor
+    BoardState(const BoardState &) = delete;
+    // move constructor
+    BoardState(BoardState &&) = default;
+    // move assignment
+    BoardState &operator=(BoardState &&) = default;
+private:
+    Status status;
+    FabMember member;
+};
 #endif
