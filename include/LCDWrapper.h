@@ -5,26 +5,7 @@
 #include "LiquidCrystal.h"
 #include "BoardStatus.h"
 
-struct LCDConfig {
-  uint8_t rs;
-  uint8_t enable;
-  uint8_t d0;
-  uint8_t d1;
-  uint8_t d2;
-  uint8_t d3;
-  uint8_t backlight_pin;
-  bool backlight_active_low;
-  LCDConfig(uint8_t rs, uint8_t enable, uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3, uint8_t backlight_pin=-1, bool backlight_active_low=false) {
-    this->rs = rs;
-    this->enable = enable;
-    this->d0 = d0;
-    this->d1 = d1;
-    this->d2 = d2;
-    this->d3 = d3;
-    this->backlight_pin = backlight_pin;
-    this->backlight_active_low = backlight_active_low;
-  }
-};
+
 
 template <uint8_t _COLS, uint8_t _ROWS>
 class LCDWrapper
@@ -55,7 +36,27 @@ private:
   std::string convertSecondsToHHMMSS(unsigned long millis);
 
 public:
-  LCDWrapper(LCDConfig config);
+  struct Config {
+    uint8_t rs;
+    uint8_t enable;
+    uint8_t d0;
+    uint8_t d1;
+    uint8_t d2;
+    uint8_t d3;
+    uint8_t backlight_pin;
+    bool backlight_active_low;
+    Config(uint8_t rs, uint8_t enable, uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3, uint8_t backlight_pin=-1, bool backlight_active_low=false) {
+      this->rs = rs;
+      this->enable = enable;
+      this->d0 = d0;
+      this->d1 = d1;
+      this->d2 = d2;
+      this->d3 = d3;
+      this->backlight_pin = backlight_pin;
+      this->backlight_active_low = backlight_active_low;
+    }
+  };
+  LCDWrapper(Config config);
 
   void begin();
 
