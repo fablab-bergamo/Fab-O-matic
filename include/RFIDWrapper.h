@@ -8,12 +8,8 @@
 
 class RFIDWrapper
 {
-private:
-    MFRC522 *mfrc522;
-    MFRC522 get();
-
 public:
-    RFIDWrapper(uint8_t cs_pin);
+    RFIDWrapper();
     void init();
     bool IsNewCardPresent();
     bool ReadCardSerial();
