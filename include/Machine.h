@@ -32,14 +32,14 @@ public:
   };
   Machine(Config config);
   ~Machine() = default;
-  bool isFree();
+  bool isFree() const;
   void begin();
   FabMember getActiveUser();
   bool isCardWhitelisted(FabMember user);
   bool login(FabMember user); // if the machine is not active, login the user
   void logout();              // if the machine is active, check if the card belongs to the user that is logged in and logout the user
-  unsigned long getUsageTime();
-  Machine::MachineID getMachineId();
+  unsigned long getUsageTime() const;
+  Machine::MachineID getMachineId() const; 
   bool operator==(const Machine &v) const;
   bool operator!=(const Machine &v) const;
 

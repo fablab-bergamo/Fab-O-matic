@@ -11,7 +11,9 @@ namespace Board
     extern MFRC522 mfrc522;
 }
 
-RFIDWrapper::RFIDWrapper() {}
+RFIDWrapper::RFIDWrapper() {
+    SPI.begin(pins.mfrc522.sck_pin, pins.mfrc522.miso_pin, pins.mfrc522.mosi_pin, pins.mfrc522.sda_pin);
+}
 
 bool RFIDWrapper::IsNewCardPresent()
 {
@@ -32,4 +34,27 @@ void RFIDWrapper::SetUid(byte *arr)
 void RFIDWrapper::init()
 {
     Board::mfrc522.PCD_Init();
+    delay(10);
+    MFRC522Debug::PCD_DumpVersionToSerial(Board::mfrc522, Serial);
+    delay(10);
+    char buffer[80]={0};
+    sprintf(buffer, "Configured SPI RFID (SCK=%d, MISO=%d, MOSI=%d, SDA=%d)", pins.mfrc522.sck_pin, pins.mfrc522.miso_pin, pins.mfrc522.mosi_pin, pins.mfrc522.sda_pin);
+    Serial.println(buffer);
+    Board::mfrc522.PCD_SetAntennaGain(MFRC522::PCD_RxGain::RxGain_max);
+    delay(10);
+    if (!Board::mfrc522.PCD_PerformSelfTest())
+        Serial.println("Self-test failure for RFID");
+}
+
+std::string RFIDWrapper::dumpUid()
+{
+    std::string output;
+    auto uid = Board::mfrc522.uid.uidByte;
+    for(auto i=0; i<sizeof(uid); i++)
+    {
+        char hexCar[2];
+        sprintf(hexCar, "%02X", uid[i]);
+        output.append(hexCar);
+    }
+    return output;
 }

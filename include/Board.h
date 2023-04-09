@@ -9,11 +9,13 @@
 #include "RFIDWrapper.h"
 #include "pins.h"
 #include "secrets.h"
+#include "SPI.h"
 
+
+// Variables
 namespace Board
 {
-    // Variables
-    MFRC522DriverPinSimple rfid_simple_driver(pins.mfrc522.cs_pin);
+    MFRC522DriverPinSimple rfid_simple_driver(pins.mfrc522.sda_pin);
     MFRC522DriverSPI spi_rfid_driver{rfid_simple_driver}; // Create SPI driver.
     MFRC522 mfrc522{spi_rfid_driver};         // Create MFRC522 instance.
     RFIDWrapper rfid;

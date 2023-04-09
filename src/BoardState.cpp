@@ -28,13 +28,20 @@ void BoardState::init()
     Board::lcd.begin();
     delay(100);
     Serial.println("Initializing RFID...");
-    Board::rfid.init(); // Init MFRC522 board.
+    Board::rfid.init();
     delay(100);
-    Serial.print("Board init complete");
+    Serial.println("Board init complete");
 }
 
 void BoardState::changeStatus(Status new_state)
 {
+    if (this->status != new_state)
+    {
+        char buffer[32]={0};
+        sprintf(buffer, "** Changing board state to %d", static_cast<typename std::underlying_type<Status>::type>(new_state));
+        Serial.println(buffer);
+    }
+
     this->status = new_state;
     this->update();
 }
@@ -42,6 +49,9 @@ void BoardState::changeStatus(Status new_state)
 void BoardState::update()
 {
     char buffer[conf::lcd::COLS];
+    Board::lcd.showConnection(true);
+    std::string user_name;
+    user_name = Board::machine.getActiveUser().getName();
 
     switch (this->status)
     {
@@ -62,31 +72,35 @@ void BoardState::update()
         break;
     case Status::LOGIN_DENIED:
         Board::lcd.setRow(0, "Negato");
-        Board::lcd.setRow(1, "Carta sconosciuta");
+        Board::lcd.setRow(1, "Carta ignota");
         break;
     case Status::LOGOUT:
         Board::lcd.setRow(0, "Arrivederci");
         Board::lcd.setRow(1, this->member.getName());
         break;
     case Status::CONNECTING:
-        Board::lcd.setRow(0, "Connecting");
+        Board::lcd.setRow(0, "Connessione in");
+        Board::lcd.setRow(1, "corso al server...");
         break;
     case Status::CONNECTED:
-        Board::lcd.setRow(0, "Connected");
+        Board::lcd.setRow(0, "Connesso");
+        Board::lcd.setRow(1, "");
         break;
     case Status::IN_USE:
-        snprintf(buffer, sizeof(buffer), "Ciao %s", Board::machine.getActiveUser().getName());
+        snprintf(buffer, sizeof(buffer), "Ciao %s", user_name.c_str());
         Board::lcd.setRow(0, buffer);
         Board::lcd.setRow(1, Board::lcd.convertSecondsToHHMMSS(Board::machine.getUsageTime()));
         break;
     case Status::BUSY:
-        Board::lcd.setRow(0, "Busy");
+        Board::lcd.setRow(0, "Elaborazione...");
+        Board::lcd.setRow(1, "");
         break;
     case Status::OFFLINE:
         Board::lcd.setRow(0, "OFFLINE MODE");
+        Board::lcd.setRow(1, "");
         break;
     }
-    Board::lcd.update_chars();
+    Board::lcd.update_chars(Board::server.isOnline());
 }
 
 bool BoardState::authorize(byte uid[10])

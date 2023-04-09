@@ -14,6 +14,7 @@ public:
     bool IsNewCardPresent();
     bool ReadCardSerial();
     void SetUid(byte *arr);
+    std::string dumpUid();
 };
 
 #endif

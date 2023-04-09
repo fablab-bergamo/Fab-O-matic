@@ -6,11 +6,9 @@
 #include "LCDWrapper.h"
 
 template <uint8_t _COLS, uint8_t _ROWS>
-LCDWrapper<_COLS, _ROWS>::LCDWrapper(Config config) : lcd(config.rs, config.enable, config.d0, config.d1, config.d2, config.d3),
-                                                      backlight_pin(config.backlight_pin),
-                                                      backlight_active_low(config.backlight_active_low),
-                                                      show_connection_status(false),
-                                                      connection_status(false)
+LCDWrapper<_COLS, _ROWS>::LCDWrapper(Config config) : config(config),
+                                                      lcd(config.rs, config.enable, config.d0, config.d1, config.d2, config.d3),
+                                                      show_connection_status(false)
 {
   buffer.fill({0});
   current.fill({0});
@@ -20,9 +18,12 @@ template <uint8_t _COLS, uint8_t _ROWS>
 void LCDWrapper<_COLS, _ROWS>::begin()
 {
   this->lcd.begin(_COLS, _ROWS);
-  this->lcd.createChar(0, this->antenna_char);
-  this->lcd.createChar(1, this->connection_char);
-  this->lcd.createChar(2, this->noconnection_char);
+  this->lcd.createChar(CHAR_ANTENNA, this->antenna_char);
+  this->lcd.createChar(CHAR_CONNECTION, this->connection_char);
+  this->lcd.createChar(CHAR_NO_CONNECTION, this->noconnection_char);
+  char buffer[80]={0};
+  sprintf(buffer, "Configured LCD %d x %d (d4=%d, d5=%d, d6=%d, d7=%d, en=%d, rs=%d)", _COLS, _ROWS, this->config.d0, this->config.d1, this->config.d2, this->config.d3, this->config.enable, this->config.rs);
+  Serial.println(buffer);
 }
 
 template <uint8_t _COLS, uint8_t _ROWS>
@@ -39,11 +40,12 @@ std::string LCDWrapper<_COLS, _ROWS>::convertSecondsToHHMMSS(unsigned long milli
 template <uint8_t _COLS, uint8_t _ROWS>
 void LCDWrapper<_COLS, _ROWS>::clear()
 {
+  this->current.fill({0});
   this->lcd.clear();
 }
 
 template <uint8_t _COLS, uint8_t _ROWS>
-void LCDWrapper<_COLS, _ROWS>::update_chars()
+void LCDWrapper<_COLS, _ROWS>::update_chars(bool connected)
 {
   if (this->needsUpdate())
   {
@@ -58,8 +60,8 @@ void LCDWrapper<_COLS, _ROWS>::update_chars()
     if (this->show_connection_status)
     {
       this->lcd.setCursor(14, 0);
-      this->lcd.write((uint8_t)0);
-      this->lcd.write(this->connection_status ? (uint8_t)1 : (uint8_t)2);
+      this->lcd.write(CHAR_ANTENNA);
+      this->lcd.write(connected ? CHAR_CONNECTION : CHAR_NO_CONNECTION);
     }
 
     this->lcd.setCursor(0, 1);
@@ -68,12 +70,6 @@ void LCDWrapper<_COLS, _ROWS>::update_chars()
 
     current = buffer;
   }
-}
-
-template <uint8_t _COLS, uint8_t _ROWS>
-void LCDWrapper<_COLS, _ROWS>::setConnectionState(bool connected)
-{
-  this->connection_status = connected;
 }
 
 template <uint8_t _COLS, uint8_t _ROWS>
@@ -87,25 +83,36 @@ bool LCDWrapper<_COLS, _ROWS>::needsUpdate()
 {
   if (this->current != this->buffer)
   {
-    Serial.println("buffer dump:");
-    for (auto i = 0; i < _ROWS; i++)
-    {
-      for (auto j = 0; j < _COLS; j++)
-      {
-        Serial.print(this->buffer[i][j]);
-      }
-      Serial.println();
-      for (auto j = 0; j < _COLS; j++)
-      {
-        Serial.print(this->current[i][j]);
-      }
-      Serial.println();
-      Serial.println();
-    }
-
+    this->pretty_print(this->buffer);
     return true;
   }
   return false;
+}
+
+template <uint8_t _COLS, uint8_t _ROWS>
+void LCDWrapper<_COLS, _ROWS>::pretty_print(std::array<std::array<char, _COLS>, _ROWS> buffer)
+{
+  // LCD upper border
+  Serial.print("/");
+  for (auto i = 0; i < _COLS; i++)
+    Serial.print("-");
+  Serial.println("\\");
+
+  for (auto i = 0; i < _ROWS; i++)
+  {
+    Serial.print("|"); // LCD left border
+    for (auto j = 0; j < _COLS; j++)
+    {
+      Serial.print(this->buffer[i][j]);
+    }
+    Serial.println("|"); // LCD right border
+  }
+
+  // LCD lower border
+  Serial.print("\\");
+  for (auto i = 0; i < _COLS; i++)
+    Serial.print("-");
+  Serial.println("/");
 }
 
 template <uint8_t _COLS, uint8_t _ROWS>
@@ -114,7 +121,7 @@ void LCDWrapper<_COLS, _ROWS>::setRow(uint8_t row, std::string text)
   if (row < _ROWS)
   {
     this->buffer[row].fill({0});
-    for (auto i = 0; i < text.length(); i++)
+    for (auto i = 0; i < text.length() && i < _COLS; i++)
     {
       this->buffer[row][i] = text[i];
     }

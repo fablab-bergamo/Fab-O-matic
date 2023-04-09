@@ -18,20 +18,15 @@ void setup()
   Serial.begin(115200); // Initialize serial communications with the PC for debugging.
   Serial.println("Starting setup!");
   delay(100);
-  Serial.println("Initializing SPI");
-  SPI.begin(pins.mfrc522.sck_pin, pins.mfrc522.miso_pin, pins.mfrc522.mosi_pin, pins.mfrc522.cs_pin);
-  delay(100);
-
   board.init();
 
   Serial.println(F("Scan PICC to see UID, SAK, type, and data blocks..."));
 
   // connection to wifi
   board.changeStatus(BoardState::Status::CONNECTING);
-
-  Board::lcd.showConnection(true);
-  Board::lcd.setConnectionState(Board::server.isOnline());
-
+  // TODO : connect
+  delay(1000);
+  // Refresh after connection
   board.changeStatus(Board::server.isOnline() ? BoardState::Status::CONNECTED : BoardState::Status::OFFLINE);
   delay(1000);
 }
@@ -43,6 +38,7 @@ void loop()
   // check if there is a card
   if (Board::rfid.IsNewCardPresent())
   {
+    Serial.println("New card present");
     // if there is a "new" card (could be the same that stayed in the field)
     if (!Board::rfid.ReadCardSerial() || !ready_for_a_new_card)
     {
@@ -53,6 +49,8 @@ void loop()
     // Acquire the UID of the card
     byte uid[10];
     Board::rfid.SetUid(uid);
+    std::string uid_str = Board::rfid.dumpUid();
+    Serial.printf("Card uid %s\n",uid_str.c_str());
 
     if (Board::machine.isFree())
     {
@@ -88,10 +86,7 @@ void loop()
   }
   else
   {
-    Serial.println(Board::rfid.IsNewCardPresent() ? "New card" : "No card");
     ready_for_a_new_card = true; // we should get SOME "no card" before flipping this flag
-    // print status on lcd screen
-
     if (!Board::machine.isFree())
     {
       board.changeStatus(BoardState::Status::IN_USE);
@@ -101,5 +96,4 @@ void loop()
       board.changeStatus(BoardState::Status::FREE);
     }
   }
-  // select the card
 }
