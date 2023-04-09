@@ -4,7 +4,7 @@
 #include "LCDWrapper.h"
 
 template <uint8_t _COLS, uint8_t _ROWS>
-LCDWrapper<_COLS, _ROWS>::LCDWrapper(LCDConfig config) : 
+LCDWrapper<_COLS, _ROWS>::LCDWrapper(Config config) : 
   lcd(config.rs, config.enable, config.d0, config.d1, config.d2, config.d3), 
   backlight_pin(config.backlight_pin),
   backlight_active_low(config.backlight_active_low),

@@ -6,38 +6,29 @@
 
 #include "FabMember.h"
 
-enum class MachineType
-{
-  INVALID,
-  PRINTER3D,
-  LASER,
-  CNC,
-  EXTRA1,
-  EXTRA2
-};
-
-struct MachineConfig
-{
-  uint16_t machine_id;
-  MachineType machine_type;
-  uint8_t control_pin;
-  bool control_pin_active_low;
-public:
-  MachineConfig() : machine_id(0), machine_type(MachineType::INVALID), control_pin(0), control_pin_active_low(false) {};
-  MachineConfig(uint16_t id, MachineType type, uint8_t pin, bool active_low): machine_id(id), machine_type(type), control_pin(pin), control_pin_active_low(active_low) {}
-};
-
 class Machine
 {
-private:
-  MachineConfig config;
-  bool active;
-  FabMember current_user;
-  void power(bool on_or_off);
-  uint32_t usage_start_timestamp;
-
 public:
-  Machine(MachineConfig config);
+  enum class MachineType
+  {
+    INVALID,
+    PRINTER3D,
+    LASER,
+    CNC,
+    EXTRA1,
+    EXTRA2
+  };
+  struct Config
+  {
+    uint16_t machine_id;
+    MachineType machine_type;
+    uint8_t control_pin;
+    bool control_pin_active_low;
+  public:
+    Config() : machine_id(0), machine_type(MachineType::INVALID), control_pin(0), control_pin_active_low(false) {};
+    Config(uint16_t id, MachineType type, uint8_t pin, bool active_low): machine_id(id), machine_type(type), control_pin(pin), control_pin_active_low(active_low) {}
+  };
+  Machine(Config config);
   ~Machine() = default;
   bool isFree();
   void begin();
@@ -49,6 +40,12 @@ public:
   uint16_t getMachineId();
   bool operator==(const Machine &v) const;
   bool operator!=(const Machine& v) const;
+private:
+  Config config;
+  bool active;
+  FabMember current_user;
+  void power(bool on_or_off);
+  uint32_t usage_start_timestamp;
 };
 
 #endif // _MACHINE_H_
