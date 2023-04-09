@@ -5,36 +5,31 @@
 #include "MFRC522DriverPinSimple.h"
 #include "MFRC522Debug.h"
 
-RFIDWrapper::RFIDWrapper(uint8_t cs_pin_num)
+namespace Board
 {
-    MFRC522DriverPinSimple cs_pin(cs_pin_num);
-    MFRC522DriverSPI driver{cs_pin}; // Create SPI driver.
-    MFRC522 mfrc522{driver};         // Create MFRC522 instance.
-    this->mfrc522 = &mfrc522;
+    // Only main.cpp instanciates the variables through Board.h file
+    extern MFRC522 mfrc522;
 }
 
-MFRC522 RFIDWrapper::get()
-{
-    return *this->mfrc522;
-}
+RFIDWrapper::RFIDWrapper() {}
 
 bool RFIDWrapper::IsNewCardPresent()
 {
-    return this->get().PICC_IsNewCardPresent();
+    return Board::mfrc522.PICC_IsNewCardPresent();
 }
 
 bool RFIDWrapper::ReadCardSerial()
 {
-    return this->get().PICC_ReadCardSerial();
+    return Board::mfrc522.PICC_ReadCardSerial();
 }
 
 void RFIDWrapper::SetUid(byte *arr)
 {
     if (arr)
-        memcpy(arr, this->get().uid.uidByte, 10);
+        memcpy(arr, Board::mfrc522.uid.uidByte, 10);
 }
 
 void RFIDWrapper::init()
 {
-    this->get().PCD_Init();
+    Board::mfrc522.PCD_Init();
 }

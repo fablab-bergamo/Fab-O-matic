@@ -13,7 +13,10 @@
 namespace Board
 {
     // Variables
-    RFIDWrapper rfid(pins.mfrc522.cs_pin);
+    MFRC522DriverPinSimple rfid_simple_driver(pins.mfrc522.cs_pin);
+    MFRC522DriverSPI spi_rfid_driver{rfid_simple_driver}; // Create SPI driver.
+    MFRC522 mfrc522{spi_rfid_driver};         // Create MFRC522 instance.
+    RFIDWrapper rfid;
     LCDWrapper<conf::lcd::COLS, conf::lcd::ROWS>::Config config_lcd(pins.lcd.rs_pin, pins.lcd.en_pin, pins.lcd.d0_pin, pins.lcd.d1_pin, pins.lcd.d2_pin, pins.lcd.d3_pin);
     LCDWrapper<conf::lcd::COLS, conf::lcd::ROWS> lcd(config_lcd);
     FabServer server(secrets::machine_data::whitelist, secrets::wifi::ssid, secrets::wifi::password);
