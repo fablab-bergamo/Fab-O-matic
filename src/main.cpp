@@ -19,7 +19,7 @@ void setup()
   Serial.println("Starting setup!");
   delay(100);
   Serial.println("Initializing SPI");
-  SPI.begin(pins::mfrc522::sck_pin, pins::mfrc522::miso_pin, pins::mfrc522::mosi_pin, pins::mfrc522::cs_pin);
+  SPI.begin(pins.mfrc522.sck_pin, pins.mfrc522.miso_pin, pins.mfrc522.mosi_pin, pins.mfrc522.cs_pin);
   delay(100);
 
   board.init();
