@@ -55,7 +55,7 @@ void FabMember::setName(std::string name)
   FabMember::holder_name = name;
 }
 
-std::string FabMember::getName()
+std::string FabMember::getName() const
 {
   return FabMember::holder_name;
 }

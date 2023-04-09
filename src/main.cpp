@@ -20,7 +20,7 @@
 #include "conf.h"
 
 static bool ready_for_a_new_card = true;
-static BoardState board;
+static Board::BoardState board;
 
 void setup()
 {

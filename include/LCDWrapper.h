@@ -60,7 +60,7 @@ public:
 
   void begin();
 
-  void update(BoardStatus status, FabServer server, FabMember user, Machine machine);
+  void update(BoardStatus status, FabMember user);
   void clear();
   void setConnectionState(bool connected);
   void showConnection(bool show);
