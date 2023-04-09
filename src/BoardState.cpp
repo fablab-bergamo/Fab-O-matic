@@ -7,6 +7,7 @@
 #include "LCDWrapper.h"
 #include "FabServer.h"
 #include "Machine.h"
+#include "AuthProvider.h"
 
 namespace Board
 {
@@ -15,11 +16,7 @@ namespace Board
     extern LCDWrapper<conf::lcd::COLS, conf::lcd::ROWS> lcd;
     extern FabServer server;
     extern Machine machine;
-}
-
-BoardState::BoardState()
-{
-    FabMember current_user = FabMember();
+    extern AuthProvider auth;
 }
 
 void BoardState::init()
@@ -50,8 +47,10 @@ void BoardState::update()
 {
     char buffer[conf::lcd::COLS];
     Board::lcd.showConnection(true);
-    std::string user_name;
-    user_name = Board::machine.getActiveUser().getName();
+    std::string user_name, machine_name, uid_str;
+    user_name = Board::machine.getActiveUser().holder_name;
+    machine_name = Board::machine.getMachineName();
+    uid_str = card::uid_str(this->member.member_uid);
 
     switch (this->status)
     {
@@ -59,24 +58,24 @@ void BoardState::update()
         Board::lcd.clear();
         break;
     case Status::FREE:
-        Board::lcd.setRow(0, Board::server.isOnline() ? "Disponibile" : "OFFLINE");
+        Board::lcd.setRow(0, machine_name);
         Board::lcd.setRow(1, "Avvicina carta");
         break;
     case Status::ALREADY_IN_USE:
         Board::lcd.setRow(0, "In uso da");
-        Board::lcd.setRow(1, Board::machine.getActiveUser().getName());
+        Board::lcd.setRow(1, Board::machine.getActiveUser().holder_name);
         break;
     case Status::LOGGED_IN:
         Board::lcd.setRow(0, "Inizio uso");
-        Board::lcd.setRow(1, this->member.getName());
+        Board::lcd.setRow(1, this->member.holder_name);
         break;
     case Status::LOGIN_DENIED:
-        Board::lcd.setRow(0, "Negato");
-        Board::lcd.setRow(1, "Carta ignota");
+        Board::lcd.setRow(0, "Carta ignota");
+        Board::lcd.setRow(1, uid_str.c_str());
         break;
     case Status::LOGOUT:
         Board::lcd.setRow(0, "Arrivederci");
-        Board::lcd.setRow(1, this->member.getName());
+        Board::lcd.setRow(1, user_name);
         break;
     case Status::CONNECTING:
         Board::lcd.setRow(0, "Connessione in");
@@ -103,17 +102,15 @@ void BoardState::update()
     Board::lcd.update_chars(Board::server.isOnline());
 }
 
-bool BoardState::authorize(byte uid[10])
+bool BoardState::authorize(card::uid_t uid)
 {
-    member.setUidFromArray(uid);
-    if (Board::server.isAuthorized(member))
-    {
-        this->member.setUidFromArray(uid);
-        Board::machine.login(this->getMember());
+    FabUser member;
+    if (Board::auth.tryLogin(uid, member)) {
+        Board::machine.login(member);
+        this->member = member;
         this->changeStatus(Status::LOGGED_IN);
         return true;
     }
-
     this->changeStatus(Status::LOGIN_DENIED);
     return false;
 }
@@ -121,6 +118,7 @@ bool BoardState::authorize(byte uid[10])
 void BoardState::logout()
 {
     Board::machine.logout();
+    this->member = FabUser();
     this->changeStatus(Status::LOGOUT);
 }
 
@@ -129,7 +127,7 @@ BoardState::Status BoardState::getStatus()
     return this->status;
 }
 
-FabMember BoardState::getMember()
+FabUser BoardState::getMember()
 {
     return this->member;
 }

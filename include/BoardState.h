@@ -1,7 +1,7 @@
 #ifndef _BOARDSTATE_H_
 #define _BOARDSTATE_H_
 
-#include "FabMember.h"
+#include "FabUser.h"
 #include "Arduino.h"
 
 class BoardState
@@ -22,14 +22,14 @@ public:
         OFFLINE
     };
 
-    BoardState();
+    BoardState() = default;
     Status getStatus();
-    FabMember getMember();
+    FabUser getMember();
 
     void init();
     void changeStatus(Status newStatus);
     void update();
-    bool authorize(byte uid[10]);
+    bool authorize(card::uid_t uid);
     void logout();
 
     // copy reference
@@ -43,6 +43,6 @@ public:
 
 private:
     Status status;
-    FabMember member;
+    FabUser member;
 };
 #endif

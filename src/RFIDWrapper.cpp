@@ -4,6 +4,8 @@
 #include "MFRC522DriverSPI.h"
 #include "MFRC522DriverPinSimple.h"
 #include "MFRC522Debug.h"
+#include "conf.h"
+#include "FabUser.h"
 
 namespace Board
 {
@@ -25,10 +27,11 @@ bool RFIDWrapper::ReadCardSerial()
     return Board::mfrc522.PICC_ReadCardSerial();
 }
 
-void RFIDWrapper::SetUid(byte *arr)
+FabUser RFIDWrapper::GetUser() const
 {
-    if (arr)
-        memcpy(arr, Board::mfrc522.uid.uidByte, 10);
+    uint8_t arr[conf::whitelist::UID_BYTE_LEN];
+    memcpy(arr, Board::mfrc522.uid.uidByte, conf::whitelist::UID_BYTE_LEN);
+    return FabUser(arr, "", false);
 }
 
 void RFIDWrapper::init()
@@ -44,17 +47,4 @@ void RFIDWrapper::init()
     delay(10);
     if (!Board::mfrc522.PCD_PerformSelfTest())
         Serial.println("Self-test failure for RFID");
-}
-
-std::string RFIDWrapper::dumpUid()
-{
-    std::string output;
-    auto uid = Board::mfrc522.uid.uidByte;
-    for(auto i=0; i<sizeof(uid); i++)
-    {
-        char hexCar[2];
-        sprintf(hexCar, "%02X", uid[i]);
-        output.append(hexCar);
-    }
-    return output;
 }

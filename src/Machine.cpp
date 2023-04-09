@@ -5,9 +5,10 @@
 
 Machine::Machine(Config user_conf) : config(user_conf), active(false), usage_start_timestamp(0)
 {
-  this->current_user = FabMember();
-  pinMode(this->config.control_pin, OUTPUT);
-  digitalWrite(this->config.control_pin, this->config.control_pin_active_low ? HIGH : LOW);
+  this->current_user = FabUser();
+  pinMode(this->config.control_pin, OUTPUT); 
+  this->power(false);
+  Serial.printf("Machine %s configured on pin %d (active_low:%d)\n", this->config.machine_name.c_str(), this->config.control_pin, this->config.control_pin_active_low);
 }
 
 Machine::MachineID Machine::getMachineId() const
@@ -20,7 +21,7 @@ bool Machine::isFree() const
   return !this->active;
 }
 
-bool Machine::login(FabMember user)
+bool Machine::login(FabUser user)
 {
   if (this->isFree())
   {
@@ -42,7 +43,7 @@ void Machine::logout()
   }
 }
 
-void Machine::power(bool value)
+void Machine::power(bool value) const
 {
   if (this->config.control_pin_active_low)
   {
@@ -54,7 +55,7 @@ void Machine::power(bool value)
   }
 }
 
-FabMember Machine::getActiveUser()
+FabUser& Machine::getActiveUser()
 {
   return this->current_user;
 }
@@ -76,4 +77,9 @@ bool Machine::operator==(const Machine &v) const
 bool Machine::operator!=(const Machine &v) const
 {
   return (this->config.machine_id.id != v.config.machine_id.id);
+}
+
+std::string Machine::getMachineName() const
+{
+  return this->config.machine_name;
 }

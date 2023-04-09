@@ -19,9 +19,7 @@ void setup()
   Serial.println("Starting setup!");
   delay(100);
   board.init();
-
-  Serial.println(F("Scan PICC to see UID, SAK, type, and data blocks..."));
-
+  Serial.println("Trying Wifi connection...");
   // connection to wifi
   board.changeStatus(BoardState::Status::CONNECTING);
   // TODO : connect
@@ -47,15 +45,11 @@ void loop()
     ready_for_a_new_card = false;
 
     // Acquire the UID of the card
-    byte uid[10];
-    Board::rfid.SetUid(uid);
-    std::string uid_str = Board::rfid.dumpUid();
-    Serial.printf("Card uid %s\n",uid_str.c_str());
-
+    FabUser candidate = Board::rfid.GetUser();
     if (Board::machine.isFree())
     {
       // machine is free
-      if (board.authorize(uid))
+      if (board.authorize(candidate.member_uid))
       {
         Serial.println("Login successfull");
       }
@@ -68,9 +62,7 @@ void loop()
     else
     {
       // machine is busy
-      FabMember member(uid);
-
-      if (Board::machine.getActiveUser().getUid() == member.getUid())
+      if (Board::machine.getActiveUser() == candidate)
       {
         // we can logout. we should require that the card stays in the field for some seconds, to prevent accidental logout. maybe sound a buzzer?
         board.logout();
