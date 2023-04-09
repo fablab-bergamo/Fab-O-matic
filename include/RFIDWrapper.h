@@ -1,10 +1,9 @@
 #ifndef _RFID_WRAPPER_H_
 #define _RFID_WRAPPER_H_
 
-#include "MFRC522v2.h"
-#include "MFRC522DriverSPI.h"
-#include "MFRC522DriverPinSimple.h"
-#include "MFRC522Debug.h"
+#include "conf.h"
+#include <string>
+#include "FabUser.h"
 
 class RFIDWrapper
 {
@@ -13,8 +12,8 @@ public:
     void init();
     bool IsNewCardPresent();
     bool ReadCardSerial();
-    void SetUid(byte *arr);
-    std::string dumpUid();
+    FabUser GetUser() const;
+    std::string dumpUid() const;
 };
 
 #endif

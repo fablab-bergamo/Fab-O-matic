@@ -3,25 +3,16 @@
 #include <string>
 #include <cstdint>
 
-FabServer::FabServer(const std::array<card::uid_t, conf::whitelist::LEN> whitelist, const std::string ssid, const std::string password) : whitelist(whitelist),
-                                                                                                                                          wifi_ssid(ssid),
-                                                                                                                                          wifi_password(password),
-                                                                                                                                          online(false) {}
+FabServer::FabServer(const std::string ssid, const std::string password) : wifi_ssid(ssid), wifi_password(password), online(false) {}
 
-bool FabServer::isAuthorized(const FabMember &member_card) const
+FabUser FabServer::checkCard(card::uid_t uid) const
 {
+  FabUser out(uid, "???", false);
   if (this->isOnline())
   {
-    return this->serverQuery(member_card);
+    return this->serverQuery(uid);
   }
-  else
-  {
-    if (this->isWhiteListed(member_card))
-    {
-      return true;
-    }
-    return false;
-  }
+  return out;
 }
 
 bool FabServer::isOnline() const
@@ -34,27 +25,12 @@ void FabServer::setOnline(bool online)
   this->online = online;
 }
 
-bool FabServer::isWhiteListed(const FabMember &member_card) const
-{
-  for (int i = 0; i < this->whitelist.size(); i++)
-  {
-    if (this->whitelist[i] == member_card.getUid())
-    {
-      return true;
-    }
-  }
-  return false;
-}
 
-bool FabServer::serverQuery(const FabMember &member_card) const
+FabUser FabServer::serverQuery(card::uid_t uid) const
 {
-  /* TODO */
-  if (member_card.getUid() == 0x11223344)
-  {
-    return true;
-  }
-  else
-    return false;
+   // TODO
+   FabUser output(uid, "NOME", true);
+   return output;
 }
 
 void FabServer::connect()
