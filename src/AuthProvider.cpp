@@ -50,6 +50,7 @@ bool AuthProvider::tryLogin(card::uid_t uid, FabUser& out)
         if (response.request_ok && response.request_ok) {
           out.authenticated = true;
           out.holder_name = response.holder_name;
+          out.member_uid = uid;
           // Cache the positive result
           this->add_in_cache(out.member_uid, out.holder_name);
           Serial.println(" -> online check OK");
@@ -64,6 +65,7 @@ bool AuthProvider::tryLogin(card::uid_t uid, FabUser& out)
       if (this->isWhiteListed(uid)) {
           member.authenticated = true;
           member.holder_name = "FABLAB";
+          member.member_uid = uid;
           out = member;
           Serial.println(" -> whilelist check OK");
           return true;

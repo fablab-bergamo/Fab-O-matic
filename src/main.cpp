@@ -126,6 +126,15 @@ void loop()
     else
     {
       board.changeStatus(BoardState::Status::FREE);
+
+      if (Board::machine.shutdownWarning())
+      {
+        // TODO : beep
+      }
+      if (Board::machine.canPowerOff())
+      {
+        Board::machine.power(false);
+      }
     }
   }
 }

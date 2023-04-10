@@ -4,11 +4,12 @@
 
 #include "BoardState.h"
 #include "LCDWrapper.h"
+#include "Machine.h"
 
 template <uint8_t _COLS, uint8_t _ROWS>
 LCDWrapper<_COLS, _ROWS>::LCDWrapper(Config config) : config(config),
                                                       lcd(config.rs, config.enable, config.d0, config.d1, config.d2, config.d3),
-                                                      show_connection_status(false)
+                                                      show_connection_status(false), show_power_status(true)
 {
   buffer.fill({0});
   current.fill({0});
@@ -21,7 +22,10 @@ void LCDWrapper<_COLS, _ROWS>::begin()
   this->lcd.createChar(CHAR_ANTENNA, this->antenna_char);
   this->lcd.createChar(CHAR_CONNECTION, this->connection_char);
   this->lcd.createChar(CHAR_NO_CONNECTION, this->noconnection_char);
-  char buffer[80]={0};
+  this->lcd.createChar(CHAR_POWERED_OFF, this->powered_off_char);
+  this->lcd.createChar(CHAR_POWERED_ON, this->powered_on_char);
+  this->lcd.createChar(CHAR_POWERING_OFF, this->powering_off_char);
+  char buffer[80] = {0};
   sprintf(buffer, "Configured LCD %d x %d (d4=%d, d5=%d, d6=%d, d7=%d, en=%d, rs=%d)", _COLS, _ROWS, this->config.d0, this->config.d1, this->config.d2, this->config.d3, this->config.enable, this->config.rs);
   Serial.println(buffer);
 }
@@ -45,9 +49,9 @@ void LCDWrapper<_COLS, _ROWS>::clear()
 }
 
 template <uint8_t _COLS, uint8_t _ROWS>
-void LCDWrapper<_COLS, _ROWS>::update_chars(bool connected)
+void LCDWrapper<_COLS, _ROWS>::update_chars(BoardInfo info)
 {
-  if (this->needsUpdate())
+  if (this->needsUpdate(info))
   {
     this->lcd.clear();
     this->lcd.setCursor(0, 0);
@@ -61,27 +65,60 @@ void LCDWrapper<_COLS, _ROWS>::update_chars(bool connected)
     {
       this->lcd.setCursor(14, 0);
       this->lcd.write(CHAR_ANTENNA);
-      this->lcd.write(connected ? CHAR_CONNECTION : CHAR_NO_CONNECTION);
+      this->lcd.write(info.server_connected ? CHAR_CONNECTION : CHAR_NO_CONNECTION);
     }
-
+  
+    if (this->show_power_status)
+    {
+      this->lcd.setCursor(13, 0);
+      if (info.power_state ==  Machine::PowerState::POWERED_ON)
+      {
+        this->lcd.write(CHAR_POWERED_ON);
+      }
+      else if (info.power_state ==  Machine::PowerState::POWERED_OFF)
+      {
+        this->lcd.write(CHAR_POWERED_OFF);
+      }
+      else if (info.power_state ==  Machine::PowerState::WAITING_FOR_POWER_OFF)
+      {
+        this->lcd.write(CHAR_POWERING_OFF);
+      }
+      else
+      {
+        this->lcd.write('?');
+      }
+    }
     this->lcd.setCursor(0, 1);
     memcpy(why_arduino_has_not_implemented_liquidcrystal_print_from_char_array_yet, &this->buffer[1], _COLS);
     this->lcd.print(why_arduino_has_not_implemented_liquidcrystal_print_from_char_array_yet);
 
-    current = buffer;
+    this->current = this->buffer;
+    this->boardInfo = info;
+    this->forceUpdate = false;
   }
 }
 
 template <uint8_t _COLS, uint8_t _ROWS>
 void LCDWrapper<_COLS, _ROWS>::showConnection(bool show)
 {
+  if (this->show_connection_status != show)
+    forceUpdate = true;
   this->show_connection_status = show;
 }
 
 template <uint8_t _COLS, uint8_t _ROWS>
-bool LCDWrapper<_COLS, _ROWS>::needsUpdate()
+void LCDWrapper<_COLS, _ROWS>::showPower(bool show)
 {
-  if (this->current != this->buffer)
+  if (this->show_connection_status != show)
+    forceUpdate = true;
+
+  this->show_power_status = show;
+}
+
+template <uint8_t _COLS, uint8_t _ROWS>
+bool LCDWrapper<_COLS, _ROWS>::needsUpdate(BoardInfo bi)
+{
+  if (this->current != this->buffer || !(bi == this->boardInfo) || forceUpdate)
   {
     this->pretty_print(this->buffer);
     return true;
