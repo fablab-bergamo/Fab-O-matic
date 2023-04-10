@@ -19,7 +19,9 @@ public:
         CONNECTED,
         ALREADY_IN_USE,
         IN_USE,
-        OFFLINE
+        OFFLINE,
+        NOT_ALLOWED,
+        VERIFYING
     };
 
     BoardState() = default;

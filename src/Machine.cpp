@@ -3,7 +3,7 @@
 
 #include <cstdint>
 
-Machine::Machine(Config user_conf) : config(user_conf), active(false), usage_start_timestamp(0)
+Machine::Machine(Config user_conf) : config(user_conf), active(false), usage_start_timestamp(0), maintenanceNeeded(false), allowed(true)
 {
   this->current_user = FabUser();
   pinMode(this->config.control_pin, OUTPUT); 

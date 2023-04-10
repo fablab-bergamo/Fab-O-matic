@@ -8,6 +8,7 @@
 #include "FabServer.h"
 #include "Machine.h"
 #include "AuthProvider.h"
+#include "secrets.h"
 
 namespace Board
 {
@@ -27,14 +28,14 @@ void BoardState::init()
     Serial.println("Initializing RFID...");
     Board::rfid.init();
     delay(100);
-    Serial.println("Board init complete");
+    Serial.println("Board init complete");    
 }
 
 void BoardState::changeStatus(Status new_state)
 {
     if (this->status != new_state)
     {
-        char buffer[32]={0};
+        char buffer[32] = {0};
         sprintf(buffer, "** Changing board state to %d", static_cast<typename std::underlying_type<Status>::type>(new_state));
         Serial.println(buffer);
     }
@@ -59,7 +60,14 @@ void BoardState::update()
         break;
     case Status::FREE:
         Board::lcd.setRow(0, machine_name);
-        Board::lcd.setRow(1, "Avvicina carta");
+        if (Board::machine.maintenanceNeeded)
+        {
+            Board::lcd.setRow(1, ">Manutenzione<");
+        }
+        else
+        {
+            Board::lcd.setRow(1, "Avvicina carta");
+        }
         break;
     case Status::ALREADY_IN_USE:
         Board::lcd.setRow(0, "In uso da");
@@ -98,6 +106,19 @@ void BoardState::update()
         Board::lcd.setRow(0, "OFFLINE MODE");
         Board::lcd.setRow(1, "");
         break;
+    case Status::NOT_ALLOWED:
+        Board::lcd.setRow(0, "BLOCCATA DA");
+        Board::lcd.setRow(1, "FABLAB");
+        break;
+    case Status::VERIFYING:
+        Board::lcd.setRow(0, "VERIFICA IN");
+        Board::lcd.setRow(1, "CORSO");
+        break;
+    default:
+        Board::lcd.setRow(0, "Unhandled status");
+        sprintf(buffer, "Value %d", static_cast<typename std::underlying_type<Status>::type>(this->status));
+        Board::lcd.setRow(1, buffer);
+        break;
     }
     Board::lcd.update_chars(Board::server.isOnline());
 }
@@ -105,11 +126,24 @@ void BoardState::update()
 bool BoardState::authorize(card::uid_t uid)
 {
     FabUser member;
-    if (Board::auth.tryLogin(uid, member)) {
-        Board::machine.login(member);
-        this->member = member;
-        this->changeStatus(Status::LOGGED_IN);
-        return true;
+    this->changeStatus(Status::VERIFYING);
+    if (Board::auth.tryLogin(uid, member))
+    {
+        if (Board::machine.allowed)
+        {
+            Board::machine.login(member);
+            auto result = Board::server.startUse(Board::machine.getActiveUser().member_uid, Board::machine.getMachineId());
+            Serial.printf("Result startUse: %d\n", result.request_ok);
+            this->member = member;
+            this->changeStatus(Status::LOGGED_IN);
+            return true;
+        }
+        this->changeStatus(Status::NOT_ALLOWED);
+        return false;
+    }
+    else
+    {
+        Serial.println("Failed login");
     }
     this->changeStatus(Status::LOGIN_DENIED);
     return false;
@@ -117,9 +151,12 @@ bool BoardState::authorize(card::uid_t uid)
 
 void BoardState::logout()
 {
+    auto result = Board::server.finishUse(Board::machine.getActiveUser().member_uid, Board::machine.getMachineId(), Board::machine.getUsageTime());
+    Serial.printf("Result finishUse: %d\n", result.request_ok);
     Board::machine.logout();
     this->member = FabUser();
     this->changeStatus(Status::LOGOUT);
+    delay(1000);
 }
 
 BoardState::Status BoardState::getStatus()

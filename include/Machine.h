@@ -42,6 +42,8 @@ public:
   std::string getMachineName() const;
   bool operator==(const Machine &v) const;
   bool operator!=(const Machine &v) const;
+  bool maintenanceNeeded; // If true, machine needs maintenance
+  bool allowed; // If false, nobody can use the machine
 
 private:
   const Config config;
