@@ -46,13 +46,16 @@ bool AuthProvider::tryLogin(card::uid_t uid, FabUser& out)
         Board::server.connect();
     
     if (Board::server.isOnline()) {
-        out = Board::server.checkCard(uid);
-        if (out.authenticated) {
+        auto response = Board::server.checkCard(uid);
+        if (response.request_ok && response.request_ok) {
+          out.authenticated = true;
+          out.holder_name = response.holder_name;
           // Cache the positive result
           this->add_in_cache(out.member_uid, out.holder_name);
           Serial.println(" -> online check OK");
           return true;
         }
+        out.authenticated = false;
         Serial.println(" -> online check NOK");
         return false;
     } 

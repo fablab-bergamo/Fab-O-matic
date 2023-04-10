@@ -13,20 +13,55 @@
 static bool ready_for_a_new_card = true;
 static BoardState board;
 
+/// @brief connects and polls the server for up-to-date machine information
+void refreshFromServer()
+{
+  if (Board::server.connect()) 
+  {
+    // Check the configured machine data from the server
+    auto result = Board::server.checkMachine(secrets::machine::machine_id);
+    if (result.request_ok)
+    {
+        if (result.is_valid)
+        {
+            Serial.printf("The configured machine ID %d is valid, maintenance=%d, allowed=%d\n", secrets::machine::machine_id, result.needs_maintenance, result.allowed);
+            Board::machine.maintenanceNeeded = result.needs_maintenance;
+            Board::machine.allowed = result.allowed;
+        }
+        else
+        {
+            Serial.printf("The configured machine ID %d is unknown to the server\n", secrets::machine::machine_id);
+        }
+    }
+  }
+}
+
+void tryConnect()
+{
+  Serial.println("Trying Wifi and server connection...");
+  // connection to wifi
+  board.changeStatus(BoardState::Status::CONNECTING);
+  
+  if (Board::server.connect()) 
+  {
+    Serial.println("Connection successfull");
+  }
+  // Get machine data from the server
+  refreshFromServer();
+
+  // Refresh after connection
+  board.changeStatus(Board::server.isOnline() ? BoardState::Status::CONNECTED : BoardState::Status::OFFLINE);
+  delay(500);
+}
+
 void setup()
 {
   Serial.begin(115200); // Initialize serial communications with the PC for debugging.
   Serial.println("Starting setup!");
   delay(100);
   board.init();
-  Serial.println("Trying Wifi connection...");
-  // connection to wifi
-  board.changeStatus(BoardState::Status::CONNECTING);
-  // TODO : connect
-  delay(1000);
-  // Refresh after connection
-  board.changeStatus(Board::server.isOnline() ? BoardState::Status::CONNECTED : BoardState::Status::OFFLINE);
-  delay(1000);
+  delay(100);
+  tryConnect();
 }
 
 void loop()
