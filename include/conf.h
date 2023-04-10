@@ -26,7 +26,7 @@ namespace conf
     }
     namespace server
     {
-        constexpr uint16_t REFRESH_PERIOD_SECONDS = 180; /* Try to connect to the server every X seconds */
+        constexpr uint16_t REFRESH_PERIOD_SECONDS = 60; /* Notify the server every X seconds */
     }
 }
 #endif
