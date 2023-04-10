@@ -12,6 +12,7 @@
 
 static bool ready_for_a_new_card = true;
 static BoardState board;
+static u_int16_t no_card_cpt = 0;
 
 /// @brief connects and polls the server for up-to-date machine information
 void refreshFromServer()
@@ -77,6 +78,7 @@ void loop()
     {
       return;
     }
+    no_card_cpt = 0;
     ready_for_a_new_card = false;
 
     // Acquire the UID of the card
@@ -113,7 +115,10 @@ void loop()
   }
   else
   {
-    ready_for_a_new_card = true; // we should get SOME "no card" before flipping this flag
+    no_card_cpt++;
+    if (no_card_cpt > 10) // we wait for get SOME "no card" before flipping this flag
+      ready_for_a_new_card = true;
+
     if (!Board::machine.isFree())
     {
       board.changeStatus(BoardState::Status::IN_USE);
