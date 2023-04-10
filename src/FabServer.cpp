@@ -12,15 +12,19 @@ bool FabServer::isOnline() const
 
 bool FabServer::connect()
 {
+  constexpr uint8_t NB_TRIES = 3;
+  constexpr uint16_t DELAY_MS = 1000;
+
   // Connect WiFi if needed
   if (this->WiFiConnection.status() != WL_CONNECTED) 
   {
-    for (auto i = 0; i < 3; i++)
+    this->WiFiConnection.begin(this->wifi_ssid.c_str(), this->wifi_password.c_str());
+    for (auto i = 0; i < NB_TRIES; i++)
     {
-      this->WiFiConnection.begin(this->wifi_ssid.c_str(), this->wifi_password.c_str());
       if (this->WiFiConnection.status() == WL_CONNECTED)
+        Serial.println("WiFi connection successfull");
         break;
-      delay(1000);
+      delay(DELAY_MS);
     }
   }
 
@@ -28,13 +32,15 @@ bool FabServer::connect()
   if (this->WiFiConnection.status() == WL_CONNECTED)
   {
     // TODO - check if the server can be reached
+    Serial.print("IP Address:");
+    Serial.println(WiFi.localIP());
     this->online = true;
   }
   else
   {
     this->online = false;
   }
-  
+
   return this->online;
 }
 

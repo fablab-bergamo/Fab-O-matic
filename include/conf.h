@@ -20,11 +20,13 @@ namespace conf
     namespace machine
     {
         constexpr uint16_t TIMEOUT_USAGE_MINUTES = 8 * 60; /* User will be log out after this delay */
-        constexpr uint16_t BEEP_REMAINING_MINUTES = 5; /* Device will beep before auto-logoff */
+        constexpr uint16_t BEEP_REMAINING_MINUTES = 1; /* Device will beep before auto-poweroff. If 0, no beeping.  */
+        constexpr uint16_t POWEROFF_DELAY_MINUTES = 2; /* Minutes of idle time before poweroff. If 0, machine will stay on. */
+        static_assert(BEEP_REMAINING_MINUTES <= POWEROFF_DELAY_MINUTES);
     }
     namespace server
     {
-        constexpr uint16_t REFRESH_PERIOD_SECONDS = 60; /* Notify the server every X seconds */
+        constexpr uint16_t REFRESH_PERIOD_SECONDS = 180; /* Try to connect to the server every X seconds */
     }
 }
 #endif

@@ -28,7 +28,7 @@ void BoardState::init()
     Serial.println("Initializing RFID...");
     Board::rfid.init();
     delay(100);
-    Serial.println("Board init complete");    
+    Serial.println("Board init complete");
 }
 
 void BoardState::changeStatus(Status new_state)
@@ -47,8 +47,11 @@ void BoardState::changeStatus(Status new_state)
 void BoardState::update()
 {
     char buffer[conf::lcd::COLS];
-    Board::lcd.showConnection(true);
     std::string user_name, machine_name, uid_str;
+
+    Board::lcd.showConnection(true);
+    Board::lcd.showPower(true);
+
     user_name = Board::machine.getActiveUser().holder_name;
     machine_name = Board::machine.getMachineName();
     uid_str = card::uid_str(this->member.member_uid);
@@ -86,8 +89,8 @@ void BoardState::update()
         Board::lcd.setRow(1, user_name);
         break;
     case Status::CONNECTING:
-        Board::lcd.setRow(0, "Connessione in");
-        Board::lcd.setRow(1, "corso al server...");
+        Board::lcd.setRow(0, "Connessione");
+        Board::lcd.setRow(1, "al server...");
         break;
     case Status::CONNECTED:
         Board::lcd.setRow(0, "Connesso");
@@ -120,7 +123,8 @@ void BoardState::update()
         Board::lcd.setRow(1, buffer);
         break;
     }
-    Board::lcd.update_chars(Board::server.isOnline());
+    BoardInfo bi = {Board::server.isOnline(), Board::machine.getPowerState(), Board::machine.shutdownWarning()};
+    Board::lcd.update_chars(bi);
 }
 
 bool BoardState::authorize(card::uid_t uid)

@@ -7,8 +7,8 @@ Machine::Machine(Config user_conf) : config(user_conf), active(false), usage_sta
 {
   this->current_user = FabUser();
   pinMode(this->config.control_pin, OUTPUT); 
-  this->power(false);
   Serial.printf("Machine %s configured on pin %d (active_low:%d)\n", this->config.machine_name.c_str(), this->config.control_pin, this->config.control_pin_active_low);
+  this->power(false);
 }
 
 Machine::MachineID Machine::getMachineId() const
@@ -23,7 +23,7 @@ bool Machine::isFree() const
 
 bool Machine::login(FabUser user)
 {
-  if (this->isFree())
+  if (this->isFree() && this->allowed)
   {
     this->active = true;
     this->current_user = user;
@@ -34,19 +34,54 @@ bool Machine::login(FabUser user)
   return false;
 }
 
+Machine::PowerState Machine::getPowerState() const
+{
+  return this->powerState;
+}
+
 void Machine::logout()
 {
   if (this->active)
   {
     active = false;
-    this->power(false);
+    this->powerState = PowerState::WAITING_FOR_POWER_OFF;
+
+    // Sets the countdown to power off
+    if (conf::machine::POWEROFF_DELAY_MINUTES > 0)
+    {
+      this->power_off_min_timestamp = millis() + conf::machine::POWEROFF_DELAY_MINUTES * 60 * 1000;
+    }
+    else
+    {
+      this->power_off_min_timestamp = 0;
+      this->power(false);
+    }
   }
 }
 
-void Machine::power(bool value) const
+bool Machine::canPowerOff() const
+{
+  if (this->power_off_min_timestamp == 0)
+    return false;
+
+  return (this->powerState == PowerState::WAITING_FOR_POWER_OFF && 
+          this->power_off_min_timestamp < millis());
+}
+
+bool Machine::shutdownWarning() const
+{
+  if (this->power_off_min_timestamp == 0)
+    return false;
+
+  auto beep_ts = this->power_off_min_timestamp - (conf::machine::BEEP_REMAINING_MINUTES * 60 * 1000);
+  
+  return (this->powerState == PowerState::WAITING_FOR_POWER_OFF && 
+          beep_ts < millis());
+}
+
+void Machine::power(bool value)
 {
   Serial.printf("Power set to %d\n", value);
-  // TODO : implement a delay and a buzzer before powering off.
   if (this->config.control_pin_active_low)
   {
     digitalWrite(this->config.control_pin, value ? HIGH : LOW);
@@ -54,6 +89,16 @@ void Machine::power(bool value) const
   else
   {
     digitalWrite(this->config.control_pin, value ? LOW : HIGH);
+  }
+
+  if (value)
+  {
+    this->power_off_min_timestamp = 0;
+    this->powerState = PowerState::POWERED_ON;
+  }
+  else
+  {
+    this->powerState = PowerState::POWERED_OFF;
   }
 }
 
