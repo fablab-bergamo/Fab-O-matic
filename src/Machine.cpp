@@ -45,6 +45,8 @@ void Machine::logout()
 
 void Machine::power(bool value) const
 {
+  Serial.printf("Power set to %d\n", value);
+  // TODO : implement a delay and a buzzer before powering off.
   if (this->config.control_pin_active_low)
   {
     digitalWrite(this->config.control_pin, value ? HIGH : LOW);
