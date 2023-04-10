@@ -18,6 +18,12 @@ public:
     EXTRA1,
     EXTRA2
   };
+  enum class PowerState
+  {
+    POWERED_ON,
+    WAITING_FOR_POWER_OFF,
+    POWERED_OFF
+  };
   struct MachineID
   {
     uint16_t id;
@@ -42,15 +48,21 @@ public:
   std::string getMachineName() const;
   bool operator==(const Machine &v) const;
   bool operator!=(const Machine &v) const;
-  bool maintenanceNeeded; // If true, machine needs maintenance
-  bool allowed; // If false, nobody can use the machine
+  bool maintenanceNeeded;             // If true, machine needs maintenance
+  bool allowed;                       // If false, nobody can use the machine
+  bool canPowerOff() const;           // True if POWEROFF_DELAY_MINUTES delay has expired,and the machine is still idle
+  void power(bool on_or_off);         // Power-on or off the machine
+  PowerState getPowerState() const;   // Gets the current state of the machine
+  bool shutdownWarning() const;       // True if the machine will power down in less than BEEP_REMAINING_MINUTES
 
 private:
   const Config config;
   bool active;
   FabUser current_user;
-  void power(bool on_or_off) const;
-  uint32_t usage_start_timestamp;
+  uint32_t usage_start_timestamp;     // When did the machine start
+  uint32_t power_off_min_timestamp;   // Minimum allowed timestamp for power-down
+  PowerState powerState;
+
 };
 
 #endif // _MACHINE_H_

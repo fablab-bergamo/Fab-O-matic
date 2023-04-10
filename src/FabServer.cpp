@@ -19,6 +19,7 @@ bool FabServer::connect()
     {
       this->WiFiConnection.begin(this->wifi_ssid.c_str(), this->wifi_password.c_str());
       if (this->WiFiConnection.status() == WL_CONNECTED)
+        Serial.println("WiFi connection successfull");
         break;
       delay(1000);
     }
@@ -34,7 +35,7 @@ bool FabServer::connect()
   {
     this->online = false;
   }
-  
+
   return this->online;
 }
 
