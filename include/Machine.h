@@ -59,8 +59,8 @@ private:
   const Config config;
   bool active;
   FabUser current_user;
-  uint32_t usage_start_timestamp;     // When did the machine start
-  uint32_t power_off_min_timestamp;   // Minimum allowed timestamp for power-down
+  unsigned long usage_start_timestamp;     // When did the machine start
+  unsigned long logout_timestamp;   // Minimum allowed timestamp for power-down
   PowerState powerState;
 
 };

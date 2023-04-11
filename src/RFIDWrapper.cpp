@@ -31,7 +31,7 @@ FabUser RFIDWrapper::GetUser() const
 {
     uint8_t arr[conf::whitelist::UID_BYTE_LEN];
     memcpy(arr, Board::mfrc522.uid.uidByte, conf::whitelist::UID_BYTE_LEN);
-    return FabUser(arr, "", false);
+    return FabUser(arr, "", false, FabUser::UserLevel::UNKNOWN);
 }
 
 void RFIDWrapper::init()

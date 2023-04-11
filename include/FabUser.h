@@ -10,7 +10,7 @@
 namespace card
 {
   typedef u_int64_t uid_t;
-  static constexpr uid_t INVALID = 0;
+  static constexpr uid_t INVALID = 0ULL;
   inline std::string uid_str(card::uid_t uid)
   {
     uint64_t number = static_cast<uint64_t>(uid);
@@ -28,15 +28,23 @@ namespace card
 
 struct FabUser
 {
-  card::uid_t member_uid = card::INVALID;
-  std::string holder_name = "";
-  bool authenticated = false;
-
-  FabUser() : member_uid(card::INVALID), holder_name(""), authenticated(false) {}
-  FabUser(card::uid_t uid, std::string name, bool authenticated) : member_uid(uid), holder_name(name), authenticated(authenticated) {}
-  FabUser(const uint8_t uid[conf::whitelist::UID_BYTE_LEN], std::string name, bool authenticated) : holder_name(name), authenticated(authenticated)
+  enum class UserLevel
   {
-    card::uid_t result = 0;
+    UNKNOWN,
+    FABLAB_USER,
+    FABLAB_ADMIN
+  };
+
+  card::uid_t member_uid;
+  std::string holder_name;
+  bool authenticated;
+  UserLevel user_level;
+
+  FabUser() : member_uid(card::INVALID), holder_name(""), authenticated(false), user_level(UserLevel::UNKNOWN) {}
+  FabUser(card::uid_t uid, std::string name, bool authenticated, UserLevel level) : member_uid(uid), holder_name(name), authenticated(authenticated), user_level(level) {}
+  FabUser(const uint8_t uid[conf::whitelist::UID_BYTE_LEN], std::string name, bool authenticated, UserLevel level) : holder_name(name), authenticated(authenticated), user_level(level)
+  {
+    card::uid_t result = card::INVALID;
     for (auto i = (conf::whitelist::UID_BYTE_LEN - 1); i >= 0; i--)
     {
       result <<= 8;

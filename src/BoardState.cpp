@@ -110,13 +110,17 @@ void BoardState::update()
         Board::lcd.setRow(1, "");
         break;
     case Status::NOT_ALLOWED:
-        Board::lcd.setRow(0, "BLOCCATA DA");
-        Board::lcd.setRow(1, "FABLAB");
+        Board::lcd.setRow(0, "Blocco");
+        Board::lcd.setRow(1, "amministrativo");
         break;
     case Status::VERIFYING:
         Board::lcd.setRow(0, "VERIFICA IN");
         Board::lcd.setRow(1, "CORSO");
         break;
+    case Status::MAINTENANCE_NEEDED:
+        Board::lcd.setRow(0, "Blocco per");
+        Board::lcd.setRow(1, "manutenzione");
+        break;        
     default:
         Board::lcd.setRow(0, "Unhandled status");
         sprintf(buffer, "Value %d", static_cast<typename std::underlying_type<Status>::type>(this->status));
@@ -135,6 +139,11 @@ bool BoardState::authorize(card::uid_t uid)
     {
         if (Board::machine.allowed)
         {
+            if (Board::machine.maintenanceNeeded && conf::machine::MAINTENANCE_BLOCK && member.user_level < FabUser::UserLevel::FABLAB_ADMIN)
+            {
+              this->changeStatus(Status::MAINTENANCE_NEEDED);
+              return false;
+            }
             Board::machine.login(member);
             auto result = Board::server.startUse(Board::machine.getActiveUser().member_uid, Board::machine.getMachineId());
             Serial.printf("Result startUse: %d\n", result.request_ok);

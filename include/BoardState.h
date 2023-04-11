@@ -21,7 +21,8 @@ public:
         IN_USE,
         OFFLINE,
         NOT_ALLOWED,
-        VERIFYING
+        VERIFYING,
+        MAINTENANCE_NEEDED
     };
 
     BoardState() = default;

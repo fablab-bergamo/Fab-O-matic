@@ -143,9 +143,7 @@ void loop()
     if (Board::machine.isFree())
     {
       board.changeStatus(BoardState::Status::FREE);
-    }
-    else
-    {
+      
       if (Board::machine.shutdownWarning())
       {
         // TODO : beep
@@ -154,7 +152,17 @@ void loop()
       {
         Board::machine.power(false);
       }
+    }
+    else
+    {
       board.changeStatus(BoardState::Status::IN_USE);
+
+      // auto logout after delay
+      if (conf::machine::TIMEOUT_USAGE_MINUTES > 0 &&
+          Board::machine.getUsageTime() > conf::machine::TIMEOUT_USAGE_MINUTES * 60 * 1000) {
+        board.logout();
+        delay(1000);
+      }
     }
   }
 }

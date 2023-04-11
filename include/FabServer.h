@@ -21,6 +21,7 @@ public:
     bool request_ok; /* True if the request was processed by the server*/
     bool is_valid; /* True if the user is valid */
     std::string holder_name; /* Name of the user from server DB */
+    FabUser::UserLevel user_level;
   };
   struct MachineResponse {
     bool request_ok; /* True if the request was processed by the server */

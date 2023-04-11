@@ -49,11 +49,12 @@ void Machine::logout()
     // Sets the countdown to power off
     if (conf::machine::POWEROFF_DELAY_MINUTES > 0)
     {
-      this->power_off_min_timestamp = millis() + conf::machine::POWEROFF_DELAY_MINUTES * 60 * 1000;
+      this->logout_timestamp = millis();
+      Serial.printf("Machine will be shutdown in %d minutes\n",  conf::machine::POWEROFF_DELAY_MINUTES);
     }
     else
     {
-      this->power_off_min_timestamp = 0;
+      this->logout_timestamp = 0;
       this->power(false);
     }
   }
@@ -61,22 +62,22 @@ void Machine::logout()
 
 bool Machine::canPowerOff() const
 {
-  if (this->power_off_min_timestamp == 0)
+  if (this->logout_timestamp == 0)
     return false;
 
   return (this->powerState == PowerState::WAITING_FOR_POWER_OFF && 
-          this->power_off_min_timestamp < millis());
+          millis() - this->logout_timestamp > conf::machine::POWEROFF_DELAY_MINUTES * 60 * 1000);
 }
 
 bool Machine::shutdownWarning() const
 {
-  if (this->power_off_min_timestamp == 0)
+  if (this->logout_timestamp == 0)
     return false;
 
-  auto beep_ts = this->power_off_min_timestamp - (conf::machine::BEEP_REMAINING_MINUTES * 60 * 1000);
+  auto beep_ts = this->logout_timestamp - (conf::machine::BEEP_REMAINING_MINUTES * 60 * 1000);
   
   return (this->powerState == PowerState::WAITING_FOR_POWER_OFF && 
-          beep_ts < millis());
+          millis() - this->logout_timestamp > conf::machine::BEEP_REMAINING_MINUTES * 60 * 1000);
 }
 
 void Machine::power(bool value)
@@ -93,7 +94,7 @@ void Machine::power(bool value)
 
   if (value)
   {
-    this->power_off_min_timestamp = 0;
+    this->logout_timestamp = 0;
     this->powerState = PowerState::POWERED_ON;
   }
   else

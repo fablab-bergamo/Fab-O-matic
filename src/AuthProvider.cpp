@@ -17,17 +17,17 @@ FabUser AuthProvider::is_in_cache(card::uid_t uid) const
       return n;
     }
   }
-  return FabUser(card::INVALID, "", false);
+  return FabUser(card::INVALID, "", false, FabUser::UserLevel::UNKNOWN);
 }
 
-void AuthProvider::add_in_cache(card::uid_t uid, std::string name) 
+void AuthProvider::add_in_cache(card::uid_t uid, std::string name, FabUser::UserLevel level) 
 {
   // Check if already in cache
   if (this->is_in_cache(uid).authenticated)
     return;
   
   // Add into the list
-  FabUser new_elem(uid, name, true);
+  FabUser new_elem(uid, name, true, level);
   this->cache.push_front(new_elem);
 
   // Keep cache size under CACHE_LEN
@@ -38,7 +38,7 @@ void AuthProvider::add_in_cache(card::uid_t uid, std::string name)
 
 bool AuthProvider::tryLogin(card::uid_t uid, FabUser& out)
 {
-    FabUser member(uid, "???", false);
+    FabUser member(uid, "???", false, FabUser::UserLevel::UNKNOWN);
     std::string uid_str = card::uid_str(member.member_uid);
     Serial.printf("tryLogin called for %s\n", uid_str.c_str());
     
@@ -51,8 +51,9 @@ bool AuthProvider::tryLogin(card::uid_t uid, FabUser& out)
           out.authenticated = true;
           out.holder_name = response.holder_name;
           out.member_uid = uid;
+          out.user_level = response.user_level;
           // Cache the positive result
-          this->add_in_cache(out.member_uid, out.holder_name);
+          this->add_in_cache(out.member_uid, out.holder_name, response.user_level);
           Serial.println(" -> online check OK");
           return true;
         }
@@ -62,10 +63,12 @@ bool AuthProvider::tryLogin(card::uid_t uid, FabUser& out)
     } 
     else
     {
-      if (this->isWhiteListed(uid)) {
+      auto result = this->WhiteListLookup(uid);
+      if (result.found) {
           member.authenticated = true;
-          member.holder_name = "FABLAB";
+          member.holder_name = std::get<2>(result.element);
           member.member_uid = uid;
+          member.user_level = std::get<1>(result.element);
           out = member;
           Serial.println(" -> whilelist check OK");
           return true;
@@ -76,15 +79,15 @@ bool AuthProvider::tryLogin(card::uid_t uid, FabUser& out)
     return false;
 }
 
-bool AuthProvider::isWhiteListed(card::uid_t uid) const
+AuthProvider::LookupResult AuthProvider::WhiteListLookup(card::uid_t uid) const
 {
   for (auto i = 0; i < this->whitelist.size(); i++)
   {
-    if (this->whitelist[i] == uid)
+    if (std::get<0>(this->whitelist[i]) == uid)
     {
-      return true;
+      return {true, this->whitelist[i]};
     }
   }
-  return false;
+  return {false, std::make_tuple<card::uid_t, FabUser::UserLevel, std::string_view>(0, FabUser::UserLevel::UNKNOWN, "")};
 }
 
