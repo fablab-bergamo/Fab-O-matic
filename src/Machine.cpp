@@ -6,7 +6,7 @@
 Machine::Machine(Config user_conf) : config(user_conf), active(false), usage_start_timestamp(0), maintenanceNeeded(false), allowed(true)
 {
   this->current_user = FabUser();
-  pinMode(this->config.control_pin, OUTPUT); 
+  pinMode(this->config.control_pin, OUTPUT);
   Serial.printf("Machine %s configured on pin %d (active_low:%d)\n", this->config.machine_name.c_str(), this->config.control_pin, this->config.control_pin_active_low);
   this->power(false);
 }
@@ -50,7 +50,7 @@ void Machine::logout()
     if (conf::machine::POWEROFF_DELAY_MINUTES > 0)
     {
       this->logout_timestamp = millis();
-      Serial.printf("Machine will be shutdown in %d minutes\n",  conf::machine::POWEROFF_DELAY_MINUTES);
+      Serial.printf("Machine will be shutdown in %d minutes\n", conf::machine::POWEROFF_DELAY_MINUTES);
     }
     else
     {
@@ -65,7 +65,7 @@ bool Machine::canPowerOff() const
   if (this->logout_timestamp == 0)
     return false;
 
-  return (this->powerState == PowerState::WAITING_FOR_POWER_OFF && 
+  return (this->powerState == PowerState::WAITING_FOR_POWER_OFF &&
           millis() - this->logout_timestamp > conf::machine::POWEROFF_DELAY_MINUTES * 60 * 1000);
 }
 
@@ -75,8 +75,8 @@ bool Machine::shutdownWarning() const
     return false;
 
   auto beep_ts = this->logout_timestamp - (conf::machine::BEEP_REMAINING_MINUTES * 60 * 1000);
-  
-  return (this->powerState == PowerState::WAITING_FOR_POWER_OFF && 
+
+  return (this->powerState == PowerState::WAITING_FOR_POWER_OFF &&
           millis() - this->logout_timestamp > conf::machine::BEEP_REMAINING_MINUTES * 60 * 1000);
 }
 
@@ -103,7 +103,7 @@ void Machine::power(bool value)
   }
 }
 
-FabUser& Machine::getActiveUser()
+FabUser &Machine::getActiveUser()
 {
   return this->current_user;
 }

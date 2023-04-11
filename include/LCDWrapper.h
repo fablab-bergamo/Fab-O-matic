@@ -18,7 +18,7 @@ struct BoardInfo
            power_warning == t.power_warning;
   }
 };
-  
+
 template <uint8_t _COLS, uint8_t _ROWS>
 class LCDWrapper
 {

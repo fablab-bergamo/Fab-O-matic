@@ -5,23 +5,21 @@
 #include <list>
 #include <string_view>
 
-class AuthProvider{
-private:
-    struct LookupResult 
-    {
-        bool found;
-        std::tuple<card::uid_t, FabUser::UserLevel, std::string_view> element;
-    };
+using WhiteListEntry = std::tuple<card::uid_t, FabUser::UserLevel, std::string_view>;
+using WhiteList = std::array<WhiteListEntry, conf::whitelist::LEN>;
 
-    std::array<std::tuple<card::uid_t, FabUser::UserLevel, std::string_view>, conf::whitelist::LEN> whitelist;
+class AuthProvider
+{
+private:
+    WhiteList whitelist;
     std::list<FabUser> cache;
     void add_in_cache(card::uid_t uid, std::string name, FabUser::UserLevel level);
-    FabUser is_in_cache(card::uid_t uid) const;
-    LookupResult WhiteListLookup(card::uid_t uid) const;
+    std::optional<FabUser> is_in_cache(card::uid_t uid) const;
+    std::optional<WhiteListEntry> WhiteListLookup(card::uid_t uid) const;
 
 public:
-    AuthProvider(std::array<std::tuple<card::uid_t, FabUser::UserLevel, std::string_view>, conf::whitelist::LEN> whitelist) : whitelist(whitelist) {}
-    bool tryLogin(card::uid_t uid, FabUser& out);
+    AuthProvider(WhiteList whitelist) : whitelist(whitelist) {}
+    bool tryLogin(card::uid_t uid, FabUser &out);
 };
 
 #endif

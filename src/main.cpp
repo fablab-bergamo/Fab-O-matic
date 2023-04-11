@@ -13,27 +13,27 @@
 static bool ready_for_a_new_card = true;
 static BoardState board;
 static u_int16_t no_card_cpt = 0;
-static unsigned long next_server_poll = 1;
+static unsigned long last_server_poll = 1;
 
 /// @brief connects and polls the server for up-to-date machine information
 void refreshFromServer()
 {
-  if (Board::server.connect()) 
+  if (Board::server.connect())
   {
     // Check the configured machine data from the server
     auto result = Board::server.checkMachine(secrets::machine::machine_id);
     if (result.request_ok)
     {
-        if (result.is_valid)
-        {
-            Serial.printf("The configured machine ID %d is valid, maintenance=%d, allowed=%d\n", secrets::machine::machine_id, result.needs_maintenance, result.allowed);
-            Board::machine.maintenanceNeeded = result.needs_maintenance;
-            Board::machine.allowed = result.allowed;
-        }
-        else
-        {
-            Serial.printf("The configured machine ID %d is unknown to the server\n", secrets::machine::machine_id);
-        }
+      if (result.is_valid)
+      {
+        Serial.printf("The configured machine ID %d is valid, maintenance=%d, allowed=%d\n", secrets::machine::machine_id, result.needs_maintenance, result.allowed);
+        Board::machine.maintenanceNeeded = result.needs_maintenance;
+        Board::machine.allowed = result.allowed;
+      }
+      else
+      {
+        Serial.printf("The configured machine ID %d is unknown to the server\n", secrets::machine::machine_id);
+      }
     }
   }
 }
@@ -43,10 +43,10 @@ bool tryConnect()
   Serial.println("Trying Wifi and server connection...");
   // connection to wifi
   board.changeStatus(BoardState::Status::CONNECTING);
-  
+
   // Try to connect
   Board::server.connect();
-  
+
   // Get machine data from the server if it is online
   refreshFromServer();
 
@@ -73,21 +73,24 @@ void loop()
   delay(100);
 
   // Regular connection management
-  if (next_server_poll == 0)
+  if (last_server_poll == 0)
   {
-    next_server_poll = millis() + conf::server::REFRESH_PERIOD_SECONDS * 1000;
+    last_server_poll = millis();
   }
-  if (next_server_poll < millis()) {
+  if (millis() - last_server_poll >  conf::server::REFRESH_PERIOD_SECONDS * 1000)
+  {
     Serial.printf("Free heap:%d bytes\n", ESP.getFreeHeap());
-    if (Board::server.isOnline()) {
+    if (Board::server.isOnline())
+    {
       // Get machine data from the server
       refreshFromServer();
     }
-    else {
+    else
+    {
       // Reconnect
       tryConnect();
     }
-    next_server_poll = 0;
+    last_server_poll = 0;
   }
 
   // check if there is a card
@@ -143,7 +146,7 @@ void loop()
     if (Board::machine.isFree())
     {
       board.changeStatus(BoardState::Status::FREE);
-      
+
       if (Board::machine.shutdownWarning())
       {
         // TODO : beep
@@ -159,7 +162,9 @@ void loop()
 
       // auto logout after delay
       if (conf::machine::TIMEOUT_USAGE_MINUTES > 0 &&
-          Board::machine.getUsageTime() > conf::machine::TIMEOUT_USAGE_MINUTES * 60 * 1000) {
+          Board::machine.getUsageTime() > conf::machine::TIMEOUT_USAGE_MINUTES * 60 * 1000)
+      {
+        Serial.println("Auto-logging out user");
         board.logout();
         delay(1000);
       }

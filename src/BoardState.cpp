@@ -120,7 +120,7 @@ void BoardState::update()
     case Status::MAINTENANCE_NEEDED:
         Board::lcd.setRow(0, "Blocco per");
         Board::lcd.setRow(1, "manutenzione");
-        break;        
+        break;
     default:
         Board::lcd.setRow(0, "Unhandled status");
         sprintf(buffer, "Value %d", static_cast<typename std::underlying_type<Status>::type>(this->status));
@@ -141,8 +141,8 @@ bool BoardState::authorize(card::uid_t uid)
         {
             if (Board::machine.maintenanceNeeded && conf::machine::MAINTENANCE_BLOCK && member.user_level < FabUser::UserLevel::FABLAB_ADMIN)
             {
-              this->changeStatus(Status::MAINTENANCE_NEEDED);
-              return false;
+                this->changeStatus(Status::MAINTENANCE_NEEDED);
+                return false;
             }
             Board::machine.login(member);
             auto result = Board::server.startUse(Board::machine.getActiveUser().member_uid, Board::machine.getMachineId());

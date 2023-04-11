@@ -67,19 +67,24 @@ void LCDWrapper<_COLS, _ROWS>::update_chars(BoardInfo info)
       this->lcd.write(CHAR_ANTENNA);
       this->lcd.write(info.server_connected ? CHAR_CONNECTION : CHAR_NO_CONNECTION);
     }
-  
+
+    
+    this->lcd.setCursor(0, 1);
+    memcpy(why_arduino_has_not_implemented_liquidcrystal_print_from_char_array_yet, &this->buffer[1], _COLS);
+    this->lcd.print(why_arduino_has_not_implemented_liquidcrystal_print_from_char_array_yet);
+
     if (this->show_power_status)
     {
-      this->lcd.setCursor(13, 0);
-      if (info.power_state ==  Machine::PowerState::POWERED_ON)
+      this->lcd.setCursor(15, 1);
+      if (info.power_state == Machine::PowerState::POWERED_ON)
       {
         this->lcd.write(CHAR_POWERED_ON);
       }
-      else if (info.power_state ==  Machine::PowerState::POWERED_OFF)
+      else if (info.power_state == Machine::PowerState::POWERED_OFF)
       {
         this->lcd.write(CHAR_POWERED_OFF);
       }
-      else if (info.power_state ==  Machine::PowerState::WAITING_FOR_POWER_OFF)
+      else if (info.power_state == Machine::PowerState::WAITING_FOR_POWER_OFF)
       {
         this->lcd.write(CHAR_POWERING_OFF);
       }
@@ -88,9 +93,6 @@ void LCDWrapper<_COLS, _ROWS>::update_chars(BoardInfo info)
         this->lcd.write('?');
       }
     }
-    this->lcd.setCursor(0, 1);
-    memcpy(why_arduino_has_not_implemented_liquidcrystal_print_from_char_array_yet, &this->buffer[1], _COLS);
-    this->lcd.print(why_arduino_has_not_implemented_liquidcrystal_print_from_char_array_yet);
 
     this->current = this->buffer;
     this->boardInfo = info;
@@ -142,7 +144,7 @@ void LCDWrapper<_COLS, _ROWS>::pretty_print(std::array<std::array<char, _COLS>, 
     {
       if (this->buffer[i][j] == 0)
       {
-        Serial.print(' '); // Replace with space
+        Serial.print(' '); // Replace \0 with space
       }
       else
       {

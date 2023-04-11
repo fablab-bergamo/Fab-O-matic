@@ -35,7 +35,7 @@ public:
     std::string machine_name;
     uint8_t control_pin{0};
     bool control_pin_active_low{false};
-    Config(MachineID id, MachineType type, std::string name, uint8_t pin, bool act_low) : machine_id(id), machine_type(type), machine_name(name), control_pin(pin), control_pin_active_low(act_low) {}
+    Config(MachineID id, MachineType type, std::string_view name, uint8_t pin, bool act_low) : machine_id(id), machine_type(type), machine_name(name), control_pin(pin), control_pin_active_low(act_low) {}
   };
   Machine(Config config);
   ~Machine() = default;
@@ -48,21 +48,20 @@ public:
   std::string getMachineName() const;
   bool operator==(const Machine &v) const;
   bool operator!=(const Machine &v) const;
-  bool maintenanceNeeded;             // If true, machine needs maintenance
-  bool allowed;                       // If false, nobody can use the machine
-  bool canPowerOff() const;           // True if POWEROFF_DELAY_MINUTES delay has expired,and the machine is still idle
-  void power(bool on_or_off);         // Power-on or off the machine
-  PowerState getPowerState() const;   // Gets the current state of the machine
-  bool shutdownWarning() const;       // True if the machine will power down in less than BEEP_REMAINING_MINUTES
+  bool maintenanceNeeded;           // If true, machine needs maintenance
+  bool allowed;                     // If false, nobody can use the machine
+  bool canPowerOff() const;         // True if POWEROFF_DELAY_MINUTES delay has expired,and the machine is still idle
+  void power(bool on_or_off);       // Power-on or off the machine
+  PowerState getPowerState() const; // Gets the current state of the machine
+  bool shutdownWarning() const;     // True if the machine will power down in less than BEEP_REMAINING_MINUTES
 
 private:
   const Config config;
   bool active;
   FabUser current_user;
-  unsigned long usage_start_timestamp;     // When did the machine start
-  unsigned long logout_timestamp;   // Minimum allowed timestamp for power-down
+  unsigned long usage_start_timestamp; // When did the machine start
+  unsigned long logout_timestamp;      // Minimum allowed timestamp for power-down
   PowerState powerState;
-
 };
 
 #endif // _MACHINE_H_
