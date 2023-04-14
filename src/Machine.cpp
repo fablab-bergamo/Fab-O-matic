@@ -3,6 +3,8 @@
 
 #include <cstdint>
 
+/// @brief Creates a new machine
+/// @param user_conf configuration of the machine
 Machine::Machine(Config user_conf) : config(user_conf), active(false), usage_start_timestamp(0), maintenanceNeeded(false), allowed(true)
 {
   this->current_user = FabUser();
@@ -11,16 +13,23 @@ Machine::Machine(Config user_conf) : config(user_conf), active(false), usage_sta
   this->power(false);
 }
 
+/// @brief Returns the machine identifier
+/// @return Machine identifier
 Machine::MachineID Machine::getMachineId() const
 {
   return this->config.machine_id;
 }
 
+/// @brief Indicates whether the machine is used by somebody
+/// @return boolean
 bool Machine::isFree() const
 {
   return !this->active;
 }
 
+/// @brief Log the given user onto the machine, if free and not blocked
+/// @param user user to login
+/// @return true of the user has been successfully logged in
 bool Machine::login(FabUser user)
 {
   if (this->isFree() && this->allowed)
@@ -34,11 +43,14 @@ bool Machine::login(FabUser user)
   return false;
 }
 
+/// @brief Returns the current power state of the machine
+/// @return 
 Machine::PowerState Machine::getPowerState() const
 {
   return this->powerState;
 }
 
+/// @brief Removes the user from the machine, and powers off the machine (respecting POWEROFF_DELAY_MINUTES setting)
 void Machine::logout()
 {
   if (this->active)

@@ -11,6 +11,8 @@ bool FabServer::isOnline() const
   return online;
 }
 
+/// @brief Establish WiFi connection and connects to FabServer
+/// @return true if both operations succeeded
 bool FabServer::connect()
 {
   constexpr uint8_t NB_TRIES = 3;
@@ -45,6 +47,9 @@ bool FabServer::connect()
   return this->online;
 }
 
+/// @brief Checks if the card ID is known to the server
+/// @param uid card uid
+/// @return server response (if request_ok)
 FabServer::UserResponse FabServer::checkCard(card::uid_t uid) const
 {
   UserResponse reply{false, false};
@@ -66,6 +71,9 @@ FabServer::UserResponse FabServer::checkCard(card::uid_t uid) const
   return reply;
 }
 
+/// @brief Checks the machine status on the server
+/// @param mid machine id
+/// @return server response (if request_ok)
 FabServer::MachineResponse FabServer::checkMachine(Machine::MachineID mid) const
 {
   MachineResponse reply{false, false, true, false};
@@ -88,6 +96,10 @@ FabServer::MachineResponse FabServer::checkMachine(Machine::MachineID mid) const
   return reply;
 }
 
+/// @brief register the starting of a machine usage
+/// @param uid card uid
+/// @param mid machine id
+/// @return server response (if request_ok)
 FabServer::SimpleResponse FabServer::startUse(card::uid_t uid, Machine::MachineID mid) const
 {
   SimpleResponse reply{false};

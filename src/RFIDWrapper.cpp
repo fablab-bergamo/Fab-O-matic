@@ -28,6 +28,8 @@ bool RFIDWrapper::ReadCardSerial()
     return Board::mfrc522.PICC_ReadCardSerial();
 }
 
+/// @brief Transforms the RFID acquired bytes into a uid_id object
+/// @return card ID
 card::uid_t RFIDWrapper::GetUid() const
 {
     uint8_t arr[conf::whitelist::UID_BYTE_LEN];
@@ -35,6 +37,7 @@ card::uid_t RFIDWrapper::GetUid() const
     return card::from_array(arr);
 }
 
+/// @brief Initializes RFID chip including self test
 void RFIDWrapper::init()
 {
     Board::mfrc522.PCD_Init();

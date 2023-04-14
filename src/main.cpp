@@ -38,6 +38,8 @@ void refreshFromServer()
   }
 }
 
+/// @brief Opens WiFi and server connection and updates board state accordingly
+/// @return True if server connection was successfull
 bool tryConnect()
 {
   Serial.println("Trying Wifi and server connection...");

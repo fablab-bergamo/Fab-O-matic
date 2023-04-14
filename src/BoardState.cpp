@@ -20,6 +20,7 @@ namespace Board
     extern AuthProvider auth;
 }
 
+/// @brief Initializes LCD and RFID classes
 void BoardState::init()
 {
     Serial.println("Initializing LCD...");
@@ -31,6 +32,8 @@ void BoardState::init()
     Serial.println("Board init complete");
 }
 
+/// @brief Sets the board in the state given.
+/// @param new_state new state
 void BoardState::changeStatus(Status new_state)
 {
     if (this->status != new_state)
@@ -44,6 +47,7 @@ void BoardState::changeStatus(Status new_state)
     this->update();
 }
 
+/// @brief Updates the LCD screen as per the current status
 void BoardState::update()
 {
     char buffer[conf::lcd::COLS];
@@ -131,6 +135,9 @@ void BoardState::update()
     Board::lcd.update_chars(bi);
 }
 
+/// @brief Checks if the card UID is valid, and tries to check the user in to the machine. 
+/// @param uid card uid
+/// @return true if the user is now logged on to the machine
 bool BoardState::authorize(card::uid_t uid)
 {
     FabUser member;
@@ -162,6 +169,7 @@ bool BoardState::authorize(card::uid_t uid)
     return false;
 }
 
+/// @brief Removes the current machine user and changes the status to LOGOUT
 void BoardState::logout()
 {
     auto result = Board::server.finishUse(Board::machine.getActiveUser().card_uid, Board::machine.getMachineId(), Board::machine.getUsageTime());
@@ -172,11 +180,15 @@ void BoardState::logout()
     delay(1000);
 }
 
+/// @brief Gets the current board status
+/// @return board status
 BoardState::Status BoardState::getStatus() const
 {
     return this->status;
 }
 
+/// @brief Gets the latest user acquired by RFID card
+/// @return a user object
 FabUser BoardState::getUser()
 {
     return this->member;

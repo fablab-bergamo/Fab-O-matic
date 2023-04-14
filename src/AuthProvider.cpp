@@ -10,6 +10,9 @@ namespace Board
   extern FabServer server;
 }
 
+/// @brief Checks if the cache contains the card ID, and uses that if available
+/// @param uid card id
+/// @return FabUser if found
 std::optional<FabUser> AuthProvider::is_in_cache(card::uid_t uid) const
 {
   auto elem = std::find_if(this->cache.begin(), this->cache.end(), 
@@ -22,6 +25,10 @@ std::optional<FabUser> AuthProvider::is_in_cache(card::uid_t uid) const
   return {*elem};
 }
 
+/// @brief Cache the user request
+/// @param uid card id of the user
+/// @param name name of the user to be cached
+/// @param level priviledge level of the user
 void AuthProvider::add_in_cache(card::uid_t uid, std::string name, FabUser::UserLevel level)
 {
   // Check if already in cache
@@ -39,6 +46,10 @@ void AuthProvider::add_in_cache(card::uid_t uid, std::string name, FabUser::User
   }
 }
 
+/// @brief Verifies the card ID against the server (if available) or the whitelist
+/// @param uid card ID
+/// @param out a FabUser with an authenticated flag==true if server or whitelist confirmed the ID
+/// @return false if the user was not found on server or whitelist
 bool AuthProvider::tryLogin(card::uid_t uid, FabUser &out)
 {
   FabUser member(uid, "???", false, FabUser::UserLevel::UNKNOWN);
@@ -84,6 +95,9 @@ bool AuthProvider::tryLogin(card::uid_t uid, FabUser &out)
   return false;
 }
 
+/// @brief Checks if the card ID is whitelisted
+/// @param uid card ID
+/// @return a whitelistentry object if the card is found in whitelist
 std::optional<WhiteListEntry> AuthProvider::WhiteListLookup(card::uid_t uid) const
 {
   auto elem = std::find_if(this->whitelist.begin(), this->whitelist.end(), 
