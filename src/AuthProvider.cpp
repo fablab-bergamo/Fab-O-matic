@@ -13,7 +13,7 @@ namespace Board
 std::optional<FabUser> AuthProvider::is_in_cache(card::uid_t uid) const
 {
   auto elem = std::find_if(this->cache.begin(), this->cache.end(), 
-                          [uid](const auto& input){return input.member_uid == uid;});
+                          [uid](const auto& input){return input.card_uid == uid;});
   
   if (elem == end(this->cache)) {
     return {};
@@ -42,7 +42,7 @@ void AuthProvider::add_in_cache(card::uid_t uid, std::string name, FabUser::User
 bool AuthProvider::tryLogin(card::uid_t uid, FabUser &out)
 {
   FabUser member(uid, "???", false, FabUser::UserLevel::UNKNOWN);
-  std::string uid_str = card::uid_str(member.member_uid);
+  std::string uid_str = card::uid_str(member.card_uid);
   Serial.printf("tryLogin called for %s\n", uid_str.c_str());
 
   if (!Board::server.isOnline())
@@ -55,10 +55,10 @@ bool AuthProvider::tryLogin(card::uid_t uid, FabUser &out)
     {
       out.authenticated = true;
       out.holder_name = response.holder_name;
-      out.member_uid = uid;
+      out.card_uid = uid;
       out.user_level = response.user_level;
       // Cache the positive result
-      this->add_in_cache(out.member_uid, out.holder_name, response.user_level);
+      this->add_in_cache(out.card_uid, out.holder_name, response.user_level);
       Serial.println(" -> online check OK");
       return true;
     }
@@ -71,7 +71,7 @@ bool AuthProvider::tryLogin(card::uid_t uid, FabUser &out)
     if (auto result = this->WhiteListLookup(uid))
     {
       member.authenticated = true;
-      member.member_uid = std::get<0>(result.value());
+      member.card_uid = std::get<0>(result.value());
       member.user_level = std::get<1>(result.value());
       member.holder_name = std::get<2>(result.value());
       out = member;

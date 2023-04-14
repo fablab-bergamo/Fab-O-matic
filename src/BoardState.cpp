@@ -54,7 +54,7 @@ void BoardState::update()
 
     user_name = Board::machine.getActiveUser().holder_name;
     machine_name = Board::machine.getMachineName();
-    uid_str = card::uid_str(this->member.member_uid);
+    uid_str = card::uid_str(this->member.card_uid);
 
     switch (this->status)
     {
@@ -145,7 +145,7 @@ bool BoardState::authorize(card::uid_t uid)
                 return false;
             }
             Board::machine.login(member);
-            auto result = Board::server.startUse(Board::machine.getActiveUser().member_uid, Board::machine.getMachineId());
+            auto result = Board::server.startUse(Board::machine.getActiveUser().card_uid, Board::machine.getMachineId());
             Serial.printf("Result startUse: %d\n", result.request_ok);
             this->member = member;
             this->changeStatus(Status::LOGGED_IN);
@@ -164,7 +164,7 @@ bool BoardState::authorize(card::uid_t uid)
 
 void BoardState::logout()
 {
-    auto result = Board::server.finishUse(Board::machine.getActiveUser().member_uid, Board::machine.getMachineId(), Board::machine.getUsageTime());
+    auto result = Board::server.finishUse(Board::machine.getActiveUser().card_uid, Board::machine.getMachineId(), Board::machine.getUsageTime());
     Serial.printf("Result finishUse: %d\n", result.request_ok);
     Board::machine.logout();
     this->member = FabUser();
@@ -172,12 +172,12 @@ void BoardState::logout()
     delay(1000);
 }
 
-BoardState::Status BoardState::getStatus()
+BoardState::Status BoardState::getStatus() const
 {
     return this->status;
 }
 
-FabUser BoardState::getMember()
+FabUser BoardState::getUser()
 {
     return this->member;
 }

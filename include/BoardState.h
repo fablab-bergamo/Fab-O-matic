@@ -26,8 +26,8 @@ public:
     };
 
     BoardState() = default;
-    Status getStatus();
-    FabUser getMember();
+    Status getStatus() const;
+    FabUser getUser();
 
     void init();
     void changeStatus(Status newStatus);

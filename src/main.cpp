@@ -106,11 +106,11 @@ void loop()
     ready_for_a_new_card = false;
 
     // Acquire the UID of the card
-    FabUser candidate = Board::rfid.GetUser();
+    auto uid = Board::rfid.GetUid();
     if (Board::machine.isFree())
     {
       // machine is free
-      if (board.authorize(candidate.member_uid))
+      if (board.authorize(uid))
       {
         Serial.println("Login successfull");
       }
@@ -123,7 +123,7 @@ void loop()
     else
     {
       // machine is busy
-      if (Board::machine.getActiveUser() == candidate)
+      if (Board::machine.getActiveUser().card_uid == uid)
       {
         // we can logout. we should require that the card stays in the field for some seconds, to prevent accidental logout. maybe sound a buzzer?
         board.logout();

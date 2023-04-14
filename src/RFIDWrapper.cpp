@@ -5,7 +5,7 @@
 #include "MFRC522DriverPinSimple.h"
 #include "MFRC522Debug.h"
 #include "conf.h"
-#include "FabUser.h"
+#include "card.h"
 
 namespace Board
 {
@@ -28,11 +28,11 @@ bool RFIDWrapper::ReadCardSerial()
     return Board::mfrc522.PICC_ReadCardSerial();
 }
 
-FabUser RFIDWrapper::GetUser() const
+card::uid_t RFIDWrapper::GetUid() const
 {
     uint8_t arr[conf::whitelist::UID_BYTE_LEN];
     memcpy(arr, Board::mfrc522.uid.uidByte, conf::whitelist::UID_BYTE_LEN);
-    return FabUser(arr, "", false, FabUser::UserLevel::UNKNOWN);
+    return card::from_array(arr);
 }
 
 void RFIDWrapper::init()

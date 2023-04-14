@@ -3,7 +3,7 @@
 
 #include "conf.h"
 #include <string>
-#include "FabUser.h"
+#include "card.h"
 
 class RFIDWrapper
 {
@@ -12,8 +12,7 @@ public:
     void init();
     bool IsNewCardPresent();
     bool ReadCardSerial();
-    FabUser GetUser() const;
-    std::string dumpUid() const;
+    card::uid_t GetUid() const;
 };
 
 #endif
