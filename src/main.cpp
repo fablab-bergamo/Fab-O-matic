@@ -66,11 +66,12 @@ void setup()
   if (!board.init()) 
   {
     board.changeStatus(BoardState::Status::ERROR);
+    board.beep_failed();
   }
   delay(100);
   WiFi.disconnect();
   WiFi.mode(WIFI_STA);
-  delay(1000);
+  board.beep_ok();
 }
 
 void loop()
