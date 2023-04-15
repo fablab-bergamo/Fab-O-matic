@@ -44,7 +44,7 @@ public:
   MachineResponse checkMachine(Machine::MachineID mid) const;
   SimpleResponse startUse(card::uid_t uid, Machine::MachineID mid) const;
   SimpleResponse finishUse(card::uid_t uid, Machine::MachineID mid, uint16_t duration_s) const;
-  SimpleResponse registerMaintenance(card::uid_t maintainer, Machine::MachineID mid);
+  SimpleResponse registerMaintenance(card::uid_t maintainer, Machine::MachineID mid) const;
   SimpleResponse alive(Machine::MachineID mid);
 
   bool isOnline() const;

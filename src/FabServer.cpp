@@ -65,6 +65,7 @@ FabServer::UserResponse FabServer::checkCard(card::uid_t uid) const
       reply.is_valid = true;
       reply.request_ok = true;
       reply.holder_name = "FABMEMBER";
+      reply.user_level = FabUser::UserLevel::FABLAB_ADMIN;
     }
   }
   catch (const std::exception &e)
@@ -87,7 +88,7 @@ FabServer::MachineResponse FabServer::checkMachine(Machine::MachineID mid) const
     {
       // TODO make a request to a server
       reply.is_valid = true;
-      reply.needs_maintenance = false;
+      reply.needs_maintenance = true;
       reply.request_ok = true;
       reply.allowed = true;
     }
@@ -129,6 +130,25 @@ FabServer::SimpleResponse FabServer::startUse(card::uid_t uid, Machine::MachineI
 /// @param duration_s duration of usage in seconds
 /// @return server response (if request_ok)
 FabServer::SimpleResponse FabServer::finishUse(card::uid_t uid, Machine::MachineID mid, uint16_t duration_s) const
+{
+  SimpleResponse reply{false};
+  try
+  {
+    if (this->isOnline())
+    {
+      // TODO make a request to a server
+      reply.request_ok = true;
+    }
+  }
+  catch (const std::exception &e)
+  {
+    Serial.println(e.what());
+    reply.request_ok = false;
+  }
+  return reply;
+}
+
+FabServer::SimpleResponse FabServer::registerMaintenance(card::uid_t maintainer, Machine::MachineID mid) const
 {
   SimpleResponse reply{false};
   try

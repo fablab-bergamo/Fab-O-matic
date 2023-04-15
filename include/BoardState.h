@@ -22,7 +22,10 @@ public:
         OFFLINE,
         NOT_ALLOWED,
         VERIFYING,
-        MAINTENANCE_NEEDED
+        MAINTENANCE_NEEDED,
+        MAINTENANCE_QUERY,
+        MAINTENANCE_DONE,
+        ERROR
     };
 
     BoardState() = default;
