@@ -18,12 +18,12 @@ RFIDWrapper::RFIDWrapper()
     SPI.begin(pins.mfrc522.sck_pin, pins.mfrc522.miso_pin, pins.mfrc522.mosi_pin, pins.mfrc522.sda_pin);
 }
 
-bool RFIDWrapper::IsNewCardPresent()
+bool RFIDWrapper::IsNewCardPresent() const
 {
     return Board::mfrc522.PICC_IsNewCardPresent();
 }
 
-bool RFIDWrapper::ReadCardSerial()
+bool RFIDWrapper::ReadCardSerial() const
 {
     return Board::mfrc522.PICC_ReadCardSerial();
 }

@@ -10,8 +10,8 @@ class RFIDWrapper
 public:
     RFIDWrapper();
     bool init();
-    bool IsNewCardPresent();
-    bool ReadCardSerial();
+    bool IsNewCardPresent() const;
+    bool ReadCardSerial() const;
     card::uid_t GetUid() const;
 };
 

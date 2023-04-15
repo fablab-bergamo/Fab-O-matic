@@ -68,7 +68,7 @@ void LCDWrapper<_COLS, _ROWS>::update_chars(BoardInfo info)
       this->lcd.write(CHAR_ANTENNA);
       this->lcd.write(info.server_connected ? CHAR_CONNECTION : CHAR_NO_CONNECTION);
     }
-    
+
     this->lcd.setCursor(0, 1);
     memcpy(why_arduino_has_not_implemented_liquidcrystal_print_from_char_array_yet, &this->buffer[1], _COLS);
     this->lcd.print(why_arduino_has_not_implemented_liquidcrystal_print_from_char_array_yet);

@@ -11,7 +11,7 @@ using WhiteList = std::array<WhiteListEntry, conf::whitelist::LEN>;
 class AuthProvider
 {
 private:
-    WhiteList whitelist;
+    const WhiteList whitelist;
     mutable std::list<FabUser> cache;
     void add_in_cache(card::uid_t uid, std::string name, FabUser::UserLevel level) const;
     std::optional<FabUser> is_in_cache(card::uid_t uid) const;

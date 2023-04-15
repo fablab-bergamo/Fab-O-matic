@@ -81,10 +81,11 @@ std::optional<FabUser> AuthProvider::tryLogin(card::uid_t uid) const
   {
     if (auto result = this->WhiteListLookup(uid))
     {
+      auto [card,level,name] = result.value();
       member.authenticated = true;
-      member.card_uid = std::get<0>(result.value());
-      member.user_level = std::get<1>(result.value());
-      member.holder_name = std::get<2>(result.value());
+      member.card_uid = card;
+      member.user_level = level;
+      member.holder_name = name;
       Serial.printf(" -> whilelist check OK (%s)\n", member.to_string().c_str());
       return member;
     }

@@ -44,7 +44,7 @@ bool Machine::login(FabUser user)
 }
 
 /// @brief Returns the current power state of the machine
-/// @return 
+/// @return
 Machine::PowerState Machine::getPowerState() const
 {
   return this->powerState;

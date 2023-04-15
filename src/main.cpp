@@ -63,7 +63,7 @@ void setup()
   Serial.begin(115200); // Initialize serial communications with the PC for debugging.
   Serial.println("Starting setup!");
   delay(100);
-  if (!board.init()) 
+  if (!board.init())
   {
     board.changeStatus(BoardState::Status::ERROR);
     board.beep_failed();
@@ -83,7 +83,7 @@ void loop()
   {
     last_server_poll = millis();
   }
-  if (millis() - last_server_poll >  conf::server::REFRESH_PERIOD_SECONDS * 1000)
+  if (millis() - last_server_poll > conf::server::REFRESH_PERIOD_SECONDS * 1000)
   {
     Serial.printf("Free heap:%d bytes\n", ESP.getFreeHeap());
     if (Board::server.isOnline())
