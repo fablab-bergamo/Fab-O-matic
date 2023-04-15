@@ -125,6 +125,7 @@ void loop()
         Serial.println("Login failed");
       }
       delay(1000);
+      refreshFromServer();
     }
     else
     {
