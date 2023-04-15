@@ -24,17 +24,14 @@ namespace Board
 /// @brief Initializes LCD and RFID classes
 bool BoardState::init()
 {
-    
+
     Serial.println("Initializing LCD...");
     bool success = Board::lcd.begin();
-    delay(100);
     Serial.println("Initializing RFID...");
     success &= Board::rfid.init();
-    delay(100);
     // Setup buzzer pin for ESP32
-    success &= (ledcSetup(BoardState::LEDC_CHANNEL, 660U, 10U) != 0);
+    success &= (ledcSetup(BoardState::LEDC_CHANNEL, BoardState::BEEP_HZ, 10U) != 0);
     ledcAttachPin(pins.buzzer.buzzer_pin, BoardState::LEDC_CHANNEL);
-
     Serial.printf("Board init complete, success = %d\n", success);
     return success;
 }
@@ -139,15 +136,15 @@ void BoardState::update()
     case Status::MAINTENANCE_QUERY:
         Board::lcd.setRow(0, "Registrare");
         Board::lcd.setRow(1, "manutenzione?");
-        break;        
+        break;
     case Status::MAINTENANCE_DONE:
         Board::lcd.setRow(0, "Manutenzione");
         Board::lcd.setRow(1, "registrata");
-        break;        
-     case Status::ERROR:
+        break;
+    case Status::ERROR:
         Board::lcd.setRow(0, "Errore");
         Board::lcd.setRow(1, "");
-        break;       
+        break;
     default:
         Board::lcd.setRow(0, "Unhandled status");
         sprintf(buffer, "Value %d", static_cast<typename std::underlying_type<Status>::type>(this->status));
@@ -164,62 +161,65 @@ void BoardState::update()
 bool BoardState::authorize(card::uid_t uid)
 {
     this->changeStatus(Status::VERIFYING);
-    if (Board::auth.tryLogin(uid, this->member))
-    {
-        if (Board::machine.allowed)
-        {
-            if (Board::machine.maintenanceNeeded) 
-            {
-                if (conf::machine::MAINTENANCE_BLOCK && member.user_level < FabUser::UserLevel::FABLAB_ADMIN)
-                {
-                    this->changeStatus(Status::MAINTENANCE_NEEDED);
-                    this->beep_failed();
-                    return false;
-                }
-                if (member.user_level >= FabUser::UserLevel::FABLAB_ADMIN)
-                {
-                    this->beep_ok();
-                    this->changeStatus(Status::MAINTENANCE_QUERY);
-                    // User must leave the card for 3s before it's recognized
-                    delay(3000);
+    auto response = Board::auth.tryLogin(uid);
 
-                    if (Board::rfid.ReadCardSerial() && Board::rfid.GetUid() == member.card_uid)
-                    {
-                        auto response = Board::server.registerMaintenance(member.card_uid, Board::machine.getMachineId());
-                        if (response.request_ok)
-                        {
-                            this->beep_ok();
-                            this->changeStatus(Status::MAINTENANCE_DONE);
-                            delay(1000);
-                        }
-                        else
-                        {
-                            this->beep_failed();
-                            this->changeStatus(Status::ERROR);
-                            return false;
-                        }
-                    }
-                }
-            }
-            Board::machine.login(member);
-            auto result = Board::server.startUse(Board::machine.getActiveUser().card_uid, Board::machine.getMachineId());
-            Serial.printf("Result startUse: %d\n", result.request_ok);
-            this->member = member;
-            this->changeStatus(Status::LOGGED_IN);
-            this->beep_ok();
-            return true;
-        }
+    if (!response.has_value())
+    {
+        Serial.println("Failed login");
+        this->changeStatus(Status::LOGIN_DENIED);
+        this->beep_failed();
+        return false;
+    }
+
+    if (!Board::machine.allowed)
+    {
+        Serial.println("Machine blocked");
         this->changeStatus(Status::NOT_ALLOWED);
         this->beep_failed();
         return false;
     }
-    else
+
+    this->member = response.value();
+
+    if (Board::machine.maintenanceNeeded)
     {
-        Serial.println("Failed login");
+        if (conf::machine::MAINTENANCE_BLOCK && this->member.user_level < FabUser::UserLevel::FABLAB_ADMIN)
+        {
+            this->changeStatus(Status::MAINTENANCE_NEEDED);
+            this->beep_failed();
+            return false;
+        }
+        if (this->member.user_level >= FabUser::UserLevel::FABLAB_ADMIN)
+        {
+            this->beep_ok();
+            this->changeStatus(Status::MAINTENANCE_QUERY);
+            // User must leave the card for 3s before it's recognized
+            delay(3000);
+
+            if (Board::rfid.ReadCardSerial() && Board::rfid.GetUid() == this->member.card_uid)
+            {
+                auto response = Board::server.registerMaintenance(this->member.card_uid, Board::machine.getMachineId());
+                if (response.request_ok)
+                {
+                    this->beep_ok();
+                    this->changeStatus(Status::MAINTENANCE_DONE);
+                    delay(1000);
+                }
+                else
+                {
+                    this->beep_failed();
+                    this->changeStatus(Status::ERROR);
+                    return false;
+                }
+            }
+        }
     }
-    this->changeStatus(Status::LOGIN_DENIED);
-    this->beep_failed();
-    return false;
+    Board::machine.login(this->member);
+    auto result = Board::server.startUse(Board::machine.getActiveUser().card_uid, Board::machine.getMachineId());
+    Serial.printf("Result startUse: %d\n", result.request_ok);
+    this->changeStatus(Status::LOGGED_IN);
+    this->beep_ok();
+    return true;
 }
 
 /// @brief Removes the current machine user and changes the status to LOGOUT
@@ -250,7 +250,7 @@ FabUser BoardState::getUser()
 
 void BoardState::beep_ok()
 {
-    ledcWriteTone(BoardState::LEDC_CHANNEL, 660UL);
+    ledcWriteTone(BoardState::LEDC_CHANNEL, BoardState::BEEP_HZ);
     delay(BoardState::BEEP_DURATION_MS);
     ledcWrite(BoardState::LEDC_CHANNEL, 0UL);
 }
@@ -260,7 +260,7 @@ void BoardState::beep_failed()
     constexpr auto NB_BEEPS = 3;
     for (auto i = 0; i < NB_BEEPS; i++)
     {
-        ledcWriteTone(BoardState::LEDC_CHANNEL, 330UL);
+        ledcWriteTone(BoardState::LEDC_CHANNEL, BoardState::BEEP_HZ);
         delay(BoardState::BEEP_DURATION_MS);
         ledcWrite(BoardState::LEDC_CHANNEL, 0UL);
         delay(BoardState::BEEP_DURATION_MS);

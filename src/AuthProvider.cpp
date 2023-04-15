@@ -29,7 +29,7 @@ std::optional<FabUser> AuthProvider::is_in_cache(card::uid_t uid) const
 /// @param uid card id of the user
 /// @param name name of the user to be cached
 /// @param level priviledge level of the user
-void AuthProvider::add_in_cache(card::uid_t uid, std::string name, FabUser::UserLevel level)
+void AuthProvider::add_in_cache(card::uid_t uid, std::string name, FabUser::UserLevel level) const
 {
   // Check if already in cache
   if (this->is_in_cache(uid).has_value())
@@ -50,7 +50,7 @@ void AuthProvider::add_in_cache(card::uid_t uid, std::string name, FabUser::User
 /// @param uid card ID
 /// @param out a FabUser with an authenticated flag==true if server or whitelist confirmed the ID
 /// @return false if the user was not found on server or whitelist
-bool AuthProvider::tryLogin(card::uid_t uid, FabUser &out)
+std::optional<FabUser> AuthProvider::tryLogin(card::uid_t uid) const
 {
   FabUser member(uid, "???", false, FabUser::UserLevel::UNKNOWN);
   std::string uid_str = card::uid_str(member.card_uid);
@@ -64,18 +64,18 @@ bool AuthProvider::tryLogin(card::uid_t uid, FabUser &out)
     auto response = Board::server.checkCard(uid);
     if (response.request_ok && response.request_ok)
     {
-      out.authenticated = true;
-      out.holder_name = response.holder_name;
-      out.card_uid = uid;
-      out.user_level = response.user_level;
+      member.authenticated = true;
+      member.holder_name = response.holder_name;
+      member.card_uid = uid;
+      member.user_level = response.user_level;
       // Cache the positive result
-      this->add_in_cache(out.card_uid, out.holder_name, response.user_level);
-      Serial.println(" -> online check OK");
-      return true;
+      this->add_in_cache(member.card_uid, member.holder_name, response.user_level);
+      Serial.printf(" -> online check OK (%s)\n", member.to_string().c_str());
+      return member;
     }
-    out.authenticated = false;
+    member.authenticated = false;
     Serial.println(" -> online check NOK");
-    return false;
+    return std::nullopt;
   }
   else
   {
@@ -85,14 +85,12 @@ bool AuthProvider::tryLogin(card::uid_t uid, FabUser &out)
       member.card_uid = std::get<0>(result.value());
       member.user_level = std::get<1>(result.value());
       member.holder_name = std::get<2>(result.value());
-      out = member;
-      Serial.println(" -> whilelist check OK");
-      return true;
+      Serial.printf(" -> whilelist check OK (%s)\n", member.to_string().c_str());
+      return member;
     }
   }
-  out = member;
   Serial.println(" -> whilelist check NOK");
-  return false;
+  return std::nullopt;
 }
 
 /// @brief Checks if the card ID is whitelisted

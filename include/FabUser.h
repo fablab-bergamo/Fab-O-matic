@@ -32,6 +32,11 @@ struct FabUser
   {
     return card_uid == t.card_uid;
   }
+  std::string to_string() 
+  {
+    auto value = static_cast<typename std::underlying_type<UserLevel>::type>(user_level);
+    return "User(Auth:" + std::to_string(authenticated) + ", UID:" + std::to_string(card_uid) + ", Name:" + holder_name + ", level:" + std::to_string(value) + ")";
+  }
 };
 
 #endif

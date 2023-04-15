@@ -12,14 +12,14 @@ class AuthProvider
 {
 private:
     WhiteList whitelist;
-    std::list<FabUser> cache;
-    void add_in_cache(card::uid_t uid, std::string name, FabUser::UserLevel level);
+    mutable std::list<FabUser> cache;
+    void add_in_cache(card::uid_t uid, std::string name, FabUser::UserLevel level) const;
     std::optional<FabUser> is_in_cache(card::uid_t uid) const;
     std::optional<WhiteListEntry> WhiteListLookup(card::uid_t uid) const;
 
 public:
     AuthProvider(WhiteList whitelist) : whitelist(whitelist) {}
-    bool tryLogin(card::uid_t uid, FabUser &out);
+    std::optional<FabUser> tryLogin(card::uid_t uid) const;
 };
 
 #endif

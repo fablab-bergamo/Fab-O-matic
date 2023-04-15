@@ -53,6 +53,7 @@ private:
     Status status;
     FabUser member;
     static constexpr unsigned short LEDC_CHANNEL = 0U;          /* Esp32 pwm channel for beep generation */
-    static constexpr unsigned short BEEP_DURATION_MS = 250UL;   /* Beep duration in milliseconds */
+    static constexpr unsigned short BEEP_DURATION_MS = 200UL;   /* Beep duration in milliseconds */
+    static constexpr unsigned int BEEP_HZ = 660U;
 };
 #endif
