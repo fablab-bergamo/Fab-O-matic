@@ -4,7 +4,11 @@
 #include <string_view>
 #include <cstdint>
 
-FabServer::FabServer(const std::string_view ssid, const std::string_view password) : wifi_ssid(ssid), wifi_password(password), online(false) {}
+/// @brief FabServer API interface class
+/// @param ssid wifi network
+/// @param password wifi password
+/// @param server_ip server IP address
+FabServer::FabServer(const std::string_view ssid, const std::string_view password, const std::string_view server_ip) : wifi_ssid(ssid), wifi_password(password), server_ip(server_ip), online(false) {}
 
 bool FabServer::isOnline() const
 {
@@ -35,7 +39,7 @@ bool FabServer::connect()
   if (this->WiFiConnection.status() == WL_CONNECTED)
   {
     // TODO - check if the server can be reached
-    Serial.print("IP Address:");
+    Serial.print("Board IP Address:");
     Serial.println(WiFi.localIP());
     this->online = true;
   }
@@ -119,6 +123,11 @@ FabServer::SimpleResponse FabServer::startUse(card::uid_t uid, Machine::MachineI
   return reply;
 }
 
+/// @brief Register end of machine usage
+/// @param uid card ID of the machine user
+/// @param mid machine used ID
+/// @param duration_s duration of usage in seconds
+/// @return server response (if request_ok)
 FabServer::SimpleResponse FabServer::finishUse(card::uid_t uid, Machine::MachineID mid, uint16_t duration_s) const
 {
   SimpleResponse reply{false};

@@ -34,6 +34,8 @@ public:
     void update();
     bool authorize(card::uid_t uid);
     void logout();
+    void beep_ok();
+    void beep_failed();
 
     // copy reference
     BoardState &operator=(const BoardState &member) = delete;
@@ -47,5 +49,7 @@ public:
 private:
     Status status;
     FabUser member;
+    static constexpr unsigned short LEDC_CHANNEL = 0U;          /* Esp32 pwm channel for beep generation */
+    static constexpr unsigned short BEEP_DURATION_MS = 250UL;   /* Beep duration in milliseconds */
 };
 #endif

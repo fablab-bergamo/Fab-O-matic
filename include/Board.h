@@ -16,7 +16,7 @@
 #include "MFRC522DriverPinSimple.h"
 #include "MFRC522v2.h"
 
-// Variables
+// Global variables
 namespace Board
 {
     MFRC522DriverPinSimple rfid_simple_driver(pins.mfrc522.sda_pin);
@@ -26,7 +26,7 @@ namespace Board
     LCDWrapper<conf::lcd::COLS, conf::lcd::ROWS>::Config config_lcd(pins.lcd.rs_pin, pins.lcd.en_pin, pins.lcd.d0_pin, pins.lcd.d1_pin, pins.lcd.d2_pin, pins.lcd.d3_pin);
     LCDWrapper<conf::lcd::COLS, conf::lcd::ROWS> lcd(config_lcd);
     
-    FabServer server(secrets::wifi::ssid, secrets::wifi::password);
+    FabServer server(secrets::wifi::ssid, secrets::wifi::password, secrets::wifi::server_ip);
 
     Machine::Config config1(secrets::machine::machine_id,
                              secrets::machine::machine_type, 

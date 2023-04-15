@@ -109,6 +109,7 @@ void loop()
 
     // Acquire the UID of the card
     auto uid = Board::rfid.GetUid();
+
     if (Board::machine.isFree())
     {
       // machine is free

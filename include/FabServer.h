@@ -13,6 +13,7 @@ class FabServer
 private:
   const std::string wifi_ssid;
   const std::string wifi_password;
+  const std::string server_ip;
   bool online;
   WiFiClass WiFiConnection;
 
@@ -36,7 +37,7 @@ public:
     bool request_ok; /* True if the request was processed by the server */
   };
 
-  FabServer(const std::string_view ssid, const std::string_view password);
+  FabServer(const std::string_view ssid, const std::string_view password, const std::string_view server_ip);
   ~FabServer() = default;
 
   UserResponse checkCard(card::uid_t uid) const;

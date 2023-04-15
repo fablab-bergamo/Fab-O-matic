@@ -9,6 +9,7 @@
 #include "Machine.h"
 #include "AuthProvider.h"
 #include "secrets.h"
+#include "pins.h"
 
 namespace Board
 {
@@ -29,6 +30,10 @@ void BoardState::init()
     Serial.println("Initializing RFID...");
     Board::rfid.init();
     delay(100);
+    // Setup buzzer pin for ESP32
+    ledcSetup(BoardState::LEDC_CHANNEL, 440U, 8U);
+    ledcAttachPin(pins.buzzer.buzzer_pin, BoardState::LEDC_CHANNEL);
+
     Serial.println("Board init complete");
 }
 
@@ -135,7 +140,7 @@ void BoardState::update()
     Board::lcd.update_chars(bi);
 }
 
-/// @brief Checks if the card UID is valid, and tries to check the user in to the machine. 
+/// @brief Checks if the card UID is valid, and tries to check the user in to the machine.
 /// @param uid card uid
 /// @return true if the user is now logged on to the machine
 bool BoardState::authorize(card::uid_t uid)
@@ -149,6 +154,7 @@ bool BoardState::authorize(card::uid_t uid)
             if (Board::machine.maintenanceNeeded && conf::machine::MAINTENANCE_BLOCK && member.user_level < FabUser::UserLevel::FABLAB_ADMIN)
             {
                 this->changeStatus(Status::MAINTENANCE_NEEDED);
+                this->beep_failed();
                 return false;
             }
             Board::machine.login(member);
@@ -156,9 +162,11 @@ bool BoardState::authorize(card::uid_t uid)
             Serial.printf("Result startUse: %d\n", result.request_ok);
             this->member = member;
             this->changeStatus(Status::LOGGED_IN);
+            this->beep_ok();
             return true;
         }
         this->changeStatus(Status::NOT_ALLOWED);
+        this->beep_failed();
         return false;
     }
     else
@@ -166,6 +174,7 @@ bool BoardState::authorize(card::uid_t uid)
         Serial.println("Failed login");
     }
     this->changeStatus(Status::LOGIN_DENIED);
+    this->beep_failed();
     return false;
 }
 
@@ -177,6 +186,7 @@ void BoardState::logout()
     Board::machine.logout();
     this->member = FabUser();
     this->changeStatus(Status::LOGOUT);
+    this->beep_ok();
     delay(1000);
 }
 
@@ -192,4 +202,22 @@ BoardState::Status BoardState::getStatus() const
 FabUser BoardState::getUser()
 {
     return this->member;
+}
+
+void BoardState::beep_ok()
+{
+    ledcWriteTone(BoardState::LEDC_CHANNEL, 500UL);
+    delay(BoardState::BEEP_DURATION_MS);
+    ledcWrite(BoardState::LEDC_CHANNEL, 0UL);
+}
+
+void BoardState::beep_failed()
+{
+    constexpr auto NB_BEEPS = 3;
+    for (auto i = 0; i < NB_BEEPS; i++)
+    {
+        ledcWriteTone(BoardState::LEDC_CHANNEL, 330UL);
+        delay(BoardState::BEEP_DURATION_MS);
+        ledcWrite(BoardState::LEDC_CHANNEL, 0UL);
+    }
 }
