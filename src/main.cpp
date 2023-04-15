@@ -65,7 +65,7 @@ void setup()
   delay(100);
   if (!board.init()) 
   {
-    board.changeStatus(BoardState::Status::ERRORE);
+    board.changeStatus(BoardState::Status::ERROR);
   }
   delay(100);
   WiFi.disconnect();

@@ -16,7 +16,7 @@ LCDWrapper<_COLS, _ROWS>::LCDWrapper(Config config) : config(config),
 }
 
 template <uint8_t _COLS, uint8_t _ROWS>
-void LCDWrapper<_COLS, _ROWS>::begin()
+bool LCDWrapper<_COLS, _ROWS>::begin()
 {
   this->lcd.begin(_COLS, _ROWS);
   this->lcd.createChar(CHAR_ANTENNA, this->antenna_char);
@@ -28,6 +28,7 @@ void LCDWrapper<_COLS, _ROWS>::begin()
   char buffer[80] = {0};
   sprintf(buffer, "Configured LCD %d x %d (d4=%d, d5=%d, d6=%d, d7=%d, en=%d, rs=%d)", _COLS, _ROWS, this->config.d0, this->config.d1, this->config.d2, this->config.d3, this->config.enable, this->config.rs);
   Serial.println(buffer);
+  return true;
 }
 
 template <uint8_t _COLS, uint8_t _ROWS>
