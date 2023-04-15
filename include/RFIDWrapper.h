@@ -9,7 +9,7 @@ class RFIDWrapper
 {
 public:
     RFIDWrapper();
-    void init();
+    bool init();
     bool IsNewCardPresent();
     bool ReadCardSerial();
     card::uid_t GetUid() const;

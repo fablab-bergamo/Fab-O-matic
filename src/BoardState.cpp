@@ -22,19 +22,21 @@ namespace Board
 }
 
 /// @brief Initializes LCD and RFID classes
-void BoardState::init()
+bool BoardState::init()
 {
+    
     Serial.println("Initializing LCD...");
-    Board::lcd.begin();
+    bool success = Board::lcd.begin();
     delay(100);
     Serial.println("Initializing RFID...");
-    Board::rfid.init();
+    success &= Board::rfid.init();
     delay(100);
     // Setup buzzer pin for ESP32
-    ledcSetup(BoardState::LEDC_CHANNEL, 440U, 8U);
+    success &= (ledcSetup(BoardState::LEDC_CHANNEL, 660U, 10U) != 0);
     ledcAttachPin(pins.buzzer.buzzer_pin, BoardState::LEDC_CHANNEL);
 
-    Serial.println("Board init complete");
+    Serial.printf("Board init complete, success = %d\n", success);
+    return success;
 }
 
 /// @brief Sets the board in the state given.
@@ -145,9 +147,8 @@ void BoardState::update()
 /// @return true if the user is now logged on to the machine
 bool BoardState::authorize(card::uid_t uid)
 {
-    FabUser member;
     this->changeStatus(Status::VERIFYING);
-    if (Board::auth.tryLogin(uid, member))
+    if (Board::auth.tryLogin(uid, this->member))
     {
         if (Board::machine.allowed)
         {
@@ -206,7 +207,7 @@ FabUser BoardState::getUser()
 
 void BoardState::beep_ok()
 {
-    ledcWriteTone(BoardState::LEDC_CHANNEL, 500UL);
+    ledcWriteTone(BoardState::LEDC_CHANNEL, 660UL);
     delay(BoardState::BEEP_DURATION_MS);
     ledcWrite(BoardState::LEDC_CHANNEL, 0UL);
 }
@@ -219,5 +220,6 @@ void BoardState::beep_failed()
         ledcWriteTone(BoardState::LEDC_CHANNEL, 330UL);
         delay(BoardState::BEEP_DURATION_MS);
         ledcWrite(BoardState::LEDC_CHANNEL, 0UL);
+        delay(BoardState::BEEP_DURATION_MS);
     }
 }

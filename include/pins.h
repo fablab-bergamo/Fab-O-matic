@@ -42,6 +42,6 @@ struct pins_config
 constexpr pins_config pins{{5U, 11U, 12U, 13U, 4U}, {13U, 12U, 14U, 27U, 26U, 25U, 9U}, {2U, 4U}, {17U}};
 #endif
 #ifdef PINS_ESP32S3
-constexpr pins_config pins{{1U, 8U, 3U, 18U, 17U}, {5U, 4U, 6U, 7U, 15U, 16U, 12U}, {10U, 11U}, {17U}};
+constexpr pins_config pins{{17U, 8U, 3U, 18U, 12U}, {5U, 4U, 6U, 7U, 15U, 16U, 12U}, {10U, 11U}, {9U}};
 #endif
 #endif

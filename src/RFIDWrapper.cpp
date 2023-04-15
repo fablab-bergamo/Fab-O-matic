@@ -38,17 +38,25 @@ card::uid_t RFIDWrapper::GetUid() const
 }
 
 /// @brief Initializes RFID chip including self test
-void RFIDWrapper::init()
+bool RFIDWrapper::init()
 {
-    Board::mfrc522.PCD_Init();
-    delay(10);
-    MFRC522Debug::PCD_DumpVersionToSerial(Board::mfrc522, Serial);
-    delay(10);
     char buffer[80] = {0};
-    sprintf(buffer, "Configured SPI RFID (SCK=%d, MISO=%d, MOSI=%d, SDA=%d)", pins.mfrc522.sck_pin, pins.mfrc522.miso_pin, pins.mfrc522.mosi_pin, pins.mfrc522.sda_pin);
+    sprintf(buffer, "Configuring SPI RFID (SCK=%d, MISO=%d, MOSI=%d, SDA=%d)", pins.mfrc522.sck_pin, pins.mfrc522.miso_pin, pins.mfrc522.mosi_pin, pins.mfrc522.sda_pin);
     Serial.println(buffer);
+
+    if (!Board::mfrc522.PCD_Init())
+    {
+        Serial.println("mfrc522 Init failed");
+        return false;
+    }
+
+    MFRC522Debug::PCD_DumpVersionToSerial(Board::mfrc522, Serial);
     Board::mfrc522.PCD_SetAntennaGain(MFRC522::PCD_RxGain::RxGain_max);
-    delay(10);
+
     if (!Board::mfrc522.PCD_PerformSelfTest())
+    {
         Serial.println("Self-test failure for RFID");
+        return false;
+    }
+    return true;
 }

@@ -97,11 +97,11 @@ void Machine::power(bool value)
   Serial.printf("Power set to %d\n", value);
   if (this->config.control_pin_active_low)
   {
-    digitalWrite(this->config.control_pin, value ? HIGH : LOW);
+    digitalWrite(this->config.control_pin, value ? LOW : HIGH);
   }
   else
   {
-    digitalWrite(this->config.control_pin, value ? LOW : HIGH);
+    digitalWrite(this->config.control_pin, value ? HIGH : LOW);
   }
 
   if (value)

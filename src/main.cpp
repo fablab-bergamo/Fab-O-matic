@@ -63,7 +63,10 @@ void setup()
   Serial.begin(115200); // Initialize serial communications with the PC for debugging.
   Serial.println("Starting setup!");
   delay(100);
-  board.init();
+  if (!board.init()) 
+  {
+    board.changeStatus(BoardState::Status::ERRORE);
+  }
   delay(100);
   WiFi.disconnect();
   WiFi.mode(WIFI_STA);

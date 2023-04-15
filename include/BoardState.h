@@ -29,7 +29,7 @@ public:
     Status getStatus() const;
     FabUser getUser();
 
-    void init();
+    bool init();
     void changeStatus(Status newStatus);
     void update();
     bool authorize(card::uid_t uid);

@@ -38,7 +38,7 @@ public:
 
   LCDWrapper(Config config);
 
-  void begin();
+  bool begin();
   void clear();
   void showConnection(bool show);
   void showPower(bool show);
