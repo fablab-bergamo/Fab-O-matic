@@ -1,5 +1,5 @@
-#ifndef _CONF_H_
-#define _CONF_H_
+#ifndef CONF_H_
+#define CONF_H_
 
 #include <cstdint>
 #include <string>
@@ -30,4 +30,4 @@ namespace conf
         constexpr uint16_t REFRESH_PERIOD_SECONDS = 60; /* Notify the server every X seconds */
     }
 }
-#endif
+#endif  // CONF_H_

@@ -10,18 +10,22 @@ namespace Board
   extern FabServer server;
 }
 
+AuthProvider::AuthProvider(WhiteList whitelist) : whitelist(whitelist) {}
+
 /// @brief Checks if the cache contains the card ID, and uses that if available
 /// @param uid card id
 /// @return FabUser if found
 std::optional<FabUser> AuthProvider::is_in_cache(card::uid_t uid) const
 {
-  auto elem = std::find_if(this->cache.begin(), this->cache.end(), 
-                          [uid](const auto& input){return input.card_uid == uid;});
-  
-  if (elem == end(this->cache)) {
+  auto elem = std::find_if(this->cache.begin(), this->cache.end(),
+                           [uid](const auto &input)
+                           { return input.card_uid == uid; });
+
+  if (elem == end(this->cache))
+  {
     return {};
   }
-  
+
   return {*elem};
 }
 
@@ -81,7 +85,7 @@ std::optional<FabUser> AuthProvider::tryLogin(card::uid_t uid) const
   {
     if (auto result = this->WhiteListLookup(uid))
     {
-      auto [card,level,name] = result.value();
+      auto [card, level, name] = result.value();
       member.authenticated = true;
       member.card_uid = card;
       member.user_level = level;
@@ -99,12 +103,14 @@ std::optional<FabUser> AuthProvider::tryLogin(card::uid_t uid) const
 /// @return a whitelistentry object if the card is found in whitelist
 std::optional<WhiteListEntry> AuthProvider::WhiteListLookup(card::uid_t uid) const
 {
-  auto elem = std::find_if(this->whitelist.begin(), this->whitelist.end(), 
-                          [uid](const auto& input){return std::get<0>(input) == uid;});
-  
-  if (elem == end(this->whitelist)) {
+  auto elem = std::find_if(this->whitelist.begin(), this->whitelist.end(),
+                           [uid](const auto &input)
+                           { return std::get<0>(input) == uid; });
+
+  if (elem == end(this->whitelist))
+  {
     return {};
   }
-  
+
   return {*elem};
 }

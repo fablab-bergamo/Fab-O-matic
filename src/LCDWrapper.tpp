@@ -16,23 +16,34 @@ LCDWrapper<_COLS, _ROWS>::LCDWrapper(Config config) : config(config),
 }
 
 template <uint8_t _COLS, uint8_t _ROWS>
+void LCDWrapper<_COLS, _ROWS>::createChar(uint8_t num, const uint8_t values[8])
+{
+  // LCD library only reads uint8_t* but did not flag const
+  this->lcd.createChar(num, const_cast<uint8_t *>(values));
+}
+
+template <uint8_t _COLS, uint8_t _ROWS>
 bool LCDWrapper<_COLS, _ROWS>::begin()
 {
   this->lcd.begin(_COLS, _ROWS);
-  this->lcd.createChar(CHAR_ANTENNA, this->antenna_char);
-  this->lcd.createChar(CHAR_CONNECTION, this->connection_char);
-  this->lcd.createChar(CHAR_NO_CONNECTION, this->noconnection_char);
-  this->lcd.createChar(CHAR_POWERED_OFF, this->powered_off_char);
-  this->lcd.createChar(CHAR_POWERED_ON, this->powered_on_char);
-  this->lcd.createChar(CHAR_POWERING_OFF, this->powering_off_char);
+  createChar(CHAR_ANTENNA, this->antenna_char);
+  createChar(CHAR_CONNECTION, this->connection_char);
+  createChar(CHAR_NO_CONNECTION, this->noconnection_char);
+  createChar(CHAR_POWERED_OFF, this->powered_off_char);
+  createChar(CHAR_POWERED_ON, this->powered_on_char);
+  createChar(CHAR_POWERING_OFF, this->powering_off_char);
+
+  if (this->config.backlight_pin != NO_PIN)
+    pinMode(this->config.backlight_pin, OUTPUT);
+
   char buffer[80] = {0};
-  sprintf(buffer, "Configured LCD %d x %d (d4=%d, d5=%d, d6=%d, d7=%d, en=%d, rs=%d)", _COLS, _ROWS, this->config.d0, this->config.d1, this->config.d2, this->config.d3, this->config.enable, this->config.rs);
+  sprintf(buffer, "Configured LCD %d x %d (d4=%d, d5=%d, d6=%d, d7=%d, en=%d, rs=%d), backlight=%d", _COLS, _ROWS, this->config.d0, this->config.d1, this->config.d2, this->config.d3, this->config.enable, this->config.rs, this->config.backlight_pin);
   Serial.println(buffer);
   return true;
 }
 
 template <uint8_t _COLS, uint8_t _ROWS>
-std::string LCDWrapper<_COLS, _ROWS>::convertSecondsToHHMMSS(unsigned long milliseconds)
+std::string LCDWrapper<_COLS, _ROWS>::convertSecondsToHHMMSS(unsigned long milliseconds) const
 {
   //! since something something does not support to_string we have to resort to ye olde cstring stuff
   char buffer[9];
@@ -129,7 +140,7 @@ bool LCDWrapper<_COLS, _ROWS>::needsUpdate(BoardInfo bi)
 }
 
 template <uint8_t _COLS, uint8_t _ROWS>
-void LCDWrapper<_COLS, _ROWS>::pretty_print(std::array<std::array<char, _COLS>, _ROWS> buffer)
+void LCDWrapper<_COLS, _ROWS>::pretty_print(const std::array<std::array<char, _COLS>, _ROWS> buffer) const
 {
   // LCD upper border
   Serial.print("/");
@@ -162,7 +173,7 @@ void LCDWrapper<_COLS, _ROWS>::pretty_print(std::array<std::array<char, _COLS>, 
 }
 
 template <uint8_t _COLS, uint8_t _ROWS>
-void LCDWrapper<_COLS, _ROWS>::setRow(uint8_t row, std::string text)
+void LCDWrapper<_COLS, _ROWS>::setRow(uint8_t row, const std::string_view text)
 {
   if (row < _ROWS)
   {
@@ -172,4 +183,18 @@ void LCDWrapper<_COLS, _ROWS>::setRow(uint8_t row, std::string text)
       this->buffer[row][i] = text[i];
     }
   }
+}
+
+template <uint8_t _COLS, uint8_t _ROWS>
+void LCDWrapper<_COLS, _ROWS>::backlightOn() const
+{
+  if (this->config.backlight_pin != NO_PIN)
+    digitalWrite(this->config.backlight_pin, this->config.backlight_active_low ? 0 : 1);
+}
+
+template <uint8_t _COLS, uint8_t _ROWS>
+void LCDWrapper<_COLS, _ROWS>::backlightOff() const
+{
+  if (this->config.backlight_pin != NO_PIN)
+    digitalWrite(this->config.backlight_pin, this->config.backlight_active_low ? 1 : 0);
 }

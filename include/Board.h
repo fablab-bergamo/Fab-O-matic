@@ -1,5 +1,5 @@
-#ifndef _BOARD_H_
-#define _BOARD_H_
+#ifndef BOARD_H_
+#define BOARD_H_
 
 #include "FabUser.h"
 #include "FabServer.h"
@@ -19,21 +19,18 @@
 // Global variables
 namespace Board
 {
-    MFRC522DriverPinSimple rfid_simple_driver(pins.mfrc522.sda_pin);
-    MFRC522DriverSPI spi_rfid_driver{rfid_simple_driver}; // Create SPI driver.
-    MFRC522 mfrc522{spi_rfid_driver};                     // Create MFRC522 instance.
     RFIDWrapper rfid;
-    LCDWrapper<conf::lcd::COLS, conf::lcd::ROWS>::Config config_lcd(pins.lcd.rs_pin, pins.lcd.en_pin, pins.lcd.d0_pin, pins.lcd.d1_pin, pins.lcd.d2_pin, pins.lcd.d3_pin);
+    LCDWrapper<conf::lcd::COLS, conf::lcd::ROWS>::Config config_lcd(pins.lcd, false);
     LCDWrapper<conf::lcd::COLS, conf::lcd::ROWS> lcd(config_lcd);
-    
+
     FabServer server(secrets::wifi::ssid, secrets::wifi::password, secrets::wifi::server_ip);
 
     Machine::Config config1(secrets::machine::machine_id,
-                             secrets::machine::machine_type, 
-                             secrets::machine::machine_name, 
-                             pins.relay.ch1_pin, false);
-    
+                            secrets::machine::machine_type,
+                            secrets::machine::machine_name,
+                            pins.relay.ch1_pin, false);
+
     Machine machine(config1);
     AuthProvider auth(secrets::cards::whitelist);
-}
-#endif
+} // namespace Board
+#endif // BOARD_H_

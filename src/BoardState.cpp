@@ -151,7 +151,7 @@ void BoardState::update()
         Board::lcd.setRow(1, buffer);
         break;
     }
-    BoardInfo bi = {Board::server.isOnline(), Board::machine.getPowerState(), Board::machine.shutdownWarning()};
+    BoardInfo bi = {Board::server.isOnline(), Board::machine.getPowerState(), Board::machine.isShutdownPending()};
     Board::lcd.update_chars(bi);
 }
 
@@ -248,14 +248,14 @@ FabUser BoardState::getUser()
     return this->member;
 }
 
-void BoardState::beep_ok()
+void BoardState::beep_ok() const
 {
     ledcWriteTone(BoardState::LEDC_CHANNEL, BoardState::BEEP_HZ);
     delay(BoardState::BEEP_DURATION_MS);
     ledcWrite(BoardState::LEDC_CHANNEL, 0UL);
 }
 
-void BoardState::beep_failed()
+void BoardState::beep_failed() const
 {
     constexpr auto NB_BEEPS = 3;
     for (auto i = 0; i < NB_BEEPS; i++)

@@ -155,7 +155,7 @@ void loop()
     {
       board.changeStatus(BoardState::Status::FREE);
 
-      if (Board::machine.shutdownWarning())
+      if (Board::machine.isShutdownPending())
       {
         // TODO : beep
       }

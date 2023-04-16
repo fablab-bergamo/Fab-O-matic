@@ -81,7 +81,7 @@ bool Machine::canPowerOff() const
           millis() - this->logout_timestamp > conf::machine::POWEROFF_DELAY_MINUTES * 60 * 1000);
 }
 
-bool Machine::shutdownWarning() const
+bool Machine::isShutdownPending() const
 {
   if (this->logout_timestamp == 0)
     return false;

@@ -1,13 +1,13 @@
-#ifndef _CARD_H_
-#define _CARD_H_
+#ifndef CARD_H_
+#define CARD_H_
 
 #include "Arduino.h"
 
 namespace card
 {
-  typedef u_int64_t uid_t;
+  using uid_t = u_int64_t;
   static constexpr uid_t INVALID = 0ULL;
-  inline std::string uid_str(card::uid_t uid)
+  inline std::string uid_str(const card::uid_t uid)
   {
     uint64_t number = static_cast<uint64_t>(uid);
     uint32_t long1 = static_cast<uint32_t>(number & 0xFFFF0000) >> 16;
@@ -21,7 +21,7 @@ namespace card
     return output;
   }
 
-  inline uid_t from_array(const uint8_t uid[conf::whitelist::UID_BYTE_LEN]) 
+  inline uid_t from_array(const uint8_t uid[conf::whitelist::UID_BYTE_LEN])
   {
     card::uid_t result = card::INVALID;
     for (auto i = (conf::whitelist::UID_BYTE_LEN - 1); i >= 0; i--)
@@ -32,4 +32,4 @@ namespace card
     return result;
   }
 }
-#endif
+#endif  // CARD_H_

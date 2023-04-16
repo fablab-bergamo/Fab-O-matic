@@ -1,5 +1,5 @@
-#ifndef _BOARDSTATE_H_
-#define _BOARDSTATE_H_
+#ifndef BOARDSTATE_H_
+#define BOARDSTATE_H_
 
 #include "FabUser.h"
 #include "Arduino.h"
@@ -35,10 +35,10 @@ public:
     bool init();
     void changeStatus(Status newStatus);
     void update();
-    bool authorize(card::uid_t uid);
+    bool authorize(const card::uid_t uid);
     void logout();
-    void beep_ok();
-    void beep_failed();
+    void beep_ok() const;
+    void beep_failed() const;
 
     // copy reference
     BoardState &operator=(const BoardState &member) = delete;
@@ -52,8 +52,8 @@ public:
 private:
     Status status;
     FabUser member;
-    static constexpr unsigned short LEDC_CHANNEL = 0U;          /* Esp32 pwm channel for beep generation */
-    static constexpr unsigned short BEEP_DURATION_MS = 200UL;   /* Beep duration in milliseconds */
+    static constexpr unsigned short LEDC_CHANNEL = 0U;        /* Esp32 pwm channel for beep generation */
+    static constexpr unsigned short BEEP_DURATION_MS = 200UL; /* Beep duration in milliseconds */
     static constexpr unsigned int BEEP_HZ = 660U;
 };
-#endif
+#endif // BOARDSTATE_H_
