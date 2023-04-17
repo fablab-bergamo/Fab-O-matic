@@ -86,6 +86,7 @@ void loop()
   if (millis() - last_server_poll > conf::server::REFRESH_PERIOD_SECONDS * 1000)
   {
     Serial.printf("Free heap:%d bytes\n", ESP.getFreeHeap());
+    Serial.printf("Current machine status:%s\n", Board::machine.toString().c_str());
     if (Board::server.isOnline())
     {
       // Get machine data from the server

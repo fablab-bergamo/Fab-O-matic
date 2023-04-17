@@ -59,7 +59,8 @@ public:
 
   bool operator==(const Machine &v) const;
   bool operator!=(const Machine &v) const;
-
+  std::string toString() const;
+  
 private:
   const Config config;
   bool active;

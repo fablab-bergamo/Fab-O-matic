@@ -74,7 +74,7 @@ std::optional<FabUser> AuthProvider::tryLogin(card::uid_t uid) const
       member.user_level = response.user_level;
       // Cache the positive result
       this->add_in_cache(member.card_uid, member.holder_name, response.user_level);
-      Serial.printf(" -> online check OK (%s)\n", member.to_string().c_str());
+      Serial.printf(" -> online check OK (%s)\n", member.toString().c_str());
       return member;
     }
     member.authenticated = false;
@@ -90,7 +90,7 @@ std::optional<FabUser> AuthProvider::tryLogin(card::uid_t uid) const
       member.card_uid = card;
       member.user_level = level;
       member.holder_name = name;
-      Serial.printf(" -> whilelist check OK (%s)\n", member.to_string().c_str());
+      Serial.printf(" -> whilelist check OK (%s)\n", member.toString().c_str());
       return member;
     }
   }

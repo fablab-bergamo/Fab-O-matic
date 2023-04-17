@@ -1,7 +1,8 @@
 #include "Machine.h"
 #include "Arduino.h"
-
+#include <sstream>
 #include <cstdint>
+#include <type_traits>
 
 /// @brief Creates a new machine
 /// @param user_conf configuration of the machine
@@ -142,4 +143,19 @@ bool Machine::operator!=(const Machine &v) const
 std::string Machine::getMachineName() const
 {
   return this->config.machine_name;
+}
+
+std::string Machine::toString() const
+{
+  std::stringstream sstream;
+  
+  sstream << "Machine (ID:" << this->getMachineId().id;
+  sstream << ", Name:" << this->getMachineName();
+  sstream << ", IsFree: " << this->isFree();
+  sstream << ", IsAllowed:" << this->allowed;
+  sstream << ", PowerState:" << static_cast<int>(this->getPowerState());
+  sstream << ", " << this->current_user.toString();
+  sstream << ")";
+
+  return sstream.str();
 }
