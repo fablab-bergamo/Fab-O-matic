@@ -86,4 +86,5 @@ private:
   void createChar(uint8_t char_idx, const uint8_t values[8]);
 };
 
+#include "LCDWrapper.tpp"
 #endif // LCDWRAPPER_H_
