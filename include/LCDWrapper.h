@@ -72,17 +72,16 @@ private:
   LiquidCrystal lcd;
   bool show_connection_status;
   bool show_power_status;
-
-  void backlightOn() const;
-  void backlightOff() const;
-
+  bool forceUpdate;
   std::array<std::array<char, _COLS>, _ROWS> buffer;
   std::array<std::array<char, _COLS>, _ROWS> current;
   BoardInfo boardInfo;
 
-  bool needsUpdate(const BoardInfo bi);
-  bool forceUpdate;
-  void pretty_print(const std::array<std::array<char, _COLS>, _ROWS> buffer) const;
+  void backlightOn() const;
+  void backlightOff() const;
+  void prettyPrint(const std::array<std::array<char, _COLS>, _ROWS> buffer) const;
+  bool needsUpdate(const BoardInfo bi) const;
+  
   void createChar(uint8_t char_idx, const uint8_t values[8]);
 };
 

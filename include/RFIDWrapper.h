@@ -14,14 +14,15 @@ private:
     MFRC522 *mfrc522;
     MFRC522DriverPinSimple *rfid_simple_driver;
     MFRC522DriverSPI *spi_rfid_driver;
+
 public:
     RFIDWrapper();
     ~RFIDWrapper();
 
     bool init() const;
-    bool IsNewCardPresent() const;
-    bool ReadCardSerial() const;
-    card::uid_t GetUid() const;
+    bool isNewCardPresent() const;
+    bool readCardSerial() const;
+    card::uid_t getUid() const;
 };
 
 #endif // RFIDWRAPPER_H_

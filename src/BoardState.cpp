@@ -196,7 +196,7 @@ bool BoardState::authorize(card::uid_t uid)
             // User must leave the card for 3s before it's recognized
             delay(3000);
 
-            if (Board::rfid.ReadCardSerial() && Board::rfid.GetUid() == this->member.card_uid)
+            if (Board::rfid.readCardSerial() && Board::rfid.getUid() == this->member.card_uid)
             {
                 auto response = Board::server.registerMaintenance(this->member.card_uid, Board::machine.getMachineId());
                 if (response.request_ok)

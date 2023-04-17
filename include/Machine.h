@@ -26,15 +26,15 @@ public:
   };
   struct MachineID
   {
-    uint16_t id;
+    const uint16_t id;
   };
   struct Config
   {
-    MachineID machine_id{0};
-    MachineType machine_type{MachineType::INVALID};
-    std::string machine_name;
-    uint8_t control_pin{0};
-    bool control_pin_active_low{false};
+    const MachineID machine_id{0};
+    const MachineType machine_type{MachineType::INVALID};
+    const std::string machine_name;
+    const uint8_t control_pin{0};
+    const bool control_pin_active_low{false};
     Config(MachineID id, MachineType type, std::string_view name, uint8_t pin, bool act_low) : machine_id(id), machine_type(type), machine_name(name), control_pin(pin), control_pin_active_low(act_low) {}
   };
 

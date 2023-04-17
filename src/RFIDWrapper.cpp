@@ -23,19 +23,19 @@ RFIDWrapper::~RFIDWrapper()
     delete(this->rfid_simple_driver);
 }
 
-bool RFIDWrapper::IsNewCardPresent() const
+bool RFIDWrapper::isNewCardPresent() const
 {
     return this->mfrc522->PICC_IsNewCardPresent();
 }
 
-bool RFIDWrapper::ReadCardSerial() const
+bool RFIDWrapper::readCardSerial() const
 {
     return this->mfrc522->PICC_ReadCardSerial();
 }
 
 /// @brief Transforms the RFID acquired bytes into a uid_id object
 /// @return card ID
-card::uid_t RFIDWrapper::GetUid() const
+card::uid_t RFIDWrapper::getUid() const
 {
     uint8_t arr[conf::whitelist::UID_BYTE_LEN];
     memcpy(arr, this->mfrc522->uid.uidByte, conf::whitelist::UID_BYTE_LEN);

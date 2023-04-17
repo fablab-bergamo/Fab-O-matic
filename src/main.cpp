@@ -100,11 +100,11 @@ void loop()
   }
 
   // check if there is a card
-  if (Board::rfid.IsNewCardPresent())
+  if (Board::rfid.isNewCardPresent())
   {
     Serial.println("New card present");
     // if there is a "new" card (could be the same that stayed in the field)
-    if (!Board::rfid.ReadCardSerial() || !ready_for_a_new_card)
+    if (!Board::rfid.readCardSerial() || !ready_for_a_new_card)
     {
       return;
     }
@@ -112,7 +112,7 @@ void loop()
     ready_for_a_new_card = false;
 
     // Acquire the UID of the card
-    auto uid = Board::rfid.GetUid();
+    auto uid = Board::rfid.getUid();
 
     if (Board::machine.isFree())
     {
