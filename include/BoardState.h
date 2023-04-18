@@ -49,6 +49,10 @@ public:
     // move assignment
     BoardState &operator=(BoardState &&) = default;
 
+    u_int16_t no_card_cpt = 0;
+    unsigned long last_server_poll = 1;
+    bool ready_for_a_new_card = true;
+
 private:
     Status status;
     FabUser member;

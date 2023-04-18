@@ -50,7 +50,7 @@ public:
   void showPower(bool show);
   void setRow(uint8_t row, const std::string_view text);
   std::string convertSecondsToHHMMSS(unsigned long millis) const;
-  void update_chars(const BoardInfo boardinfo);
+  void update_chars(const BoardInfo &boardinfo);
 
 private:
   static constexpr uint8_t CHAR_ANTENNA = 0;
@@ -79,8 +79,8 @@ private:
 
   void backlightOn() const;
   void backlightOff() const;
-  void prettyPrint(const std::array<std::array<char, _COLS>, _ROWS> buffer) const;
-  bool needsUpdate(const BoardInfo bi) const;
+  void prettyPrint(const std::array<std::array<char, _COLS>, _ROWS> &buffer) const;
+  bool needsUpdate(const BoardInfo &bi) const;
   
   void createChar(uint8_t char_idx, const uint8_t values[8]);
 };

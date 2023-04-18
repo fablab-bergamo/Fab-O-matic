@@ -63,7 +63,7 @@ void LCDWrapper<_COLS, _ROWS>::clear()
 }
 
 template <uint8_t _COLS, uint8_t _ROWS>
-void LCDWrapper<_COLS, _ROWS>::update_chars(BoardInfo info)
+void LCDWrapper<_COLS, _ROWS>::update_chars(const BoardInfo &info)
 {
   if (this->needsUpdate(info))
   {
@@ -131,7 +131,7 @@ void LCDWrapper<_COLS, _ROWS>::showPower(bool show)
 }
 
 template <uint8_t _COLS, uint8_t _ROWS>
-bool LCDWrapper<_COLS, _ROWS>::needsUpdate(BoardInfo bi) const
+bool LCDWrapper<_COLS, _ROWS>::needsUpdate(const BoardInfo &bi) const
 {
   if (this->current != this->buffer || !(bi == this->boardInfo) || forceUpdate)
   {
@@ -142,14 +142,14 @@ bool LCDWrapper<_COLS, _ROWS>::needsUpdate(BoardInfo bi) const
 }
 
 template <uint8_t _COLS, uint8_t _ROWS>
-void LCDWrapper<_COLS, _ROWS>::prettyPrint(const std::array<std::array<char, _COLS>, _ROWS> buffer) const
+void LCDWrapper<_COLS, _ROWS>::prettyPrint(const std::array<std::array<char, _COLS>, _ROWS> &buffer) const
 {
   // LCD upper border
   Serial.print("/");
   for (auto i = 0; i < _COLS; i++)
     Serial.print("-");
   Serial.println("\\");
-
+  
   for (auto i = 0; i < _ROWS; i++)
   {
     Serial.print("|"); // LCD left border
