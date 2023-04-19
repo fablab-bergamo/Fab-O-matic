@@ -23,7 +23,7 @@ std::optional<FabUser> AuthProvider::is_in_cache(card::uid_t uid) const
 
   if (elem == end(this->cache))
   {
-    return {};
+    return std::nullopt;
   }
 
   return {*elem};
@@ -56,8 +56,9 @@ void AuthProvider::add_in_cache(card::uid_t uid, std::string name, FabUser::User
 /// @return false if the user was not found on server or whitelist
 std::optional<FabUser> AuthProvider::tryLogin(card::uid_t uid) const
 {
-  FabUser member(uid, "???", false, FabUser::UserLevel::UNKNOWN);
-  std::string uid_str = card::uid_str(member.card_uid);
+  FabUser member;
+  std::string uid_str = card::uid_str(uid);
+
   Serial.printf("tryLogin called for %s\n", uid_str.c_str());
 
   if (!Board::server.isOnline())
@@ -69,11 +70,11 @@ std::optional<FabUser> AuthProvider::tryLogin(card::uid_t uid) const
     if (response.request_ok && response.request_ok)
     {
       member.authenticated = true;
-      member.holder_name = response.holder_name;
       member.card_uid = uid;
+      member.holder_name = response.holder_name;
       member.user_level = response.user_level;
       // Cache the positive result
-      this->add_in_cache(member.card_uid, member.holder_name, response.user_level);
+      this->add_in_cache(uid, member.holder_name, response.user_level);
       Serial.printf(" -> online check OK (%s)\n", member.toString().c_str());
       return member;
     }
@@ -86,8 +87,8 @@ std::optional<FabUser> AuthProvider::tryLogin(card::uid_t uid) const
     if (auto result = this->WhiteListLookup(uid))
     {
       auto [card, level, name] = result.value();
-      member.authenticated = true;
       member.card_uid = card;
+      member.authenticated = true;
       member.user_level = level;
       member.holder_name = name;
       Serial.printf(" -> whilelist check OK (%s)\n", member.toString().c_str());
@@ -109,7 +110,7 @@ std::optional<WhiteListEntry> AuthProvider::WhiteListLookup(card::uid_t uid) con
 
   if (elem == end(this->whitelist))
   {
-    return {};
+    return std::nullopt;
   }
 
   return {*elem};
