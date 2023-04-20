@@ -6,21 +6,17 @@
 #include "MFRC522Debug.h"
 #include "conf.h"
 #include "card.h"
-
+#include <memory>
 
 RFIDWrapper::RFIDWrapper()
 {
+    // Configure SPI bus
     SPI.begin(pins.mfrc522.sck_pin, pins.mfrc522.miso_pin, pins.mfrc522.mosi_pin, pins.mfrc522.sda_pin);
-    this->rfid_simple_driver = new MFRC522DriverPinSimple(pins.mfrc522.sda_pin);
-    this->spi_rfid_driver = new MFRC522DriverSPI(*this->rfid_simple_driver); // Create SPI driver.
-    this->mfrc522 = new MFRC522(*this->spi_rfid_driver);
-}
 
-RFIDWrapper::~RFIDWrapper()
-{
-    delete(this->mfrc522);
-    delete(this->spi_rfid_driver);
-    delete(this->rfid_simple_driver);
+    // Smart pointers members destructors will run & free the memory, when class will be distructed.
+    this->rfid_simple_driver = std::unique_ptr<MFRC522DriverPinSimple>(new MFRC522DriverPinSimple(pins.mfrc522.sda_pin));
+    this->spi_rfid_driver = std::unique_ptr<MFRC522DriverSPI>(new MFRC522DriverSPI(*this->rfid_simple_driver)); // Create SPI driver.
+    this->mfrc522 = std::unique_ptr<MFRC522>(new MFRC522(*this->spi_rfid_driver));
 }
 
 bool RFIDWrapper::isNewCardPresent() const
