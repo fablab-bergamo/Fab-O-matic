@@ -8,9 +8,9 @@
 #include "Machine.h"
 
 template <uint8_t _COLS, uint8_t _ROWS>
-LCDWrapper<_COLS, _ROWS>::LCDWrapper(Config config) : config(config),
-                                                      lcd(config.rs, config.enable, config.d0, config.d1, config.d2, config.d3),
-                                                      show_connection_status(true), show_power_status(true), forceUpdate(true)
+LCDWrapper<_COLS, _ROWS>::LCDWrapper(const pins_config::lcd_config &config) : config(config),
+                                                                              lcd(config.rs_pin, config.en_pin, config.d0_pin, config.d1_pin, config.d2_pin, config.d3_pin),
+                                                                              show_connection_status(true), show_power_status(true), forceUpdate(true)
 {
   buffer.fill({0});
   current.fill({0});
@@ -34,13 +34,15 @@ bool LCDWrapper<_COLS, _ROWS>::begin()
   createChar(CHAR_POWERED_ON, this->powered_on_char);
   createChar(CHAR_POWERING_OFF, this->powering_off_char);
 
-  if (this->config.backlight_pin != NO_PIN)
-    pinMode(this->config.backlight_pin, OUTPUT);
+  if (this->config.bl_pin != NO_PIN)
+    pinMode(this->config.bl_pin, OUTPUT);
 
   this->backlightOn();
 
   char buffer[80] = {0};
-  sprintf(buffer, "Configured LCD %d x %d (d4=%d, d5=%d, d6=%d, d7=%d, en=%d, rs=%d), backlight=%d", _COLS, _ROWS, this->config.d0, this->config.d1, this->config.d2, this->config.d3, this->config.enable, this->config.rs, this->config.backlight_pin);
+  sprintf(buffer, "Configured LCD %d x %d (d4=%d, d5=%d, d6=%d, d7=%d, en=%d, rs=%d), backlight=%d", _COLS, _ROWS,
+          this->config.d0_pin, this->config.d1_pin, this->config.d2_pin, this->config.d3_pin,
+          this->config.en_pin, this->config.rs_pin, this->config.bl_pin);
   Serial.println(buffer);
   return true;
 }
@@ -192,13 +194,13 @@ void LCDWrapper<_COLS, _ROWS>::setRow(uint8_t row, const std::string_view text)
 template <uint8_t _COLS, uint8_t _ROWS>
 void LCDWrapper<_COLS, _ROWS>::backlightOn() const
 {
-  if (this->config.backlight_pin != NO_PIN)
-    digitalWrite(this->config.backlight_pin, this->config.backlight_active_low ? 0 : 1);
+  if (this->config.bl_pin != NO_PIN)
+    digitalWrite(this->config.bl_pin, this->config.active_low ? 0 : 1);
 }
 
 template <uint8_t _COLS, uint8_t _ROWS>
 void LCDWrapper<_COLS, _ROWS>::backlightOff() const
 {
-  if (this->config.backlight_pin != NO_PIN)
-    digitalWrite(this->config.backlight_pin, this->config.backlight_active_low ? 1 : 0);
+  if (this->config.bl_pin != NO_PIN)
+    digitalWrite(this->config.bl_pin, this->config.active_low ? 1 : 0);
 }

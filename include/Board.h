@@ -20,8 +20,7 @@
 namespace Board
 {
     RFIDWrapper rfid;
-    LCDWrapper<conf::lcd::COLS, conf::lcd::ROWS>::Config config_lcd(pins.lcd, false);
-    LCDWrapper<conf::lcd::COLS, conf::lcd::ROWS> lcd(config_lcd);
+    LCDWrapper<conf::lcd::COLS, conf::lcd::ROWS> lcd(pins.lcd);
 
     FabServer server(secrets::wifi::ssid, secrets::wifi::password, secrets::wifi::server_ip);
 

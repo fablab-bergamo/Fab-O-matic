@@ -24,25 +24,7 @@ template <uint8_t _COLS, uint8_t _ROWS>
 class LCDWrapper
 {
 public:
-  struct Config
-  {
-    const uint8_t rs;
-    const uint8_t enable;
-    const uint8_t d0;
-    const uint8_t d1;
-    const uint8_t d2;
-    const uint8_t d3;
-    const uint8_t backlight_pin;
-    const bool backlight_active_low;
-
-    Config(pins_config::lcd_config lcd_conf, bool backlight_active_low = false) : d0(lcd_conf.d0_pin), d1(lcd_conf.d1_pin), d2(lcd_conf.d2_pin), d3(lcd_conf.d3_pin),
-                                                                                  backlight_pin(lcd_conf.bl_pin),
-                                                                                  backlight_active_low(backlight_active_low),
-                                                                                  enable(lcd_conf.en_pin),
-                                                                                  rs(lcd_conf.rs_pin){};
-  };
-
-  LCDWrapper(const Config config);
+  LCDWrapper(const pins_config::lcd_config &config);
 
   bool begin();
   void clear();
@@ -67,7 +49,7 @@ private:
   static constexpr uint8_t powered_off_char[8] = {0x0a, 0x04, 0x0a, 0x00, 0x1f, 0x1f, 0x0a, 0x0a};
   static constexpr uint8_t powering_off_char[8] = {0x0e, 0x15, 0x15, 0x15, 0x17, 0x11, 0x11, 0x0e};
 
-  const Config config;
+  const pins_config::lcd_config config;
 
   LiquidCrystal lcd;
   bool show_connection_status;
@@ -81,7 +63,7 @@ private:
   void backlightOff() const;
   void prettyPrint(const std::array<std::array<char, _COLS>, _ROWS> &buffer) const;
   bool needsUpdate(const BoardInfo &bi) const;
-  
+
   void createChar(uint8_t char_idx, const uint8_t values[8]);
 };
 
