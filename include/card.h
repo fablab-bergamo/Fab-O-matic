@@ -31,5 +31,11 @@ namespace card
     }
     return result;
   }
+  inline void print(uint64_t uid)
+  {
+    Serial.printf("%08lx%08lx",
+      static_cast<uint32_t>((uid >> 32) & 0xFFFFFFFF),
+      static_cast<uint32_t>(uid & 0xFFFFFFFF));
+  }
 }
 #endif  // CARD_H_

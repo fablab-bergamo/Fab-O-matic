@@ -107,14 +107,18 @@ std::optional<FabUser> AuthProvider::tryLogin(card::uid_t uid) const
 /// @brief Checks if the card ID is whitelisted
 /// @param uid card ID
 /// @return a whitelistentry object if the card is found in whitelist
-std::optional<WhiteListEntry> AuthProvider::WhiteListLookup(card::uid_t uid) const
+std::optional<WhiteListEntry> AuthProvider::WhiteListLookup(card::uid_t candidate_uid) const
 {
   auto elem = std::find_if(this->whitelist.begin(), this->whitelist.end(),
-                           [uid](const auto &input)
-                           { return std::get<0>(input) == uid; });
+                           [candidate_uid](const auto &input)
+                           {
+                             auto [w_uid, w_level, w_name] = input;
+                             return w_uid == candidate_uid;
+                           });
 
   if (elem == end(this->whitelist))
   {
+    Serial.printf("%s not found in whitelist\n", card::uid_str(candidate_uid).c_str());
     return std::nullopt;
   }
 

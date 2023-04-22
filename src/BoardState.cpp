@@ -165,8 +165,12 @@ void BoardState::update()
 bool BoardState::authorize(card::uid_t uid)
 {
     this->changeStatus(Status::VERIFYING);
-    auto response = Board::auth.tryLogin(uid);
+    this->member.authenticated = false;
+    this->member.holder_name = "?";
+    this->member.card_uid = uid;
+    this->member.user_level = FabUser::UserLevel::UNKNOWN;
 
+    auto response = Board::auth.tryLogin(uid);
     if (!response.has_value())
     {
         Serial.println("Failed login");
@@ -174,6 +178,8 @@ bool BoardState::authorize(card::uid_t uid)
         this->beep_failed();
         return false;
     }
+
+    this->member = response.value();
 
     if (!Board::machine.allowed)
     {
@@ -183,14 +189,13 @@ bool BoardState::authorize(card::uid_t uid)
         return false;
     }
 
-    this->member = response.value();
-
     if (Board::machine.maintenanceNeeded)
     {
         if (conf::machine::MAINTENANCE_BLOCK && this->member.user_level < FabUser::UserLevel::FABLAB_ADMIN)
         {
             this->changeStatus(Status::MAINTENANCE_NEEDED);
             this->beep_failed();
+            delay(3000);
             return false;
         }
         if (this->member.user_level >= FabUser::UserLevel::FABLAB_ADMIN)
@@ -208,6 +213,7 @@ bool BoardState::authorize(card::uid_t uid)
                     this->beep_ok();
                     this->changeStatus(Status::MAINTENANCE_DONE);
                     delay(1000);
+                    return false;
                 }
                 else
                 {

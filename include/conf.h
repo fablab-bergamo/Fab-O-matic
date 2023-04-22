@@ -9,7 +9,7 @@ namespace conf
     namespace whitelist
     {
         constexpr uint8_t LEN = 10U;         /* Maximum number of whitelisted cards */
-        constexpr uint8_t UID_BYTE_LEN = 8U; /* Number of bytes in RFID cards UID */
+        constexpr uint8_t UID_BYTE_LEN = 4U; /* Number of bytes in RFID cards UID */
         constexpr uint8_t CACHE_LEN = 10U;   /* Number of bytes in RFID cards UID */
     }
     namespace lcd

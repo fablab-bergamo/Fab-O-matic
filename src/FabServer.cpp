@@ -44,7 +44,7 @@ bool FabServer::connect()
       Serial.print("Board IP Address:");
       Serial.println(WiFi.localIP());
     }
-    this->online = true;
+    this->online = false;
   }
   else
   {
