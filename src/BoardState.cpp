@@ -24,15 +24,19 @@ namespace Board
 /// @brief Initializes LCD and RFID classes
 bool BoardState::init()
 {
-
-    Serial.println("Initializing LCD...");
+    if (conf::debug::DEBUG)
+        Serial.println("Initializing board...");
+    
     bool success = Board::lcd.begin();
-    Serial.println("Initializing RFID...");
     success &= Board::rfid.init();
+    
     // Setup buzzer pin for ESP32
     success &= (ledcSetup(BoardState::LEDC_CHANNEL, BoardState::BEEP_HZ, 10U) != 0);
     ledcAttachPin(pins.buzzer.buzzer_pin, BoardState::LEDC_CHANNEL);
-    Serial.printf("Board init complete, success = %d\n", success);
+    
+    if (conf::debug::DEBUG)
+        Serial.printf("Board init complete, success = %d\n", success);
+        
     return success;
 }
 
@@ -40,7 +44,7 @@ bool BoardState::init()
 /// @param new_state new state
 void BoardState::changeStatus(Status new_state)
 {
-    if (this->status != new_state)
+    if (conf::debug::DEBUG && this->status != new_state)
     {
         char buffer[32] = {0};
         sprintf(buffer, "** Changing board state to %d", static_cast<typename std::underlying_type<Status>::type>(new_state));
@@ -196,7 +200,7 @@ bool BoardState::authorize(card::uid_t uid)
             // User must leave the card for 3s before it's recognized
             delay(3000);
 
-            if (Board::rfid.readCardSerial() && Board::rfid.getUid() == this->member.card_uid)
+            if (Board::rfid.cardStillThere(this->member.card_uid))
             {
                 auto response = Board::server.registerMaintenance(this->member.card_uid, Board::machine.getMachineId());
                 if (response.request_ok)
@@ -216,7 +220,10 @@ bool BoardState::authorize(card::uid_t uid)
     }
     Board::machine.login(this->member);
     auto result = Board::server.startUse(Board::machine.getActiveUser().card_uid, Board::machine.getMachineId());
-    Serial.printf("Result startUse: %d\n", result.request_ok);
+    
+    if (conf::debug::DEBUG)
+        Serial.printf("Result startUse: %d\n", result.request_ok);
+
     this->changeStatus(Status::LOGGED_IN);
     this->beep_ok();
     return true;
@@ -226,7 +233,10 @@ bool BoardState::authorize(card::uid_t uid)
 void BoardState::logout()
 {
     auto result = Board::server.finishUse(Board::machine.getActiveUser().card_uid, Board::machine.getMachineId(), Board::machine.getUsageTime());
-    Serial.printf("Result finishUse: %d\n", result.request_ok);
+
+    if (conf::debug::DEBUG)
+        Serial.printf("Result finishUse: %d\n", result.request_ok);
+    
     Board::machine.logout();
     this->member = FabUser();
     this->changeStatus(Status::LOGOUT);

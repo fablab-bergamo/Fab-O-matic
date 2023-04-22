@@ -22,6 +22,7 @@ public:
 
     bool init() const;
     bool isNewCardPresent() const;
+    bool cardStillThere(const card::uid_t original) const;
     bool readCardSerial() const;
     card::uid_t getUid() const;
 

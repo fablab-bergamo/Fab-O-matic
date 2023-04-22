@@ -9,12 +9,7 @@
 #include "RFIDWrapper.h"
 #include "pins.h"
 #include "secrets.h"
-#include "SPI.h"
 #include "AuthProvider.h"
-#include "MFRC522Driver.h"
-#include "MFRC522DriverSPI.h"
-#include "MFRC522DriverPinSimple.h"
-#include "MFRC522v2.h"
 
 // Global variables
 namespace Board

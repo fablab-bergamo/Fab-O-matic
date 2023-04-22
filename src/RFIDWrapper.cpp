@@ -21,12 +21,42 @@ RFIDWrapper::RFIDWrapper()
 
 bool RFIDWrapper::isNewCardPresent() const
 {
-    return this->mfrc522->PICC_IsNewCardPresent();
+    auto result = this->mfrc522->PICC_IsNewCardPresent();
+
+    if (conf::debug::DEBUG && result)
+        Serial.printf("isNewCardPresent=%d\n", result);
+
+    return result;
 }
 
 bool RFIDWrapper::readCardSerial() const
 {
-    return this->mfrc522->PICC_ReadCardSerial();
+    auto result = this->mfrc522->PICC_ReadCardSerial();
+
+    if (conf::debug::DEBUG)
+        Serial.printf("readCardSerial=%d\n", result);
+
+    return result;
+}
+
+bool RFIDWrapper::cardStillThere(const card::uid_t original) const
+{
+    for (auto i = 0; i < 3; i++)
+    {
+        // Detect Tag without looking for collisions
+        byte bufferATQA[2];
+        byte bufferSize = sizeof(bufferATQA);
+
+        MFRC522::StatusCode result = this->mfrc522->PICC_WakeupA(bufferATQA, &bufferSize);
+
+        if (result == MFRC522::StatusCode::STATUS_OK)
+        {
+            if (this->readCardSerial() && this->getUid() == original)
+                return true;
+        }
+        delay(5);
+    }
+    return false;
 }
 
 /// @brief Transforms the RFID acquired bytes into a uid_id object
@@ -35,15 +65,27 @@ card::uid_t RFIDWrapper::getUid() const
 {
     uint8_t arr[conf::whitelist::UID_BYTE_LEN];
     memcpy(arr, this->mfrc522->uid.uidByte, conf::whitelist::UID_BYTE_LEN);
-    return card::from_array(arr);
+
+    auto c = card::from_array(arr);
+
+    if (conf::debug::DEBUG)
+    {
+        auto str_id = card::uid_str(c);
+        Serial.printf("getUid=%s\n", str_id.c_str());
+    }
+
+    return c;
 }
 
 /// @brief Initializes RFID chip including self test
 bool RFIDWrapper::init() const
 {
-    char buffer[80] = {0};
-    sprintf(buffer, "Configuring SPI RFID (SCK=%d, MISO=%d, MOSI=%d, SDA=%d)", pins.mfrc522.sck_pin, pins.mfrc522.miso_pin, pins.mfrc522.mosi_pin, pins.mfrc522.sda_pin);
-    Serial.println(buffer);
+    if (conf::debug::DEBUG)
+    {
+        char buffer[80] = {0};
+        sprintf(buffer, "Configuring SPI RFID (SCK=%d, MISO=%d, MOSI=%d, SDA=%d)", pins.mfrc522.sck_pin, pins.mfrc522.miso_pin, pins.mfrc522.mosi_pin, pins.mfrc522.sda_pin);
+        Serial.println(buffer);
+    }
 
     if (!this->mfrc522->PCD_Init())
     {
@@ -51,7 +93,9 @@ bool RFIDWrapper::init() const
         return false;
     }
 
-    MFRC522Debug::PCD_DumpVersionToSerial(*this->mfrc522, Serial);
+    if (conf::debug::DEBUG)
+        MFRC522Debug::PCD_DumpVersionToSerial(*this->mfrc522, Serial);
+
     this->mfrc522->PCD_SetAntennaGain(MFRC522::PCD_RxGain::RxGain_max);
 
     if (!this->mfrc522->PCD_PerformSelfTest())

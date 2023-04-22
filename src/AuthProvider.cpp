@@ -59,7 +59,8 @@ std::optional<FabUser> AuthProvider::tryLogin(card::uid_t uid) const
   FabUser member;
   std::string uid_str = card::uid_str(uid);
 
-  Serial.printf("tryLogin called for %s\n", uid_str.c_str());
+  if (conf::debug::DEBUG)
+    Serial.printf("tryLogin called for %s\n", uid_str.c_str());
 
   if (!Board::server.isOnline())
     Board::server.connect();
@@ -75,11 +76,13 @@ std::optional<FabUser> AuthProvider::tryLogin(card::uid_t uid) const
       member.user_level = response.user_level;
       // Cache the positive result
       this->add_in_cache(uid, member.holder_name, response.user_level);
-      Serial.printf(" -> online check OK (%s)\n", member.toString().c_str());
+      if (conf::debug::DEBUG)
+        Serial.printf(" -> online check OK (%s)\n", member.toString().c_str());
       return member;
     }
     member.authenticated = false;
-    Serial.println(" -> online check NOK");
+    if (conf::debug::DEBUG)
+      Serial.println(" -> online check NOK");
     return std::nullopt;
   }
   else
@@ -91,11 +94,13 @@ std::optional<FabUser> AuthProvider::tryLogin(card::uid_t uid) const
       member.authenticated = true;
       member.user_level = level;
       member.holder_name = name;
-      Serial.printf(" -> whilelist check OK (%s)\n", member.toString().c_str());
+      if (conf::debug::DEBUG)
+        Serial.printf(" -> whilelist check OK (%s)\n", member.toString().c_str());
       return member;
     }
   }
-  Serial.println(" -> whilelist check NOK");
+  if (conf::debug::DEBUG)
+    Serial.println(" -> whilelist check NOK");
   return std::nullopt;
 }
 

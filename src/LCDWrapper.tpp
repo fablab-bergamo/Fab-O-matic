@@ -39,11 +39,15 @@ bool LCDWrapper<_COLS, _ROWS>::begin()
 
   this->backlightOn();
 
-  char buffer[80] = {0};
-  sprintf(buffer, "Configured LCD %d x %d (d4=%d, d5=%d, d6=%d, d7=%d, en=%d, rs=%d), backlight=%d", _COLS, _ROWS,
-          this->config.d0_pin, this->config.d1_pin, this->config.d2_pin, this->config.d3_pin,
-          this->config.en_pin, this->config.rs_pin, this->config.bl_pin);
-  Serial.println(buffer);
+  if (conf::debug::DEBUG)
+  {
+    char buffer[80] = {0};
+    sprintf(buffer, "Configured LCD %d x %d (d4=%d, d5=%d, d6=%d, d7=%d, en=%d, rs=%d), backlight=%d", _COLS, _ROWS,
+            this->config.d0_pin, this->config.d1_pin, this->config.d2_pin, this->config.d3_pin,
+            this->config.en_pin, this->config.rs_pin, this->config.bl_pin);
+    Serial.println(buffer);
+  }
+
   return true;
 }
 
@@ -79,7 +83,7 @@ void LCDWrapper<_COLS, _ROWS>::update_chars(const BoardInfo &info)
 
   for (auto row_num = 0; row_num < _ROWS; row_num++)
   {
-    this->lcd.setCursor(row_num, 0);
+    this->lcd.setCursor(0, row_num);
     char why_arduino_has_not_implemented_liquidcrystal_print_from_char_array_yet[_COLS];
     memcpy(why_arduino_has_not_implemented_liquidcrystal_print_from_char_array_yet, &this->buffer[row_num], _COLS);
     this->lcd.print(why_arduino_has_not_implemented_liquidcrystal_print_from_char_array_yet);
@@ -142,7 +146,11 @@ bool LCDWrapper<_COLS, _ROWS>::needsUpdate(const BoardInfo &bi) const
 {
   if (forceUpdate || !(bi == this->boardInfo) || this->current != this->buffer)
   {
-    this->prettyPrint(this->buffer);
+    if (conf::debug::DEBUG)
+    {
+      this->prettyPrint(this->buffer);
+    }
+
     return true;
   }
   return false;

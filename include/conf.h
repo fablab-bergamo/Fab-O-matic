@@ -22,12 +22,18 @@ namespace conf
         constexpr uint16_t TIMEOUT_USAGE_MINUTES = 8 * 60; /* User will be log out after this delay. If 0, no auto-logout. */
         constexpr uint16_t BEEP_REMAINING_MINUTES = 1;     /* Device will beep before auto-poweroff. If 0, no beeping.  */
         constexpr uint16_t POWEROFF_DELAY_MINUTES = 2;     /* Minutes of idle time before poweroff. If 0, machine will stay on. */
+        constexpr bool MAINTENANCE_BLOCK = true;           /* If true, machine needing maintenance will be blocked for normal users */
+
         static_assert(BEEP_REMAINING_MINUTES <= POWEROFF_DELAY_MINUTES);
-        constexpr bool MAINTENANCE_BLOCK = true; /* If true, machine needing maintenance will be blocked for normal users */
     }
     namespace server
     {
-        constexpr uint16_t REFRESH_PERIOD_SECONDS = 60; /* Notify the server every X seconds */
+        constexpr uint16_t REFRESH_PERIOD_SECONDS = 15; /* Notify the server every X seconds */
+    }
+    namespace debug
+    {
+        constexpr bool DEBUG = true;      /* True to add logs */
+        constexpr int WDG_TIMEOUT_S = 30; /* Timeout for hardware watchdog */
     }
 }
-#endif  // CONF_H_
+#endif // CONF_H_

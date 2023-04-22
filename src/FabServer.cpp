@@ -28,7 +28,7 @@ bool FabServer::connect()
     this->WiFiConnection.begin(this->wifi_ssid.c_str(), this->wifi_password.c_str());
     for (auto i = 0; i < NB_TRIES; i++)
     {
-      if (this->WiFiConnection.status() == WL_CONNECTED)
+      if (conf::debug::DEBUG && this->WiFiConnection.status() == WL_CONNECTED)
         Serial.println("WiFi connection successfull");
       break;
       delay(DELAY_MS);
@@ -39,8 +39,11 @@ bool FabServer::connect()
   if (this->WiFiConnection.status() == WL_CONNECTED)
   {
     // TODO - check if the server can be reached
-    Serial.print("Board IP Address:");
-    Serial.println(WiFi.localIP());
+    if (conf::debug::DEBUG)
+    {
+      Serial.print("Board IP Address:");
+      Serial.println(WiFi.localIP());
+    }
     this->online = true;
   }
   else

@@ -10,7 +10,10 @@ Machine::Machine(Config user_conf) : config(user_conf), active(false), usage_sta
 {
   this->current_user = FabUser();
   pinMode(this->config.control_pin, OUTPUT);
-  Serial.printf("Machine %s configured on pin %d (active_low:%d)\n", this->config.machine_name.c_str(), this->config.control_pin, this->config.control_pin_active_low);
+  
+  if (conf::debug::DEBUG)
+    Serial.printf("Machine %s configured on pin %d (active_low:%d)\n", this->config.machine_name.c_str(), this->config.control_pin, this->config.control_pin_active_low);
+
   this->power(false);
 }
 
@@ -63,7 +66,8 @@ void Machine::logout()
     if (conf::machine::POWEROFF_DELAY_MINUTES > 0)
     {
       this->logout_timestamp = millis();
-      Serial.printf("Machine will be shutdown in %d minutes\n", conf::machine::POWEROFF_DELAY_MINUTES);
+      if (conf::debug::DEBUG)
+        Serial.printf("Machine will be shutdown in %d minutes\n", conf::machine::POWEROFF_DELAY_MINUTES);
     }
     else
     {
@@ -95,7 +99,9 @@ bool Machine::isShutdownPending() const
 
 void Machine::power(bool value)
 {
-  Serial.printf("Power set to %d\n", value);
+  if (conf::debug::DEBUG)
+    Serial.printf("Power set to %d\n", value);
+
   if (this->config.control_pin_active_low)
   {
     digitalWrite(this->config.control_pin, value ? LOW : HIGH);
@@ -148,7 +154,7 @@ std::string Machine::getMachineName() const
 std::string Machine::toString() const
 {
   std::stringstream sstream;
-  
+
   sstream << "Machine (ID:" << this->getMachineId().id;
   sstream << ", Name:" << this->getMachineName();
   sstream << ", IsFree: " << this->isFree();
