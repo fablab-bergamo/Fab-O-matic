@@ -65,8 +65,8 @@ bool RFIDWrapper::cardStillThere(const card::uid_t original) const
 /// @return card ID
 card::uid_t RFIDWrapper::getUid() const
 {
-    uint8_t arr[conf::whitelist::UID_BYTE_LEN] {0};
-    
+    uint8_t arr[conf::whitelist::UID_BYTE_LEN]{0};
+
     memcpy(arr, this->mfrc522->uid.uidByte, std::min(conf::whitelist::UID_BYTE_LEN, this->mfrc522->uid.size));
 
     auto c = card::from_array(arr);
@@ -86,8 +86,8 @@ bool RFIDWrapper::init() const
     if (conf::debug::DEBUG)
     {
         char buffer[80] = {0};
-        sprintf(buffer, "Configuring SPI RFID (SCK=%d, MISO=%d, MOSI=%d, SDA=%d)", pins.mfrc522.sck_pin, pins.mfrc522.miso_pin, pins.mfrc522.mosi_pin, pins.mfrc522.sda_pin);
-        Serial.println(buffer);
+        if (sprintf(buffer, "Configuring SPI RFID (SCK=%d, MISO=%d, MOSI=%d, SDA=%d)", pins.mfrc522.sck_pin, pins.mfrc522.miso_pin, pins.mfrc522.mosi_pin, pins.mfrc522.sda_pin) > 0)
+            Serial.println(buffer);
     }
 
     if (!this->mfrc522->PCD_Init())

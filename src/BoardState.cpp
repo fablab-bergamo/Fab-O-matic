@@ -47,8 +47,8 @@ void BoardState::changeStatus(Status new_state)
     if (conf::debug::DEBUG && this->status != new_state)
     {
         char buffer[32] = {0};
-        sprintf(buffer, "** Changing board state to %d", static_cast<typename std::underlying_type<Status>::type>(new_state));
-        Serial.println(buffer);
+        if (sprintf(buffer, "** Changing board state to %d", static_cast<typename std::underlying_type<Status>::type>(new_state)) > 0)
+            Serial.println(buffer);
     }
 
     this->status = new_state;
@@ -151,8 +151,8 @@ void BoardState::update()
         break;
     default:
         Board::lcd.setRow(0, "Unhandled status");
-        sprintf(buffer, "Value %d", static_cast<typename std::underlying_type<Status>::type>(this->status));
-        Board::lcd.setRow(1, buffer);
+        if (sprintf(buffer, "Value %d", static_cast<typename std::underlying_type<Status>::type>(this->status)) > 0)
+            Board::lcd.setRow(1, buffer);
         break;
     }
     BoardInfo bi = {Board::server.isOnline(), Board::machine.getPowerState(), Board::machine.isShutdownPending()};
