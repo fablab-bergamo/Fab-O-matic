@@ -1,10 +1,9 @@
+#include "LCDWrapper.h"
+
 #include <cstdint>
 #include <string>
 #include <array>
 #include <sstream>
-
-#include "BoardState.h"
-#include "LCDWrapper.h"
 #include "Machine.h"
 
 template <uint8_t _COLS, uint8_t _ROWS>
@@ -39,13 +38,14 @@ bool LCDWrapper<_COLS, _ROWS>::begin()
 
   this->backlightOn();
 
-  if (conf::debug::DEBUG)
+  if (conf::debug::ENABLE_LOGS)
   {
-    char buffer[80] = {0};
-    sprintf(buffer, "Configured LCD %d x %d (d4=%d, d5=%d, d6=%d, d7=%d, en=%d, rs=%d), backlight=%d", _COLS, _ROWS,
-            this->config.d0_pin, this->config.d1_pin, this->config.d2_pin, this->config.d3_pin,
-            this->config.en_pin, this->config.rs_pin, this->config.bl_pin);
-    Serial.println(buffer);
+    constexpr auto MAX_LEN = 80;
+    char buffer[MAX_LEN] = {0};
+    if (sprintf(buffer, "Configured LCD %d x %d (d4=%d, d5=%d, d6=%d, d7=%d, en=%d, rs=%d), backlight=%d", _COLS, _ROWS,
+                this->config.d0_pin, this->config.d1_pin, this->config.d2_pin, this->config.d3_pin,
+                this->config.en_pin, this->config.rs_pin, this->config.bl_pin) > 0)
+      Serial.println(buffer);
   }
 
   return true;
@@ -146,9 +146,9 @@ bool LCDWrapper<_COLS, _ROWS>::needsUpdate(const BoardInfo &bi) const
 {
   if (forceUpdate || !(bi == this->boardInfo) || this->current != this->buffer)
   {
-    if (conf::debug::DEBUG)
+    if (conf::debug::ENABLE_LOGS)
     {
-      this->prettyPrint(this->buffer);
+      this->prettyPrint(this->buffer, bi);
     }
 
     return true;
@@ -157,7 +157,8 @@ bool LCDWrapper<_COLS, _ROWS>::needsUpdate(const BoardInfo &bi) const
 }
 
 template <uint8_t _COLS, uint8_t _ROWS>
-void LCDWrapper<_COLS, _ROWS>::prettyPrint(const std::array<std::array<char, _COLS>, _ROWS> &buffer) const
+void LCDWrapper<_COLS, _ROWS>::prettyPrint(const std::array<std::array<char, _COLS>, _ROWS> &buffer,
+                                           const BoardInfo &bi) const
 {
   std::stringstream ss;
   ss << "/" << std::string(_COLS, '-') << "\\\n"; // LCD top
@@ -183,6 +184,21 @@ void LCDWrapper<_COLS, _ROWS>::prettyPrint(const std::array<std::array<char, _CO
   ss << "\\" << std::string(_COLS, '-') << "/\n";
 
   auto str = ss.str();
+
+  // Add symbols
+  constexpr auto symbols_per_line = conf::lcd::COLS + 2;
+
+  str[symbols_per_line * 2 - 1] = bi.server_connected ? 'Y' : 'x';
+
+  if (bi.power_state == Machine::PowerState::POWERED_ON)
+    str[symbols_per_line * 3] = 'Y';
+
+  if (bi.power_state == Machine::PowerState::POWERED_OFF)
+    str[symbols_per_line * 3] = 'x';
+
+  if (bi.power_state == Machine::PowerState::WAITING_FOR_POWER_OFF)
+    str[symbols_per_line * 3] = '!';
+
   Serial.print(str.c_str());
 }
 

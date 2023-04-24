@@ -1,14 +1,14 @@
+#include "AuthProvider.h"
+
 #include <string>
 #include <cstdint>
-
-#include "AuthProvider.h"
 #include "FabServer.h"
 
 namespace Board
 {
   // Only main.cpp instanciates the variables through Board.h file
   extern FabServer server;
-}
+} // namespace Board
 
 AuthProvider::AuthProvider(WhiteList whitelist) : whitelist(whitelist) {}
 
@@ -56,10 +56,10 @@ void AuthProvider::add_in_cache(card::uid_t uid, std::string name, FabUser::User
 /// @return false if the user was not found on server or whitelist
 std::optional<FabUser> AuthProvider::tryLogin(card::uid_t uid) const
 {
-  FabUser member;
+  FabUser user;
   std::string uid_str = card::uid_str(uid);
 
-  if (conf::debug::DEBUG)
+  if (conf::debug::ENABLE_LOGS)
     Serial.printf("tryLogin called for %s\n", uid_str.c_str());
 
   if (!Board::server.isOnline())
@@ -70,36 +70,39 @@ std::optional<FabUser> AuthProvider::tryLogin(card::uid_t uid) const
     auto response = Board::server.checkCard(uid);
     if (response.request_ok && response.request_ok)
     {
-      member.authenticated = true;
-      member.card_uid = uid;
-      member.holder_name = response.holder_name;
-      member.user_level = response.user_level;
+      user.authenticated = true;
+      user.card_uid = uid;
+      user.holder_name = response.holder_name;
+      user.user_level = response.user_level;
       // Cache the positive result
-      this->add_in_cache(uid, member.holder_name, response.user_level);
-      if (conf::debug::DEBUG)
-        Serial.printf(" -> online check OK (%s)\n", member.toString().c_str());
-      return member;
+      this->add_in_cache(uid, user.holder_name, response.user_level);
+
+      if (conf::debug::ENABLE_LOGS)
+        Serial.printf(" -> online check OK (%s)\n", user.toString().c_str());
+
+      return user;
     }
-    member.authenticated = false;
-    if (conf::debug::DEBUG)
+    user.authenticated = false;
+
+    if (conf::debug::ENABLE_LOGS)
       Serial.println(" -> online check NOK");
+
     return std::nullopt;
   }
-  else
+
+  if (auto result = this->WhiteListLookup(uid))
   {
-    if (auto result = this->WhiteListLookup(uid))
-    {
-      auto [card, level, name] = result.value();
-      member.card_uid = card;
-      member.authenticated = true;
-      member.user_level = level;
-      member.holder_name = name;
-      if (conf::debug::DEBUG)
-        Serial.printf(" -> whilelist check OK (%s)\n", member.toString().c_str());
-      return member;
-    }
+    auto [card, level, name] = result.value();
+    user.card_uid = card;
+    user.authenticated = true;
+    user.user_level = level;
+    user.holder_name = name;
+    if (conf::debug::ENABLE_LOGS)
+      Serial.printf(" -> whilelist check OK (%s)\n", user.toString().c_str());
+    return user;
   }
-  if (conf::debug::DEBUG)
+
+  if (conf::debug::ENABLE_LOGS)
     Serial.println(" -> whilelist check NOK");
   return std::nullopt;
 }

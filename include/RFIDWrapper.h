@@ -24,6 +24,8 @@ public:
     bool isNewCardPresent() const;
     bool cardStillThere(const card::uid_t original) const;
     bool readCardSerial() const;
+    bool selfTest() const;
+    void reset() const;
     card::uid_t getUid() const;
 
     RFIDWrapper(const RFIDWrapper &) = delete;             // copy constructor

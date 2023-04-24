@@ -10,6 +10,8 @@
 /// @param server_ip server IP address
 FabServer::FabServer(const std::string_view ssid, const std::string_view password, const std::string_view server_ip) : wifi_ssid(ssid), wifi_password(password), server_ip(server_ip), online(false) {}
 
+/// @brief true if the server has been reached successfully
+/// @return boolean
 bool FabServer::isOnline() const
 {
   return online;
@@ -28,7 +30,7 @@ bool FabServer::connect()
     this->WiFiConnection.begin(this->wifi_ssid.c_str(), this->wifi_password.c_str());
     for (auto i = 0; i < NB_TRIES; i++)
     {
-      if (conf::debug::DEBUG && this->WiFiConnection.status() == WL_CONNECTED)
+      if (conf::debug::ENABLE_LOGS && this->WiFiConnection.status() == WL_CONNECTED)
         Serial.println("WiFi connection successfull");
       break;
       delay(DELAY_MS);
@@ -39,12 +41,12 @@ bool FabServer::connect()
   if (this->WiFiConnection.status() == WL_CONNECTED)
   {
     // TODO - check if the server can be reached
-    if (conf::debug::DEBUG)
+    if (conf::debug::ENABLE_LOGS)
     {
       Serial.print("Board IP Address:");
       Serial.println(WiFi.localIP());
     }
-    this->online = false;
+    this->online = true;
   }
   else
   {

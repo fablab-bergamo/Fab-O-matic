@@ -25,11 +25,9 @@ struct FabUser
 
   FabUser() = default;
 
-  FabUser(const card::uid_t uid, std::string_view name, bool authenticated, UserLevel level) : 
-    card_uid(uid), holder_name(name), authenticated(authenticated), user_level(level) {}
+  FabUser(const card::uid_t uid, std::string_view name, bool authenticated, UserLevel level) : card_uid(uid), holder_name(name), authenticated(authenticated), user_level(level) {}
 
-  FabUser(const uint8_t uid[conf::whitelist::UID_BYTE_LEN], std::string_view name, bool authenticated, UserLevel level) :
-    holder_name(name), authenticated(authenticated), user_level(level)
+  FabUser(const uint8_t uid[conf::whitelist::UID_BYTE_LEN], std::string_view name, bool authenticated, UserLevel level) : holder_name(name), authenticated(authenticated), user_level(level)
   {
     this->card_uid = card::from_array(uid);
   }
@@ -40,7 +38,7 @@ struct FabUser
   std::string toString() const
   {
     std::stringstream sstream;
-    
+
     sstream << "User (Auth:" << authenticated;
     sstream << ", UID: " << std::hex << card_uid;
     sstream << ", Name:" << holder_name;
@@ -52,4 +50,4 @@ struct FabUser
   }
 };
 
-#endif  // FABUSER_H_
+#endif // FABUSER_H_

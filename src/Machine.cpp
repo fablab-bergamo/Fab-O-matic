@@ -6,13 +6,15 @@
 
 /// @brief Creates a new machine
 /// @param user_conf configuration of the machine
-Machine::Machine(Config user_conf) : config(user_conf), active(false), usage_start_timestamp(0), maintenanceNeeded(false), allowed(true)
+Machine::Machine(Config user_conf) : config(user_conf), active(false), usage_start_timestamp(0),
+                                     maintenanceNeeded(false), allowed(true)
 {
   this->current_user = FabUser();
   pinMode(this->config.control_pin, OUTPUT);
-  
-  if (conf::debug::DEBUG)
-    Serial.printf("Machine %s configured on pin %d (active_low:%d)\n", this->config.machine_name.c_str(), this->config.control_pin, this->config.control_pin_active_low);
+
+  if (conf::debug::ENABLE_LOGS)
+    Serial.printf("Machine %s configured on pin %d (active_low:%d)\n", this->config.machine_name.c_str(),
+                  this->config.control_pin, this->config.control_pin_active_low);
 
   this->power(false);
 }
@@ -63,11 +65,11 @@ void Machine::logout()
     this->powerState = PowerState::WAITING_FOR_POWER_OFF;
 
     // Sets the countdown to power off
-    if (conf::machine::POWEROFF_DELAY_MINUTES > 0)
+    if (conf::machine::POWEROFF_DELAY_MS > 0)
     {
       this->logout_timestamp = millis();
-      if (conf::debug::DEBUG)
-        Serial.printf("Machine will be shutdown in %d minutes\n", conf::machine::POWEROFF_DELAY_MINUTES);
+      if (conf::debug::ENABLE_LOGS)
+        Serial.printf("Machine will be shutdown in %d ms\n", conf::machine::POWEROFF_DELAY_MS);
     }
     else
     {
@@ -77,29 +79,33 @@ void Machine::logout()
   }
 }
 
+/// @brief indicates if the machine can be powered off
+/// @return true if the delay has expired
 bool Machine::canPowerOff() const
 {
   if (this->logout_timestamp == 0)
     return false;
 
   return (this->powerState == PowerState::WAITING_FOR_POWER_OFF &&
-          millis() - this->logout_timestamp > conf::machine::POWEROFF_DELAY_MINUTES * 60 * 1000);
+          millis() - this->logout_timestamp > conf::machine::POWEROFF_DELAY_MS);
 }
 
-bool Machine::isShutdownPending() const
+/// @brief indicates if the machine is about to shudown and board should beep
+/// @return true if shutdown is imminent
+bool Machine::isShutdownImminent() const
 {
-  if (this->logout_timestamp == 0)
+  if (this->logout_timestamp == 0 || conf::machine::BEEP_REMAINING_MS == 0)
     return false;
 
-  auto beep_ts = this->logout_timestamp - (conf::machine::BEEP_REMAINING_MINUTES * 60 * 1000);
-
   return (this->powerState == PowerState::WAITING_FOR_POWER_OFF &&
-          millis() - this->logout_timestamp > conf::machine::BEEP_REMAINING_MINUTES * 60 * 1000);
+          millis() - this->logout_timestamp > conf::machine::BEEP_REMAINING_MS);
 }
 
+/// @brief sets the machine power to on (true) or off (false)
+/// @param value setpoint
 void Machine::power(bool value)
 {
-  if (conf::debug::DEBUG)
+  if (conf::debug::ENABLE_LOGS)
     Serial.printf("Power set to %d\n", value);
 
   if (this->config.control_pin_active_low)

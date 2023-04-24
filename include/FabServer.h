@@ -52,10 +52,10 @@ public:
   bool connect();
 
   // Rule of 5 https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rc-five
-  FabServer(const FabServer &) = delete; // copy constructor
+  FabServer(const FabServer &) = delete;            // copy constructor
   FabServer &operator=(const FabServer &) = delete; // copy assignment
-  FabServer(FabServer &&) = delete;            // move constructor
-  FabServer &operator=(FabServer &&) = delete; // move assignment
+  FabServer(FabServer &&) = delete;                 // move constructor
+  FabServer &operator=(FabServer &&) = delete;      // move assignment
 };
 
 #endif // FABSERVER_H_

@@ -49,7 +49,7 @@ public:
   std::string getMachineName() const;
   unsigned long getUsageTime() const;
   PowerState getPowerState() const; // Gets the current state of the machine
-  bool isShutdownPending() const;   // True if the machine will power down in less than BEEP_REMAINING_MINUTES
+  bool isShutdownImminent() const;  // True if the machine will power down in less than BEEP_REMAINING_MINUTES
   bool isFree() const;
 
   bool login(FabUser user);         // if the machine is not active, login the user

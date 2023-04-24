@@ -3,7 +3,6 @@
 
 #include <array>
 #include "LiquidCrystal.h"
-#include "BoardState.h"
 #include "Machine.h"
 #include "pins.h"
 
@@ -61,7 +60,7 @@ private:
 
   void backlightOn() const;
   void backlightOff() const;
-  void prettyPrint(const std::array<std::array<char, _COLS>, _ROWS> &buffer) const;
+  void prettyPrint(const std::array<std::array<char, _COLS>, _ROWS> &buffer, const BoardInfo &bi) const;
   bool needsUpdate(const BoardInfo &bi) const;
 
   void createChar(uint8_t char_idx, const uint8_t values[8]);

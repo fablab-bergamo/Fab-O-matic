@@ -1,193 +1,179 @@
 #include <cstdint>
 #include <string>
 #include <array>
-#include <chrono>
 
-#include <LiquidCrystal.h>
-#include <WiFi.h>
-
-#include "Board.h"
-#include "BoardState.h"
-#include "pins.h"
 #include <esp_task_wdt.h>
+#include <TaskScheduler.h>
 
-static BoardState bstate;
+#include "globals.h"
+#include "pins.h"
+#include "BoardLogic.h"
 
+// Pre-declarations
+void taskCheckRfid();
+void taskConnect();
+void taskPoweroffCheck();
+void taskLogoffCheck();
+void taskEspWatchdog();
+void taskRfidWatchdog();
+void taskPoweroffWarning();
 
-/// @brief connects and polls the server for up-to-date machine information
-void refreshFromServer()
-{
-  if (Board::server.connect())
-  {
-    // Check the configured machine data from the server
-    auto result = Board::server.checkMachine(secrets::machine::machine_id);
-    if (result.request_ok)
-    {
-      if (result.is_valid)
-      {
-        if (conf::debug::DEBUG)
-          Serial.printf("The configured machine ID %d is valid, maintenance=%d, allowed=%d\n", secrets::machine::machine_id, result.needs_maintenance, result.allowed);
+/* This is the list of tasks that will be run in cooperative scheduling fashion.
+ * Using tasks simplifies the code versus a single state machine / if (millis() - memory) patterns
+ *
+ * See https://github.com/arkhipenko/TaskScheduler/blob/master/examples/Scheduler_template/Scheduler_template.ino
+ *
+ * Task are created as follows :
+ * - Task( period ; # repeats ; callback ; scheduler object ; true if task active )
+ *
+ * Do not add code in loop() as ts.execute() runs forever.
+ */
 
-        Board::machine.maintenanceNeeded = result.needs_maintenance;
-        Board::machine.allowed = result.allowed;
-      }
-      else
-      {
-        Serial.printf("The configured machine ID %d is unknown to the server\n", secrets::machine::machine_id);
-      }
-    }
-  }
-}
+// NOLINTBEGIN(cert-err58-cpp)
+
+const Task t1(conf::tasks::RFID_CHECK_MS *TASK_MILLISECOND, TASK_FOREVER, &taskCheckRfid, &Tasks::ts, true);
+const Task t2(conf::tasks::REFRESH_PERIOD_SECONDS *TASK_SECOND, TASK_FOREVER, &taskConnect, &Tasks::ts, true);
+const Task t3(1 * TASK_SECOND, TASK_FOREVER, &taskPoweroffCheck, &Tasks::ts, true);
+const Task t4(1 * TASK_SECOND, TASK_FOREVER, &taskLogoffCheck, &Tasks::ts, true);
+
+// Hardware watchdog will run at half the frequency
+const Task t5(conf::tasks::WDG_TIMEOUT_S / 2 * TASK_SECOND, TASK_FOREVER, &taskEspWatchdog, &Tasks::ts, true);
+const Task t6(conf::tasks::RFID_CHIP_CHECK_S *TASK_SECOND, TASK_FOREVER, &taskRfidWatchdog, &Tasks::ts, true);
+const Task t7(conf::machine::DELAY_BETWEEN_BEEPS_S *TASK_SECOND, TASK_FOREVER, &taskPoweroffWarning, &Tasks::ts, true);
+
+// NOLINTEND(cert-err58-cpp)
+
+using namespace Board;
+using Status = BoardLogic::Status;
 
 /// @brief Opens WiFi and server connection and updates board state accordingly
-/// @return True if server connection was successfull
-bool tryConnect()
+void taskConnect()
 {
-  if (conf::debug::DEBUG)
+  if (conf::debug::ENABLE_LOGS)
     Serial.println("Trying Wifi and server connection...");
-  
-  // connection to wifi
-  bstate.changeStatus(BoardState::Status::CONNECTING);
 
-  // Try to connect
-  Board::server.connect();
+  if (!server.isOnline())
+  {
+    // connection to wifi
+    logic.changeStatus(Status::CONNECTING);
 
-  // Get machine data from the server if it is online
-  refreshFromServer();
+    // Try to connect
+    server.connect();
+    // Refresh after connection
+    logic.changeStatus(server.isOnline() ? Status::CONNECTED : Status::OFFLINE);
 
-  // Refresh after connection
-  bstate.changeStatus(Board::server.isOnline() ? BoardState::Status::CONNECTED : BoardState::Status::OFFLINE);
-  delay(500);
-  return Board::server.isOnline();
+    // Briefly show to the user
+    delay(500);
+  }
+
+  if (server.isOnline())
+  {
+    // Get machine data from the server if it is online
+    logic.refreshFromServer();
+  }
 }
 
-void setup()
+/// @brief periodic check for new RFID card
+void taskCheckRfid()
 {
-  esp_task_wdt_init(conf::debug::WDG_TIMEOUT_S, true); //enable panic so ESP32 restarts
-  esp_task_wdt_add(NULL); //add current thread to WDT watch
-
-  Serial.begin(115200); // Initialize serial communications with the PC for debugging.
-
-  if (conf::debug::DEBUG)
-    Serial.println("Starting setup!");
-
-  delay(100);
-  if (!bstate.init())
-  {
-    bstate.changeStatus(BoardState::Status::ERROR);
-    bstate.beep_failed();
-    while(true) {};
-  }
-  delay(100);
-  WiFi.disconnect();
-  WiFi.mode(WIFI_STA);
-  bstate.beep_ok();
-}
-
-
-void loop()
-{
-  esp_task_wdt_reset();
-  delay(100);
-
-  // Regular connection management
-  if (bstate.last_server_poll == 0)
-  {
-    bstate.last_server_poll = millis();
-  }
-
-  if (millis() - bstate.last_server_poll > conf::server::REFRESH_PERIOD_SECONDS * 1000)
-  {
-    if (conf::debug::DEBUG)
-    {
-      Serial.printf("Free heap:%d bytes\n", ESP.getFreeHeap());
-      Serial.printf("Current machine status:%s\n", Board::machine.toString().c_str());
-    }
-
-    if (Board::server.isOnline())
-    {
-      // Get machine data from the server
-      refreshFromServer();
-    }
-    else
-    {
-      // Reconnect
-      tryConnect();
-    }
-    bstate.last_server_poll = 0;
-  }
-
   // check if there is a card
-  if (Board::rfid.isNewCardPresent())
+  if (rfid.isNewCardPresent())
   {
-    if (conf::debug::DEBUG)
-      Serial.println("New card present");
-
-    // if there is a "new" card (could be the same that stayed in the field)
-    if (!bstate.ready_for_a_new_card || !Board::rfid.readCardSerial())
-    {
-      return;
-    }
-    bstate.no_card_cpt = 0;
-    bstate.ready_for_a_new_card = false;
-
-    // Acquire the UID of the card
-    auto uid = Board::rfid.getUid();
-
-    if (Board::machine.isFree())
-    {
-      // machine is free
-      if (!bstate.authorize(uid))
-      {
-        Serial.println("Login failed");
-      }
-      delay(1000);
-      refreshFromServer();
-      return;
-    }
-
-    // machine is busy
-    if (Board::machine.getActiveUser().card_uid == uid)
-    {
-      // we can logout. we should require that the card stays in the field for some seconds, to prevent accidental logout. maybe sound a buzzer?
-      bstate.logout();
-    }
-    else
-    {
-      // user is not the same, display who is using it
-      bstate.changeStatus(BoardState::Status::ALREADY_IN_USE);
-    }
-    delay(1000);
+    logic.onNewCard();
     return;
   }
 
   // No new card present
-  bstate.ready_for_a_new_card = true;
-
-  if (Board::machine.isFree())
+  logic.ready_for_a_new_card = true;
+  if (machine.isFree())
   {
-    bstate.changeStatus(BoardState::Status::FREE);
-
-    if (Board::machine.isShutdownPending())
-    {
-      // TODO : beep
-    }
-    if (Board::machine.canPowerOff())
-    {
-      Board::machine.power(false);
-    }
+    logic.changeStatus(Status::FREE);
   }
   else
   {
-    bstate.changeStatus(BoardState::Status::IN_USE);
-
-    // auto logout after delay
-    if (conf::machine::TIMEOUT_USAGE_MINUTES > 0 &&
-        Board::machine.getUsageTime() > conf::machine::TIMEOUT_USAGE_MINUTES * 60 * 1000)
-    {
-      Serial.println("Auto-logging out user");
-      bstate.logout();
-      delay(1000);
-    }
+    logic.changeStatus(Status::IN_USE);
   }
+}
+
+/// @brief periodic check if the machine must be powered off
+void taskPoweroffCheck()
+{
+  if (machine.canPowerOff())
+  {
+    machine.power(false);
+  }
+}
+
+/// @brief periodic check if the machine must be powered off
+void taskPoweroffWarning()
+{
+  if (machine.isShutdownImminent())
+  {
+    logic.beep_failed();
+    if (conf::debug::ENABLE_LOGS)
+      Serial.println("Machine is about to shutdown");
+  }
+}
+
+/// @brief periodic check if the user shall be logged off
+void taskLogoffCheck()
+{
+  // auto logout after delay
+  if (conf::machine::TIMEOUT_USAGE_MINUTES > 0 &&
+      machine.getUsageTime() > conf::machine::TIMEOUT_USAGE_MINUTES * 60 * 1000)
+  {
+    Serial.println("Auto-logging out user");
+    logic.logout();
+  }
+}
+
+/// @brief Keep the ESP32 HW watchdog alive.
+/// If code gets stuck this will cause an automatic reset.
+void taskEspWatchdog()
+{
+  if (conf::tasks::WDG_TIMEOUT_S > 0)
+  {
+    esp_task_wdt_reset(); // Signal the hardware watchdog
+  }
+}
+
+/// @brief checks the RFID chip status and re-init it if necessary.
+void taskRfidWatchdog()
+{
+  if (!rfid.selfTest())
+  {
+    Serial.println("RFID chip failure");
+
+    // Infinite retry until success or hw watchdog timeout
+    while (!rfid.init())
+      delay(conf::tasks::RFID_CHECK_MS);
+  }
+}
+
+void setup()
+{
+  Serial.begin(conf::debug::SERIAL_SPEED_BDS); // Initialize serial communications with the PC for debugging.
+
+  if (conf::debug::ENABLE_LOGS)
+    Serial.println("Starting setup!");
+
+  if (conf::tasks::WDG_TIMEOUT_S > 0)
+  {
+    esp_task_wdt_init(conf::tasks::WDG_TIMEOUT_S, true); // enable panic so ESP32 restarts
+    esp_task_wdt_add(NULL);                              // add current thread to WDT watch
+  }
+
+  if (!logic.init())
+  {
+    logic.changeStatus(Status::ERROR);
+    logic.beep_failed();
+    while (true)
+      ;
+  }
+  logic.beep_ok();
+}
+
+void loop()
+{
+  Tasks::ts.execute();
 }
