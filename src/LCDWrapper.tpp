@@ -1,42 +1,63 @@
+#include "LCDWrapper.h"
+
 #include <cstdint>
 #include <string>
 #include <array>
-
-#include "BoardState.h"
-#include "LCDWrapper.h"
+#include <sstream>
 #include "Machine.h"
 
 template <uint8_t _COLS, uint8_t _ROWS>
-LCDWrapper<_COLS, _ROWS>::LCDWrapper(Config config) : config(config),
-                                                      lcd(config.rs, config.enable, config.d0, config.d1, config.d2, config.d3),
-                                                      show_connection_status(false), show_power_status(true)
+LCDWrapper<_COLS, _ROWS>::LCDWrapper(const pins_config::lcd_config &config) : config(config),
+                                                                              lcd(config.rs_pin, config.en_pin, config.d0_pin, config.d1_pin, config.d2_pin, config.d3_pin),
+                                                                              show_connection_status(true), show_power_status(true), forceUpdate(true)
 {
   buffer.fill({0});
   current.fill({0});
 }
 
 template <uint8_t _COLS, uint8_t _ROWS>
-void LCDWrapper<_COLS, _ROWS>::begin()
+void LCDWrapper<_COLS, _ROWS>::createChar(uint8_t num, const uint8_t values[8])
 {
-  this->lcd.begin(_COLS, _ROWS);
-  this->lcd.createChar(CHAR_ANTENNA, this->antenna_char);
-  this->lcd.createChar(CHAR_CONNECTION, this->connection_char);
-  this->lcd.createChar(CHAR_NO_CONNECTION, this->noconnection_char);
-  this->lcd.createChar(CHAR_POWERED_OFF, this->powered_off_char);
-  this->lcd.createChar(CHAR_POWERED_ON, this->powered_on_char);
-  this->lcd.createChar(CHAR_POWERING_OFF, this->powering_off_char);
-  char buffer[80] = {0};
-  sprintf(buffer, "Configured LCD %d x %d (d4=%d, d5=%d, d6=%d, d7=%d, en=%d, rs=%d)", _COLS, _ROWS, this->config.d0, this->config.d1, this->config.d2, this->config.d3, this->config.enable, this->config.rs);
-  Serial.println(buffer);
+  // Arduino LCD library only reads uint8_t* but did not flag const, so we use this wrapper
+  this->lcd.createChar(num, const_cast<uint8_t *>(values));
 }
 
 template <uint8_t _COLS, uint8_t _ROWS>
-std::string LCDWrapper<_COLS, _ROWS>::convertSecondsToHHMMSS(unsigned long milliseconds)
+bool LCDWrapper<_COLS, _ROWS>::begin()
+{
+  this->lcd.begin(_COLS, _ROWS);
+  createChar(CHAR_ANTENNA, this->antenna_char);
+  createChar(CHAR_CONNECTION, this->connection_char);
+  createChar(CHAR_NO_CONNECTION, this->noconnection_char);
+  createChar(CHAR_POWERED_OFF, this->powered_off_char);
+  createChar(CHAR_POWERED_ON, this->powered_on_char);
+  createChar(CHAR_POWERING_OFF, this->powering_off_char);
+
+  if (this->config.bl_pin != NO_PIN)
+    pinMode(this->config.bl_pin, OUTPUT);
+
+  this->backlightOn();
+
+  if (conf::debug::ENABLE_LOGS)
+  {
+    constexpr auto MAX_LEN = 80;
+    char buffer[MAX_LEN] = {0};
+    if (sprintf(buffer, "Configured LCD %d x %d (d4=%d, d5=%d, d6=%d, d7=%d, en=%d, rs=%d), backlight=%d", _COLS, _ROWS,
+                this->config.d0_pin, this->config.d1_pin, this->config.d2_pin, this->config.d3_pin,
+                this->config.en_pin, this->config.rs_pin, this->config.bl_pin) > 0)
+      Serial.println(buffer);
+  }
+
+  return true;
+}
+
+template <uint8_t _COLS, uint8_t _ROWS>
+std::string LCDWrapper<_COLS, _ROWS>::convertSecondsToHHMMSS(unsigned long milliseconds) const
 {
   //! since something something does not support to_string we have to resort to ye olde cstring stuff
   char buffer[9];
   unsigned long seconds = milliseconds / 1000;
-  snprintf(buffer, sizeof(buffer), "%02d:%02d:%02d", (int)(seconds / 3600), (int)((seconds % 3600) / 60), (int)(seconds % 60));
+  snprintf(buffer, sizeof(buffer), "%02d:%02d:%02d", seconds / 3600U, (seconds % 3600U) / 60U, seconds % 60U);
 
   return {buffer};
 }
@@ -46,56 +67,60 @@ void LCDWrapper<_COLS, _ROWS>::clear()
 {
   this->current.fill({0});
   this->lcd.clear();
+  this->forceUpdate = true;
 }
 
 template <uint8_t _COLS, uint8_t _ROWS>
-void LCDWrapper<_COLS, _ROWS>::update_chars(BoardInfo info)
+void LCDWrapper<_COLS, _ROWS>::update_chars(const BoardInfo &info)
 {
-  if (this->needsUpdate(info))
+
+  if (!this->needsUpdate(info))
   {
-    this->lcd.clear();
-    this->lcd.setCursor(0, 0);
-
-    char why_arduino_has_not_implemented_liquidcrystal_print_from_char_array_yet[16];
-    memcpy(why_arduino_has_not_implemented_liquidcrystal_print_from_char_array_yet, &this->buffer[0], _COLS);
-
-    this->lcd.print(why_arduino_has_not_implemented_liquidcrystal_print_from_char_array_yet);
-
-    if (this->show_connection_status)
-    {
-      this->lcd.setCursor(14, 0);
-      this->lcd.write(CHAR_ANTENNA);
-      this->lcd.write(info.server_connected ? CHAR_CONNECTION : CHAR_NO_CONNECTION);
-    }
-  
-    if (this->show_power_status)
-    {
-      this->lcd.setCursor(13, 0);
-      if (info.power_state ==  Machine::PowerState::POWERED_ON)
-      {
-        this->lcd.write(CHAR_POWERED_ON);
-      }
-      else if (info.power_state ==  Machine::PowerState::POWERED_OFF)
-      {
-        this->lcd.write(CHAR_POWERED_OFF);
-      }
-      else if (info.power_state ==  Machine::PowerState::WAITING_FOR_POWER_OFF)
-      {
-        this->lcd.write(CHAR_POWERING_OFF);
-      }
-      else
-      {
-        this->lcd.write('?');
-      }
-    }
-    this->lcd.setCursor(0, 1);
-    memcpy(why_arduino_has_not_implemented_liquidcrystal_print_from_char_array_yet, &this->buffer[1], _COLS);
-    this->lcd.print(why_arduino_has_not_implemented_liquidcrystal_print_from_char_array_yet);
-
-    this->current = this->buffer;
-    this->boardInfo = info;
-    this->forceUpdate = false;
+    return;
   }
+
+  this->lcd.clear();
+
+  for (auto row_num = 0; row_num < _ROWS; row_num++)
+  {
+    this->lcd.setCursor(0, row_num);
+    char why_arduino_has_not_implemented_liquidcrystal_print_from_char_array_yet[_COLS];
+    memcpy(why_arduino_has_not_implemented_liquidcrystal_print_from_char_array_yet, &this->buffer[row_num], _COLS);
+    this->lcd.print(why_arduino_has_not_implemented_liquidcrystal_print_from_char_array_yet);
+  }
+
+  static_assert(_COLS > 15 && _ROWS > 1);
+  if (this->show_connection_status)
+  {
+    this->lcd.setCursor(14, 0);
+    this->lcd.write(CHAR_ANTENNA);
+    this->lcd.write(info.server_connected ? CHAR_CONNECTION : CHAR_NO_CONNECTION);
+  }
+
+  if (this->show_power_status)
+  {
+    this->lcd.setCursor(15, 1);
+    if (info.power_state == Machine::PowerState::POWERED_ON)
+    {
+      this->lcd.write(CHAR_POWERED_ON);
+    }
+    else if (info.power_state == Machine::PowerState::POWERED_OFF)
+    {
+      this->lcd.write(CHAR_POWERED_OFF);
+    }
+    else if (info.power_state == Machine::PowerState::WAITING_FOR_POWER_OFF)
+    {
+      this->lcd.write(CHAR_POWERING_OFF);
+    }
+    else
+    {
+      this->lcd.write('?');
+    }
+  }
+
+  this->current = this->buffer;
+  this->boardInfo = info;
+  this->forceUpdate = false;
 }
 
 template <uint8_t _COLS, uint8_t _ROWS>
@@ -103,57 +128,82 @@ void LCDWrapper<_COLS, _ROWS>::showConnection(bool show)
 {
   if (this->show_connection_status != show)
     forceUpdate = true;
+
   this->show_connection_status = show;
 }
 
 template <uint8_t _COLS, uint8_t _ROWS>
 void LCDWrapper<_COLS, _ROWS>::showPower(bool show)
 {
-  if (this->show_connection_status != show)
+  if (this->show_power_status != show)
     forceUpdate = true;
 
   this->show_power_status = show;
 }
 
 template <uint8_t _COLS, uint8_t _ROWS>
-bool LCDWrapper<_COLS, _ROWS>::needsUpdate(BoardInfo bi)
+bool LCDWrapper<_COLS, _ROWS>::needsUpdate(const BoardInfo &bi) const
 {
-  if (this->current != this->buffer || !(bi == this->boardInfo) || forceUpdate)
+  if (forceUpdate || !(bi == this->boardInfo) || this->current != this->buffer)
   {
-    this->pretty_print(this->buffer);
+    if (conf::debug::ENABLE_LOGS)
+    {
+      this->prettyPrint(this->buffer, bi);
+    }
+
     return true;
   }
   return false;
 }
 
 template <uint8_t _COLS, uint8_t _ROWS>
-void LCDWrapper<_COLS, _ROWS>::pretty_print(std::array<std::array<char, _COLS>, _ROWS> buffer)
+void LCDWrapper<_COLS, _ROWS>::prettyPrint(const std::array<std::array<char, _COLS>, _ROWS> &buffer,
+                                           const BoardInfo &bi) const
 {
-  // LCD upper border
-  Serial.print("/");
-  for (auto i = 0; i < _COLS; i++)
-    Serial.print("-");
-  Serial.println("\\");
+  std::stringstream ss;
+  ss << "/" << std::string(_COLS, '-') << "\\\n"; // LCD top
 
-  for (auto i = 0; i < _ROWS; i++)
+  for (auto &row : buffer)
   {
-    Serial.print("|"); // LCD left border
-    for (auto j = 0; j < _COLS; j++)
+    ss << "|";
+    for (auto &ch : row)
     {
-      Serial.print(this->buffer[i][j]);
+      if (ch == 0)
+      {
+        ss << " "; // Replace \0 with space
+      }
+      else
+      {
+        ss << ch;
+      }
     }
-    Serial.println("|"); // LCD right border
+    ss << "|\n"; // LCD right border
   }
 
   // LCD lower border
-  Serial.print("\\");
-  for (auto i = 0; i < _COLS; i++)
-    Serial.print("-");
-  Serial.println("/");
+  ss << "\\" << std::string(_COLS, '-') << "/\n";
+
+  auto str = ss.str();
+
+  // Add symbols
+  constexpr auto symbols_per_line = conf::lcd::COLS + 2;
+
+  str[symbols_per_line * 2 - 1] = bi.server_connected ? 'Y' : 'x';
+
+  if (bi.power_state == Machine::PowerState::POWERED_ON)
+    str[symbols_per_line * 3] = 'Y';
+
+  if (bi.power_state == Machine::PowerState::POWERED_OFF)
+    str[symbols_per_line * 3] = 'x';
+
+  if (bi.power_state == Machine::PowerState::WAITING_FOR_POWER_OFF)
+    str[symbols_per_line * 3] = '!';
+
+  Serial.print(str.c_str());
 }
 
 template <uint8_t _COLS, uint8_t _ROWS>
-void LCDWrapper<_COLS, _ROWS>::setRow(uint8_t row, std::string text)
+void LCDWrapper<_COLS, _ROWS>::setRow(uint8_t row, std::string_view text)
 {
   if (row < _ROWS)
   {
@@ -163,4 +213,18 @@ void LCDWrapper<_COLS, _ROWS>::setRow(uint8_t row, std::string text)
       this->buffer[row][i] = text[i];
     }
   }
+}
+
+template <uint8_t _COLS, uint8_t _ROWS>
+void LCDWrapper<_COLS, _ROWS>::backlightOn() const
+{
+  if (this->config.bl_pin != NO_PIN)
+    digitalWrite(this->config.bl_pin, this->config.active_low ? 0 : 1);
+}
+
+template <uint8_t _COLS, uint8_t _ROWS>
+void LCDWrapper<_COLS, _ROWS>::backlightOff() const
+{
+  if (this->config.bl_pin != NO_PIN)
+    digitalWrite(this->config.bl_pin, this->config.active_low ? 1 : 0);
 }

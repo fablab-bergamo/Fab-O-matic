@@ -1,5 +1,7 @@
 # rfid-arduino
 
+[![PlatformIO CI](https://github.com/PBrunot/rfid-arduino/actions/workflows/platformio.yml/badge.svg)](https://github.com/PBrunot/rfid-arduino/actions/workflows/platformio.yml)
+
 ## Hardware requirements
 
 - ESP32

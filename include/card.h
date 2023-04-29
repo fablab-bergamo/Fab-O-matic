@@ -1,0 +1,42 @@
+#ifndef CARD_H_
+#define CARD_H_
+
+#include "Arduino.h"
+#include "conf.h"
+
+namespace card
+{
+  using uid_t = u_int64_t;
+  static constexpr uid_t INVALID = 0ULL;
+  inline std::string uid_str(const card::uid_t uid)
+  {
+    uint64_t number = static_cast<uint64_t>(uid);
+    uint32_t long1 = static_cast<uint32_t>(number & 0xFFFF0000) >> 16;
+    uint32_t long2 = static_cast<uint32_t>(number & 0x0000FFFF);
+
+    char buffer[9] = {0};
+    snprintf(buffer, 5, "%04X", long1);
+    snprintf(&buffer[4], 5, "%04X", long2);
+
+    std::string output(buffer, 8); // Skip the final \0 char
+    return output;
+  }
+
+  inline uid_t from_array(const uint8_t uid[conf::whitelist::UID_BYTE_LEN])
+  {
+    card::uid_t result = 0;
+    for (auto i = (conf::whitelist::UID_BYTE_LEN - 1); i >= 0; i--)
+    {
+      result <<= 8;
+      result |= uid[i];
+    }
+    return result;
+  }
+  inline void print(uint64_t uid)
+  {
+    Serial.printf("%08lx%08lx",
+                  static_cast<uint32_t>((uid >> 32) & 0xFFFFFFFF),
+                  static_cast<uint32_t>(uid & 0xFFFFFFFF));
+  }
+}
+#endif // CARD_H_

@@ -1,0 +1,39 @@
+name: PlatformIO CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.platformio/.cache
+          key: ${{ runner.os }}-pio
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - name: Install PlatformIO Core
+        run: pip install --upgrade platformio
+      - name: Use secrets.h.example as base for the build
+        run: cp include/secrets.h.example include/secrets.h
+      - name: Check PlatformIO Project with linter
+        run: pio check
+      - name: Build PlatformIO Project
+        run: pio run
+      - name: Upload ESP32S3 build
+        uses: actions/upload-artifact@v3
+        with:
+          name: esp32s3.bin
+          path: .pio/build/esp32-s3-devkitc-1/firmware.bin
+          retention-days: 10
+      - name: Upload ESP32 build
+        uses: actions/upload-artifact@v3
+        with:
+          name: esp32.bin
+          path: .pio/build/esp32dev/firmware.bin
+          retention-days: 10

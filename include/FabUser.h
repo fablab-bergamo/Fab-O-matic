@@ -1,53 +1,53 @@
-#ifndef _FAB_USER_H_
-#define _FAB_USER_H_
+#ifndef FABUSER_H_
+#define FABUSER_H_
 
 #include <cstdint>
 #include <string>
 #include <array>
 #include "Arduino.h"
 #include "conf.h"
-
-namespace card
-{
-  typedef u_int64_t uid_t;
-  static constexpr uid_t INVALID = 0;
-  inline std::string uid_str(card::uid_t uid)
-  {
-    uint64_t number = static_cast<uint64_t>(uid);
-    uint32_t long1 = static_cast<uint32_t>(number & 0xFFFF0000) >> 16;
-    uint32_t long2 = static_cast<uint32_t>(number & 0x0000FFFF);
-
-    char buffer[9] = {0};
-    snprintf(buffer, 5, "%04X", long1);
-    snprintf(&buffer[4], 5, "%04X", long2);
-
-    std::string output(buffer, 9);
-    return output;
-  }
-}
+#include "card.h"
+#include <sstream>
 
 struct FabUser
 {
-  card::uid_t member_uid = card::INVALID;
+  enum class UserLevel
+  {
+    UNKNOWN,
+    FABLAB_USER,
+    FABLAB_ADMIN
+  };
+
+  card::uid_t card_uid = card::INVALID;
   std::string holder_name = "";
   bool authenticated = false;
+  UserLevel user_level = UserLevel::UNKNOWN;
 
-  FabUser() : member_uid(card::INVALID), holder_name(""), authenticated(false) {}
-  FabUser(card::uid_t uid, std::string name, bool authenticated) : member_uid(uid), holder_name(name), authenticated(authenticated) {}
-  FabUser(const uint8_t uid[conf::whitelist::UID_BYTE_LEN], std::string name, bool authenticated) : holder_name(name), authenticated(authenticated)
+  FabUser() = default;
+
+  FabUser(const card::uid_t uid, std::string_view name, bool authenticated, UserLevel level) : card_uid(uid), holder_name(name), authenticated(authenticated), user_level(level) {}
+
+  FabUser(const uint8_t uid[conf::whitelist::UID_BYTE_LEN], std::string_view name, bool authenticated, UserLevel level) : holder_name(name), authenticated(authenticated), user_level(level)
   {
-    card::uid_t result = 0;
-    for (auto i = (conf::whitelist::UID_BYTE_LEN - 1); i >= 0; i--)
-    {
-      result <<= 8;
-      result |= uid[i];
-    }
-    this->member_uid = result;
+    this->card_uid = card::from_array(uid);
   }
   bool operator==(const FabUser &t) const
   {
-    return member_uid == t.member_uid;
+    return card_uid == t.card_uid;
+  }
+  std::string toString() const
+  {
+    std::stringstream sstream;
+
+    sstream << "User (Auth:" << authenticated;
+    sstream << ", UID: " << std::hex << card_uid;
+    sstream << ", Name:" << holder_name;
+
+    auto i_level = static_cast<typename std::underlying_type<UserLevel>::type>(user_level);
+    sstream << ", level:" << i_level << ")";
+
+    return sstream.str();
   }
 };
 
-#endif
+#endif // FABUSER_H_

@@ -1,5 +1,5 @@
-#ifndef _SERVER_H_
-#define _SERVER_H_
+#ifndef FABSERVER_H_
+#define FABSERVER_H_
 
 #include "FabUser.h"
 #include "WiFi.h"
@@ -7,47 +7,64 @@
 #include "conf.h"
 #include "Machine.h"
 #include <string>
+#include <MQTTClient.h>
+#include <functional>
+#include <ArduinoJson.h>
+#include "MQTTtypes.h"
+
+using namespace ServerMQTT;
 
 class FabServer
 {
 private:
   const std::string wifi_ssid;
   const std::string wifi_password;
-  bool online;
+  const std::string server_ip;
+  std::string topic = "";
+  std::string response_topic = "";
+
+  MQTTClientCallbackSimpleFunction callback;
+  bool online = false;
   WiFiClass WiFiConnection;
+  WiFiClient net;
+  MQTTClient client;
+  StaticJsonDocument<256> doc;
+  std::string last_query = "";
+  std::string last_reply = "";
+  bool answer_pending = false;
+
+  void messageReceived(String &topic, String &payload);
+  bool publish(const Query &payload);
+  bool waitForAnswer();
+  bool publishWithReply(const Query &payload);
+  String fakeReply() const;
+
+  template <typename RespT, typename QueryT, typename... QueryArgs>
+  std::unique_ptr<RespT> processQuery(QueryArgs &&...);
+
+  static constexpr unsigned int MAX_MQTT_LENGTH = 128;
 
 public:
-  struct UserResponse {
-    bool request_ok; /* True if the request was processed by the server*/
-    bool is_valid; /* True if the user is valid */
-    std::string holder_name; /* Name of the user from server DB */
-  };
-  struct MachineResponse {
-    bool request_ok; /* True if the request was processed by the server */
-    bool is_valid; /* True if the machine has a valid ID */
-    bool needs_maintenance; /* True if the machine needs maintenance */
-    bool allowed; /* True if the machine can be used by anybody */
-  };
-  struct UseResponse {
-    bool request_ok; /* True if the request was processed by the server */
-  };
-
-  FabServer(const std::string ssid, const std::string password);
+  FabServer() = delete;
+  FabServer(std::string_view ssid, std::string_view password, std::string_view server_ip);
   ~FabServer() = default;
 
-  UserResponse checkCard(card::uid_t uid) const;
-  MachineResponse checkMachine(Machine::MachineID mid) const;
-  UseResponse startUse(card::uid_t uid, Machine::MachineID mid) const;
-  UseResponse finishUse(card::uid_t uid, Machine::MachineID mid, uint16_t duration_s) const;
+  std::unique_ptr<UserResponse> checkCard(const card::uid_t uid);
+  std::unique_ptr<MachineResponse> checkMachine(const Machine::MachineID mid);
+  std::unique_ptr<SimpleResponse> startUse(const card::uid_t uid, const Machine::MachineID mid);
+  std::unique_ptr<SimpleResponse> finishUse(const card::uid_t uid, const Machine::MachineID mid, uint16_t duration_s);
+  std::unique_ptr<SimpleResponse> registerMaintenance(const card::uid_t maintainer, const Machine::MachineID mid);
+  std::unique_ptr<SimpleResponse> alive(const Machine::MachineID mid);
 
   bool isOnline() const;
   bool connect();
+  bool loop();
 
   // Rule of 5 https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rc-five
-  FabServer(const FabServer&) = delete; // copy constructor
-  FabServer& operator=(const FabServer&) = delete;
-  FabServer(FabServer&&) = delete; // move constructor
-  FabServer& operator=(FabServer&&) = delete; // move assignment
+  FabServer(const FabServer &) = delete;            // copy constructor
+  FabServer &operator=(const FabServer &) = delete; // copy assignment
+  FabServer(FabServer &&) = delete;                 // move constructor
+  FabServer &operator=(FabServer &&) = delete;      // move assignment
 };
 
-#endif // _SERVER_H_
+#endif // FABSERVER_H_
