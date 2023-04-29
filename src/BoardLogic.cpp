@@ -23,22 +23,27 @@ namespace Board
 BoardLogic::BoardLogic() noexcept : status(Status::CLEAR) {}
 
 /// @brief connects and polls the server for up-to-date machine information
-void BoardLogic::refreshFromServer() const
+void BoardLogic::refreshFromServer()
 {
   if (Board::server.connect())
   {
     // Check the configured machine data from the server
+    auto prevStatus = this->getStatus();
+
+    this->changeStatus(Status::CONNECTING);
     auto result = Board::server.checkMachine(secrets::machine::machine_id);
-    if (result.request_ok)
+    this->changeStatus(prevStatus);
+
+    if (result->request_ok)
     {
-      if (result.is_valid)
+      if (result->is_valid)
       {
         if (conf::debug::ENABLE_LOGS)
           Serial.printf("The configured machine ID %d is valid, maintenance=%d, allowed=%d\n",
-                        secrets::machine::machine_id, result.needs_maintenance, result.allowed);
+                        secrets::machine::machine_id, result->needs_maintenance, result->allowed);
 
-        Board::machine.maintenanceNeeded = result.needs_maintenance;
-        Board::machine.allowed = result.allowed;
+        Board::machine.maintenanceNeeded = result->needs_maintenance;
+        Board::machine.allowed = result->allowed;
       }
       else
       {
@@ -96,10 +101,11 @@ void BoardLogic::onNewCard()
 void BoardLogic::logout()
 {
   auto result = Board::server.finishUse(Board::machine.getActiveUser().card_uid,
-                                        Board::machine.getMachineId(), Board::machine.getUsageTime());
+                                        Board::machine.getMachineId(),
+                                        Board::machine.getUsageTime() / 1000U);
 
   if (conf::debug::ENABLE_LOGS)
-    Serial.printf("Result finishUse: %d\n", result.request_ok);
+    Serial.printf("Result finishUse: %d\n", result->request_ok);
 
   Board::machine.logout();
   this->user = FabUser();
@@ -110,7 +116,7 @@ void BoardLogic::logout()
 
 /// @brief Asks the user to keep the RFID tag on the reader as confirmation
 /// @return True if the user accepted, False if user bailed out
-bool BoardLogic::longTap(const std::string_view short_prompt)
+bool BoardLogic::longTap(std::string_view short_prompt) const
 {
   constexpr unsigned int TOTAL_DURATION_MS = 3000;
   constexpr unsigned int STEPS_COUNT = 6;
@@ -189,7 +195,7 @@ bool BoardLogic::authorize(card::uid_t uid)
       if (this->longTap("Registra"))
       {
         auto response = Board::server.registerMaintenance(this->user.card_uid, Board::machine.getMachineId());
-        if (!response.request_ok)
+        if (!response->request_ok)
         {
           this->beep_failed();
           this->changeStatus(Status::ERROR);
@@ -210,7 +216,7 @@ bool BoardLogic::authorize(card::uid_t uid)
                                        Board::machine.getMachineId());
 
   if (conf::debug::ENABLE_LOGS)
-    Serial.printf("Result startUse: %d\n", result.request_ok);
+    Serial.printf("Result startUse: %d\n", result->request_ok);
 
   this->changeStatus(Status::LOGGED_IN);
   this->beep_ok();
@@ -258,7 +264,7 @@ void BoardLogic::changeStatus(Status new_state)
 /// @brief Updates the LCD screen as per the current status
 void BoardLogic::updateLCD() const
 {
-  char buffer[conf::lcd::COLS];
+  char buffer[conf::lcd::COLS + 1]; // Null terminated strings
   std::string user_name, machine_name, uid_str;
 
   Board::lcd.showConnection(true);
@@ -313,8 +319,8 @@ void BoardLogic::updateLCD() const
     Board::lcd.setRow(1, "");
     break;
   case Status::IN_USE:
-    snprintf(buffer, sizeof(buffer), "Ciao %s", user_name.c_str());
-    Board::lcd.setRow(0, buffer);
+    if (snprintf(buffer, sizeof(buffer), "Ciao %s", user_name.c_str()) > 0)
+      Board::lcd.setRow(0, buffer);
     Board::lcd.setRow(1, Board::lcd.convertSecondsToHHMMSS(Board::machine.getUsageTime()));
     break;
   case Status::BUSY:

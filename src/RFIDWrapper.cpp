@@ -16,14 +16,16 @@ RFIDWrapper::RFIDWrapper()
   pinMode(pins.mfrc522.reset_pin, OUTPUT);
 
   // Smart pointers members destructors will run & free the memory, when class will be distructed.
-  this->rfid_simple_driver = std::unique_ptr<MFRC522DriverPinSimple>(new MFRC522DriverPinSimple(pins.mfrc522.sda_pin));
-  this->spi_rfid_driver = std::unique_ptr<MFRC522DriverSPI>(new MFRC522DriverSPI(*this->rfid_simple_driver)); // Create SPI driver.
-  this->mfrc522 = std::unique_ptr<MFRC522>(new MFRC522(*this->spi_rfid_driver));
+  this->rfid_simple_driver = std::make_unique<MFRC522DriverPinSimple>(pins.mfrc522.sda_pin);
+  this->spi_rfid_driver = std::make_unique<MFRC522DriverSPI>(*this->rfid_simple_driver); // Create SPI driver.
+  this->mfrc522 = std::make_unique<MFRC522>(*this->spi_rfid_driver);
 }
 
+/// @brief indicates if a new card is present in the RFID chip antenna area
+/// @return true if a new card is present
 bool RFIDWrapper::isNewCardPresent() const
 {
-  auto result = this->mfrc522->PICC_IsNewCardPresent();
+  bool result = this->mfrc522->PICC_IsNewCardPresent();
 
   if (conf::debug::ENABLE_LOGS && result)
     Serial.printf("isNewCardPresent=%d\n", result);
@@ -31,6 +33,8 @@ bool RFIDWrapper::isNewCardPresent() const
   return result;
 }
 
+/// @brief tries to read the card serial number
+/// @return true if successfull, result can be read with getUid()
 bool RFIDWrapper::readCardSerial() const
 {
   auto result = this->mfrc522->PICC_ReadCardSerial();
@@ -44,6 +48,8 @@ bool RFIDWrapper::readCardSerial() const
   return result;
 }
 
+/// @brief indicates if the card is still present in the RFID chip antenna area
+/// @param original the card ID to check
 bool RFIDWrapper::cardStillThere(const card::uid_t original) const
 {
   for (auto i = 0; i < 3; i++)

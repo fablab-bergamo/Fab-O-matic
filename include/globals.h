@@ -18,12 +18,12 @@ namespace Board
   RFIDWrapper rfid;
   LCDWrapper<conf::lcd::COLS, conf::lcd::ROWS> lcd(pins.lcd);
 
-  FabServer server(secrets::wifi::ssid, secrets::wifi::password, secrets::wifi::server_ip);
+  FabServer server(secrets::wifi::ssid, secrets::wifi::password, secrets::mqtt::server);
 
-  Machine::Config config1(secrets::machine::machine_id,
-                          secrets::machine::machine_type,
-                          secrets::machine::machine_name,
-                          pins.relay.ch1_pin, false);
+  const Machine::Config config1(secrets::machine::machine_id,
+                                secrets::machine::machine_type,
+                                secrets::machine::machine_name,
+                                pins.relay.ch1_pin, false);
 
   Machine machine(config1);
   AuthProvider auth(secrets::cards::whitelist);

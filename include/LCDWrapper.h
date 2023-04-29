@@ -29,7 +29,7 @@ public:
   void clear();
   void showConnection(bool show);
   void showPower(bool show);
-  void setRow(uint8_t row, const std::string_view text);
+  void setRow(uint8_t row, std::string_view text);
   std::string convertSecondsToHHMMSS(unsigned long millis) const;
   void update_chars(const BoardInfo &boardinfo);
 

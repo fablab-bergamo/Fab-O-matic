@@ -2,6 +2,7 @@
 #define CARD_H_
 
 #include "Arduino.h"
+#include "conf.h"
 
 namespace card
 {
@@ -17,7 +18,7 @@ namespace card
     snprintf(buffer, 5, "%04X", long1);
     snprintf(&buffer[4], 5, "%04X", long2);
 
-    std::string output(buffer, 9);
+    std::string output(buffer, 8); // Skip the final \0 char
     return output;
   }
 

@@ -17,6 +17,7 @@ void taskLogoffCheck();
 void taskEspWatchdog();
 void taskRfidWatchdog();
 void taskPoweroffWarning();
+void taskMQTTAlive();
 
 /* This is the list of tasks that will be run in cooperative scheduling fashion.
  * Using tasks simplifies the code versus a single state machine / if (millis() - memory) patterns
@@ -40,6 +41,7 @@ const Task t4(1 * TASK_SECOND, TASK_FOREVER, &taskLogoffCheck, &Tasks::ts, true)
 const Task t5(conf::tasks::WDG_TIMEOUT_S / 2 * TASK_SECOND, TASK_FOREVER, &taskEspWatchdog, &Tasks::ts, true);
 const Task t6(conf::tasks::RFID_CHIP_CHECK_S *TASK_SECOND, TASK_FOREVER, &taskRfidWatchdog, &Tasks::ts, true);
 const Task t7(conf::machine::DELAY_BETWEEN_BEEPS_S *TASK_SECOND, TASK_FOREVER, &taskPoweroffWarning, &Tasks::ts, true);
+const Task t8(1 * TASK_SECOND, TASK_FOREVER, &taskMQTTAlive, &Tasks::ts, true);
 
 // NOLINTEND(cert-err58-cpp)
 
@@ -49,8 +51,8 @@ using Status = BoardLogic::Status;
 /// @brief Opens WiFi and server connection and updates board state accordingly
 void taskConnect()
 {
-  if (conf::debug::ENABLE_LOGS)
-    Serial.println("Trying Wifi and server connection...");
+  if (conf::debug::ENABLE_TASK_LOGS)
+    Serial.println("taskConnect");
 
   if (!server.isOnline())
   {
@@ -76,6 +78,9 @@ void taskConnect()
 /// @brief periodic check for new RFID card
 void taskCheckRfid()
 {
+  if (conf::debug::ENABLE_TASK_LOGS)
+    Serial.println("taskCheckRfid");
+
   // check if there is a card
   if (rfid.isNewCardPresent())
   {
@@ -98,6 +103,9 @@ void taskCheckRfid()
 /// @brief periodic check if the machine must be powered off
 void taskPoweroffCheck()
 {
+  if (conf::debug::ENABLE_TASK_LOGS)
+    Serial.println("taskPoweroffCheck");
+
   if (machine.canPowerOff())
   {
     machine.power(false);
@@ -107,6 +115,9 @@ void taskPoweroffCheck()
 /// @brief periodic check if the machine must be powered off
 void taskPoweroffWarning()
 {
+  if (conf::debug::ENABLE_TASK_LOGS)
+    Serial.println("taskPoweroffWarning");
+
   if (machine.isShutdownImminent())
   {
     logic.beep_failed();
@@ -118,12 +129,16 @@ void taskPoweroffWarning()
 /// @brief periodic check if the user shall be logged off
 void taskLogoffCheck()
 {
+  if (conf::debug::ENABLE_TASK_LOGS)
+    Serial.println("taskLogoffCheck");
+
   // auto logout after delay
   if (conf::machine::TIMEOUT_USAGE_MINUTES > 0 &&
-      machine.getUsageTime() > conf::machine::TIMEOUT_USAGE_MINUTES * 60 * 1000)
+      machine.getUsageTime() > conf::machine::TIMEOUT_USAGE_MINUTES * 60)
   {
     Serial.println("Auto-logging out user");
     logic.logout();
+    logic.beep_failed();
   }
 }
 
@@ -131,8 +146,19 @@ void taskLogoffCheck()
 /// If code gets stuck this will cause an automatic reset.
 void taskEspWatchdog()
 {
+  static bool initialized = false;
+
+  if (conf::debug::ENABLE_TASK_LOGS)
+    Serial.println("taskEspWatchdog");
+
   if (conf::tasks::WDG_TIMEOUT_S > 0)
   {
+    if (!initialized)
+    {
+      esp_task_wdt_init(conf::tasks::WDG_TIMEOUT_S, true); // enable panic so ESP32 restarts
+      esp_task_wdt_add(NULL);                              // add current thread to WDT watch
+      initialized = true;
+    }
     esp_task_wdt_reset(); // Signal the hardware watchdog
   }
 }
@@ -140,6 +166,9 @@ void taskEspWatchdog()
 /// @brief checks the RFID chip status and re-init it if necessary.
 void taskRfidWatchdog()
 {
+  if (conf::debug::ENABLE_TASK_LOGS)
+    Serial.println("taskRfidWatchdog");
+
   if (!rfid.selfTest())
   {
     Serial.println("RFID chip failure");
@@ -150,18 +179,24 @@ void taskRfidWatchdog()
   }
 }
 
+/// @brief sends the MQTT alive message
+void taskMQTTAlive()
+{
+  if (conf::debug::ENABLE_TASK_LOGS)
+    Serial.println("taskMQTTAlive");
+
+  if (server.isOnline())
+  {
+    server.loop();
+  }
+}
+
 void setup()
 {
   Serial.begin(conf::debug::SERIAL_SPEED_BDS); // Initialize serial communications with the PC for debugging.
 
   if (conf::debug::ENABLE_LOGS)
     Serial.println("Starting setup!");
-
-  if (conf::tasks::WDG_TIMEOUT_S > 0)
-  {
-    esp_task_wdt_init(conf::tasks::WDG_TIMEOUT_S, true); // enable panic so ESP32 restarts
-    esp_task_wdt_add(NULL);                              // add current thread to WDT watch
-  }
 
   if (!logic.init())
   {

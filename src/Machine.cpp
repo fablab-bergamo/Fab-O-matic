@@ -133,11 +133,13 @@ FabUser &Machine::getActiveUser()
   return this->current_user;
 }
 
+/// @brief return the usage time in seconds
+/// @return
 unsigned long Machine::getUsageTime() const
 {
   if (this->active)
   {
-    return millis() - this->usage_start_timestamp;
+    return (millis() - this->usage_start_timestamp);
   }
   return 0;
 }

@@ -32,7 +32,7 @@ public:
 
   Status getStatus() const;
   FabUser getUser();
-  void refreshFromServer() const;
+  void refreshFromServer();
   void onNewCard();
   void logout();
   bool authorize(const card::uid_t uid);
@@ -56,7 +56,7 @@ public:
 private:
   Status status;
   FabUser user;
-  bool longTap(const std::string_view short_prompt);
+  bool longTap(std::string_view short_prompt) const;
 };
 
 #endif // BOARDLOGIC_H

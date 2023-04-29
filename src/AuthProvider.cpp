@@ -67,15 +67,14 @@ std::optional<FabUser> AuthProvider::tryLogin(card::uid_t uid) const
 
   if (Board::server.isOnline())
   {
-    auto response = Board::server.checkCard(uid);
-    if (response.request_ok && response.request_ok)
+    if (auto response = Board::server.checkCard(uid); response->request_ok && response->is_valid)
     {
       user.authenticated = true;
       user.card_uid = uid;
-      user.holder_name = response.holder_name;
-      user.user_level = response.user_level;
+      user.holder_name = response->holder_name;
+      user.user_level = response->user_level;
       // Cache the positive result
-      this->add_in_cache(uid, user.holder_name, response.user_level);
+      this->add_in_cache(uid, user.holder_name, response->user_level);
 
       if (conf::debug::ENABLE_LOGS)
         Serial.printf(" -> online check OK (%s)\n", user.toString().c_str());
@@ -90,7 +89,7 @@ std::optional<FabUser> AuthProvider::tryLogin(card::uid_t uid) const
     return std::nullopt;
   }
 
-  if (auto result = this->WhiteListLookup(uid))
+  if (auto result = this->WhiteListLookup(uid); result.has_value())
   {
     auto [card, level, name] = result.value();
     user.card_uid = card;

@@ -203,7 +203,7 @@ void LCDWrapper<_COLS, _ROWS>::prettyPrint(const std::array<std::array<char, _CO
 }
 
 template <uint8_t _COLS, uint8_t _ROWS>
-void LCDWrapper<_COLS, _ROWS>::setRow(uint8_t row, const std::string_view text)
+void LCDWrapper<_COLS, _ROWS>::setRow(uint8_t row, std::string_view text)
 {
   if (row < _ROWS)
   {
