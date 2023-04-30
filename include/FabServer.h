@@ -17,20 +17,20 @@ using namespace ServerMQTT;
 class FabServer
 {
 private:
-  const std::string wifi_ssid;
-  const std::string wifi_password;
-  const std::string server_ip;
+  const std::string_view wifi_ssid;
+  const std::string_view wifi_password;
+  const std::string_view server_ip;
   std::string topic = "";
   std::string response_topic = "";
 
   MQTTClientCallbackSimpleFunction callback;
-  bool online = false;
   WiFiClass WiFiConnection;
   WiFiClient net;
   MQTTClient client;
   StaticJsonDocument<256> doc;
   std::string last_query = "";
   std::string last_reply = "";
+  bool online = false;
   bool answer_pending = false;
 
   void messageReceived(String &topic, String &payload);

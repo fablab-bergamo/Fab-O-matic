@@ -5,6 +5,7 @@
 #include "Machine.h"
 #include "FabServer.h"
 #include "RFIDWrapper.h"
+#include "MockRFIDWrapper.h"
 #include "AuthProvider.h"
 #include <esp_task_wdt.h>
 #include "LCDWrapper.h"
@@ -13,7 +14,11 @@
 namespace Board
 {
   // Only main.cpp instanciates the variables through Board.h file
+#ifdef WOKWI_SIMULATION
+  extern MockRFIDWrapper rfid;
+#else
   extern RFIDWrapper rfid;
+#endif
   extern FabServer server;
   extern Machine machine;
   extern AuthProvider auth;
@@ -39,7 +44,7 @@ void BoardLogic::refreshFromServer()
       if (result->is_valid)
       {
         if (conf::debug::ENABLE_LOGS)
-          Serial.printf("The configured machine ID %d is valid, maintenance=%d, allowed=%d\n",
+          Serial.printf("The configured machine ID %d is valid, maintenance=%d, allowed=%d\r\n",
                         secrets::machine::machine_id, result->needs_maintenance, result->allowed);
 
         Board::machine.maintenanceNeeded = result->needs_maintenance;
@@ -47,7 +52,7 @@ void BoardLogic::refreshFromServer()
       }
       else
       {
-        Serial.printf("The configured machine ID %d is unknown to the server\n",
+        Serial.printf("The configured machine ID %d is unknown to the server\r\n",
                       secrets::machine::machine_id);
       }
     }
@@ -105,7 +110,7 @@ void BoardLogic::logout()
                                         Board::machine.getUsageTime() / 1000U);
 
   if (conf::debug::ENABLE_LOGS)
-    Serial.printf("Result finishUse: %d\n", result->request_ok);
+    Serial.printf("Result finishUse: %d\r\n", result->request_ok);
 
   Board::machine.logout();
   this->user = FabUser();
@@ -216,7 +221,7 @@ bool BoardLogic::authorize(card::uid_t uid)
                                        Board::machine.getMachineId());
 
   if (conf::debug::ENABLE_LOGS)
-    Serial.printf("Result startUse: %d\n", result->request_ok);
+    Serial.printf("Result startUse: %d\r\n", result->request_ok);
 
   this->changeStatus(Status::LOGGED_IN);
   this->beep_ok();
@@ -241,7 +246,7 @@ bool BoardLogic::init()
   success &= WiFi.mode(WIFI_STA);
 
   if (conf::debug::ENABLE_LOGS)
-    Serial.printf("Board init complete, success = %d\n", success);
+    Serial.printf("Board init complete, success = %d\r\n", success);
 
   return success;
 }
@@ -253,7 +258,7 @@ void BoardLogic::changeStatus(Status new_state)
   if (conf::debug::ENABLE_LOGS && this->status != new_state)
   {
     char buffer[32] = {0};
-    if (sprintf(buffer, "** Changing board state to %d", static_cast<typename std::underlying_type<Status>::type>(new_state)) > 0)
+    if (sprintf(buffer, "** Changing board state to %d", static_cast<int>(new_state)) > 0)
       Serial.println(buffer);
   }
 
@@ -264,7 +269,7 @@ void BoardLogic::changeStatus(Status new_state)
 /// @brief Updates the LCD screen as per the current status
 void BoardLogic::updateLCD() const
 {
-  char buffer[conf::lcd::COLS + 1]; // Null terminated strings
+  char buffer[conf::lcd::COLS + 1] = {0}; // Null terminated strings
   std::string user_name, machine_name, uid_str;
 
   Board::lcd.showConnection(true);
@@ -304,7 +309,7 @@ void BoardLogic::updateLCD() const
     break;
   case Status::LOGIN_DENIED:
     Board::lcd.setRow(0, "Carta ignota");
-    Board::lcd.setRow(1, uid_str.c_str());
+    Board::lcd.setRow(1, uid_str.data());
     break;
   case Status::LOGOUT:
     Board::lcd.setRow(0, "Arrivederci");
@@ -319,7 +324,7 @@ void BoardLogic::updateLCD() const
     Board::lcd.setRow(1, "");
     break;
   case Status::IN_USE:
-    if (snprintf(buffer, sizeof(buffer), "Ciao %s", user_name.c_str()) > 0)
+    if (snprintf(buffer, sizeof(buffer), "Ciao %s", user_name.data()) > 0)
       Board::lcd.setRow(0, buffer);
     Board::lcd.setRow(1, Board::lcd.convertSecondsToHHMMSS(Board::machine.getUsageTime()));
     break;
@@ -357,7 +362,7 @@ void BoardLogic::updateLCD() const
     break;
   default:
     Board::lcd.setRow(0, "Unhandled status");
-    if (sprintf(buffer, "Value %d", static_cast<typename std::underlying_type<Status>::type>(this->status)) > 0)
+    if (sprintf(buffer, "Value %d", static_cast<int>(this->status)) > 0)
       Board::lcd.setRow(1, buffer);
     break;
   }

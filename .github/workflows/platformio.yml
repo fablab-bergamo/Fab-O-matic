@@ -23,13 +23,19 @@ jobs:
         run: cp include/secrets.h.example include/secrets.h
       - name: Check PlatformIO Project with linter
         run: pio check
-      - name: Build PlatformIO Project
+      - name: Build PlatformIO Projects
         run: pio run
       - name: Upload ESP32S3 build
         uses: actions/upload-artifact@v3
         with:
           name: esp32s3.bin
-          path: .pio/build/esp32-s3-devkitc-1/firmware.bin
+          path: .pio/build/esp32-s3/firmware.bin
+          retention-days: 10
+      - name: Upload WOKWI build
+        uses: actions/upload-artifact@v3
+        with:
+          name: esp32-wokwi.bin
+          path: .pio/build/wokwi/firmware.bin
           retention-days: 10
       - name: Upload ESP32 build
         uses: actions/upload-artifact@v3

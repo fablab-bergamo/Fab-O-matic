@@ -2,6 +2,14 @@
 
 Build status : [![PlatformIO CI](https://github.com/fablab-bergamo/rfid-arduino/actions/workflows/platformio.yml/badge.svg)](https://github.com/fablab-bergamo/rfid-arduino/actions/workflows/platformio.yml)
 
+## Testing on WOKWI
+
+- Download latest esp32-wokwi.zip file from Actions / platformio.yml / Artifacts
+- Extract esp32-wokwi.bin file from artifact ZIP
+- Open WOKWI Circuit <https://wokwi.com/projects/363426843283349505>
+- In code editor, press F1 > Upload firmware ... and pick the esp32-wokwi.bin
+- The simulator simulates random RFID tags from whitelist.
+
 ## Hardware requirements
 
 - ESP32 or ESP32-S3

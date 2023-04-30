@@ -28,7 +28,7 @@ bool RFIDWrapper::isNewCardPresent() const
   bool result = this->mfrc522->PICC_IsNewCardPresent();
 
   if (conf::debug::ENABLE_LOGS && result)
-    Serial.printf("isNewCardPresent=%d\n", result);
+    Serial.printf("isNewCardPresent=%d\r\n", result);
 
   return result;
 }
@@ -41,7 +41,7 @@ bool RFIDWrapper::readCardSerial() const
 
   if (conf::debug::ENABLE_LOGS)
   {
-    Serial.printf("readCardSerial=%d (SAK=%d, Size=%d)\n", result,
+    Serial.printf("readCardSerial=%d (SAK=%d, Size=%d)\r\n", result,
                   this->mfrc522->uid.sak, this->mfrc522->uid.size);
   }
 
@@ -77,7 +77,7 @@ bool RFIDWrapper::selfTest() const
   auto result = this->mfrc522->PCD_PerformSelfTest();
   if (conf::debug::ENABLE_LOGS)
   {
-    Serial.printf("RFID self test = %d\n", result);
+    Serial.printf("RFID self test = %d\r\n", result);
   }
   return result;
 }
@@ -104,7 +104,7 @@ card::uid_t RFIDWrapper::getUid() const
   if (conf::debug::ENABLE_LOGS)
   {
     auto str_id = card::uid_str(c);
-    Serial.printf("getUid=%s\n", str_id.c_str());
+    Serial.printf("getUid=%s\r\n", str_id.c_str());
   }
 
   return c;

@@ -13,7 +13,7 @@ Machine::Machine(Config user_conf) : config(user_conf), active(false), usage_sta
   pinMode(this->config.control_pin, OUTPUT);
 
   if (conf::debug::ENABLE_LOGS)
-    Serial.printf("Machine %s configured on pin %d (active_low:%d)\n", this->config.machine_name.c_str(),
+    Serial.printf("Machine %s configured on pin %d (active_low:%d)\r\n", this->config.machine_name.c_str(),
                   this->config.control_pin, this->config.control_pin_active_low);
 
   this->power(false);
@@ -69,7 +69,7 @@ void Machine::logout()
     {
       this->logout_timestamp = millis();
       if (conf::debug::ENABLE_LOGS)
-        Serial.printf("Machine will be shutdown in %d ms\n", conf::machine::POWEROFF_DELAY_MS);
+        Serial.printf("Machine will be shutdown in %d ms\r\n", conf::machine::POWEROFF_DELAY_MS);
     }
     else
     {
@@ -106,7 +106,7 @@ bool Machine::isShutdownImminent() const
 void Machine::power(bool value)
 {
   if (conf::debug::ENABLE_LOGS)
-    Serial.printf("Power set to %d\n", value);
+    Serial.printf("Power set to %d\r\n", value);
 
   if (this->config.control_pin_active_low)
   {

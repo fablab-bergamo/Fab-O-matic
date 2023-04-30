@@ -161,7 +161,7 @@ void LCDWrapper<_COLS, _ROWS>::prettyPrint(const std::array<std::array<char, _CO
                                            const BoardInfo &bi) const
 {
   std::stringstream ss;
-  ss << "/" << std::string(_COLS, '-') << "\\\n"; // LCD top
+  ss << "/" << std::string(_COLS, '-') << "\\\r\n"; // LCD top
 
   for (auto &row : buffer)
   {
@@ -177,27 +177,27 @@ void LCDWrapper<_COLS, _ROWS>::prettyPrint(const std::array<std::array<char, _CO
         ss << ch;
       }
     }
-    ss << "|\n"; // LCD right border
+    ss << "|\r\n"; // LCD right border
   }
 
   // LCD lower border
-  ss << "\\" << std::string(_COLS, '-') << "/\n";
+  ss << "\\" << std::string(_COLS, '-') << "/\r\n";
 
   auto str = ss.str();
 
   // Add symbols
-  constexpr auto symbols_per_line = conf::lcd::COLS + 2;
+  constexpr auto symbols_per_line = conf::lcd::COLS + 3;
 
-  str[symbols_per_line * 2 - 1] = bi.server_connected ? 'Y' : 'x';
+  str[symbols_per_line * 2 - 2] = bi.server_connected ? 'Y' : 'x';
 
   if (bi.power_state == Machine::PowerState::POWERED_ON)
-    str[symbols_per_line * 3] = 'Y';
+    str[symbols_per_line * 3 - 1] = 'Y';
 
   if (bi.power_state == Machine::PowerState::POWERED_OFF)
-    str[symbols_per_line * 3] = 'x';
+    str[symbols_per_line * 3 - 1] = 'x';
 
   if (bi.power_state == Machine::PowerState::WAITING_FOR_POWER_OFF)
-    str[symbols_per_line * 3] = '!';
+    str[symbols_per_line * 3 - 1] = '!';
 
   Serial.print(str.c_str());
 }

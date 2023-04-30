@@ -76,7 +76,7 @@ namespace ServerMQTT
     response->user_level = static_cast<FabUser::UserLevel>(doc["level"].as<int>());
 
     if (conf::debug::ENABLE_LOGS)
-      Serial.printf("Parsed user response as request_ok %d is_valid %d name %s level %d\n", response->request_ok, response->is_valid, response->holder_name.data(), response->user_level);
+      Serial.printf("Parsed user response as request_ok %d is_valid %d name %s level %d\r\n", response->request_ok, response->is_valid, response->holder_name.data(), response->user_level);
 
     return response;
   }
@@ -90,7 +90,7 @@ namespace ServerMQTT
     response->allowed = doc["allowed"];
 
     if (conf::debug::ENABLE_LOGS)
-      Serial.printf("Parsed machine response as request_ok %d is_valid %d maintenance %d allowed %d\n", response->request_ok, response->is_valid, response->needs_maintenance, response->allowed);
+      Serial.printf("Parsed machine response as request_ok %d is_valid %d maintenance %d allowed %d\r\n", response->request_ok, response->is_valid, response->needs_maintenance, response->allowed);
 
     return response;
   }
@@ -101,7 +101,7 @@ namespace ServerMQTT
     response->request_ok = doc["request_ok"];
 
     if (conf::debug::ENABLE_LOGS)
-      Serial.printf("Parsed simple response as request_ok %d\n", response->request_ok);
+      Serial.printf("Parsed simple response as request_ok %d\r\n", response->request_ok);
 
     return response;
   }

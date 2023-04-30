@@ -60,7 +60,7 @@ std::optional<FabUser> AuthProvider::tryLogin(card::uid_t uid) const
   std::string uid_str = card::uid_str(uid);
 
   if (conf::debug::ENABLE_LOGS)
-    Serial.printf("tryLogin called for %s\n", uid_str.c_str());
+    Serial.printf("tryLogin called for %s\r\n", uid_str.c_str());
 
   if (!Board::server.isOnline())
     Board::server.connect();
@@ -77,7 +77,7 @@ std::optional<FabUser> AuthProvider::tryLogin(card::uid_t uid) const
       this->add_in_cache(uid, user.holder_name, response->user_level);
 
       if (conf::debug::ENABLE_LOGS)
-        Serial.printf(" -> online check OK (%s)\n", user.toString().c_str());
+        Serial.printf(" -> online check OK (%s)\r\n", user.toString().c_str());
 
       return user;
     }
@@ -97,7 +97,7 @@ std::optional<FabUser> AuthProvider::tryLogin(card::uid_t uid) const
     user.user_level = level;
     user.holder_name = name;
     if (conf::debug::ENABLE_LOGS)
-      Serial.printf(" -> whilelist check OK (%s)\n", user.toString().c_str());
+      Serial.printf(" -> whilelist check OK (%s)\r\n", user.toString().c_str());
     return user;
   }
 
@@ -120,7 +120,7 @@ std::optional<WhiteListEntry> AuthProvider::WhiteListLookup(card::uid_t candidat
 
   if (elem == end(this->whitelist))
   {
-    Serial.printf("%s not found in whitelist\n", card::uid_str(candidate_uid).c_str());
+    Serial.printf("%s not found in whitelist\r\n", card::uid_str(candidate_uid).c_str());
     return std::nullopt;
   }
 

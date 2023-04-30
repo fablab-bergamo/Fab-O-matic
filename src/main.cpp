@@ -210,5 +210,8 @@ void setup()
 
 void loop()
 {
+  if (conf::debug::ENABLE_TASK_LOGS)
+    Serial.println("loop() called");
+
   Tasks::ts.execute();
 }

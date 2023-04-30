@@ -30,7 +30,7 @@ bool FabServer::publishWithReply(const Query &query)
     if (this->waitForAnswer())
     {
       if (conf::debug::ENABLE_LOGS)
-        Serial.printf("Received answer: %s\n", this->last_reply.c_str());
+        Serial.printf("Received answer: %s\r\n", this->last_reply.data());
       return true;
     }
   }
@@ -43,12 +43,12 @@ bool FabServer::publishWithReply(const Query &query)
 bool FabServer::publish(const Query &query)
 {
 
-  String payload(query.payload().c_str());
+  String payload(query.payload().data());
   String topic(this->topic.c_str());
 
   if (payload.length() > FabServer::MAX_MQTT_LENGTH)
   {
-    Serial.printf("Message is too long: %s\n", payload);
+    Serial.printf("Message is too long: %s\r\n", payload);
     return false;
   }
 
@@ -56,7 +56,7 @@ bool FabServer::publish(const Query &query)
   this->last_query = payload.c_str();
 
   if (conf::debug::ENABLE_LOGS)
-    Serial.printf("Sending MQTT message %s on topic %s\n", payload.c_str(), topic.c_str());
+    Serial.printf("Sending MQTT message %s on topic %s\r\n", payload.c_str(), topic.c_str());
 
   return this->client.publish(topic, payload);
 }
@@ -139,7 +139,7 @@ bool FabServer::waitForAnswer()
       return true;
     }
   }
-  Serial.printf("Failure, no answer from MQTT server (timeout:%d ms)\n", MAX_DURATION_MS);
+  Serial.printf("Failure, no answer from MQTT server (timeout:%d ms)\r\n", MAX_DURATION_MS);
   return false;
 }
 
@@ -172,7 +172,7 @@ bool FabServer::connect()
   // Connect WiFi if needed
   if (this->WiFiConnection.status() != WL_CONNECTED)
   {
-    this->WiFiConnection.begin(this->wifi_ssid.c_str(), this->wifi_password.c_str());
+    this->WiFiConnection.begin(this->wifi_ssid.data(), this->wifi_password.data());
     for (auto i = 0; i < NB_TRIES; i++)
     {
       if (conf::debug::ENABLE_LOGS && this->WiFiConnection.status() == WL_CONNECTED)
@@ -185,6 +185,9 @@ bool FabServer::connect()
   // Check server
   if (this->WiFiConnection.status() == WL_CONNECTED)
   {
+    if (conf::debug::ENABLE_LOGS)
+      Serial.printf("Connected to WiFi %s\r\n", this->wifi_ssid.data());
+
     this->client.begin(secrets::mqtt::server.data(), this->net);
 
     this->callback = [&](String &a, String &b)
@@ -194,7 +197,7 @@ bool FabServer::connect()
 
     if (!client.connect("ESP32", secrets::mqtt::user.data(), secrets::mqtt::password.data(), false))
     {
-      Serial.printf("Failure to connect as client: %s\n", secrets::mqtt::client.data());
+      Serial.printf("Failure to connect as client: %s\r\n", secrets::mqtt::client.data());
     }
 
     if (client.connected())
@@ -206,7 +209,7 @@ bool FabServer::connect()
 
       if (!client.subscribe(this->response_topic.c_str()))
       {
-        Serial.printf("Failure to subscribe to reply topic %s\n", this->response_topic.c_str());
+        Serial.printf("Failure to subscribe to reply topic %s\r\n", this->response_topic.c_str());
         this->online = false;
       }
       // TODO ??
@@ -214,6 +217,7 @@ bool FabServer::connect()
   }
   else
   {
+    Serial.printf("Failure to connect to WiFi %s\r\n", this->wifi_ssid.data());
     this->online = false;
   }
 
@@ -243,7 +247,7 @@ std::unique_ptr<RespT> FabServer::processQuery(QueryArgs &&...args)
       if (QueryT query{args...}; this->publishWithReply(query))
       {
         // Deserialize the JSON document
-        const auto payload = this->last_reply.c_str();
+        const auto payload = this->last_reply.data();
         if (DeserializationError error = deserializeJson(this->doc, payload))
         {
           Serial.printf("Failed to parse json: %s (%s)", payload, error.c_str());
