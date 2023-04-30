@@ -32,12 +32,12 @@ private:
   std::string last_reply = "";
   bool online = false;
   bool answer_pending = false;
+  uint8_t channel = -1;
 
   void messageReceived(String &topic, String &payload);
   bool publish(const Query &payload);
   bool waitForAnswer();
   bool publishWithReply(const Query &payload);
-  String fakeReply() const;
 
   template <typename RespT, typename QueryT, typename... QueryArgs>
   std::unique_ptr<RespT> processQuery(QueryArgs &&...);
@@ -46,7 +46,7 @@ private:
 
 public:
   FabServer() = delete;
-  FabServer(std::string_view ssid, std::string_view password, std::string_view server_ip);
+  FabServer(std::string_view ssid, std::string_view password, std::string_view server_ip, uint8_t channel = -1);
   ~FabServer() = default;
 
   std::unique_ptr<UserResponse> checkCard(const card::uid_t uid);

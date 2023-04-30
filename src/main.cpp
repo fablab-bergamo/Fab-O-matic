@@ -8,6 +8,7 @@
 #include "globals.h"
 #include "pins.h"
 #include "BoardLogic.h"
+#include "pthread.h"
 
 // Pre-declarations
 void taskCheckRfid();
@@ -103,8 +104,13 @@ void taskCheckRfid()
 /// @brief periodic check if the machine must be powered off
 void taskPoweroffCheck()
 {
+  static bool value = false;
+
   if (conf::debug::ENABLE_TASK_LOGS)
     Serial.println("taskPoweroffCheck");
+
+  Board::logic.invert_led();
+  Board::lcd.clear();
 
   if (machine.canPowerOff())
   {
@@ -134,9 +140,9 @@ void taskLogoffCheck()
 
   // auto logout after delay
   if (conf::machine::TIMEOUT_USAGE_MINUTES > 0 &&
-      machine.getUsageTime() > conf::machine::TIMEOUT_USAGE_MINUTES * 60)
+      machine.getUsageTime() / 1000UL > conf::machine::TIMEOUT_USAGE_MINUTES * 60UL)
   {
-    Serial.println("Auto-logging out user");
+    Serial.printf("Auto-logging out user %s\r\n", machine.getActiveUser().holder_name.c_str());
     logic.logout();
     logic.beep_failed();
   }
@@ -191,6 +197,31 @@ void taskMQTTAlive()
   }
 }
 
+#ifdef WOKWI_SIMULATION
+pthread_t mqtt_server;
+pthread_attr_t attr;
+
+void *threadMQTTServer(void *arg)
+{
+  if (conf::debug::ENABLE_LOGS)
+    Serial.println("threadMQTTServer started");
+
+  delay(5000);
+  bool value = false;
+  while (true)
+  {
+    // Check if the server is online
+    if (!Board::broker.isRunning())
+    {
+      // Try to connect
+      Board::broker.start();
+    }
+    Board::broker.update();
+    delay(500);
+  }
+}
+#endif
+
 void setup()
 {
   Serial.begin(conf::debug::SERIAL_SPEED_BDS); // Initialize serial communications with the PC for debugging.
@@ -205,13 +236,20 @@ void setup()
     while (true)
       ;
   }
+
+#ifdef WOKWI_SIMULATION
+  attr.stacksize = 3 * 1024;
+  attr.detachstate = PTHREAD_CREATE_DETACHED;
+  if (pthread_create(&mqtt_server, &attr, threadMQTTServer, NULL))
+  {
+    Serial.println("Error creating MQTT server thread");
+  }
+#endif
+
   logic.beep_ok();
 }
 
 void loop()
 {
-  if (conf::debug::ENABLE_TASK_LOGS)
-    Serial.println("loop() called");
-
   Tasks::ts.execute();
 }

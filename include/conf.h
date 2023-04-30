@@ -27,10 +27,9 @@ namespace conf::machine
 
 namespace conf::debug
 {
-  constexpr bool ENABLE_LOGS = true;                 /* True to add logs */
+  constexpr bool ENABLE_LOGS = false;                /* True to add logs */
   constexpr bool ENABLE_TASK_LOGS = false;           /* True to add logs */
   constexpr unsigned long SERIAL_SPEED_BDS = 115200; /* Serial speed in bauds */
-  constexpr bool FAKE_BACKEND = true;                /* True to use fake broker */
 }
 namespace conf::buzzer
 {

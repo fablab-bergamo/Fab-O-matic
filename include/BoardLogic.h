@@ -3,6 +3,8 @@
 
 #include "FabUser.h"
 #include "card.h"
+#include <Adafruit_NeoPixel.h>
+#include "pins.h"
 
 class BoardLogic
 {
@@ -32,6 +34,8 @@ public:
 
   Status getStatus() const;
   FabUser getUser();
+  Adafruit_NeoPixel pixels{1, pins.led.pin, NEO_GRB + NEO_KHZ800};
+
   void refreshFromServer();
   void onNewCard();
   void logout();
@@ -41,8 +45,11 @@ public:
   void updateLCD() const;
   void beep_ok() const;
   void beep_failed() const;
+  void led(bool value);
+  void invert_led();
 
   bool ready_for_a_new_card = true;
+  bool led_status = false;
 
   // copy reference
   BoardLogic &operator=(const BoardLogic &board) = delete;

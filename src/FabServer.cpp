@@ -13,7 +13,9 @@ using namespace ServerMQTT;
 /// @param ssid wifi network
 /// @param password wifi password
 /// @param server_ip server IP address
-FabServer::FabServer(std::string_view ssid, std::string_view password, std::string_view server_ip) : wifi_ssid(ssid), wifi_password(password), server_ip(server_ip), online(false)
+/// @param channel wifi channel (use 0 for auto)
+FabServer::FabServer(std::string_view ssid, std::string_view password, std::string_view server_ip, u_int8_t channel)
+    : wifi_ssid(ssid), wifi_password(password), server_ip(server_ip), online(false), channel(channel)
 {
   std::stringstream ss;
   ss << secrets::mqtt::topic << "/" << secrets::machine::machine_id.id;
@@ -30,7 +32,7 @@ bool FabServer::publishWithReply(const Query &query)
     if (this->waitForAnswer())
     {
       if (conf::debug::ENABLE_LOGS)
-        Serial.printf("Received answer: %s\r\n", this->last_reply.data());
+        Serial.printf("MQTT Client: received answer: %s\r\n", this->last_reply.data());
       return true;
     }
   }
@@ -48,7 +50,7 @@ bool FabServer::publish(const Query &query)
 
   if (payload.length() > FabServer::MAX_MQTT_LENGTH)
   {
-    Serial.printf("Message is too long: %s\r\n", payload);
+    Serial.printf("MQTT Client: Message is too long: %s\r\n", payload);
     return false;
   }
 
@@ -56,7 +58,7 @@ bool FabServer::publish(const Query &query)
   this->last_query = payload.c_str();
 
   if (conf::debug::ENABLE_LOGS)
-    Serial.printf("Sending MQTT message %s on topic %s\r\n", payload.c_str(), topic.c_str());
+    Serial.printf("MQTT Client: sending message %s on topic %s\r\n", payload.c_str(), topic.c_str());
 
   return this->client.publish(topic, payload);
 }
@@ -67,7 +69,7 @@ bool FabServer::loop()
   {
     if (this->online && conf::debug::ENABLE_LOGS)
     {
-      Serial.println("MQTT connection lost");
+      Serial.println("MQTT Client: connection lost");
     }
     this->online = false;
     return false;
@@ -75,50 +77,12 @@ bool FabServer::loop()
   return true;
 }
 
-/// @brief Returns a fake server reply for testing purposes
-/// @return json payload
-String FabServer::fakeReply() const
-{
-  if (this->last_query.find("checkmachine") != std::string::npos)
-  {
-    String payload = "{\"request_ok\":true,\"is_valid\":true,\"allowed\":true,\"maintenance\":false}";
-    return payload;
-  }
-
-  if (this->last_query.find("maintenance") != std::string::npos)
-  {
-    String payload = "{\"request_ok\":true}";
-    return payload;
-  }
-
-  if (this->last_query.find("startuse") != std::string::npos)
-  {
-    String payload = "{\"request_ok\":true}";
-    return payload;
-  }
-
-  if (this->last_query.find("stopuse") != std::string::npos)
-  {
-    String payload = "{\"request_ok\":true}";
-    return payload;
-  }
-
-  if (this->last_query.find("checkuser") != std::string::npos)
-  {
-    String payload = "{\"request_ok\":true,\"level\":2,\"name\":\"FAKE USER\",\"is_valid\":true}";
-    return payload;
-  }
-
-  String payload = "{\"request_ok\":true}";
-  return payload;
-}
-
 /// @brief blocks until the server answers or until the timeout is reached
 /// @return true if the server answered
 bool FabServer::waitForAnswer()
 {
   constexpr uint16_t MAX_DURATION_MS = 2000;
-  constexpr uint16_t DELAY_MS = 100;
+  constexpr uint16_t DELAY_MS = 50;
   constexpr uint8_t NB_TRIES = (MAX_DURATION_MS / DELAY_MS);
 
   for (auto i = 0; i < NB_TRIES; i++)
@@ -127,12 +91,6 @@ bool FabServer::waitForAnswer()
     {
       this->client.loop();
       delay(DELAY_MS);
-      if (conf::debug::FAKE_BACKEND)
-      {
-        String topic = this->response_topic.c_str();
-        String payload = this->fakeReply();
-        this->messageReceived(topic, payload);
-      }
     }
     else
     {
@@ -155,9 +113,13 @@ bool FabServer::isOnline() const
 /// @param payload payload of the message
 void FabServer::messageReceived(String &topic, String &payload)
 {
-  std::stringstream ss;
-  ss << "Received message, topic:" << topic.c_str() << ", payload:" << payload.c_str();
-  Serial.println(ss.str().c_str());
+  if (conf::debug::ENABLE_LOGS)
+  {
+    std::stringstream ss;
+    ss << "MQTT Client: Received " << topic.c_str() << " -> " << payload.c_str();
+    Serial.println(ss.str().c_str());
+  }
+
   this->last_reply = payload.c_str();
   this->answer_pending = false;
 }
@@ -172,7 +134,7 @@ bool FabServer::connect()
   // Connect WiFi if needed
   if (this->WiFiConnection.status() != WL_CONNECTED)
   {
-    this->WiFiConnection.begin(this->wifi_ssid.data(), this->wifi_password.data());
+    this->WiFiConnection.begin(this->wifi_ssid.data(), this->wifi_password.data(), this->channel);
     for (auto i = 0; i < NB_TRIES; i++)
     {
       if (conf::debug::ENABLE_LOGS && this->WiFiConnection.status() == WL_CONNECTED)
@@ -209,10 +171,14 @@ bool FabServer::connect()
 
       if (!client.subscribe(this->response_topic.c_str()))
       {
-        Serial.printf("Failure to subscribe to reply topic %s\r\n", this->response_topic.c_str());
+        Serial.printf("MQTT Client: failure to subscribe to reply topic %s\r\n", this->response_topic.c_str());
         this->online = false;
       }
-      // TODO ??
+    }
+    else
+    {
+      Serial.printf("Failure to connect to MQTT server %s\r\n", secrets::mqtt::server.data());
+      this->online = false;
     }
   }
   else
@@ -224,7 +190,7 @@ bool FabServer::connect()
   if (conf::debug::ENABLE_LOGS)
   {
     std::stringstream ss;
-    ss << "Online:" << this->online << ", board IP address:" << WiFi.localIP() << ", server: " << secrets::mqtt::server;
+    ss << "Online:" << this->online << ", board IP address:" << WiFi.localIP().toString().c_str() << ", server: " << secrets::mqtt::server;
     Serial.println(ss.str().c_str());
   }
   return this->online;

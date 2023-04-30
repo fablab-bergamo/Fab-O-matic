@@ -12,6 +12,7 @@
 #include "AuthProvider.h"
 #include "BoardLogic.h"
 #include <TaskScheduler.h>
+#include "MockMQTTBroker.h"
 
 // Global variables
 namespace Board
@@ -19,7 +20,8 @@ namespace Board
 
 #ifdef WOKWI_SIMULATION
   MockRFIDWrapper rfid;
-  FabServer server("Wokwi-GUEST", "", secrets::mqtt::server);
+  FabServer server("Wokwi-GUEST", "", secrets::mqtt::server, 6);
+  MockMQTTBroker broker;
 #else
   RFIDWrapper rfid;
   FabServer server(secrets::wifi::ssid, secrets::wifi::password, secrets::mqtt::server);

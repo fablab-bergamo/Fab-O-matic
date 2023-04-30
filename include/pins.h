@@ -35,20 +35,44 @@ struct pins_config
   {
     uint8_t pin;
   };
+  struct led_config
+  {
+    uint8_t pin;
+    bool is_rgb;
+  };
   // Struct members
   mfrc522_config mfrc522;
   lcd_config lcd;
   relay_config relay;
   buzzer_config buzzer;
+  led_config led;
 };
 
 #ifdef PINS_ESP32
-constexpr pins_config pins{{27U, 26U, 33U, 32U, 4U}, {15U, 18U, 2U, 4U, 5U, 19U, 9U, false}, {14U, 27U}, {12U}};
+constexpr pins_config pins{
+    {27U, 26U, 33U, 32U, 4U},               // RFID
+    {15U, 18U, 2U, 4U, 5U, 19U, 9U, false}, // LCD
+    {14U, 27U},                             // relay
+    {12U},                                  // buzzer
+    {18U, false}                            // Neopixel
+};
 #endif
 #ifdef WOKWI_SIMULATION
-constexpr pins_config pins{{27U, 26U, 33U, 32U, 4U}, {15U, 18U, 2U, 4U, 5U, 19U, 9U, false}, {14U, 27U}, {12U}};
+constexpr pins_config pins{
+    {27U, 26U, 33U, 32U, 4U},               // RFID
+    {15U, 18U, 2U, 4U, 5U, 19U, 9U, false}, // LCD
+    {14U, 27U},                             // relay
+    {12U},                                  // buzzer
+    {18U, true}                             // Neopixel
+};
 #endif
 #ifdef PINS_ESP32S3
-constexpr pins_config pins{{17U, 8U, 3U, 18U, 12U}, {5U, 4U, 6U, 7U, 15U, 16U, 13U, false}, {10U, 11U}, {9U}};
+constexpr pins_config pins{
+    {17U, 8U, 3U, 18U, 12U},                // RFID
+    {5U, 4U, 6U, 7U, 15U, 16U, 13U, false}, // LCD
+    {10U, 11U},                             // relay
+    {9U},                                   // buzzer
+    {8U, false}                             // Neopixel
+};
 #endif
 #endif // PINS_H_

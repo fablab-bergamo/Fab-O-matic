@@ -10,6 +10,8 @@
 #include <esp_task_wdt.h>
 #include "LCDWrapper.h"
 #include <sstream>
+#include "pins.h"
+#include <Adafruit_NeoPixel.h>
 
 namespace Board
 {
@@ -25,7 +27,33 @@ namespace Board
   extern LCDWrapper<conf::lcd::COLS, conf::lcd::ROWS> lcd;
 } // namespace Board
 
-BoardLogic::BoardLogic() noexcept : status(Status::CLEAR) {}
+BoardLogic::BoardLogic() noexcept : status(Status::CLEAR)
+{
+  pinMode(pins.led.pin, OUTPUT);
+  if (pins.led.is_rgb)
+  {
+    pixels.begin();
+  }
+}
+
+void BoardLogic::led(bool value)
+{
+  if (pins.led.is_rgb)
+  {
+    pixels.setPixelColor(0, pixels.Color(0, value ? 255 : 0, 0));
+    pixels.show();
+  }
+  else
+  {
+    digitalWrite(pins.led.pin, value ? HIGH : LOW);
+  }
+  this->led_status = value;
+}
+
+void BoardLogic::invert_led()
+{
+  this->led(!this->led_status);
+}
 
 /// @brief connects and polls the server for up-to-date machine information
 void BoardLogic::refreshFromServer()
@@ -33,12 +61,7 @@ void BoardLogic::refreshFromServer()
   if (Board::server.connect())
   {
     // Check the configured machine data from the server
-    auto prevStatus = this->getStatus();
-
-    this->changeStatus(Status::CONNECTING);
     auto result = Board::server.checkMachine(secrets::machine::machine_id);
-    this->changeStatus(prevStatus);
-
     if (result->request_ok)
     {
       if (result->is_valid)

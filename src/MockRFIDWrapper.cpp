@@ -16,6 +16,7 @@ bool MockRFIDWrapper::isNewCardPresent() const
   bool result = (random(0, 100) == 0);
   if (result)
   {
+    // Choose a random card from the whitelist
     this->card_idx = random(0, conf::whitelist::LEN);
   }
 

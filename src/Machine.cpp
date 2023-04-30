@@ -61,7 +61,7 @@ void Machine::logout()
 {
   if (this->active)
   {
-    active = false;
+    this->active = false;
     this->powerState = PowerState::WAITING_FOR_POWER_OFF;
 
     // Sets the countdown to power off
@@ -133,8 +133,8 @@ FabUser &Machine::getActiveUser()
   return this->current_user;
 }
 
-/// @brief return the usage time in seconds
-/// @return
+/// @brief Gets the duration the machine has been used
+/// @return milliseconds since the machine has been started
 unsigned long Machine::getUsageTime() const
 {
   if (this->active)
