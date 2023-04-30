@@ -110,7 +110,6 @@ void taskPoweroffCheck()
     Serial.println("taskPoweroffCheck");
 
   Board::logic.invert_led();
-  Board::lcd.clear();
 
   if (machine.canPowerOff())
   {

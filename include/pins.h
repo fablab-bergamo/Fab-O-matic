@@ -68,11 +68,11 @@ constexpr pins_config pins{
 #endif
 #ifdef PINS_ESP32S3
 constexpr pins_config pins{
-    {17U, 8U, 3U, 18U, 12U},                // RFID
-    {5U, 4U, 6U, 7U, 15U, 16U, 13U, false}, // LCD
-    {10U, 11U},                             // relay
-    {9U},                                   // buzzer
-    {8U, false}                             // Neopixel
+    {17U, 8U, 3U, 18U, 12U},               // RFID
+    {5U, 4U, 6U, 7U, 15U, 2U, 13U, false}, // LCD
+    {10U, 11U},                            // relay
+    {9U},                                  // buzzer
+    {48U, true}                            // Neopixel
 };
 #endif
 #endif // PINS_H_

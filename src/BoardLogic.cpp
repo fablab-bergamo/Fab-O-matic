@@ -40,7 +40,7 @@ void BoardLogic::led(bool value)
 {
   if (pins.led.is_rgb)
   {
-    pixels.setPixelColor(0, pixels.Color(0, value ? 255 : 0, 0));
+    pixels.setPixelColor(0, pixels.Color(0, value ? 64 : 0, 0));
     pixels.show();
   }
   else
