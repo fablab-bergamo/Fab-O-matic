@@ -136,7 +136,7 @@ bool RFIDWrapper::init() const
     MFRC522Debug::PCD_DumpVersionToSerial(*this->mfrc522, Serial);
 
   this->mfrc522->PCD_SetAntennaGain(MFRC522::PCD_RxGain::RxGain_max);
-  delay(10);
+  delay(5);
 
   if (!this->mfrc522->PCD_PerformSelfTest())
   {

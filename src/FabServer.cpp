@@ -6,6 +6,7 @@
 #include <cstdint>
 #include <sstream>
 #include <ArduinoJson.h>
+#include <chrono>
 
 using namespace ServerMQTT;
 
@@ -124,6 +125,35 @@ void FabServer::messageReceived(String &topic, String &payload)
   this->answer_pending = false;
 }
 
+bool FabServer::connectWiFi() noexcept
+{
+  constexpr uint8_t NB_TRIES = 3;
+  constexpr uint16_t DELAY_MS = 1000;
+
+  try
+  {
+    // Connect WiFi if needed
+    if (this->WiFiConnection.status() != WL_CONNECTED)
+    {
+      this->WiFiConnection.begin(this->wifi_ssid.data(), this->wifi_password.data(), this->channel);
+      for (auto i = 0; i < NB_TRIES; i++)
+      {
+        if (conf::debug::ENABLE_LOGS && this->WiFiConnection.status() == WL_CONNECTED)
+          Serial.println("WiFi connection successfull");
+        break;
+        delay(DELAY_MS);
+      }
+    }
+
+    return this->WiFiConnection.status() == WL_CONNECTED;
+  }
+  catch (const std::exception &e)
+  {
+    Serial.println(e.what());
+    return false;
+  }
+}
+
 /// @brief Establish WiFi connection and connects to FabServer
 /// @return true if both operations succeeded
 bool FabServer::connect()
@@ -131,26 +161,13 @@ bool FabServer::connect()
   constexpr uint8_t NB_TRIES = 3;
   constexpr uint16_t DELAY_MS = 1000;
 
-  // Connect WiFi if needed
-  if (this->WiFiConnection.status() != WL_CONNECTED)
-  {
-    this->WiFiConnection.begin(this->wifi_ssid.data(), this->wifi_password.data(), this->channel);
-    for (auto i = 0; i < NB_TRIES; i++)
-    {
-      if (conf::debug::ENABLE_LOGS && this->WiFiConnection.status() == WL_CONNECTED)
-        Serial.println("WiFi connection successfull");
-      break;
-      delay(DELAY_MS);
-    }
-  }
-
   // Check server
-  if (this->WiFiConnection.status() == WL_CONNECTED)
+  if (this->connectWiFi())
   {
     if (conf::debug::ENABLE_LOGS)
       Serial.printf("Connected to WiFi %s\r\n", this->wifi_ssid.data());
 
-    this->client.begin(secrets::mqtt::server.data(), this->net);
+    this->client.begin(this->server_ip.data(), this->net);
 
     this->callback = [&](String &a, String &b)
     { return this->messageReceived(a, b); };
@@ -190,7 +207,7 @@ bool FabServer::connect()
   if (conf::debug::ENABLE_LOGS)
   {
     std::stringstream ss;
-    ss << "Online:" << this->online << ", board IP address:" << WiFi.localIP().toString().c_str() << ", server: " << secrets::mqtt::server;
+    ss << "Online:" << this->online << ", board IP address:" << WiFi.localIP().toString().c_str() << ", server: " << this->server_ip.data();
     Serial.println(ss.str().c_str());
   }
   return this->online;
@@ -260,7 +277,7 @@ std::unique_ptr<SimpleResponse> FabServer::startUse(card::uid_t uid, Machine::Ma
 /// @param mid machine used ID
 /// @param duration_s duration of usage in seconds
 /// @return server response (if request_ok)
-std::unique_ptr<SimpleResponse> FabServer::finishUse(card::uid_t uid, Machine::MachineID mid, uint16_t duration_s)
+std::unique_ptr<SimpleResponse> FabServer::finishUse(card::uid_t uid, Machine::MachineID mid, std::chrono::seconds duration_s)
 {
   return this->processQuery<SimpleResponse, StopUseQuery>(uid, mid, duration_s);
 }

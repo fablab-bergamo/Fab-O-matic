@@ -5,6 +5,9 @@
 #include "LiquidCrystal.h"
 #include "Machine.h"
 #include "pins.h"
+#include <chrono>
+
+using namespace std::chrono;
 
 struct BoardInfo
 {
@@ -30,7 +33,7 @@ public:
   void showConnection(bool show);
   void showPower(bool show);
   void setRow(uint8_t row, std::string_view text);
-  std::string convertSecondsToHHMMSS(unsigned long millis) const;
+  std::string convertSecondsToHHMMSS(duration<uint16_t> duration) const;
   void update_chars(const BoardInfo &boardinfo);
 
 private:

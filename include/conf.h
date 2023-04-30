@@ -3,6 +3,10 @@
 
 #include <cstdint>
 #include <string>
+#include <chrono>
+
+using namespace std::chrono_literals;
+using namespace std::chrono;
 
 namespace conf::whitelist
 {
@@ -17,12 +21,14 @@ namespace conf::lcd
 }
 namespace conf::machine
 {
-  constexpr uint16_t TIMEOUT_USAGE_MINUTES = 8 * 60;         /* User will be log out after this delay. If 0, no auto-logout. */
-  constexpr unsigned long BEEP_REMAINING_MS = 2 * 60 * 1000; /* Device will beep before auto-poweroff. If 0, no beeping.  */
-  constexpr unsigned long POWEROFF_DELAY_MS = 5 * 60 * 1000; /* Milliseconds of idle time before poweroff. If 0, machine will stay on. */
-  constexpr uint16_t DELAY_BETWEEN_BEEPS_S = 45;             /* When about to shutdown, it will beep every X seconds */
-  constexpr bool MAINTENANCE_BLOCK = true;                   /* If true, machine needing maintenance will be blocked for normal users */
-  static_assert(BEEP_REMAINING_MS <= POWEROFF_DELAY_MS);
+  constexpr auto AUTO_LOGOFF_DELAY = 8h;       /* User will be log out after this delay. If 0h, no auto-logout. */
+  constexpr auto BEEP_PERIOD = 1min;           /* Device will beep before auto-poweroff. If 0min, no beeping.  */
+  constexpr auto POWEROFF_GRACE_PERIOD = 1min; /* Idle time before poweroff. If 0min, machine will stay on. */
+  constexpr auto DELAY_BETWEEN_BEEPS = 30s;    /* Beeps will be heard every 30s when the machine is about to shutdown */
+  constexpr bool MAINTENANCE_BLOCK = true;     /* If true, machine needing maintenance will be blocked for normal users */
+
+  static_assert(BEEP_PERIOD <= POWEROFF_GRACE_PERIOD);
+  static_assert(DELAY_BETWEEN_BEEPS < BEEP_PERIOD);
 }
 
 namespace conf::debug
@@ -33,17 +39,17 @@ namespace conf::debug
 }
 namespace conf::buzzer
 {
-  constexpr unsigned short LEDC_PWM_CHANNEL = 0U;    /* Esp32 pwm channel for beep generation */
-  constexpr unsigned short BEEP_DURATION_MS = 200UL; /* Beep duration in milliseconds */
+  constexpr unsigned short LEDC_PWM_CHANNEL = 0U; /* Esp32 pwm channel for beep generation */
+  constexpr auto STANDARD_BEEP_DURATION = 200ms;  /* Beep duration, typical value 200ms */
   constexpr unsigned int BEEP_HZ = 660U;
 }
 namespace conf::tasks
 {
-  constexpr unsigned int RFID_CHECK_MS = 150;     /* Task period to check for RFID badge in milliseconds */
-  constexpr unsigned int RFID_CHIP_CHECK_S = 60;  /* Performs RFID self check and reset if necessary every X seconds */
-  constexpr uint16_t REFRESH_PERIOD_SECONDS = 30; /* Notify the server every X seconds */
-  constexpr int WDG_TIMEOUT_S = 30;               /* Timeout for hardware watchdog in seconds, set to 0 to disable */
-  static_assert(WDG_TIMEOUT_S == 0 || WDG_TIMEOUT_S > 5);
+  constexpr auto RFID_CHECK_PERIOD = 150ms;  /* Task period to check for RFID badge (should be fast: 150ms) */
+  constexpr auto RFID_SELFTEST_PERIOD = 60s; /* Performs RFID self check and reset chip if necessary (default: 60s) */
+  constexpr auto MQTT_REFRESH_PERIOD = 30s;  /* Query the MQTT broker for machine state at given period (default: 30s) */
+  constexpr auto WATCHDOG_TIMEOUT = 30s;     /* Timeout for hardware watchdog set to 0s to disable (default: 30s) */
+  static_assert(WATCHDOG_TIMEOUT == 0s || WATCHDOG_TIMEOUT > 10s);
 }
 
 #endif // CONF_H_

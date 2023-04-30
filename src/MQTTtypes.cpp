@@ -52,7 +52,7 @@ namespace ServerMQTT
     ss << "{\"action\":\"stopuse\", "
        << "\"uid\":\"" << card::uid_str(this->uid) << "\","
        << "\"mid\":" << this->mid.id << ","
-       << "\"duration\":" << this->duration_s
+       << "\"duration\":" << this->duration_s.count()
        << "}";
     return ss.str();
   }

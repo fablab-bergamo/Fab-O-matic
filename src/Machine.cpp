@@ -3,10 +3,14 @@
 #include <sstream>
 #include <cstdint>
 #include <type_traits>
+#include <chrono>
+
+using namespace std::chrono_literals;
+using namespace std::chrono;
 
 /// @brief Creates a new machine
 /// @param user_conf configuration of the machine
-Machine::Machine(Config user_conf) : config(user_conf), active(false), usage_start_timestamp(0),
+Machine::Machine(Config user_conf) : config(user_conf), active(false),
                                      maintenanceNeeded(false), allowed(true)
 {
   this->current_user = FabUser();
@@ -43,7 +47,7 @@ bool Machine::login(FabUser user)
     this->active = true;
     this->current_user = user;
     this->power(true);
-    this->usage_start_timestamp = millis();
+    this->usage_start_timestamp = system_clock::now();
     return true;
   }
   return false;
@@ -63,17 +67,19 @@ void Machine::logout()
   {
     this->active = false;
     this->powerState = PowerState::WAITING_FOR_POWER_OFF;
+    this->usage_start_timestamp = std::nullopt;
 
     // Sets the countdown to power off
-    if (conf::machine::POWEROFF_DELAY_MS > 0)
+    if (conf::machine::POWEROFF_GRACE_PERIOD > 0s)
     {
-      this->logout_timestamp = millis();
+      this->logout_timestamp = system_clock::now();
       if (conf::debug::ENABLE_LOGS)
-        Serial.printf("Machine will be shutdown in %d ms\r\n", conf::machine::POWEROFF_DELAY_MS);
+        Serial.printf("Machine will be shutdown in %d s\r\n",
+                      duration_cast<seconds>(conf::machine::POWEROFF_GRACE_PERIOD).count());
     }
     else
     {
-      this->logout_timestamp = 0;
+      this->logout_timestamp = system_clock::now();
       this->power(false);
     }
   }
@@ -83,22 +89,22 @@ void Machine::logout()
 /// @return true if the delay has expired
 bool Machine::canPowerOff() const
 {
-  if (this->logout_timestamp == 0)
+  if (!this->logout_timestamp.has_value())
     return false;
 
   return (this->powerState == PowerState::WAITING_FOR_POWER_OFF &&
-          millis() - this->logout_timestamp > conf::machine::POWEROFF_DELAY_MS);
+          system_clock::now() - this->logout_timestamp.value() > conf::machine::POWEROFF_GRACE_PERIOD);
 }
 
 /// @brief indicates if the machine is about to shudown and board should beep
 /// @return true if shutdown is imminent
 bool Machine::isShutdownImminent() const
 {
-  if (this->logout_timestamp == 0 || conf::machine::BEEP_REMAINING_MS == 0)
+  if (!this->logout_timestamp.has_value() || conf::machine::BEEP_PERIOD == 0ms)
     return false;
 
   return (this->powerState == PowerState::WAITING_FOR_POWER_OFF &&
-          millis() - this->logout_timestamp > conf::machine::BEEP_REMAINING_MS);
+          system_clock::now() - this->logout_timestamp.value() > conf::machine::BEEP_PERIOD);
 }
 
 /// @brief sets the machine power to on (true) or off (false)
@@ -119,7 +125,7 @@ void Machine::power(bool value)
 
   if (value)
   {
-    this->logout_timestamp = 0;
+    this->logout_timestamp = std::nullopt;
     this->powerState = PowerState::POWERED_ON;
   }
   else
@@ -135,13 +141,13 @@ FabUser &Machine::getActiveUser()
 
 /// @brief Gets the duration the machine has been used
 /// @return milliseconds since the machine has been started
-unsigned long Machine::getUsageTime() const
+seconds Machine::getUsageDuration() const
 {
-  if (this->active)
+  if (this->usage_start_timestamp.has_value())
   {
-    return (millis() - this->usage_start_timestamp);
+    return duration_cast<seconds>(system_clock::now() - this->usage_start_timestamp.value());
   }
-  return 0;
+  return 0s;
 }
 
 bool Machine::operator==(const Machine &v) const

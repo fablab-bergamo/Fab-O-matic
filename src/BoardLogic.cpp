@@ -130,7 +130,7 @@ void BoardLogic::logout()
 {
   auto result = Board::server.finishUse(Board::machine.getActiveUser().card_uid,
                                         Board::machine.getMachineId(),
-                                        Board::machine.getUsageTime() / 1000U);
+                                        Board::machine.getUsageDuration());
 
   if (conf::debug::ENABLE_LOGS)
     Serial.printf("Result finishUse: %d\r\n", result->request_ok);
@@ -146,9 +146,9 @@ void BoardLogic::logout()
 /// @return True if the user accepted, False if user bailed out
 bool BoardLogic::longTap(std::string_view short_prompt) const
 {
-  constexpr unsigned int TOTAL_DURATION_MS = 3000;
+  constexpr seconds TOTAL_DURATION = 3s;
   constexpr unsigned int STEPS_COUNT = 6;
-  constexpr unsigned int STEP_DELAY = (TOTAL_DURATION_MS / STEPS_COUNT);
+  constexpr milliseconds STEP_DELAY = (TOTAL_DURATION / STEPS_COUNT);
 
   const BoardInfo bi = {Board::server.isOnline(), Board::machine.getPowerState(), Board::machine.isShutdownImminent()};
 
@@ -160,7 +160,7 @@ bool BoardLogic::longTap(std::string_view short_prompt) const
     Board::lcd.setRow(1, ss.str());
     Board::lcd.update_chars(bi);
 
-    delay(STEP_DELAY);
+    delay(STEP_DELAY.count());
 
     if (!Board::rfid.cardStillThere(this->user.card_uid))
     {
@@ -349,7 +349,7 @@ void BoardLogic::updateLCD() const
   case Status::IN_USE:
     if (snprintf(buffer, sizeof(buffer), "Ciao %s", user_name.data()) > 0)
       Board::lcd.setRow(0, buffer);
-    Board::lcd.setRow(1, Board::lcd.convertSecondsToHHMMSS(Board::machine.getUsageTime()));
+    Board::lcd.setRow(1, Board::lcd.convertSecondsToHHMMSS(Board::machine.getUsageDuration()));
     break;
   case Status::BUSY:
     Board::lcd.setRow(0, "Elaborazione...");
@@ -410,7 +410,7 @@ FabUser BoardLogic::getUser()
 void BoardLogic::beep_ok() const
 {
   ledcWriteTone(conf::buzzer::LEDC_PWM_CHANNEL, conf::buzzer::BEEP_HZ);
-  delay(conf::buzzer::BEEP_DURATION_MS);
+  delay(duration_cast<milliseconds>(conf::buzzer::STANDARD_BEEP_DURATION).count());
   ledcWrite(conf::buzzer::LEDC_PWM_CHANNEL, 0UL);
 }
 
@@ -420,8 +420,8 @@ void BoardLogic::beep_failed() const
   for (auto i = 0; i < NB_BEEPS; i++)
   {
     ledcWriteTone(conf::buzzer::LEDC_PWM_CHANNEL, conf::buzzer::BEEP_HZ);
-    delay(conf::buzzer::BEEP_DURATION_MS);
+    delay(duration_cast<milliseconds>(conf::buzzer::STANDARD_BEEP_DURATION).count());
     ledcWrite(conf::buzzer::LEDC_PWM_CHANNEL, 0UL);
-    delay(conf::buzzer::BEEP_DURATION_MS);
+    delay(duration_cast<milliseconds>(conf::buzzer::STANDARD_BEEP_DURATION).count());
   }
 }

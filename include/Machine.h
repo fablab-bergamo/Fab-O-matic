@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include <array>
+#include <chrono>
 
 #include "FabUser.h"
 
@@ -47,7 +48,7 @@ public:
   FabUser &getActiveUser();
   Machine::MachineID getMachineId() const;
   std::string getMachineName() const;
-  unsigned long getUsageTime() const;
+  std::chrono::seconds getUsageDuration() const;
   PowerState getPowerState() const; // Gets the current state of the machine
   bool isShutdownImminent() const;  // True if the machine will power down in less than BEEP_REMAINING_MINUTES
   bool isFree() const;
@@ -65,8 +66,8 @@ private:
   const Config config;
   bool active;
   FabUser current_user;
-  unsigned long usage_start_timestamp; // When did the machine start
-  unsigned long logout_timestamp;      // Minimum allowed timestamp for power-down
+  std::optional<time_point<system_clock>> usage_start_timestamp; // When did the machine start
+  std::optional<time_point<system_clock>> logout_timestamp;      // Minimum allowed timestamp for power-down
   PowerState powerState;
 };
 

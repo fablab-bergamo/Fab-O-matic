@@ -11,6 +11,7 @@
 #include <functional>
 #include <ArduinoJson.h>
 #include "MQTTtypes.h"
+#include <chrono>
 
 using namespace ServerMQTT;
 
@@ -52,12 +53,13 @@ public:
   std::unique_ptr<UserResponse> checkCard(const card::uid_t uid);
   std::unique_ptr<MachineResponse> checkMachine(const Machine::MachineID mid);
   std::unique_ptr<SimpleResponse> startUse(const card::uid_t uid, const Machine::MachineID mid);
-  std::unique_ptr<SimpleResponse> finishUse(const card::uid_t uid, const Machine::MachineID mid, uint16_t duration_s);
+  std::unique_ptr<SimpleResponse> finishUse(const card::uid_t uid, const Machine::MachineID mid, std::chrono::seconds duration);
   std::unique_ptr<SimpleResponse> registerMaintenance(const card::uid_t maintainer, const Machine::MachineID mid);
   std::unique_ptr<SimpleResponse> alive(const Machine::MachineID mid);
 
   bool isOnline() const;
   bool connect();
+  bool connectWiFi() noexcept;
   bool loop();
 
   // Rule of 5 https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rc-five

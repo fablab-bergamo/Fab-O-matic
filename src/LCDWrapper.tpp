@@ -52,12 +52,15 @@ bool LCDWrapper<_COLS, _ROWS>::begin()
 }
 
 template <uint8_t _COLS, uint8_t _ROWS>
-std::string LCDWrapper<_COLS, _ROWS>::convertSecondsToHHMMSS(unsigned long milliseconds) const
+std::string LCDWrapper<_COLS, _ROWS>::convertSecondsToHHMMSS(duration<uint16_t> duration) const
 {
   //! since something something does not support to_string we have to resort to ye olde cstring stuff
-  char buffer[9];
-  unsigned long seconds = milliseconds / 1000;
-  snprintf(buffer, sizeof(buffer), "%02d:%02d:%02d", seconds / 3600U, (seconds % 3600U) / 60U, seconds % 60U);
+  char buffer[9] = {0};
+
+  snprintf(buffer, sizeof(buffer), "%02d:%02d:%02d",
+           duration.count() / 3600UL,
+           (duration.count() % 3600UL) / 60UL,
+           duration.count() % 60UL);
 
   return {buffer};
 }

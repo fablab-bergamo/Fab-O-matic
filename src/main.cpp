@@ -3,12 +3,16 @@
 #include <array>
 
 #include <esp_task_wdt.h>
-#include <TaskScheduler.h>
-
 #include "globals.h"
 #include "pins.h"
 #include "BoardLogic.h"
 #include "pthread.h"
+
+#define _TASK_SLEEP_ON_IDLE_RUN
+#include <TaskScheduler.h>
+
+using namespace Board;
+using Status = BoardLogic::Status;
 
 // Pre-declarations
 void taskCheckRfid();
@@ -33,21 +37,46 @@ void taskMQTTAlive();
 
 // NOLINTBEGIN(cert-err58-cpp)
 
-const Task t1(conf::tasks::RFID_CHECK_MS *TASK_MILLISECOND, TASK_FOREVER, &taskCheckRfid, &Tasks::ts, true);
-const Task t2(conf::tasks::REFRESH_PERIOD_SECONDS *TASK_SECOND, TASK_FOREVER, &taskConnect, &Tasks::ts, true);
-const Task t3(1 * TASK_SECOND, TASK_FOREVER, &taskPoweroffCheck, &Tasks::ts, true);
-const Task t4(1 * TASK_SECOND, TASK_FOREVER, &taskLogoffCheck, &Tasks::ts, true);
+const Task t1(duration_cast<milliseconds>(conf::tasks::RFID_CHECK_PERIOD).count() * TASK_MILLISECOND,
+              TASK_FOREVER,
+              &taskCheckRfid,
+              &Tasks::ts, true);
+
+Task t2(duration_cast<milliseconds>(conf::tasks::MQTT_REFRESH_PERIOD).count() * TASK_MILLISECOND,
+        TASK_FOREVER,
+        &taskConnect,
+        &Tasks::ts, true);
+
+const Task t3(1 * TASK_SECOND, TASK_FOREVER,
+              &taskPoweroffCheck,
+              &Tasks::ts, true);
+
+const Task t4(1 * TASK_SECOND, TASK_FOREVER,
+              &taskLogoffCheck,
+              &Tasks::ts, true);
 
 // Hardware watchdog will run at half the frequency
-const Task t5(conf::tasks::WDG_TIMEOUT_S / 2 * TASK_SECOND, TASK_FOREVER, &taskEspWatchdog, &Tasks::ts, true);
-const Task t6(conf::tasks::RFID_CHIP_CHECK_S *TASK_SECOND, TASK_FOREVER, &taskRfidWatchdog, &Tasks::ts, true);
-const Task t7(conf::machine::DELAY_BETWEEN_BEEPS_S *TASK_SECOND, TASK_FOREVER, &taskPoweroffWarning, &Tasks::ts, true);
-const Task t8(1 * TASK_SECOND, TASK_FOREVER, &taskMQTTAlive, &Tasks::ts, true);
+const Task t5(duration_cast<milliseconds>(conf::tasks::WATCHDOG_TIMEOUT).count() / 2 * TASK_MILLISECOND,
+              TASK_FOREVER,
+              &taskEspWatchdog,
+              &Tasks::ts, true);
+
+const Task t6(duration_cast<milliseconds>(conf::tasks::RFID_SELFTEST_PERIOD).count() * TASK_MILLISECOND,
+              TASK_FOREVER,
+              &taskRfidWatchdog,
+              &Tasks::ts, true);
+
+const Task t7(duration_cast<milliseconds>(conf::machine::DELAY_BETWEEN_BEEPS).count() * TASK_MILLISECOND,
+              TASK_FOREVER,
+              &taskPoweroffWarning,
+              &Tasks::ts, true);
+
+const Task t8(1 * TASK_SECOND,
+              TASK_FOREVER,
+              &taskMQTTAlive,
+              &Tasks::ts, true);
 
 // NOLINTEND(cert-err58-cpp)
-
-using namespace Board;
-using Status = BoardLogic::Status;
 
 /// @brief Opens WiFi and server connection and updates board state accordingly
 void taskConnect()
@@ -138,8 +167,8 @@ void taskLogoffCheck()
     Serial.println("taskLogoffCheck");
 
   // auto logout after delay
-  if (conf::machine::TIMEOUT_USAGE_MINUTES > 0 &&
-      machine.getUsageTime() / 1000UL > conf::machine::TIMEOUT_USAGE_MINUTES * 60UL)
+  if (conf::machine::AUTO_LOGOFF_DELAY > 0s &&
+      machine.getUsageDuration() > conf::machine::AUTO_LOGOFF_DELAY)
   {
     Serial.printf("Auto-logging out user %s\r\n", machine.getActiveUser().holder_name.c_str());
     logic.logout();
@@ -156,12 +185,12 @@ void taskEspWatchdog()
   if (conf::debug::ENABLE_TASK_LOGS)
     Serial.println("taskEspWatchdog");
 
-  if (conf::tasks::WDG_TIMEOUT_S > 0)
+  if (conf::tasks::WATCHDOG_TIMEOUT > 0s)
   {
     if (!initialized)
     {
-      esp_task_wdt_init(conf::tasks::WDG_TIMEOUT_S, true); // enable panic so ESP32 restarts
-      esp_task_wdt_add(NULL);                              // add current thread to WDT watch
+      esp_task_wdt_init(duration_cast<seconds>(conf::tasks::WATCHDOG_TIMEOUT).count(), true); // enable panic so ESP32 restarts
+      esp_task_wdt_add(NULL);                                                                 // add current thread to WDT watch
       initialized = true;
     }
     esp_task_wdt_reset(); // Signal the hardware watchdog
@@ -180,7 +209,7 @@ void taskRfidWatchdog()
 
     // Infinite retry until success or hw watchdog timeout
     while (!rfid.init())
-      delay(conf::tasks::RFID_CHECK_MS);
+      delay(duration_cast<milliseconds>(conf::tasks::RFID_CHECK_PERIOD).count());
   }
 }
 
@@ -244,8 +273,9 @@ void setup()
     Serial.println("Error creating MQTT server thread");
   }
 #endif
-
   logic.beep_ok();
+  server.connectWiFi();
+  t2.delay(5 * TASK_SECOND);
 }
 
 void loop()

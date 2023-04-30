@@ -20,7 +20,7 @@ namespace Board
 
 #ifdef WOKWI_SIMULATION
   MockRFIDWrapper rfid;
-  FabServer server("Wokwi-GUEST", "", secrets::mqtt::server, 6);
+  FabServer server("Wokwi-GUEST", "", "127.0.0.1", 6);
   MockMQTTBroker broker;
 #else
   RFIDWrapper rfid;

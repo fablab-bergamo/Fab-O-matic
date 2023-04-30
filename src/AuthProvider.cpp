@@ -81,12 +81,18 @@ std::optional<FabUser> AuthProvider::tryLogin(card::uid_t uid) const
 
       return user;
     }
-    user.authenticated = false;
+    else
+    {
+      if (conf::debug::ENABLE_LOGS)
+        Serial.println(" -> online check NOK");
 
-    if (conf::debug::ENABLE_LOGS)
-      Serial.println(" -> online check NOK");
+      user.authenticated = false;
 
-    return std::nullopt;
+      if (response->request_ok)
+        return std::nullopt;
+
+      // If request failed, we need to check the whitelist
+    }
   }
 
   if (auto result = this->WhiteListLookup(uid); result.has_value())

@@ -56,12 +56,12 @@ namespace ServerMQTT
   public:
     const card::uid_t uid;
     const Machine::MachineID mid;
-    const uint16_t duration_s;
+    const std::chrono::seconds duration_s;
     /// @brief Request to register machine usage stop
     /// @param card_uid machine user card id
     /// @param mid machine id
     /// @param duration duration of usage, in seconds
-    StopUseQuery(card::uid_t card_uid, Machine::MachineID mid, uint16_t duration) : uid(card_uid), mid(mid), duration_s(duration){};
+    StopUseQuery(card::uid_t card_uid, Machine::MachineID mid, std::chrono::seconds duration) : uid(card_uid), mid(mid), duration_s(duration){};
     std::string payload() const;
   };
 
