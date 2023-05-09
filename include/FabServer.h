@@ -51,11 +51,11 @@ public:
   ~FabServer() = default;
 
   std::unique_ptr<UserResponse> checkCard(const card::uid_t uid);
-  std::unique_ptr<MachineResponse> checkMachine(const Machine::MachineID mid);
-  std::unique_ptr<SimpleResponse> startUse(const card::uid_t uid, const Machine::MachineID mid);
-  std::unique_ptr<SimpleResponse> finishUse(const card::uid_t uid, const Machine::MachineID mid, std::chrono::seconds duration);
-  std::unique_ptr<SimpleResponse> registerMaintenance(const card::uid_t maintainer, const Machine::MachineID mid);
-  std::unique_ptr<SimpleResponse> alive(const Machine::MachineID mid);
+  std::unique_ptr<MachineResponse> checkMachine();
+  std::unique_ptr<SimpleResponse> startUse(const card::uid_t uid);
+  std::unique_ptr<SimpleResponse> finishUse(const card::uid_t uid, std::chrono::seconds duration);
+  std::unique_ptr<SimpleResponse> registerMaintenance(const card::uid_t maintainer);
+  std::unique_ptr<SimpleResponse> alive();
 
   bool isOnline() const;
   bool connect();

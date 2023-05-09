@@ -29,16 +29,14 @@ namespace ServerMQTT
   class MachineQuery : public Query
   {
   public:
-    const Machine::MachineID mid;
-    MachineQuery(Machine::MachineID mid) : mid(mid){};
+    MachineQuery(){};
     std::string payload() const;
   };
 
   class AliveQuery : public Query
   {
   public:
-    const Machine::MachineID mid;
-    AliveQuery(Machine::MachineID mid) : mid(mid){};
+    AliveQuery(){};
     std::string payload() const;
   };
 
@@ -46,8 +44,7 @@ namespace ServerMQTT
   {
   public:
     const card::uid_t uid;
-    const Machine::MachineID mid;
-    StartUseQuery(card::uid_t card_uid, Machine::MachineID mid) : uid(card_uid), mid(mid){};
+    StartUseQuery(card::uid_t card_uid) : uid(card_uid){};
     std::string payload() const;
   };
 
@@ -55,13 +52,12 @@ namespace ServerMQTT
   {
   public:
     const card::uid_t uid;
-    const Machine::MachineID mid;
     const std::chrono::seconds duration_s;
     /// @brief Request to register machine usage stop
     /// @param card_uid machine user card id
     /// @param mid machine id
     /// @param duration duration of usage, in seconds
-    StopUseQuery(card::uid_t card_uid, Machine::MachineID mid, std::chrono::seconds duration) : uid(card_uid), mid(mid), duration_s(duration){};
+    StopUseQuery(card::uid_t card_uid, std::chrono::seconds duration) : uid(card_uid), duration_s(duration){};
     std::string payload() const;
   };
 
@@ -69,8 +65,7 @@ namespace ServerMQTT
   {
   public:
     const card::uid_t uid;
-    const Machine::MachineID mid;
-    RegisterMaintenanceQuery(card::uid_t card_uid, Machine::MachineID mid) : uid(card_uid), mid(mid){};
+    RegisterMaintenanceQuery(card::uid_t card_uid) : uid(card_uid){};
     std::string payload() const;
   };
 

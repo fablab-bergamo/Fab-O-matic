@@ -21,8 +21,7 @@ namespace ServerMQTT
   std::string MachineQuery::payload() const
   {
     std::stringstream ss;
-    ss << "{\"action\":\"checkmachine\","
-       << "\"mid\":\"" << this->mid.id << "\""
+    ss << "{\"action\":\"checkmachine\""
        << "}";
     return ss.str();
   }
@@ -30,8 +29,7 @@ namespace ServerMQTT
   std::string AliveQuery::payload() const
   {
     std::stringstream ss;
-    ss << "{\"action\":\"alive\","
-       << "\"mid\":\"" << this->mid.id << "\""
+    ss << "{\"action\":\"alive\""
        << "}";
     return ss.str();
   }
@@ -40,8 +38,7 @@ namespace ServerMQTT
   {
     std::stringstream ss;
     ss << "{\"action\":\"startuse\", "
-       << "\"uid\":\"" << card::uid_str(this->uid) << "\","
-       << "\"mid\":" << this->mid.id
+       << "\"uid\":\"" << card::uid_str(this->uid) << "\""
        << "}";
     return ss.str();
   }
@@ -51,7 +48,6 @@ namespace ServerMQTT
     std::stringstream ss;
     ss << "{\"action\":\"stopuse\", "
        << "\"uid\":\"" << card::uid_str(this->uid) << "\","
-       << "\"mid\":" << this->mid.id << ","
        << "\"duration\":" << this->duration_s.count()
        << "}";
     return ss.str();
@@ -61,8 +57,7 @@ namespace ServerMQTT
   {
     std::stringstream ss;
     ss << "{\"action\":\"maintenance\", "
-       << "\"uid\":\"" << card::uid_str(this->uid) << "\","
-       << "\"mid\":" << this->mid.id
+       << "\"uid\":\"" << card::uid_str(this->uid) << "\""
        << "}";
     return ss.str();
   }

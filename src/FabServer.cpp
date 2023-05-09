@@ -258,18 +258,18 @@ std::unique_ptr<UserResponse> FabServer::checkCard(card::uid_t uid)
 /// @brief Checks the machine status on the server
 /// @param mid machine id
 /// @return server response (if request_ok)
-std::unique_ptr<MachineResponse> FabServer::checkMachine(Machine::MachineID mid)
+std::unique_ptr<MachineResponse> FabServer::checkMachine()
 {
-  return this->processQuery<MachineResponse, MachineQuery>(mid);
+  return this->processQuery<MachineResponse, MachineQuery>();
 }
 
 /// @brief register the starting of a machine usage
 /// @param uid card uid
 /// @param mid machine id
 /// @return server response (if request_ok)
-std::unique_ptr<SimpleResponse> FabServer::startUse(card::uid_t uid, Machine::MachineID mid)
+std::unique_ptr<SimpleResponse> FabServer::startUse(card::uid_t uid)
 {
-  return this->processQuery<SimpleResponse, StartUseQuery>(uid, mid);
+  return this->processQuery<SimpleResponse, StartUseQuery>(uid);
 }
 
 /// @brief Register end of machine usage
@@ -277,24 +277,24 @@ std::unique_ptr<SimpleResponse> FabServer::startUse(card::uid_t uid, Machine::Ma
 /// @param mid machine used ID
 /// @param duration_s duration of usage in seconds
 /// @return server response (if request_ok)
-std::unique_ptr<SimpleResponse> FabServer::finishUse(card::uid_t uid, Machine::MachineID mid, std::chrono::seconds duration_s)
+std::unique_ptr<SimpleResponse> FabServer::finishUse(card::uid_t uid, std::chrono::seconds duration_s)
 {
-  return this->processQuery<SimpleResponse, StopUseQuery>(uid, mid, duration_s);
+  return this->processQuery<SimpleResponse, StopUseQuery>(uid, duration_s);
 }
 
 /// @brief Registers a maintenance action
 /// @param maintainer who performed the maintenance
 /// @param mid machine maintenance done
 /// @return server response (if request_ok)
-std::unique_ptr<SimpleResponse> FabServer::registerMaintenance(card::uid_t maintainer, Machine::MachineID mid)
+std::unique_ptr<SimpleResponse> FabServer::registerMaintenance(card::uid_t maintainer)
 {
-  return this->processQuery<SimpleResponse, RegisterMaintenanceQuery>(maintainer, mid);
+  return this->processQuery<SimpleResponse, RegisterMaintenanceQuery>(maintainer);
 }
 
 /// @brief Sends a ping to the server
 /// @param mid machine ID
 /// @return server response (if request_ok)
-std::unique_ptr<SimpleResponse> FabServer::alive(const Machine::MachineID mid)
+std::unique_ptr<SimpleResponse> FabServer::alive()
 {
-  return this->processQuery<SimpleResponse, AliveQuery>(mid);
+  return this->processQuery<SimpleResponse, AliveQuery>();
 }

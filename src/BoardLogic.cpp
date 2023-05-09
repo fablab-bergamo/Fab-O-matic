@@ -61,7 +61,7 @@ void BoardLogic::refreshFromServer()
   if (Board::server.connect())
   {
     // Check the configured machine data from the server
-    auto result = Board::server.checkMachine(secrets::machine::machine_id);
+    auto result = Board::server.checkMachine();
     if (result->request_ok)
     {
       if (result->is_valid)
@@ -129,7 +129,6 @@ void BoardLogic::onNewCard()
 void BoardLogic::logout()
 {
   auto result = Board::server.finishUse(Board::machine.getActiveUser().card_uid,
-                                        Board::machine.getMachineId(),
                                         Board::machine.getUsageDuration());
 
   if (conf::debug::ENABLE_LOGS)
@@ -222,7 +221,7 @@ bool BoardLogic::authorize(card::uid_t uid)
 
       if (this->longTap("Registra"))
       {
-        auto response = Board::server.registerMaintenance(this->user.card_uid, Board::machine.getMachineId());
+        auto response = Board::server.registerMaintenance(this->user.card_uid);
         if (!response->request_ok)
         {
           this->beep_failed();
@@ -240,8 +239,7 @@ bool BoardLogic::authorize(card::uid_t uid)
     }
   }
   Board::machine.login(this->user);
-  auto result = Board::server.startUse(Board::machine.getActiveUser().card_uid,
-                                       Board::machine.getMachineId());
+  auto result = Board::server.startUse(Board::machine.getActiveUser().card_uid);
 
   if (conf::debug::ENABLE_LOGS)
     Serial.printf("Result startUse: %d\r\n", result->request_ok);
