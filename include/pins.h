@@ -9,43 +9,43 @@ struct pins_config
 {
   struct mfrc522_config
   { /* SPI RFID chip pins definition */
-    uint8_t sda_pin;
-    uint8_t mosi_pin;
-    uint8_t miso_pin;
-    uint8_t sck_pin;
-    uint8_t reset_pin;
+    const uint8_t sda_pin;
+    const uint8_t mosi_pin;
+    const uint8_t miso_pin;
+    const uint8_t sck_pin;
+    const uint8_t reset_pin;
   };
   struct lcd_config /* LCD parallel interface pins definition */
   {
-    uint8_t rs_pin; /* Reset */
-    uint8_t en_pin; /* Enable */
-    uint8_t d0_pin;
-    uint8_t d1_pin;
-    uint8_t d2_pin;
-    uint8_t d3_pin;
-    uint8_t bl_pin;  /* Backlight pin */
-    bool active_low; /* Backlight active low*/
+    const uint8_t rs_pin; /* Reset */
+    const uint8_t en_pin; /* Enable */
+    const uint8_t d0_pin;
+    const uint8_t d1_pin;
+    const uint8_t d2_pin;
+    const uint8_t d3_pin;
+    const uint8_t bl_pin;  /* Backlight pin */
+    const bool active_low; /* Backlight active low*/
   };
   struct relay_config
   {
-    uint8_t ch1_pin; /* Control pin for Machine 1 */
-    uint8_t ch2_pin; /* unclear */
+    const uint8_t ch1_pin; /* Control pin for Machine 1 */
+    const uint8_t ch2_pin; /* unclear */
   };
   struct buzzer_config
   {
-    uint8_t pin;
+    const uint8_t pin;
   };
   struct led_config
   {
-    uint8_t pin;
-    bool is_rgb;
+    const uint8_t pin;
+    const bool is_rgb;
   };
   // Struct members
-  mfrc522_config mfrc522;
-  lcd_config lcd;
-  relay_config relay;
-  buzzer_config buzzer;
-  led_config led;
+  const mfrc522_config mfrc522;
+  const lcd_config lcd;
+  const relay_config relay;
+  const buzzer_config buzzer;
+  const led_config led;
 };
 
 #ifdef PINS_ESP32
