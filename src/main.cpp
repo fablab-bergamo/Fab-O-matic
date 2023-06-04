@@ -23,6 +23,7 @@ void taskEspWatchdog();
 void taskRfidWatchdog();
 void taskPoweroffWarning();
 void taskMQTTAlive();
+void taskBlink();
 
 /* This is the list of tasks that will be run in cooperative scheduling fashion.
  * Using tasks simplifies the code versus a single state machine / if (millis() - memory) patterns
@@ -74,6 +75,11 @@ const Task t7(duration_cast<milliseconds>(conf::machine::DELAY_BETWEEN_BEEPS).co
 const Task t8(1 * TASK_SECOND,
               TASK_FOREVER,
               &taskMQTTAlive,
+              &Tasks::ts, true);
+
+const Task t9(1 * TASK_SECOND,
+              TASK_FOREVER,
+              &taskBlink,
               &Tasks::ts, true);
 
 // NOLINTEND(cert-err58-cpp)
@@ -130,6 +136,20 @@ void taskCheckRfid()
   }
 }
 
+/// @brief blink led
+void taskBlink()
+{
+  if (Board::server.isOnline())
+    if (!Board::machine.allowed || Board::machine.maintenanceNeeded)
+      Board::logic.set_led_color(64, 0, 0); // Red
+    else
+      Board::logic.set_led_color(0, 64, 0); // Green
+  else
+    Board::logic.set_led_color(127, 83, 16); // Orange
+
+  Board::logic.invert_led(); // Blink when in use
+}
+
 /// @brief periodic check if the machine must be powered off
 void taskPoweroffCheck()
 {
@@ -137,8 +157,6 @@ void taskPoweroffCheck()
 
   if (conf::debug::ENABLE_TASK_LOGS)
     Serial.println("taskPoweroffCheck");
-
-  Board::logic.invert_led();
 
   if (machine.canPowerOff())
   {

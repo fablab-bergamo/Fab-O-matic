@@ -84,7 +84,7 @@ std::optional<FabUser> AuthProvider::tryLogin(card::uid_t uid) const
     else
     {
       if (conf::debug::ENABLE_LOGS)
-        Serial.println(" -> online check NOK");
+        Serial.println(" -> online check NOT OK");
 
       user.authenticated = false;
 

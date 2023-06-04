@@ -47,6 +47,7 @@ public:
   void beep_failed() const;
   void led(bool value);
   void invert_led();
+  void set_led_color(uint8_t r, uint8_t g, uint8_t b);
 
   bool ready_for_a_new_card = true;
   bool led_status = false;
@@ -63,6 +64,8 @@ public:
 private:
   Status status;
   FabUser user;
+  uint8_t led_color[3] = {0, 255, 0};
+
   bool longTap(std::string_view short_prompt) const;
 };
 

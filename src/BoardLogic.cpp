@@ -36,11 +36,19 @@ BoardLogic::BoardLogic() noexcept : status(Status::CLEAR)
   }
 }
 
+void BoardLogic::set_led_color(uint8_t r, uint8_t g, uint8_t b)
+{
+  this->led_color[0] = r;
+  this->led_color[1] = g;
+  this->led_color[2] = b;
+}
+
 void BoardLogic::led(bool value)
 {
   if (pins.led.is_rgb)
   {
-    pixels.setPixelColor(0, pixels.Color(0, value ? 64 : 0, 0));
+    auto color = value ? pixels.Color(this->led_color[0], this->led_color[1], this->led_color[2]) : pixels.Color(0, 0, 0);
+    pixels.setPixelColor(0, color);
     pixels.show();
   }
   else

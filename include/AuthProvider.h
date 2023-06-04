@@ -22,7 +22,7 @@ private:
 public:
   AuthProvider() = delete;
   AuthProvider(WhiteList whitelist);
-  std::optional<FabUser> tryLogin(card::uid_t uid) const;
+  [[nodiscard]] std::optional<FabUser> tryLogin(card::uid_t uid) const;
 };
 
 #endif // AUTHPROVIDER_H_
