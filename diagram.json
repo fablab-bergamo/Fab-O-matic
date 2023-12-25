@@ -1,0 +1,275 @@
+{
+  "version": 1,
+  "author": "Uri Shaked",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "board-esp32-s2-devkitm-1",
+      "id": "esp",
+      "top": 95.4,
+      "left": 170.21,
+      "rotate": 90,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-lcd1602",
+      "id": "lcd1",
+      "top": -93.92,
+      "left": 140.23,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-buzzer",
+      "id": "bz1",
+      "top": 217.91,
+      "left": -47.61,
+      "rotate": 270,
+      "attrs": {
+        "volume": "0.1"
+      }
+    },
+    {
+      "type": "wokwi-relay-module",
+      "id": "relay1",
+      "top": 142.36,
+      "left": -93.29,
+      "rotate": 180,
+      "attrs": {}
+    }
+  ],
+  "connections": [
+    [
+      "esp:TX",
+      "$serialMonitor:RX",
+      "",
+      []
+    ],
+    [
+      "esp:RX",
+      "$serialMonitor:TX",
+      "",
+      []
+    ],
+    [
+      "lcd1:RS",
+      "esp:D15",
+      "orange",
+      [
+        "v0"
+      ]
+    ],
+    [
+      "esp:D18",
+      "lcd1:E",
+      "gray",
+      [
+        "h0"
+      ]
+    ],
+    [
+      "esp:D12",
+      "bz1:2",
+      "violet",
+      [
+        "h0"
+      ]
+    ],
+    [
+      "esp:D14",
+      "relay1:IN",
+      "blue",
+      [
+        "h0"
+      ]
+    ],
+    [
+      "lcd1:VSS",
+      "lcd1:K",
+      "black",
+      [
+        "v18.03",
+        "h144.73"
+      ]
+    ],
+    [
+      "lcd1:RW",
+      "lcd1:K",
+      "black",
+      [
+        "v28.16",
+        "h82.13"
+      ]
+    ],
+    [
+      "lcd1:D4",
+      "esp:D2",
+      "green",
+      [
+        "v0"
+      ]
+    ],
+    [
+      "lcd1:D5",
+      "esp:D4",
+      "green",
+      [
+        "v0"
+      ]
+    ],
+    [
+      "lcd1:D6",
+      "esp:D5",
+      "green",
+      [
+        "v0"
+      ]
+    ],
+    [
+      "lcd1:D7",
+      "esp:D19",
+      "green",
+      [
+        "v0"
+      ]
+    ],
+    [
+      "lcd1:K",
+      "esp:GND.2",
+      "black",
+      [
+        "v27.98",
+        "h54.43",
+        "v222.3",
+        "h-61.21"
+      ]
+    ],
+    [
+      "esp:5V",
+      "lcd1:A",
+      "red",
+      [
+        "v-78.99",
+        "h180.31"
+      ]
+    ],
+    [
+      "lcd1:VDD",
+      "lcd1:A",
+      "red",
+      [
+        "v39.8",
+        "h123.96"
+      ]
+    ],
+    [
+      "esp:15",
+      "lcd1:RS",
+      "gray",
+      [
+        "v-65.91",
+        "h35.34"
+      ]
+    ],
+    [
+      "esp:18",
+      "lcd1:E",
+      "gray",
+      [
+        "v9.98",
+        "h-21.92",
+        "v-157.01",
+        "h123.36"
+      ]
+    ],
+    [
+      "esp:2",
+      "lcd1:D4",
+      "green",
+      [
+        "v-49.42",
+        "h-8.32"
+      ]
+    ],
+    [
+      "esp:4",
+      "lcd1:D5",
+      "green",
+      [
+        "v-64.59",
+        "h20.77"
+      ]
+    ],
+    [
+      "esp:5",
+      "lcd1:D6",
+      "green",
+      [
+        "v-59.31",
+        "h36.31"
+      ]
+    ],
+    [
+      "esp:19",
+      "lcd1:D7",
+      "green",
+      [
+        "v15.25",
+        "h-43.4",
+        "v-156.35",
+        "h213.08"
+      ]
+    ],
+    [
+      "bz1:1",
+      "esp:GND.2",
+      "black",
+      [
+        "h15.37",
+        "v16.12",
+        "h257.94"
+      ]
+    ],
+    [
+      "relay1:GND",
+      "bz1:1",
+      "black",
+      [
+        "h23.77",
+        "v97.36"
+      ]
+    ],
+    [
+      "esp:14",
+      "relay1:IN",
+      "blue",
+      [
+        "v-22.37",
+        "h-1.97"
+      ]
+    ],
+    [
+      "relay1:VCC",
+      "esp:5V",
+      "red",
+      [
+        "h65.99",
+        "v-32.71",
+        "h21.11"
+      ]
+    ],
+    [
+      "bz1:2",
+      "esp:12",
+      "violet",
+      [
+        "h39.12",
+        "v-135.51",
+        "h104.89"
+      ]
+    ]
+  ],
+  "serialMonitor": {
+    "display": "terminal"
+  },
+  "dependencies": {}
+}

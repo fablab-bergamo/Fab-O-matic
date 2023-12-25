@@ -1,9 +1,9 @@
-#include "MockRFIDWrapper.h"
-#include "pins.h"
-#include "conf.h"
-#include "card.h"
+#include "MockRFIDWrapper.hpp"
+#include "pins.hpp"
+#include "conf.hpp"
+#include "card.hpp"
 #include <memory>
-#include "secrets.h"
+#include "secrets.hpp"
 
 MockRFIDWrapper::MockRFIDWrapper()
 {
@@ -13,7 +13,7 @@ MockRFIDWrapper::MockRFIDWrapper()
 /// @return true if a new card is present
 bool MockRFIDWrapper::isNewCardPresent() const
 {
-  bool result = (random(0, 100) == 0);
+  auto result = (random(0, 500) == 0);
   if (result)
   {
     // Choose a random card from the whitelist
@@ -44,17 +44,12 @@ bool MockRFIDWrapper::readCardSerial() const
 /// @param original the card ID to check
 bool MockRFIDWrapper::cardStillThere(const card::uid_t original) const
 {
-  for (auto i = 0; i < 3; i++)
+  static constexpr auto NB_TRIES = 3;
+  for (auto i = 0; i < NB_TRIES; i++)
   {
     // Detect Tag without looking for collisions
-    byte bufferATQA[2];
-    byte bufferSize = sizeof(bufferATQA);
-
-    if (true)
-    {
-      if (this->readCardSerial() && this->getUid() == original)
-        return true;
-    }
+    if (this->readCardSerial() && this->getUid() == original)
+      return true;
     delay(5);
   }
   return false;
@@ -109,9 +104,9 @@ bool MockRFIDWrapper::init() const
   {
     constexpr auto MAX_LEN = 80;
     char buffer[MAX_LEN] = {0};
-    if (sprintf(buffer, "Configuring Fake SPI RFID (SCK=%d, MISO=%d, MOSI=%d, SDA=%d) RESET=%d",
-                pins.mfrc522.sck_pin, pins.mfrc522.miso_pin, pins.mfrc522.mosi_pin,
-                pins.mfrc522.sda_pin, pins.mfrc522.reset_pin) > 0)
+    if (snprintf(buffer, sizeof(buffer), "Configuring Fake SPI RFID (SCK=%d, MISO=%d, MOSI=%d, SDA=%d) RESET=%d",
+                 pins.mfrc522.sck_pin, pins.mfrc522.miso_pin, pins.mfrc522.mosi_pin,
+                 pins.mfrc522.sda_pin, pins.mfrc522.reset_pin) > 0)
       Serial.println(buffer);
   }
 

@@ -3,15 +3,15 @@
 #include <array>
 
 #include <esp_task_wdt.h>
-#include "globals.h"
-#include "pins.h"
-#include "BoardLogic.h"
+#include "globals.hpp"
+#include "pins.hpp"
+#include "BoardLogic.hpp"
 #include "pthread.h"
 
-#define _TASK_SLEEP_ON_IDLE_RUN
-#include <TaskScheduler.h>
+#include "Tasks.hpp"
 
 using namespace Board;
+using namespace fablab::tasks;
 using Status = BoardLogic::Status;
 
 // Pre-declarations
@@ -24,71 +24,30 @@ void taskRfidWatchdog();
 void taskPoweroffWarning();
 void taskMQTTAlive();
 void taskBlink();
+void taskLcdRefresh();
 
-/* This is the list of tasks that will be run in cooperative scheduling fashion.
- * Using tasks simplifies the code versus a single state machine / if (millis() - memory) patterns
- *
- * See https://github.com/arkhipenko/TaskScheduler/blob/master/examples/Scheduler_template/Scheduler_template.ino
- *
- * Task are created as follows :
- * - Task( period ; # repeats ; callback ; scheduler object ; true if task active )
- *
- * Do not add code in loop() as ts.execute() runs forever.
- */
-
-// NOLINTBEGIN(cert-err58-cpp)
-
-const Task t1(duration_cast<milliseconds>(conf::tasks::RFID_CHECK_PERIOD).count() * TASK_MILLISECOND,
-              TASK_FOREVER,
-              &taskCheckRfid,
-              &Tasks::ts, true);
-
-Task t2(duration_cast<milliseconds>(conf::tasks::MQTT_REFRESH_PERIOD).count() * TASK_MILLISECOND,
-        TASK_FOREVER,
-        &taskConnect,
-        &Tasks::ts, true);
-
-const Task t3(1 * TASK_SECOND, TASK_FOREVER,
-              &taskPoweroffCheck,
-              &Tasks::ts, true);
-
-const Task t4(1 * TASK_SECOND, TASK_FOREVER,
-              &taskLogoffCheck,
-              &Tasks::ts, true);
+Task t1("RFIDChip", conf::tasks::RFID_CHECK_PERIOD, &taskCheckRfid, scheduler, true);
+Task t2("Wifi/MQQT init", conf::tasks::MQTT_REFRESH_PERIOD, &taskConnect, scheduler, true);
+Task t3("Poweroff", std::chrono::seconds(1), &taskPoweroffCheck, scheduler, true);
+Task t4("Logoff", std::chrono::seconds(1), &taskLogoffCheck, scheduler, true);
 
 // Hardware watchdog will run at half the frequency
-const Task t5(duration_cast<milliseconds>(conf::tasks::WATCHDOG_TIMEOUT).count() / 2 * TASK_MILLISECOND,
-              TASK_FOREVER,
-              &taskEspWatchdog,
-              &Tasks::ts, true);
+Task t5("Watchdog", conf::tasks::WATCHDOG_TIMEOUT / 2, &taskEspWatchdog, scheduler, true);
+Task t6("Selftest", conf::tasks::RFID_SELFTEST_PERIOD, &taskRfidWatchdog, scheduler, true);
+Task t7("PoweroffWarning", conf::machine::DELAY_BETWEEN_BEEPS, &taskPoweroffWarning, scheduler, true);
+Task t8("MQTT keepalive", std::chrono::seconds(1), &taskMQTTAlive, scheduler, true);
+Task t9("LED", std::chrono::seconds(1), &taskBlink, scheduler, true);
 
-const Task t6(duration_cast<milliseconds>(conf::tasks::RFID_SELFTEST_PERIOD).count() * TASK_MILLISECOND,
-              TASK_FOREVER,
-              &taskRfidWatchdog,
-              &Tasks::ts, true);
-
-const Task t7(duration_cast<milliseconds>(conf::machine::DELAY_BETWEEN_BEEPS).count() * TASK_MILLISECOND,
-              TASK_FOREVER,
-              &taskPoweroffWarning,
-              &Tasks::ts, true);
-
-const Task t8(1 * TASK_SECOND,
-              TASK_FOREVER,
-              &taskMQTTAlive,
-              &Tasks::ts, true);
-
-const Task t9(1 * TASK_SECOND,
-              TASK_FOREVER,
-              &taskBlink,
-              &Tasks::ts, true);
-
-// NOLINTEND(cert-err58-cpp)
+// Wokwi requires LCD refresh unlike real hardware
+Task t10("LCDRefresh", std::chrono::seconds(1), &taskLcdRefresh, scheduler, false);
 
 /// @brief Opens WiFi and server connection and updates board state accordingly
 void taskConnect()
 {
   if (conf::debug::ENABLE_TASK_LOGS)
-    Serial.println("taskConnect");
+  {
+    Serial.printf("taskConnect, millis %lu\r\n", millis());
+  }
 
   if (!server.isOnline())
   {
@@ -106,6 +65,7 @@ void taskConnect()
 
   if (server.isOnline())
   {
+    Serial.println("taskConnect - online, calling refreshFromServer");
     // Get machine data from the server if it is online
     logic.refreshFromServer();
   }
@@ -153,14 +113,12 @@ void taskBlink()
 /// @brief periodic check if the machine must be powered off
 void taskPoweroffCheck()
 {
-  static bool value = false;
-
   if (conf::debug::ENABLE_TASK_LOGS)
     Serial.println("taskPoweroffCheck");
 
   if (machine.canPowerOff())
   {
-    machine.power(false);
+    machine.power_mqtt(false);
   }
 }
 
@@ -185,8 +143,7 @@ void taskLogoffCheck()
     Serial.println("taskLogoffCheck");
 
   // auto logout after delay
-  if (conf::machine::AUTO_LOGOFF_DELAY > 0s &&
-      machine.getUsageDuration() > conf::machine::AUTO_LOGOFF_DELAY)
+  if (machine.isAutologoffExpired())
   {
     Serial.printf("Auto-logging out user %s\r\n", machine.getActiveUser().holder_name.c_str());
     logic.logout();
@@ -198,7 +155,7 @@ void taskLogoffCheck()
 /// If code gets stuck this will cause an automatic reset.
 void taskEspWatchdog()
 {
-  static bool initialized = false;
+  static auto initialized = false;
 
   if (conf::debug::ENABLE_TASK_LOGS)
     Serial.println("taskEspWatchdog");
@@ -243,7 +200,17 @@ void taskMQTTAlive()
   }
 }
 
-#ifdef WOKWI_SIMULATION
+void taskLcdRefresh()
+{
+  if (conf::debug::ENABLE_TASK_LOGS)
+    Serial.println("taskLcdRefresh");
+
+  BoardInfo bi = {Board::server.isOnline(), Board::machine.getPowerState(), Board::machine.isShutdownImminent()};
+  Board::lcd.update(bi, true);
+}
+
+#if (WOKWI_SIMULATION)
+
 pthread_t mqtt_server;
 pthread_attr_t attr;
 
@@ -252,18 +219,19 @@ void *threadMQTTServer(void *arg)
   if (conf::debug::ENABLE_LOGS)
     Serial.println("threadMQTTServer started");
 
-  delay(5000);
-  bool value = false;
+  delay(3000);
   while (true)
   {
     // Check if the server is online
     if (!Board::broker.isRunning())
     {
-      // Try to connect
       Board::broker.start();
     }
-    Board::broker.update();
-    delay(500);
+    else
+    {
+      Board::broker.update();
+    }
+    delay(25);
   }
 }
 #endif
@@ -283,20 +251,23 @@ void setup()
       ;
   }
 
-#ifdef WOKWI_SIMULATION
+#if (WOKWI_SIMULATION)
   attr.stacksize = 3 * 1024;
   attr.detachstate = PTHREAD_CREATE_DETACHED;
   if (pthread_create(&mqtt_server, &attr, threadMQTTServer, NULL))
   {
     Serial.println("Error creating MQTT server thread");
   }
+  t10.start();
 #endif
+
   logic.beep_ok();
   server.connectWiFi();
-  t2.delay(5 * TASK_SECOND);
+  // Don't try to connect immediately, restart the 30s now
+  t2.restart();
 }
 
 void loop()
 {
-  Tasks::ts.execute();
+  scheduler.execute();
 }

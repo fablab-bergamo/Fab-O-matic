@@ -4,8 +4,8 @@
 #include <string>
 #include <memory>
 
-#include "conf.h"
-#include "card.h"
+#include "conf.hpp"
+#include "card.hpp"
 
 class MockRFIDWrapper
 {

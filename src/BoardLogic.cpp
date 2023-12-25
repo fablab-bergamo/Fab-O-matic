@@ -1,22 +1,22 @@
-#include "BoardLogic.h"
+#include "BoardLogic.hpp"
 #include "Arduino.h"
-#include "secrets.h"
-#include "conf.h"
-#include "Machine.h"
-#include "FabServer.h"
-#include "RFIDWrapper.h"
-#include "MockRFIDWrapper.h"
-#include "AuthProvider.h"
+#include "secrets.hpp"
+#include "conf.hpp"
+#include "Machine.hpp"
+#include "FabServer.hpp"
+#include "RFIDWrapper.hpp"
+#include "MockRFIDWrapper.hpp"
+#include "AuthProvider.hpp"
 #include <esp_task_wdt.h>
-#include "LCDWrapper.h"
+#include "LCDWrapper.hpp"
 #include <sstream>
-#include "pins.h"
+#include "pins.hpp"
 #include <Adafruit_NeoPixel.h>
 
 namespace Board
 {
   // Only main.cpp instanciates the variables through Board.h file
-#ifdef WOKWI_SIMULATION
+#if (WOKWI_SIMULATION)
   extern MockRFIDWrapper rfid;
 #else
   extern RFIDWrapper rfid;
@@ -30,7 +30,7 @@ namespace Board
 BoardLogic::BoardLogic() noexcept : status(Status::CLEAR)
 {
   pinMode(pins.led.pin, OUTPUT);
-  if (pins.led.is_rgb)
+  if (pins.led.is_neopixel)
   {
     pixels.begin();
   }
@@ -45,7 +45,7 @@ void BoardLogic::set_led_color(uint8_t r, uint8_t g, uint8_t b)
 
 void BoardLogic::led(bool value)
 {
-  if (pins.led.is_rgb)
+  if (pins.led.is_neopixel)
   {
     auto color = value ? pixels.Color(this->led_color[0], this->led_color[1], this->led_color[2]) : pixels.Color(0, 0, 0);
     pixels.setPixelColor(0, color);
@@ -66,6 +66,9 @@ void BoardLogic::invert_led()
 /// @brief connects and polls the server for up-to-date machine information
 void BoardLogic::refreshFromServer()
 {
+  if (conf::debug::ENABLE_LOGS)
+    Serial.printf("BoardLogic::refreshFromServer() called\r\n");
+
   if (Board::server.connect())
   {
     // Check the configured machine data from the server
@@ -75,16 +78,17 @@ void BoardLogic::refreshFromServer()
       if (result->is_valid)
       {
         if (conf::debug::ENABLE_LOGS)
-          Serial.printf("The configured machine ID %d is valid, maintenance=%d, allowed=%d\r\n",
-                        secrets::machine::machine_id, result->needs_maintenance, result->allowed);
+          Serial.printf("The configured machine ID %u is valid, maintenance=%d, allowed=%d\r\n",
+                        secrets::machine::machine_id.id, result->needs_maintenance, result->allowed);
 
         Board::machine.maintenanceNeeded = result->needs_maintenance;
         Board::machine.allowed = result->allowed;
+        Board::machine.setAutologoffDelay(std::chrono::minutes(result->timeout_min));
       }
       else
       {
-        Serial.printf("The configured machine ID %d is unknown to the server\r\n",
-                      secrets::machine::machine_id);
+        Serial.printf("The configured machine ID %u is unknown to the server\r\n",
+                      secrets::machine::machine_id.id);
       }
     }
   }
@@ -154,31 +158,31 @@ void BoardLogic::logout()
 bool BoardLogic::longTap(std::string_view short_prompt) const
 {
   constexpr seconds TOTAL_DURATION = 3s;
-  constexpr unsigned int STEPS_COUNT = 6;
-  constexpr milliseconds STEP_DELAY = (TOTAL_DURATION / STEPS_COUNT);
+  constexpr auto STEPS_COUNT = 6;
+  constexpr milliseconds STEP_DELAY = duration_cast<milliseconds>(TOTAL_DURATION) / STEPS_COUNT;
+  constexpr uint32_t MSSTEP_DELAY = static_cast<uint32_t>(STEP_DELAY.count());
 
   const BoardInfo bi = {Board::server.isOnline(), Board::machine.getPowerState(), Board::machine.isShutdownImminent()};
 
-  bool user_bailed_out = false;
   for (auto step = 0; step < STEPS_COUNT; step++)
   {
     std::stringstream ss;
     ss << short_prompt << " " << step << "/" << STEPS_COUNT;
     Board::lcd.setRow(1, ss.str());
-    Board::lcd.update_chars(bi);
+    Board::lcd.update(bi);
 
-    delay(STEP_DELAY.count());
+    delay(MSSTEP_DELAY);
 
     if (!Board::rfid.cardStillThere(this->user.card_uid))
     {
       Board::lcd.setRow(1, "");
-      Board::lcd.update_chars(bi);
+      Board::lcd.update(bi);
       return false;
     }
   }
 
   Board::lcd.setRow(1, "");
-  Board::lcd.update_chars(bi);
+  Board::lcd.update(bi);
   return true;
 }
 
@@ -229,8 +233,8 @@ bool BoardLogic::authorize(card::uid_t uid)
 
       if (this->longTap("Registra"))
       {
-        auto response = Board::server.registerMaintenance(this->user.card_uid);
-        if (!response->request_ok)
+        auto maint_resp = Board::server.registerMaintenance(this->user.card_uid);
+        if (!maint_resp->request_ok)
         {
           this->beep_failed();
           this->changeStatus(Status::ERROR);
@@ -238,22 +242,32 @@ bool BoardLogic::authorize(card::uid_t uid)
         }
         else
         {
-          this->beep_ok();
           this->changeStatus(Status::MAINTENANCE_DONE);
+          this->beep_ok();
           delay(1000);
         }
         // Proceed to log-on the staff member to the machine in all cases
       }
     }
   }
-  Board::machine.login(this->user);
-  auto result = Board::server.startUse(Board::machine.getActiveUser().card_uid);
 
-  if (conf::debug::ENABLE_LOGS)
-    Serial.printf("Result startUse: %d\r\n", result->request_ok);
+  if (Board::machine.login(this->user))
+  {
+    auto result = Board::server.startUse(Board::machine.getActiveUser().card_uid);
 
-  this->changeStatus(Status::LOGGED_IN);
-  this->beep_ok();
+    if (conf::debug::ENABLE_LOGS)
+      Serial.printf("Result startUse: %d\r\n", result->request_ok);
+
+    this->changeStatus(Status::LOGGED_IN);
+    this->beep_ok();
+  }
+  else
+  {
+    this->changeStatus(Status::NOT_ALLOWED);
+    this->beep_failed();
+    delay(1000);
+  }
+
   return true;
 }
 
@@ -263,7 +277,7 @@ bool BoardLogic::init()
   if (conf::debug::ENABLE_LOGS)
     Serial.println("Initializing board...");
 
-  bool success = Board::lcd.begin();
+  auto success = Board::lcd.begin();
   success &= Board::rfid.init();
 
   // Setup buzzer pin for ESP32
@@ -287,7 +301,7 @@ void BoardLogic::changeStatus(Status new_state)
   if (conf::debug::ENABLE_LOGS && this->status != new_state)
   {
     char buffer[32] = {0};
-    if (sprintf(buffer, "** Changing board state to %d", static_cast<int>(new_state)) > 0)
+    if (snprintf(buffer, sizeof(buffer), "** Changing board state to %d", static_cast<int>(new_state)) > 0)
       Serial.println(buffer);
   }
 
@@ -391,12 +405,12 @@ void BoardLogic::updateLCD() const
     break;
   default:
     Board::lcd.setRow(0, "Unhandled status");
-    if (sprintf(buffer, "Value %d", static_cast<int>(this->status)) > 0)
+    if (snprintf(buffer, sizeof(buffer), "Value %d", static_cast<int>(this->status)) > 0)
       Board::lcd.setRow(1, buffer);
     break;
   }
   BoardInfo bi = {Board::server.isOnline(), Board::machine.getPowerState(), Board::machine.isShutdownImminent()};
-  Board::lcd.update_chars(bi);
+  Board::lcd.update(bi, false);
 }
 
 /// @brief Gets the current board status

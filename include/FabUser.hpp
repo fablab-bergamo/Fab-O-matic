@@ -5,8 +5,8 @@
 #include <string>
 #include <array>
 #include "Arduino.h"
-#include "conf.h"
-#include "card.h"
+#include "conf.hpp"
+#include "card.hpp"
 #include <sstream>
 
 struct FabUser
@@ -19,15 +19,15 @@ struct FabUser
   };
 
   card::uid_t card_uid = card::INVALID;
-  std::string holder_name = "";
+  std::string holder_name{""};
   bool authenticated = false;
   UserLevel user_level = UserLevel::UNKNOWN;
 
   FabUser() = default;
 
-  FabUser(const card::uid_t uid, std::string_view name, bool authenticated, UserLevel level) : card_uid(uid), holder_name(name), authenticated(authenticated), user_level(level) {}
+  FabUser(const card::uid_t uid, std::string_view name, bool auth, UserLevel level) : card_uid(uid), holder_name(name), authenticated(auth), user_level(level) {}
 
-  FabUser(const uint8_t uid[conf::whitelist::UID_BYTE_LEN], std::string_view name, bool authenticated, UserLevel level) : holder_name(name), authenticated(authenticated), user_level(level)
+  FabUser(const uint8_t uid[conf::whitelist::UID_BYTE_LEN], std::string_view name, bool auth, UserLevel level) : holder_name(name), authenticated(auth), user_level(level)
   {
     this->card_uid = card::from_array(uid);
   }

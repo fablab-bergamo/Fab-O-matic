@@ -1,10 +1,10 @@
 #ifndef BOARDLOGIC_H
 #define BOARDLOGIC_H
 
-#include "FabUser.h"
-#include "card.h"
+#include "FabUser.hpp"
+#include "card.hpp"
 #include <Adafruit_NeoPixel.h>
-#include "pins.h"
+#include "pins.hpp"
 
 class BoardLogic
 {

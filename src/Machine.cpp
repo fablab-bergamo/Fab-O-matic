@@ -1,17 +1,24 @@
-#include "Machine.h"
+#include "Machine.hpp"
 #include "Arduino.h"
 #include <sstream>
 #include <cstdint>
 #include <type_traits>
 #include <chrono>
+#include "secrets.hpp"
+#include "FabServer.hpp"
 
 using namespace std::chrono_literals;
 using namespace std::chrono;
 
 /// @brief Creates a new machine
 /// @param user_conf configuration of the machine
-Machine::Machine(Config user_conf) : config(user_conf), active(false),
-                                     maintenanceNeeded(false), allowed(true)
+Machine::Machine(const Config user_conf, FabServer &serv) : maintenanceNeeded(false), allowed(true),
+                                                            config(user_conf),
+                                                            server(serv),
+                                                            active(false),
+                                                            autologoff(conf::machine::DEFAULT_AUTO_LOGOFF_DELAY),
+                                                            power_state(PowerState::UNKNOWN)
+
 {
   this->current_user = FabUser();
   pinMode(this->config.control_pin, OUTPUT);
@@ -19,8 +26,6 @@ Machine::Machine(Config user_conf) : config(user_conf), active(false),
   if (conf::debug::ENABLE_LOGS)
     Serial.printf("Machine %s configured on pin %d (active_low:%d)\r\n", this->config.machine_name.c_str(),
                   this->config.control_pin, this->config.control_pin_active_low);
-
-  this->power(false);
 }
 
 /// @brief Returns the machine identifier
@@ -46,7 +51,7 @@ bool Machine::login(FabUser user)
   {
     this->active = true;
     this->current_user = user;
-    this->power(true);
+    this->power_mqtt(true);
     this->usage_start_timestamp = system_clock::now();
     return true;
   }
@@ -57,7 +62,7 @@ bool Machine::login(FabUser user)
 /// @return
 Machine::PowerState Machine::getPowerState() const
 {
-  return this->powerState;
+  return this->power_state;
 }
 
 /// @brief Removes the user from the machine, and powers off the machine (respecting POWEROFF_DELAY_MINUTES setting)
@@ -66,7 +71,7 @@ void Machine::logout()
   if (this->active)
   {
     this->active = false;
-    this->powerState = PowerState::WAITING_FOR_POWER_OFF;
+    this->power_state = PowerState::WAITING_FOR_POWER_OFF;
     this->usage_start_timestamp = std::nullopt;
 
     // Sets the countdown to power off
@@ -74,13 +79,13 @@ void Machine::logout()
     {
       this->logout_timestamp = system_clock::now();
       if (conf::debug::ENABLE_LOGS)
-        Serial.printf("Machine will be shutdown in %d s\r\n",
+        Serial.printf("Machine will be shutdown in %lld s\r\n",
                       duration_cast<seconds>(conf::machine::POWEROFF_GRACE_PERIOD).count());
     }
     else
     {
       this->logout_timestamp = system_clock::now();
-      this->power(false);
+      this->power_mqtt(false);
     }
   }
 }
@@ -92,7 +97,7 @@ bool Machine::canPowerOff() const
   if (!this->logout_timestamp.has_value())
     return false;
 
-  return (this->powerState == PowerState::WAITING_FOR_POWER_OFF &&
+  return (this->power_state == PowerState::WAITING_FOR_POWER_OFF &&
           system_clock::now() - this->logout_timestamp.value() > conf::machine::POWEROFF_GRACE_PERIOD);
 }
 
@@ -103,13 +108,13 @@ bool Machine::isShutdownImminent() const
   if (!this->logout_timestamp.has_value() || conf::machine::BEEP_PERIOD == 0ms)
     return false;
 
-  return (this->powerState == PowerState::WAITING_FOR_POWER_OFF &&
+  return (this->power_state == PowerState::WAITING_FOR_POWER_OFF &&
           system_clock::now() - this->logout_timestamp.value() > conf::machine::BEEP_PERIOD);
 }
 
 /// @brief sets the machine power to on (true) or off (false)
 /// @param value setpoint
-void Machine::power(bool value)
+void Machine::power_relay(bool value)
 {
   if (conf::debug::ENABLE_LOGS)
     Serial.printf("Power set to %d\r\n", value);
@@ -126,11 +131,48 @@ void Machine::power(bool value)
   if (value)
   {
     this->logout_timestamp = std::nullopt;
-    this->powerState = PowerState::POWERED_ON;
+    this->power_state = PowerState::POWERED_ON;
   }
   else
   {
-    this->powerState = PowerState::POWERED_OFF;
+    this->power_state = PowerState::POWERED_OFF;
+  }
+}
+
+/// @brief sets the machine power to on (true) or off (false)
+/// @param value setpoint
+void Machine::power_mqtt(bool value)
+{
+  if (conf::debug::ENABLE_LOGS)
+    Serial.printf("Power set to %d\r\n", value);
+
+  String topic{secrets::machine::machine_topic.data()};
+  String payload = value ? "on" : "off";
+
+  auto retries = 0;
+  while (!server.publish(topic, payload))
+  {
+    if (conf::debug::ENABLE_LOGS)
+      Serial.printf("Error while publishing %s to %s\r\n", payload.c_str(), topic.c_str());
+
+    server.connect();
+    delay(500);
+    retries++;
+    if (retries > 5)
+    {
+      Serial.println("Unable to publish to MQTT");
+      return;
+    }
+  }
+
+  if (value)
+  {
+    this->logout_timestamp = std::nullopt;
+    this->power_state = PowerState::POWERED_ON;
+  }
+  else
+  {
+    this->power_state = PowerState::POWERED_OFF;
   }
 }
 
@@ -178,4 +220,23 @@ std::string Machine::toString() const
   sstream << ")";
 
   return sstream.str();
+}
+
+std::chrono::minutes Machine::getAutologoffDelay() const
+{
+  return this->autologoff;
+}
+
+void Machine::setAutologoffDelay(std::chrono::minutes new_delay)
+{
+  if (conf::debug::ENABLE_LOGS && this->autologoff != new_delay)
+    Serial.printf("Setting autologoff delay to %lld min\r\n", new_delay.count());
+
+  this->autologoff = new_delay;
+}
+
+bool Machine::isAutologoffExpired() const
+{
+  return this->getAutologoffDelay() > 0min &&
+         this->getUsageDuration() > this->getAutologoffDelay();
 }

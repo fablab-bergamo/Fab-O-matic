@@ -1,11 +1,11 @@
-#include "RFIDWrapper.h"
-#include "pins.h"
+#include "RFIDWrapper.hpp"
+#include "pins.hpp"
 #include "MFRC522v2.h"
 #include "MFRC522DriverSPI.h"
 #include "MFRC522DriverPinSimple.h"
 #include "MFRC522Debug.h"
-#include "conf.h"
-#include "card.h"
+#include "conf.hpp"
+#include "card.hpp"
 #include <memory>
 
 RFIDWrapper::RFIDWrapper()
@@ -25,7 +25,7 @@ RFIDWrapper::RFIDWrapper()
 /// @return true if a new card is present
 bool RFIDWrapper::isNewCardPresent() const
 {
-  bool result = this->mfrc522->PICC_IsNewCardPresent();
+  auto result = this->mfrc522->PICC_IsNewCardPresent();
 
   if (conf::debug::ENABLE_LOGS && result)
     Serial.printf("isNewCardPresent=%d\r\n", result);
@@ -52,7 +52,8 @@ bool RFIDWrapper::readCardSerial() const
 /// @param original the card ID to check
 bool RFIDWrapper::cardStillThere(const card::uid_t original) const
 {
-  for (auto i = 0; i < 3; i++)
+  static constexpr auto NB_TRIES = 3;
+  for (auto i = 0; i < NB_TRIES; i++)
   {
     // Detect Tag without looking for collisions
     byte bufferATQA[2];
@@ -118,9 +119,9 @@ bool RFIDWrapper::init() const
   {
     constexpr auto MAX_LEN = 80;
     char buffer[MAX_LEN] = {0};
-    if (sprintf(buffer, "Configuring SPI RFID (SCK=%d, MISO=%d, MOSI=%d, SDA=%d) RESET=%d",
-                pins.mfrc522.sck_pin, pins.mfrc522.miso_pin, pins.mfrc522.mosi_pin,
-                pins.mfrc522.sda_pin, pins.mfrc522.reset_pin) > 0)
+    if (snprintf(buffer, sizeof(buffer), "Configuring SPI RFID (SCK=%d, MISO=%d, MOSI=%d, SDA=%d) RESET=%d",
+                 pins.mfrc522.sck_pin, pins.mfrc522.miso_pin, pins.mfrc522.mosi_pin,
+                 pins.mfrc522.sda_pin, pins.mfrc522.reset_pin) > 0)
       Serial.println(buffer);
   }
 

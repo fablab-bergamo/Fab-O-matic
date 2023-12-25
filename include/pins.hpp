@@ -38,7 +38,7 @@ struct pins_config
   struct led_config
   {
     const uint8_t pin;
-    const bool is_rgb;
+    const bool is_neopixel;
   };
   // Struct members
   const mfrc522_config mfrc522;
@@ -50,14 +50,14 @@ struct pins_config
 
 #ifdef PINS_ESP32
 constexpr pins_config pins{
-    {27U, 26U, 33U, 32U, 4U},               // RFID
-    {15U, 18U, 2U, 4U, 5U, 19U, 9U, false}, // LCD
-    {14U, 27U},                             // relay
-    {12U},                                  // buzzer
-    {18U, false}                            // Neopixel
+    {27U, 33U, 32U, 26U, 4U},                // RFID
+    {15U, 2U, 0U, 4U, 16U, 17U, 18U, false}, // LCD
+    {14U, 27U},                              // relay
+    {12U},                                   // buzzer
+    {19U, false}                             // Neopixel (non testato)
 };
 #endif
-#ifdef WOKWI_SIMULATION
+#if(WOKWI_SIMULATION)
 constexpr pins_config pins{
     {27U, 26U, 33U, 32U, 4U},               // RFID
     {15U, 18U, 2U, 4U, 5U, 19U, 9U, false}, // LCD

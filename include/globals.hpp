@@ -1,24 +1,24 @@
 #ifndef GLOBALS_H_
 #define GLOBALS_H_
 
-#include "FabServer.h"
-#include "Machine.h"
-#include "LCDWrapper.h"
-#include "conf.h"
-#include "MockRFIDWrapper.h"
-#include "RFIDWrapper.h"
-#include "pins.h"
-#include "secrets.h"
-#include "AuthProvider.h"
-#include "BoardLogic.h"
-#include <TaskScheduler.h>
-#include "MockMQTTBroker.h"
+#include "FabServer.hpp"
+#include "Machine.hpp"
+#include "LCDWrapper.hpp"
+#include "conf.hpp"
+#include "MockRFIDWrapper.hpp"
+#include "RFIDWrapper.hpp"
+#include "pins.hpp"
+#include "secrets.hpp"
+#include "AuthProvider.hpp"
+#include "BoardLogic.hpp"
+#include "Tasks.hpp"
+#include "MockMQTTBroker.hpp"
 
 // Global variables
 namespace Board
 {
 
-#ifdef WOKWI_SIMULATION
+#if (WOKWI_SIMULATION)
   MockRFIDWrapper rfid;
   FabServer server("Wokwi-GUEST", "", "127.0.0.1", 6);
   MockMQTTBroker broker;
@@ -34,14 +34,10 @@ namespace Board
                                 secrets::machine::machine_name,
                                 pins.relay.ch1_pin, false);
 
-  Machine machine(config1);
+  Machine machine(config1, server);
   AuthProvider auth(secrets::cards::whitelist);
   BoardLogic logic;
+  fablab::tasks::Scheduler scheduler;
 } // namespace Board
-
-namespace Tasks
-{
-  Scheduler ts;
-}
 
 #endif // GLOBALS_H_

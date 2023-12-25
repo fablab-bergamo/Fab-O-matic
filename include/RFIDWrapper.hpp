@@ -4,8 +4,8 @@
 #include <string>
 #include <memory>
 
-#include "conf.h"
-#include "card.h"
+#include "conf.hpp"
+#include "card.hpp"
 #include "MFRC522v2.h"
 #include "MFRC522DriverSPI.h"
 #include "MFRC522DriverPinSimple.h"

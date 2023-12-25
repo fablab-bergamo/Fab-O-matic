@@ -20,7 +20,7 @@ jobs:
       - name: Install PlatformIO Core
         run: pip install --upgrade platformio
       - name: Use secrets.h.example as base for the build
-        run: cp include/secrets.h.example include/secrets.h
+        run: cp include/secrets.hpp.example include/secrets.hpp
       - name: Check PlatformIO Project with linter
         run: pio check
       - name: Build PlatformIO Projects

@@ -1,16 +1,15 @@
 #ifndef FABSERVER_H_
 #define FABSERVER_H_
 
-#include "FabUser.h"
+#include "FabUser.hpp"
 #include "WiFi.h"
 #include <array>
-#include "conf.h"
-#include "Machine.h"
+#include "conf.hpp"
 #include <string>
 #include <MQTTClient.h>
 #include <functional>
 #include <ArduinoJson.h>
-#include "MQTTtypes.h"
+#include "MQTTtypes.hpp"
 #include <chrono>
 
 using namespace ServerMQTT;
@@ -21,19 +20,21 @@ private:
   const std::string_view wifi_ssid;
   const std::string_view wifi_password;
   const std::string_view server_ip;
-  std::string topic = "";
-  std::string response_topic = "";
 
   MQTTClientCallbackSimpleFunction callback;
   WiFiClass WiFiConnection;
   WiFiClient net;
   MQTTClient client;
   StaticJsonDocument<256> doc;
-  std::string last_query = "";
-  std::string last_reply = "";
+
+  std::string topic{""};
+  std::string response_topic{""};
+  std::string last_query{""};
+  std::string last_reply{""};
+
   bool online = false;
   bool answer_pending = false;
-  uint8_t channel = -1;
+  const uint8_t channel = -1;
 
   void messageReceived(String &topic, String &payload);
   bool publish(const Query &payload);
@@ -41,7 +42,7 @@ private:
   bool publishWithReply(const Query &payload);
 
   template <typename RespT, typename QueryT, typename... QueryArgs>
-  std::unique_ptr<RespT> processQuery(QueryArgs &&...);
+  [[nodiscard]] std::unique_ptr<RespT> processQuery(QueryArgs &&...);
 
   static constexpr unsigned int MAX_MQTT_LENGTH = 128;
 
@@ -56,6 +57,7 @@ public:
   [[nodiscard]] std::unique_ptr<SimpleResponse> finishUse(const card::uid_t uid, std::chrono::seconds duration);
   [[nodiscard]] std::unique_ptr<SimpleResponse> registerMaintenance(const card::uid_t maintainer);
   [[nodiscard]] std::unique_ptr<SimpleResponse> alive();
+  [[nodiscard]] bool publish(String topic, String payload);
 
   bool isOnline() const;
   bool connect();

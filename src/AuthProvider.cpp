@@ -1,8 +1,9 @@
-#include "AuthProvider.h"
+#include "AuthProvider.hpp"
 
-#include <string>
 #include <cstdint>
-#include "FabServer.h"
+#include <string>
+
+#include "FabServer.hpp"
 
 namespace Board
 {
@@ -10,7 +11,7 @@ namespace Board
   extern FabServer server;
 } // namespace Board
 
-AuthProvider::AuthProvider(WhiteList whitelist) : whitelist(whitelist) {}
+AuthProvider::AuthProvider(WhiteList list) : whitelist(list) {}
 
 /// @brief Checks if the cache contains the card ID, and uses that if available
 /// @param uid card id
@@ -57,7 +58,7 @@ void AuthProvider::add_in_cache(card::uid_t uid, std::string name, FabUser::User
 std::optional<FabUser> AuthProvider::tryLogin(card::uid_t uid) const
 {
   FabUser user;
-  std::string uid_str = card::uid_str(uid);
+  auto uid_str = card::uid_str(uid);
 
   if (conf::debug::ENABLE_LOGS)
     Serial.printf("tryLogin called for %s\r\n", uid_str.c_str());
@@ -67,7 +68,7 @@ std::optional<FabUser> AuthProvider::tryLogin(card::uid_t uid) const
 
   if (Board::server.isOnline())
   {
-    if (auto response = Board::server.checkCard(uid); response->request_ok && response->is_valid)
+    if (auto response = Board::server.checkCard(uid); response->request_ok && response->getResult() == UserResult::USER_AUTHORIZED)
     {
       user.authenticated = true;
       user.card_uid = uid;

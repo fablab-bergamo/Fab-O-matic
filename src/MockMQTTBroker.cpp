@@ -1,6 +1,6 @@
-#ifdef WOKWI_SIMULATION
-#include "MockMQTTBroker.h"
-#include "conf.h"
+#if (WOKWI_SIMULATION)
+#include "MockMQTTBroker.hpp"
+#include "conf.hpp"
 
 MockMQTTBroker::MockMQTTBroker()
 {
@@ -10,6 +10,8 @@ void MockMQTTBroker::start()
 {
   while (WiFi.status() != WL_CONNECTED)
   { // Wait for the Wi-Fi to connect
+    if (conf::debug::ENABLE_LOGS)
+      Serial.printf("MQTTBROKER: WiFi status changed to %d\r\n", WiFi.status());
     this->is_running = false;
     return;
   }
@@ -17,8 +19,8 @@ void MockMQTTBroker::start()
   {
     this->is_running = this->init(MockMQTTBroker::MQTTPORT, true);
 
-    if (conf::debug::ENABLE_LOGS && this->is_running)
-      Serial.println("MQTTBROKER: started");
+    if (conf::debug::ENABLE_LOGS)
+      Serial.printf("MQTTBROKER: started with result %d\r\n", this->is_running);
   }
 }
 bool MockMQTTBroker::onEvent(sMQTTEvent *event)
@@ -73,7 +75,7 @@ std::string MockMQTTBroker::fakeReply() const
 {
   if (this->payload.find("checkmachine") != std::string::npos)
   {
-    return "{\"request_ok\":true,\"is_valid\":true,\"allowed\":true,\"maintenance\":false}";
+    return "{\"request_ok\":true,\"is_valid\":true,\"allowed\":true,\"maintenance\":false,\"timeout_min\":2}";
   }
 
   if (this->payload.find("maintenance") != std::string::npos)

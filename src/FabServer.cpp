@@ -1,5 +1,5 @@
-#include "FabServer.h"
-#include "secrets.h"
+#include "FabServer.hpp"
+#include "secrets.hpp"
 
 #include <string>
 #include <string_view>
@@ -15,12 +15,12 @@ using namespace ServerMQTT;
 /// @param password wifi password
 /// @param server_ip server IP address
 /// @param channel wifi channel (use 0 for auto)
-FabServer::FabServer(std::string_view ssid, std::string_view password, std::string_view server_ip, u_int8_t channel)
-    : wifi_ssid(ssid), wifi_password(password), server_ip(server_ip), online(false), channel(channel)
+FabServer::FabServer(std::string_view ssid, std::string_view password, std::string_view ip, u_int8_t chan)
+    : wifi_ssid(ssid), wifi_password(password), server_ip(ip), online(false), channel(chan)
 {
   std::stringstream ss;
-  ss << secrets::mqtt::topic << "/" << secrets::machine::machine_id.id;
-  this->topic = ss.str();
+  ss << conf::mqtt::topic << "/" << secrets::machine::machine_id.id;
+  this->topic.assign(ss.str());
 }
 
 /// @brief Posts to MQTT server and waits for answer
@@ -40,28 +40,48 @@ bool FabServer::publishWithReply(const Query &query)
   return false;
 }
 
+/// @brief publish on MQTT the requested info
+/// @param mqtt_topic topic to publish to
+/// @param mqtt_payload payload to publish
+/// @return true if successfull
+bool FabServer::publish(String mqtt_topic, String mqtt_payload)
+{
+  if (mqtt_payload.length() > FabServer::MAX_MQTT_LENGTH)
+  {
+    Serial.printf("MQTT Client: Message is too long: %s\r\n", mqtt_payload.c_str());
+    return false;
+  }
+
+  this->answer_pending = true;
+  this->last_query.assign(mqtt_payload.c_str());
+
+  if (conf::debug::ENABLE_LOGS)
+    Serial.printf("MQTT Client: sending message %s on topic %s\r\n", mqtt_payload.c_str(), mqtt_topic.c_str());
+
+  return this->client.publish(mqtt_topic.c_str(), mqtt_payload.c_str());
+}
+
 /// @brief posts to MQTT server
 /// @param query message to post
 /// @return true if the message was published
 bool FabServer::publish(const Query &query)
 {
+  String s_payload(query.payload().data());
+  String s_topic(this->topic.c_str());
 
-  String payload(query.payload().data());
-  String topic(this->topic.c_str());
-
-  if (payload.length() > FabServer::MAX_MQTT_LENGTH)
+  if (s_payload.length() > FabServer::MAX_MQTT_LENGTH)
   {
-    Serial.printf("MQTT Client: Message is too long: %s\r\n", payload);
+    Serial.printf("MQTT Client: Message is too long: %s\r\n", s_payload.c_str());
     return false;
   }
 
   this->answer_pending = true;
-  this->last_query = payload.c_str();
+  this->last_query.assign(s_payload.c_str());
 
   if (conf::debug::ENABLE_LOGS)
-    Serial.printf("MQTT Client: sending message %s on topic %s\r\n", payload.c_str(), topic.c_str());
+    Serial.printf("MQTT Client: sending message %s on topic %s\r\n", s_payload.c_str(), s_topic.c_str());
 
-  return this->client.publish(topic, payload);
+  return this->client.publish(s_topic, s_payload);
 }
 
 bool FabServer::loop()
@@ -82,9 +102,9 @@ bool FabServer::loop()
 /// @return true if the server answered
 bool FabServer::waitForAnswer()
 {
-  constexpr uint16_t MAX_DURATION_MS = 2000;
-  constexpr uint16_t DELAY_MS = 50;
-  constexpr uint8_t NB_TRIES = (MAX_DURATION_MS / DELAY_MS);
+  constexpr auto MAX_DURATION_MS = 2000;
+  constexpr auto DELAY_MS = 50;
+  constexpr auto NB_TRIES = (MAX_DURATION_MS / DELAY_MS);
 
   for (auto i = 0; i < NB_TRIES; i++)
   {
@@ -112,34 +132,39 @@ bool FabServer::isOnline() const
 /// @brief Callback for MQTT messages
 /// @param topic topic the message was received on
 /// @param payload payload of the message
-void FabServer::messageReceived(String &topic, String &payload)
+void FabServer::messageReceived(String &s_topic, String &s_payload)
 {
   if (conf::debug::ENABLE_LOGS)
   {
     std::stringstream ss;
-    ss << "MQTT Client: Received " << topic.c_str() << " -> " << payload.c_str();
+    ss << "MQTT Client: Received " << s_topic.c_str() << " -> " << s_payload.c_str();
     Serial.println(ss.str().c_str());
   }
 
-  this->last_reply = payload.c_str();
+  this->last_reply.assign(s_payload.c_str());
   this->answer_pending = false;
 }
 
+/// @brief Connects to the WiFi network
+/// @return true if the connection succeeded
 bool FabServer::connectWiFi() noexcept
 {
-  constexpr uint8_t NB_TRIES = 3;
-  constexpr uint16_t DELAY_MS = 1000;
+  static constexpr auto NB_TRIES = 3;
+  static constexpr auto DELAY_MS = 1000;
 
   try
   {
     // Connect WiFi if needed
     if (this->WiFiConnection.status() != WL_CONNECTED)
     {
+      if (conf::debug::ENABLE_LOGS)
+        Serial.printf("FabServer::connectWiFi() : WiFi connection state=%d\n\r", this->WiFiConnection.status());
+
       this->WiFiConnection.begin(this->wifi_ssid.data(), this->wifi_password.data(), this->channel);
       for (auto i = 0; i < NB_TRIES; i++)
       {
         if (conf::debug::ENABLE_LOGS && this->WiFiConnection.status() == WL_CONNECTED)
-          Serial.println("WiFi connection successfull");
+          Serial.println("FabServer::connectWiFi() : WiFi connection successfull");
         break;
         delay(DELAY_MS);
       }
@@ -158,14 +183,32 @@ bool FabServer::connectWiFi() noexcept
 /// @return true if both operations succeeded
 bool FabServer::connect()
 {
-  constexpr uint8_t NB_TRIES = 3;
-  constexpr uint16_t DELAY_MS = 1000;
+  auto status = this->WiFiConnection.status();
 
-  // Check server
-  if (this->connectWiFi())
+  if (conf::debug::ENABLE_LOGS)
+    Serial.printf("FabServer::connect() called, Wifi status=%d\r\n", status);
+
+  // Check if WiFi nextwork is available, and if not, try to connect
+  if (status != WL_CONNECTED)
+  {
+    this->online = false;
+
+    if (this->client.connected())
+    {
+      if (conf::debug::ENABLE_LOGS)
+        Serial.printf("Closing MQTT client due to WiFi down\r\n");
+      this->client.disconnect();
+    }
+
+    this->connectWiFi();
+  }
+
+  // Check if WiFi is available but MQTT client is not
+  if (this->WiFiConnection.status() == WL_CONNECTED &&
+      !this->client.connected())
   {
     if (conf::debug::ENABLE_LOGS)
-      Serial.printf("Connected to WiFi %s\r\n", this->wifi_ssid.data());
+      Serial.printf("Connecting to MQTT server %s\r\n", secrets::mqtt::server.data());
 
     this->client.begin(this->server_ip.data(), this->net);
 
@@ -174,40 +217,42 @@ bool FabServer::connect()
 
     this->client.onMessage(this->callback);
 
-    if (!client.connect("ESP32", secrets::mqtt::user.data(), secrets::mqtt::password.data(), false))
+    if (!client.connect(secrets::mqtt::client.data(), secrets::mqtt::user.data(), secrets::mqtt::password.data(), false))
     {
       Serial.printf("Failure to connect as client: %s\r\n", secrets::mqtt::client.data());
     }
 
+    // Setup subscriptions
     if (client.connected())
     {
-      this->online = true;
       std::stringstream tmp_topic;
-      tmp_topic << this->topic << secrets::mqtt::response_topic;
-      this->response_topic = tmp_topic.str();
+      tmp_topic << this->topic << conf::mqtt::response_topic;
+      this->response_topic.assign(tmp_topic.str());
 
       if (!client.subscribe(this->response_topic.c_str()))
       {
         Serial.printf("MQTT Client: failure to subscribe to reply topic %s\r\n", this->response_topic.c_str());
-        this->online = false;
+      }
+      else
+      {
+        this->online = true;
       }
     }
     else
     {
       Serial.printf("Failure to connect to MQTT server %s\r\n", secrets::mqtt::server.data());
-      this->online = false;
     }
   }
-  else
+
+  if (!client.connected())
   {
-    Serial.printf("Failure to connect to WiFi %s\r\n", this->wifi_ssid.data());
     this->online = false;
   }
 
   if (conf::debug::ENABLE_LOGS)
   {
     std::stringstream ss;
-    ss << "Online:" << this->online << ", board IP address:" << WiFi.localIP().toString().c_str() << ", server: " << this->server_ip.data();
+    ss << "FabServer::connect() : Online:" << this->online << ", board IP address:" << WiFi.localIP().toString().c_str() << ", server: " << this->server_ip.data();
     Serial.println(ss.str().c_str());
   }
   return this->online;
@@ -230,7 +275,7 @@ std::unique_ptr<RespT> FabServer::processQuery(QueryArgs &&...args)
       if (QueryT query{args...}; this->publishWithReply(query))
       {
         // Deserialize the JSON document
-        const auto payload = this->last_reply.data();
+        auto payload = this->last_reply.c_str();
         if (DeserializationError error = deserializeJson(this->doc, payload))
         {
           Serial.printf("Failed to parse json: %s (%s)", payload, error.c_str());
