@@ -235,7 +235,7 @@ namespace fablabbg
   Task t8("MQTT keepalive", std::chrono::seconds(1), &taskMQTTAlive, scheduler, true);
   Task t9("LED", std::chrono::seconds(1), &taskBlink, scheduler, true);
   // Wokwi requires LCD refresh unlike real hardware
-  Task t10("LCDRefresh", std::chrono::seconds(1), &taskLcdRefresh, scheduler, false);
+  Task t10("LCDRefresh", std::chrono::seconds(2), &taskLcdRefresh, scheduler, false);
 
 } // namespace fablabbg
 

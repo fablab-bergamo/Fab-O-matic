@@ -43,7 +43,7 @@ namespace fablabbg
       Config(MachineID id, MachineType type, std::string_view name, uint8_t pin, bool act_low) : machine_id(id), machine_type(type), machine_name(name), control_pin(pin), control_pin_active_low(act_low) {}
     };
 
-    Machine(const Config config, FabServer &server);
+    Machine(const Config &config, FabServer &server);
     ~Machine() = default;
 
     bool maintenanceNeeded; // If true, machine needs maintenance

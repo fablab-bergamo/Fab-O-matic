@@ -33,6 +33,8 @@ namespace fablabbg::Board
                                 secrets::machine::machine_name,
                                 pins.relay.ch1_pin, false);
 
+  static_assert(!conf::machine::USE_RELAY || pins.relay.ch1_pin != NO_PIN, "A valid pin number for relay is required when USE_RELAY is true");
+
   Machine machine(config1, server);
   AuthProvider auth(secrets::cards::whitelist);
   BoardLogic logic;

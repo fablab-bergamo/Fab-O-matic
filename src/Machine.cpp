@@ -14,7 +14,7 @@ namespace fablabbg
 
   /// @brief Creates a new machine
   /// @param user_conf configuration of the machine
-  Machine::Machine(const Config user_conf, FabServer &serv) : maintenanceNeeded(false), allowed(true),
+  Machine::Machine(const Config &user_conf, FabServer &serv) : maintenanceNeeded(false), allowed(true),
                                                               config(user_conf),
                                                               server(serv),
                                                               active(false),
