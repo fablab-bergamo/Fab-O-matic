@@ -6,6 +6,9 @@
 
 namespace fablabbg::Tasks
 {
+  using namespace std::chrono;
+  using namespace std::chrono_literals;
+
   Scheduler::Scheduler() : tasks()
   {
   }
@@ -23,16 +26,16 @@ namespace fablabbg::Tasks
                 tasks.end());
   }
 
-  void Scheduler::execute()
+  void Scheduler::execute() const
   {
-    for (auto &task : tasks)
+    for (const auto &task : tasks)
     {
       task.get().run();
     }
 
     if (conf::debug::ENABLE_TASK_LOGS && millis() % 256 == 0)
     {
-      std::chrono::milliseconds avg_delay = 0ms;
+      milliseconds avg_delay = 0ms;
       unsigned long nb_runs = 0;
 
       std::for_each(tasks.begin(), tasks.end(),
@@ -53,26 +56,26 @@ namespace fablabbg::Tasks
     }
   }
 
-  Task::Task(std::string id, std::chrono::milliseconds period, std::function<void()> callback, Scheduler &scheduler, bool active) : active(active),
-                                                                                                                                    id(id),
-                                                                                                                                    period(period),
-                                                                                                                                    last_run(std::chrono::system_clock::now()),
-                                                                                                                                    next_run(last_run + period),
-                                                                                                                                    average_period(0),
-                                                                                                                                    callback(callback),
-                                                                                                                                    run_counter(0)
+  Task::Task(std::string id, milliseconds period, std::function<void()> callback, Scheduler &scheduler, bool active) : active(active),
+                                                                                                                       id(id),
+                                                                                                                       period(period),
+                                                                                                                       last_run(system_clock::now()),
+                                                                                                                       next_run(last_run + period),
+                                                                                                                       average_period(0),
+                                                                                                                       callback(callback),
+                                                                                                                       run_counter(0)
   {
     scheduler.addTask(*this);
   }
 
   void Task::run()
   {
-    if (this->isActive() && std::chrono::system_clock::now() >= next_run)
+    if (this->isActive() && system_clock::now() >= next_run)
     {
       run_counter++;
-      auto last_period = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - last_run);
+      auto last_period = duration_cast<milliseconds>(system_clock::now() - last_run);
       average_period = (average_period * (run_counter - 1) + last_period) / run_counter;
-      last_run = std::chrono::system_clock::now();
+      last_run = system_clock::now();
       try
       {
         callback();
@@ -98,11 +101,11 @@ namespace fablabbg::Tasks
 
   void Task::restart()
   {
-    last_run = std::chrono::system_clock::now();
+    last_run = system_clock::now();
     next_run = last_run + period;
   }
 
-  void Task::setPeriod(std::chrono::milliseconds new_period)
+  void Task::setPeriod(milliseconds new_period)
   {
     period = new_period;
   }
@@ -122,7 +125,7 @@ namespace fablabbg::Tasks
     return active;
   }
 
-  std::chrono::milliseconds Task::getPeriod() const
+  milliseconds Task::getPeriod() const
   {
     return period;
   }
@@ -137,7 +140,7 @@ namespace fablabbg::Tasks
     return id;
   }
 
-  std::chrono::milliseconds Task::getAverageDelay() const
+  milliseconds Task::getAverageDelay() const
   {
     if (average_period > period)
     {

@@ -6,13 +6,15 @@
 
 namespace fablabbg::Tasks
 {
+  using namespace std::chrono;
+
   class Scheduler;
 
   class Task
   {
   public:
     Task() = delete;
-    Task(std::string id, std::chrono::milliseconds period, std::function<void()> callback, Scheduler &scheduler, bool active);
+    Task(std::string id, milliseconds period, std::function<void()> callback, Scheduler &scheduler, bool active);
     ~Task() = default;
 
     Task(const Task &other) = delete;
@@ -24,23 +26,23 @@ namespace fablabbg::Tasks
     void stop();
     void start();
     void restart();
-    void setPeriod(std::chrono::milliseconds new_period);
+    void setPeriod(milliseconds new_period);
     void setCallback(std::function<void()> new_callback);
     void setActive(bool new_active);
     bool isActive() const;
-    std::chrono::milliseconds getPeriod() const;
+    milliseconds getPeriod() const;
     std::function<void()> getCallback() const;
     std::string getId() const;
-    std::chrono::milliseconds getAverageDelay() const;
+    milliseconds getAverageDelay() const;
     unsigned long getRunCounter() const;
 
   private:
     bool active;
-    std::string id;
-    std::chrono::milliseconds period;
-    std::chrono::time_point<std::chrono::system_clock> last_run;
-    std::chrono::time_point<std::chrono::system_clock> next_run;
-    std::chrono::milliseconds average_period;
+    const std::string id;
+    milliseconds period;
+    time_point<system_clock> last_run;
+    time_point<system_clock> next_run;
+    milliseconds average_period;
     std::function<void()> callback;
     unsigned long run_counter;
   };
@@ -53,7 +55,7 @@ namespace fablabbg::Tasks
 
     void addTask(Task &task);
     void removeTask(Task &task);
-    void execute();
+    void execute() const;
 
   private:
     std::vector<std::reference_wrapper<Task>> tasks; // Vector containing references to the tasks, not the tasks themselves
