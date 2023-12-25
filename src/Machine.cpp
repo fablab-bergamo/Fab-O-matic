@@ -21,11 +21,20 @@ Machine::Machine(const Config user_conf, FabServer &serv) : maintenanceNeeded(fa
 
 {
   this->current_user = FabUser();
-  pinMode(this->config.control_pin, OUTPUT);
 
-  if (conf::debug::ENABLE_LOGS)
-    Serial.printf("Machine %s configured on pin %d (active_low:%d)\r\n", this->config.machine_name.c_str(),
-                  this->config.control_pin, this->config.control_pin_active_low);
+  if constexpr (conf::machine::USE_RELAY)
+  {
+    pinMode(this->config.control_pin, OUTPUT);
+    if (conf::debug::ENABLE_LOGS)
+      Serial.printf("Machine %s configured on pin %d (active_low:%d)\r\n", this->config.machine_name.c_str(),
+                    this->config.control_pin, this->config.control_pin_active_low);
+  }
+
+  if constexpr (conf::machine::USE_MQTT_RELAY)
+  {
+    if (conf::debug::ENABLE_LOGS)
+      Serial.printf("Machine %s configured on MQTT relay\r\n", this->config.machine_name.c_str());
+  }
 }
 
 /// @brief Returns the machine identifier
@@ -51,7 +60,14 @@ bool Machine::login(FabUser user)
   {
     this->active = true;
     this->current_user = user;
-    this->power_mqtt(true);
+    if constexpr (conf::machine::USE_RELAY)
+    {
+      this->power_relay(true);
+    }
+    else if constexpr (conf::machine::USE_MQTT_RELAY)
+    {
+      this->power_mqtt(true);
+    }
     this->usage_start_timestamp = system_clock::now();
     return true;
   }
@@ -85,7 +101,14 @@ void Machine::logout()
     else
     {
       this->logout_timestamp = system_clock::now();
-      this->power_mqtt(false);
+      if constexpr (conf::machine::USE_RELAY)
+      {
+        this->power_relay(false);
+      }
+      else if constexpr (conf::machine::USE_MQTT_RELAY)
+      {
+        this->power_mqtt(false);
+      }
     }
   }
 }
@@ -117,7 +140,7 @@ bool Machine::isShutdownImminent() const
 void Machine::power_relay(bool value)
 {
   if (conf::debug::ENABLE_LOGS)
-    Serial.printf("Power set to %d\r\n", value);
+    Serial.printf("Machine::power_relay : power set to %d\r\n", value);
 
   if (this->config.control_pin_active_low)
   {
@@ -144,7 +167,7 @@ void Machine::power_relay(bool value)
 void Machine::power_mqtt(bool value)
 {
   if (conf::debug::ENABLE_LOGS)
-    Serial.printf("Power set to %d\r\n", value);
+    Serial.printf("Machine::power_mqtt : power set to %d\r\n", value);
 
   String topic{secrets::machine::machine_topic.data()};
   String payload = value ? "on" : "off";

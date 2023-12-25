@@ -118,7 +118,14 @@ void taskPoweroffCheck()
 
   if (machine.canPowerOff())
   {
-    machine.power_mqtt(false);
+    if constexpr (conf::machine::USE_MQTT_RELAY)
+    {
+      machine.power_mqtt(false);
+    }
+    else if constexpr (conf::machine::USE_RELAY)
+    {
+      machine.power_relay(false);
+    }
   }
 }
 
