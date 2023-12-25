@@ -4,7 +4,7 @@
 
 #include <algorithm>
 
-namespace fablab::tasks
+namespace fablabbg::Tasks
 {
   Scheduler::Scheduler() : tasks()
   {

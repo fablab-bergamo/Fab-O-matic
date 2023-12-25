@@ -9,9 +9,8 @@
 #include <string_view>
 #include "ArduinoJson.h"
 
-namespace ServerMQTT
+namespace fablabbg::ServerMQTT
 {
-
   class Query
   {
   public:
@@ -139,5 +138,5 @@ namespace ServerMQTT
     [[nodiscard]] static std::unique_ptr<SimpleResponse> fromJson(JsonDocument &doc);
   };
 
-} // namespace ServerMQTT
+} // namespace fablabbg::ServerMQTT
 #endif

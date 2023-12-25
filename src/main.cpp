@@ -10,238 +10,236 @@
 
 #include "Tasks.hpp"
 
-using namespace Board;
-using namespace fablab::tasks;
-using Status = BoardLogic::Status;
-
-// Pre-declarations
-void taskCheckRfid();
-void taskConnect();
-void taskPoweroffCheck();
-void taskLogoffCheck();
-void taskEspWatchdog();
-void taskRfidWatchdog();
-void taskPoweroffWarning();
-void taskMQTTAlive();
-void taskBlink();
-void taskLcdRefresh();
-
-Task t1("RFIDChip", conf::tasks::RFID_CHECK_PERIOD, &taskCheckRfid, scheduler, true);
-Task t2("Wifi/MQQT init", conf::tasks::MQTT_REFRESH_PERIOD, &taskConnect, scheduler, true);
-Task t3("Poweroff", std::chrono::seconds(1), &taskPoweroffCheck, scheduler, true);
-Task t4("Logoff", std::chrono::seconds(1), &taskLogoffCheck, scheduler, true);
-
-// Hardware watchdog will run at half the frequency
-Task t5("Watchdog", conf::tasks::WATCHDOG_TIMEOUT / 2, &taskEspWatchdog, scheduler, true);
-Task t6("Selftest", conf::tasks::RFID_SELFTEST_PERIOD, &taskRfidWatchdog, scheduler, true);
-Task t7("PoweroffWarning", conf::machine::DELAY_BETWEEN_BEEPS, &taskPoweroffWarning, scheduler, true);
-Task t8("MQTT keepalive", std::chrono::seconds(1), &taskMQTTAlive, scheduler, true);
-Task t9("LED", std::chrono::seconds(1), &taskBlink, scheduler, true);
-
-// Wokwi requires LCD refresh unlike real hardware
-Task t10("LCDRefresh", std::chrono::seconds(1), &taskLcdRefresh, scheduler, false);
-
-/// @brief Opens WiFi and server connection and updates board state accordingly
-void taskConnect()
+namespace fablabbg
 {
-  if (conf::debug::ENABLE_TASK_LOGS)
+  using namespace Board;
+  using namespace Tasks;
+  using Status = BoardLogic::Status;
+
+  /// @brief Opens WiFi and server connection and updates board state accordingly
+  void taskConnect()
   {
-    Serial.printf("taskConnect, millis %lu\r\n", millis());
+    if (conf::debug::ENABLE_TASK_LOGS)
+    {
+      Serial.printf("taskConnect, millis %lu\r\n", millis());
+    }
+
+    if (!server.isOnline())
+    {
+      // connection to wifi
+      logic.changeStatus(Status::CONNECTING);
+
+      // Try to connect
+      server.connect();
+      // Refresh after connection
+      logic.changeStatus(server.isOnline() ? Status::CONNECTED : Status::OFFLINE);
+
+      // Briefly show to the user
+      delay(500);
+    }
+
+    if (server.isOnline())
+    {
+      Serial.println("taskConnect - online, calling refreshFromServer");
+      // Get machine data from the server if it is online
+      logic.refreshFromServer();
+    }
   }
 
-  if (!server.isOnline())
+  /// @brief periodic check for new RFID card
+  void taskCheckRfid()
   {
-    // connection to wifi
-    logic.changeStatus(Status::CONNECTING);
+    if (conf::debug::ENABLE_TASK_LOGS)
+      Serial.println("taskCheckRfid");
 
-    // Try to connect
-    server.connect();
-    // Refresh after connection
-    logic.changeStatus(server.isOnline() ? Status::CONNECTED : Status::OFFLINE);
+    // check if there is a card
+    if (rfid.isNewCardPresent())
+    {
+      logic.onNewCard();
+      return;
+    }
 
-    // Briefly show to the user
-    delay(500);
-  }
-
-  if (server.isOnline())
-  {
-    Serial.println("taskConnect - online, calling refreshFromServer");
-    // Get machine data from the server if it is online
-    logic.refreshFromServer();
-  }
-}
-
-/// @brief periodic check for new RFID card
-void taskCheckRfid()
-{
-  if (conf::debug::ENABLE_TASK_LOGS)
-    Serial.println("taskCheckRfid");
-
-  // check if there is a card
-  if (rfid.isNewCardPresent())
-  {
-    logic.onNewCard();
-    return;
-  }
-
-  // No new card present
-  logic.ready_for_a_new_card = true;
-  if (machine.isFree())
-  {
-    logic.changeStatus(Status::FREE);
-  }
-  else
-  {
-    logic.changeStatus(Status::IN_USE);
-  }
-}
-
-/// @brief blink led
-void taskBlink()
-{
-  if (Board::server.isOnline())
-    if (!Board::machine.allowed || Board::machine.maintenanceNeeded)
-      Board::logic.set_led_color(64, 0, 0); // Red
+    // No new card present
+    logic.ready_for_a_new_card = true;
+    if (machine.isFree())
+    {
+      logic.changeStatus(Status::FREE);
+    }
     else
-      Board::logic.set_led_color(0, 64, 0); // Green
-  else
-    Board::logic.set_led_color(127, 83, 16); // Orange
-
-  Board::logic.invert_led(); // Blink when in use
-}
-
-/// @brief periodic check if the machine must be powered off
-void taskPoweroffCheck()
-{
-  if (conf::debug::ENABLE_TASK_LOGS)
-    Serial.println("taskPoweroffCheck");
-
-  if (machine.canPowerOff())
-  {
-    if constexpr (conf::machine::USE_MQTT_RELAY)
     {
-      machine.power_mqtt(false);
-    }
-    else if constexpr (conf::machine::USE_RELAY)
-    {
-      machine.power_relay(false);
+      logic.changeStatus(Status::IN_USE);
     }
   }
-}
 
-/// @brief periodic check if the machine must be powered off
-void taskPoweroffWarning()
-{
-  if (conf::debug::ENABLE_TASK_LOGS)
-    Serial.println("taskPoweroffWarning");
-
-  if (machine.isShutdownImminent())
+  /// @brief blink led
+  void taskBlink()
   {
-    logic.beep_failed();
-    if (conf::debug::ENABLE_LOGS)
-      Serial.println("Machine is about to shutdown");
+    if (Board::server.isOnline())
+      if (!Board::machine.allowed || Board::machine.maintenanceNeeded)
+        Board::logic.set_led_color(64, 0, 0); // Red
+      else
+        Board::logic.set_led_color(0, 64, 0); // Green
+    else
+      Board::logic.set_led_color(127, 83, 16); // Orange
+
+    Board::logic.invert_led(); // Blink when in use
   }
-}
 
-/// @brief periodic check if the user shall be logged off
-void taskLogoffCheck()
-{
-  if (conf::debug::ENABLE_TASK_LOGS)
-    Serial.println("taskLogoffCheck");
-
-  // auto logout after delay
-  if (machine.isAutologoffExpired())
+  /// @brief periodic check if the machine must be powered off
+  void taskPoweroffCheck()
   {
-    Serial.printf("Auto-logging out user %s\r\n", machine.getActiveUser().holder_name.c_str());
-    logic.logout();
-    logic.beep_failed();
-  }
-}
+    if (conf::debug::ENABLE_TASK_LOGS)
+      Serial.println("taskPoweroffCheck");
 
-/// @brief Keep the ESP32 HW watchdog alive.
-/// If code gets stuck this will cause an automatic reset.
-void taskEspWatchdog()
-{
-  static auto initialized = false;
-
-  if (conf::debug::ENABLE_TASK_LOGS)
-    Serial.println("taskEspWatchdog");
-
-  if (conf::tasks::WATCHDOG_TIMEOUT > 0s)
-  {
-    if (!initialized)
+    if (machine.canPowerOff())
     {
-      esp_task_wdt_init(duration_cast<seconds>(conf::tasks::WATCHDOG_TIMEOUT).count(), true); // enable panic so ESP32 restarts
-      esp_task_wdt_add(NULL);                                                                 // add current thread to WDT watch
-      initialized = true;
+      if constexpr (conf::machine::USE_MQTT_RELAY)
+      {
+        machine.power_mqtt(false);
+      }
+      else if constexpr (conf::machine::USE_RELAY)
+      {
+        machine.power_relay(false);
+      }
     }
-    esp_task_wdt_reset(); // Signal the hardware watchdog
   }
-}
 
-/// @brief checks the RFID chip status and re-init it if necessary.
-void taskRfidWatchdog()
-{
-  if (conf::debug::ENABLE_TASK_LOGS)
-    Serial.println("taskRfidWatchdog");
-
-  if (!rfid.selfTest())
+  /// @brief periodic check if the machine must be powered off
+  void taskPoweroffWarning()
   {
-    Serial.println("RFID chip failure");
+    if (conf::debug::ENABLE_TASK_LOGS)
+      Serial.println("taskPoweroffWarning");
 
-    // Infinite retry until success or hw watchdog timeout
-    while (!rfid.init())
-      delay(duration_cast<milliseconds>(conf::tasks::RFID_CHECK_PERIOD).count());
+    if (machine.isShutdownImminent())
+    {
+      logic.beep_failed();
+      if (conf::debug::ENABLE_LOGS)
+        Serial.println("Machine is about to shutdown");
+    }
   }
-}
 
-/// @brief sends the MQTT alive message
-void taskMQTTAlive()
-{
-  if (conf::debug::ENABLE_TASK_LOGS)
-    Serial.println("taskMQTTAlive");
-
-  if (server.isOnline())
+  /// @brief periodic check if the user shall be logged off
+  void taskLogoffCheck()
   {
-    server.loop();
+    if (conf::debug::ENABLE_TASK_LOGS)
+      Serial.println("taskLogoffCheck");
+
+    // auto logout after delay
+    if (machine.isAutologoffExpired())
+    {
+      Serial.printf("Auto-logging out user %s\r\n", machine.getActiveUser().holder_name.c_str());
+      logic.logout();
+      logic.beep_failed();
+    }
   }
-}
 
-void taskLcdRefresh()
-{
-  if (conf::debug::ENABLE_TASK_LOGS)
-    Serial.println("taskLcdRefresh");
+  /// @brief Keep the ESP32 HW watchdog alive.
+  /// If code gets stuck this will cause an automatic reset.
+  void taskEspWatchdog()
+  {
+    static auto initialized = false;
 
-  BoardInfo bi = {Board::server.isOnline(), Board::machine.getPowerState(), Board::machine.isShutdownImminent()};
-  Board::lcd.update(bi, true);
-}
+    if (conf::debug::ENABLE_TASK_LOGS)
+      Serial.println("taskEspWatchdog");
+
+    if (conf::tasks::WATCHDOG_TIMEOUT > 0s)
+    {
+      if (!initialized)
+      {
+        esp_task_wdt_init(duration_cast<seconds>(conf::tasks::WATCHDOG_TIMEOUT).count(), true); // enable panic so ESP32 restarts
+        esp_task_wdt_add(NULL);                                                                 // add current thread to WDT watch
+        initialized = true;
+      }
+      esp_task_wdt_reset(); // Signal the hardware watchdog
+    }
+  }
+
+  /// @brief checks the RFID chip status and re-init it if necessary.
+  void taskRfidWatchdog()
+  {
+    if (conf::debug::ENABLE_TASK_LOGS)
+      Serial.println("taskRfidWatchdog");
+
+    if (!rfid.selfTest())
+    {
+      Serial.println("RFID chip failure");
+
+      // Infinite retry until success or hw watchdog timeout
+      while (!rfid.init())
+        delay(duration_cast<milliseconds>(conf::tasks::RFID_CHECK_PERIOD).count());
+    }
+  }
+
+  /// @brief sends the MQTT alive message
+  void taskMQTTAlive()
+  {
+    if (conf::debug::ENABLE_TASK_LOGS)
+      Serial.println("taskMQTTAlive");
+
+    if (server.isOnline())
+    {
+      server.loop();
+    }
+  }
+
+  void taskLcdRefresh()
+  {
+    if (conf::debug::ENABLE_TASK_LOGS)
+      Serial.println("taskLcdRefresh");
+
+    BoardInfo bi = {Board::server.isOnline(), Board::machine.getPowerState(), Board::machine.isShutdownImminent()};
+    Board::lcd.update(bi, true);
+  }
 
 #if (WOKWI_SIMULATION)
 
-pthread_t mqtt_server;
-pthread_attr_t attr;
+  pthread_t mqtt_server;
+  pthread_attr_t attr;
 
-void *threadMQTTServer(void *arg)
-{
-  if (conf::debug::ENABLE_LOGS)
-    Serial.println("threadMQTTServer started");
-
-  delay(3000);
-  while (true)
+  void *threadMQTTServer(void *arg)
   {
-    // Check if the server is online
-    if (!Board::broker.isRunning())
+    if (conf::debug::ENABLE_LOGS)
+      Serial.println("threadMQTTServer started");
+
+    delay(3000);
+    while (true)
     {
-      Board::broker.start();
+      // Check if the server is online
+      if (!Board::broker.isRunning())
+      {
+        Board::broker.start();
+      }
+      else
+      {
+        Board::broker.update();
+      }
+      delay(25);
     }
-    else
-    {
-      Board::broker.update();
-    }
-    delay(25);
   }
-}
 #endif
+
+  // Tasks definitions
+  //
+  // They will be executed at the required frequency during loop()->scheduler.execute() call
+  // The scheduler will take care of the timing and will call the task callback
+  // The callback will be executed in the same thread as the scheduler
+
+  Task t1("RFIDChip", conf::tasks::RFID_CHECK_PERIOD, &taskCheckRfid, scheduler, true);
+  Task t2("Wifi/MQQT init", conf::tasks::MQTT_REFRESH_PERIOD, &taskConnect, scheduler, true);
+  Task t3("Poweroff", std::chrono::seconds(1), &taskPoweroffCheck, scheduler, true);
+  Task t4("Logoff", std::chrono::seconds(1), &taskLogoffCheck, scheduler, true);
+  // Hardware watchdog will run at half the frequency
+  Task t5("Watchdog", conf::tasks::WATCHDOG_TIMEOUT / 2, &taskEspWatchdog, scheduler, true);
+  Task t6("Selftest", conf::tasks::RFID_SELFTEST_PERIOD, &taskRfidWatchdog, scheduler, true);
+  Task t7("PoweroffWarning", conf::machine::DELAY_BETWEEN_BEEPS, &taskPoweroffWarning, scheduler, true);
+  Task t8("MQTT keepalive", std::chrono::seconds(1), &taskMQTTAlive, scheduler, true);
+  Task t9("LED", std::chrono::seconds(1), &taskBlink, scheduler, true);
+  // Wokwi requires LCD refresh unlike real hardware
+  Task t10("LCDRefresh", std::chrono::seconds(1), &taskLcdRefresh, scheduler, false);
+
+} // namespace fablabbg
+
+using namespace fablabbg;
 
 void setup()
 {
@@ -253,6 +251,11 @@ void setup()
   if (!logic.init())
   {
     logic.changeStatus(Status::ERROR);
+    if constexpr (pins.led.is_neopixel)
+    {
+      logic.set_led_color(255, 0, 0);
+      logic.led(true);
+    }
     logic.beep_failed();
     while (true)
       ;

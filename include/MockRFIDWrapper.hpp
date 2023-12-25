@@ -7,26 +7,28 @@
 #include "conf.hpp"
 #include "card.hpp"
 
-class MockRFIDWrapper
+namespace fablabbg
 {
-private:
-  mutable int card_idx = 0;
+  class MockRFIDWrapper
+  {
+  private:
+    mutable int card_idx = 0;
 
-public:
-  MockRFIDWrapper();
+  public:
+    MockRFIDWrapper();
 
-  bool init() const;
-  bool isNewCardPresent() const;
-  bool cardStillThere(const card::uid_t original) const;
-  bool readCardSerial() const;
-  bool selfTest() const;
-  void reset() const;
-  card::uid_t getUid() const;
+    bool init() const;
+    bool isNewCardPresent() const;
+    bool cardStillThere(const card::uid_t original) const;
+    bool readCardSerial() const;
+    bool selfTest() const;
+    void reset() const;
+    card::uid_t getUid() const;
 
-  MockRFIDWrapper(const MockRFIDWrapper &) = delete;             // copy constructor
-  MockRFIDWrapper &operator=(const MockRFIDWrapper &x) = delete; // copy assignment
-  MockRFIDWrapper(MockRFIDWrapper &&) = delete;                  // move constructor
-  MockRFIDWrapper &operator=(MockRFIDWrapper &&) = delete;       // move assignment
-};
-
+    MockRFIDWrapper(const MockRFIDWrapper &) = delete;             // copy constructor
+    MockRFIDWrapper &operator=(const MockRFIDWrapper &x) = delete; // copy assignment
+    MockRFIDWrapper(MockRFIDWrapper &&) = delete;                  // move constructor
+    MockRFIDWrapper &operator=(MockRFIDWrapper &&) = delete;       // move assignment
+  };
+} // namespace fablabbg
 #endif // MOCKRFIDWRAPPER_H_

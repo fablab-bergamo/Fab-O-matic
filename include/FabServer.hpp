@@ -12,63 +12,65 @@
 #include "MQTTtypes.hpp"
 #include <chrono>
 
-using namespace ServerMQTT;
-
-class FabServer
+namespace fablabbg
 {
-private:
-  const std::string_view wifi_ssid;
-  const std::string_view wifi_password;
-  const std::string_view server_ip;
+  using namespace ServerMQTT;
 
-  MQTTClientCallbackSimpleFunction callback;
-  WiFiClass WiFiConnection;
-  WiFiClient net;
-  MQTTClient client;
-  StaticJsonDocument<256> doc;
+  class FabServer
+  {
+  private:
+    const std::string_view wifi_ssid;
+    const std::string_view wifi_password;
+    const std::string_view server_ip;
 
-  std::string topic{""};
-  std::string response_topic{""};
-  std::string last_query{""};
-  std::string last_reply{""};
+    MQTTClientCallbackSimpleFunction callback;
+    WiFiClass WiFiConnection;
+    WiFiClient net;
+    MQTTClient client;
+    StaticJsonDocument<256> doc;
 
-  bool online = false;
-  bool answer_pending = false;
-  const uint8_t channel = -1;
+    std::string topic{""};
+    std::string response_topic{""};
+    std::string last_query{""};
+    std::string last_reply{""};
 
-  void messageReceived(String &topic, String &payload);
-  bool publish(const Query &payload);
-  bool waitForAnswer();
-  bool publishWithReply(const Query &payload);
+    bool online = false;
+    bool answer_pending = false;
+    const uint8_t channel = -1;
 
-  template <typename RespT, typename QueryT, typename... QueryArgs>
-  [[nodiscard]] std::unique_ptr<RespT> processQuery(QueryArgs &&...);
+    void messageReceived(String &topic, String &payload);
+    bool publish(const Query &payload);
+    bool waitForAnswer();
+    bool publishWithReply(const Query &payload);
 
-  static constexpr unsigned int MAX_MQTT_LENGTH = 128;
+    template <typename RespT, typename QueryT, typename... QueryArgs>
+    [[nodiscard]] std::unique_ptr<RespT> processQuery(QueryArgs &&...);
 
-public:
-  FabServer() = delete;
-  FabServer(std::string_view ssid, std::string_view password, std::string_view server_ip, uint8_t channel = -1);
-  ~FabServer() = default;
+    static constexpr unsigned int MAX_MQTT_LENGTH = 128;
 
-  [[nodiscard]] std::unique_ptr<UserResponse> checkCard(const card::uid_t uid);
-  [[nodiscard]] std::unique_ptr<MachineResponse> checkMachine();
-  [[nodiscard]] std::unique_ptr<SimpleResponse> startUse(const card::uid_t uid);
-  [[nodiscard]] std::unique_ptr<SimpleResponse> finishUse(const card::uid_t uid, std::chrono::seconds duration);
-  [[nodiscard]] std::unique_ptr<SimpleResponse> registerMaintenance(const card::uid_t maintainer);
-  [[nodiscard]] std::unique_ptr<SimpleResponse> alive();
-  [[nodiscard]] bool publish(String topic, String payload);
+  public:
+    FabServer() = delete;
+    FabServer(std::string_view ssid, std::string_view password, std::string_view server_ip, uint8_t channel = -1);
+    ~FabServer() = default;
 
-  bool isOnline() const;
-  bool connect();
-  bool connectWiFi() noexcept;
-  bool loop();
+    [[nodiscard]] std::unique_ptr<UserResponse> checkCard(const card::uid_t uid);
+    [[nodiscard]] std::unique_ptr<MachineResponse> checkMachine();
+    [[nodiscard]] std::unique_ptr<SimpleResponse> startUse(const card::uid_t uid);
+    [[nodiscard]] std::unique_ptr<SimpleResponse> finishUse(const card::uid_t uid, std::chrono::seconds duration);
+    [[nodiscard]] std::unique_ptr<SimpleResponse> registerMaintenance(const card::uid_t maintainer);
+    [[nodiscard]] std::unique_ptr<SimpleResponse> alive();
+    [[nodiscard]] bool publish(String topic, String payload);
 
-  // Rule of 5 https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rc-five
-  FabServer(const FabServer &) = delete;            // copy constructor
-  FabServer &operator=(const FabServer &) = delete; // copy assignment
-  FabServer(FabServer &&) = delete;                 // move constructor
-  FabServer &operator=(FabServer &&) = delete;      // move assignment
-};
+    bool isOnline() const;
+    bool connect();
+    bool connectWiFi() noexcept;
+    bool loop();
 
+    // Rule of 5 https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rc-five
+    FabServer(const FabServer &) = delete;            // copy constructor
+    FabServer &operator=(const FabServer &) = delete; // copy assignment
+    FabServer(FabServer &&) = delete;                 // move constructor
+    FabServer &operator=(FabServer &&) = delete;      // move assignment
+  };
+} // namespace fablabbg
 #endif // FABSERVER_H_

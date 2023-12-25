@@ -7,7 +7,7 @@
 #include <sstream>
 #include "ArduinoJson.hpp"
 
-namespace ServerMQTT
+namespace fablabbg::ServerMQTT
 {
   std::string UserQuery::payload() const
   {

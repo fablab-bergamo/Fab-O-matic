@@ -14,10 +14,9 @@
 #include "Tasks.hpp"
 #include "MockMQTTBroker.hpp"
 
-// Global variables
-namespace Board
+namespace fablabbg::Board
 {
-
+  // Global variables
 #if (WOKWI_SIMULATION)
   MockRFIDWrapper rfid;
   FabServer server("Wokwi-GUEST", "", "127.0.0.1", 6);
@@ -37,7 +36,7 @@ namespace Board
   Machine machine(config1, server);
   AuthProvider auth(secrets::cards::whitelist);
   BoardLogic logic;
-  fablab::tasks::Scheduler scheduler;
+  Tasks::Scheduler scheduler;
 } // namespace Board
 
 #endif // GLOBALS_H_

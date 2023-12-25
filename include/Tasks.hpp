@@ -4,7 +4,7 @@
 #include <chrono>
 #include <functional>
 
-namespace fablab::tasks
+namespace fablabbg::Tasks
 {
   class Scheduler;
 

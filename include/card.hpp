@@ -6,7 +6,7 @@
 #include <sstream>
 #include <iomanip>
 
-namespace card
+namespace fablabbg::card
 {
   using uid_t = u_int64_t;
   static constexpr uid_t INVALID = 0ULL;
