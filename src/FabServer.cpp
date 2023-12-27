@@ -226,7 +226,7 @@ namespace fablabbg
         !this->client.connected())
     {
       if (conf::debug::ENABLE_LOGS)
-        Serial.printf("Connecting to MQTT server %s\r\n", this->server_ip.data());
+        Serial.printf("Connecting to MQTT server %s\r\n", this->server_ip.c_str());
 
       this->client.begin(this->server_ip.data(), this->net);
 
@@ -239,7 +239,7 @@ namespace fablabbg
                           this->mqtt_user.c_str(),
                           this->mqtt_password.c_str(), false))
       {
-        Serial.printf("Failure to connect as client: %s\r\n", secrets::mqtt::client.data());
+        Serial.printf("Failure to connect as client: %s\r\n", mqtt_client_name.c_str());
       }
 
       // Setup subscriptions
@@ -272,7 +272,7 @@ namespace fablabbg
     if (conf::debug::ENABLE_LOGS)
     {
       std::stringstream ss;
-      ss << "FabServer::connect() : Online:" << this->online << ", board IP address:" << WiFi.localIP().toString().c_str() << ", server: " << this->server_ip.data();
+      ss << "FabServer::connect() : Online:" << this->online << ", board IP address:" << WiFi.localIP().toString().c_str() << ", server: " << this->server_ip.c_str();
       Serial.println(ss.str().c_str());
     }
     return this->online;
