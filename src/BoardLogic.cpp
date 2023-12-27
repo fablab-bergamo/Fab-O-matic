@@ -1,5 +1,11 @@
-#include "BoardLogic.hpp"
+#include <sstream>
+
 #include "Arduino.h"
+#include "WiFi.h"
+#include <esp_task_wdt.h>
+#include <Adafruit_NeoPixel.h>
+
+#include "BoardLogic.hpp"
 #include "secrets.hpp"
 #include "conf.hpp"
 #include "Machine.hpp"
@@ -7,11 +13,8 @@
 #include "RFIDWrapper.hpp"
 #include "MockRFIDWrapper.hpp"
 #include "AuthProvider.hpp"
-#include <esp_task_wdt.h>
 #include "LCDWrapper.hpp"
-#include <sstream>
 #include "pins.hpp"
-#include <Adafruit_NeoPixel.h>
 
 namespace fablabbg
 {
@@ -408,6 +411,18 @@ namespace fablabbg
     case Status::ERROR_HW:
       Board::lcd.setRow(0, "Errore");
       Board::lcd.setRow(1, "Hardware");
+      break;
+    case Status::PORTAL_FAILED:
+      Board::lcd.setRow(0, "Errore portale");
+      Board::lcd.setRow(1, WiFi.softAPIP().toString().c_str());
+      break;
+    case Status::PORTAL_OK:
+      Board::lcd.setRow(0, "AP config OK");
+      Board::lcd.setRow(1, "Avvio...");
+      break;
+    case Status::PORTAL_STARTING:
+      Board::lcd.setRow(0, "Apri portale");
+      Board::lcd.setRow(1, WiFi.softAPIP().toString().c_str());
       break;
     default:
       Board::lcd.setRow(0, "Unhandled status");

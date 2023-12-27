@@ -30,7 +30,10 @@ namespace fablabbg
       MAINTENANCE_QUERY,
       MAINTENANCE_DONE,
       ERROR,
-      ERROR_HW
+      ERROR_HW,
+      PORTAL_FAILED,
+      PORTAL_OK,
+      PORTAL_STARTING
     };
 
     BoardLogic() noexcept;
