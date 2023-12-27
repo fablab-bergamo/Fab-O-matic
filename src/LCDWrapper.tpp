@@ -3,6 +3,7 @@
 #include <array>
 #include <sstream>
 #include "LCDWrapper.hpp"
+#include <type_traits>
 
 namespace fablabbg
 {
@@ -220,8 +221,11 @@ namespace fablabbg
   }
 
   template <uint8_t _COLS, uint8_t _ROWS>
-  void LCDWrapper<_COLS, _ROWS>::setRow(uint8_t row, std::string_view text)
+  void LCDWrapper<_COLS, _ROWS>::setRow(uint8_t row, const std::string_view text)
   {
+    if (text.length() >= _COLS)
+      Serial.printf("LCDWrapper::setRow: text too long : %s\r\n", text.data());
+
     if (row < _ROWS)
     {
       this->buffer[row].fill({0});
