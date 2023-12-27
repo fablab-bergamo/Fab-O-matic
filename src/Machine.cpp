@@ -208,16 +208,6 @@ namespace fablabbg
     return 0s;
   }
 
-  bool Machine::operator==(const Machine &v) const
-  {
-    return (this->config.machine_id.id == v.config.machine_id.id);
-  }
-
-  bool Machine::operator!=(const Machine &v) const
-  {
-    return (this->config.machine_id.id != v.config.machine_id.id);
-  }
-
   std::string Machine::getMachineName() const
   {
     return this->config.machine_name;

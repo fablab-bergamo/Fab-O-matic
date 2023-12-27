@@ -33,21 +33,17 @@ namespace fablabbg
     std::string getMachineName() const;
     std::chrono::seconds getUsageDuration() const;
     std::chrono::minutes getAutologoffDelay() const;
-    void setAutologoffDelay(std::chrono::minutes new_delay);
+
+    bool login(FabUser user);                   // if the machine is not active, login the user
+    void logout();                              // if the machine is active, check if the card belongs to the user that is logged in and logout the user
+    void setAutologoffDelay(minutes new_delay); // Sets the delay after which the user will be logged off automatically
+    void power(bool on_or_off);                 // Power-on or off the machine
 
     PowerState getPowerState() const; // Gets the current state of the machine
     bool isShutdownImminent() const;  // True if the machine will power down in less than BEEP_REMAINING_MINUTES
-    bool isFree() const;
-
-    bool login(FabUser user); // if the machine is not active, login the user
-    void logout();            // if the machine is active, check if the card belongs to the user that is logged in and logout the user
-    bool canPowerOff() const; // True if POWEROFF_DELAY_MINUTES delay has expired,and the machine is still idle
-
-    void power(bool on_or_off); // Power-on or off the machine
-    bool operator==(const Machine &v) const;
-    bool operator!=(const Machine &v) const;
+    bool isFree() const;              // True is the machine is not used by anybody
+    bool canPowerOff() const;         // True if POWEROFF_DELAY_MINUTES delay has expired,and the machine is still idle
     std::string toString() const;
-
     bool isAutologoffExpired() const;
 
   private:
