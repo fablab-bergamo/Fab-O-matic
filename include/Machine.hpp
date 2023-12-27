@@ -22,13 +22,14 @@ namespace fablabbg
       UNKNOWN
     };
 
-    Machine(MachineConfig config, FabServer &server);
+    Machine();
     ~Machine() = default;
 
     bool maintenanceNeeded; // If true, machine needs maintenance
     bool allowed;           // If false, nobody can use the machine
 
     FabUser &getActiveUser();
+    void configure(MachineConfig new_config, FabServer &serv); // Must be called before using the machine
     MachineID getMachineId() const;
     std::string getMachineName() const;
     seconds getUsageDuration() const;
@@ -47,8 +48,9 @@ namespace fablabbg
     bool isAutologoffExpired() const;
 
   private:
-    MachineConfig config;
-    FabServer &server;
+    std::optional<MachineConfig> config;
+    std::optional<std::reference_wrapper<FabServer>> server;
+
     bool active;
     FabUser current_user;
 

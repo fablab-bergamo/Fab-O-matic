@@ -14,18 +14,21 @@ namespace fablabbg
   using namespace std::chrono;
 
   /// @brief Creates a new machine
-  /// @param user_conf configuration of the machine
-  Machine::Machine(MachineConfig user_conf, FabServer &serv) : maintenanceNeeded(false), allowed(true),
-                                                               config(user_conf), server(serv),
-                                                               active(false),
-                                                               power_state(PowerState::UNKNOWN)
+  Machine::Machine() : maintenanceNeeded(false), allowed(true),
+                       config(std::nullopt), server(std::nullopt),
+                       active(false), power_state(PowerState::UNKNOWN)
 
   {
     this->current_user = FabUser();
+  }
 
-    if (this->config.hasRelay())
+  void Machine::configure(MachineConfig new_config, FabServer &serv)
+  {
+    this->config = new_config;
+    this->server = std::reference_wrapper<FabServer>(serv);
+    if (this->config.value().hasRelay())
     {
-      pinMode(this->config.relay_config.pin, OUTPUT);
+      pinMode(this->config.value().relay_config.pin, OUTPUT);
     }
   }
 
@@ -33,7 +36,11 @@ namespace fablabbg
   /// @return Machine identifier
   MachineID Machine::getMachineId() const
   {
-    return this->config.machine_id;
+    if (!this->config.has_value())
+    {
+      return MachineID{0};
+    }
+    return this->config.value().machine_id;
   }
 
   /// @brief Indicates whether the machine is used by somebody
@@ -118,13 +125,21 @@ namespace fablabbg
     if (conf::debug::ENABLE_LOGS)
       Serial.printf("Machine::power_relay : power set to %d\r\n", value);
 
-    if (this->config.relay_config.active_low)
+    if (!this->config.has_value())
     {
-      digitalWrite(this->config.relay_config.pin, value ? LOW : HIGH);
+      Serial.println("Machine::power_relay : machine is not configured");
+      return;
+    }
+
+    auto pin = this->config.value().relay_config.pin;
+
+    if (this->config.value().relay_config.active_low)
+    {
+      digitalWrite(pin, value ? LOW : HIGH);
     }
     else
     {
-      digitalWrite(this->config.relay_config.pin, value ? HIGH : LOW);
+      digitalWrite(pin, value ? HIGH : LOW);
     }
 
     if (value)
@@ -145,16 +160,24 @@ namespace fablabbg
     if (conf::debug::ENABLE_LOGS)
       Serial.printf("Machine::power_mqtt : power set to %d\r\n", value);
 
-    String topic{this->config.mqtt_config.topic.data()};
-    String payload = value ? this->config.mqtt_config.on_message.data() : this->config.mqtt_config.off_message.data();
+    if (!this->server.has_value() || !this->config.has_value())
+    {
+      Serial.println("Machine::power_mqtt : server is not configured");
+      return;
+    }
+    auto &mqtt_server = this->server.value().get();
+    auto &act_config = this->config.value();
+
+    String topic{act_config.mqtt_config.topic.data()};
+    String payload = value ? act_config.mqtt_config.on_message.data() : act_config.mqtt_config.off_message.data();
 
     auto retries = 0;
-    while (!server.publish(topic, payload))
+    while (!mqtt_server.publish(topic, payload))
     {
       if (conf::debug::ENABLE_LOGS)
         Serial.printf("Error while publishing %s to %s\r\n", payload.c_str(), topic.c_str());
 
-      server.connect();
+      mqtt_server.connect();
       delay(500);
       retries++;
       if (retries > 5)
@@ -180,11 +203,17 @@ namespace fablabbg
     if (conf::debug::ENABLE_LOGS)
       Serial.printf("Machine::power : power set to %d\r\n", on_or_off);
 
-    if (this->config.hasRelay())
+    if (!this->config.has_value())
+    {
+      Serial.println("Machine::power : machine is not configured");
+      return;
+    }
+
+    if (this->config.value().hasRelay())
     {
       this->power_relay(on_or_off);
     }
-    if (this->config.hasMqttSwitch())
+    if (this->config.value().hasMqttSwitch())
     {
       this->power_mqtt(on_or_off);
     }
@@ -208,7 +237,11 @@ namespace fablabbg
 
   std::string Machine::getMachineName() const
   {
-    return this->config.machine_name;
+    if (!this->config.has_value())
+    {
+      return "Machine not configured";
+    }
+    return this->config.value().machine_name;
   }
 
   std::string Machine::toString() const
@@ -224,7 +257,15 @@ namespace fablabbg
     sstream << ", UsageDuration (s):" << this->getUsageDuration().count();
     sstream << ", ShutdownImminent:" << this->isShutdownImminent();
     sstream << ", MaintenanceNeeded:" << this->maintenanceNeeded;
-    sstream << ", " << this->config.toString();
+
+    if (this->config.has_value())
+    {
+      sstream << ", " << this->config.value().toString();
+    }
+    else
+    {
+      sstream << ", No config";
+    }
     sstream << ", Active:" << this->active;
     sstream << ", Last logoff:" << (this->logoff_timestamp.has_value() ? this->logoff_timestamp.value().time_since_epoch().count() : 0);
     sstream << ")";
@@ -234,15 +275,25 @@ namespace fablabbg
 
   minutes Machine::getAutologoffDelay() const
   {
-    return this->config.autologoff;
+    if (!this->config.has_value())
+    {
+      return 0min;
+    }
+    return this->config.value().autologoff;
   }
 
   void Machine::setAutologoffDelay(minutes new_delay)
   {
-    if (conf::debug::ENABLE_LOGS && this->config.autologoff != new_delay)
+    if (!this->config.has_value())
+    {
+      Serial.println("Machine::setAutologoffDelay : machine is not configured");
+      return;
+    }
+
+    if (conf::debug::ENABLE_LOGS && this->config.value().autologoff != new_delay)
       Serial.printf("Setting autologoff delay to %lld min\r\n", new_delay.count());
 
-    this->config.autologoff = new_delay;
+    this->config.value().autologoff = new_delay;
   }
 
   bool Machine::isAutologoffExpired() const

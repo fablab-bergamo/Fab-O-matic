@@ -14,29 +14,22 @@
 #include "BoardLogic.hpp"
 #include "Tasks.hpp"
 #include "MockMQTTBroker.hpp"
+#include "SavedConfig.hpp"
 
 namespace fablabbg::Board
 {
   // Global variables
 #if (WOKWI_SIMULATION)
   MockRFIDWrapper rfid;
-  FabServer server("Wokwi-GUEST", "", "127.0.0.1", 6);
+  FabServer server;
   MockMQTTBroker broker;
 #else
   RFIDWrapper rfid;
-  FabServer server(secrets::wifi::ssid, secrets::wifi::password, secrets::mqtt::server);
+  FabServer server;
 #endif
 
   LCDWrapper<conf::lcd::COLS, conf::lcd::ROWS> lcd(pins.lcd);
-
-  MachineConfig config1(secrets::machine::machine_id,
-                        secrets::machine::machine_type,
-                        secrets::machine::machine_name,
-                        pins.relay.ch1_pin, false,
-                        secrets::machine::machine_topic,
-                        conf::machine::DEFAULT_AUTO_LOGOFF_DELAY);
-
-  Machine machine(config1, server);
+  Machine machine;
   AuthProvider auth(secrets::cards::whitelist);
   BoardLogic logic;
   Tasks::Scheduler scheduler;

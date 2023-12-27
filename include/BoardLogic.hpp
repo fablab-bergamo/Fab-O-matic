@@ -48,6 +48,7 @@ namespace fablabbg
     bool authorize(const card::uid_t uid);
     void changeStatus(Status newStatus);
     bool board_init();
+    bool loadConfig();
     void updateLCD() const;
     void beep_ok() const;
     void beep_failed() const;

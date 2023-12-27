@@ -1,16 +1,19 @@
 #ifndef FABSERVER_H_
 #define FABSERVER_H_
 
-#include "FabUser.hpp"
-#include "WiFi.h"
 #include <array>
-#include "conf.hpp"
-#include <string>
-#include <MQTTClient.h>
-#include <functional>
-#include <ArduinoJson.h>
-#include "MQTTtypes.hpp"
 #include <chrono>
+#include <functional>
+#include <string>
+
+#include <ArduinoJson.h>
+#include "WiFi.h"
+#include <MQTTClient.h>
+
+#include "FabUser.hpp"
+#include "conf.hpp"
+#include "MQTTtypes.hpp"
+#include "SavedConfig.hpp"
 
 namespace fablabbg
 {
@@ -19,9 +22,12 @@ namespace fablabbg
   class FabServer
   {
   private:
-    const std::string_view wifi_ssid;
-    const std::string_view wifi_password;
-    const std::string_view server_ip;
+    std::string wifi_ssid;
+    std::string wifi_password;
+    std::string server_ip;
+    std::string mqtt_user;
+    std::string mqtt_password;
+    std::string mqtt_client_name;
 
     MQTTClientCallbackSimpleFunction callback;
     WiFiClass WiFiConnection;
@@ -36,7 +42,7 @@ namespace fablabbg
 
     bool online = false;
     bool answer_pending = false;
-    const uint8_t channel = -1;
+    uint8_t channel = -1;
 
     void messageReceived(String &topic, String &payload);
     bool publish(const Query &payload);
@@ -49,8 +55,7 @@ namespace fablabbg
     static constexpr unsigned int MAX_MQTT_LENGTH = 128;
 
   public:
-    FabServer() = delete;
-    FabServer(std::string_view ssid, std::string_view password, std::string_view server_ip, uint8_t channel = -1);
+    FabServer();
     ~FabServer() = default;
 
     [[nodiscard]] std::unique_ptr<UserResponse> checkCard(const card::uid_t uid);
@@ -65,6 +70,7 @@ namespace fablabbg
     bool connect();
     bool connectWiFi() noexcept;
     bool loop();
+    void configure(const SavedConfig &config); // Must be called before using the server
 
     // Rule of 5 https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rc-five
     FabServer(const FabServer &) = delete;            // copy constructor

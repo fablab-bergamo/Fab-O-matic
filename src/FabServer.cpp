@@ -7,23 +7,38 @@
 #include <sstream>
 #include <ArduinoJson.h>
 #include <chrono>
+#include "SavedConfig.hpp"
 
 namespace fablabbg
 {
 
   using namespace ServerMQTT;
 
-  /// @brief FabServer API interface class
-  /// @param ssid wifi network
-  /// @param password wifi password
-  /// @param server_ip server IP address
-  /// @param channel wifi channel (use 0 for auto)
-  FabServer::FabServer(std::string_view ssid, std::string_view password, std::string_view ip, u_int8_t chan)
-      : wifi_ssid(ssid), wifi_password(password), server_ip(ip), online(false), channel(chan)
+  FabServer::FabServer()
   {
+    char client_name[16]{0};
+    std::snprintf(client_name, sizeof(client_name), "BOARD%ld", random(0, 1000));
+    this->mqtt_client_name = client_name;
+  }
+
+  void FabServer::configure(const SavedConfig &config)
+  {
+    this->wifi_ssid = config.ssid;
+    this->wifi_password = config.password;
+    this->server_ip = config.mqtt_server;
+    this->mqtt_user = config.mqtt_user;
+    this->mqtt_password = config.mqtt_password;
+
+#if (WOKWI_SIMULATION)
+    this->channel = 6;
+#else
+    this->channel = -1;
+#endif
+    this->online = false;
+
     std::stringstream ss;
-    ss << conf::mqtt::topic << "/" << secrets::machine::machine_id.id;
-    this->topic.assign(ss.str());
+    ss << conf::mqtt::topic << "/" << config.machine_id;
+    this->topic = ss.str();
   }
 
   /// @brief Posts to MQTT server and waits for answer
@@ -211,7 +226,7 @@ namespace fablabbg
         !this->client.connected())
     {
       if (conf::debug::ENABLE_LOGS)
-        Serial.printf("Connecting to MQTT server %s\r\n", secrets::mqtt::server.data());
+        Serial.printf("Connecting to MQTT server %s\r\n", this->server_ip.data());
 
       this->client.begin(this->server_ip.data(), this->net);
 
@@ -220,7 +235,9 @@ namespace fablabbg
 
       this->client.onMessage(this->callback);
 
-      if (!client.connect(secrets::mqtt::client.data(), secrets::mqtt::user.data(), secrets::mqtt::password.data(), false))
+      if (!client.connect(this->mqtt_client_name.c_str(),
+                          this->mqtt_user.c_str(),
+                          this->mqtt_password.c_str(), false))
       {
         Serial.printf("Failure to connect as client: %s\r\n", secrets::mqtt::client.data());
       }
@@ -243,7 +260,7 @@ namespace fablabbg
       }
       else
       {
-        Serial.printf("Failure to connect to MQTT server %s\r\n", secrets::mqtt::server.data());
+        Serial.printf("Failure to connect to MQTT server %s\r\n", this->server_ip.c_str());
       }
     }
 

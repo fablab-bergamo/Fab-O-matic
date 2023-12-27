@@ -15,6 +15,7 @@
 #include "AuthProvider.hpp"
 #include "LCDWrapper.hpp"
 #include "pins.hpp"
+#include "SavedConfig.hpp"
 
 namespace fablabbg
 {
@@ -84,7 +85,7 @@ namespace fablabbg
         {
           if (conf::debug::ENABLE_LOGS)
             Serial.printf("The configured machine ID %u is valid, maintenance=%d, allowed=%d\r\n",
-                          secrets::machine::machine_id.id, result->needs_maintenance, result->allowed);
+                          Board::machine.getMachineId().id, result->needs_maintenance, result->allowed);
 
           Board::machine.maintenanceNeeded = result->needs_maintenance;
           Board::machine.allowed = result->allowed;
@@ -93,7 +94,7 @@ namespace fablabbg
         else
         {
           Serial.printf("The configured machine ID %u is unknown to the server\r\n",
-                        secrets::machine::machine_id.id);
+                        Board::machine.getMachineId().id);
         }
       }
     }
@@ -289,12 +290,45 @@ namespace fablabbg
     success &= (ledcSetup(conf::buzzer::LEDC_PWM_CHANNEL, conf::buzzer::BEEP_HZ, 10U) != 0);
     ledcAttachPin(pins.buzzer.pin, conf::buzzer::LEDC_PWM_CHANNEL);
 
-    // Force Wifi disconnect as ESP32 has persistent wifi config
-    WiFi.disconnect();
-    success &= WiFi.mode(WIFI_STA);
+    if (conf::debug::ENABLE_LOGS)
+    {
+      Serial.printf("Board init complete, success = %d\r\n", success);
+    }
+
+    return success;
+  }
+
+  bool BoardLogic::loadConfig()
+  {
+    auto success = true;
+
+    // Load configuration
+    auto config = SavedConfig::LoadFromEEPROM();
+    if (!config)
+    {
+      Serial.printf("Configuration file not found, creating defaults...\r\n");
+      auto new_config = SavedConfig::DefaultConfig();
+      success &= new_config.SaveToEEPROM();
+      config = new_config;
+    }
 
     if (conf::debug::ENABLE_LOGS)
-      Serial.printf("Board init complete, success = %d\r\n", success);
+    {
+      Serial.println("Configuration from EEPROM:");
+      Serial.println(config->toString().c_str());
+    }
+
+    Board::server.configure(config.value());
+
+    MachineID mid{(uint16_t)atoi(config.value().machine_id)};
+    MachineConfig machine_conf(mid,
+                               conf::default_config::machine_type,
+                               conf::default_config::machine_name,
+                               pins.relay.ch1_pin, false,
+                               config.value().machine_topic,
+                               conf::machine::DEFAULT_AUTO_LOGOFF_DELAY);
+
+    Board::machine.configure(machine_conf, Board::server);
 
     return success;
   }

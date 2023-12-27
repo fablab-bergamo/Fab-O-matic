@@ -1,17 +1,16 @@
 #include <cstdint>
 #include <string>
 #include <array>
+#include "pthread.h"
 
 #include <esp_task_wdt.h>
-#include "SPIFFS.h"
+#include <WiFiManager.h>
 
 #include "globals.hpp"
 #include "pins.hpp"
 #include "BoardLogic.hpp"
-#include "pthread.h"
-
 #include "Tasks.hpp"
-#include <WiFiManager.h>
+#include "SavedConfig.hpp"
 
 namespace fablabbg
 {
@@ -195,14 +194,23 @@ namespace fablabbg
   Task t2("Wifi/MQQT init", conf::tasks::MQTT_REFRESH_PERIOD, &taskConnect, scheduler, true, 20s);
   Task t3("Poweroff", 1s, &taskPoweroffCheck, scheduler, true);
   Task t4("Logoff", 1s, &taskLogoffCheck, scheduler, true);
-  // Hardware watchdog will run at half the frequency
-  Task t5("Watchdog", conf::tasks::WATCHDOG_TIMEOUT / 2, &taskEspWatchdog, scheduler, true);
+  // Hardware watchdog will run at one third the frequency
+  Task t5("Watchdog", conf::tasks::WATCHDOG_TIMEOUT / 3, &taskEspWatchdog, scheduler, true);
   Task t6("Selftest", conf::tasks::RFID_SELFTEST_PERIOD, &taskRfidWatchdog, scheduler, true);
   Task t7("PoweroffWarning", conf::machine::DELAY_BETWEEN_BEEPS, &taskPoweroffWarning, scheduler, true);
   Task t8("MQTT keepalive", 1s, &taskMQTTAlive, scheduler, true);
   Task t9("LED", 1s, &taskBlink, scheduler, true);
   // Wokwi requires LCD refresh unlike real hardware
   Task t10("LCDRefresh", 2s, &taskLcdRefresh, scheduler, false);
+
+  // flag for saving data
+  bool shouldSaveConfig = false;
+
+  // callback notifying us of the need to save config
+  void saveConfigCallback()
+  {
+    shouldSaveConfig = true;
+  }
 
   // Called just before the webportal is started after failed WiFi connection
   void configModeCallback(WiFiManager *myWiFiManager)
@@ -216,13 +224,17 @@ namespace fablabbg
   // Starts the WiFi portal for configuration if needed
   void config_portal()
   {
-    char mqtt_server[40]{0};
-
     WiFiManager wifiManager;
+    SavedConfig config = SavedConfig::LoadFromEEPROM().value_or(SavedConfig::DefaultConfig());
 
-    // id/name, placeholder/prompt, default, length
-    WiFiManagerParameter custom_mqtt_server("MQTT", "MQTT Broker address", mqtt_server, 40);
+    WiFiManagerParameter custom_mqtt_server("Broker", "MQTT Broker address", config.mqtt_server, sizeof(config.mqtt_server));
+    WiFiManagerParameter custom_mqtt_topic("Topic", "MQTT Switch topic (leave empty to disable)", config.machine_topic, sizeof(config.machine_topic));
+    WiFiManagerParameter custom_machine_id("MachineID", "Machine ID", config.machine_id, sizeof(config.machine_id));
+
     wifiManager.addParameter(&custom_mqtt_server);
+    wifiManager.addParameter(&custom_mqtt_topic);
+    wifiManager.addParameter(&custom_machine_id);
+
     wifiManager.setTimeout(duration_cast<seconds>(conf::tasks::PORTAL_CONFIG_TIMEOUT).count());
     wifiManager.setConnectRetries(3);  // 3 retries
     wifiManager.setConnectTimeout(10); // 10 seconds
@@ -230,10 +242,17 @@ namespace fablabbg
     wifiManager.setTitle("FabLab Bergamo - RFID arduino");
     wifiManager.setCaptivePortalEnable(true);
     wifiManager.setAPCallback(configModeCallback);
-#ifdef DEBUG
+    wifiManager.setSaveConfigCallback(saveConfigCallback);
+
+    if (conf::debug::FORCE_PORTAL_RESET)
+    {
+      wifiManager.resetSettings();
+    }
+
+#if (WOKWI_SIMULATION)
     wifiManager.setDebugOutput(true);
     wifiManager.resetSettings();
-    wifiManager.setTimeout(15); // fail fast for debugging
+    wifiManager.setTimeout(10); // fail fast for debugging
 #endif
 
     if (wifiManager.autoConnect())
@@ -246,7 +265,33 @@ namespace fablabbg
       logic.changeStatus(Status::PORTAL_FAILED);
       delay(3000);
     }
+
+    if (shouldSaveConfig)
+    {
+      // save SSID data from WiFiManager
+      strncpy(config.ssid, WiFi.SSID().c_str(), sizeof(config.ssid));
+      strncpy(config.password, WiFi.psk().c_str(), sizeof(config.password));
+
+      // read updated parameters
+      strncpy(config.mqtt_server, custom_mqtt_server.getValue(), sizeof(config.mqtt_server));
+      strncpy(config.machine_topic, custom_mqtt_topic.getValue(), sizeof(config.machine_topic));
+      strncpy(config.machine_id, custom_machine_id.getValue(), sizeof(config.machine_id));
+
+      // save the custom parameters to EEPROM
+      if (config.SaveToEEPROM())
+      {
+        Serial.println("Config saved to EEPROM");
+
+        // Reconfigure FabServer which may have been initialized with default values
+        server.configure(config);
+      }
+      else
+      {
+        Serial.println("Failed to save config to EEPROM");
+      }
+    }
   }
+
 } // namespace fablabbg
 
 using namespace fablabbg;
@@ -258,28 +303,48 @@ void setup()
   if (conf::debug::ENABLE_LOGS)
   {
     Serial.println("Starting setup!");
-    Serial.println(machine.toString().c_str());
   }
 
+  // Initialize hardware (RFID, LCD)
   if (!logic.board_init())
   {
     logic.changeStatus(Status::ERROR_HW);
     logic.set_led_color(255, 0, 0);
     logic.led(true);
     logic.beep_failed();
+#ifndef DEBUG
+    // Cannot continue without RFID or LCD
     while (true)
       ;
+#endif
   }
 
+  // Network configuration setup
   config_portal();
 
+  // Now load network, machine id, mqtt config into the machine and server objects.
+  if (!logic.loadConfig())
+  {
+    logic.changeStatus(Status::ERROR);
+    logic.set_led_color(255, 0, 0);
+    logic.led(true);
+    logic.beep_failed();
+#ifndef DEBUG
+    // Cannot continue without valid configurations
+    while (true)
+      ;
+#endif
+  }
+
 #if (WOKWI_SIMULATION)
+  // Start MQTT server thread in simulation
   attr_mqtt_broker.stacksize = 3 * 1024;
   attr_mqtt_broker.detachstate = PTHREAD_CREATE_DETACHED;
   if (pthread_create(&thread_mqtt_broker, &attr_mqtt_broker, threadMQTTServer, NULL))
   {
     Serial.println("Error creating MQTT server thread");
   }
+  // Enables LCD refresh for Wokwi
   t10.start();
 #endif
 

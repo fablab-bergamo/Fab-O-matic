@@ -5,11 +5,25 @@
 #include <string>
 #include <chrono>
 
+#include "MachineConfig.hpp"
+
 using namespace std::chrono_literals;
 using namespace std::chrono;
 
 namespace fablabbg
 {
+  namespace conf::default_config
+  {
+    static constexpr std::string_view ssid = "Wokwi-GUEST"; /* Default SSID */
+    static constexpr std::string_view password = "";        /* Default password */
+    static constexpr std::string_view mqtt_server = "127.0.0.1";
+    static constexpr std::string_view mqtt_user = "user";
+    static constexpr std::string_view mqtt_password = "password";
+    static constexpr std::string_view machine_topic = "shelly/command/switch:0";
+    static constexpr MachineID machine_id{1};
+    static constexpr std::string_view machine_name = "MACHINE1";
+    static constexpr MachineType machine_type = MachineType::LASER;
+  }
   namespace conf::whitelist
   {
     static constexpr uint8_t LEN = 10U;         /* Maximum number of whitelisted cards */
@@ -38,6 +52,7 @@ namespace fablabbg
     static constexpr bool ENABLE_LOGS = true;                 /* True to add logs */
     static constexpr bool ENABLE_TASK_LOGS = false;           /* True to add logs regarding tasks scheduling and statistics */
     static constexpr unsigned long SERIAL_SPEED_BDS = 115200; /* Serial speed in bauds */
+    static constexpr bool FORCE_PORTAL_RESET = false;         /* True to force EEPROM reset */
   }
   namespace conf::buzzer
   {
