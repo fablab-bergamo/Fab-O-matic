@@ -31,8 +31,8 @@ namespace fablabbg
     FabUser &getActiveUser();
     MachineID getMachineId() const;
     std::string getMachineName() const;
-    std::chrono::seconds getUsageDuration() const;
-    std::chrono::minutes getAutologoffDelay() const;
+    seconds getUsageDuration() const;
+    minutes getAutologoffDelay() const;
 
     bool login(FabUser user);                   // if the machine is not active, login the user
     void logout();                              // if the machine is active, check if the card belongs to the user that is logged in and logout the user
@@ -52,8 +52,8 @@ namespace fablabbg
     bool active;
     FabUser current_user;
 
-    std::optional<time_point<system_clock>> usage_start_timestamp; // When did the machine start
-    std::optional<time_point<system_clock>> logout_timestamp;      // Minimum allowed timestamp for power-down
+    std::optional<time_point<system_clock>> usage_start_timestamp; // When did the machine start?
+    std::optional<time_point<system_clock>> logoff_timestamp;      // When did the last user log off?
     PowerState power_state;
 
     void power_mqtt(bool on_or_off);

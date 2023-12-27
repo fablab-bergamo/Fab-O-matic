@@ -76,18 +76,16 @@ namespace fablabbg
       this->usage_start_timestamp = std::nullopt;
 
       // Sets the countdown to power off
-      if (conf::machine::POWEROFF_GRACE_PERIOD > 0s)
+      this->logoff_timestamp = system_clock::now();
+
+      if (conf::machine::POWEROFF_GRACE_PERIOD == 0s)
       {
-        this->logout_timestamp = system_clock::now();
-        if (conf::debug::ENABLE_LOGS)
-          Serial.printf("Machine will be shutdown in %lld s\r\n",
-                        duration_cast<seconds>(conf::machine::POWEROFF_GRACE_PERIOD).count());
-      }
-      else
-      {
-        this->logout_timestamp = system_clock::now();
         this->power(false);
       }
+
+      if (conf::debug::ENABLE_LOGS)
+        Serial.printf("Machine will be shutdown in %lld s\r\n",
+                      duration_cast<seconds>(conf::machine::POWEROFF_GRACE_PERIOD).count());
     }
   }
 
@@ -95,22 +93,22 @@ namespace fablabbg
   /// @return true if the delay has expired
   bool Machine::canPowerOff() const
   {
-    if (!this->logout_timestamp.has_value())
+    if (!this->logoff_timestamp.has_value())
       return false;
 
     return (this->power_state == PowerState::WAITING_FOR_POWER_OFF &&
-            system_clock::now() - this->logout_timestamp.value() > conf::machine::POWEROFF_GRACE_PERIOD);
+            system_clock::now() - this->logoff_timestamp.value() > conf::machine::POWEROFF_GRACE_PERIOD);
   }
 
   /// @brief indicates if the machine is about to shudown and board should beep
   /// @return true if shutdown is imminent
   bool Machine::isShutdownImminent() const
   {
-    if (!this->logout_timestamp.has_value() || conf::machine::BEEP_PERIOD == 0ms)
+    if (!this->logoff_timestamp.has_value() || conf::machine::BEEP_PERIOD == 0ms)
       return false;
 
     return (this->power_state == PowerState::WAITING_FOR_POWER_OFF &&
-            system_clock::now() - this->logout_timestamp.value() > conf::machine::BEEP_PERIOD);
+            system_clock::now() - this->logoff_timestamp.value() > conf::machine::BEEP_PERIOD);
   }
 
   /// @brief sets the machine power to on (true) or off (false)
@@ -131,7 +129,7 @@ namespace fablabbg
 
     if (value)
     {
-      this->logout_timestamp = std::nullopt;
+      this->logoff_timestamp = std::nullopt;
       this->power_state = PowerState::POWERED_ON;
     }
     else
@@ -168,7 +166,7 @@ namespace fablabbg
 
     if (value)
     {
-      this->logout_timestamp = std::nullopt;
+      this->logoff_timestamp = std::nullopt;
       this->power_state = PowerState::POWERED_ON;
     }
     else
@@ -227,17 +225,19 @@ namespace fablabbg
     sstream << ", ShutdownImminent:" << this->isShutdownImminent();
     sstream << ", MaintenanceNeeded:" << this->maintenanceNeeded;
     sstream << ", " << this->config.toString();
+    sstream << ", Active:" << this->active;
+    sstream << ", Last logoff:" << (this->logoff_timestamp.has_value() ? this->logoff_timestamp.value().time_since_epoch().count() : 0);
     sstream << ")";
 
     return sstream.str();
   }
 
-  std::chrono::minutes Machine::getAutologoffDelay() const
+  minutes Machine::getAutologoffDelay() const
   {
     return this->config.autologoff;
   }
 
-  void Machine::setAutologoffDelay(std::chrono::minutes new_delay)
+  void Machine::setAutologoffDelay(minutes new_delay)
   {
     if (conf::debug::ENABLE_LOGS && this->config.autologoff != new_delay)
       Serial.printf("Setting autologoff delay to %lld min\r\n", new_delay.count());
