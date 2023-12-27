@@ -274,7 +274,7 @@ namespace fablabbg
   }
 
   /// @brief Initializes LCD and RFID classes
-  bool BoardLogic::init()
+  bool BoardLogic::board_init()
   {
     if (conf::debug::ENABLE_LOGS)
       Serial.println("Initializing board...");
@@ -404,6 +404,10 @@ namespace fablabbg
     case Status::ERROR:
       Board::lcd.setRow(0, "Errore");
       Board::lcd.setRow(1, "");
+      break;
+    case Status::ERROR_HW:
+      Board::lcd.setRow(0, "Errore");
+      Board::lcd.setRow(1, "Hardware");
       break;
     default:
       Board::lcd.setRow(0, "Unhandled status");

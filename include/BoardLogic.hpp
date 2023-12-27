@@ -29,7 +29,8 @@ namespace fablabbg
       MAINTENANCE_NEEDED,
       MAINTENANCE_QUERY,
       MAINTENANCE_DONE,
-      ERROR
+      ERROR,
+      ERROR_HW
     };
 
     BoardLogic() noexcept;
@@ -43,7 +44,7 @@ namespace fablabbg
     void logout();
     bool authorize(const card::uid_t uid);
     void changeStatus(Status newStatus);
-    bool init();
+    bool board_init();
     void updateLCD() const;
     void beep_ok() const;
     void beep_failed() const;

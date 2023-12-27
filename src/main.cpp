@@ -3,12 +3,15 @@
 #include <array>
 
 #include <esp_task_wdt.h>
+#include "SPIFFS.h"
+
 #include "globals.hpp"
 #include "pins.hpp"
 #include "BoardLogic.hpp"
 #include "pthread.h"
 
 #include "Tasks.hpp"
+#include <WiFiManager.h>
 
 namespace fablabbg
 {
@@ -93,14 +96,7 @@ namespace fablabbg
 
     if (machine.canPowerOff())
     {
-      if constexpr (conf::machine::USE_MQTT_RELAY)
-      {
-        machine.power_mqtt(false);
-      }
-      else if constexpr (conf::machine::USE_RELAY)
-      {
-        machine.power_relay(false);
-      }
+      machine.power(false);
     }
   }
 
@@ -193,8 +189,8 @@ namespace fablabbg
 
 #if (WOKWI_SIMULATION)
 
-  pthread_t mqtt_server;
-  pthread_attr_t attr;
+  pthread_t thread_mqtt_broker;
+  pthread_attr_t attr_mqtt_broker;
 
   void *threadMQTTServer(void *arg)
   {
@@ -241,16 +237,44 @@ namespace fablabbg
 
 using namespace fablabbg;
 
+void config_portal()
+{
+  char mqtt_server[40]{0};
+
+  WiFiManager wifiManager;
+
+#ifdef DEBUG
+  wifiManager.setDebugOutput(true);
+  wifiManager.resetSettings();
+#endif
+
+  // id/name, placeholder/prompt, default, length
+  WiFiManagerParameter custom_mqtt_server("MQTT", "MQTT Broker address", mqtt_server, 40);
+  wifiManager.addParameter(&custom_mqtt_server);
+  wifiManager.setTimeout(240);       // 4 minutes for configuration
+  wifiManager.setConnectRetries(3);  // 3 retries
+  wifiManager.setConnectTimeout(10); // 10 seconds
+  wifiManager.setCountry("IT");
+  wifiManager.setTitle("FabLab Bergamo - RFID arduino");
+  wifiManager.setCaptivePortalEnable(true);
+  wifiManager.autoConnect();
+}
+
 void setup()
 {
   Serial.begin(conf::debug::SERIAL_SPEED_BDS); // Initialize serial communications with the PC for debugging.
 
   if (conf::debug::ENABLE_LOGS)
-    Serial.println("Starting setup!");
-
-  if (!logic.init())
   {
-    logic.changeStatus(Status::ERROR);
+    Serial.println("Starting setup!");
+    Serial.println(machine.toString().c_str());
+  }
+
+  config_portal();
+
+  if (!logic.board_init())
+  {
+    logic.changeStatus(Status::ERROR_HW);
     if constexpr (pins.led.is_neopixel)
     {
       logic.set_led_color(255, 0, 0);
@@ -262,9 +286,9 @@ void setup()
   }
 
 #if (WOKWI_SIMULATION)
-  attr.stacksize = 3 * 1024;
-  attr.detachstate = PTHREAD_CREATE_DETACHED;
-  if (pthread_create(&mqtt_server, &attr, threadMQTTServer, NULL))
+  attr_mqtt_broker.stacksize = 3 * 1024;
+  attr_mqtt_broker.detachstate = PTHREAD_CREATE_DETACHED;
+  if (pthread_create(&thread_mqtt_broker, &attr_mqtt_broker, threadMQTTServer, NULL))
   {
     Serial.println("Error creating MQTT server thread");
   }
