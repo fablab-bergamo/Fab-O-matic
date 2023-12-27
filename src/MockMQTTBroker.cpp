@@ -78,7 +78,7 @@ namespace fablabbg
   {
     if (this->payload.find("checkmachine") != std::string::npos)
     {
-      return "{\"request_ok\":true,\"is_valid\":true,\"allowed\":true,\"maintenance\":false,\"timeout_min\":3}";
+      return "{\"request_ok\":true,\"is_valid\":true,\"allowed\":true,\"maintenance\":false,\"logoff\":30,\"name\":\"ENDER_1\",\"type\":1}";
     }
 
     if (this->payload.find("maintenance") != std::string::npos)
@@ -98,7 +98,7 @@ namespace fablabbg
 
     if (this->payload.find("checkuser") != std::string::npos)
     {
-      return "{\"request_ok\":true,\"level\":2,\"name\":\"FAKE USER\",\"is_valid\":true}";
+      return "{\"request_ok\":true,\"level\":2,\"name\":\"TEST USER\",\"is_valid\":true}";
     }
 
     return "{\"request_ok\":true}";

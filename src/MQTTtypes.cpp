@@ -74,7 +74,8 @@ namespace fablabbg::ServerMQTT
     response->user_level = static_cast<FabUser::UserLevel>(doc["level"].as<int>());
 
     if (conf::debug::ENABLE_LOGS)
-      Serial.printf("Parsed user response as request_ok %d result %u name %s level %u\r\n", response->request_ok, static_cast<uint8_t>(response->result), response->holder_name.data(), static_cast<uint8_t>(response->user_level));
+      Serial.printf("Parsed user response as request_ok %d result %u name %s level %u\r\n", response->request_ok,
+                    static_cast<uint8_t>(response->result), response->holder_name.data(), static_cast<uint8_t>(response->user_level));
 
     return response;
   }
@@ -83,12 +84,15 @@ namespace fablabbg::ServerMQTT
   {
     auto response = std::make_unique<MachineResponse>(doc["request_ok"].as<bool>());
     response->is_valid = doc["is_valid"];
-    response->needs_maintenance = doc["maintenance"];
+    response->maintenance = doc["maintenance"];
     response->allowed = doc["allowed"];
-    response->timeout_min = doc["timeout_min"];
+    response->logoff = doc["logoff"];
+    response->name = doc["name"].as<std::string>();
+    response->type = doc["type"];
     if (conf::debug::ENABLE_LOGS)
-      Serial.printf("Parsed machine response as request_ok %d is_valid %d maintenance %d allowed %d autologoff %d\r\n",
-                    response->request_ok, response->is_valid, response->needs_maintenance, response->allowed, response->timeout_min);
+      Serial.printf("Parsed machine response as request_ok %d is_valid %d maintenance %d allowed %d autologoff %d name %s type %d\r\n",
+                    response->request_ok, response->is_valid, response->maintenance, response->allowed, response->logoff,
+                    response->name.c_str(), response->type);
 
     return response;
   }

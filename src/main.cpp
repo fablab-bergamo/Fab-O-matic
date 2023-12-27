@@ -168,7 +168,7 @@ namespace fablabbg
     if (conf::debug::ENABLE_LOGS)
       Serial.println("threadMQTTServer started");
 
-    delay(3000);
+    delay(2000);
     while (true)
     {
       // Check if the server is online

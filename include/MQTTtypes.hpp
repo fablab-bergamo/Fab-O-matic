@@ -119,10 +119,12 @@ namespace fablabbg::ServerMQTT
   class MachineResponse : public Response
   {
   public:
-    bool is_valid = false;         /* True if the machine has a valid ID */
-    bool needs_maintenance = true; /* True if the machine needs maintenance */
-    bool allowed = false;          /* True if the machine can be used by anybody */
-    uint16_t timeout_min = 0;      /* Timeout in minutes */
+    bool is_valid = false;   /* True if the machine has a valid ID */
+    bool maintenance = true; /* True if the machine needs maintenance */
+    bool allowed = false;    /* True if the machine can be used by anybody */
+    uint16_t logoff = 0;     /* Timeout in minutes */
+    std::string name{""};    /* Name of the machine from server DB */
+    uint8_t type = 0;        /* Type of the machine */
     MachineResponse() = delete;
     MachineResponse(bool rok) : Response(rok){};
 

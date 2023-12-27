@@ -301,4 +301,32 @@ namespace fablabbg
     return this->getAutologoffDelay() > 0min &&
            this->getUsageDuration() > this->getAutologoffDelay();
   }
+
+  void Machine::setMachineName(std::string_view new_name)
+  {
+    if (!this->config.has_value())
+    {
+      Serial.println("Machine::setMachineName : machine is not configured");
+      return;
+    }
+
+    if (conf::debug::ENABLE_LOGS && this->config.value().machine_name != new_name)
+      Serial.printf("Setting machine name to %s\r\n", new_name.data());
+
+    this->config.value().machine_name = new_name;
+  }
+
+  void Machine::setMachineType(MachineType new_type)
+  {
+    if (!this->config.has_value())
+    {
+      Serial.println("Machine::setMachineType : machine is not configured");
+      return;
+    }
+
+    if (conf::debug::ENABLE_LOGS && this->config.value().machine_type != new_type)
+      Serial.printf("Setting machine type to %d\r\n", static_cast<uint8_t>(new_type));
+
+    this->config.value().machine_type = new_type;
+  }
 } // namespace fablabbg
