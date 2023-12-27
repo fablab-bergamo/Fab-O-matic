@@ -29,10 +29,6 @@ namespace fablabbg
     static constexpr auto DELAY_BETWEEN_BEEPS = 30s;      /* Beeps will be heard every 30s when the machine is about to shutdown */
     static constexpr bool MAINTENANCE_BLOCK = true;       /* If true, machine needing maintenance will be blocked for normal users */
 
-    static constexpr bool USE_MQTT_RELAY = true; /* If true, the machine will use MQTT relay to control the machine */
-    static constexpr bool USE_RELAY = false;     /* If true, the machine will use relay to control the machine */
-
-    static_assert(USE_MQTT_RELAY ^ USE_RELAY);
     static_assert(BEEP_PERIOD <= POWEROFF_GRACE_PERIOD);
     static_assert(DELAY_BETWEEN_BEEPS < BEEP_PERIOD);
   }

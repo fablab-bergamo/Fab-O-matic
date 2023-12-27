@@ -2,6 +2,7 @@
 #define GLOBALS_H_
 
 #include "FabServer.hpp"
+#include "MachineConfig.hpp"
 #include "Machine.hpp"
 #include "LCDWrapper.hpp"
 #include "conf.hpp"
@@ -28,12 +29,12 @@ namespace fablabbg::Board
 
   LCDWrapper<conf::lcd::COLS, conf::lcd::ROWS> lcd(pins.lcd);
 
-  const Machine::Config config1(secrets::machine::machine_id,
-                                secrets::machine::machine_type,
-                                secrets::machine::machine_name,
-                                pins.relay.ch1_pin, false);
-
-  static_assert(!conf::machine::USE_RELAY || pins.relay.ch1_pin != NO_PIN, "A valid pin number for relay is required when USE_RELAY is true");
+  MachineConfig config1(secrets::machine::machine_id,
+                        secrets::machine::machine_type,
+                        secrets::machine::machine_name,
+                        pins.relay.ch1_pin, false,
+                        secrets::machine::machine_topic,
+                        conf::machine::DEFAULT_AUTO_LOGOFF_DELAY);
 
   Machine machine(config1, server);
   AuthProvider auth(secrets::cards::whitelist);

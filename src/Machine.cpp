@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <type_traits>
 #include <chrono>
+#include "pins.hpp"
 #include "secrets.hpp"
 #include "FabServer.hpp"
 
@@ -14,34 +15,23 @@ namespace fablabbg
 
   /// @brief Creates a new machine
   /// @param user_conf configuration of the machine
-  Machine::Machine(const Config &user_conf, FabServer &serv) : maintenanceNeeded(false), allowed(true),
-                                                              config(user_conf),
-                                                              server(serv),
-                                                              active(false),
-                                                              autologoff(conf::machine::DEFAULT_AUTO_LOGOFF_DELAY),
-                                                              power_state(PowerState::UNKNOWN)
+  Machine::Machine(MachineConfig user_conf, FabServer &serv) : maintenanceNeeded(false), allowed(true),
+                                                               config(user_conf), server(serv),
+                                                               active(false),
+                                                               power_state(PowerState::UNKNOWN)
 
   {
     this->current_user = FabUser();
 
-    if constexpr (conf::machine::USE_RELAY)
+    if (this->config.hasRelay())
     {
-      pinMode(this->config.control_pin, OUTPUT);
-      if (conf::debug::ENABLE_LOGS)
-        Serial.printf("Machine %s configured on pin %d (active_low:%d)\r\n", this->config.machine_name.c_str(),
-                      this->config.control_pin, this->config.control_pin_active_low);
-    }
-
-    if constexpr (conf::machine::USE_MQTT_RELAY)
-    {
-      if (conf::debug::ENABLE_LOGS)
-        Serial.printf("Machine %s configured on MQTT relay\r\n", this->config.machine_name.c_str());
+      pinMode(this->config.relay_config.pin, OUTPUT);
     }
   }
 
   /// @brief Returns the machine identifier
   /// @return Machine identifier
-  Machine::MachineID Machine::getMachineId() const
+  MachineID Machine::getMachineId() const
   {
     return this->config.machine_id;
   }
@@ -62,14 +52,7 @@ namespace fablabbg
     {
       this->active = true;
       this->current_user = user;
-      if constexpr (conf::machine::USE_RELAY)
-      {
-        this->power_relay(true);
-      }
-      else if constexpr (conf::machine::USE_MQTT_RELAY)
-      {
-        this->power_mqtt(true);
-      }
+      this->power(true);
       this->usage_start_timestamp = system_clock::now();
       return true;
     }
@@ -103,14 +86,7 @@ namespace fablabbg
       else
       {
         this->logout_timestamp = system_clock::now();
-        if constexpr (conf::machine::USE_RELAY)
-        {
-          this->power_relay(false);
-        }
-        else if constexpr (conf::machine::USE_MQTT_RELAY)
-        {
-          this->power_mqtt(false);
-        }
+        this->power(false);
       }
     }
   }
@@ -144,13 +120,13 @@ namespace fablabbg
     if (conf::debug::ENABLE_LOGS)
       Serial.printf("Machine::power_relay : power set to %d\r\n", value);
 
-    if (this->config.control_pin_active_low)
+    if (this->config.relay_config.active_low)
     {
-      digitalWrite(this->config.control_pin, value ? LOW : HIGH);
+      digitalWrite(this->config.relay_config.pin, value ? LOW : HIGH);
     }
     else
     {
-      digitalWrite(this->config.control_pin, value ? HIGH : LOW);
+      digitalWrite(this->config.relay_config.pin, value ? HIGH : LOW);
     }
 
     if (value)
@@ -171,8 +147,8 @@ namespace fablabbg
     if (conf::debug::ENABLE_LOGS)
       Serial.printf("Machine::power_mqtt : power set to %d\r\n", value);
 
-    String topic{secrets::machine::machine_topic.data()};
-    String payload = value ? "on" : "off";
+    String topic{this->config.mqtt_config.topic.data()};
+    String payload = value ? this->config.mqtt_config.on_message.data() : this->config.mqtt_config.off_message.data();
 
     auto retries = 0;
     while (!server.publish(topic, payload))
@@ -198,6 +174,21 @@ namespace fablabbg
     else
     {
       this->power_state = PowerState::POWERED_OFF;
+    }
+  }
+
+  void Machine::power(bool on_or_off)
+  {
+    if (conf::debug::ENABLE_LOGS)
+      Serial.printf("Machine::power : power set to %d\r\n", on_or_off);
+
+    if (this->config.hasRelay())
+    {
+      this->power_relay(on_or_off);
+    }
+    if (this->config.hasMqttSwitch())
+    {
+      this->power_mqtt(on_or_off);
     }
   }
 
@@ -242,6 +233,10 @@ namespace fablabbg
     sstream << ", IsAllowed:" << this->allowed;
     sstream << ", PowerState:" << static_cast<int>(this->getPowerState());
     sstream << ", " << this->current_user.toString();
+    sstream << ", UsageDuration (s):" << this->getUsageDuration().count();
+    sstream << ", ShutdownImminent:" << this->isShutdownImminent();
+    sstream << ", MaintenanceNeeded:" << this->maintenanceNeeded;
+    sstream << ", " << this->config.toString();
     sstream << ")";
 
     return sstream.str();
@@ -249,15 +244,15 @@ namespace fablabbg
 
   std::chrono::minutes Machine::getAutologoffDelay() const
   {
-    return this->autologoff;
+    return this->config.autologoff;
   }
 
   void Machine::setAutologoffDelay(std::chrono::minutes new_delay)
   {
-    if (conf::debug::ENABLE_LOGS && this->autologoff != new_delay)
+    if (conf::debug::ENABLE_LOGS && this->config.autologoff != new_delay)
       Serial.printf("Setting autologoff delay to %lld min\r\n", new_delay.count());
 
-    this->autologoff = new_delay;
+    this->config.autologoff = new_delay;
   }
 
   bool Machine::isAutologoffExpired() const
