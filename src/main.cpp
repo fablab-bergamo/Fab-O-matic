@@ -17,6 +17,7 @@ namespace fablabbg
 {
   using namespace Board;
   using namespace Tasks;
+  using namespace std::chrono;
   using Status = BoardLogic::Status;
 
   /// @brief Opens WiFi and server connection and updates board state accordingly
@@ -222,16 +223,16 @@ namespace fablabbg
 
   Task t1("RFIDChip", conf::tasks::RFID_CHECK_PERIOD, &taskCheckRfid, scheduler, true);
   Task t2("Wifi/MQQT init", conf::tasks::MQTT_REFRESH_PERIOD, &taskConnect, scheduler, true);
-  Task t3("Poweroff", std::chrono::seconds(1), &taskPoweroffCheck, scheduler, true);
-  Task t4("Logoff", std::chrono::seconds(1), &taskLogoffCheck, scheduler, true);
+  Task t3("Poweroff", seconds(1), &taskPoweroffCheck, scheduler, true);
+  Task t4("Logoff", seconds(1), &taskLogoffCheck, scheduler, true);
   // Hardware watchdog will run at half the frequency
   Task t5("Watchdog", conf::tasks::WATCHDOG_TIMEOUT / 2, &taskEspWatchdog, scheduler, true);
   Task t6("Selftest", conf::tasks::RFID_SELFTEST_PERIOD, &taskRfidWatchdog, scheduler, true);
   Task t7("PoweroffWarning", conf::machine::DELAY_BETWEEN_BEEPS, &taskPoweroffWarning, scheduler, true);
-  Task t8("MQTT keepalive", std::chrono::seconds(1), &taskMQTTAlive, scheduler, true);
-  Task t9("LED", std::chrono::seconds(1), &taskBlink, scheduler, true);
+  Task t8("MQTT keepalive", seconds(1), &taskMQTTAlive, scheduler, true);
+  Task t9("LED", seconds(1), &taskBlink, scheduler, true);
   // Wokwi requires LCD refresh unlike real hardware
-  Task t10("LCDRefresh", std::chrono::seconds(2), &taskLcdRefresh, scheduler, false);
+  Task t10("LCDRefresh", seconds(2), &taskLcdRefresh, scheduler, false);
 
 } // namespace fablabbg
 
@@ -243,20 +244,22 @@ void config_portal()
 
   WiFiManager wifiManager;
 
-#ifdef DEBUG
-  wifiManager.setDebugOutput(true);
-  wifiManager.resetSettings();
-#endif
-
   // id/name, placeholder/prompt, default, length
   WiFiManagerParameter custom_mqtt_server("MQTT", "MQTT Broker address", mqtt_server, 40);
   wifiManager.addParameter(&custom_mqtt_server);
-  wifiManager.setTimeout(240);       // 4 minutes for configuration
+  wifiManager.setTimeout(duration_cast<seconds>(conf::tasks::PORTAL_CONFIG_TIMEOUT).count());
   wifiManager.setConnectRetries(3);  // 3 retries
   wifiManager.setConnectTimeout(10); // 10 seconds
   wifiManager.setCountry("IT");
   wifiManager.setTitle("FabLab Bergamo - RFID arduino");
   wifiManager.setCaptivePortalEnable(true);
+
+#ifdef DEBUG
+  wifiManager.setDebugOutput(true);
+  wifiManager.resetSettings();
+  wifiManager.setTimeout(15); // fail fast for debugging
+#endif
+
   wifiManager.autoConnect();
 }
 

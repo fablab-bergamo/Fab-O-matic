@@ -8,15 +8,16 @@
 
 namespace fablabbg
 {
-  enum class MachineType
+  enum class MachineType : uint8_t
   {
-    INVALID,
-    PRINTER3D,
-    LASER,
-    CNC,
-    EXTRA1,
-    EXTRA2
+    INVALID = 0,
+    PRINTER3D = 1,
+    LASER = 2,
+    CNC = 3,
+    EXTRA1 = 4,
+    EXTRA2 = 5
   };
+
   struct MachineID
   {
     const uint16_t id;

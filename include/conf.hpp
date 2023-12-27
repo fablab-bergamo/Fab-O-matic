@@ -25,7 +25,7 @@ namespace fablabbg
   {
     static constexpr auto DEFAULT_AUTO_LOGOFF_DELAY = 8h; /* User will be log out after this delay. If 0h, no auto-logout. This may be overriden by backend data */
     static constexpr auto BEEP_PERIOD = 1min;             /* Device will beep before auto-poweroff. If 0min, no beeping.  */
-    static constexpr auto POWEROFF_GRACE_PERIOD = 1min;   /* Idle time before poweroff. If 0min, machine will stay on. */
+    static constexpr auto POWEROFF_GRACE_PERIOD = 2min;   /* Idle time before poweroff. If 0min, machine will stay on. */
     static constexpr auto DELAY_BETWEEN_BEEPS = 30s;      /* Beeps will be heard every 30s when the machine is about to shutdown */
     static constexpr bool MAINTENANCE_BLOCK = true;       /* If true, machine needing maintenance will be blocked for normal users */
 
@@ -47,10 +47,11 @@ namespace fablabbg
   }
   namespace conf::tasks
   {
-    static constexpr auto RFID_CHECK_PERIOD = 150ms;  /* Task period to check for RFID badge (should be fast: 150ms) */
-    static constexpr auto RFID_SELFTEST_PERIOD = 60s; /* Performs RFID self check and reset chip if necessary (default: 60s) */
-    static constexpr auto MQTT_REFRESH_PERIOD = 30s;  /* Query the MQTT broker for machine state at given period (default: 30s) */
-    static constexpr auto WATCHDOG_TIMEOUT = 30s;     /* Timeout for hardware watchdog set to 0s to disable (default: 30s) */
+    static constexpr auto RFID_CHECK_PERIOD = 150ms;    /* Task period to check for RFID badge (should be fast: 150ms) */
+    static constexpr auto RFID_SELFTEST_PERIOD = 60s;   /* Performs RFID self check and reset chip if necessary (default: 60s) */
+    static constexpr auto MQTT_REFRESH_PERIOD = 30s;    /* Query the MQTT broker for machine state at given period (default: 30s) */
+    static constexpr auto WATCHDOG_TIMEOUT = 30s;       /* Timeout for hardware watchdog set to 0s to disable (default: 30s) */
+    static constexpr auto PORTAL_CONFIG_TIMEOUT = 5min; /* Timeout for portal configuration (default: 5min) */
     static_assert(WATCHDOG_TIMEOUT == 0s || WATCHDOG_TIMEOUT > 10s);
   }
 
