@@ -23,11 +23,6 @@ namespace fablabbg
   /// @brief Opens WiFi and server connection and updates board state accordingly
   void taskConnect()
   {
-    if (conf::debug::ENABLE_TASK_LOGS)
-    {
-      Serial.printf("taskConnect, millis %lu\r\n", millis());
-    }
-
     if (!server.isOnline())
     {
       // connection to wifi
@@ -53,9 +48,6 @@ namespace fablabbg
   /// @brief periodic check for new RFID card
   void taskCheckRfid()
   {
-    if (conf::debug::ENABLE_TASK_LOGS)
-      Serial.println("taskCheckRfid");
-
     // check if there is a card
     if (rfid.isNewCardPresent())
     {
@@ -92,9 +84,6 @@ namespace fablabbg
   /// @brief periodic check if the machine must be powered off
   void taskPoweroffCheck()
   {
-    if (conf::debug::ENABLE_TASK_LOGS)
-      Serial.println("taskPoweroffCheck");
-
     if (machine.canPowerOff())
     {
       machine.power(false);
@@ -104,9 +93,6 @@ namespace fablabbg
   /// @brief periodic check if the machine must be powered off
   void taskPoweroffWarning()
   {
-    if (conf::debug::ENABLE_TASK_LOGS)
-      Serial.println("taskPoweroffWarning");
-
     if (machine.isShutdownImminent())
     {
       logic.beep_failed();
@@ -118,9 +104,6 @@ namespace fablabbg
   /// @brief periodic check if the user shall be logged off
   void taskLogoffCheck()
   {
-    if (conf::debug::ENABLE_TASK_LOGS)
-      Serial.println("taskLogoffCheck");
-
     // auto logout after delay
     if (machine.isAutologoffExpired())
     {
@@ -135,9 +118,6 @@ namespace fablabbg
   void taskEspWatchdog()
   {
     static auto initialized = false;
-
-    if (conf::debug::ENABLE_TASK_LOGS)
-      Serial.println("taskEspWatchdog");
 
     if (conf::tasks::WATCHDOG_TIMEOUT > 0s)
     {
@@ -154,9 +134,6 @@ namespace fablabbg
   /// @brief checks the RFID chip status and re-init it if necessary.
   void taskRfidWatchdog()
   {
-    if (conf::debug::ENABLE_TASK_LOGS)
-      Serial.println("taskRfidWatchdog");
-
     if (!rfid.selfTest())
     {
       Serial.println("RFID chip failure");
@@ -170,9 +147,6 @@ namespace fablabbg
   /// @brief sends the MQTT alive message
   void taskMQTTAlive()
   {
-    if (conf::debug::ENABLE_TASK_LOGS)
-      Serial.println("taskMQTTAlive");
-
     if (server.isOnline())
     {
       server.loop();
@@ -181,9 +155,6 @@ namespace fablabbg
 
   void taskLcdRefresh()
   {
-    if (conf::debug::ENABLE_TASK_LOGS)
-      Serial.println("taskLcdRefresh");
-
     BoardInfo bi = {Board::server.isOnline(), Board::machine.getPowerState(), Board::machine.isShutdownImminent()};
     Board::lcd.update(bi, true);
   }
@@ -219,49 +190,66 @@ namespace fablabbg
   //
   // They will be executed at the required frequency during loop()->scheduler.execute() call
   // The scheduler will take care of the timing and will call the task callback
-  // The callback will be executed in the same thread as the scheduler
 
   Task t1("RFIDChip", conf::tasks::RFID_CHECK_PERIOD, &taskCheckRfid, scheduler, true);
-  Task t2("Wifi/MQQT init", conf::tasks::MQTT_REFRESH_PERIOD, &taskConnect, scheduler, true);
-  Task t3("Poweroff", seconds(1), &taskPoweroffCheck, scheduler, true);
-  Task t4("Logoff", seconds(1), &taskLogoffCheck, scheduler, true);
+  Task t2("Wifi/MQQT init", conf::tasks::MQTT_REFRESH_PERIOD, &taskConnect, scheduler, true, 20s);
+  Task t3("Poweroff", 1s, &taskPoweroffCheck, scheduler, true);
+  Task t4("Logoff", 1s, &taskLogoffCheck, scheduler, true);
   // Hardware watchdog will run at half the frequency
   Task t5("Watchdog", conf::tasks::WATCHDOG_TIMEOUT / 2, &taskEspWatchdog, scheduler, true);
   Task t6("Selftest", conf::tasks::RFID_SELFTEST_PERIOD, &taskRfidWatchdog, scheduler, true);
   Task t7("PoweroffWarning", conf::machine::DELAY_BETWEEN_BEEPS, &taskPoweroffWarning, scheduler, true);
-  Task t8("MQTT keepalive", seconds(1), &taskMQTTAlive, scheduler, true);
-  Task t9("LED", seconds(1), &taskBlink, scheduler, true);
+  Task t8("MQTT keepalive", 1s, &taskMQTTAlive, scheduler, true);
+  Task t9("LED", 1s, &taskBlink, scheduler, true);
   // Wokwi requires LCD refresh unlike real hardware
-  Task t10("LCDRefresh", seconds(2), &taskLcdRefresh, scheduler, false);
+  Task t10("LCDRefresh", 2s, &taskLcdRefresh, scheduler, false);
 
+  // Called just before the webportal is started after failed WiFi connection
+  void configModeCallback(WiFiManager *myWiFiManager)
+  {
+    Serial.println("Entering config mode");
+    Serial.println(WiFi.softAPIP());
+    Serial.println(myWiFiManager->getConfigPortalSSID());
+    logic.changeStatus(Status::PORTAL_STARTING);
+  }
+
+  // Starts the WiFi portal for configuration if needed
+  void config_portal()
+  {
+    char mqtt_server[40]{0};
+
+    WiFiManager wifiManager;
+
+    // id/name, placeholder/prompt, default, length
+    WiFiManagerParameter custom_mqtt_server("MQTT", "MQTT Broker address", mqtt_server, 40);
+    wifiManager.addParameter(&custom_mqtt_server);
+    wifiManager.setTimeout(duration_cast<seconds>(conf::tasks::PORTAL_CONFIG_TIMEOUT).count());
+    wifiManager.setConnectRetries(3);  // 3 retries
+    wifiManager.setConnectTimeout(10); // 10 seconds
+    wifiManager.setCountry("IT");
+    wifiManager.setTitle("FabLab Bergamo - RFID arduino");
+    wifiManager.setCaptivePortalEnable(true);
+    wifiManager.setAPCallback(configModeCallback);
+#ifdef DEBUG
+    wifiManager.setDebugOutput(true);
+    wifiManager.resetSettings();
+    wifiManager.setTimeout(15); // fail fast for debugging
+#endif
+
+    if (wifiManager.autoConnect())
+    {
+      logic.changeStatus(Status::PORTAL_OK);
+      delay(1000);
+    }
+    else
+    {
+      logic.changeStatus(Status::PORTAL_FAILED);
+      delay(3000);
+    }
+  }
 } // namespace fablabbg
 
 using namespace fablabbg;
-
-void config_portal()
-{
-  char mqtt_server[40]{0};
-
-  WiFiManager wifiManager;
-
-  // id/name, placeholder/prompt, default, length
-  WiFiManagerParameter custom_mqtt_server("MQTT", "MQTT Broker address", mqtt_server, 40);
-  wifiManager.addParameter(&custom_mqtt_server);
-  wifiManager.setTimeout(duration_cast<seconds>(conf::tasks::PORTAL_CONFIG_TIMEOUT).count());
-  wifiManager.setConnectRetries(3);  // 3 retries
-  wifiManager.setConnectTimeout(10); // 10 seconds
-  wifiManager.setCountry("IT");
-  wifiManager.setTitle("FabLab Bergamo - RFID arduino");
-  wifiManager.setCaptivePortalEnable(true);
-
-#ifdef DEBUG
-  wifiManager.setDebugOutput(true);
-  wifiManager.resetSettings();
-  wifiManager.setTimeout(15); // fail fast for debugging
-#endif
-
-  wifiManager.autoConnect();
-}
 
 void setup()
 {
@@ -273,20 +261,17 @@ void setup()
     Serial.println(machine.toString().c_str());
   }
 
-  config_portal();
-
   if (!logic.board_init())
   {
     logic.changeStatus(Status::ERROR_HW);
-    if constexpr (pins.led.is_neopixel)
-    {
-      logic.set_led_color(255, 0, 0);
-      logic.led(true);
-    }
+    logic.set_led_color(255, 0, 0);
+    logic.led(true);
     logic.beep_failed();
     while (true)
       ;
   }
+
+  config_portal();
 
 #if (WOKWI_SIMULATION)
   attr_mqtt_broker.stacksize = 3 * 1024;
@@ -300,8 +285,9 @@ void setup()
 
   logic.beep_ok();
   server.connectWiFi();
-  // Don't try to connect immediately, restart the 30s now
-  t2.restart();
+
+  // Since the WiFiManager may have taken minutes, recompute the tasks schedule
+  scheduler.restart();
 }
 
 void loop()

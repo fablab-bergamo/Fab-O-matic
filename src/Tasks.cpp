@@ -26,6 +26,56 @@ namespace fablabbg::Tasks
                 tasks.end());
   }
 
+  void Scheduler::restart() const
+  {
+    for (const auto &task : tasks)
+    {
+      task.get().restart();
+    }
+  }
+  void Scheduler::printStats() const
+  {
+    milliseconds avg_delay = 0ms;
+    unsigned long nb_runs = 0;
+
+    for (const auto &task : tasks)
+    {
+      avg_delay += task.get().getAvgTardiness() * task.get().getRunCounter();
+      nb_runs += task.get().getRunCounter();
+    }
+    if (nb_runs > 0)
+    {
+      avg_delay /= nb_runs;
+    }
+
+    Serial.printf("Scheduler::execute complete: %d tasks total, %lu runs, avg delay/run: %llu ms\r\n", tasks.size(), nb_runs, avg_delay.count());
+
+    for (const auto &task : tasks)
+    {
+      if (task.get().isActive())
+      {
+        if (task.get().getRunCounter() > 0)
+        {
+          Serial.printf("\t Task: %s, %lu runs, avg tardiness/run: %llu ms, period %llu ms, delay %llu ms, average task duration %llu ms\r\n",
+                        task.get().getId().c_str(), task.get().getRunCounter(),
+                        task.get().getAvgTardiness().count(), task.get().getPeriod().count(),
+                        task.get().getDelay().count(),
+                        task.get().getTotalRuntime().count() / task.get().getRunCounter());
+        }
+        else
+        {
+          Serial.printf("\t Task: %s, never ran, period %llu ms, delay %llu ms\r\n",
+                        task.get().getId().c_str(), task.get().getPeriod().count(),
+                        task.get().getDelay().count());
+        }
+      }
+      else
+      {
+        Serial.printf("\t Task: %s, inactive\r\n", task.get().getId().c_str());
+      }
+    }
+  }
+
   void Scheduler::execute() const
   {
     for (const auto &task : tasks)
@@ -33,37 +83,33 @@ namespace fablabbg::Tasks
       task.get().run();
     }
 
-    if (conf::debug::ENABLE_TASK_LOGS && millis() % 256 == 0)
+    if (conf::debug::ENABLE_TASK_LOGS && millis() % 1024 == 0)
     {
-      milliseconds avg_delay = 0ms;
-      unsigned long nb_runs = 0;
-
-      std::for_each(tasks.begin(), tasks.end(),
-                    [&avg_delay, &nb_runs](auto &task)
-                    {
-                      avg_delay += task.get().getAverageDelay() * task.get().getRunCounter();
-                      nb_runs += task.get().getRunCounter();
-                    });
-      if (nb_runs > 0)
-      {
-        avg_delay /= nb_runs;
-      }
-      Serial.printf("Scheduler::execute complete: %d tasks total, %lu runs, avg delay/run: %llu ms\r\n", tasks.size(), nb_runs, avg_delay.count());
+      printStats();
     }
+#if (WOKWI_SIMULATION)
     else
     {
-      delay(3);
+      delay(5); // Wokwi simulation is sometimes slow and this helps to catch-up
     }
+#endif
   }
 
-  Task::Task(std::string id, milliseconds period, std::function<void()> callback, Scheduler &scheduler, bool active) : active(active),
-                                                                                                                       id(id),
-                                                                                                                       period(period),
-                                                                                                                       last_run(system_clock::now()),
-                                                                                                                       next_run(last_run + period),
-                                                                                                                       average_period(0),
-                                                                                                                       callback(callback),
-                                                                                                                       run_counter(0)
+  /// @brief Creates a new task
+  /// @param id task id
+  /// @param period task period (if 0, will be run only once)
+  /// @param callback callback function to execute
+  /// @param scheduler reference to the scheduler
+  /// @param active if true, the task will be executed
+  /// @param delay initial delay before starting the task
+  Task::Task(std::string id, milliseconds period,
+             std::function<void()> callback,
+             Scheduler &scheduler, bool active, milliseconds delay) : active(active), id(id),
+                                                                      period(period), delay(delay),
+                                                                      last_run(system_clock::now() + delay),
+                                                                      next_run(last_run + period),
+                                                                      average_tardiness(0ms), total_runtime(0ms),
+                                                                      callback(callback), run_counter(0)
   {
     scheduler.addTask(*this);
   }
@@ -74,8 +120,14 @@ namespace fablabbg::Tasks
     {
       run_counter++;
       auto last_period = duration_cast<milliseconds>(system_clock::now() - last_run);
-      average_period = (average_period * (run_counter - 1) + last_period) / run_counter;
+      average_tardiness = (average_tardiness * (run_counter - 1) + last_period) / run_counter;
       last_run = system_clock::now();
+
+      if (conf::debug::ENABLE_TASK_LOGS)
+      {
+        Serial.printf("Task %s\r\n", this->getId().c_str());
+      }
+
       try
       {
         callback();
@@ -84,7 +136,17 @@ namespace fablabbg::Tasks
       {
         Serial.printf("EXCEPTION while executing %s : %s\r\n", this->getId().c_str(), e.what());
       }
-      next_run = last_run + period;
+
+      total_runtime += duration_cast<milliseconds>(system_clock::now() - last_run);
+
+      if (period > 0ms)
+      {
+        next_run = last_run + period; // Schedule next run
+      }
+      else
+      {
+        next_run = system_clock::time_point::max(); // Disable the task
+      }
     }
   }
 
@@ -99,10 +161,11 @@ namespace fablabbg::Tasks
     restart();
   }
 
+  /// @brief recompute the next run time (now + delay)
   void Task::restart()
   {
-    last_run = system_clock::now();
-    next_run = last_run + period;
+    last_run = system_clock::now() + delay;
+    next_run = last_run;
   }
 
   void Task::setPeriod(milliseconds new_period)
@@ -113,11 +176,6 @@ namespace fablabbg::Tasks
   void Task::setCallback(std::function<void()> new_callback)
   {
     callback = new_callback;
-  }
-
-  void Task::setActive(bool new_active)
-  {
-    active = new_active;
   }
 
   bool Task::isActive() const
@@ -140,11 +198,11 @@ namespace fablabbg::Tasks
     return id;
   }
 
-  milliseconds Task::getAverageDelay() const
+  milliseconds Task::getAvgTardiness() const
   {
-    if (average_period > period)
+    if (average_tardiness > period)
     {
-      return average_period - period;
+      return average_tardiness - period;
     }
     else
     {
@@ -155,5 +213,20 @@ namespace fablabbg::Tasks
   unsigned long Task::getRunCounter() const
   {
     return run_counter;
+  }
+
+  milliseconds Task::getDelay() const
+  {
+    return delay;
+  }
+
+  void Task::setDelay(milliseconds new_delay)
+  {
+    delay = new_delay;
+  }
+
+  milliseconds Task::getTotalRuntime() const
+  {
+    return total_runtime;
   }
 } // namespace fablab::tasks

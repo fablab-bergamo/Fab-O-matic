@@ -36,7 +36,7 @@ namespace fablabbg
   namespace conf::debug
   {
     static constexpr bool ENABLE_LOGS = true;                 /* True to add logs */
-    static constexpr bool ENABLE_TASK_LOGS = false;           /* True to add logs */
+    static constexpr bool ENABLE_TASK_LOGS = false;           /* True to add logs regarding tasks scheduling and statistics */
     static constexpr unsigned long SERIAL_SPEED_BDS = 115200; /* Serial speed in bauds */
   }
   namespace conf::buzzer
