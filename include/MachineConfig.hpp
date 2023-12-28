@@ -40,11 +40,11 @@ namespace fablabbg
       const std::string off_message{"off"};
     } mqtt_config;
 
-    minutes autologoff;
+    seconds autologoff;
 
     MachineConfig(MachineID id, MachineType type, std::string_view name,
                   uint8_t pin, bool act_low, std::string_view topic,
-                  minutes autologoff) : machine_id(id), machine_type(type), machine_name(name),
+                  seconds autologoff) : machine_id(id), machine_type(type), machine_name(name),
                                         relay_config{pin, act_low},
                                         mqtt_config{std::string{topic}},
                                         autologoff(autologoff) {}

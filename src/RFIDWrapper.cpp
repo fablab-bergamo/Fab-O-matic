@@ -1,3 +1,5 @@
+#include <memory>
+
 #include "RFIDWrapper.hpp"
 #include "pins.hpp"
 #include "MFRC522v2.h"
@@ -6,7 +8,6 @@
 #include "MFRC522Debug.h"
 #include "conf.hpp"
 #include "card.hpp"
-#include <memory>
 
 namespace fablabbg
 {
@@ -18,16 +19,16 @@ namespace fablabbg
     pinMode(pins.mfrc522.reset_pin, OUTPUT);
 
     // Smart pointers members destructors will run & free the memory, when class will be distructed.
-    this->rfid_simple_driver = std::make_unique<MFRC522DriverPinSimple>(pins.mfrc522.sda_pin);
-    this->spi_rfid_driver = std::make_unique<MFRC522DriverSPI>(*this->rfid_simple_driver); // Create SPI driver.
-    this->mfrc522 = std::make_unique<MFRC522>(*this->spi_rfid_driver);
+    rfid_simple_driver = std::make_unique<MFRC522DriverPinSimple>(pins.mfrc522.sda_pin);
+    spi_rfid_driver = std::make_unique<MFRC522DriverSPI>(*rfid_simple_driver); // Create SPI driver.
+    mfrc522 = std::make_unique<MFRC522>(*spi_rfid_driver);
   }
 
   /// @brief indicates if a new card is present in the RFID chip antenna area
   /// @return true if a new card is present
   bool RFIDWrapper::isNewCardPresent() const
   {
-    auto result = this->mfrc522->PICC_IsNewCardPresent();
+    auto result = mfrc522->PICC_IsNewCardPresent();
 
     if (conf::debug::ENABLE_LOGS && result)
       Serial.printf("isNewCardPresent=%d\r\n", result);
@@ -37,17 +38,23 @@ namespace fablabbg
 
   /// @brief tries to read the card serial number
   /// @return true if successfull, result can be read with getUid()
-  bool RFIDWrapper::readCardSerial() const
+  std::optional<card::uid_t> RFIDWrapper::readCardSerial() const
   {
-    auto result = this->mfrc522->PICC_ReadCardSerial();
+    auto result = mfrc522->PICC_ReadCardSerial();
 
     if (conf::debug::ENABLE_LOGS)
     {
       Serial.printf("readCardSerial=%d (SAK=%d, Size=%d)\r\n", result,
-                    this->mfrc522->uid.sak, this->mfrc522->uid.size);
+                    mfrc522->uid.sak, mfrc522->uid.size);
     }
-
-    return result;
+    if (result)
+    {
+      return getUid();
+    }
+    else
+    {
+      return std::nullopt;
+    }
   }
 
   /// @brief indicates if the card is still present in the RFID chip antenna area
@@ -61,11 +68,11 @@ namespace fablabbg
       byte bufferATQA[2];
       byte bufferSize = sizeof(bufferATQA);
 
-      MFRC522::StatusCode result = this->mfrc522->PICC_WakeupA(bufferATQA, &bufferSize);
+      MFRC522::StatusCode result = mfrc522->PICC_WakeupA(bufferATQA, &bufferSize);
 
       if (result == MFRC522::StatusCode::STATUS_OK)
       {
-        if (this->readCardSerial() && this->getUid() == original)
+        if (readCardSerial() && getUid() == original)
           return true;
       }
       delay(5);
@@ -77,7 +84,7 @@ namespace fablabbg
   /// @return true if successfull
   bool RFIDWrapper::selfTest() const
   {
-    auto result = this->mfrc522->PCD_PerformSelfTest();
+    auto result = mfrc522->PCD_PerformSelfTest();
     if (conf::debug::ENABLE_LOGS)
     {
       Serial.printf("RFID self test = %d\r\n", result);
@@ -100,7 +107,7 @@ namespace fablabbg
   {
     uint8_t arr[conf::whitelist::UID_BYTE_LEN]{0};
 
-    memcpy(arr, this->mfrc522->uid.uidByte, std::min(conf::whitelist::UID_BYTE_LEN, this->mfrc522->uid.size));
+    memcpy(arr, mfrc522->uid.uidByte, std::min(conf::whitelist::UID_BYTE_LEN, mfrc522->uid.size));
 
     auto c = card::from_array(arr);
 
@@ -114,7 +121,7 @@ namespace fablabbg
   }
 
   /// @brief Initializes RFID chip including self test
-  bool RFIDWrapper::init() const
+  bool RFIDWrapper::init_rfid() const
   {
 
     if (conf::debug::ENABLE_LOGS)
@@ -127,21 +134,21 @@ namespace fablabbg
         Serial.println(buffer);
     }
 
-    this->reset();
+    reset();
 
-    if (!this->mfrc522->PCD_Init())
+    if (!mfrc522->PCD_Init())
     {
       Serial.println("mfrc522 Init failed");
       return false;
     }
 
     if (conf::debug::ENABLE_LOGS)
-      MFRC522Debug::PCD_DumpVersionToSerial(*this->mfrc522, Serial);
+      MFRC522Debug::PCD_DumpVersionToSerial(*mfrc522, Serial);
 
-    this->mfrc522->PCD_SetAntennaGain(MFRC522::PCD_RxGain::RxGain_max);
+    mfrc522->PCD_SetAntennaGain(MFRC522::PCD_RxGain::RxGain_max);
     delay(5);
 
-    if (!this->mfrc522->PCD_PerformSelfTest())
+    if (!mfrc522->PCD_PerformSelfTest())
     {
       Serial.println("Self-test failure for RFID");
       return false;

@@ -20,11 +20,11 @@ namespace fablabbg
   /// @return FabUser if found
   std::optional<FabUser> AuthProvider::is_in_cache(card::uid_t uid) const
   {
-    auto elem = std::find_if(this->cache.begin(), this->cache.end(),
+    auto elem = std::find_if(cache.begin(), cache.end(),
                              [uid](const auto &input)
                              { return input.card_uid == uid; });
 
-    if (elem == end(this->cache))
+    if (elem == end(cache))
     {
       return std::nullopt;
     }
@@ -39,17 +39,17 @@ namespace fablabbg
   void AuthProvider::add_in_cache(card::uid_t uid, std::string name, FabUser::UserLevel level) const
   {
     // Check if already in cache
-    if (this->is_in_cache(uid).has_value())
+    if (is_in_cache(uid).has_value())
       return;
 
     // Add into the list
     FabUser new_elem(uid, name, true, level);
-    this->cache.push_front(new_elem);
+    cache.push_front(new_elem);
 
     // Keep cache size under CACHE_LEN
-    if (this->cache.size() > conf::whitelist::CACHE_LEN)
+    if (cache.size() > conf::whitelist::CACHE_LEN)
     {
-      this->cache.pop_back();
+      cache.pop_back();
     }
   }
 
@@ -77,7 +77,7 @@ namespace fablabbg
         user.holder_name = response->holder_name;
         user.user_level = response->user_level;
         // Cache the positive result
-        this->add_in_cache(uid, user.holder_name, response->user_level);
+        add_in_cache(uid, user.holder_name, response->user_level);
 
         if (conf::debug::ENABLE_LOGS)
           Serial.printf(" -> online check OK (%s)\r\n", user.toString().c_str());
@@ -98,7 +98,7 @@ namespace fablabbg
       }
     }
 
-    if (auto result = this->WhiteListLookup(uid); result.has_value())
+    if (auto result = WhiteListLookup(uid); result.has_value())
     {
       auto [card, level, name] = result.value();
       user.card_uid = card;
@@ -120,14 +120,14 @@ namespace fablabbg
   /// @return a whitelistentry object if the card is found in whitelist
   std::optional<WhiteListEntry> AuthProvider::WhiteListLookup(card::uid_t candidate_uid) const
   {
-    auto elem = std::find_if(this->whitelist.begin(), this->whitelist.end(),
+    auto elem = std::find_if(whitelist.begin(), whitelist.end(),
                              [candidate_uid](const auto &input)
                              {
                                auto [w_uid, w_level, w_name] = input;
                                return w_uid == candidate_uid;
                              });
 
-    if (elem == end(this->whitelist))
+    if (elem == end(whitelist))
     {
       Serial.printf("%s not found in whitelist\r\n", card::uid_str(candidate_uid).c_str());
       return std::nullopt;
@@ -135,4 +135,13 @@ namespace fablabbg
 
     return {*elem};
   }
+
+  /// @brief Sets the whitelist
+  /// @param list the whitelist to set
+  void AuthProvider::setWhitelist(WhiteList list)
+  {
+    whitelist = list;
+    cache.clear();
+  }
+
 } // namespace fablabbg

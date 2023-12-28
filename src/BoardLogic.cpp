@@ -8,32 +8,18 @@
 #include "BoardLogic.hpp"
 #include "secrets.hpp"
 #include "conf.hpp"
-#include "Machine.hpp"
-#include "FabServer.hpp"
-#include "RFIDWrapper.hpp"
-#include "MockRFIDWrapper.hpp"
+#include "machine.hpp"
+#include "Fabserver.hpp"
+#include "BaseRFIDWrapper.hpp"
 #include "AuthProvider.hpp"
-#include "LCDWrapper.hpp"
+#include "BaseLCDWrapper.hpp"
 #include "pins.hpp"
 #include "SavedConfig.hpp"
 
 namespace fablabbg
 {
-  namespace Board
-  {
-    // Only main.cpp instanciates the variables through Board.h file
-#if (WOKWI_SIMULATION)
-    extern MockRFIDWrapper rfid;
-#else
-    extern RFIDWrapper rfid;
-#endif
-    extern FabServer server;
-    extern Machine machine;
-    extern AuthProvider auth;
-    extern LCDWrapper<conf::lcd::COLS, conf::lcd::ROWS> lcd;
-  } // namespace Board
-
-  BoardLogic::BoardLogic() noexcept : status(Status::CLEAR)
+  BoardLogic::BoardLogic() noexcept : status(Status::CLEAR),
+                                      server(std::nullopt), rfid(std::nullopt)
   {
     pinMode(pins.led.pin, OUTPUT);
     if (pins.led.is_neopixel)
@@ -44,16 +30,16 @@ namespace fablabbg
 
   void BoardLogic::set_led_color(uint8_t r, uint8_t g, uint8_t b)
   {
-    this->led_color[0] = r;
-    this->led_color[1] = g;
-    this->led_color[2] = b;
+    led_color[0] = r;
+    led_color[1] = g;
+    led_color[2] = b;
   }
 
   void BoardLogic::led(bool value)
   {
     if (pins.led.is_neopixel)
     {
-      auto color = value ? pixels.Color(this->led_color[0], this->led_color[1], this->led_color[2]) : pixels.Color(0, 0, 0);
+      auto color = value ? pixels.Color(led_color[0], led_color[1], led_color[2]) : pixels.Color(0, 0, 0);
       pixels.setPixelColor(0, color);
       pixels.show();
     }
@@ -61,12 +47,28 @@ namespace fablabbg
     {
       digitalWrite(pins.led.pin, value ? HIGH : LOW);
     }
-    this->led_status = value;
+    led_status = value;
   }
 
   void BoardLogic::invert_led()
   {
-    this->led(!this->led_status);
+    led(!led_status);
+  }
+
+  FabServer &BoardLogic::getServer() const
+  {
+    if (server.has_value())
+      return server.value().get();
+    else
+      throw std::runtime_error("Server not initialized");
+  }
+
+  BaseRFIDWrapper &BoardLogic::getRfid() const
+  {
+    if (rfid.has_value())
+      return rfid.value().get();
+    else
+      throw std::runtime_error("RFID not initialized");
   }
 
   /// @brief connects and polls the server for up-to-date machine information
@@ -75,72 +77,68 @@ namespace fablabbg
     if (conf::debug::ENABLE_LOGS)
       Serial.printf("BoardLogic::refreshFromServer() called\r\n");
 
-    if (Board::server.connect())
+    if (getServer().connect())
     {
       // Check the configured machine data from the server
-      auto result = Board::server.checkMachine();
+      auto result = getServer().checkMachine();
       if (result->request_ok)
       {
         if (result->is_valid)
         {
           if (conf::debug::ENABLE_LOGS)
             Serial.printf("The configured machine ID %u is valid, maintenance=%d, allowed=%d\r\n",
-                          Board::machine.getMachineId().id, result->maintenance, result->allowed);
+                          machine.getMachineId().id, result->maintenance, result->allowed);
 
-          Board::machine.maintenanceNeeded = result->maintenance;
-          Board::machine.allowed = result->allowed;
-          Board::machine.setAutologoffDelay(std::chrono::minutes(result->logoff));
-          Board::machine.setMachineName(result->name);
+          machine.maintenanceNeeded = result->maintenance;
+          machine.allowed = result->allowed;
+          machine.setAutologoffDelay(std::chrono::minutes(result->logoff));
+          machine.setMachineName(result->name);
           MachineType mt = static_cast<MachineType>(result->type);
-          Board::machine.setMachineType(mt);
+          machine.setMachineType(mt);
         }
         else
         {
           Serial.printf("The configured machine ID %u is unknown to the server\r\n",
-                        Board::machine.getMachineId().id);
+                        machine.getMachineId().id);
         }
       }
     }
   }
 
   /// @brief Called when a RFID tag has been detected
-  void BoardLogic::onNewCard()
+  void BoardLogic::onNewCard(card::uid_t uid)
   {
     if (conf::debug::ENABLE_LOGS)
       Serial.println("New card present");
 
-    // if there is a "new" card (could be the same that stayed in the field)
-    if (!this->ready_for_a_new_card || !Board::rfid.readCardSerial())
+    if (!ready_for_a_new_card)
     {
       return;
     }
-    this->ready_for_a_new_card = false;
+    ready_for_a_new_card = false;
 
-    // Acquire the UID of the card
-    auto uid = Board::rfid.getUid();
-
-    if (Board::machine.isFree())
+    if (machine.isFree())
     {
       // machine is free
-      if (!this->authorize(uid))
+      if (!authorize(uid))
       {
         Serial.println("Login failed");
       }
       delay(1000);
-      this->refreshFromServer();
+      refreshFromServer();
       return;
     }
 
     // machine is busy
-    if (Board::machine.getActiveUser().card_uid == uid)
+    if (machine.getActiveUser().card_uid == uid)
     {
       // we can logout. we should require that the card stays in the field for some seconds, to prevent accidental logout. maybe sound a buzzer?
-      this->logout();
+      logout();
     }
     else
     {
       // user is not the same, display who is using it
-      this->changeStatus(Status::ALREADY_IN_USE);
+      changeStatus(Status::ALREADY_IN_USE);
     }
     delay(1000);
     return;
@@ -149,16 +147,15 @@ namespace fablabbg
   /// @brief Removes the current machine user and changes the status to LOGOUT
   void BoardLogic::logout()
   {
-    auto result = Board::server.finishUse(Board::machine.getActiveUser().card_uid,
-                                          Board::machine.getUsageDuration());
+    auto result = getServer().finishUse(machine.getActiveUser().card_uid,
+                                        machine.getUsageDuration());
 
     if (conf::debug::ENABLE_LOGS)
       Serial.printf("Result finishUse: %d\r\n", result->request_ok);
 
-    Board::machine.logout();
-    this->user = FabUser();
-    this->changeStatus(Status::LOGOUT);
-    this->beep_ok();
+    machine.logout();
+    changeStatus(Status::LOGOUT);
+    beep_ok();
     delay(1000);
   }
 
@@ -171,27 +168,27 @@ namespace fablabbg
     constexpr milliseconds STEP_DELAY = duration_cast<milliseconds>(TOTAL_DURATION) / STEPS_COUNT;
     constexpr uint32_t MSSTEP_DELAY = static_cast<uint32_t>(STEP_DELAY.count());
 
-    const BoardInfo bi = {Board::server.isOnline(), Board::machine.getPowerState(), Board::machine.isShutdownImminent()};
+    const BoardInfo bi = {getServer().isOnline(), machine.getPowerState(), machine.isShutdownImminent()};
 
     for (auto step = 0; step < STEPS_COUNT; step++)
     {
       std::stringstream ss;
       ss << short_prompt << " " << step << "/" << STEPS_COUNT;
-      Board::lcd.setRow(1, ss.str());
-      Board::lcd.update(bi);
+      getLcd().setRow(1, ss.str());
+      getLcd().update(bi);
 
       delay(MSSTEP_DELAY);
 
-      if (!Board::rfid.cardStillThere(this->user.card_uid))
+      if (!getRfid().cardStillThere(machine.getActiveUser().card_uid))
       {
-        Board::lcd.setRow(1, "");
-        Board::lcd.update(bi);
+        getLcd().setRow(1, "");
+        getLcd().update(bi);
         return false;
       }
     }
 
-    Board::lcd.setRow(1, "");
-    Board::lcd.update(bi);
+    getLcd().setRow(1, "");
+    getLcd().update(bi);
     return true;
   }
 
@@ -200,59 +197,61 @@ namespace fablabbg
   /// @return true if the user is now logged on to the machine
   bool BoardLogic::authorize(card::uid_t uid)
   {
-    this->changeStatus(Status::VERIFYING);
-    this->user.authenticated = false;
-    this->user.holder_name = "?";
-    this->user.card_uid = uid;
-    this->user.user_level = FabUser::UserLevel::UNKNOWN;
+    changeStatus(Status::VERIFYING);
+    FabUser user;
 
-    auto response = Board::auth.tryLogin(uid);
+    user.authenticated = false;
+    user.holder_name = "?";
+    user.card_uid = uid;
+    user.user_level = FabUser::UserLevel::UNKNOWN;
+
+    auto response = auth.tryLogin(uid);
     if (!response.has_value())
     {
       Serial.println("Failed login");
-      this->changeStatus(Status::LOGIN_DENIED);
-      this->beep_failed();
+      changeStatus(Status::LOGIN_DENIED);
+      beep_failed();
       return false;
     }
 
-    this->user = response.value();
+    user = response.value();
 
-    if (!Board::machine.allowed)
+    if (!machine.allowed)
     {
       Serial.println("Machine blocked");
-      this->changeStatus(Status::NOT_ALLOWED);
-      this->beep_failed();
+      changeStatus(Status::NOT_ALLOWED);
+      beep_failed();
       return false;
     }
 
-    if (Board::machine.maintenanceNeeded)
+    if (machine.maintenanceNeeded)
     {
       if (conf::machine::MAINTENANCE_BLOCK &&
-          this->user.user_level < FabUser::UserLevel::FABLAB_ADMIN)
+          user.user_level < FabUser::UserLevel::FABLAB_ADMIN)
       {
-        this->changeStatus(Status::MAINTENANCE_NEEDED);
-        this->beep_failed();
+        changeStatus(Status::MAINTENANCE_NEEDED);
+        beep_failed();
         delay(3000);
         return false;
       }
-      if (this->user.user_level >= FabUser::UserLevel::FABLAB_ADMIN)
+      if (user.user_level >= FabUser::UserLevel::FABLAB_ADMIN)
       {
-        this->beep_ok();
-        this->changeStatus(Status::MAINTENANCE_QUERY);
+        beep_ok();
+        changeStatus(Status::MAINTENANCE_QUERY);
 
-        if (this->longTap("Registra"))
+        if (longTap("Registra"))
         {
-          auto maint_resp = Board::server.registerMaintenance(this->user.card_uid);
+          auto maint_resp = getServer().registerMaintenance(user.card_uid);
           if (!maint_resp->request_ok)
           {
-            this->beep_failed();
-            this->changeStatus(Status::ERROR);
+            beep_failed();
+            changeStatus(Status::ERROR);
             delay(1000);
           }
           else
           {
-            this->changeStatus(Status::MAINTENANCE_DONE);
-            this->beep_ok();
+            changeStatus(Status::MAINTENANCE_DONE);
+            beep_ok();
             delay(1000);
           }
           // Proceed to log-on the staff member to the machine in all cases
@@ -260,20 +259,20 @@ namespace fablabbg
       }
     }
 
-    if (Board::machine.login(this->user))
+    if (machine.login(user))
     {
-      auto result = Board::server.startUse(Board::machine.getActiveUser().card_uid);
+      auto result = getServer().startUse(machine.getActiveUser().card_uid);
 
       if (conf::debug::ENABLE_LOGS)
         Serial.printf("Result startUse: %d\r\n", result->request_ok);
 
-      this->changeStatus(Status::LOGGED_IN);
-      this->beep_ok();
+      changeStatus(Status::LOGGED_IN);
+      beep_ok();
     }
     else
     {
-      this->changeStatus(Status::NOT_ALLOWED);
-      this->beep_failed();
+      changeStatus(Status::NOT_ALLOWED);
+      beep_failed();
       delay(1000);
     }
 
@@ -286,8 +285,8 @@ namespace fablabbg
     if (conf::debug::ENABLE_LOGS)
       Serial.println("Initializing board...");
 
-    auto success = Board::lcd.begin();
-    success &= Board::rfid.init();
+    auto success = getLcd().begin();
+    success &= getRfid().init_rfid();
 
     // Setup buzzer pin for ESP32
     success &= (ledcSetup(conf::buzzer::LEDC_PWM_CHANNEL, conf::buzzer::BEEP_HZ, 10U) != 0);
@@ -301,54 +300,19 @@ namespace fablabbg
     return success;
   }
 
-  bool BoardLogic::loadConfig()
-  {
-    auto success = true;
-
-    // Load configuration
-    auto config = SavedConfig::LoadFromEEPROM();
-    if (!config)
-    {
-      Serial.printf("Configuration file not found, creating defaults...\r\n");
-      auto new_config = SavedConfig::DefaultConfig();
-      success &= new_config.SaveToEEPROM();
-      config = new_config;
-    }
-
-    if (conf::debug::ENABLE_LOGS)
-    {
-      Serial.println("Configuration from EEPROM:");
-      Serial.println(config->toString().c_str());
-    }
-
-    Board::server.configure(config.value());
-
-    MachineID mid{(uint16_t)atoi(config.value().machine_id)};
-    MachineConfig machine_conf(mid,
-                               conf::default_config::machine_type,
-                               conf::default_config::machine_name,
-                               pins.relay.ch1_pin, false,
-                               config.value().machine_topic,
-                               conf::machine::DEFAULT_AUTO_LOGOFF_DELAY);
-
-    Board::machine.configure(machine_conf, Board::server);
-
-    return success;
-  }
-
   /// @brief Sets the board in the state given.
   /// @param new_state new state
   void BoardLogic::changeStatus(Status new_state)
   {
-    if (conf::debug::ENABLE_LOGS && this->status != new_state)
+    if (conf::debug::ENABLE_LOGS && status != new_state)
     {
       char buffer[32] = {0};
       if (snprintf(buffer, sizeof(buffer), "** Changing board state to %d", static_cast<int>(new_state)) > 0)
         Serial.println(buffer);
     }
 
-    this->status = new_state;
-    this->updateLCD();
+    status = new_state;
+    updateLCD();
   }
 
   /// @brief Updates the LCD screen as per the current status
@@ -357,132 +321,134 @@ namespace fablabbg
     char buffer[conf::lcd::COLS + 1] = {0}; // Null terminated strings
     std::string user_name, machine_name, uid_str;
 
-    Board::lcd.showConnection(true);
-    Board::lcd.showPower(true);
+    getLcd().showConnection(true);
+    getLcd().showPower(true);
 
-    user_name = Board::machine.getActiveUser().holder_name;
-    machine_name = Board::machine.isConfigured() ? Board::machine.getMachineName() : "-";
-    uid_str = card::uid_str(this->user.card_uid);
+    user_name = machine.getActiveUser().holder_name;
+    machine_name = machine.isConfigured() ? machine.getMachineName() : "-";
 
-    switch (this->status)
+    if (rfid.has_value())
+    {
+      auto uid = rfid.value().get().getUid();
+      uid_str = card::uid_str(uid);
+    }
+    else
+    {
+      uid_str = "????????";
+    }
+
+    switch (status)
     {
     case Status::CLEAR:
-      Board::lcd.clear();
+      getLcd().clear();
       break;
     case Status::FREE:
-      Board::lcd.setRow(0, machine_name);
-      if (Board::machine.maintenanceNeeded)
+      getLcd().setRow(0, machine_name);
+      if (machine.maintenanceNeeded)
       {
-        Board::lcd.setRow(1, ">Manutenzione<");
+        getLcd().setRow(1, ">Manutenzione<");
       }
-      else if (!Board::machine.allowed)
+      else if (!machine.allowed)
       {
-        Board::lcd.setRow(1, "> BLOCCATA <");
+        getLcd().setRow(1, "> BLOCCATA <");
       }
       else
       {
-        Board::lcd.setRow(1, "Avvicina carta");
+        getLcd().setRow(1, "Avvicina carta");
       }
       break;
     case Status::ALREADY_IN_USE:
-      Board::lcd.setRow(0, "In uso da");
-      Board::lcd.setRow(1, Board::machine.getActiveUser().holder_name);
+      getLcd().setRow(0, "In uso da");
+      getLcd().setRow(1, user_name);
       break;
     case Status::LOGGED_IN:
-      Board::lcd.setRow(0, "Inizio uso");
-      Board::lcd.setRow(1, this->user.holder_name);
+      getLcd().setRow(0, "Inizio uso");
+      getLcd().setRow(1, user_name);
       break;
     case Status::LOGIN_DENIED:
-      Board::lcd.setRow(0, "Carta ignota");
-      Board::lcd.setRow(1, uid_str.data());
+      getLcd().setRow(0, "Carta ignota");
+      getLcd().setRow(1, uid_str);
       break;
     case Status::LOGOUT:
-      Board::lcd.setRow(0, "Arrivederci");
-      Board::lcd.setRow(1, user_name);
+      getLcd().setRow(0, "Arrivederci");
+      getLcd().setRow(1, user_name);
       break;
     case Status::CONNECTING:
-      Board::lcd.setRow(0, "Connessione");
-      Board::lcd.setRow(1, "al server...");
+      getLcd().setRow(0, "Connessione");
+      getLcd().setRow(1, "al getServer()...");
       break;
     case Status::CONNECTED:
-      Board::lcd.setRow(0, "Connesso");
-      Board::lcd.setRow(1, "");
+      getLcd().setRow(0, "Connesso");
+      getLcd().setRow(1, "");
       break;
     case Status::IN_USE:
-      if (snprintf(buffer, sizeof(buffer), "Ciao %s", user_name.data()) > 0)
-        Board::lcd.setRow(0, buffer);
-      Board::lcd.setRow(1, Board::lcd.convertSecondsToHHMMSS(Board::machine.getUsageDuration()));
+      if (snprintf(buffer, sizeof(buffer), "Ciao %s", user_name.c_str()) > 0)
+        getLcd().setRow(0, buffer);
+      getLcd().setRow(1, getLcd().convertSecondsToHHMMSS(machine.getUsageDuration()));
       break;
     case Status::BUSY:
-      Board::lcd.setRow(0, "Elaborazione...");
-      Board::lcd.setRow(1, "");
+      getLcd().setRow(0, "Elaborazione...");
+      getLcd().setRow(1, "");
       break;
     case Status::OFFLINE:
-      Board::lcd.setRow(0, "OFFLINE MODE");
-      Board::lcd.setRow(1, "");
+      getLcd().setRow(0, "OFFLINE MODE");
+      getLcd().setRow(1, "");
       break;
     case Status::NOT_ALLOWED:
-      Board::lcd.setRow(0, "Blocco");
-      Board::lcd.setRow(1, "amministrativo");
+      getLcd().setRow(0, "Blocco");
+      getLcd().setRow(1, "amministrativo");
       break;
     case Status::VERIFYING:
-      Board::lcd.setRow(0, "VERIFICA IN");
-      Board::lcd.setRow(1, "CORSO");
+      getLcd().setRow(0, "VERIFICA IN");
+      getLcd().setRow(1, "CORSO");
       break;
     case Status::MAINTENANCE_NEEDED:
-      Board::lcd.setRow(0, "Blocco per");
-      Board::lcd.setRow(1, "manutenzione");
+      getLcd().setRow(0, "Blocco per");
+      getLcd().setRow(1, "manutenzione");
       break;
     case Status::MAINTENANCE_QUERY:
-      Board::lcd.setRow(0, "Manutenzione?");
-      Board::lcd.setRow(1, "Registra");
+      getLcd().setRow(0, "Manutenzione?");
+      getLcd().setRow(1, "Registra");
       break;
     case Status::MAINTENANCE_DONE:
-      Board::lcd.setRow(0, "Manutenzione");
-      Board::lcd.setRow(1, "registrata");
+      getLcd().setRow(0, "Manutenzione");
+      getLcd().setRow(1, "registrata");
       break;
     case Status::ERROR:
-      Board::lcd.setRow(0, "Errore");
-      Board::lcd.setRow(1, "");
+      getLcd().setRow(0, "Errore");
+      getLcd().setRow(1, "");
       break;
     case Status::ERROR_HW:
-      Board::lcd.setRow(0, "Errore");
-      Board::lcd.setRow(1, "Hardware");
+      getLcd().setRow(0, "Errore");
+      getLcd().setRow(1, "Hardware");
       break;
     case Status::PORTAL_FAILED:
-      Board::lcd.setRow(0, "Errore portale");
-      Board::lcd.setRow(1, WiFi.softAPIP().toString().c_str());
+      getLcd().setRow(0, "Errore portale");
+      getLcd().setRow(1, WiFi.softAPIP().toString().c_str());
       break;
     case Status::PORTAL_OK:
-      Board::lcd.setRow(0, "AP config OK");
-      Board::lcd.setRow(1, "Avvio...");
+      getLcd().setRow(0, "AP config OK");
+      getLcd().setRow(1, "Avvio...");
       break;
     case Status::PORTAL_STARTING:
-      Board::lcd.setRow(0, "Apri portale");
-      Board::lcd.setRow(1, WiFi.softAPIP().toString().c_str());
+      getLcd().setRow(0, "Apri portale");
+      getLcd().setRow(1, WiFi.softAPIP().toString().c_str());
       break;
     default:
-      Board::lcd.setRow(0, "Unhandled status");
-      if (snprintf(buffer, sizeof(buffer), "Value %d", static_cast<int>(this->status)) > 0)
-        Board::lcd.setRow(1, buffer);
+      getLcd().setRow(0, "Unhandled status");
+      if (snprintf(buffer, sizeof(buffer), "Value %d", static_cast<int>(status)) > 0)
+        getLcd().setRow(1, buffer);
       break;
     }
-    BoardInfo bi = {Board::server.isOnline(), Board::machine.getPowerState(), Board::machine.isShutdownImminent()};
-    Board::lcd.update(bi, false);
+    BoardInfo bi = {getServer().isOnline(), machine.getPowerState(), machine.isShutdownImminent()};
+    getLcd().update(bi, false);
   }
 
   /// @brief Gets the current board status
   /// @return board status
   BoardLogic::Status BoardLogic::getStatus() const
   {
-    return this->status;
-  }
-
-  /// @brief Gets the latest user acquired by RFID card
-  /// @return a user object
-  FabUser BoardLogic::getUser()
-  {
-    return this->user;
+    return status;
   }
 
   void BoardLogic::beep_ok() const
@@ -503,4 +469,143 @@ namespace fablabbg
       delay(duration_cast<milliseconds>(conf::buzzer::STANDARD_BEEP_DURATION).count());
     }
   }
+
+  /// @brief Configures the board with the given references
+  bool BoardLogic::configure(FabServer &server, BaseRFIDWrapper &rfid, BaseLCDWrapper &lcd)
+  {
+    this->server = server;
+    this->rfid = rfid;
+    this->lcd = lcd;
+    auto success = true;
+
+    // Load configuration
+    auto config = SavedConfig::LoadFromEEPROM();
+    if (!config)
+    {
+      Serial.printf("Configuration file not found, creating defaults...\r\n");
+      auto new_config = SavedConfig::DefaultConfig();
+      success &= new_config.SaveToEEPROM();
+      config = new_config;
+    }
+
+    if (conf::debug::ENABLE_LOGS)
+    {
+      Serial.println("Configuration from EEPROM:");
+      Serial.println(config->toString().c_str());
+    }
+
+    server.configure(config.value());
+
+    MachineID mid{(uint16_t)atoi(config.value().machine_id)};
+    MachineConfig machine_conf(mid,
+                               conf::default_config::machine_type,
+                               conf::default_config::machine_name,
+                               pins.relay.ch1_pin, false,
+                               config.value().machine_topic,
+                               conf::machine::DEFAULT_AUTO_LOGOFF_DELAY);
+
+    machine.configure(machine_conf, getServer());
+
+    return success;
+  }
+
+  /// @brief Refreshes the LCD screen
+  void BoardLogic::refreshLCD() const
+  {
+    if (server.has_value())
+    {
+      BoardInfo bi = {server.value().get().isOnline(), machine.getPowerState(), machine.isShutdownImminent()};
+      getLcd().update(bi, true);
+    }
+  }
+
+  /// @brief Blinks the LED
+  void BoardLogic::blinkLed()
+  {
+    if (getServer().isOnline())
+    {
+      if (!machine.allowed || machine.maintenanceNeeded)
+      {
+        set_led_color(64, 0, 0); // Red
+      }
+      else
+      {
+        set_led_color(0, 64, 0); // Green
+      }
+    }
+    else
+    {
+      set_led_color(127, 83, 16); // Orange
+    }
+    invert_led(); // Blink when in use
+  }
+
+  /// @brief Checks if a new card is present
+  void BoardLogic::checkRfid()
+  {
+    auto &rfid = getRfid();
+
+    // check if there is a card
+    if (rfid.isNewCardPresent())
+    {
+      auto result = rfid.readCardSerial();
+      if (result)
+      {
+        onNewCard(result.value());
+      }
+      return;
+    }
+
+    // No new card present
+    ready_for_a_new_card = true;
+    if (machine.isFree())
+    {
+      changeStatus(Status::FREE);
+    }
+    else
+    {
+      changeStatus(Status::IN_USE);
+    }
+  }
+
+  /// @brief Checks if the machine must be powered off
+  void BoardLogic::checkPowerOff()
+  {
+    if (machine.canPowerOff())
+    {
+      machine.power(false);
+    }
+  }
+
+/// @brief Gets the current machine
+/// @return a machine object
+#if XTRA_UNIT_TEST
+  Machine &BoardLogic::getMachine()
+#else
+  const Machine &BoardLogic::getMachine() const
+#endif
+  {
+    return machine;
+  }
+
+  BaseLCDWrapper &BoardLogic::getLcd() const
+  {
+    if (lcd.has_value())
+      return lcd.value().get();
+    else
+      throw std::runtime_error("LCD not initialized");
+  }
+
+  /// @brief Sets the autologoff delay
+  /// @param delay new delay
+  void BoardLogic::setAutologoffDelay(seconds delay)
+  {
+    machine.setAutologoffDelay(delay);
+  }
+
+  void BoardLogic::setWhitelist(WhiteList whitelist)
+  {
+    auth.setWhitelist(whitelist);
+  }
+
 } // namespace fablabbg

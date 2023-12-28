@@ -55,8 +55,7 @@ namespace fablabbg
     static constexpr unsigned int MAX_MQTT_LENGTH = 128;
 
   public:
-    FabServer();
-    ~FabServer() = default;
+    FabServer() = default;
 
     [[nodiscard]] std::unique_ptr<UserResponse> checkCard(const card::uid_t uid);
     [[nodiscard]] std::unique_ptr<MachineResponse> checkMachine();

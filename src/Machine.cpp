@@ -13,11 +13,11 @@ namespace fablabbg
   using namespace std::chrono_literals;
   using namespace std::chrono;
 
-#define CHECK_CONFIGURED(ret_type)                            \
-  if (!this->config.has_value() || !this->server.has_value()) \
-  {                                                           \
-    Serial.println("Machine : call configure first");         \
-    return ret_type();                                        \
+#define CHECK_CONFIGURED(ret_type)                    \
+  if (!config.has_value() || !server.has_value())     \
+  {                                                   \
+    Serial.println("Machine : call configure first"); \
+    return ret_type();                                \
   }
 
   /// @brief Creates a new machine
@@ -26,22 +26,22 @@ namespace fablabbg
                        active(false), power_state(PowerState::UNKNOWN)
 
   {
-    this->current_user = FabUser();
+    current_user = FabUser();
   }
 
   void Machine::configure(const MachineConfig &new_config, FabServer &serv)
   {
     // https://stackoverflow.com/questions/67596731/why-is-stdoptionaltoperator-deleted-when-t-contains-a-const-data-memb
-    this->config.emplace(new_config);
+    config.emplace(new_config);
 
-    this->server = std::reference_wrapper<FabServer>(serv);
+    server = std::reference_wrapper<FabServer>(serv);
 
-    if (this->config.value().hasRelay())
+    if (config.value().hasRelay())
     {
-      pinMode(this->config.value().relay_config.pin, OUTPUT);
+      pinMode(config.value().relay_config.pin, OUTPUT);
     }
     if (conf::debug::ENABLE_LOGS)
-      Serial.printf("Machine configured : %s\r\n", this->toString().c_str());
+      Serial.printf("Machine configured : %s\r\n", toString().c_str());
   }
 
   /// @brief Returns the machine identifier
@@ -49,14 +49,14 @@ namespace fablabbg
   MachineID Machine::getMachineId() const
   {
     CHECK_CONFIGURED(MachineID);
-    return this->config.value().machine_id;
+    return config.value().machine_id;
   }
 
   /// @brief Indicates whether the machine is used by somebody
   /// @return boolean
   bool Machine::isFree() const
   {
-    return !this->active;
+    return !active;
   }
 
   /// @brief Log the given user onto the machine, if free and not blocked
@@ -65,12 +65,12 @@ namespace fablabbg
   bool Machine::login(FabUser user)
   {
     CHECK_CONFIGURED(bool);
-    if (this->isFree() && this->allowed)
+    if (isFree() && allowed)
     {
-      this->active = true;
-      this->current_user = user;
-      this->power(true);
-      this->usage_start_timestamp = system_clock::now();
+      active = true;
+      current_user = user;
+      power(true);
+      usage_start_timestamp = system_clock::now();
       return true;
     }
     return false;
@@ -80,25 +80,25 @@ namespace fablabbg
   /// @return
   Machine::PowerState Machine::getPowerState() const
   {
-    return this->power_state;
+    return power_state;
   }
 
   /// @brief Removes the user from the machine, and powers off the machine (respecting POWEROFF_DELAY_MINUTES setting)
   void Machine::logout()
   {
     CHECK_CONFIGURED(void);
-    if (this->active)
+    if (active)
     {
-      this->active = false;
-      this->power_state = PowerState::WAITING_FOR_POWER_OFF;
-      this->usage_start_timestamp = std::nullopt;
+      active = false;
+      power_state = PowerState::WAITING_FOR_POWER_OFF;
+      usage_start_timestamp = std::nullopt;
 
       // Sets the countdown to power off
-      this->logoff_timestamp = system_clock::now();
+      logoff_timestamp = system_clock::now();
 
       if (conf::machine::POWEROFF_GRACE_PERIOD == 0s)
       {
-        this->power(false);
+        power(false);
       }
 
       if (conf::debug::ENABLE_LOGS)
@@ -111,22 +111,22 @@ namespace fablabbg
   /// @return true if the delay has expired
   bool Machine::canPowerOff() const
   {
-    if (!this->logoff_timestamp.has_value())
+    if (!logoff_timestamp.has_value())
       return false;
 
-    return (this->power_state == PowerState::WAITING_FOR_POWER_OFF &&
-            system_clock::now() - this->logoff_timestamp.value() > conf::machine::POWEROFF_GRACE_PERIOD);
+    return (power_state == PowerState::WAITING_FOR_POWER_OFF &&
+            system_clock::now() - logoff_timestamp.value() > conf::machine::POWEROFF_GRACE_PERIOD);
   }
 
   /// @brief indicates if the machine is about to shudown and board should beep
   /// @return true if shutdown is imminent
   bool Machine::isShutdownImminent() const
   {
-    if (!this->logoff_timestamp.has_value() || conf::machine::BEEP_PERIOD == 0ms)
+    if (!logoff_timestamp.has_value() || conf::machine::BEEP_PERIOD == 0ms)
       return false;
 
-    return (this->power_state == PowerState::WAITING_FOR_POWER_OFF &&
-            system_clock::now() - this->logoff_timestamp.value() > conf::machine::BEEP_PERIOD);
+    return (power_state == PowerState::WAITING_FOR_POWER_OFF &&
+            system_clock::now() - logoff_timestamp.value() > conf::machine::BEEP_PERIOD);
   }
 
   /// @brief sets the machine power to on (true) or off (false)
@@ -137,9 +137,9 @@ namespace fablabbg
     if (conf::debug::ENABLE_LOGS)
       Serial.printf("Machine::power_relay : power set to %d\r\n", value);
 
-    auto pin = this->config.value().relay_config.pin;
+    auto pin = config.value().relay_config.pin;
 
-    if (this->config.value().relay_config.active_low)
+    if (config.value().relay_config.active_low)
     {
       digitalWrite(pin, value ? LOW : HIGH);
     }
@@ -150,12 +150,12 @@ namespace fablabbg
 
     if (value)
     {
-      this->logoff_timestamp = std::nullopt;
-      this->power_state = PowerState::POWERED_ON;
+      logoff_timestamp = std::nullopt;
+      power_state = PowerState::POWERED_ON;
     }
     else
     {
-      this->power_state = PowerState::POWERED_OFF;
+      power_state = PowerState::POWERED_OFF;
     }
   }
 
@@ -168,8 +168,8 @@ namespace fablabbg
     if (conf::debug::ENABLE_LOGS)
       Serial.printf("Machine::power_mqtt : power set to %d\r\n", value);
 
-    auto &mqtt_server = this->server.value().get();
-    auto &act_config = this->config.value();
+    auto &mqtt_server = server.value().get();
+    auto &act_config = config.value();
 
     String topic{act_config.mqtt_config.topic.data()};
     String payload = value ? act_config.mqtt_config.on_message.data() : act_config.mqtt_config.off_message.data();
@@ -192,12 +192,12 @@ namespace fablabbg
 
     if (value)
     {
-      this->logoff_timestamp = std::nullopt;
-      this->power_state = PowerState::POWERED_ON;
+      logoff_timestamp = std::nullopt;
+      power_state = PowerState::POWERED_ON;
     }
     else
     {
-      this->power_state = PowerState::POWERED_OFF;
+      power_state = PowerState::POWERED_OFF;
     }
   }
 
@@ -208,28 +208,28 @@ namespace fablabbg
     if (conf::debug::ENABLE_LOGS)
       Serial.printf("Machine::power : power set to %d\r\n", on_or_off);
 
-    if (this->config.value().hasRelay())
+    if (config.value().hasRelay())
     {
-      this->power_relay(on_or_off);
+      power_relay(on_or_off);
     }
-    if (this->config.value().hasMqttSwitch())
+    if (config.value().hasMqttSwitch())
     {
-      this->power_mqtt(on_or_off);
+      power_mqtt(on_or_off);
     }
   }
 
-  FabUser &Machine::getActiveUser()
+  FabUser Machine::getActiveUser() const
   {
-    return this->current_user;
+    return current_user;
   }
 
   /// @brief Gets the duration the machine has been used
   /// @return milliseconds since the machine has been started
   seconds Machine::getUsageDuration() const
   {
-    if (this->usage_start_timestamp.has_value())
+    if (usage_start_timestamp.has_value())
     {
-      return duration_cast<seconds>(system_clock::now() - this->usage_start_timestamp.value());
+      return duration_cast<seconds>(system_clock::now() - usage_start_timestamp.value());
     }
     return 0s;
   }
@@ -237,80 +237,86 @@ namespace fablabbg
   std::string Machine::getMachineName() const
   {
     CHECK_CONFIGURED(std::string);
-    return this->config.value().machine_name;
+    return config.value().machine_name;
   }
 
   std::string Machine::toString() const
   {
     std::stringstream sstream;
 
-    if (!this->config.has_value() || !this->server.has_value())
+    if (!config.has_value() || !server.has_value())
     {
       sstream << "Machine (not configured)";
       return sstream.str();
     }
 
-    sstream << "Machine (ID:" << this->getMachineId().id;
-    sstream << ", Name:" << this->getMachineName();
-    sstream << ", IsFree: " << this->isFree();
-    sstream << ", IsAllowed:" << this->allowed;
-    sstream << ", PowerState:" << static_cast<int>(this->getPowerState());
-    sstream << ", " << this->current_user.toString();
-    sstream << ", UsageDuration (s):" << this->getUsageDuration().count();
-    sstream << ", ShutdownImminent:" << this->isShutdownImminent();
-    sstream << ", MaintenanceNeeded:" << this->maintenanceNeeded;
-    sstream << ", " << this->config.value().toString();
-    sstream << ", Active:" << this->active;
-    sstream << ", Last logoff:" << (this->logoff_timestamp.has_value() ? this->logoff_timestamp.value().time_since_epoch().count() : 0);
+    sstream << "Machine (ID:" << getMachineId().id;
+    sstream << ", Name:" << getMachineName();
+    sstream << ", IsFree: " << isFree();
+    sstream << ", IsAllowed:" << allowed;
+    sstream << ", PowerState:" << static_cast<int>(getPowerState());
+    sstream << ", " << current_user.toString();
+    sstream << ", UsageDuration (s):" << getUsageDuration().count();
+    sstream << ", ShutdownImminent:" << isShutdownImminent();
+    sstream << ", MaintenanceNeeded:" << maintenanceNeeded;
+    sstream << ", " << config.value().toString();
+    sstream << ", Active:" << active;
+    sstream << ", Last logoff:" << (logoff_timestamp.has_value() ? logoff_timestamp.value().time_since_epoch().count() : 0);
     sstream << ")";
 
     return sstream.str();
   }
 
-  minutes Machine::getAutologoffDelay() const
+  seconds Machine::getAutologoffDelay() const
   {
-    CHECK_CONFIGURED(minutes);
-    return this->config.value().autologoff;
+    CHECK_CONFIGURED(seconds);
+    return config.value().autologoff;
   }
 
-  void Machine::setAutologoffDelay(minutes new_delay)
+  void Machine::setAutologoffDelay(seconds new_delay)
   {
     CHECK_CONFIGURED(void);
 
-    if (conf::debug::ENABLE_LOGS && this->config.value().autologoff != new_delay)
-      Serial.printf("Changing autologoff delay to %lld min\r\n", new_delay.count());
+    if (conf::debug::ENABLE_LOGS && config.value().autologoff != new_delay)
+      Serial.printf("Changing autologoff delay to %lld min\r\n",
+                    duration_cast<minutes>(config.value().autologoff).count());
 
-    this->config.value().autologoff = new_delay;
+    config.value().autologoff = new_delay;
   }
 
   bool Machine::isAutologoffExpired() const
   {
-    return this->getAutologoffDelay() > 0min &&
-           this->getUsageDuration() > this->getAutologoffDelay();
+    return getAutologoffDelay() > 0min &&
+           getUsageDuration() > getAutologoffDelay();
   }
 
   void Machine::setMachineName(std::string_view new_name)
   {
     CHECK_CONFIGURED(void);
 
-    if (conf::debug::ENABLE_LOGS && this->config.value().machine_name != new_name)
+    if (conf::debug::ENABLE_LOGS && config.value().machine_name != new_name)
       Serial.printf("Changing machine name to %s\r\n", new_name.data());
 
-    this->config.value().machine_name = new_name;
+    config.value().machine_name = new_name;
   }
 
   void Machine::setMachineType(MachineType new_type)
   {
     CHECK_CONFIGURED(void);
 
-    if (conf::debug::ENABLE_LOGS && this->config.value().machine_type != new_type)
+    if (conf::debug::ENABLE_LOGS && config.value().machine_type != new_type)
       Serial.printf("Changing machine type to %d\r\n", static_cast<uint8_t>(new_type));
 
-    this->config.value().machine_type = new_type;
+    config.value().machine_type = new_type;
   }
 
   bool Machine::isConfigured() const
   {
-    return this->config.has_value() && this->server.has_value();
+    return config.has_value() && server.has_value();
+  }
+
+  std::optional<MachineConfig> Machine::getConfig() const
+  {
+    return config;
   }
 } // namespace fablabbg

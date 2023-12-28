@@ -66,7 +66,7 @@ namespace fablabbg
       return false;
     }
 
-    this->magic_number = MAGIC_NUMBER;
+    magic_number = MAGIC_NUMBER;
 
     EEPROM.put(0, *this);
     auto result = EEPROM.commit();
@@ -82,14 +82,14 @@ namespace fablabbg
   {
     DynamicJsonDocument doc(1024);
 
-    doc["ssid"] = this->ssid;
-    doc["password"] = this->password;
-    doc["mqtt_server"] = this->mqtt_server;
-    doc["mqtt_user"] = this->mqtt_user;
-    doc["mqtt_password"] = this->mqtt_password;
-    doc["machine_topic"] = this->machine_topic;
-    doc["machine_id"] = this->machine_id;
-    doc["magic_number"] = this->magic_number;
+    doc["ssid"] = ssid;
+    doc["password"] = password;
+    doc["mqtt_server"] = mqtt_server;
+    doc["mqtt_user"] = mqtt_user;
+    doc["mqtt_password"] = mqtt_password;
+    doc["machine_topic"] = machine_topic;
+    doc["machine_id"] = machine_id;
+    doc["magic_number"] = magic_number;
 
     std::string result;
     serializeJson(doc, result);

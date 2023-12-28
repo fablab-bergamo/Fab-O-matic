@@ -15,7 +15,7 @@ namespace fablabbg
   class AuthProvider
   {
   private:
-    const WhiteList whitelist;
+    WhiteList whitelist;
     mutable std::list<FabUser> cache;
     void add_in_cache(card::uid_t uid, std::string name, FabUser::UserLevel level) const;
     std::optional<FabUser> is_in_cache(card::uid_t uid) const;
@@ -25,6 +25,7 @@ namespace fablabbg
     AuthProvider() = delete;
     AuthProvider(WhiteList whitelist);
     [[nodiscard]] std::optional<FabUser> tryLogin(card::uid_t uid) const;
+    void setWhitelist(WhiteList list);
   };
 } // namespace fablabbg
 #endif // AUTHPROVIDER_H_

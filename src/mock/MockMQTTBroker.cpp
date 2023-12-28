@@ -1,5 +1,5 @@
 #if (WOKWI_SIMULATION)
-#include "MockMQTTBroker.hpp"
+#include "mock/MockMQTTBroker.hpp"
 #include "conf.hpp"
 
 namespace fablabbg
@@ -15,15 +15,15 @@ namespace fablabbg
     { // Wait for the Wi-Fi to connect
       if (conf::debug::ENABLE_LOGS)
         Serial.printf("MQTT BROKER: WiFi status changed to %d\r\n", WiFi.status());
-      this->is_running = false;
+      is_running = false;
       return;
     }
-    if (!this->is_running)
+    if (!is_running)
     {
-      this->is_running = this->init(MockMQTTBroker::MQTTPORT, true);
+      is_running = init(MockMQTTBroker::MQTTPORT, true);
 
       if (conf::debug::ENABLE_LOGS)
-        Serial.printf("MQTT BROKER: started with result %d\r\n", this->is_running);
+        Serial.printf("MQTT BROKER: started with result %d\r\n", is_running);
     }
   }
   bool MockMQTTBroker::onEvent(sMQTTEvent *event)
@@ -41,15 +41,15 @@ namespace fablabbg
     case Public_sMQTTEventType:
     {
       sMQTTPublicClientEvent *e = (sMQTTPublicClientEvent *)event;
-      this->topic = e->Topic();
-      this->payload = e->Payload();
+      topic = e->Topic();
+      payload = e->Payload();
 
       if (conf::debug::ENABLE_LOGS)
-        Serial.printf("MQTT BROKER: Received  %s -> %s\r\n", this->topic.c_str(), this->payload.c_str());
+        Serial.printf("MQTT BROKER: Received  %s -> %s\r\n", topic.c_str(), payload.c_str());
 
-      std::string reply = this->fakeReply();
-      std::string topic_reply = this->topic + "/reply";
-      this->publish(topic_reply, reply, 0, false);
+      std::string reply = fakeReply();
+      std::string topic_reply = topic + "/reply";
+      publish(topic_reply, reply, 0, false);
     }
     break;
     case RemoveClient_sMQTTEventType:
@@ -61,7 +61,7 @@ namespace fablabbg
     }
     break;
     case LostConnect_sMQTTEventType:
-      this->is_running = false;
+      is_running = false;
       break;
     }
     return true;
@@ -69,34 +69,34 @@ namespace fablabbg
 
   bool MockMQTTBroker::isRunning() const
   {
-    return this->is_running;
+    return is_running;
   }
 
   /// @brief Returns a fake server reply for testing purposes
   /// @return json payload
   std::string MockMQTTBroker::fakeReply() const
   {
-    if (this->payload.find("checkmachine") != std::string::npos)
+    if (payload.find("checkmachine") != std::string::npos)
     {
       return "{\"request_ok\":true,\"is_valid\":true,\"allowed\":true,\"maintenance\":false,\"logoff\":30,\"name\":\"ENDER_1\",\"type\":1}";
     }
 
-    if (this->payload.find("maintenance") != std::string::npos)
+    if (payload.find("maintenance") != std::string::npos)
     {
       return "{\"request_ok\":true}";
     }
 
-    if (this->payload.find("startuse") != std::string::npos)
+    if (payload.find("startuse") != std::string::npos)
     {
       return "{\"request_ok\":true}";
     }
 
-    if (this->payload.find("stopuse") != std::string::npos)
+    if (payload.find("stopuse") != std::string::npos)
     {
       return "{\"request_ok\":true}";
     }
 
-    if (this->payload.find("checkuser") != std::string::npos)
+    if (payload.find("checkuser") != std::string::npos)
     {
       return "{\"request_ok\":true,\"level\":2,\"name\":\"TEST USER\",\"is_valid\":true}";
     }

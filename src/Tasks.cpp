@@ -121,7 +121,7 @@ namespace fablabbg::Tasks
 
   void Task::run()
   {
-    if (this->isActive() && system_clock::now() >= next_run)
+    if (isActive() && system_clock::now() >= next_run)
     {
       run_counter++;
       auto last_period = duration_cast<milliseconds>(system_clock::now() - last_run);
@@ -130,7 +130,7 @@ namespace fablabbg::Tasks
 
       if (conf::debug::ENABLE_TASK_LOGS)
       {
-        Serial.printf("Task %s\r\n", this->getId().c_str());
+        Serial.printf("Task %s\r\n", getId().c_str());
       }
 
       try
@@ -139,7 +139,7 @@ namespace fablabbg::Tasks
       }
       catch (const std::exception &e)
       {
-        Serial.printf("EXCEPTION while executing %s : %s\r\n", this->getId().c_str(), e.what());
+        Serial.printf("EXCEPTION while executing %s : %s\r\n", getId().c_str(), e.what());
       }
 
       total_runtime += duration_cast<milliseconds>(system_clock::now() - last_run);

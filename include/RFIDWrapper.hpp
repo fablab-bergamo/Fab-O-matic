@@ -3,16 +3,18 @@
 
 #include <string>
 #include <memory>
+#include <optional>
 
 #include "conf.hpp"
 #include "card.hpp"
 #include "MFRC522v2.h"
 #include "MFRC522DriverSPI.h"
 #include "MFRC522DriverPinSimple.h"
+#include "BaseRfidWrapper.hpp"
 
 namespace fablabbg
 {
-  class RFIDWrapper
+  class RFIDWrapper : public BaseRFIDWrapper
   {
   private:
     std::unique_ptr<MFRC522> mfrc522;
@@ -22,10 +24,10 @@ namespace fablabbg
   public:
     RFIDWrapper();
 
-    bool init() const;
+    bool init_rfid() const;
     bool isNewCardPresent() const;
     bool cardStillThere(const card::uid_t original) const;
-    bool readCardSerial() const;
+    std::optional<card::uid_t> readCardSerial() const;
     bool selfTest() const;
     void reset() const;
     card::uid_t getUid() const;

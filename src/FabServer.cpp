@@ -14,31 +14,28 @@ namespace fablabbg
 
   using namespace ServerMQTT;
 
-  FabServer::FabServer()
-  {
-    char client_name[16]{0};
-    std::snprintf(client_name, sizeof(client_name), "BOARD%ld", random(0, 1000));
-    this->mqtt_client_name = client_name;
-  }
-
   void FabServer::configure(const SavedConfig &config)
   {
-    this->wifi_ssid = config.ssid;
-    this->wifi_password = config.password;
-    this->server_ip = config.mqtt_server;
-    this->mqtt_user = config.mqtt_user;
-    this->mqtt_password = config.mqtt_password;
+    wifi_ssid = config.ssid;
+    wifi_password = config.password;
+    server_ip = config.mqtt_server;
+    mqtt_user = config.mqtt_user;
+    mqtt_password = config.mqtt_password;
 
 #if (WOKWI_SIMULATION)
-    this->channel = 6;
+    channel = 6;
 #else
-    this->channel = -1;
+    channel = -1;
 #endif
-    this->online = false;
+    online = false;
 
     std::stringstream ss;
     ss << conf::mqtt::topic << "/" << config.machine_id;
-    this->topic = ss.str();
+    topic = ss.str();
+
+    char client_name[16]{0};
+    std::snprintf(client_name, sizeof(client_name), "BOARD%ld", random(0, 1000));
+    mqtt_client_name = client_name;
   }
 
   /// @brief Posts to MQTT server and waits for answer
@@ -46,12 +43,12 @@ namespace fablabbg
   /// @return true if the server answered
   bool FabServer::publishWithReply(const Query &query)
   {
-    if (this->publish(query))
+    if (publish(query))
     {
-      if (this->waitForAnswer())
+      if (waitForAnswer())
       {
         if (conf::debug::ENABLE_LOGS)
-          Serial.printf("MQTT Client: received answer: %s\r\n", this->last_reply.data());
+          Serial.printf("MQTT Client: received answer: %s\r\n", last_reply.data());
         return true;
       }
     }
@@ -70,13 +67,13 @@ namespace fablabbg
       return false;
     }
 
-    this->answer_pending = true;
-    this->last_query.assign(mqtt_payload.c_str());
+    answer_pending = true;
+    last_query.assign(mqtt_payload.c_str());
 
     if (conf::debug::ENABLE_LOGS)
       Serial.printf("MQTT Client: sending message %s on topic %s\r\n", mqtt_payload.c_str(), mqtt_topic.c_str());
 
-    return this->client.publish(mqtt_topic.c_str(), mqtt_payload.c_str());
+    return client.publish(mqtt_topic.c_str(), mqtt_payload.c_str());
   }
 
   /// @brief posts to MQTT server
@@ -85,7 +82,7 @@ namespace fablabbg
   bool FabServer::publish(const Query &query)
   {
     String s_payload(query.payload().data());
-    String s_topic(this->topic.c_str());
+    String s_topic(topic.c_str());
 
     if (s_payload.length() > FabServer::MAX_MQTT_LENGTH)
     {
@@ -93,24 +90,24 @@ namespace fablabbg
       return false;
     }
 
-    this->answer_pending = true;
-    this->last_query.assign(s_payload.c_str());
+    answer_pending = true;
+    last_query.assign(s_payload.c_str());
 
     if (conf::debug::ENABLE_LOGS)
       Serial.printf("MQTT Client: sending message %s on topic %s\r\n", s_payload.c_str(), s_topic.c_str());
 
-    return this->client.publish(s_topic, s_payload);
+    return client.publish(s_topic, s_payload);
   }
 
   bool FabServer::loop()
   {
-    if (!this->client.loop())
+    if (!client.loop())
     {
-      if (this->online && conf::debug::ENABLE_LOGS)
+      if (online && conf::debug::ENABLE_LOGS)
       {
         Serial.println("MQTT Client: connection lost");
       }
-      this->online = false;
+      online = false;
       return false;
     }
     return true;
@@ -126,9 +123,9 @@ namespace fablabbg
 
     for (auto i = 0; i < NB_TRIES; i++)
     {
-      if (this->answer_pending)
+      if (answer_pending)
       {
-        this->client.loop();
+        client.loop();
         delay(DELAY_MS);
       }
       else
@@ -159,8 +156,8 @@ namespace fablabbg
       Serial.println(ss.str().c_str());
     }
 
-    this->last_reply.assign(s_payload.c_str());
-    this->answer_pending = false;
+    last_reply.assign(s_payload.c_str());
+    answer_pending = false;
   }
 
   /// @brief Connects to the WiFi network
@@ -173,22 +170,22 @@ namespace fablabbg
     try
     {
       // Connect WiFi if needed
-      if (this->WiFiConnection.status() != WL_CONNECTED)
+      if (WiFiConnection.status() != WL_CONNECTED)
       {
         if (conf::debug::ENABLE_LOGS)
-          Serial.printf("FabServer::connectWiFi() : WiFi connection state=%d\n\r", this->WiFiConnection.status());
+          Serial.printf("FabServer::connectWiFi() : WiFi connection state=%d\n\r", WiFiConnection.status());
 
-        this->WiFiConnection.begin(this->wifi_ssid.data(), this->wifi_password.data(), this->channel);
+        WiFiConnection.begin(wifi_ssid.data(), wifi_password.data(), channel);
         for (auto i = 0; i < NB_TRIES; i++)
         {
-          if (conf::debug::ENABLE_LOGS && this->WiFiConnection.status() == WL_CONNECTED)
+          if (conf::debug::ENABLE_LOGS && WiFiConnection.status() == WL_CONNECTED)
             Serial.println("FabServer::connectWiFi() : WiFi connection successfull");
           break;
           delay(DELAY_MS);
         }
       }
 
-      return this->WiFiConnection.status() == WL_CONNECTED;
+      return WiFiConnection.status() == WL_CONNECTED;
     }
     catch (const std::exception &e)
     {
@@ -201,7 +198,7 @@ namespace fablabbg
   /// @return true if both operations succeeded
   bool FabServer::connect()
   {
-    auto status = this->WiFiConnection.status();
+    auto status = WiFiConnection.status();
 
     if (conf::debug::ENABLE_LOGS)
       Serial.printf("FabServer::connect() called, Wifi status=%d\r\n", status);
@@ -209,35 +206,35 @@ namespace fablabbg
     // Check if WiFi nextwork is available, and if not, try to connect
     if (status != WL_CONNECTED)
     {
-      this->online = false;
+      online = false;
 
-      if (this->client.connected())
+      if (client.connected())
       {
         if (conf::debug::ENABLE_LOGS)
           Serial.printf("Closing MQTT client due to WiFi down\r\n");
-        this->client.disconnect();
+        client.disconnect();
       }
 
-      this->connectWiFi();
+      connectWiFi();
     }
 
     // Check if WiFi is available but MQTT client is not
-    if (this->WiFiConnection.status() == WL_CONNECTED &&
-        !this->client.connected())
+    if (WiFiConnection.status() == WL_CONNECTED &&
+        !client.connected())
     {
       if (conf::debug::ENABLE_LOGS)
-        Serial.printf("Connecting to MQTT server %s\r\n", this->server_ip.c_str());
+        Serial.printf("Connecting to MQTT server %s\r\n", server_ip.c_str());
 
-      this->client.begin(this->server_ip.data(), this->net);
+      client.begin(server_ip.data(), net);
 
-      this->callback = [&](String &a, String &b)
-      { return this->messageReceived(a, b); };
+      callback = [&](String &a, String &b)
+      { return messageReceived(a, b); };
 
-      this->client.onMessage(this->callback);
+      client.onMessage(callback);
 
-      if (!client.connect(this->mqtt_client_name.c_str(),
-                          this->mqtt_user.c_str(),
-                          this->mqtt_password.c_str(), false))
+      if (!client.connect(mqtt_client_name.c_str(),
+                          mqtt_user.c_str(),
+                          mqtt_password.c_str(), false))
       {
         Serial.printf("Failure to connect as client: %s\r\n", mqtt_client_name.c_str());
       }
@@ -246,30 +243,30 @@ namespace fablabbg
       if (client.connected())
       {
         std::stringstream tmp_topic;
-        tmp_topic << this->topic << conf::mqtt::response_topic;
-        this->response_topic.assign(tmp_topic.str());
+        tmp_topic << topic << conf::mqtt::response_topic;
+        response_topic.assign(tmp_topic.str());
 
-        if (!client.subscribe(this->response_topic.c_str()))
+        if (!client.subscribe(response_topic.c_str()))
         {
-          Serial.printf("MQTT Client: failure to subscribe to reply topic %s\r\n", this->response_topic.c_str());
+          Serial.printf("MQTT Client: failure to subscribe to reply topic %s\r\n", response_topic.c_str());
         }
         else
         {
-          this->online = true;
+          online = true;
         }
       }
       else
       {
-        Serial.printf("Failure to connect to MQTT server %s\r\n", this->server_ip.c_str());
+        Serial.printf("Failure to connect to MQTT server %s\r\n", server_ip.c_str());
       }
     }
 
     if (!client.connected())
     {
-      this->online = false;
+      online = false;
     }
 
-    return this->online;
+    return online;
   }
 
   /// @brief Process a MQTT query and returns the response
@@ -284,18 +281,18 @@ namespace fablabbg
     static_assert(std::is_base_of<ServerMQTT::Response, RespT>::value, "RespT must inherit from Response");
     try
     {
-      if (this->isOnline())
+      if (isOnline())
       {
-        if (QueryT query{args...}; this->publishWithReply(query))
+        if (QueryT query{args...}; publishWithReply(query))
         {
           // Deserialize the JSON document
-          auto payload = this->last_reply.c_str();
-          if (DeserializationError error = deserializeJson(this->doc, payload))
+          auto payload = last_reply.c_str();
+          if (DeserializationError error = deserializeJson(doc, payload))
           {
             Serial.printf("Failed to parse json: %s (%s)", payload, error.c_str());
             throw std::runtime_error("Failed to parse json");
           }
-          return RespT::fromJson(this->doc);
+          return RespT::fromJson(doc);
         }
       }
     }
@@ -311,7 +308,7 @@ namespace fablabbg
   /// @return server response (if request_ok)
   std::unique_ptr<UserResponse> FabServer::checkCard(card::uid_t uid)
   {
-    return this->processQuery<UserResponse, UserQuery>(uid);
+    return processQuery<UserResponse, UserQuery>(uid);
   }
 
   /// @brief Checks the machine status on the server
@@ -319,7 +316,7 @@ namespace fablabbg
   /// @return server response (if request_ok)
   std::unique_ptr<MachineResponse> FabServer::checkMachine()
   {
-    return this->processQuery<MachineResponse, MachineQuery>();
+    return processQuery<MachineResponse, MachineQuery>();
   }
 
   /// @brief register the starting of a machine usage
@@ -328,7 +325,7 @@ namespace fablabbg
   /// @return server response (if request_ok)
   std::unique_ptr<SimpleResponse> FabServer::startUse(card::uid_t uid)
   {
-    return this->processQuery<SimpleResponse, StartUseQuery>(uid);
+    return processQuery<SimpleResponse, StartUseQuery>(uid);
   }
 
   /// @brief Register end of machine usage
@@ -338,7 +335,7 @@ namespace fablabbg
   /// @return server response (if request_ok)
   std::unique_ptr<SimpleResponse> FabServer::finishUse(card::uid_t uid, std::chrono::seconds duration_s)
   {
-    return this->processQuery<SimpleResponse, StopUseQuery>(uid, duration_s);
+    return processQuery<SimpleResponse, StopUseQuery>(uid, duration_s);
   }
 
   /// @brief Registers a maintenance action
@@ -347,7 +344,7 @@ namespace fablabbg
   /// @return server response (if request_ok)
   std::unique_ptr<SimpleResponse> FabServer::registerMaintenance(card::uid_t maintainer)
   {
-    return this->processQuery<SimpleResponse, RegisterMaintenanceQuery>(maintainer);
+    return processQuery<SimpleResponse, RegisterMaintenanceQuery>(maintainer);
   }
 
   /// @brief Sends a ping to the server
@@ -355,6 +352,6 @@ namespace fablabbg
   /// @return server response (if request_ok)
   std::unique_ptr<SimpleResponse> FabServer::alive()
   {
-    return this->processQuery<SimpleResponse, AliveQuery>();
+    return processQuery<SimpleResponse, AliveQuery>();
   }
 } // namespace fablabbg

@@ -17,6 +17,7 @@ namespace fablabbg
     {
       UNKNOWN,
       FABLAB_USER,
+      FABLAB_STAFF,
       FABLAB_ADMIN
     };
 
@@ -31,7 +32,7 @@ namespace fablabbg
 
     FabUser(const uint8_t uid[conf::whitelist::UID_BYTE_LEN], std::string_view name, bool auth, UserLevel level) : holder_name(name), authenticated(auth), user_level(level)
     {
-      this->card_uid = card::from_array(uid);
+      card_uid = card::from_array(uid);
     }
     bool operator==(const FabUser &t) const
     {

@@ -7,17 +7,17 @@ namespace fablabbg
   {
     std::stringstream sstream;
 
-    sstream << "MachineConfig (ID:" << this->machine_id.id;
-    sstream << ", Name:" << this->machine_name;
-    sstream << ", Type:" << static_cast<int>(this->machine_type);
-    sstream << ", RelayConfig (pin:" << static_cast<int>(this->relay_config.pin);
-    sstream << ", active_low:" << this->relay_config.active_low;
-    sstream << "), MQTTConfig (topic:" << this->mqtt_config.topic;
-    sstream << ", on_message:" << this->mqtt_config.on_message;
-    sstream << ", off_message:" << this->mqtt_config.off_message;
-    sstream << "), AutologoffDelay (min):" << this->autologoff.count();
-    sstream << ", HasRelay:" << this->hasRelay();
-    sstream << ", HasMqttSwitch:" << this->hasMqttSwitch();
+    sstream << "MachineConfig (ID:" << machine_id.id;
+    sstream << ", Name:" << machine_name;
+    sstream << ", Type:" << static_cast<int>(machine_type);
+    sstream << ", RelayConfig (pin:" << static_cast<int>(relay_config.pin);
+    sstream << ", active_low:" << relay_config.active_low;
+    sstream << "), MQTTConfig (topic:" << mqtt_config.topic;
+    sstream << ", on_message:" << mqtt_config.on_message;
+    sstream << ", off_message:" << mqtt_config.off_message;
+    sstream << "), AutologoffDelay (min):" << duration_cast<minutes>(autologoff).count();
+    sstream << ", HasRelay:" << hasRelay();
+    sstream << ", HasMqttSwitch:" << hasMqttSwitch();
     sstream << "))";
 
     return sstream.str();
@@ -25,11 +25,11 @@ namespace fablabbg
 
   bool MachineConfig::hasRelay() const
   {
-    return this->relay_config.pin != NO_PIN;
+    return relay_config.pin != NO_PIN;
   }
 
   bool MachineConfig::hasMqttSwitch() const
   {
-    return !this->mqtt_config.topic.empty();
+    return !mqtt_config.topic.empty();
   }
 }

@@ -19,6 +19,19 @@ namespace fablabbg
   using namespace std::chrono;
   using Status = BoardLogic::Status;
 
+  namespace Board
+  {
+    // Only main.cpp instanciates the variables through Board.h file
+#if (WOKWI_SIMULATION)
+    extern MockRFIDWrapper rfid;
+#else
+    extern RFIDWrapper rfid;
+#endif
+    extern LCDWrapper<conf::lcd::COLS, conf::lcd::ROWS> lcd;
+    extern FabServer server;
+    extern Scheduler scheduler;
+  }
+
   /// @brief Opens WiFi and server connection and updates board state accordingly
   void taskConnect()
   {
@@ -47,52 +60,25 @@ namespace fablabbg
   /// @brief periodic check for new RFID card
   void taskCheckRfid()
   {
-    // check if there is a card
-    if (rfid.isNewCardPresent())
-    {
-      logic.onNewCard();
-      return;
-    }
-
-    // No new card present
-    logic.ready_for_a_new_card = true;
-    if (machine.isFree())
-    {
-      logic.changeStatus(Status::FREE);
-    }
-    else
-    {
-      logic.changeStatus(Status::IN_USE);
-    }
+    Board::logic.checkRfid();
   }
 
   /// @brief blink led
   void taskBlink()
   {
-    if (Board::server.isOnline())
-      if (!Board::machine.allowed || Board::machine.maintenanceNeeded)
-        Board::logic.set_led_color(64, 0, 0); // Red
-      else
-        Board::logic.set_led_color(0, 64, 0); // Green
-    else
-      Board::logic.set_led_color(127, 83, 16); // Orange
-
-    Board::logic.invert_led(); // Blink when in use
+    Board::logic.blinkLed();
   }
 
   /// @brief periodic check if the machine must be powered off
   void taskPoweroffCheck()
   {
-    if (machine.canPowerOff())
-    {
-      machine.power(false);
-    }
+    Board::logic.checkPowerOff();
   }
 
   /// @brief periodic check if the machine must be powered off
   void taskPoweroffWarning()
   {
-    if (machine.isShutdownImminent())
+    if (Board::logic.getMachine().isShutdownImminent())
     {
       logic.beep_failed();
       if (conf::debug::ENABLE_LOGS)
@@ -104,6 +90,7 @@ namespace fablabbg
   void taskLogoffCheck()
   {
     // auto logout after delay
+    auto &machine = Board::logic.getMachine();
     if (machine.isAutologoffExpired())
     {
       Serial.printf("Auto-logging out user %s\r\n", machine.getActiveUser().holder_name.c_str());
@@ -138,7 +125,7 @@ namespace fablabbg
       Serial.println("RFID chip failure");
 
       // Infinite retry until success or hw watchdog timeout
-      while (!rfid.init())
+      while (!rfid.init_rfid())
         delay(duration_cast<milliseconds>(conf::tasks::RFID_CHECK_PERIOD).count());
     }
   }
@@ -154,8 +141,7 @@ namespace fablabbg
 
   void taskLcdRefresh()
   {
-    BoardInfo bi = {Board::server.isOnline(), Board::machine.getPowerState(), Board::machine.isShutdownImminent()};
-    Board::lcd.update(bi, true);
+    Board::logic.refreshLCD();
   }
 
 #if (WOKWI_SIMULATION)
@@ -307,7 +293,10 @@ void setup()
   }
 
   // Initialize hardware (RFID, LCD)
-  if (!logic.board_init())
+  auto success = logic.configure(Board::server, Board::rfid, Board::lcd);
+  success &= logic.board_init();
+
+  if (!success)
   {
     logic.changeStatus(Status::ERROR_HW);
     logic.set_led_color(255, 0, 0);
@@ -322,20 +311,6 @@ void setup()
 
   // Network configuration setup
   config_portal();
-
-  // Now load network, machine id, mqtt config into the machine and server objects.
-  if (!logic.loadConfig())
-  {
-    logic.changeStatus(Status::ERROR);
-    logic.set_led_color(255, 0, 0);
-    logic.led(true);
-    logic.beep_failed();
-#ifndef DEBUG
-    // Cannot continue without valid configurations
-    while (true)
-      ;
-#endif
-  }
 
 #if (WOKWI_SIMULATION)
   // Start MQTT server thread in simulation

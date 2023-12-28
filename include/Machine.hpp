@@ -32,16 +32,16 @@ namespace fablabbg
     bool maintenanceNeeded; // If true, machine needs maintenance
     bool allowed;           // If false, nobody can use the machine
 
-    FabUser &getActiveUser();
+    FabUser getActiveUser() const;
     void configure(const MachineConfig &new_config, FabServer &serv); // Must be called before using the machine
     MachineID getMachineId() const;
     std::string getMachineName() const;
     seconds getUsageDuration() const;
-    minutes getAutologoffDelay() const;
+    seconds getAutologoffDelay() const;
 
     bool login(FabUser user);                       // if the machine is not active, login the user
     void logout();                                  // if the machine is active, check if the card belongs to the user that is logged in and logout the user
-    void setAutologoffDelay(minutes new_delay);     // Sets the delay after which the user will be logged off automatically
+    void setAutologoffDelay(seconds new_delay);     // Sets the delay after which the user will be logged off automatically
     void power(bool on_or_off);                     // Power-on or off the machine
     void setMachineName(std::string_view new_name); // Sets the machine name as per backend configuration
     void setMachineType(MachineType new_type);      // Sets the machine type as per backend configuration
@@ -53,6 +53,8 @@ namespace fablabbg
     std::string toString() const;
     bool isAutologoffExpired() const; // True if the user shall be logged off automatically
     bool isConfigured() const;        // True if the machine has been configured
+
+    std::optional<MachineConfig> getConfig() const; // Returns the current configuration of the machine
 
   private:
     std::optional<MachineConfig> config;

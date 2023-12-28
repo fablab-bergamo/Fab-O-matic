@@ -7,13 +7,14 @@
 #include "Machine.hpp"
 #include "pins.hpp"
 #include <chrono>
+#include "BaseLCDWrapper.hpp"
 
 using namespace std::chrono;
 
 namespace fablabbg
 {
   template <uint8_t _COLS, uint8_t _ROWS>
-  class LCDWrapper
+  class LCDWrapper : public BaseLCDWrapper
   {
   public:
     LCDWrapper(const pins_config::lcd_config &config);
@@ -57,7 +58,6 @@ namespace fablabbg
     void backlightOff() const;
     void prettyPrint(const DisplayBuffer &buffer, const BoardInfo &bi) const;
     bool needsUpdate(const BoardInfo &bi) const;
-
     void createChar(uint8_t char_idx, const uint8_t values[8]);
   };
 } // namespace fablabbg

@@ -13,7 +13,7 @@ namespace fablabbg::ServerMQTT
   {
     std::stringstream ss;
     ss << "{\"action\":\"checkuser\","
-       << "\"uid\":\"" << card::uid_str(this->uid) << "\""
+       << "\"uid\":\"" << card::uid_str(uid) << "\""
        << "}";
     return ss.str();
   }
@@ -38,7 +38,7 @@ namespace fablabbg::ServerMQTT
   {
     std::stringstream ss;
     ss << "{\"action\":\"startuse\", "
-       << "\"uid\":\"" << card::uid_str(this->uid) << "\""
+       << "\"uid\":\"" << card::uid_str(uid) << "\""
        << "}";
     return ss.str();
   }
@@ -47,8 +47,8 @@ namespace fablabbg::ServerMQTT
   {
     std::stringstream ss;
     ss << "{\"action\":\"stopuse\", "
-       << "\"uid\":\"" << card::uid_str(this->uid) << "\","
-       << "\"duration\":" << this->duration_s.count()
+       << "\"uid\":\"" << card::uid_str(uid) << "\","
+       << "\"duration\":" << duration_s.count()
        << "}";
     return ss.str();
   }
@@ -57,14 +57,14 @@ namespace fablabbg::ServerMQTT
   {
     std::stringstream ss;
     ss << "{\"action\":\"maintenance\", "
-       << "\"uid\":\"" << card::uid_str(this->uid) << "\""
+       << "\"uid\":\"" << card::uid_str(uid) << "\""
        << "}";
     return ss.str();
   }
 
   UserResult UserResponse::getResult() const
   {
-    return static_cast<UserResult>(this->result);
+    return static_cast<UserResult>(result);
   }
   std::unique_ptr<UserResponse> UserResponse::fromJson(JsonDocument &doc)
   {

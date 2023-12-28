@@ -12,9 +12,9 @@ namespace fablabbg
                                                                               lcd(config.rs_pin, config.en_pin, config.d0_pin, config.d1_pin, config.d2_pin, config.d3_pin),
                                                                               show_connection_status(true), show_power_status(true), forceUpdate(true)
   {
-    for (auto &row : this->buffer)
+    for (auto &row : buffer)
       row.fill({0});
-    for (auto &row : this->current)
+    for (auto &row : current)
       row.fill({0});
   }
 
@@ -22,32 +22,32 @@ namespace fablabbg
   void LCDWrapper<_COLS, _ROWS>::createChar(uint8_t num, const uint8_t values[8])
   {
     // Arduino LCD library only reads uint8_t* but did not flag const, so we use this wrapper
-    this->lcd.createChar(num, const_cast<uint8_t *>(values));
+    lcd.createChar(num, const_cast<uint8_t *>(values));
   }
 
   template <uint8_t _COLS, uint8_t _ROWS>
   bool LCDWrapper<_COLS, _ROWS>::begin()
   {
-    this->lcd.begin(_COLS, _ROWS);
-    createChar(CHAR_ANTENNA, this->antenna_char);
-    createChar(CHAR_CONNECTION, this->connection_char);
-    createChar(CHAR_NO_CONNECTION, this->noconnection_char);
-    createChar(CHAR_POWERED_OFF, this->powered_off_char);
-    createChar(CHAR_POWERED_ON, this->powered_on_char);
-    createChar(CHAR_POWERING_OFF, this->powering_off_char);
+    lcd.begin(_COLS, _ROWS);
+    createChar(CHAR_ANTENNA, antenna_char);
+    createChar(CHAR_CONNECTION, connection_char);
+    createChar(CHAR_NO_CONNECTION, noconnection_char);
+    createChar(CHAR_POWERED_OFF, powered_off_char);
+    createChar(CHAR_POWERED_ON, powered_on_char);
+    createChar(CHAR_POWERING_OFF, powering_off_char);
 
-    if (this->config.bl_pin != NO_PIN)
-      pinMode(this->config.bl_pin, OUTPUT);
+    if (config.bl_pin != NO_PIN)
+      pinMode(config.bl_pin, OUTPUT);
 
-    this->backlightOn();
+    backlightOn();
 
     if (conf::debug::ENABLE_LOGS)
     {
       constexpr size_t MAX_LEN = 100;
       char buf[MAX_LEN] = {0};
       if (snprintf(buf, sizeof(buf), "Configured LCD %d x %d (d4=%d, d5=%d, d6=%d, d7=%d, en=%d, rs=%d), backlight=%d", _COLS, _ROWS,
-                   this->config.d0_pin, this->config.d1_pin, this->config.d2_pin, this->config.d3_pin,
-                   this->config.en_pin, this->config.rs_pin, this->config.bl_pin) > 0)
+                   config.d0_pin, config.d1_pin, config.d2_pin, config.d3_pin,
+                   config.en_pin, config.rs_pin, config.bl_pin) > 0)
         Serial.println(buf);
     }
 
@@ -55,98 +55,84 @@ namespace fablabbg
   }
 
   template <uint8_t _COLS, uint8_t _ROWS>
-  std::string LCDWrapper<_COLS, _ROWS>::convertSecondsToHHMMSS(duration<uint16_t> duration) const
-  {
-    //! since something something does not support to_string we have to resort to ye olde cstring stuff
-    char buf[9] = {0};
-
-    snprintf(buf, sizeof(buf), "%02lu:%02lu:%02lu",
-             duration.count() / 3600UL,
-             (duration.count() % 3600UL) / 60UL,
-             duration.count() % 60UL);
-
-    return {buf};
-  }
-
-  template <uint8_t _COLS, uint8_t _ROWS>
   void LCDWrapper<_COLS, _ROWS>::clear()
   {
-    for (auto &row : this->current)
+    for (auto &row : current)
       row.fill({' '});
-    this->lcd.clear();
-    this->forceUpdate = true;
+    lcd.clear();
+    forceUpdate = true;
   }
 
   template <uint8_t _COLS, uint8_t _ROWS>
   void LCDWrapper<_COLS, _ROWS>::update(const BoardInfo &info, bool forced)
   {
-    if (!forced && !this->needsUpdate(info))
+    if (!forced && !needsUpdate(info))
     {
       return;
     }
 
-    this->lcd.clear();
+    lcd.clear();
 
     auto row_num = 0;
-    for (const auto &row : this->buffer)
+    for (const auto &row : buffer)
     {
-      this->lcd.setCursor(0, row_num);
+      lcd.setCursor(0, row_num);
       char why_arduino_has_not_implemented_liquidcrystal_from_char_array_yet[_COLS];
       memcpy(why_arduino_has_not_implemented_liquidcrystal_from_char_array_yet, &row, _COLS);
-      this->lcd.print(why_arduino_has_not_implemented_liquidcrystal_from_char_array_yet);
+      lcd.print(why_arduino_has_not_implemented_liquidcrystal_from_char_array_yet);
       row_num++;
     }
 
     static_assert(_COLS > 1 && _ROWS > 1, "LCDWrapper required at least 2x2 LCDs");
-    if (this->show_connection_status)
+    if (show_connection_status)
     {
-      this->lcd.setCursor(_COLS - 2, 0);
-      this->lcd.write(CHAR_ANTENNA);
-      this->lcd.write(info.server_connected ? CHAR_CONNECTION : CHAR_NO_CONNECTION);
+      lcd.setCursor(_COLS - 2, 0);
+      lcd.write(CHAR_ANTENNA);
+      lcd.write(info.server_connected ? CHAR_CONNECTION : CHAR_NO_CONNECTION);
     }
 
-    if (this->show_power_status)
+    if (show_power_status)
     {
-      this->lcd.setCursor(_COLS - 1, 1);
+      lcd.setCursor(_COLS - 1, 1);
       if (info.power_state == Machine::PowerState::POWERED_ON)
       {
-        this->lcd.write(CHAR_POWERED_ON);
+        lcd.write(CHAR_POWERED_ON);
       }
       else if (info.power_state == Machine::PowerState::POWERED_OFF)
       {
-        this->lcd.write(CHAR_POWERED_OFF);
+        lcd.write(CHAR_POWERED_OFF);
       }
       else if (info.power_state == Machine::PowerState::WAITING_FOR_POWER_OFF)
       {
-        this->lcd.write(CHAR_POWERING_OFF);
+        lcd.write(CHAR_POWERING_OFF);
       }
       else
       {
-        this->lcd.write('?');
+        lcd.write('?');
       }
     }
 
-    this->current = this->buffer;
-    this->boardInfo = info;
-    this->forceUpdate = false;
+    current = buffer;
+    boardInfo = info;
+    forceUpdate = false;
   }
 
   template <uint8_t _COLS, uint8_t _ROWS>
   void LCDWrapper<_COLS, _ROWS>::showConnection(bool show)
   {
-    if (this->show_connection_status != show)
+    if (show_connection_status != show)
       forceUpdate = true;
 
-    this->show_connection_status = show;
+    show_connection_status = show;
   }
 
   template <uint8_t _COLS, uint8_t _ROWS>
   void LCDWrapper<_COLS, _ROWS>::showPower(bool show)
   {
-    if (this->show_power_status != show)
+    if (show_power_status != show)
       forceUpdate = true;
 
-    this->show_power_status = show;
+    show_power_status = show;
   }
 
   /// @brief Checks if the LCD buffer has changed since last write to the LCD, or forced update has been requested.
@@ -157,11 +143,11 @@ namespace fablabbg
   template <uint8_t _COLS, uint8_t _ROWS>
   bool LCDWrapper<_COLS, _ROWS>::needsUpdate(const BoardInfo &bi) const
   {
-    if (forceUpdate || !(bi == this->boardInfo) || this->current != this->buffer)
+    if (forceUpdate || !(bi == boardInfo) || current != buffer)
     {
       if (conf::debug::ENABLE_LOGS)
       {
-        this->prettyPrint(this->buffer, bi);
+        prettyPrint(buffer, bi);
       }
 
       return true;
@@ -228,10 +214,10 @@ namespace fablabbg
 
     if (row < _ROWS)
     {
-      this->buffer[row].fill({0});
+      buffer[row].fill({0});
       for (auto i = 0; i < text.length() && i < _COLS; i++)
       {
-        this->buffer[row][i] = text[i];
+        buffer[row][i] = text[i];
       }
     }
   }
@@ -239,14 +225,14 @@ namespace fablabbg
   template <uint8_t _COLS, uint8_t _ROWS>
   void LCDWrapper<_COLS, _ROWS>::backlightOn() const
   {
-    if (this->config.bl_pin != NO_PIN)
-      digitalWrite(this->config.bl_pin, this->config.active_low ? 0 : 1);
+    if (config.bl_pin != NO_PIN)
+      digitalWrite(config.bl_pin, config.active_low ? 0 : 1);
   }
 
   template <uint8_t _COLS, uint8_t _ROWS>
   void LCDWrapper<_COLS, _ROWS>::backlightOff() const
   {
-    if (this->config.bl_pin != NO_PIN)
-      digitalWrite(this->config.bl_pin, this->config.active_low ? 1 : 0);
+    if (config.bl_pin != NO_PIN)
+      digitalWrite(config.bl_pin, config.active_low ? 1 : 0);
   }
 } // namespace fablabbg

@@ -3,6 +3,7 @@
 #define MOCKMQTTBROKER_H_
 
 #include "sMQTTBroker.h"
+#include "BaseRfidWrapper.hpp"
 
 namespace fablabbg
 {

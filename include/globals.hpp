@@ -6,31 +6,31 @@
 #include "Machine.hpp"
 #include "LCDWrapper.hpp"
 #include "conf.hpp"
-#include "MockRFIDWrapper.hpp"
+#include "mock/MockRFIDWrapper.hpp"
 #include "RFIDWrapper.hpp"
 #include "pins.hpp"
 #include "secrets.hpp"
 #include "AuthProvider.hpp"
 #include "BoardLogic.hpp"
 #include "Tasks.hpp"
-#include "MockMQTTBroker.hpp"
+#include "mock/MockMQTTBroker.hpp"
 #include "SavedConfig.hpp"
+#include "LCDWrapper.hpp"
+#include "pins.hpp"
+
+using namespace fablabbg;
 
 namespace fablabbg::Board
 {
   // Global variables
 #if (WOKWI_SIMULATION)
   MockRFIDWrapper rfid;
-  FabServer server;
   MockMQTTBroker broker;
 #else
   RFIDWrapper rfid;
-  FabServer server;
 #endif
-
-  LCDWrapper<conf::lcd::COLS, conf::lcd::ROWS> lcd(pins.lcd);
-  Machine machine;
-  AuthProvider auth(secrets::cards::whitelist);
+  LCDWrapper<conf::lcd::COLS, conf::lcd::ROWS> lcd{pins.lcd};
+  FabServer server;
   BoardLogic logic;
   Tasks::Scheduler scheduler;
 } // namespace Board
