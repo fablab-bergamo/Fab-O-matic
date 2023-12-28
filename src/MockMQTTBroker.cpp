@@ -14,7 +14,7 @@ namespace fablabbg
     while (WiFi.status() != WL_CONNECTED)
     { // Wait for the Wi-Fi to connect
       if (conf::debug::ENABLE_LOGS)
-        Serial.printf("MQTTBROKER: WiFi status changed to %d\r\n", WiFi.status());
+        Serial.printf("MQTT BROKER: WiFi status changed to %d\r\n", WiFi.status());
       this->is_running = false;
       return;
     }
@@ -23,7 +23,7 @@ namespace fablabbg
       this->is_running = this->init(MockMQTTBroker::MQTTPORT, true);
 
       if (conf::debug::ENABLE_LOGS)
-        Serial.printf("MQTTBROKER: started with result %d\r\n", this->is_running);
+        Serial.printf("MQTT BROKER: started with result %d\r\n", this->is_running);
     }
   }
   bool MockMQTTBroker::onEvent(sMQTTEvent *event)
@@ -35,7 +35,7 @@ namespace fablabbg
       sMQTTNewClientEvent *e = (sMQTTNewClientEvent *)event;
 
       if (conf::debug::ENABLE_LOGS)
-        Serial.printf("MQTTBROKER: client connected, id:%s\r\n", e->Client()->getClientId().c_str());
+        Serial.printf("MQTT BROKER: client connected, id:%s\r\n", e->Client()->getClientId().c_str());
     }
     break;
     case Public_sMQTTEventType:
@@ -45,7 +45,7 @@ namespace fablabbg
       this->payload = e->Payload();
 
       if (conf::debug::ENABLE_LOGS)
-        Serial.printf("MQTTBROKER : Received  %s -> %s\r\n", this->topic.c_str(), this->payload.c_str());
+        Serial.printf("MQTT BROKER: Received  %s -> %s\r\n", this->topic.c_str(), this->payload.c_str());
 
       std::string reply = this->fakeReply();
       std::string topic_reply = this->topic + "/reply";
@@ -57,7 +57,7 @@ namespace fablabbg
       sMQTTRemoveClientEvent *e = (sMQTTRemoveClientEvent *)event;
 
       if (conf::debug::ENABLE_LOGS)
-        Serial.printf("MQTTBROKER: removed client id: %s\r\n", e->Client()->getClientId().c_str());
+        Serial.printf("MQTT BROKER: removed client id: %s\r\n", e->Client()->getClientId().c_str());
     }
     break;
     case LostConnect_sMQTTEventType:

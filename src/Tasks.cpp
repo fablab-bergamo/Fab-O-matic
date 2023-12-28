@@ -95,6 +95,11 @@ namespace fablabbg::Tasks
 #endif
   }
 
+  size_t Scheduler::taskCount() const
+  {
+    return tasks.size();
+  }
+
   /// @brief Creates a new task
   /// @param id task id
   /// @param period task period (if 0, will be run only once)
@@ -107,7 +112,7 @@ namespace fablabbg::Tasks
              Scheduler &scheduler, bool active, milliseconds delay) : active(active), id(id),
                                                                       period(period), delay(delay),
                                                                       last_run(system_clock::now() + delay),
-                                                                      next_run(last_run + period),
+                                                                      next_run(last_run),
                                                                       average_tardiness(0ms), total_runtime(0ms),
                                                                       callback(callback), run_counter(0)
   {

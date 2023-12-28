@@ -18,10 +18,10 @@ namespace fablabbg::Tasks
     Task(std::string id, milliseconds period, std::function<void()> callback, Scheduler &scheduler, bool active = true, milliseconds delay = 0ms);
     ~Task() = default;
 
-    Task(const Task &other) = delete;
-    Task(Task &&other) = delete;
-    Task &operator=(const Task &other) = delete;
-    Task &operator=(Task &&other) = delete;
+    Task(const Task &other) = default;
+    Task(Task &&other) = default;
+    Task &operator=(const Task &other) = default;
+    Task &operator=(Task &&other) = default;
 
     void run();                              // Execute the task if active
     void stop();                             // Prevent the task from running again
@@ -63,6 +63,7 @@ namespace fablabbg::Tasks
     void removeTask(Task &task);
     void execute() const;
     void restart() const;
+    size_t taskCount() const;
 
   private:
     std::vector<std::reference_wrapper<Task>> tasks; // Vector containing references to the tasks, not the tasks themselves

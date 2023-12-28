@@ -15,7 +15,10 @@ namespace fablabbg
   {
     static constexpr auto FIELD_LENGTH = 40;
     static constexpr auto INT_LENGTH = 5;      // Must save as string for WiFiManager
-    static constexpr auto MAGIC_NUMBER = 0x44; // Increment when changing the struct
+    static constexpr auto MAGIC_NUMBER = 0x45; // Increment when changing the struct
+
+    // Magic number to check if the EEPROM is initialized
+    mutable uint8_t magic_number{0};
 
     // Wifi
     char ssid[FIELD_LENGTH]{0};
@@ -30,9 +33,6 @@ namespace fablabbg
     char machine_topic[FIELD_LENGTH]{0};
 
     char machine_id[INT_LENGTH]{0};
-
-    // Magic number to check if the EEPROM is initialized
-    mutable uint8_t magic_number;
 
     bool SaveToEEPROM() const;
     std::string toString() const;

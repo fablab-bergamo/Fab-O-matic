@@ -269,12 +269,6 @@ namespace fablabbg
       this->online = false;
     }
 
-    if (conf::debug::ENABLE_LOGS)
-    {
-      std::stringstream ss;
-      ss << "FabServer::connect() : Online:" << this->online << ", board IP address:" << WiFi.localIP().toString().c_str() << ", server: " << this->server_ip.c_str();
-      Serial.println(ss.str().c_str());
-    }
     return this->online;
   }
 

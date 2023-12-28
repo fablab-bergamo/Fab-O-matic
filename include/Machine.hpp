@@ -24,12 +24,16 @@ namespace fablabbg
 
     Machine();
     ~Machine() = default;
+    Machine(const Machine &) = delete;             // copy constructor
+    Machine &operator=(const Machine &x) = delete; // copy assignment
+    Machine(Machine &&) = delete;                  // move constructor
+    Machine &operator=(Machine &&) = delete;       // move assignment
 
     bool maintenanceNeeded; // If true, machine needs maintenance
     bool allowed;           // If false, nobody can use the machine
 
     FabUser &getActiveUser();
-    void configure(MachineConfig new_config, FabServer &serv); // Must be called before using the machine
+    void configure(const MachineConfig &new_config, FabServer &serv); // Must be called before using the machine
     MachineID getMachineId() const;
     std::string getMachineName() const;
     seconds getUsageDuration() const;
@@ -48,6 +52,7 @@ namespace fablabbg
     bool canPowerOff() const;         // True if POWEROFF_DELAY_MINUTES delay has expired,and the machine is still idle
     std::string toString() const;
     bool isAutologoffExpired() const; // True if the user shall be logged off automatically
+    bool isConfigured() const;        // True if the machine has been configured
 
   private:
     std::optional<MachineConfig> config;

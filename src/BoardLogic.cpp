@@ -361,7 +361,7 @@ namespace fablabbg
     Board::lcd.showPower(true);
 
     user_name = Board::machine.getActiveUser().holder_name;
-    machine_name = Board::machine.getMachineName();
+    machine_name = Board::machine.isConfigured() ? Board::machine.getMachineName() : "-";
     uid_str = card::uid_str(this->user.card_uid);
 
     switch (this->status)

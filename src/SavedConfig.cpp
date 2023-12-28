@@ -28,6 +28,8 @@ namespace fablabbg
     // Machine
     strncpy(config.machine_id, std::to_string(conf::default_config::machine_id.id).c_str(), INT_LENGTH);
 
+    config.magic_number = MAGIC_NUMBER;
+
     return config;
   }
 
@@ -72,8 +74,6 @@ namespace fablabbg
     if (conf::debug::ENABLE_LOGS)
     {
       Serial.printf("EEPROM commit result: %d\r\n", result);
-      Serial.println("EEPROM content:");
-      Serial.println(this->toString().c_str());
     }
     return result;
   }
@@ -89,6 +89,7 @@ namespace fablabbg
     doc["mqtt_password"] = this->mqtt_password;
     doc["machine_topic"] = this->machine_topic;
     doc["machine_id"] = this->machine_id;
+    doc["magic_number"] = this->magic_number;
 
     std::string result;
     serializeJson(doc, result);

@@ -30,14 +30,14 @@ namespace fablabbg
     std::string machine_name;
     struct RelayConfig
     {
-      uint8_t pin{NO_PIN};
-      bool active_low{false};
+      const uint8_t pin{NO_PIN};
+      const bool active_low{false};
     } relay_config;
     struct MQTTConfig
     {
-      std::string topic{""};
-      std::string on_message{"on"};
-      std::string off_message{"off"};
+      const std::string topic{""};
+      const std::string on_message{"on"};
+      const std::string off_message{"off"};
     } mqtt_config;
 
     minutes autologoff;
@@ -51,6 +51,12 @@ namespace fablabbg
     std::string toString() const;
     bool hasRelay() const;
     bool hasMqttSwitch() const;
+
+    MachineConfig() = delete;
+    MachineConfig(const MachineConfig &) = default;             // copy constructor
+    MachineConfig &operator=(const MachineConfig &x) = default; // copy assignment
+    MachineConfig(MachineConfig &&) = delete;                   // move constructor
+    MachineConfig &operator=(MachineConfig &&) = delete;        // move assignment
   };
 }
 

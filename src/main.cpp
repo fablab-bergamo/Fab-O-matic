@@ -296,6 +296,7 @@ namespace fablabbg
 
 using namespace fablabbg;
 
+#ifndef UNIT_TEST
 void setup()
 {
   Serial.begin(conf::debug::SERIAL_SPEED_BDS); // Initialize serial communications with the PC for debugging.
@@ -346,7 +347,7 @@ void setup()
   }
   // Enables LCD refresh for Wokwi
   t10.start();
-#endif
+#endif // WOKWI_SIMULATION
 
   logic.beep_ok();
   server.connectWiFi();
@@ -359,3 +360,4 @@ void loop()
 {
   scheduler.execute();
 }
+#endif // UNIT_TEST
