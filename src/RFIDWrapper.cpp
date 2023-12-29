@@ -59,10 +59,10 @@ namespace fablabbg
 
   /// @brief indicates if the card is still present in the RFID chip antenna area
   /// @param original the card ID to check
-  bool RFIDWrapper::cardStillThere(const card::uid_t original) const
+  bool RFIDWrapper::cardStillThere(const card::uid_t original, milliseconds max_delay) const
   {
-    static constexpr auto NB_TRIES = 3;
-    for (auto i = 0; i < NB_TRIES; i++)
+    auto start = std::chrono::system_clock::now();
+    do
     {
       // Detect Tag without looking for collisions
       byte bufferATQA[2];
@@ -72,11 +72,12 @@ namespace fablabbg
 
       if (result == MFRC522::StatusCode::STATUS_OK)
       {
-        if (readCardSerial() && getUid() == original)
+        if (readCardSerial() == original)
           return true;
       }
-      delay(5);
-    }
+      delay(20);
+    } while (std::chrono::system_clock::now() - start < max_delay);
+
     return false;
   }
 

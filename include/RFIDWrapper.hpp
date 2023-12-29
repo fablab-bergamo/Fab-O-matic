@@ -4,6 +4,7 @@
 #include <string>
 #include <memory>
 #include <optional>
+#include <chrono>
 
 #include "conf.hpp"
 #include "card.hpp"
@@ -14,6 +15,8 @@
 
 namespace fablabbg
 {
+  using namespace std::chrono;
+
   class RFIDWrapper : public BaseRFIDWrapper
   {
   private:
@@ -26,7 +29,7 @@ namespace fablabbg
 
     bool init_rfid() const;
     bool isNewCardPresent() const;
-    bool cardStillThere(const card::uid_t original) const;
+    bool cardStillThere(const card::uid_t original, milliseconds max_delay) const;
     std::optional<card::uid_t> readCardSerial() const;
     bool selfTest() const;
     void reset() const;

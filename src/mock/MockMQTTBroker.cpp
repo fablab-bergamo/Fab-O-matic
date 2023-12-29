@@ -107,7 +107,9 @@ namespace fablabbg
 
     if (query.find("checkuser") != std::string::npos)
     {
-      return "{\"request_ok\":true,\"level\":2,\"name\":\"TEST USER\",\"is_valid\":true}";
+      auto uid = query.substr(query.find("uid") + 6 + 4, 4);
+      auto response = "{\"request_ok\":true,\"is_valid\":true,\"level\":2,\"name\":\"USER" + uid + "\",\"is_valid\":true}";
+      return response;
     }
 
     return "{\"request_ok\":true}";

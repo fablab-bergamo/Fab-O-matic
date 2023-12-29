@@ -222,12 +222,14 @@ void test_machine_maintenance()
   simulate_rfid_card(rfid, logic, card_fabuser, 0ms);
   TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::MAINTENANCE_NEEDED, logic.getStatus(), "Status not MAINTENANCE_NEEDED");
 
-  simulate_rfid_card(rfid, logic, std::nullopt, 0ms);
+  simulate_rfid_card(rfid, logic, std::nullopt);
+  delay(1000);
 
-  simulate_rfid_card(rfid, logic, card_admin, conf::machine::LONG_TAP_DURATION);
+  simulate_rfid_card(rfid, logic, card_admin, 0ms); // Log in + Conferma manutenzione perché non ritorna prima della conclusione
+  simulate_rfid_card(rfid, logic, std::nullopt);    // Card away
+  TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::IN_USE, logic.getStatus(), "Status not IN_USE");
   TEST_ASSERT_FALSE_MESSAGE(logic.getMachine().maintenanceNeeded, "Maintenance not cleared");
 
-  simulate_rfid_card(rfid, logic, std::nullopt);
   // Logoff admin
   simulate_rfid_card(rfid, logic, card_admin);
   TEST_ASSERT_TRUE_MESSAGE(logic.getMachine().isFree(), "Machine is not free");

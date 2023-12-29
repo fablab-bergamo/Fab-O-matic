@@ -11,7 +11,7 @@ namespace fablabbg
   public:
     virtual bool init_rfid() const;
     virtual bool isNewCardPresent() const;
-    virtual bool cardStillThere(const card::uid_t original) const;
+    virtual bool cardStillThere(const card::uid_t original, milliseconds delay) const;
     virtual std::optional<card::uid_t> readCardSerial() const;
     virtual bool selfTest() const;
     virtual void reset() const;

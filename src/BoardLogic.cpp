@@ -164,9 +164,7 @@ namespace fablabbg
   bool BoardLogic::longTap(std::string_view short_prompt) const
   {
     constexpr auto STEPS_COUNT = 6;
-    constexpr milliseconds STEP_DELAY = duration_cast<milliseconds>(conf::machine::LONG_TAP_DURATION) / STEPS_COUNT;
-    constexpr uint32_t MSSTEP_DELAY = static_cast<uint32_t>(STEP_DELAY.count());
-
+    constexpr milliseconds delay_per_step = duration_cast<milliseconds>(conf::machine::LONG_TAP_DURATION) / STEPS_COUNT;
     const BoardInfo bi = {getServer().isOnline(), machine.getPowerState(), machine.isShutdownImminent()};
 
     for (auto step = 0; step < STEPS_COUNT; step++)
@@ -176,17 +174,23 @@ namespace fablabbg
       getLcd().setRow(1, ss.str());
       getLcd().update(bi);
 
-      delay(MSSTEP_DELAY);
-
-      if (!getRfid().cardStillThere(machine.getActiveUser().card_uid))
+      auto start = std::chrono::system_clock::now();
+      if (!getRfid().cardStillThere(machine.getActiveUser().card_uid, delay_per_step))
       {
-        getLcd().setRow(1, "");
+        getLcd().setRow(1, "* ANNULLATO *");
         getLcd().update(bi);
         return false;
       }
+
+      // cardStillThere may have returned immediately, so we need to wait a bit
+      auto elapsed = std::chrono::system_clock::now() - start;
+      if (delay_per_step - elapsed > 10ms)
+      {
+        delay(duration_cast<milliseconds>(delay_per_step - elapsed).count());
+      }
     }
 
-    getLcd().setRow(1, "");
+    getLcd().setRow(1, "* CONFERMATO *");
     getLcd().update(bi);
     return true;
   }
@@ -255,6 +259,7 @@ namespace fablabbg
           else
           {
             changeStatus(Status::MAINTENANCE_DONE);
+            machine.maintenanceNeeded = false;
             beep_ok();
             delay(1000);
           }
