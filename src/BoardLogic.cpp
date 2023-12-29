@@ -8,9 +8,9 @@
 #include "BoardLogic.hpp"
 #include "secrets.hpp"
 #include "conf.hpp"
-#include "machine.hpp"
-#include "Fabserver.hpp"
-#include "BaseRFIDWrapper.hpp"
+#include "Machine.hpp"
+#include "FabServer.hpp"
+#include "BaseRfidWrapper.hpp"
 #include "AuthProvider.hpp"
 #include "BaseLCDWrapper.hpp"
 #include "pins.hpp"
@@ -163,9 +163,8 @@ namespace fablabbg
   /// @return True if the user accepted, False if user bailed out
   bool BoardLogic::longTap(std::string_view short_prompt) const
   {
-    constexpr seconds TOTAL_DURATION = 3s;
     constexpr auto STEPS_COUNT = 6;
-    constexpr milliseconds STEP_DELAY = duration_cast<milliseconds>(TOTAL_DURATION) / STEPS_COUNT;
+    constexpr milliseconds STEP_DELAY = duration_cast<milliseconds>(conf::machine::LONG_TAP_DURATION) / STEPS_COUNT;
     constexpr uint32_t MSSTEP_DELAY = static_cast<uint32_t>(STEP_DELAY.count());
 
     const BoardInfo bi = {getServer().isOnline(), machine.getPowerState(), machine.isShutdownImminent()};
@@ -227,14 +226,14 @@ namespace fablabbg
     if (machine.maintenanceNeeded)
     {
       if (conf::machine::MAINTENANCE_BLOCK &&
-          user.user_level < FabUser::UserLevel::FABLAB_ADMIN)
+          user.user_level < FabUser::UserLevel::FABLAB_STAFF)
       {
         changeStatus(Status::MAINTENANCE_NEEDED);
         beep_failed();
         delay(3000);
         return false;
       }
-      if (user.user_level >= FabUser::UserLevel::FABLAB_ADMIN)
+      if (user.user_level >= FabUser::UserLevel::FABLAB_STAFF)
       {
         beep_ok();
         changeStatus(Status::MAINTENANCE_QUERY);
@@ -247,6 +246,11 @@ namespace fablabbg
             beep_failed();
             changeStatus(Status::ERROR);
             delay(1000);
+            // Allow bypass for admins
+            if (user.user_level == FabUser::UserLevel::FABLAB_ADMIN)
+            {
+              machine.maintenanceNeeded = false;
+            }
           }
           else
           {
@@ -577,13 +581,16 @@ namespace fablabbg
     }
   }
 
-/// @brief Gets the current machine
-/// @return a machine object
-#if XTRA_UNIT_TEST
-  Machine &BoardLogic::getMachine()
-#else
+  /// @brief returns a modificable machine for testing only
+  /// @return machine
+  Machine &BoardLogic::getMachineForTesting()
+  {
+    return machine;
+  }
+
+  /// @brief Gets the current machine
+  /// @return a machine object
   const Machine &BoardLogic::getMachine() const
-#endif
   {
     return machine;
   }

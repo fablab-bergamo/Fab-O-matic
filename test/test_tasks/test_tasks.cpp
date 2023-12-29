@@ -126,7 +126,6 @@ void test_stop_start_tasks(void)
 
 void setup()
 {
-  delay(2000); // service delay
   UNITY_BEGIN();
   RUN_TEST(test_execute_runs_all_tasks);
   RUN_TEST(test_stop_start_tasks);

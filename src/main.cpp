@@ -145,6 +145,47 @@ namespace fablabbg
   }
 
 #if (WOKWI_SIMULATION)
+  void taskRFIDCardSim()
+  {
+    static uid_t logged_uid = card::INVALID;
+    static bool in_rfid_field = false;
+
+    if (logged_uid == card::INVALID)
+    {
+      if (in_rfid_field)
+      {
+        rfid.resetUid();
+        in_rfid_field = false;
+        logged_uid = rfid.getUid();
+        return;
+      }
+
+      // Select random card every X times
+      if (random(0, 100) < 5)
+      {
+        auto [card_uid, level, name] = secrets::cards::whitelist[random(0, secrets::cards::whitelist.size())];
+        logged_uid = card_uid;
+        rfid.setUid(card_uid);
+        in_rfid_field = true;
+      }
+    }
+    else
+    {
+      if (in_rfid_field)
+      {
+        rfid.resetUid();
+        in_rfid_field = false;
+        logged_uid = card::INVALID;
+        return;
+      }
+      // Select logged-in card every X times
+      if (random(0, 100) < 5)
+      {
+        rfid.setUid(logged_uid);
+        in_rfid_field = true;
+      }
+    }
+  }
 
   pthread_t thread_mqtt_broker;
   pthread_attr_t attr_mqtt_broker;
@@ -186,8 +227,12 @@ namespace fablabbg
   Task t7("PoweroffWarning", conf::machine::DELAY_BETWEEN_BEEPS, &taskPoweroffWarning, scheduler, true);
   Task t8("MQTT keepalive", 1s, &taskMQTTAlive, scheduler, true);
   Task t9("LED", 1s, &taskBlink, scheduler, true);
+
+#if (WOKWI_SIMULATION)
   // Wokwi requires LCD refresh unlike real hardware
-  Task t10("LCDRefresh", 2s, &taskLcdRefresh, scheduler, false);
+  Task t10("LCDRefresh", 2s, &taskLcdRefresh, scheduler, true);
+  Task t11("RFIDCardsSim", 1s, &taskRFIDCardSim, scheduler, true, 30s);
+#endif
 
   // flag for saving data
   bool shouldSaveConfig = false;
@@ -320,8 +365,6 @@ void setup()
   {
     Serial.println("Error creating MQTT server thread");
   }
-  // Enables LCD refresh for Wokwi
-  t10.start();
 #endif // WOKWI_SIMULATION
 
   logic.beep_ok();

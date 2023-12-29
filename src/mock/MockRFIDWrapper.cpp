@@ -54,10 +54,10 @@ namespace fablabbg
     if (fakeUid.has_value())
       return fakeUid.value();
 
-    uint8_t arr[conf::whitelist::UID_BYTE_LEN]{0};
+    uint8_t arr[conf::rfid_tags::UID_BYTE_LEN]{0};
     auto [uid, level, nane] = secrets::cards::whitelist[0];
 
-    memcpy(arr, &uid, conf::whitelist::UID_BYTE_LEN);
+    memcpy(arr, &uid, conf::rfid_tags::UID_BYTE_LEN);
 
     auto c = card::from_array(arr);
 

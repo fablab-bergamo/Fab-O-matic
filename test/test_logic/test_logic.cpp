@@ -4,62 +4,29 @@
 #include <vector>
 
 #include <Arduino.h>
-#define UNITY_INCLUDE_PRINT_FORMATTED
 #include <unity.h>
 #include "FabServer.hpp"
 #include "mock/MockLCDWrapper.hpp"
 #include "mock/MockRFIDWrapper.hpp"
-#define XTRA_UNIT_TEST
 #include "BoardLogic.hpp"
 #include "conf.hpp"
 #include "SavedConfig.hpp"
+#include "test_common.h"
 
 using namespace fablabbg;
 using namespace std::chrono;
 using namespace std::chrono_literals;
+using namespace fablabbg::tests;
 
 FabServer server;
 MockRFIDWrapper rfid;
 MockLCDWrapper lcd;
 BoardLogic logic;
 
-static constexpr WhiteList test_whitelist /* List of RFID tags whitelisted, regardless of connection */
-    {
-        std::make_tuple(0xAABBCCD1, FabUser::UserLevel::FABLAB_ADMIN, "ABCDEFG"),
-        std::make_tuple(0xAABBCCD2, FabUser::UserLevel::FABLAB_STAFF, "PIPPO"),
-        std::make_tuple(0xAABBCCD3, FabUser::UserLevel::FABLAB_USER, "USER1"),
-        std::make_tuple(0xAABBCCD4, FabUser::UserLevel::FABLAB_USER, "USER2"),
-        std::make_tuple(0xAABBCCD5, FabUser::UserLevel::FABLAB_USER, "USER3")};
-
-void tearDown(void)
-{
-}
-
-void setUp(void)
-{
-  TEST_ASSERT_TRUE_MESSAGE(SavedConfig::DefaultConfig().SaveToEEPROM(), "Default config save failed");
-  TEST_ASSERT_TRUE_MESSAGE(logic.configure(server, rfid, lcd), "BoardLogic configure failed");
-  TEST_ASSERT_TRUE_MESSAGE(logic.board_init(), "BoardLogic init failed");
-  TEST_ASSERT_FALSE_MESSAGE(lcd.last_boardinfo.server_connected, "Server not connected");
-  logic.setWhitelist(test_whitelist);
-}
-
-card::uid_t get_test_uid(size_t idx = 0)
+constexpr card::uid_t get_test_uid(size_t idx)
 {
   auto [card_uid, level, name] = test_whitelist[idx];
   return card_uid;
-}
-
-void machine_init()
-{
-  auto &machine = logic.getMachine();
-  machine.allowed = true;
-  machine.maintenanceNeeded = false;
-  logic.logout();
-  rfid.resetUid();
-  logic.checkRfid();
-  TEST_ASSERT_TRUE_MESSAGE(logic.getStatus() == BoardLogic::Status::FREE, "machine_init: Status not FREE");
-  TEST_ASSERT_TRUE_MESSAGE(logic.getMachine().isFree(), "machine_init: machine not free");
 }
 
 void test_machine_defaults()
@@ -129,7 +96,7 @@ void test_simple_methods()
 
 void test_whitelist_no_network()
 {
-  machine_init();
+  machine_init(logic, rfid);
 
   // Check whitelist is recognized
   for (auto &wle : test_whitelist)
@@ -152,112 +119,162 @@ void test_whitelist_no_network()
   // Logon simulating RFID tag
   auto [card_uid, level, name] = test_whitelist[1];
 
-  rfid.setUid(card_uid);
-  TEST_ASSERT_TRUE_MESSAGE(card_uid == rfid.getUid(), "Card UID not equal");
+  simulate_rfid_card(rfid, logic, card_uid);
   TEST_ASSERT_TRUE_MESSAGE(rfid.isNewCardPresent(), "New card not present");
   TEST_ASSERT_TRUE_MESSAGE(rfid.readCardSerial().has_value(), "Card serial not read");
   TEST_ASSERT_TRUE_MESSAGE(rfid.readCardSerial().value() == card_uid, "Card serial not equal");
+  TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::LOGGED_IN, logic.getStatus(), "Status not LOGGED_IN");
 
-  logic.checkRfid();
-  TEST_ASSERT_TRUE_MESSAGE(logic.getStatus() == BoardLogic::Status::LOGGED_IN, "Status not LOGGED_IN");
-  logic.logout();
-  rfid.resetUid();
-  TEST_ASSERT_TRUE_MESSAGE(logic.getStatus() == BoardLogic::Status::LOGOUT, "Status not LOGOUT");
+  // Card away, machine shall be busy
+  auto new_state = simulate_rfid_card(rfid, logic, std::nullopt);
+  TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::IN_USE, new_state, "Status not IN_USE");
+  TEST_ASSERT_FALSE_MESSAGE(logic.getMachine().isFree(), "Machine is free");
+
+  // Same card back, shall logout user
+  new_state = simulate_rfid_card(rfid, logic, card_uid, 0ms);
+  TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::LOGOUT, new_state, "Status not LOGOUT");
+  TEST_ASSERT_TRUE_MESSAGE(logic.getMachine().isFree(), "Machine is not free");
 }
 
 void test_one_user_at_a_time()
 {
-  // Check that machine is free
-  machine_init();
+  machine_init(logic, rfid);
 
   auto [card_uid, level, name] = test_whitelist[0];
-  rfid.setUid(card_uid);
-  logic.checkRfid();
-  TEST_ASSERT_TRUE_MESSAGE(logic.getStatus() == BoardLogic::Status::LOGGED_IN, "Status not LOGGED_IN");
+  auto new_state = simulate_rfid_card(rfid, logic, card_uid);
+
+  TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::LOGGED_IN, new_state, "Status not LOGGED_IN");
   TEST_ASSERT_TRUE_MESSAGE(!logic.getMachine().isFree(), "Machine is free");
 
+  // Card away, machine shall be busy
+  new_state = simulate_rfid_card(rfid, logic, std::nullopt);
+  TEST_ASSERT_TRUE_MESSAGE(!logic.getMachine().isFree(), "Machine is free");
+
+  // New card, shall be denied
   auto [card_uid2, level2, name2] = test_whitelist[1];
-  rfid.setUid(card_uid2);
-  logic.checkRfid();
+  simulate_rfid_card(rfid, logic, card_uid2);
   TEST_ASSERT_TRUE_MESSAGE(logic.getMachine().getActiveUser().card_uid == card_uid, "User UID has changed");
 
-  logic.checkRfid();
-  rfid.resetUid();
-  logic.checkRfid();
-  TEST_ASSERT_TRUE_MESSAGE(logic.getStatus() == BoardLogic::Status::IN_USE, "Status not IN_USE");
-  logic.logout();
+  // New card away, first user shall still be here
+  simulate_rfid_card(rfid, logic, std::nullopt);
+  TEST_ASSERT_TRUE_MESSAGE(logic.getMachine().getActiveUser().card_uid == card_uid, "User UID has changed");
+  TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::IN_USE, logic.getStatus(), "Status not IN_USE");
 
-  // Now must succeed
-  rfid.setUid(card_uid2);
-  logic.checkRfid();
-  TEST_ASSERT_TRUE_MESSAGE(logic.getStatus() == BoardLogic::Status::LOGGED_IN, "Status not LOGGED_IN");
-  TEST_ASSERT_TRUE_MESSAGE(logic.getMachine().getActiveUser().card_uid == card_uid2, "User UID has changed");
+  // Original card, shall log out
+  simulate_rfid_card(rfid, logic, card_uid);
+  TEST_ASSERT_TRUE_MESSAGE(logic.getMachine().isFree(), "Machine is not free");
+  // Original card away
+  simulate_rfid_card(rfid, logic, std::nullopt);
+  TEST_ASSERT_TRUE_MESSAGE(logic.getMachine().isFree(), "Machine is not free");
+
+  // Now new card must succeed
+  simulate_rfid_card(rfid, logic, card_uid2);
+  TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::LOGGED_IN, logic.getStatus(), "Status not LOGGED_IN");
+
+  // Card away
+  simulate_rfid_card(rfid, logic, std::nullopt);
+  TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::IN_USE, logic.getStatus(), "Status not IN_USE");
+
+  TEST_ASSERT_TRUE_MESSAGE(logic.getMachine().getActiveUser().card_uid == card_uid2, "User UID is not expected");
+  TEST_ASSERT_TRUE_MESSAGE(!logic.getMachine().isFree(), "Machine is free");
 }
 
 void test_user_autologoff()
 {
-  machine_init();
+  machine_init(logic, rfid);
 
   TEST_ASSERT_TRUE_MESSAGE(logic.getMachine().getAutologoffDelay() == conf::machine::DEFAULT_AUTO_LOGOFF_DELAY, "Autologoff delay not default");
 
   logic.setAutologoffDelay(2s);
   TEST_ASSERT_TRUE_MESSAGE(logic.getMachine().getAutologoffDelay() == 2s, "Autologoff delay not 2s");
 
-  rfid.setUid(get_test_uid(0));
-  logic.checkRfid();
-  TEST_ASSERT_TRUE_MESSAGE(logic.getStatus() == BoardLogic::Status::LOGGED_IN, "Status not LOGGED_IN");
+  simulate_rfid_card(rfid, logic, get_test_uid(0), 100ms);
+  TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::LOGGED_IN, logic.getStatus(), "Status not LOGGED_IN");
+
+  // Card away
+  simulate_rfid_card(rfid, logic, std::nullopt);
   delay(1000);
-  logic.checkRfid();
   TEST_ASSERT_FALSE_MESSAGE(logic.getMachine().isFree(), "Machine is free");
   TEST_ASSERT_FALSE_MESSAGE(logic.getMachine().isAutologoffExpired(), "Autologoff not expired");
+  TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::IN_USE, logic.getStatus(), "Status not IN_USE");
+
+  // Now shall expire afer 2s
+  simulate_rfid_card(rfid, logic, std::nullopt);
   delay(1000);
   TEST_ASSERT_TRUE_MESSAGE(logic.getMachine().isAutologoffExpired(), "Autologoff expired");
+
   logic.logout();
+  simulate_rfid_card(rfid, logic, std::nullopt);
   TEST_ASSERT_TRUE_MESSAGE(logic.getMachine().isFree(), "Machine is free");
-  rfid.resetUid();
+  TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::FREE, logic.getStatus(), "Status not FREE");
 }
 
 void test_machine_maintenance()
 {
-  // check maintenance
-  machine_init();
-  auto &machine = logic.getMachine();
+  machine_init(logic, rfid);
+
+  auto &machine = logic.getMachineForTesting();
+  auto card_fabuser = get_test_uid(2);
+  auto card_admin = get_test_uid(0);
 
   machine.allowed = true;
   machine.maintenanceNeeded = true;
-  rfid.setUid(get_test_uid(2)); // USER
-  logic.checkRfid();
-  rfid.resetUid();
-  TEST_ASSERT_TRUE_MESSAGE(logic.getStatus() == BoardLogic::Status::MAINTENANCE_NEEDED, "Status not MAINTENANCE_NEEDED");
+  simulate_rfid_card(rfid, logic, card_fabuser, 0ms);
+  TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::MAINTENANCE_NEEDED, logic.getStatus(), "Status not MAINTENANCE_NEEDED");
 
-  logic.checkRfid();
-  rfid.setUid(get_test_uid(0)); // ADMIN can mark maintenance done
-  logic.checkRfid();
-  TEST_ASSERT_TRUE_MESSAGE(logic.getStatus() != BoardLogic::Status::MAINTENANCE_NEEDED, "Status MAINTENANCE_NEEDED for admin");
+  simulate_rfid_card(rfid, logic, std::nullopt, 0ms);
+
+  simulate_rfid_card(rfid, logic, card_admin, conf::machine::LONG_TAP_DURATION);
+  TEST_ASSERT_FALSE_MESSAGE(logic.getMachine().maintenanceNeeded, "Maintenance not cleared");
+
+  simulate_rfid_card(rfid, logic, std::nullopt);
+  // Logoff admin
+  simulate_rfid_card(rfid, logic, card_admin);
+  TEST_ASSERT_TRUE_MESSAGE(logic.getMachine().isFree(), "Machine is not free");
+  simulate_rfid_card(rfid, logic, std::nullopt);
+
+  // Now try to logon with fabuser
+  simulate_rfid_card(rfid, logic, card_fabuser, 0ms);
+  TEST_ASSERT_FALSE_MESSAGE(logic.getStatus() == BoardLogic::Status::MAINTENANCE_NEEDED, "Status not MAINTENANCE_NEEDED");
+  TEST_ASSERT_FALSE_MESSAGE(logic.getStatus() == BoardLogic::Status::LOGGED_IN, "Status not LOGGED_IN");
 }
 
 void test_machine_allowed()
 {
-  machine_init();
-  auto &machine = logic.getMachine();
+  machine_init(logic, rfid);
+
+  auto &machine = logic.getMachineForTesting();
+  auto card_fabuser = get_test_uid(3);
+  auto card_admin = get_test_uid(0);
 
   machine.allowed = false;
   machine.maintenanceNeeded = false;
 
   // check if blocked for normal users
-  rfid.setUid(get_test_uid(3)); // USER
-  logic.checkRfid();
-  TEST_ASSERT_TRUE_MESSAGE(logic.getStatus() == BoardLogic::Status::NOT_ALLOWED, "Status not NOT_ALLOWED");
+  simulate_rfid_card(rfid, logic, card_fabuser, 0ms);
+  TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::NOT_ALLOWED, logic.getStatus(), "Status not NOT_ALLOWED");
+  simulate_rfid_card(rfid, logic, std::nullopt);
 
   // still blocked for admins
-  rfid.setUid(get_test_uid(0)); // ADMIN
-  logic.checkRfid();
-  TEST_ASSERT_TRUE_MESSAGE(logic.getStatus() == BoardLogic::Status::NOT_ALLOWED, "Status not NOT_ALLOWED for admins");
+  simulate_rfid_card(rfid, logic, card_admin, 0ms);
+  TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::NOT_ALLOWED, logic.getStatus(), "Status not NOT_ALLOWED for admins");
+  simulate_rfid_card(rfid, logic, std::nullopt, 0ms);
 }
+
+void tearDown(void){};
+
+void setUp(void)
+{
+  TEST_ASSERT_TRUE_MESSAGE(SavedConfig::DefaultConfig().SaveToEEPROM(), "Default config save failed");
+  TEST_ASSERT_TRUE_MESSAGE(logic.configure(server, rfid, lcd), "BoardLogic configure failed");
+  TEST_ASSERT_TRUE_MESSAGE(logic.board_init(), "BoardLogic init failed");
+  TEST_ASSERT_FALSE_MESSAGE(lcd.last_boardinfo.server_connected, "Server not connected");
+  logic.setWhitelist(test_whitelist);
+};
 
 void setup()
 {
-  delay(2000); // service delay
+  delay(1000);
   UNITY_BEGIN();
   RUN_TEST(test_machine_defaults);
   RUN_TEST(test_simple_methods);
@@ -267,7 +284,7 @@ void setup()
   RUN_TEST(test_one_user_at_a_time);
   RUN_TEST(test_user_autologoff);
   UNITY_END(); // stop unit testing
-}
+};
 
 void loop()
 {

@@ -67,11 +67,9 @@ namespace fablabbg
     void setAutologoffDelay(seconds delay);
     void setWhitelist(WhiteList whitelist);
 
-#ifdef XTRA_UNIT_TEST
-    Machine &getMachine(); // Must be able to modify to simulate some problems
-#else
+    Machine &getMachineForTesting();
     const Machine &getMachine() const;
-#endif
+
     // copy reference
     BoardLogic &operator=(const BoardLogic &board) = delete;
     // copy constructor

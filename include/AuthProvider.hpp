@@ -6,11 +6,12 @@
 #include <string_view>
 #include <tuple>
 #include <string>
+#include "secrets.hpp"
 
 namespace fablabbg
 {
   using WhiteListEntry = std::tuple<card::uid_t, FabUser::UserLevel, std::string_view>;
-  using WhiteList = std::array<WhiteListEntry, conf::whitelist::LEN>;
+  using WhiteList = std::array<WhiteListEntry, secrets::cards::LEN>;
 
   class AuthProvider
   {

@@ -46,8 +46,17 @@ namespace fablabbg
 
       if (conf::debug::ENABLE_LOGS)
         Serial.printf("MQTT BROKER: Received  %s -> %s\r\n", topic.c_str(), payload.c_str());
-
-      std::string reply = fakeReply();
+      // Call the configured replies generation callback
+      std::string reply = "";
+      while (true)
+      {
+        if (lock())
+        {
+          reply = callback(payload);
+          unlock();
+          break;
+        }
+      }
       std::string topic_reply = topic + "/reply";
       publish(topic_reply, reply, 0, false);
     }
@@ -74,34 +83,47 @@ namespace fablabbg
 
   /// @brief Returns a fake server reply for testing purposes
   /// @return json payload
-  std::string MockMQTTBroker::fakeReply() const
+  std::string MockMQTTBroker::defaultReplies(std::string query) const
   {
-    if (payload.find("checkmachine") != std::string::npos)
+    if (query.find("checkmachine") != std::string::npos)
     {
       return "{\"request_ok\":true,\"is_valid\":true,\"allowed\":true,\"maintenance\":false,\"logoff\":30,\"name\":\"ENDER_1\",\"type\":1}";
     }
 
-    if (payload.find("maintenance") != std::string::npos)
+    if (query.find("maintenance") != std::string::npos)
     {
       return "{\"request_ok\":true}";
     }
 
-    if (payload.find("startuse") != std::string::npos)
+    if (query.find("startuse") != std::string::npos)
     {
       return "{\"request_ok\":true}";
     }
 
-    if (payload.find("stopuse") != std::string::npos)
+    if (query.find("stopuse") != std::string::npos)
     {
       return "{\"request_ok\":true}";
     }
 
-    if (payload.find("checkuser") != std::string::npos)
+    if (query.find("checkuser") != std::string::npos)
     {
       return "{\"request_ok\":true,\"level\":2,\"name\":\"TEST USER\",\"is_valid\":true}";
     }
 
     return "{\"request_ok\":true}";
   }
+
+  void MockMQTTBroker::configureReplies(std::function<std::string(std::string)> callback)
+  {
+    while (true)
+    {
+      if (lock())
+      {
+        this->callback = callback;
+        unlock();
+        break;
+      }
+    }
+  }
 } // namespace fablabbg
-#endif
+#endif // WOKWI_SIMULATION

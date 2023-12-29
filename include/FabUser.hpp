@@ -30,7 +30,7 @@ namespace fablabbg
 
     FabUser(const card::uid_t uid, std::string_view name, bool auth, UserLevel level) : card_uid(uid), holder_name(name), authenticated(auth), user_level(level) {}
 
-    FabUser(const uint8_t uid[conf::whitelist::UID_BYTE_LEN], std::string_view name, bool auth, UserLevel level) : holder_name(name), authenticated(auth), user_level(level)
+    FabUser(const uint8_t uid[conf::rfid_tags::UID_BYTE_LEN], std::string_view name, bool auth, UserLevel level) : holder_name(name), authenticated(auth), user_level(level)
     {
       card_uid = card::from_array(uid);
     }

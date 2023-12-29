@@ -3,7 +3,6 @@
 #include <functional>
 
 #include <Arduino.h>
-#define UNITY_INCLUDE_PRINT_FORMATTED
 #include <unity.h>
 #include "SavedConfig.hpp"
 
@@ -12,25 +11,6 @@ using namespace std::chrono;
 using namespace std::chrono_literals;
 
 SavedConfig original;
-
-void tearDown(void)
-{
-  original.SaveToEEPROM();
-}
-
-void setUp(void)
-{
-  // set stuff up here
-  auto result = SavedConfig::LoadFromEEPROM();
-  if (result.has_value())
-  {
-    original = result.value();
-  }
-  else
-  {
-    original = SavedConfig::DefaultConfig();
-  }
-}
 
 void test_defaults(void)
 {
@@ -120,9 +100,27 @@ void test_magic_number()
   TEST_ASSERT_FALSE_MESSAGE(result2.has_value(), "Loaded config is not empty");
 }
 
+void tearDown(void)
+{
+  original.SaveToEEPROM();
+}
+
+void setUp(void)
+{
+  // set stuff up here
+  auto result = SavedConfig::LoadFromEEPROM();
+  if (result.has_value())
+  {
+    original = result.value();
+  }
+  else
+  {
+    original = SavedConfig::DefaultConfig();
+  }
+}
+
 void setup()
 {
-  delay(2000); // service delay
   UNITY_BEGIN();
   RUN_TEST(test_defaults);
   RUN_TEST(test_changes);

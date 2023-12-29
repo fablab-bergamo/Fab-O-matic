@@ -105,9 +105,9 @@ namespace fablabbg
   /// @return card ID
   card::uid_t RFIDWrapper::getUid() const
   {
-    uint8_t arr[conf::whitelist::UID_BYTE_LEN]{0};
+    uint8_t arr[conf::rfid_tags::UID_BYTE_LEN]{0};
 
-    memcpy(arr, mfrc522->uid.uidByte, std::min(conf::whitelist::UID_BYTE_LEN, mfrc522->uid.size));
+    memcpy(arr, mfrc522->uid.uidByte, std::min(conf::rfid_tags::UID_BYTE_LEN, mfrc522->uid.size));
 
     auto c = card::from_array(arr);
 

@@ -24,11 +24,10 @@ namespace fablabbg
     static constexpr std::string_view machine_name = "MACHINE1";
     static constexpr MachineType machine_type = MachineType::LASER;
   }
-  namespace conf::whitelist
+  namespace conf::rfid_tags
   {
-    static constexpr uint8_t LEN = 10U;         /* Maximum number of whitelisted cards */
     static constexpr uint8_t UID_BYTE_LEN = 4U; /* Number of bytes in RFID cards UID */
-    static constexpr uint8_t CACHE_LEN = 10U;   /* Number of bytes in RFID cards UID */
+    static constexpr uint8_t CACHE_LEN = 10U;   /* Number of cached UID */
   }
   namespace conf::lcd
   {
@@ -42,7 +41,7 @@ namespace fablabbg
     static constexpr auto POWEROFF_GRACE_PERIOD = 2min;   /* Idle time before poweroff. If 0min, machine will stay on. */
     static constexpr auto DELAY_BETWEEN_BEEPS = 30s;      /* Beeps will be heard every 30s when the machine is about to shutdown */
     static constexpr bool MAINTENANCE_BLOCK = true;       /* If true, machine needing maintenance will be blocked for normal users */
-
+    static constexpr auto LONG_TAP_DURATION = 3s;         /* Minimum time to confirm by long tap maintenance*/
     static_assert(BEEP_PERIOD <= POWEROFF_GRACE_PERIOD);
     static_assert(DELAY_BETWEEN_BEEPS < BEEP_PERIOD);
   }

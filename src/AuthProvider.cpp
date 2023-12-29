@@ -47,7 +47,7 @@ namespace fablabbg
     cache.push_front(new_elem);
 
     // Keep cache size under CACHE_LEN
-    if (cache.size() > conf::whitelist::CACHE_LEN)
+    if (cache.size() > conf::rfid_tags::CACHE_LEN)
     {
       cache.pop_back();
     }
