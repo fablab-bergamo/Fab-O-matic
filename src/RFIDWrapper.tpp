@@ -2,33 +2,21 @@
 
 #include "RFIDWrapper.hpp"
 #include "pins.hpp"
-#include "MFRC522v2.h"
-#include "MFRC522DriverSPI.h"
-#include "MFRC522DriverPinSimple.h"
-#include "MFRC522Debug.h"
 #include "conf.hpp"
 #include "card.hpp"
 
 namespace fablabbg
 {
-  RFIDWrapper::RFIDWrapper()
-  {
-    // Configure SPI bus
-    SPI.begin(pins.mfrc522.sck_pin, pins.mfrc522.miso_pin, pins.mfrc522.mosi_pin, pins.mfrc522.sda_pin);
-
-    pinMode(pins.mfrc522.reset_pin, OUTPUT);
-
-    // Smart pointers members destructors will run & free the memory, when class will be distructed.
-    rfid_simple_driver = std::make_unique<MFRC522DriverPinSimple>(pins.mfrc522.sda_pin);
-    spi_rfid_driver = std::make_unique<MFRC522DriverSPI>(*rfid_simple_driver); // Create SPI driver.
-    mfrc522 = std::make_unique<MFRC522>(*spi_rfid_driver);
-  }
+  /// @brief Constructor
+  template <typename Driver>
+  RFIDWrapper<Driver>::RFIDWrapper() : driver{std::make_unique<Driver>()} {};
 
   /// @brief indicates if a new card is present in the RFID chip antenna area
   /// @return true if a new card is present
-  bool RFIDWrapper::isNewCardPresent() const
+  template <typename Driver>
+  bool RFIDWrapper<Driver>::isNewCardPresent() const
   {
-    auto result = mfrc522->PICC_IsNewCardPresent();
+    auto result = driver->PICC_IsNewCardPresent();
 
     if (conf::debug::ENABLE_LOGS && result)
       Serial.printf("isNewCardPresent=%d\r\n", result);
@@ -38,14 +26,16 @@ namespace fablabbg
 
   /// @brief tries to read the card serial number
   /// @return true if successfull, result can be read with getUid()
-  std::optional<card::uid_t> RFIDWrapper::readCardSerial() const
+  template <typename Driver>
+  std::optional<card::uid_t> RFIDWrapper<Driver>::readCardSerial() const
   {
-    auto result = mfrc522->PICC_ReadCardSerial();
+    auto result = driver->PICC_ReadCardSerial();
+    const auto &uid = driver->getDriverUid();
 
     if (conf::debug::ENABLE_LOGS)
     {
       Serial.printf("readCardSerial=%d (SAK=%d, Size=%d)\r\n", result,
-                    mfrc522->uid.sak, mfrc522->uid.size);
+                    uid.sak, uid.size);
     }
     if (result)
     {
@@ -59,7 +49,8 @@ namespace fablabbg
 
   /// @brief indicates if the card is still present in the RFID chip antenna area
   /// @param original the card ID to check
-  bool RFIDWrapper::cardStillThere(const card::uid_t original, milliseconds max_delay) const
+  template <typename Driver>
+  bool RFIDWrapper<Driver>::cardStillThere(const card::uid_t original, milliseconds max_delay) const
   {
     auto start = std::chrono::system_clock::now();
     do
@@ -68,9 +59,7 @@ namespace fablabbg
       byte bufferATQA[2];
       byte bufferSize = sizeof(bufferATQA);
 
-      MFRC522::StatusCode result = mfrc522->PICC_WakeupA(bufferATQA, &bufferSize);
-
-      if (result == MFRC522::StatusCode::STATUS_OK)
+      if (driver->PICC_WakeupA(bufferATQA, bufferSize))
       {
         if (readCardSerial() == original)
           return true;
@@ -83,9 +72,10 @@ namespace fablabbg
 
   /// @brief Performs a RFID chip self test
   /// @return true if successfull
-  bool RFIDWrapper::selfTest() const
+  template <typename Driver>
+  bool RFIDWrapper<Driver>::selfTest() const
   {
-    auto result = mfrc522->PCD_PerformSelfTest();
+    auto result = driver->PCD_PerformSelfTest();
     if (conf::debug::ENABLE_LOGS)
     {
       Serial.printf("RFID self test = %d\r\n", result);
@@ -94,7 +84,8 @@ namespace fablabbg
   }
 
   /// @brief Performs a chip reset
-  void RFIDWrapper::reset() const
+  template <typename Driver>
+  void RFIDWrapper<Driver>::reset() const
   {
     digitalWrite(pins.mfrc522.reset_pin, 1);
     delay(25);
@@ -104,25 +95,21 @@ namespace fablabbg
 
   /// @brief Transforms the RFID acquired bytes into a uid_id object
   /// @return card ID
-  card::uid_t RFIDWrapper::getUid() const
+  template <typename Driver>
+  card::uid_t RFIDWrapper<Driver>::getUid() const
   {
     uint8_t arr[conf::rfid_tags::UID_BYTE_LEN]{0};
-
-    memcpy(arr, mfrc522->uid.uidByte, std::min(conf::rfid_tags::UID_BYTE_LEN, mfrc522->uid.size));
+    auto const &uid = driver->getDriverUid();
+    memcpy(arr, uid.uidByte, std::min(conf::rfid_tags::UID_BYTE_LEN, uid.size));
 
     auto c = card::from_array(arr);
-
-    if (conf::debug::ENABLE_LOGS)
-    {
-      auto str_id = card::uid_str(c);
-      Serial.printf("getUid=%s\r\n", str_id.c_str());
-    }
 
     return c;
   }
 
   /// @brief Initializes RFID chip including self test
-  bool RFIDWrapper::init_rfid() const
+  template <typename Driver>
+  bool RFIDWrapper<Driver>::init_rfid() const
   {
 
     if (conf::debug::ENABLE_LOGS)
@@ -137,23 +124,47 @@ namespace fablabbg
 
     reset();
 
-    if (!mfrc522->PCD_Init())
+    if (!driver->PCD_Init())
     {
       Serial.println("mfrc522 Init failed");
       return false;
     }
 
     if (conf::debug::ENABLE_LOGS)
-      MFRC522Debug::PCD_DumpVersionToSerial(*mfrc522, Serial);
+      driver->PCD_DumpVersionToSerial();
 
-    mfrc522->PCD_SetAntennaGain(MFRC522::PCD_RxGain::RxGain_max);
+    driver->PCD_SetAntennaGain(Driver::RxGainMax);
     delay(5);
 
-    if (!mfrc522->PCD_PerformSelfTest())
+    if (!driver->PCD_PerformSelfTest())
     {
       Serial.println("Self-test failure for RFID");
       return false;
     }
     return true;
+  }
+
+  /// @brief Sets the card ID for testing
+  /// @param uid the card ID
+  template <typename Driver>
+  void RFIDWrapper<Driver>::setUid(const card::uid_t &uid)
+  {
+    if (conf::debug::ENABLE_LOGS)
+    {
+      auto str_id = card::uid_str(uid);
+      Serial.printf("setUid=%s\r\n", str_id.c_str());
+    }
+
+    driver->setUid(uid);
+  }
+
+  /// @brief Resets the card ID for testing
+  template <typename Driver>
+  void RFIDWrapper<Driver>::resetUid()
+  {
+    if (conf::debug::ENABLE_LOGS)
+      Serial.println("resetUid");
+
+    driver->resetUid();
   }
 } // namespace fablabbg

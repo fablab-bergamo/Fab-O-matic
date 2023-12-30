@@ -11,6 +11,7 @@
 #include "Machine.hpp"
 #include "secrets.hpp"
 #include "BaseLCDWrapper.hpp"
+#include "BaseRfidWrapper.hpp"
 
 namespace fablabbg
 {
@@ -59,7 +60,9 @@ namespace fablabbg
     void led(bool value);
     void invert_led();
     void set_led_color(uint8_t r, uint8_t g, uint8_t b);
+
     bool configure(FabServer &server, BaseRFIDWrapper &rfid, BaseLCDWrapper &lcd);
+
     void refreshLCD() const;
     void blinkLed();
     void checkRfid();

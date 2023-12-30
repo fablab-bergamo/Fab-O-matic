@@ -85,16 +85,17 @@ namespace fablabbg
       {
         if (result->is_valid)
         {
-          if (conf::debug::ENABLE_LOGS)
-            Serial.printf("The configured machine ID %u is valid, maintenance=%d, allowed=%d\r\n",
-                          machine.getMachineId().id, result->maintenance, result->allowed);
-
           machine.maintenanceNeeded = result->maintenance;
           machine.allowed = result->allowed;
           machine.setAutologoffDelay(std::chrono::minutes(result->logoff));
           machine.setMachineName(result->name);
           MachineType mt = static_cast<MachineType>(result->type);
           machine.setMachineType(mt);
+
+          if (conf::debug::ENABLE_LOGS)
+          {
+            Serial.printf("Machine data updated:%s\r\n", machine.toString().c_str());
+          }
         }
         else
         {

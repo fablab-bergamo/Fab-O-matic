@@ -3,13 +3,13 @@
 
 #include "unity.h"
 #include "card.hpp"
-#include "mock/MockRFIDWrapper.hpp"
+#include "BaseRfidWrapper.hpp"
 #include "test_common.h"
 #include "BoardLogic.hpp"
 
 namespace fablabbg::tests
 {
-  BoardLogic::Status simulate_rfid_card(MockRFIDWrapper &rfid, BoardLogic &logic, std::optional<card::uid_t> uid,
+  BoardLogic::Status simulate_rfid_card(BaseRFIDWrapper &rfid, BoardLogic &logic, std::optional<card::uid_t> uid,
                                         milliseconds duration_tap)
   {
     constexpr auto DEFAULT_CYCLES = 3;
@@ -33,7 +33,7 @@ namespace fablabbg::tests
   }
 
   /// @brief Resets machine to initial state, clearing flags
-  void machine_init(BoardLogic &logic, MockRFIDWrapper &rfid)
+  void machine_init(BoardLogic &logic, BaseRFIDWrapper &rfid)
   {
     auto &machine = logic.getMachineForTesting();
     machine.allowed = true;

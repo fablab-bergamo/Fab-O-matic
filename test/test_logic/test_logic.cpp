@@ -6,8 +6,10 @@
 #include <Arduino.h>
 #include <unity.h>
 #include "FabServer.hpp"
-#include "mock/MockLCDWrapper.hpp"
-#include "mock/MockRFIDWrapper.hpp"
+#include "LCDWrapper.hpp"
+#include "RFIDWrapper.hpp"
+#include "mock/MockMrfc522.hpp"
+#include "mock/MockLcdLibrary.hpp"
 #include "BoardLogic.hpp"
 #include "conf.hpp"
 #include "SavedConfig.hpp"
@@ -19,8 +21,8 @@ using namespace std::chrono_literals;
 using namespace fablabbg::tests;
 
 FabServer server;
-MockRFIDWrapper rfid;
-MockLCDWrapper lcd;
+RFIDWrapper<MockMrfc522> rfid;
+LCDWrapper<MockLcdLibrary, conf::lcd::ROWS, conf::lcd::COLS> lcd{pins.lcd};
 BoardLogic logic;
 
 constexpr card::uid_t get_test_uid(size_t idx)
@@ -270,7 +272,6 @@ void setUp(void)
   TEST_ASSERT_TRUE_MESSAGE(SavedConfig::DefaultConfig().SaveToEEPROM(), "Default config save failed");
   TEST_ASSERT_TRUE_MESSAGE(logic.configure(server, rfid, lcd), "BoardLogic configure failed");
   TEST_ASSERT_TRUE_MESSAGE(logic.board_init(), "BoardLogic init failed");
-  TEST_ASSERT_FALSE_MESSAGE(lcd.last_boardinfo.server_connected, "Server not connected");
   logic.setWhitelist(test_whitelist);
 };
 

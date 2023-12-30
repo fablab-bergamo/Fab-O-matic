@@ -8,21 +8,17 @@
 
 #include "conf.hpp"
 #include "card.hpp"
-#include "MFRC522v2.h"
-#include "MFRC522DriverSPI.h"
-#include "MFRC522DriverPinSimple.h"
 #include "BaseRfidWrapper.hpp"
 
 namespace fablabbg
 {
   using namespace std::chrono;
 
+  template <typename Driver>
   class RFIDWrapper : public BaseRFIDWrapper
   {
   private:
-    std::unique_ptr<MFRC522> mfrc522;
-    std::unique_ptr<MFRC522DriverPinSimple> rfid_simple_driver;
-    std::unique_ptr<MFRC522DriverSPI> spi_rfid_driver;
+    std::unique_ptr<Driver> driver;
 
   public:
     RFIDWrapper();
@@ -31,9 +27,15 @@ namespace fablabbg
     bool isNewCardPresent() const;
     bool cardStillThere(const card::uid_t original, milliseconds max_delay) const;
     std::optional<card::uid_t> readCardSerial() const;
+
     bool selfTest() const;
+
     void reset() const;
     card::uid_t getUid() const;
+
+    // Testing methods
+    void resetUid();
+    void setUid(const card::uid_t &uid);
 
     RFIDWrapper(const RFIDWrapper &) = delete;             // copy constructor
     RFIDWrapper &operator=(const RFIDWrapper &x) = delete; // copy assignment
@@ -41,4 +43,7 @@ namespace fablabbg
     RFIDWrapper &operator=(RFIDWrapper &&) = delete;       // move assignment
   };
 } // namespace fablabbg
+
+#include "RFIDWrapper.tpp"
+
 #endif // RFIDWRAPPER_H_

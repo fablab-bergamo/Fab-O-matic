@@ -7,10 +7,10 @@
 
 namespace fablabbg
 {
-  template <uint8_t _COLS, uint8_t _ROWS>
-  LCDWrapper<_COLS, _ROWS>::LCDWrapper(const pins_config::lcd_config &conf) : config(conf),
-                                                                              lcd(config.rs_pin, config.en_pin, config.d0_pin, config.d1_pin, config.d2_pin, config.d3_pin),
-                                                                              show_connection_status(true), show_power_status(true), forceUpdate(true)
+  template <typename TLcd, uint8_t _COLS, uint8_t _ROWS>
+  LCDWrapper<TLcd, _COLS, _ROWS>::LCDWrapper(const pins_config::lcd_config &conf) : config(conf),
+                                                                                    lcd(config.rs_pin, config.en_pin, config.d0_pin, config.d1_pin, config.d2_pin, config.d3_pin),
+                                                                                    show_connection_status(true), show_power_status(true), forceUpdate(true)
   {
     for (auto &row : buffer)
       row.fill({0});
@@ -18,15 +18,15 @@ namespace fablabbg
       row.fill({0});
   }
 
-  template <uint8_t _COLS, uint8_t _ROWS>
-  void LCDWrapper<_COLS, _ROWS>::createChar(uint8_t num, const uint8_t values[8])
+  template <typename TLcd, uint8_t _COLS, uint8_t _ROWS>
+  void LCDWrapper<TLcd, _COLS, _ROWS>::createChar(uint8_t num, const uint8_t values[8])
   {
     // Arduino LCD library only reads uint8_t* but did not flag const, so we use this wrapper
     lcd.createChar(num, const_cast<uint8_t *>(values));
   }
 
-  template <uint8_t _COLS, uint8_t _ROWS>
-  bool LCDWrapper<_COLS, _ROWS>::begin()
+  template <typename TLcd, uint8_t _COLS, uint8_t _ROWS>
+  bool LCDWrapper<TLcd, _COLS, _ROWS>::begin()
   {
     lcd.begin(_COLS, _ROWS);
     createChar(CHAR_ANTENNA, antenna_char);
@@ -54,8 +54,8 @@ namespace fablabbg
     return true;
   }
 
-  template <uint8_t _COLS, uint8_t _ROWS>
-  void LCDWrapper<_COLS, _ROWS>::clear()
+  template <typename TLcd, uint8_t _COLS, uint8_t _ROWS>
+  void LCDWrapper<TLcd, _COLS, _ROWS>::clear()
   {
     for (auto &row : current)
       row.fill({' '});
@@ -63,8 +63,8 @@ namespace fablabbg
     forceUpdate = true;
   }
 
-  template <uint8_t _COLS, uint8_t _ROWS>
-  void LCDWrapper<_COLS, _ROWS>::update(const BoardInfo &info, bool forced)
+  template <typename TLcd, uint8_t _COLS, uint8_t _ROWS>
+  void LCDWrapper<TLcd, _COLS, _ROWS>::update(const BoardInfo &info, bool forced)
   {
     if (!forced && !needsUpdate(info))
     {
@@ -117,8 +117,8 @@ namespace fablabbg
     forceUpdate = false;
   }
 
-  template <uint8_t _COLS, uint8_t _ROWS>
-  void LCDWrapper<_COLS, _ROWS>::showConnection(bool show)
+  template <typename TLcd, uint8_t _COLS, uint8_t _ROWS>
+  void LCDWrapper<TLcd, _COLS, _ROWS>::showConnection(bool show)
   {
     if (show_connection_status != show)
       forceUpdate = true;
@@ -126,8 +126,8 @@ namespace fablabbg
     show_connection_status = show;
   }
 
-  template <uint8_t _COLS, uint8_t _ROWS>
-  void LCDWrapper<_COLS, _ROWS>::showPower(bool show)
+  template <typename TLcd, uint8_t _COLS, uint8_t _ROWS>
+  void LCDWrapper<TLcd, _COLS, _ROWS>::showPower(bool show)
   {
     if (show_power_status != show)
       forceUpdate = true;
@@ -140,8 +140,8 @@ namespace fablabbg
   /// @tparam _ROWS number of rows
   /// @param bi current state of the board
   /// @return true if the buffer has changed, false otherwise
-  template <uint8_t _COLS, uint8_t _ROWS>
-  bool LCDWrapper<_COLS, _ROWS>::needsUpdate(const BoardInfo &bi) const
+  template <typename TLcd, uint8_t _COLS, uint8_t _ROWS>
+  bool LCDWrapper<TLcd, _COLS, _ROWS>::needsUpdate(const BoardInfo &bi) const
   {
     if (forceUpdate || !(bi == boardInfo) || current != buffer)
     {
@@ -160,9 +160,9 @@ namespace fablabbg
   /// @tparam _ROWS number of rows
   /// @param buf character buffer
   /// @param bi board info, used for special indicators status
-  template <uint8_t _COLS, uint8_t _ROWS>
-  void LCDWrapper<_COLS, _ROWS>::prettyPrint(const DisplayBuffer &buf,
-                                             const BoardInfo &bi) const
+  template <typename TLcd, uint8_t _COLS, uint8_t _ROWS>
+  void LCDWrapper<TLcd, _COLS, _ROWS>::prettyPrint(const DisplayBuffer &buf,
+                                                   const BoardInfo &bi) const
   {
     std::stringstream ss;
     ss << "/" << std::string(_COLS, '-') << "\\\r\n"; // LCD top
@@ -206,8 +206,8 @@ namespace fablabbg
     Serial.print(str.c_str());
   }
 
-  template <uint8_t _COLS, uint8_t _ROWS>
-  void LCDWrapper<_COLS, _ROWS>::setRow(uint8_t row, const std::string_view text)
+  template <typename TLcd, uint8_t _COLS, uint8_t _ROWS>
+  void LCDWrapper<TLcd, _COLS, _ROWS>::setRow(uint8_t row, const std::string_view text)
   {
     if (text.length() >= _COLS)
       Serial.printf("LCDWrapper::setRow: text too long : %s\r\n", text.data());
@@ -222,15 +222,15 @@ namespace fablabbg
     }
   }
 
-  template <uint8_t _COLS, uint8_t _ROWS>
-  void LCDWrapper<_COLS, _ROWS>::backlightOn() const
+  template <typename TLcd, uint8_t _COLS, uint8_t _ROWS>
+  void LCDWrapper<TLcd, _COLS, _ROWS>::backlightOn() const
   {
     if (config.bl_pin != NO_PIN)
       digitalWrite(config.bl_pin, config.active_low ? 0 : 1);
   }
 
-  template <uint8_t _COLS, uint8_t _ROWS>
-  void LCDWrapper<_COLS, _ROWS>::backlightOff() const
+  template <typename TLcd, uint8_t _COLS, uint8_t _ROWS>
+  void LCDWrapper<TLcd, _COLS, _ROWS>::backlightOff() const
   {
     if (config.bl_pin != NO_PIN)
       digitalWrite(config.bl_pin, config.active_low ? 1 : 0);

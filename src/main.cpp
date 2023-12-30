@@ -11,6 +11,8 @@
 #include "BoardLogic.hpp"
 #include "Tasks.hpp"
 #include "SavedConfig.hpp"
+#include "Mrfc522Driver.hpp"
+#include "mock/MockMQTTBroker.hpp"
 
 namespace fablabbg
 {
@@ -23,11 +25,10 @@ namespace fablabbg
   {
     // Only main.cpp instanciates the variables through Board.h file
 #if (WOKWI_SIMULATION)
-    extern MockRFIDWrapper rfid;
+    extern RFIDWrapper<MockMrfc522> rfid;
 #else
-    extern RFIDWrapper rfid;
+    extern RFIDWrapper<Mrfc522Driver> rfid;
 #endif
-    extern LCDWrapper<conf::lcd::COLS, conf::lcd::ROWS> lcd;
     extern FabServer server;
     extern Scheduler scheduler;
   }

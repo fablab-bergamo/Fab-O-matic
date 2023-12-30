@@ -13,13 +13,13 @@ namespace fablabbg
   class BaseLCDWrapper
   {
   public:
-    virtual bool begin();
-    virtual void clear();
-    virtual void showConnection(bool show);
-    virtual void showPower(bool show);
-    virtual void setRow(uint8_t row, const std::string_view text);
+    virtual bool begin() = 0;
+    virtual void clear() = 0;
+    virtual void showConnection(bool show) = 0;
+    virtual void showPower(bool show) = 0;
+    virtual void setRow(uint8_t row, const std::string_view text) = 0;
     std::string convertSecondsToHHMMSS(duration<uint16_t> duration) const;
-    virtual void update(const BoardInfo &boardinfo, bool forced = false);
+    virtual void update(const BoardInfo &boardinfo, bool forced = false) = 0;
   };
 } // namespace fablabbg
 

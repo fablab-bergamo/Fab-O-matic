@@ -3,7 +3,6 @@
 
 #include <array>
 #include "BoardInfo.hpp"
-#include "LiquidCrystal.h"
 #include "Machine.hpp"
 #include "pins.hpp"
 #include <chrono>
@@ -13,7 +12,7 @@ using namespace std::chrono;
 
 namespace fablabbg
 {
-  template <uint8_t _COLS, uint8_t _ROWS>
+  template <typename LcdLibrary, uint8_t _COLS, uint8_t _ROWS>
   class LCDWrapper : public BaseLCDWrapper
   {
   public:
@@ -46,7 +45,7 @@ namespace fablabbg
 
     const pins_config::lcd_config config;
 
-    LiquidCrystal lcd;
+    LcdLibrary lcd;
     bool show_connection_status;
     bool show_power_status;
     bool forceUpdate;

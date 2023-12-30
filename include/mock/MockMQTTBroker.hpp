@@ -13,19 +13,6 @@ namespace fablabbg
 {
   class MockMQTTBroker : public sMQTTBroker
   {
-  private:
-    constexpr static uint16_t MQTTPORT = 1883;
-    bool is_running = false;
-    std::string topic = "";
-    std::string payload = "";
-
-    // Maybe set outside the MQTT broker thread
-    std::function<std::string(std::string)> callback = std::bind(&MockMQTTBroker::defaultReplies, this, std::placeholders::_1);
-    std::atomic<bool> isLocked;
-
-    bool lock() { return !isLocked.exchange(true); }
-    void unlock() { isLocked = false; }
-
   public:
     MockMQTTBroker();
     ~MockMQTTBroker() = default;
@@ -33,10 +20,24 @@ namespace fablabbg
     bool isRunning() const;
     void start();
     bool onEvent(sMQTTEvent *event);
-    std::string defaultReplies(std::string query) const;
+    std::string defaultReplies(const std::string &query) const;
     /// @brief set the reply generation function. May be called from a different thread
     /// @param callback
     void configureReplies(std::function<std::string(std::string)> callback);
+
+  private:
+    constexpr static uint16_t MQTTPORT = 1883;
+    bool is_running = false;
+    std::string topic = "";
+    std::string payload = "";
+
+    // Maybe set outside the MQTT broker thread
+    std::function<std::string(const std::string &)> callback = [this](const std::string &query)
+    { return defaultReplies(query); };
+    std::atomic<bool> isLocked;
+
+    bool lock() { return !isLocked.exchange(true); }
+    void unlock() { isLocked = false; }
   };
 } // namespace fablabbg
 #endif // MOCKMQTTBROKER_H_

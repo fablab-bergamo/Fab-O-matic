@@ -83,7 +83,7 @@ namespace fablabbg
 
   /// @brief Returns a fake server reply for testing purposes
   /// @return json payload
-  std::string MockMQTTBroker::defaultReplies(std::string query) const
+  std::string MockMQTTBroker::defaultReplies(const std::string &query) const
   {
     if (query.find("checkmachine") != std::string::npos)
     {
