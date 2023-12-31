@@ -18,8 +18,11 @@
 
 namespace fablabbg
 {
-  BoardLogic::BoardLogic() noexcept : status(Status::CLEAR),
-                                      server(std::nullopt), rfid(std::nullopt)
+  BoardLogic::BoardLogic() : status(Status::CLEAR),
+                             server(std::make_unique<FabServer>()),
+                             rfid(std::nullopt),
+                             lcd(std::nullopt)
+
   {
     pinMode(pins.led.pin, OUTPUT);
     if (pins.led.is_neopixel)
@@ -55,14 +58,6 @@ namespace fablabbg
     led(!led_status);
   }
 
-  FabServer &BoardLogic::getServer() const
-  {
-    if (server.has_value())
-      return server.value().get();
-    else
-      throw std::runtime_error("Server not initialized");
-  }
-
   BaseRFIDWrapper &BoardLogic::getRfid() const
   {
     if (rfid.has_value())
@@ -77,10 +72,10 @@ namespace fablabbg
     if (conf::debug::ENABLE_LOGS)
       Serial.printf("BoardLogic::refreshFromServer() called\r\n");
 
-    if (getServer().connect())
+    if (server->connect())
     {
       // Check the configured machine data from the server
-      auto result = getServer().checkMachine();
+      auto result = server->checkMachine();
       if (result->request_ok)
       {
         if (result->is_valid)
@@ -148,8 +143,8 @@ namespace fablabbg
   /// @brief Removes the current machine user and changes the status to LOGOUT
   void BoardLogic::logout()
   {
-    auto result = getServer().finishUse(machine.getActiveUser().card_uid,
-                                        machine.getUsageDuration());
+    auto result = server->finishUse(machine.getActiveUser().card_uid,
+                                    machine.getUsageDuration());
 
     if (conf::debug::ENABLE_LOGS)
       Serial.printf("Result finishUse: %d\r\n", result->request_ok);
@@ -166,7 +161,7 @@ namespace fablabbg
   {
     constexpr auto STEPS_COUNT = 6;
     constexpr milliseconds delay_per_step = duration_cast<milliseconds>(conf::machine::LONG_TAP_DURATION) / STEPS_COUNT;
-    const BoardInfo bi = {getServer().isOnline(), machine.getPowerState(), machine.isShutdownImminent()};
+    const BoardInfo bi = {server->isOnline(), machine.getPowerState(), machine.isShutdownImminent()};
 
     for (auto step = 0; step < STEPS_COUNT; step++)
     {
@@ -209,7 +204,7 @@ namespace fablabbg
     user.card_uid = uid;
     user.user_level = FabUser::UserLevel::UNKNOWN;
 
-    auto response = auth.tryLogin(uid);
+    auto response = auth.tryLogin(uid, *server);
     if (!response.has_value())
     {
       Serial.println("Failed login");
@@ -245,7 +240,7 @@ namespace fablabbg
 
         if (longTap("Registra"))
         {
-          auto maint_resp = getServer().registerMaintenance(user.card_uid);
+          auto maint_resp = server->registerMaintenance(user.card_uid);
           if (!maint_resp->request_ok)
           {
             beep_failed();
@@ -271,7 +266,7 @@ namespace fablabbg
 
     if (machine.login(user))
     {
-      auto result = getServer().startUse(machine.getActiveUser().card_uid);
+      auto result = server->startUse(machine.getActiveUser().card_uid);
 
       if (conf::debug::ENABLE_LOGS)
         Serial.printf("Result startUse: %d\r\n", result->request_ok);
@@ -385,7 +380,7 @@ namespace fablabbg
       break;
     case Status::CONNECTING:
       getLcd().setRow(0, "Connessione");
-      getLcd().setRow(1, "al getServer()...");
+      getLcd().setRow(1, "al server->..");
       break;
     case Status::CONNECTED:
       getLcd().setRow(0, "Connesso");
@@ -450,7 +445,7 @@ namespace fablabbg
         getLcd().setRow(1, buffer);
       break;
     }
-    BoardInfo bi = {getServer().isOnline(), machine.getPowerState(), machine.isShutdownImminent()};
+    BoardInfo bi = {server->isOnline(), machine.getPowerState(), machine.isShutdownImminent()};
     getLcd().update(bi, false);
   }
 
@@ -481,11 +476,16 @@ namespace fablabbg
   }
 
   /// @brief Configures the board with the given references
-  bool BoardLogic::configure(FabServer &server, BaseRFIDWrapper &rfid, BaseLCDWrapper &lcd)
+  bool BoardLogic::configure(BaseRFIDWrapper &rfid, BaseLCDWrapper &lcd)
   {
-    this->server = server;
     this->rfid = rfid;
     this->lcd = lcd;
+    return reconfigure();
+  }
+
+  /// @brief Configures the board with the given references
+  bool BoardLogic::reconfigure()
+  {
     auto success = true;
 
     // Load configuration
@@ -504,7 +504,7 @@ namespace fablabbg
       Serial.println(config->toString().c_str());
     }
 
-    server.configure(config.value());
+    server->configure(config.value());
 
     MachineID mid{(uint16_t)atoi(config.value().machine_id)};
     MachineConfig machine_conf(mid,
@@ -514,7 +514,7 @@ namespace fablabbg
                                config.value().machine_topic,
                                conf::machine::DEFAULT_AUTO_LOGOFF_DELAY);
 
-    machine.configure(machine_conf, getServer());
+    machine.configure(machine_conf, *server);
 
     return success;
   }
@@ -522,17 +522,14 @@ namespace fablabbg
   /// @brief Refreshes the LCD screen
   void BoardLogic::refreshLCD() const
   {
-    if (server.has_value())
-    {
-      BoardInfo bi = {server.value().get().isOnline(), machine.getPowerState(), machine.isShutdownImminent()};
-      getLcd().update(bi, true);
-    }
+    BoardInfo bi = {server->isOnline(), machine.getPowerState(), machine.isShutdownImminent()};
+    getLcd().update(bi, true);
   }
 
   /// @brief Blinks the LED
   void BoardLogic::blinkLed()
   {
-    if (getServer().isOnline())
+    if (server->isOnline())
     {
       if (!machine.allowed || machine.maintenanceNeeded)
       {
@@ -621,4 +618,8 @@ namespace fablabbg
     auth.setWhitelist(whitelist);
   }
 
+  FabServer &BoardLogic::getServer() const
+  {
+    return *server;
+  }
 } // namespace fablabbg

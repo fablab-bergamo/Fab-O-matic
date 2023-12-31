@@ -31,8 +31,7 @@ namespace fablabbg::Board
 #else
   RFIDWrapper<Mrfc522Driver> rfid{};
 #endif
-  LCDWrapper<LiquidCrystal, conf::lcd::COLS, conf::lcd::ROWS> lcd{pins.lcd};
-  FabServer server;
+  LCDWrapper<LiquidCrystal> lcd{pins.lcd};
   BoardLogic logic;
   Tasks::Scheduler scheduler;
 } // namespace Board

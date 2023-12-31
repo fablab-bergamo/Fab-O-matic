@@ -10,12 +10,13 @@ namespace fablabbg
     bool server_connected;
     Machine::PowerState power_state;
     bool power_warning;
-    bool operator==(const BoardInfo &t) const
+
+    bool operator==(const BoardInfo &other) const
     {
-      return server_connected == t.server_connected &&
-            power_state == t.power_state &&
-            power_warning == t.power_warning;
-    }
+      return server_connected == other.server_connected &&
+             power_state == other.power_state &&
+             power_warning == other.power_warning;
+    };
   };
 }
 #endif // BOARDINFO_HPP
