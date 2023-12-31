@@ -144,27 +144,9 @@ namespace fablabbg
     return true;
   }
 
-  /// @brief Sets the card ID for testing
-  /// @param uid the card ID
   template <typename Driver>
-  void RFIDWrapper<Driver>::setUid(const card::uid_t &uid)
+  Driver &RFIDWrapper<Driver>::getDriver()
   {
-    if (conf::debug::ENABLE_LOGS)
-    {
-      auto str_id = card::uid_str(uid);
-      Serial.printf("setUid=%s\r\n", str_id.c_str());
-    }
-
-    driver->setUid(uid);
-  }
-
-  /// @brief Resets the card ID for testing
-  template <typename Driver>
-  void RFIDWrapper<Driver>::resetUid()
-  {
-    if (conf::debug::ENABLE_LOGS)
-      Serial.println("resetUid");
-
-    driver->resetUid();
+    return *driver.get();
   }
 } // namespace fablabbg

@@ -20,9 +20,8 @@ using namespace std::chrono;
 using namespace std::chrono_literals;
 using namespace fablabbg::tests;
 
-FabServer server;
 RFIDWrapper<MockMrfc522> rfid;
-LCDWrapper<MockLcdLibrary, conf::lcd::ROWS, conf::lcd::COLS> lcd{pins.lcd};
+LCDWrapper<MockLcdLibrary> lcd{pins.lcd};
 BoardLogic logic;
 
 constexpr card::uid_t get_test_uid(size_t idx)
@@ -225,8 +224,6 @@ void test_machine_maintenance()
   TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::MAINTENANCE_NEEDED, logic.getStatus(), "Status not MAINTENANCE_NEEDED");
 
   simulate_rfid_card(rfid, logic, std::nullopt);
-  delay(1000);
-
   simulate_rfid_card(rfid, logic, card_admin, 0ms); // Log in + Conferma manutenzione perché non ritorna prima della conclusione
   simulate_rfid_card(rfid, logic, std::nullopt);    // Card away
   TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::IN_USE, logic.getStatus(), "Status not IN_USE");
@@ -270,7 +267,7 @@ void tearDown(void){};
 void setUp(void)
 {
   TEST_ASSERT_TRUE_MESSAGE(SavedConfig::DefaultConfig().SaveToEEPROM(), "Default config save failed");
-  TEST_ASSERT_TRUE_MESSAGE(logic.configure(server, rfid, lcd), "BoardLogic configure failed");
+  TEST_ASSERT_TRUE_MESSAGE(logic.configure(rfid, lcd), "BoardLogic configure failed");
   TEST_ASSERT_TRUE_MESSAGE(logic.board_init(), "BoardLogic init failed");
   logic.setWhitelist(test_whitelist);
 };

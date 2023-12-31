@@ -29,13 +29,14 @@ namespace fablabbg
 #else
     extern RFIDWrapper<Mrfc522Driver> rfid;
 #endif
-    extern FabServer server;
     extern Scheduler scheduler;
+    extern BoardLogic logic;
   }
 
   /// @brief Opens WiFi and server connection and updates board state accordingly
   void taskConnect()
   {
+    auto &server = logic.getServer();
     if (!server.isOnline())
     {
       // connection to wifi
@@ -134,6 +135,7 @@ namespace fablabbg
   /// @brief sends the MQTT alive message
   void taskMQTTAlive()
   {
+    auto &server = logic.getServer();
     if (server.isOnline())
     {
       server.loop();
@@ -209,6 +211,17 @@ namespace fablabbg
         Board::broker.update();
       }
       delay(25);
+    }
+  }
+
+  void startMQTTBrocker()
+  {
+    // Start MQTT server thread in simulation
+    attr_mqtt_broker.stacksize = 3 * 1024; // Required for ESP32-S2
+    attr_mqtt_broker.detachstate = PTHREAD_CREATE_DETACHED;
+    if (pthread_create(&thread_mqtt_broker, &attr_mqtt_broker, threadMQTTServer, NULL))
+    {
+      Serial.println("Error creating MQTT server thread");
     }
   }
 #endif
@@ -314,8 +327,8 @@ namespace fablabbg
       {
         Serial.println("Config saved to EEPROM");
 
-        // Reconfigure FabServer which may have been initialized with default values
-        server.configure(config);
+        // Reconfigure all settings after changes
+        logic.reconfigure();
       }
       else
       {
@@ -323,7 +336,6 @@ namespace fablabbg
       }
     }
   }
-
 } // namespace fablabbg
 
 using namespace fablabbg;
@@ -339,7 +351,7 @@ void setup()
   }
 
   // Initialize hardware (RFID, LCD)
-  auto success = logic.configure(Board::server, Board::rfid, Board::lcd);
+  auto success = logic.configure(Board::rfid, Board::lcd);
   success &= logic.board_init();
 
   if (!success)
@@ -359,17 +371,13 @@ void setup()
   config_portal();
 
 #if (WOKWI_SIMULATION)
-  // Start MQTT server thread in simulation
-  attr_mqtt_broker.stacksize = 3 * 1024;
-  attr_mqtt_broker.detachstate = PTHREAD_CREATE_DETACHED;
-  if (pthread_create(&thread_mqtt_broker, &attr_mqtt_broker, threadMQTTServer, NULL))
-  {
-    Serial.println("Error creating MQTT server thread");
-  }
-#endif // WOKWI_SIMULATION
+  startMQTTBrocker();
+#endif
 
   logic.beep_ok();
-  server.connectWiFi();
+
+  // Join the AP and try to connect to broker
+  logic.getServer().connect();
 
   // Since the WiFiManager may have taken minutes, recompute the tasks schedule
   scheduler.restart();

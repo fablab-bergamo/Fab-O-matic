@@ -16,10 +16,6 @@ namespace fablabbg
     virtual bool selfTest() const = 0;
     virtual void reset() const = 0;
     virtual card::uid_t getUid() const = 0;
-
-    // Testing methods
-    virtual void resetUid() = 0;
-    virtual void setUid(const card::uid_t &uid) = 0;
   };
 }
 #endif // _BASE_RFID_WRAPPER_HPP_

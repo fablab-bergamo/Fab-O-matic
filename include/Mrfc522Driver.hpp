@@ -39,9 +39,6 @@ namespace fablabbg
     void PCD_SetAntennaGain(MFRC522Constants::PCD_RxGain gain);
     void PCD_DumpVersionToSerial();
 
-    void setUid(const std::optional<card::uid_t> &uid);
-    void resetUid();
-
     static constexpr auto RxGainMax = MFRC522::PCD_RxGain::RxGain_max;
   };
 } // namespace fablabbg

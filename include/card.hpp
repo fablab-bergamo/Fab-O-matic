@@ -34,7 +34,7 @@ namespace fablabbg::card
   }
   inline void print(uint64_t uid)
   {
-    Serial.printf(card::uid_str(uid).c_str());
+    Serial.printf("%s", card::uid_str(uid).c_str());
   }
 }
 #endif // CARD_H_

@@ -43,7 +43,7 @@ namespace fablabbg
       PORTAL_STARTING
     };
 
-    BoardLogic() noexcept;
+    BoardLogic();
 
     Status getStatus() const;
     Adafruit_NeoPixel pixels{1, pins.led.pin, NEO_GRB + NEO_KHZ800};
@@ -61,7 +61,7 @@ namespace fablabbg
     void invert_led();
     void set_led_color(uint8_t r, uint8_t g, uint8_t b);
 
-    bool configure(FabServer &server, BaseRFIDWrapper &rfid, BaseLCDWrapper &lcd);
+    bool configure(BaseRFIDWrapper &rfid, BaseLCDWrapper &lcd);
 
     void refreshLCD() const;
     void blinkLed();
@@ -69,6 +69,8 @@ namespace fablabbg
     void checkPowerOff();
     void setAutologoffDelay(seconds delay);
     void setWhitelist(WhiteList whitelist);
+    FabServer &getServer() const;
+    bool reconfigure();
 
     Machine &getMachineForTesting();
     const Machine &getMachine() const;
@@ -85,7 +87,7 @@ namespace fablabbg
   private:
     Status status;
     uint8_t led_color[3] = {0, 255, 0};
-    std::optional<std::reference_wrapper<FabServer>> server;
+    std::unique_ptr<FabServer> server;
     std::optional<std::reference_wrapper<BaseRFIDWrapper>> rfid;
     std::optional<std::reference_wrapper<BaseLCDWrapper>> lcd;
     bool ready_for_a_new_card = true;
@@ -94,7 +96,6 @@ namespace fablabbg
     mutable Machine machine;
     mutable AuthProvider auth{secrets::cards::whitelist};
 
-    FabServer &getServer() const;
     BaseRFIDWrapper &getRfid() const;
     BaseLCDWrapper &getLcd() const;
 

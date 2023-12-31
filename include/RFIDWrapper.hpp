@@ -34,8 +34,7 @@ namespace fablabbg
     card::uid_t getUid() const;
 
     // Testing methods
-    void resetUid();
-    void setUid(const card::uid_t &uid);
+    Driver &getDriver();
 
     RFIDWrapper(const RFIDWrapper &) = delete;             // copy constructor
     RFIDWrapper &operator=(const RFIDWrapper &x) = delete; // copy assignment

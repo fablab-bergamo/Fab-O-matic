@@ -43,10 +43,4 @@ namespace fablabbg
 
   void Mrfc522Driver::PCD_DumpVersionToSerial() { MFRC522Debug::PCD_DumpVersionToSerial(*mfrc522, Serial); }
 
-  // Not implemented for real driver
-  void Mrfc522Driver::setUid(const std::optional<card::uid_t> &uid){};
-
-  // Not implemented for real driver
-  void Mrfc522Driver::resetUid(){};
-
 } // namespace fablabbg
