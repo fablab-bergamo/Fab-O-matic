@@ -12,13 +12,13 @@ using namespace std::chrono;
 
 namespace fablabbg
 {
-  template <typename LcdLibrary, uint8_t _COLS, uint8_t _ROWS>
+  template <typename LcdDriver>
   class LCDWrapper : public BaseLCDWrapper
   {
   public:
     LCDWrapper(const pins_config::lcd_config &config);
 
-    using DisplayBuffer = std::array<std::array<char, _COLS>, _ROWS>;
+    using DisplayBuffer = std::array<std::array<char, conf::lcd::COLS>, conf::lcd::ROWS>;
     bool begin();
     void clear();
     void showConnection(bool show);
@@ -45,7 +45,7 @@ namespace fablabbg
 
     const pins_config::lcd_config config;
 
-    LcdLibrary lcd;
+    LcdDriver lcd;
     bool show_connection_status;
     bool show_power_status;
     bool forceUpdate;

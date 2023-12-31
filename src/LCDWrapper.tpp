@@ -7,10 +7,10 @@
 
 namespace fablabbg
 {
-  template <typename TLcd, uint8_t _COLS, uint8_t _ROWS>
-  LCDWrapper<TLcd, _COLS, _ROWS>::LCDWrapper(const pins_config::lcd_config &conf) : config(conf),
-                                                                                    lcd(config.rs_pin, config.en_pin, config.d0_pin, config.d1_pin, config.d2_pin, config.d3_pin),
-                                                                                    show_connection_status(true), show_power_status(true), forceUpdate(true)
+  template <typename TLcdDriver>
+  LCDWrapper<TLcdDriver>::LCDWrapper(const pins_config::lcd_config &conf) : config(conf),
+                                                                            lcd(config.rs_pin, config.en_pin, config.d0_pin, config.d1_pin, config.d2_pin, config.d3_pin),
+                                                                            show_connection_status(true), show_power_status(true), forceUpdate(true)
   {
     for (auto &row : buffer)
       row.fill({0});
@@ -18,17 +18,17 @@ namespace fablabbg
       row.fill({0});
   }
 
-  template <typename TLcd, uint8_t _COLS, uint8_t _ROWS>
-  void LCDWrapper<TLcd, _COLS, _ROWS>::createChar(uint8_t num, const uint8_t values[8])
+  template <typename TLcdDriver>
+  void LCDWrapper<TLcdDriver>::createChar(uint8_t num, const uint8_t values[8])
   {
     // Arduino LCD library only reads uint8_t* but did not flag const, so we use this wrapper
     lcd.createChar(num, const_cast<uint8_t *>(values));
   }
 
-  template <typename TLcd, uint8_t _COLS, uint8_t _ROWS>
-  bool LCDWrapper<TLcd, _COLS, _ROWS>::begin()
+  template <typename TLcdDriver>
+  bool LCDWrapper<TLcdDriver>::begin()
   {
-    lcd.begin(_COLS, _ROWS);
+    lcd.begin(conf::lcd::COLS, conf::lcd::ROWS);
     createChar(CHAR_ANTENNA, antenna_char);
     createChar(CHAR_CONNECTION, connection_char);
     createChar(CHAR_NO_CONNECTION, noconnection_char);
@@ -45,7 +45,7 @@ namespace fablabbg
     {
       constexpr size_t MAX_LEN = 100;
       char buf[MAX_LEN] = {0};
-      if (snprintf(buf, sizeof(buf), "Configured LCD %d x %d (d4=%d, d5=%d, d6=%d, d7=%d, en=%d, rs=%d), backlight=%d", _COLS, _ROWS,
+      if (snprintf(buf, sizeof(buf), "Configured LCD %d x %d (d4=%d, d5=%d, d6=%d, d7=%d, en=%d, rs=%d), backlight=%d", conf::lcd::COLS, conf::lcd::ROWS,
                    config.d0_pin, config.d1_pin, config.d2_pin, config.d3_pin,
                    config.en_pin, config.rs_pin, config.bl_pin) > 0)
         Serial.println(buf);
@@ -54,8 +54,8 @@ namespace fablabbg
     return true;
   }
 
-  template <typename TLcd, uint8_t _COLS, uint8_t _ROWS>
-  void LCDWrapper<TLcd, _COLS, _ROWS>::clear()
+  template <typename TLcdDriver>
+  void LCDWrapper<TLcdDriver>::clear()
   {
     for (auto &row : current)
       row.fill({' '});
@@ -63,8 +63,8 @@ namespace fablabbg
     forceUpdate = true;
   }
 
-  template <typename TLcd, uint8_t _COLS, uint8_t _ROWS>
-  void LCDWrapper<TLcd, _COLS, _ROWS>::update(const BoardInfo &info, bool forced)
+  template <typename TLcdDriver>
+  void LCDWrapper<TLcdDriver>::update(const BoardInfo &info, bool forced)
   {
     if (!forced && !needsUpdate(info))
     {
@@ -77,23 +77,23 @@ namespace fablabbg
     for (const auto &row : buffer)
     {
       lcd.setCursor(0, row_num);
-      char why_arduino_has_not_implemented_liquidcrystal_from_char_array_yet[_COLS];
-      memcpy(why_arduino_has_not_implemented_liquidcrystal_from_char_array_yet, &row, _COLS);
+      char why_arduino_has_not_implemented_liquidcrystal_from_char_array_yet[conf::lcd::COLS];
+      memcpy(why_arduino_has_not_implemented_liquidcrystal_from_char_array_yet, &row, conf::lcd::COLS);
       lcd.print(why_arduino_has_not_implemented_liquidcrystal_from_char_array_yet);
       row_num++;
     }
 
-    static_assert(_COLS > 1 && _ROWS > 1, "LCDWrapper required at least 2x2 LCDs");
+    static_assert(conf::lcd::COLS > 1 && conf::lcd::ROWS > 1, "LCDWrapper required at least 2x2 LCDs");
     if (show_connection_status)
     {
-      lcd.setCursor(_COLS - 2, 0);
+      lcd.setCursor(conf::lcd::COLS - 2, 0);
       lcd.write(CHAR_ANTENNA);
       lcd.write(info.server_connected ? CHAR_CONNECTION : CHAR_NO_CONNECTION);
     }
 
     if (show_power_status)
     {
-      lcd.setCursor(_COLS - 1, 1);
+      lcd.setCursor(conf::lcd::COLS - 1, 1);
       if (info.power_state == Machine::PowerState::POWERED_ON)
       {
         lcd.write(CHAR_POWERED_ON);
@@ -117,8 +117,8 @@ namespace fablabbg
     forceUpdate = false;
   }
 
-  template <typename TLcd, uint8_t _COLS, uint8_t _ROWS>
-  void LCDWrapper<TLcd, _COLS, _ROWS>::showConnection(bool show)
+  template <typename TLcdDriver>
+  void LCDWrapper<TLcdDriver>::showConnection(bool show)
   {
     if (show_connection_status != show)
       forceUpdate = true;
@@ -126,8 +126,8 @@ namespace fablabbg
     show_connection_status = show;
   }
 
-  template <typename TLcd, uint8_t _COLS, uint8_t _ROWS>
-  void LCDWrapper<TLcd, _COLS, _ROWS>::showPower(bool show)
+  template <typename TLcdDriver>
+  void LCDWrapper<TLcdDriver>::showPower(bool show)
   {
     if (show_power_status != show)
       forceUpdate = true;
@@ -136,12 +136,10 @@ namespace fablabbg
   }
 
   /// @brief Checks if the LCD buffer has changed since last write to the LCD, or forced update has been requested.
-  /// @tparam _COLS number of columns
-  /// @tparam _ROWS number of rows
   /// @param bi current state of the board
   /// @return true if the buffer has changed, false otherwise
-  template <typename TLcd, uint8_t _COLS, uint8_t _ROWS>
-  bool LCDWrapper<TLcd, _COLS, _ROWS>::needsUpdate(const BoardInfo &bi) const
+  template <typename TLcdDriver>
+  bool LCDWrapper<TLcdDriver>::needsUpdate(const BoardInfo &bi) const
   {
     if (forceUpdate || !(bi == boardInfo) || current != buffer)
     {
@@ -156,16 +154,14 @@ namespace fablabbg
   }
 
   /// @brief Debug utility to print in the console the current buffer contents
-  /// @tparam _COLS number of columns
-  /// @tparam _ROWS number of rows
   /// @param buf character buffer
   /// @param bi board info, used for special indicators status
-  template <typename TLcd, uint8_t _COLS, uint8_t _ROWS>
-  void LCDWrapper<TLcd, _COLS, _ROWS>::prettyPrint(const DisplayBuffer &buf,
-                                                   const BoardInfo &bi) const
+  template <typename TLcdDriver>
+  void LCDWrapper<TLcdDriver>::prettyPrint(const DisplayBuffer &buf,
+                                           const BoardInfo &bi) const
   {
     std::stringstream ss;
-    ss << "/" << std::string(_COLS, '-') << "\\\r\n"; // LCD top
+    ss << "/" << std::string(conf::lcd::COLS, '-') << "\\\r\n"; // LCD top
 
     for (const auto &row : buf)
     {
@@ -185,7 +181,7 @@ namespace fablabbg
     }
 
     // LCD lower border
-    ss << "\\" << std::string(_COLS, '-') << "/\r\n";
+    ss << "\\" << std::string(conf::lcd::COLS, '-') << "/\r\n";
 
     auto str = ss.str();
 
@@ -206,31 +202,31 @@ namespace fablabbg
     Serial.print(str.c_str());
   }
 
-  template <typename TLcd, uint8_t _COLS, uint8_t _ROWS>
-  void LCDWrapper<TLcd, _COLS, _ROWS>::setRow(uint8_t row, const std::string_view text)
+  template <typename TLcdDriver>
+  void LCDWrapper<TLcdDriver>::setRow(uint8_t row, const std::string_view text)
   {
-    if (text.length() >= _COLS)
+    if (text.length() >= conf::lcd::COLS)
       Serial.printf("LCDWrapper::setRow: text too long : %s\r\n", text.data());
 
-    if (row < _ROWS)
+    if (row < conf::lcd::ROWS)
     {
       buffer[row].fill({0});
-      for (auto i = 0; i < text.length() && i < _COLS; i++)
+      for (auto i = 0; i < text.length() && i < conf::lcd::COLS; i++)
       {
         buffer[row][i] = text[i];
       }
     }
   }
 
-  template <typename TLcd, uint8_t _COLS, uint8_t _ROWS>
-  void LCDWrapper<TLcd, _COLS, _ROWS>::backlightOn() const
+  template <typename TLcdDriver>
+  void LCDWrapper<TLcdDriver>::backlightOn() const
   {
     if (config.bl_pin != NO_PIN)
       digitalWrite(config.bl_pin, config.active_low ? 0 : 1);
   }
 
-  template <typename TLcd, uint8_t _COLS, uint8_t _ROWS>
-  void LCDWrapper<TLcd, _COLS, _ROWS>::backlightOff() const
+  template <typename TLcdDriver>
+  void LCDWrapper<TLcdDriver>::backlightOff() const
   {
     if (config.bl_pin != NO_PIN)
       digitalWrite(config.bl_pin, config.active_low ? 1 : 0);
