@@ -57,7 +57,7 @@ namespace fablabbg
   /// @param uid card ID
   /// @param out a FabUser with an authenticated flag==true if server or whitelist confirmed the ID
   /// @return false if the user was not found on server or whitelist
-  std::optional<FabUser> AuthProvider::tryLogin(card::uid_t uid) const
+  std::optional<FabUser> AuthProvider::tryLogin(card::uid_t uid, FabServer &server) const
   {
     FabUser user;
     auto uid_str = card::uid_str(uid);
@@ -65,12 +65,12 @@ namespace fablabbg
     if (conf::debug::ENABLE_LOGS)
       Serial.printf("tryLogin called for %s\r\n", uid_str.c_str());
 
-    if (!Board::server.isOnline())
-      Board::server.connect();
+    if (!server.isOnline())
+      server.connect();
 
-    if (Board::server.isOnline())
+    if (server.isOnline())
     {
-      if (auto response = Board::server.checkCard(uid); response->request_ok && response->getResult() == UserResult::USER_AUTHORIZED)
+      if (auto response = server.checkCard(uid); response->request_ok && response->getResult() == UserResult::USER_AUTHORIZED)
       {
         user.authenticated = true;
         user.card_uid = uid;

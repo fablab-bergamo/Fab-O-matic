@@ -25,7 +25,7 @@ namespace fablabbg
   public:
     AuthProvider() = delete;
     AuthProvider(WhiteList whitelist);
-    [[nodiscard]] std::optional<FabUser> tryLogin(card::uid_t uid) const;
+    [[nodiscard]] std::optional<FabUser> tryLogin(card::uid_t uid, FabServer &server) const;
     void setWhitelist(WhiteList list);
   };
 } // namespace fablabbg
