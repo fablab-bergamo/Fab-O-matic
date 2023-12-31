@@ -157,7 +157,7 @@ namespace fablabbg
 
   /// @brief Asks the user to keep the RFID tag on the reader as confirmation
   /// @return True if the user accepted, False if user bailed out
-  bool BoardLogic::longTap(std::string_view short_prompt) const
+  bool BoardLogic::longTap(const card::uid_t card, const std::string &short_prompt) const
   {
     constexpr auto STEPS_COUNT = 6;
     constexpr milliseconds delay_per_step = duration_cast<milliseconds>(conf::machine::LONG_TAP_DURATION) / STEPS_COUNT;
@@ -171,7 +171,7 @@ namespace fablabbg
       getLcd().update(bi);
 
       auto start = std::chrono::system_clock::now();
-      if (!getRfid().cardStillThere(machine.getActiveUser().card_uid, delay_per_step))
+      if (!getRfid().cardStillThere(card, delay_per_step))
       {
         getLcd().setRow(1, "* ANNULLATO *");
         getLcd().update(bi);
@@ -238,7 +238,7 @@ namespace fablabbg
         beep_ok();
         changeStatus(Status::MAINTENANCE_QUERY);
 
-        if (longTap("Registra"))
+        if (longTap(user.card_uid, "Registra"))
         {
           auto maint_resp = server->registerMaintenance(user.card_uid);
           if (!maint_resp->request_ok)

@@ -120,7 +120,7 @@ void test_whitelist_no_network()
   // Logon simulating RFID tag
   auto [card_uid, level, name] = test_whitelist[1];
 
-  simulate_rfid_card(rfid, logic, card_uid);
+  simulate_rfid_card(rfid, logic, card_uid, std::nullopt);
   TEST_ASSERT_TRUE_MESSAGE(rfid.isNewCardPresent(), "New card not present");
   TEST_ASSERT_TRUE_MESSAGE(rfid.readCardSerial().has_value(), "Card serial not read");
   TEST_ASSERT_TRUE_MESSAGE(rfid.readCardSerial().value() == card_uid, "Card serial not equal");
@@ -132,7 +132,7 @@ void test_whitelist_no_network()
   TEST_ASSERT_FALSE_MESSAGE(logic.getMachine().isFree(), "Machine is free");
 
   // Same card back, shall logout user
-  new_state = simulate_rfid_card(rfid, logic, card_uid, 0ms);
+  new_state = simulate_rfid_card(rfid, logic, card_uid);
   TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::LOGOUT, new_state, "Status not LOGOUT");
   TEST_ASSERT_TRUE_MESSAGE(logic.getMachine().isFree(), "Machine is not free");
 }
@@ -153,7 +153,7 @@ void test_one_user_at_a_time()
 
   // New card, shall be denied
   auto [card_uid2, level2, name2] = test_whitelist[1];
-  simulate_rfid_card(rfid, logic, card_uid2);
+  simulate_rfid_card(rfid, logic, card_uid2, 100ms);
   TEST_ASSERT_TRUE_MESSAGE(logic.getMachine().getActiveUser().card_uid == card_uid, "User UID has changed");
 
   // New card away, first user shall still be here
@@ -189,7 +189,7 @@ void test_user_autologoff()
   logic.setAutologoffDelay(2s);
   TEST_ASSERT_TRUE_MESSAGE(logic.getMachine().getAutologoffDelay() == 2s, "Autologoff delay not 2s");
 
-  simulate_rfid_card(rfid, logic, get_test_uid(0), 100ms);
+  simulate_rfid_card(rfid, logic, get_test_uid(0));
   TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::LOGGED_IN, logic.getStatus(), "Status not LOGGED_IN");
 
   // Card away
@@ -220,24 +220,24 @@ void test_machine_maintenance()
 
   machine.allowed = true;
   machine.maintenanceNeeded = true;
-  simulate_rfid_card(rfid, logic, card_fabuser, 0ms);
+  simulate_rfid_card(rfid, logic, card_fabuser);
   TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::MAINTENANCE_NEEDED, logic.getStatus(), "Status not MAINTENANCE_NEEDED");
 
   simulate_rfid_card(rfid, logic, std::nullopt);
-  simulate_rfid_card(rfid, logic, card_admin, 0ms); // Log in + Conferma manutenzione perché non ritorna prima della conclusione
-  simulate_rfid_card(rfid, logic, std::nullopt);    // Card away
-  TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::IN_USE, logic.getStatus(), "Status not IN_USE");
-  TEST_ASSERT_FALSE_MESSAGE(logic.getMachine().maintenanceNeeded, "Maintenance not cleared");
+  simulate_rfid_card(rfid, logic, card_admin, conf::machine::LONG_TAP_DURATION + 1s); // Log in + Conferma manutenzione perché non ritorna prima della conclusione
+  simulate_rfid_card(rfid, logic, std::nullopt);                                      // Card away
+  TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::IN_USE, logic.getStatus(), "Status not IN_USE by admin");
+  TEST_ASSERT_FALSE_MESSAGE(logic.getMachine().maintenanceNeeded, "Maintenance not cleared by admin");
 
   // Logoff admin
   simulate_rfid_card(rfid, logic, card_admin);
   TEST_ASSERT_TRUE_MESSAGE(logic.getMachine().isFree(), "Machine is not free");
   simulate_rfid_card(rfid, logic, std::nullopt);
 
-  // Now try to logon with fabuser
-  simulate_rfid_card(rfid, logic, card_fabuser, 0ms);
-  TEST_ASSERT_FALSE_MESSAGE(logic.getStatus() == BoardLogic::Status::MAINTENANCE_NEEDED, "Status not MAINTENANCE_NEEDED");
-  TEST_ASSERT_FALSE_MESSAGE(logic.getStatus() == BoardLogic::Status::LOGGED_IN, "Status not LOGGED_IN");
+  // Now try to logon with fabuser (should succeed because maintenance is cleared)
+  simulate_rfid_card(rfid, logic, card_fabuser);
+  simulate_rfid_card(rfid, logic, std::nullopt);
+  TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::IN_USE, logic.getStatus(), "Status not IN_USE by normal user");
 }
 
 void test_machine_allowed()
@@ -252,14 +252,14 @@ void test_machine_allowed()
   machine.maintenanceNeeded = false;
 
   // check if blocked for normal users
-  simulate_rfid_card(rfid, logic, card_fabuser, 0ms);
+  simulate_rfid_card(rfid, logic, card_fabuser);
   TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::NOT_ALLOWED, logic.getStatus(), "Status not NOT_ALLOWED");
   simulate_rfid_card(rfid, logic, std::nullopt);
 
   // still blocked for admins
-  simulate_rfid_card(rfid, logic, card_admin, 0ms);
+  simulate_rfid_card(rfid, logic, card_admin);
   TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::NOT_ALLOWED, logic.getStatus(), "Status not NOT_ALLOWED for admins");
-  simulate_rfid_card(rfid, logic, std::nullopt, 0ms);
+  simulate_rfid_card(rfid, logic, std::nullopt);
 }
 
 void tearDown(void){};

@@ -6,7 +6,8 @@
 
 #include "card.hpp"
 #include "BoardLogic.hpp"
-#include "BaseRfidWrapper.hpp"
+#include "mock/MockMrfc522.hpp"
+#include "RfidWrapper.hpp"
 
 namespace fablabbg::tests
 {
@@ -26,11 +27,10 @@ namespace fablabbg::tests
   /// @param logic Board logic
   /// @param uid UID of the card to simulate or std::nullopt for no card
   /// @param duration_tap Duration of the tap
-  BoardLogic::Status simulate_rfid_card(BaseRFIDWrapper &rfid, BoardLogic &logic,
-                                        std::optional<card::uid_t> uid,
-                                        milliseconds duration_tap = milliseconds(250));
+  BoardLogic::Status simulate_rfid_card(RFIDWrapper<MockMrfc522> &rfid, BoardLogic &logic, std::optional<card::uid_t> uid,
+                                        std::optional<milliseconds> duration_tap = std::nullopt);
 
-  void machine_init(BoardLogic &logic, BaseRFIDWrapper &rfid);
+  void machine_init(BoardLogic &logic, RFIDWrapper<MockMrfc522> &rfid);
 }
 
 #endif // TEST_COMMON_H_

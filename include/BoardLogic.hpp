@@ -99,7 +99,7 @@ namespace fablabbg
     BaseRFIDWrapper &getRfid() const;
     BaseLCDWrapper &getLcd() const;
 
-    bool longTap(std::string_view short_prompt) const;
+    bool longTap(const card::uid_t card, const std::string &short_prompt) const;
   };
 } // namespace fablabbg
 #endif // BOARDLOGIC_H
