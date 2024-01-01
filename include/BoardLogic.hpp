@@ -18,7 +18,7 @@ namespace fablabbg
   class BoardLogic
   {
   public:
-    enum class Status
+    enum class Status : uint8_t
     {
       CLEAR,
       FREE,

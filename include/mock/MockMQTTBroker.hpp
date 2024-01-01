@@ -1,4 +1,3 @@
-#if (WOKWI_SIMULATION)
 #ifndef MOCKMQTTBROKER_H_
 #define MOCKMQTTBROKER_H_
 
@@ -27,7 +26,7 @@ namespace fablabbg
 
   private:
     constexpr static uint16_t MQTTPORT = 1883;
-    bool is_running = false;
+    std::atomic<bool> is_running{false};
     std::string topic = "";
     std::string payload = "";
 
@@ -41,4 +40,3 @@ namespace fablabbg
   };
 } // namespace fablabbg
 #endif // MOCKMQTTBROKER_H_
-#endif // WOKWI_SIMULATION

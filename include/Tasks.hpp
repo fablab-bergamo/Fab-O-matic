@@ -15,7 +15,7 @@ namespace fablabbg::Tasks
   {
   public:
     Task() = delete;
-    Task(std::string id, milliseconds period, std::function<void()> callback, Scheduler &scheduler, bool active = true, milliseconds delay = 0ms);
+    Task(const std::string &id, milliseconds period, std::function<void()> callback, Scheduler &scheduler, bool active = true, milliseconds delay = 0ms);
     ~Task() = default;
 
     Task(const Task &other) = default;

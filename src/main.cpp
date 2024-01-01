@@ -151,41 +151,25 @@ namespace fablabbg
   void taskRFIDCardSim()
   {
     static uid_t logged_uid = card::INVALID;
-    static bool in_rfid_field = false;
+    auto &driver = rfid.getDriver();
 
     if (logged_uid == card::INVALID)
     {
-      if (in_rfid_field)
-      {
-        rfid.resetUid();
-        in_rfid_field = false;
-        logged_uid = rfid.getUid();
-        return;
-      }
-
       // Select random card every X times
       if (random(0, 100) < 5)
       {
         auto [card_uid, level, name] = secrets::cards::whitelist[random(0, secrets::cards::whitelist.size())];
         logged_uid = card_uid;
-        rfid.setUid(card_uid);
-        in_rfid_field = true;
+        driver.setUid(card_uid, milliseconds(500));
       }
     }
     else
     {
-      if (in_rfid_field)
-      {
-        rfid.resetUid();
-        in_rfid_field = false;
-        logged_uid = card::INVALID;
-        return;
-      }
       // Select logged-in card every X times
       if (random(0, 100) < 5)
       {
-        rfid.setUid(logged_uid);
-        in_rfid_field = true;
+        driver.setUid(logged_uid, milliseconds(500));
+        logged_uid = card::INVALID;
       }
     }
   }
@@ -210,7 +194,7 @@ namespace fablabbg
       {
         Board::broker.update();
       }
-      delay(25);
+      delay(50);
     }
   }
 

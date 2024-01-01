@@ -14,11 +14,7 @@ namespace fablabbg
 {
   namespace conf::default_config
   {
-    static constexpr std::string_view ssid = "Wokwi-GUEST"; /* Default SSID */
-    static constexpr std::string_view password = "";        /* Default password */
     static constexpr std::string_view mqtt_server = "127.0.0.1";
-    static constexpr std::string_view mqtt_user = "user";
-    static constexpr std::string_view mqtt_password = "password";
     static constexpr std::string_view machine_topic = "shelly/command/switch:0";
     static constexpr MachineID machine_id{1};
     static constexpr std::string_view machine_name = "MACHINE1";
@@ -41,7 +37,7 @@ namespace fablabbg
     static constexpr auto POWEROFF_GRACE_PERIOD = 2min;   /* Idle time before poweroff. If 0min, machine will stay on. */
     static constexpr auto DELAY_BETWEEN_BEEPS = 30s;      /* Beeps will be heard every 30s when the machine is about to shutdown */
     static constexpr bool MAINTENANCE_BLOCK = true;       /* If true, machine needing maintenance will be blocked for normal users */
-    static constexpr auto LONG_TAP_DURATION = 10s;         /* Minimum time to confirm by long tap maintenance*/
+    static constexpr auto LONG_TAP_DURATION = 10s;        /* Minimum time to confirm by long tap maintenance*/
     static_assert(BEEP_PERIOD <= POWEROFF_GRACE_PERIOD);
     static_assert(DELAY_BETWEEN_BEEPS < BEEP_PERIOD);
   }

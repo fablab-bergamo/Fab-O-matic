@@ -14,13 +14,13 @@ namespace fablabbg
     SavedConfig config;
 
     // Wifi
-    strncpy(config.ssid, conf::default_config::ssid.data(), FIELD_LENGTH);
-    strncpy(config.password, conf::default_config::password.data(), FIELD_LENGTH);
+    strncpy(config.ssid, secrets::credentials::ssid.data(), FIELD_LENGTH);
+    strncpy(config.password, secrets::credentials::password.data(), FIELD_LENGTH);
 
     // MQTT
     strncpy(config.mqtt_server, conf::default_config::mqtt_server.data(), FIELD_LENGTH);
-    strncpy(config.mqtt_user, conf::default_config::mqtt_user.data(), FIELD_LENGTH);
-    strncpy(config.mqtt_password, conf::default_config::mqtt_password.data(), FIELD_LENGTH);
+    strncpy(config.mqtt_user, secrets::credentials::mqtt_user.data(), FIELD_LENGTH);
+    strncpy(config.mqtt_password, secrets::credentials::mqtt_password.data(), FIELD_LENGTH);
 
     // MQTT Switch
     strncpy(config.machine_topic, conf::default_config::machine_topic.data(), FIELD_LENGTH);

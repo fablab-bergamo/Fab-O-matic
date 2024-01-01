@@ -1,4 +1,3 @@
-#if (WOKWI_SIMULATION)
 #include "mock/MockMQTTBroker.hpp"
 #include "conf.hpp"
 
@@ -23,7 +22,7 @@ namespace fablabbg
       is_running = init(MockMQTTBroker::MQTTPORT, true);
 
       if (conf::debug::ENABLE_LOGS)
-        Serial.printf("MQTT BROKER: started with result %d\r\n", is_running);
+        Serial.printf("MQTT BROKER: started with result %d\r\n", is_running.load());
     }
   }
   bool MockMQTTBroker::onEvent(sMQTTEvent *event)
@@ -128,4 +127,3 @@ namespace fablabbg
     }
   }
 } // namespace fablabbg
-#endif // WOKWI_SIMULATION

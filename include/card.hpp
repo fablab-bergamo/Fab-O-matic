@@ -22,7 +22,7 @@ namespace fablabbg::card
     return ss.str();
   }
 
-  inline uid_t from_array(const uint8_t uid[conf::rfid_tags::UID_BYTE_LEN])
+  constexpr inline uid_t from_array(const uint8_t uid[conf::rfid_tags::UID_BYTE_LEN])
   {
     card::uid_t result = 0;
     for (auto i = (conf::rfid_tags::UID_BYTE_LEN - 1); i >= 0; i--)

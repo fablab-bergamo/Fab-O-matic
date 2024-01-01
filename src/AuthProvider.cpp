@@ -36,7 +36,7 @@ namespace fablabbg
   /// @param uid card id of the user
   /// @param name name of the user to be cached
   /// @param level priviledge level of the user
-  void AuthProvider::add_in_cache(card::uid_t uid, std::string name, FabUser::UserLevel level) const
+  void AuthProvider::add_in_cache(card::uid_t uid, const std::string name, FabUser::UserLevel level) const
   {
     // Check if already in cache
     if (is_in_cache(uid).has_value())

@@ -18,7 +18,9 @@
 #include "pins.hpp"
 #include "LiquidCrystal.h"
 #include "Mrfc522Driver.hpp"
+#if (WOKWI_SIMULATION)
 #include "mock/MockMQTTBroker.hpp"
+#endif 
 
 using namespace fablabbg;
 
@@ -26,14 +28,14 @@ namespace fablabbg::Board
 {
   // Global variables
 #if (WOKWI_SIMULATION)
-  RFIDWrapper<MockMrfc522> rfid;
-  MockMQTTBroker broker;
+  DRAM_ATTR RFIDWrapper<MockMrfc522> rfid;
+  DRAM_ATTR MockMQTTBroker broker;
 #else
-  RFIDWrapper<Mrfc522Driver> rfid{};
+  DRAM_ATTR RFIDWrapper<Mrfc522Driver> rfid{};
 #endif
-  LCDWrapper<LiquidCrystal> lcd{pins.lcd};
-  BoardLogic logic;
-  Tasks::Scheduler scheduler;
+  DRAM_ATTR LCDWrapper<LiquidCrystal> lcd{pins.lcd};
+  DRAM_ATTR BoardLogic logic;
+  DRAM_ATTR Tasks::Scheduler scheduler;
 } // namespace Board
 
 #endif // GLOBALS_H_
