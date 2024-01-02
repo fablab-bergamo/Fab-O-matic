@@ -92,7 +92,7 @@ namespace fablabbg::ServerMQTT
     if (conf::debug::ENABLE_LOGS)
       Serial.printf("Parsed machine response as request_ok %d is_valid %d maintenance %d allowed %d autologoff %d name %s type %d\r\n",
                     response->request_ok, response->is_valid, response->maintenance, response->allowed, response->logoff,
-                    response->name.c_str(), response->type);
+                    response->name.data(), response->type);
 
     return response;
   }

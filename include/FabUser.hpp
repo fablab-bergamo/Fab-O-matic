@@ -28,15 +28,15 @@ namespace fablabbg
 
     FabUser() = default;
 
-    FabUser(const card::uid_t uid, std::string_view name, bool auth, UserLevel level) : card_uid(uid),
-                                                                                        holder_name(name),
-                                                                                        authenticated(auth),
-                                                                                        user_level(level) {}
+    FabUser(const card::uid_t uid, const std::string &name, bool auth, UserLevel level) : card_uid(uid),
+                                                                                          holder_name(name),
+                                                                                          authenticated(auth),
+                                                                                          user_level(level) {}
 
-    FabUser(const uint8_t uid[conf::rfid_tags::UID_BYTE_LEN], std::string_view name, bool auth, UserLevel level) : card_uid(card::from_array(uid)),
-                                                                                                                   holder_name(name),
-                                                                                                                   authenticated(auth),
-                                                                                                                   user_level(level) {}
+    FabUser(const uint8_t uid[conf::rfid_tags::UID_BYTE_LEN], const std::string &name, bool auth, UserLevel level) : card_uid(card::from_array(uid)),
+                                                                                                                     holder_name(name),
+                                                                                                                     authenticated(auth),
+                                                                                                                     user_level(level) {}
     bool operator==(const FabUser &t) const
     {
       return card_uid == t.card_uid;

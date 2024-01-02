@@ -97,7 +97,7 @@ void test_stop_start_tasks(void)
   create_tasks(scheduler, 150ms);
   TEST_ASSERT_EQUAL_MESSAGE(NB_TASKS, scheduler.taskCount(), "Scheduler does not contain all tasks");
 
-  for (auto t : tasks)
+  for (auto &t : tasks)
   {
     t->stop();
   }
@@ -106,7 +106,7 @@ void test_stop_start_tasks(void)
   run_for_duration(execute, 150ms);
   TEST_ASSERT_EQUAL_MESSAGE(0, task_counter, "Stopped tasks has been executed");
 
-  for (auto t : tasks)
+  for (auto &t : tasks)
   {
     t->start();
   }
@@ -116,7 +116,7 @@ void test_stop_start_tasks(void)
   TEST_ASSERT_EQUAL_MESSAGE(NB_TASKS, task_counter, "Started tasks have not all been executed");
 
   task_counter = 0;
-  for (auto t : tasks)
+  for (auto &t : tasks)
   {
     t->restart();
   }

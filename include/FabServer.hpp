@@ -70,6 +70,7 @@ namespace fablabbg
     bool connectWiFi() noexcept;
     bool loop();
     void configure(const SavedConfig &config); // Must be called before using the server
+    void disconnect();
 
     // Rule of 5 https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rc-five
     FabServer(const FabServer &) = delete;            // copy constructor

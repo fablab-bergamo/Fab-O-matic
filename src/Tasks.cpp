@@ -107,7 +107,7 @@ namespace fablabbg::Tasks
   /// @param scheduler reference to the scheduler
   /// @param active if true, the task will be executed
   /// @param delay initial delay before starting the task
-  Task::Task(const std::string& id, milliseconds period,
+  Task::Task(const std::string &id, milliseconds period,
              std::function<void()> callback,
              Scheduler &scheduler, bool active, milliseconds delay) : active(active), id(id),
                                                                       period(period), delay(delay),

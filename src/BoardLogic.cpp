@@ -18,11 +18,7 @@
 
 namespace fablabbg
 {
-  BoardLogic::BoardLogic() : status(Status::CLEAR),
-                             server(std::make_unique<FabServer>()),
-                             rfid(std::nullopt),
-                             lcd(std::nullopt)
-
+  BoardLogic::BoardLogic() : server(std::make_unique<FabServer>())
   {
     pinMode(pins.led.pin, OUTPUT);
     if (pins.led.is_neopixel)
@@ -509,9 +505,9 @@ namespace fablabbg
     MachineID mid{(uint16_t)atoi(config.value().machine_id)};
     MachineConfig machine_conf(mid,
                                conf::default_config::machine_type,
-                               conf::default_config::machine_name,
+                               std::string{conf::default_config::machine_name},
                                pins.relay.ch1_pin, false,
-                               config.value().machine_topic,
+                               std::string{config.value().machine_topic},
                                conf::machine::DEFAULT_AUTO_LOGOFF_DELAY);
 
     machine.configure(machine_conf, *server);

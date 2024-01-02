@@ -16,10 +16,10 @@ namespace fablabbg
   class MockMrfc522
   {
   private:
-    std::optional<card::uid_t> uid;
-    std::optional<time_point<system_clock>> stop_uid_simulate_time;
+    std::optional<card::uid_t> uid{std::nullopt};
+    std::optional<time_point<system_clock>> stop_uid_simulate_time{std::nullopt};
     std::optional<card::uid_t> getSimulatedUid() const;
-    
+
   public:
     struct UidDriver
     {
@@ -28,7 +28,8 @@ namespace fablabbg
       byte sak; // The SAK (Select acknowledge) byte returned from the PICC after successful selection.
     };
 
-    MockMrfc522();
+    constexpr MockMrfc522(){};
+
     bool PICC_IsNewCardPresent();
     bool PICC_ReadCardSerial();
     void reset();

@@ -24,7 +24,7 @@ namespace fablabbg::ServerMQTT
     const card::uid_t uid;
 
     UserQuery() = delete;
-    UserQuery(card::uid_t card_uid) : uid(card_uid){};
+    constexpr UserQuery(card::uid_t card_uid) : uid(card_uid){};
 
     std::string payload() const;
   };
@@ -32,14 +32,14 @@ namespace fablabbg::ServerMQTT
   class MachineQuery : public Query
   {
   public:
-    MachineQuery() = default;
+    constexpr MachineQuery() = default;
     std::string payload() const;
   };
 
   class AliveQuery : public Query
   {
   public:
-    AliveQuery() = default;
+    constexpr AliveQuery() = default;
     std::string payload() const;
   };
 
@@ -49,7 +49,7 @@ namespace fablabbg::ServerMQTT
     const card::uid_t uid;
 
     StartUseQuery() = delete;
-    StartUseQuery(card::uid_t card_uid) : uid(card_uid){};
+    constexpr StartUseQuery(card::uid_t card_uid) : uid(card_uid){};
 
     std::string payload() const;
   };
@@ -66,7 +66,7 @@ namespace fablabbg::ServerMQTT
     /// @param card_uid machine user card id
     /// @param mid machine id
     /// @param duration duration of usage, in seconds
-    StopUseQuery(card::uid_t card_uid, std::chrono::seconds duration) : uid(card_uid), duration_s(duration){};
+    constexpr StopUseQuery(card::uid_t card_uid, std::chrono::seconds duration) : uid(card_uid), duration_s(duration){};
     std::string payload() const;
   };
 
@@ -76,7 +76,7 @@ namespace fablabbg::ServerMQTT
     const card::uid_t uid;
 
     RegisterMaintenanceQuery() = delete;
-    RegisterMaintenanceQuery(card::uid_t card_uid) : uid(card_uid){};
+    constexpr RegisterMaintenanceQuery(card::uid_t card_uid) : uid(card_uid){};
 
     std::string payload() const;
   };
@@ -87,7 +87,7 @@ namespace fablabbg::ServerMQTT
     const bool request_ok{false}; /* True if the request was processed by the server */
 
     Response() = delete;
-    Response(bool result) : request_ok(result){};
+    constexpr Response(bool result) : request_ok(result){};
 
   protected:
     static void loadJson(JsonDocument &doc);
@@ -98,19 +98,21 @@ namespace fablabbg::ServerMQTT
     USER_INVALID = 0,
     USER_AUTHORIZED = 1,
     USER_UNAUTHORIZED = 2,
-    USER_UNAUTHORIZED_MAINTENANCE = 3,
+    USER_UNAUTHORIZED_MAINTENANCE = 3
   };
 
   class UserResponse : public Response
   {
   public:
-    uint8_t result = static_cast<uint8_t>(UserResult::USER_INVALID); /* Result of the user check */
-    std::string holder_name;                                         /* Name of the user from server DB */
-    FabUser::UserLevel user_level;                                   /* User priviledges */
+    uint8_t result{static_cast<uint8_t>(UserResult::USER_INVALID)}; /* Result of the user check */
+    std::string holder_name{""};                                    /* Name of the user from server DB */
+    FabUser::UserLevel user_level{FabUser::UserLevel::UNKNOWN};     /* User priviledges */
 
     UserResponse() = delete;
     UserResponse(bool rok) : Response(rok){};
-    UserResponse(bool rok, UserResult res) : Response(rok), result(static_cast<uint8_t>(res)){};
+
+    UserResponse(bool rok, UserResult res) : Response(rok),
+                                             result(static_cast<uint8_t>(res)){};
 
     [[nodiscard]] static std::unique_ptr<UserResponse> fromJson(JsonDocument &doc);
     UserResult getResult() const;
@@ -135,7 +137,7 @@ namespace fablabbg::ServerMQTT
   {
   public:
     SimpleResponse() = delete;
-    SimpleResponse(bool rok) : Response(rok){};
+    constexpr SimpleResponse(bool rok) : Response(rok){};
 
     [[nodiscard]] static std::unique_ptr<SimpleResponse> fromJson(JsonDocument &doc);
   };

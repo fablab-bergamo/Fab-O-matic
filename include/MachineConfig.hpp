@@ -27,7 +27,7 @@ namespace fablabbg
   {
     MachineID machine_id{0};
     MachineType machine_type{MachineType::INVALID};
-    std::string machine_name;
+    std::string machine_name{""};
     struct RelayConfig
     {
       const uint8_t pin{NO_PIN};
@@ -42,12 +42,13 @@ namespace fablabbg
 
     seconds autologoff;
 
-    MachineConfig(MachineID id, MachineType type, std::string_view name,
-                  uint8_t pin, bool act_low, std::string_view topic,
-                  seconds autologoff) : machine_id(id), machine_type(type), machine_name(name),
+    MachineConfig(MachineID id, MachineType type, const std::string &name,
+                  uint8_t pin, bool act_low, const std::string &topic,
+                  seconds autologoff) : machine_id(id), machine_type(type),
+                                        machine_name(name),
                                         relay_config{pin, act_low},
-                                        mqtt_config{std::string{topic}},
-                                        autologoff(autologoff) {}
+                                        mqtt_config{topic},
+                                        autologoff(autologoff){};
     std::string toString() const;
     bool hasRelay() const;
     bool hasMqttSwitch() const;

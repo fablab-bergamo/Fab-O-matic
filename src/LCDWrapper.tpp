@@ -203,7 +203,7 @@ namespace fablabbg
   }
 
   template <typename TLcdDriver>
-  void LCDWrapper<TLcdDriver>::setRow(uint8_t row, const std::string_view text)
+  void LCDWrapper<TLcdDriver>::setRow(uint8_t row, const std::string &text)
   {
     if (text.length() >= conf::lcd::COLS)
       Serial.printf("LCDWrapper::setRow: text too long : %s\r\n", text.data());

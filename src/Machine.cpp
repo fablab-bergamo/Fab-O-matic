@@ -20,15 +20,6 @@ namespace fablabbg
     return ret_type();                                \
   }
 
-  /// @brief Creates a new machine
-  Machine::Machine() : maintenanceNeeded(false), allowed(true),
-                       config(std::nullopt), server(std::nullopt),
-                       active(false), power_state(PowerState::UNKNOWN)
-
-  {
-    current_user = FabUser();
-  }
-
   void Machine::configure(const MachineConfig &new_config, FabServer &serv)
   {
     // https://stackoverflow.com/questions/67596731/why-is-stdoptionaltoperator-deleted-when-t-contains-a-const-data-memb
@@ -237,7 +228,7 @@ namespace fablabbg
   std::string Machine::getMachineName() const
   {
     CHECK_CONFIGURED(std::string);
-    return config.value().machine_name;
+    return std::string{config.value().machine_name.data()};
   }
 
   std::string Machine::toString() const
@@ -290,7 +281,7 @@ namespace fablabbg
            getUsageDuration() > getAutologoffDelay();
   }
 
-  void Machine::setMachineName(std::string_view new_name)
+  void Machine::setMachineName(const std::string &new_name)
   {
     CHECK_CONFIGURED(void);
 

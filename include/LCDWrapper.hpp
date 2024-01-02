@@ -23,7 +23,7 @@ namespace fablabbg
     void clear();
     void showConnection(bool show);
     void showPower(bool show);
-    void setRow(uint8_t row, const std::string_view text);
+    void setRow(uint8_t row, const std::string &text);
     std::string convertSecondsToHHMMSS(duration<uint16_t> duration) const;
     void update(const BoardInfo &boardinfo, bool forced = false);
 

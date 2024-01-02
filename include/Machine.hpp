@@ -22,15 +22,16 @@ namespace fablabbg
       POWERED_OFF
     };
 
-    Machine();
+    constexpr Machine(){};
+
     ~Machine() = default;
     Machine(const Machine &) = delete;             // copy constructor
     Machine &operator=(const Machine &x) = delete; // copy assignment
     Machine(Machine &&) = delete;                  // move constructor
     Machine &operator=(Machine &&) = delete;       // move assignment
 
-    bool maintenanceNeeded; // If true, machine needs maintenance
-    bool allowed;           // If false, nobody can use the machine
+    bool maintenanceNeeded{false}; // If true, machine needs maintenance
+    bool allowed{true};            // If false, nobody can use the machine
 
     FabUser getActiveUser() const;
     void configure(const MachineConfig &new_config, FabServer &serv); // Must be called before using the machine
@@ -39,12 +40,12 @@ namespace fablabbg
     seconds getUsageDuration() const;
     seconds getAutologoffDelay() const;
 
-    bool login(FabUser user);                       // if the machine is not active, login the user
-    void logout();                                  // if the machine is active, check if the card belongs to the user that is logged in and logout the user
-    void setAutologoffDelay(seconds new_delay);     // Sets the delay after which the user will be logged off automatically
-    void power(bool on_or_off);                     // Power-on or off the machine
-    void setMachineName(std::string_view new_name); // Sets the machine name as per backend configuration
-    void setMachineType(MachineType new_type);      // Sets the machine type as per backend configuration
+    bool login(FabUser user);                         // if the machine is not active, login the user
+    void logout();                                    // if the machine is active, check if the card belongs to the user that is logged in and logout the user
+    void setAutologoffDelay(seconds new_delay);       // Sets the delay after which the user will be logged off automatically
+    void power(bool on_or_off);                       // Power-on or off the machine
+    void setMachineName(const std::string &new_name); // Sets the machine name as per backend configuration
+    void setMachineType(MachineType new_type);        // Sets the machine type as per backend configuration
 
     PowerState getPowerState() const; // Gets the current state of the machine
     bool isShutdownImminent() const;  // True if the machine will power down in less than BEEP_REMAINING_MINUTES
@@ -57,15 +58,15 @@ namespace fablabbg
     std::optional<MachineConfig> getConfig() const; // Returns the current configuration of the machine
 
   private:
-    std::optional<MachineConfig> config;
-    std::optional<std::reference_wrapper<FabServer>> server;
+    std::optional<MachineConfig> config{std::nullopt};
+    std::optional<std::reference_wrapper<FabServer>> server{std::nullopt};
 
-    bool active;
-    FabUser current_user;
+    bool active{false};
+    FabUser current_user{};
 
-    std::optional<time_point<system_clock>> usage_start_timestamp; // When did the machine start?
-    std::optional<time_point<system_clock>> logoff_timestamp;      // When did the last user log off?
-    PowerState power_state;
+    std::optional<time_point<system_clock>> usage_start_timestamp{std::nullopt}; // When did the machine start?
+    std::optional<time_point<system_clock>> logoff_timestamp{std::nullopt};      // When did the last user log off?
+    PowerState power_state{PowerState::UNKNOWN};
 
     void power_mqtt(bool on_or_off);
     void power_relay(bool on_or_off);

@@ -5,8 +5,10 @@
 #include <cstdint>
 #include <optional>
 
-#include "MachineConfig.hpp"
 #include <EEPROM.h>
+
+#include "conf.hpp"
+#include "MachineConfig.hpp"
 
 namespace fablabbg
 {
@@ -36,6 +38,8 @@ namespace fablabbg
 
     bool SaveToEEPROM() const;
     std::string toString() const;
+
+    constexpr SavedConfig() = default;
 
     static std::optional<SavedConfig> LoadFromEEPROM();
     static SavedConfig DefaultConfig();

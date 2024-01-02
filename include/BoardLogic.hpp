@@ -85,13 +85,13 @@ namespace fablabbg
     BoardLogic &operator=(BoardLogic &&) = default;
 
   private:
-    Status status;
+    Status status {Status::CLEAR};
     uint8_t led_color[3] = {0, 255, 0};
     std::unique_ptr<FabServer> server;
-    std::optional<std::reference_wrapper<BaseRFIDWrapper>> rfid;
-    std::optional<std::reference_wrapper<BaseLCDWrapper>> lcd;
-    bool ready_for_a_new_card = true;
-    bool led_status = false;
+    std::optional<std::reference_wrapper<BaseRFIDWrapper>> rfid{std::nullopt};
+    std::optional<std::reference_wrapper<BaseLCDWrapper>> lcd{std::nullopt};
+    bool ready_for_a_new_card{true};
+    bool led_status{false};
 
     mutable Machine machine;
     mutable AuthProvider auth{secrets::cards::whitelist};

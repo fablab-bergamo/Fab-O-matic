@@ -95,7 +95,7 @@ namespace fablabbg
     auto &machine = Board::logic.getMachine();
     if (machine.isAutologoffExpired())
     {
-      Serial.printf("Auto-logging out user %s\r\n", machine.getActiveUser().holder_name.c_str());
+      Serial.printf("Auto-logging out user %s\r\n", machine.getActiveUser().holder_name.data());
       logic.logout();
       logic.beep_failed();
     }

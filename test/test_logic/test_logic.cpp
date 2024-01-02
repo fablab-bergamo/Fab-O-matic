@@ -316,32 +316,40 @@ void test_stop_broker()
 
 void test_fabserver_network()
 {
-  const int NB_TESTS = 30;
+  const int NB_TESTS = 5;
+  const int NB_MACHINES = 9;
   auto &server = logic.getServer();
-  TEST_ASSERT_TRUE_MESSAGE(server.connect(), "Server connect failed");
-  TEST_ASSERT_TRUE_MESSAGE(server.isOnline(), "Server is not online");
-  for (auto i = 0; i < NB_TESTS; ++i)
+  for (auto mid = 1; mid <= NB_MACHINES; mid++)
   {
+    auto saved_config = SavedConfig::DefaultConfig();
+    snprintf(saved_config.machine_id, sizeof(saved_config.machine_id), "%d", mid);
+    server.configure(saved_config);
     TEST_ASSERT_TRUE_MESSAGE(server.connect(), "Server connect failed");
-    card::uid_t uid = 123456789;
-    auto response = server.checkCard(uid);
-    TEST_ASSERT_TRUE_MESSAGE(response != nullptr, "Server checkCard failed");
-    TEST_ASSERT_TRUE_MESSAGE(response->request_ok, "Server checkCard request failed");
-    auto machine_resp = server.checkMachine(); // Machine ID is in the topic already
-    TEST_ASSERT_TRUE_MESSAGE(machine_resp != nullptr, "Server checkMachine failed");
-    TEST_ASSERT_TRUE_MESSAGE(machine_resp->request_ok, "Server checkMachine request failed");
-    auto maintenance_resp = server.registerMaintenance(uid);
-    TEST_ASSERT_TRUE_MESSAGE(maintenance_resp != nullptr, "Server registerMaintenance failed");
-    TEST_ASSERT_TRUE_MESSAGE(maintenance_resp->request_ok, "Server registerMaintenance request failed");
-    auto start_use_resp = server.startUse(uid);
-    TEST_ASSERT_TRUE_MESSAGE(start_use_resp != nullptr, "Server startUse failed");
-    TEST_ASSERT_TRUE_MESSAGE(start_use_resp->request_ok, "Server startUse request failed");
-    auto stop_use_resp = server.finishUse(uid, 10s);
-    TEST_ASSERT_TRUE_MESSAGE(stop_use_resp != nullptr, "Server stopUse failed");
-    TEST_ASSERT_TRUE_MESSAGE(stop_use_resp->request_ok, "Server stopUse request failed");
-    auto alive_resp = server.alive();
-    TEST_ASSERT_TRUE_MESSAGE(alive_resp != nullptr, "Server alive failed");
-    TEST_ASSERT_TRUE_MESSAGE(alive_resp->request_ok, "Server alive request failed");
+    TEST_ASSERT_TRUE_MESSAGE(server.isOnline(), "Server is not online");
+    for (auto i = 0; i < NB_TESTS; ++i)
+    {
+      TEST_ASSERT_TRUE_MESSAGE(server.connect(), "Server connect failed");
+      card::uid_t uid = 123456789 + i;
+      auto response = server.checkCard(uid);
+      TEST_ASSERT_TRUE_MESSAGE(response != nullptr, "Server checkCard failed");
+      TEST_ASSERT_TRUE_MESSAGE(response->request_ok, "Server checkCard request failed");
+
+      auto machine_resp = server.checkMachine(); // Machine ID is in the topic already
+      TEST_ASSERT_TRUE_MESSAGE(machine_resp != nullptr, "Server checkMachine failed");
+      TEST_ASSERT_TRUE_MESSAGE(machine_resp->request_ok, "Server checkMachine request failed");
+      auto maintenance_resp = server.registerMaintenance(uid);
+      TEST_ASSERT_TRUE_MESSAGE(maintenance_resp != nullptr, "Server registerMaintenance failed");
+      TEST_ASSERT_TRUE_MESSAGE(maintenance_resp->request_ok, "Server registerMaintenance request failed");
+      auto start_use_resp = server.startUse(uid);
+      TEST_ASSERT_TRUE_MESSAGE(start_use_resp != nullptr, "Server startUse failed");
+      TEST_ASSERT_TRUE_MESSAGE(start_use_resp->request_ok, "Server startUse request failed");
+      auto stop_use_resp = server.finishUse(uid, 10s);
+      TEST_ASSERT_TRUE_MESSAGE(stop_use_resp != nullptr, "Server stopUse failed");
+      TEST_ASSERT_TRUE_MESSAGE(stop_use_resp->request_ok, "Server stopUse request failed");
+      auto alive_resp = server.alive();
+      TEST_ASSERT_TRUE_MESSAGE(alive_resp != nullptr, "Server alive failed");
+      TEST_ASSERT_TRUE_MESSAGE(alive_resp->request_ok, "Server alive request failed");
+    }
   }
 }
 void tearDown(void){};

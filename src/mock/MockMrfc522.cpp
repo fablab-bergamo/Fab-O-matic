@@ -15,8 +15,6 @@ namespace fablabbg
     return retVal;
   }
 
-  MockMrfc522::MockMrfc522() : uid{std::nullopt}, stop_uid_simulate_time{std::nullopt} {};
-
   bool MockMrfc522::PICC_IsNewCardPresent() { return getSimulatedUid().has_value(); }
 
   bool MockMrfc522::PICC_ReadCardSerial() { return getSimulatedUid().has_value(); }
