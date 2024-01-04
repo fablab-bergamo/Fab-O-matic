@@ -30,32 +30,65 @@ namespace fablabbg
     Machine(Machine &&) = delete;                  // move constructor
     Machine &operator=(Machine &&) = delete;       // move assignment
 
-    bool maintenanceNeeded{false}; // If true, machine needs maintenance
-    bool allowed{true};            // If false, nobody can use the machine
+    /// @brief If true, machine needs maintenance
+    bool maintenanceNeeded{false}; 
+    /// @brief If true, machine is allowed to be used by anybody
+    bool allowed{true};
 
     FabUser getActiveUser() const;
-    void configure(const MachineConfig &new_config, FabServer &serv); // Must be called before using the machine
+    
+    /// @brief Configure the machine, it must be called before most methods.
+    void configure(const MachineConfig &new_config, FabServer &serv);
+    
     MachineID getMachineId() const;
     std::string getMachineName() const;
+
+    /// @brief Duration of the current usage, or 0s
     seconds getUsageDuration() const;
+
     seconds getAutologoffDelay() const;
 
-    bool login(FabUser user);                         // if the machine is not active, login the user
-    void logout();                                    // if the machine is active, check if the card belongs to the user that is logged in and logout the user
-    void setAutologoffDelay(seconds new_delay);       // Sets the delay after which the user will be logged off automatically
-    void power(bool on_or_off);                       // Power-on or off the machine
-    void setMachineName(const std::string &new_name); // Sets the machine name as per backend configuration
-    void setMachineType(MachineType new_type);        // Sets the machine type as per backend configuration
+    /// @brief Try to login the user and start the usage timer
+    bool login(FabUser user);                         
+    
+    /// @brief Logoff the user and stop the usage timer
+    void logout();                                    
+    
+    /// @brief Sets the delay after which the user will be logged off automatically
+    void setAutologoffDelay(seconds new_delay);
 
-    PowerState getPowerState() const; // Gets the current state of the machine
-    bool isShutdownImminent() const;  // True if the machine will power down in less than BEEP_REMAINING_MINUTES
-    bool isFree() const;              // True is the machine is not used by anybody
-    bool canPowerOff() const;         // True if POWEROFF_DELAY_MINUTES delay has expired,and the machine is still idle
+    /// @brief Powers the machine on or off using relay/MQTT/both
+    /// @param on_or_off new power state
+    void power(bool on_or_off);
+
+    /// @brief Sets the machine name as per backend configuration
+    /// @param new_name Will be shown on LCD, keep it short.
+    void setMachineName(const std::string &new_name); 
+
+    /// @brief Sets the machine type as per backend configuration
+    void setMachineType(MachineType new_type);        
+
+    /// @brief Returns the current power state of the machine
+    PowerState getPowerState() const; 
+
+    /// @brief Indicates if the machine will power down in less than BEEP_REMAINING_MINUTES
+    bool isShutdownImminent() const;  
+
+    /// @brief Indicates is the machine is not used by anybody
+    bool isFree() const;
+
+    /// @brief Indicates if POWEROFF_DELAY_MINUTES delay has expired,and the machine is still idle
+    bool canPowerOff() const;
     std::string toString() const;
-    bool isAutologoffExpired() const; // True if the user shall be logged off automatically
-    bool isConfigured() const;        // True if the machine has been configured
 
-    std::optional<MachineConfig> getConfig() const; // Returns the current configuration of the machine
+    /// @brief Indicates ff the user shall be logged off automatically
+    bool isAutologoffExpired() const;
+
+    /// @brief Indicates if the machine has been configured 
+    bool isConfigured() const;
+
+    /// @brief Returns the current configuration of the machine, used for testing.
+    std::optional<MachineConfig> getConfig() const;
 
   private:
     std::optional<MachineConfig> config{std::nullopt};

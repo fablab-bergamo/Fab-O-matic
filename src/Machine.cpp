@@ -7,17 +7,18 @@
 #include "pins.hpp"
 #include "secrets.hpp"
 #include "FabServer.hpp"
+#include "Logging.hpp"
 
 namespace fablabbg
 {
   using namespace std::chrono_literals;
   using namespace std::chrono;
 
-#define CHECK_CONFIGURED(ret_type)                    \
-  if (!config.has_value() || !server.has_value())     \
-  {                                                   \
-    Serial.println("Machine : call configure first"); \
-    return ret_type();                                \
+#define CHECK_CONFIGURED(ret_type)                   \
+  if (!config.has_value() || !server.has_value())    \
+  {                                                  \
+    ESP_LOGE(TAG, "Machine : call configure first"); \
+    return ret_type();                               \
   }
 
   void Machine::configure(const MachineConfig &new_config, FabServer &serv)
@@ -31,8 +32,8 @@ namespace fablabbg
     {
       pinMode(config.value().relay_config.pin, OUTPUT);
     }
-    if (conf::debug::ENABLE_LOGS)
-      Serial.printf("Machine configured : %s\r\n", toString().c_str());
+
+    ESP_LOGD(TAG, "Machine configured : %s", toString().c_str());
   }
 
   /// @brief Returns the machine identifier
@@ -92,9 +93,8 @@ namespace fablabbg
         power(false);
       }
 
-      if (conf::debug::ENABLE_LOGS)
-        Serial.printf("Machine will be shutdown in %lld s\r\n",
-                      duration_cast<seconds>(conf::machine::POWEROFF_GRACE_PERIOD).count());
+      ESP_LOGI(TAG, "Machine will be shutdown in %lld s",
+               duration_cast<seconds>(conf::machine::POWEROFF_GRACE_PERIOD).count());
     }
   }
 
@@ -125,8 +125,7 @@ namespace fablabbg
   void Machine::power_relay(bool value)
   {
     CHECK_CONFIGURED(void);
-    if (conf::debug::ENABLE_LOGS)
-      Serial.printf("Machine::power_relay : power set to %d\r\n", value);
+    ESP_LOGI(TAG, "Machine::power_relay : power set to %d", value);
 
     auto pin = config.value().relay_config.pin;
 
@@ -156,8 +155,7 @@ namespace fablabbg
   {
     CHECK_CONFIGURED(void);
 
-    if (conf::debug::ENABLE_LOGS)
-      Serial.printf("Machine::power_mqtt : power set to %d\r\n", value);
+    ESP_LOGI(TAG, "Machine::power_mqtt : power set to %d", value);
 
     auto &mqtt_server = server.value().get();
     auto &act_config = config.value();
@@ -166,17 +164,18 @@ namespace fablabbg
     String payload = value ? act_config.mqtt_config.on_message.data() : act_config.mqtt_config.off_message.data();
 
     auto retries = 0;
+    constexpr auto MAX_TRIES = 3;
+    constexpr auto DELAY_MS = duration_cast<milliseconds>(conf::mqtt::MAX_RETRY_DURATION).count() / MAX_TRIES;
     while (!mqtt_server.publish(topic, payload))
     {
-      if (conf::debug::ENABLE_LOGS)
-        Serial.printf("Error while publishing %s to %s\r\n", payload.c_str(), topic.c_str());
+      ESP_LOGE(TAG, "Error while publishing %s to %s", payload.c_str(), topic.c_str());
 
       mqtt_server.connect();
-      delay(500);
+      delay(DELAY_MS);
       retries++;
-      if (retries > 5)
+      if (retries > MAX_TRIES)
       {
-        Serial.println("Unable to publish to MQTT");
+        ESP_LOGW(TAG, "Unable to publish to MQTT (%d/%d)", retries, MAX_TRIES);
         return;
       }
     }
@@ -196,8 +195,7 @@ namespace fablabbg
   {
     CHECK_CONFIGURED(void);
 
-    if (conf::debug::ENABLE_LOGS)
-      Serial.printf("Machine::power : power set to %d\r\n", on_or_off);
+    ESP_LOGI(TAG, "Machine::power : power set to %d", on_or_off);
 
     if (config.value().hasRelay())
     {
@@ -268,9 +266,11 @@ namespace fablabbg
   {
     CHECK_CONFIGURED(void);
 
-    if (conf::debug::ENABLE_LOGS && config.value().autologoff != new_delay)
-      Serial.printf("Changing autologoff delay to %lld min\r\n",
-                    duration_cast<minutes>(config.value().autologoff).count());
+    if (config.value().autologoff != new_delay)
+    {
+      ESP_LOGD(TAG, "Changing autologoff delay to %lld min",
+               duration_cast<minutes>(config.value().autologoff).count());
+    }
 
     config.value().autologoff = new_delay;
   }
@@ -285,8 +285,10 @@ namespace fablabbg
   {
     CHECK_CONFIGURED(void);
 
-    if (conf::debug::ENABLE_LOGS && config.value().machine_name != new_name)
-      Serial.printf("Changing machine name to %s\r\n", new_name.data());
+    if (config.value().machine_name != new_name)
+    {
+      ESP_LOGD(TAG, "Changing machine name to %s", new_name.data());
+    }
 
     config.value().machine_name = new_name;
   }
@@ -295,8 +297,8 @@ namespace fablabbg
   {
     CHECK_CONFIGURED(void);
 
-    if (conf::debug::ENABLE_LOGS && config.value().machine_type != new_type)
-      Serial.printf("Changing machine type to %d\r\n", static_cast<uint8_t>(new_type));
+    if (config.value().machine_type != new_type)
+      ESP_LOGD(TAG, "Changing machine type to %d", static_cast<uint8_t>(new_type));
 
     config.value().machine_type = new_type;
   }

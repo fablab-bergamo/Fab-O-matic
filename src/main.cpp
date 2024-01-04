@@ -13,6 +13,7 @@
 #include "SavedConfig.hpp"
 #include "Mrfc522Driver.hpp"
 #include "mock/MockMQTTBroker.hpp"
+#include "Logging.hpp"
 
 namespace fablabbg
 {
@@ -48,12 +49,12 @@ namespace fablabbg
       logic.changeStatus(server.isOnline() ? Status::CONNECTED : Status::OFFLINE);
 
       // Briefly show to the user
-      delay(500);
+      logic.shortDelay();
     }
 
     if (server.isOnline())
     {
-      Serial.println("taskConnect - online, calling refreshFromServer");
+      ESP_LOGI(TAG, "taskConnect - online, calling refreshFromServer");
       // Get machine data from the server if it is online
       logic.refreshFromServer();
     }
@@ -84,7 +85,7 @@ namespace fablabbg
     {
       logic.beep_failed();
       if (conf::debug::ENABLE_LOGS)
-        Serial.println("Machine is about to shutdown");
+        ESP_LOGI(TAG, "Machine is about to shutdown");
     }
   }
 
@@ -95,7 +96,7 @@ namespace fablabbg
     auto &machine = Board::logic.getMachine();
     if (machine.isAutologoffExpired())
     {
-      Serial.printf("Auto-logging out user %s\r\n", machine.getActiveUser().holder_name.data());
+      ESP_LOGI(TAG, "Auto-logging out user %s\r\n", machine.getActiveUser().holder_name.data());
       logic.logout();
       logic.beep_failed();
     }
@@ -111,8 +112,10 @@ namespace fablabbg
     {
       if (!initialized)
       {
-        esp_task_wdt_init(duration_cast<seconds>(conf::tasks::WATCHDOG_TIMEOUT).count(), true); // enable panic so ESP32 restarts
-        esp_task_wdt_add(NULL);                                                                 // add current thread to WDT watch
+        auto secs = duration_cast<seconds>(conf::tasks::WATCHDOG_TIMEOUT).count();
+        esp_task_wdt_init(secs, true); // enable panic so ESP32 restarts
+        ESP_LOGI(TAG, "taskEspWatchdog - initialized %d seconds", secs);
+        esp_task_wdt_add(NULL); // add current thread to WDT watch
         initialized = true;
       }
       esp_task_wdt_reset(); // Signal the hardware watchdog
@@ -124,7 +127,7 @@ namespace fablabbg
   {
     if (!rfid.selfTest())
     {
-      Serial.println("RFID chip failure");
+      ESP_LOGE(TAG, "RFID chip failure");
 
       // Infinite retry until success or hw watchdog timeout
       while (!rfid.init_rfid())
@@ -179,21 +182,12 @@ namespace fablabbg
 
   void *threadMQTTServer(void *arg)
   {
-    if (conf::debug::ENABLE_LOGS)
-      Serial.println("threadMQTTServer started");
+    ESP_LOGI(TAG, "threadMQTTServer started");
 
     delay(2000);
     while (true)
     {
-      // Check if the server is online
-      if (!Board::broker.isRunning())
-      {
-        Board::broker.start();
-      }
-      else
-      {
-        Board::broker.update();
-      }
+      Board::broker.mainLoop();
       delay(50);
     }
   }
@@ -205,7 +199,7 @@ namespace fablabbg
     attr_mqtt_broker.detachstate = PTHREAD_CREATE_DETACHED;
     if (pthread_create(&thread_mqtt_broker, &attr_mqtt_broker, threadMQTTServer, NULL))
     {
-      Serial.println("Error creating MQTT server thread");
+      ESP_LOGE(TAG, "Error creating MQTT server thread");
     }
   }
 #endif
@@ -220,7 +214,7 @@ namespace fablabbg
   Task t3("Poweroff", 1s, &taskPoweroffCheck, scheduler, true);
   Task t4("Logoff", 1s, &taskLogoffCheck, scheduler, true);
   // Hardware watchdog will run at one third the frequency
-  Task t5("Watchdog", conf::tasks::WATCHDOG_TIMEOUT / 3, &taskEspWatchdog, scheduler, true);
+  Task t5("Watchdog", conf::tasks::WATCHDOG_TIMEOUT / 3, &taskEspWatchdog, scheduler, false);
   Task t6("Selftest", conf::tasks::RFID_SELFTEST_PERIOD, &taskRfidWatchdog, scheduler, true);
   Task t7("PoweroffWarning", conf::machine::DELAY_BETWEEN_BEEPS, &taskPoweroffWarning, scheduler, true);
   Task t8("MQTT keepalive", 1s, &taskMQTTAlive, scheduler, true);
@@ -244,9 +238,9 @@ namespace fablabbg
   // Called just before the webportal is started after failed WiFi connection
   void configModeCallback(WiFiManager *myWiFiManager)
   {
-    Serial.println("Entering config mode");
-    Serial.println(WiFi.softAPIP());
-    Serial.println(myWiFiManager->getConfigPortalSSID());
+    ESP_LOGI(TAG, "Entering portal config mode");
+    ESP_LOGD(TAG, "%s", WiFi.softAPIP().toString().c_str());
+    ESP_LOGD(TAG, "%s", myWiFiManager->getConfigPortalSSID().c_str());
     logic.changeStatus(Status::PORTAL_STARTING);
   }
 
@@ -309,14 +303,14 @@ namespace fablabbg
       // save the custom parameters to EEPROM
       if (config.SaveToEEPROM())
       {
-        Serial.println("Config saved to EEPROM");
+        ESP_LOGD(TAG, "Config saved to EEPROM");
 
         // Reconfigure all settings after changes
         logic.reconfigure();
       }
       else
       {
-        Serial.println("Failed to save config to EEPROM");
+        ESP_LOGE(TAG, "Failed to save config to EEPROM");
       }
     }
   }
@@ -324,14 +318,16 @@ namespace fablabbg
 
 using namespace fablabbg;
 
-#ifndef UNIT_TEST
+#ifndef PIO_UNIT_TESTING
 void setup()
 {
   Serial.begin(conf::debug::SERIAL_SPEED_BDS); // Initialize serial communications with the PC for debugging.
+  delay(500);
 
   if (conf::debug::ENABLE_LOGS)
   {
-    Serial.println("Starting setup!");
+    Serial.setDebugOutput(true);
+    ESP_LOGD(TAG, "Starting setup!");
   }
 
   // Initialize hardware (RFID, LCD)
@@ -363,6 +359,7 @@ void setup()
   // Join the AP and try to connect to broker
   logic.getServer().connect();
 
+  t5.start(); // Enable the HW watchdog
   // Since the WiFiManager may have taken minutes, recompute the tasks schedule
   scheduler.restart();
 }
@@ -371,4 +368,4 @@ void loop()
 {
   scheduler.execute();
 }
-#endif // UNIT_TEST
+#endif // PIO_UNIT_TESTING

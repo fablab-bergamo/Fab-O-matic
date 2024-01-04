@@ -60,6 +60,7 @@ namespace fablabbg
     void led(bool value);
     void invert_led();
     void set_led_color(uint8_t r, uint8_t g, uint8_t b);
+    void shortDelay(); // Waits for some time to allow the user to read the LCD screen
 
     bool configure(BaseRFIDWrapper &rfid, BaseLCDWrapper &lcd);
 
@@ -85,7 +86,7 @@ namespace fablabbg
     BoardLogic &operator=(BoardLogic &&) = default;
 
   private:
-    Status status {Status::CLEAR};
+    Status status{Status::CLEAR};
     uint8_t led_color[3] = {0, 255, 0};
     std::unique_ptr<FabServer> server;
     std::optional<std::reference_wrapper<BaseRFIDWrapper>> rfid{std::nullopt};

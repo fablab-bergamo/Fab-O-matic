@@ -40,6 +40,7 @@ namespace fablabbg
       const std::string off_message{"off"};
     } mqtt_config;
 
+    /// @brief Time after which the active user on the machine shall be logged-off
     seconds autologoff;
 
     MachineConfig(MachineID id, MachineType type, const std::string &name,
@@ -50,7 +51,11 @@ namespace fablabbg
                                         mqtt_config{topic},
                                         autologoff(autologoff){};
     std::string toString() const;
+
+    /// @brief Indicates if the machine is controller by hard-wired relay
     bool hasRelay() const;
+
+    /// @brief Indicates if the machine is controller by MQTT switch (Shelly)
     bool hasMqttSwitch() const;
 
     MachineConfig() = delete;

@@ -6,6 +6,7 @@
 #include "SavedConfig.hpp"
 #include "secrets.hpp"
 #include "conf.hpp"
+#include "Logging.hpp"
 
 namespace fablabbg
 {
@@ -39,10 +40,7 @@ namespace fablabbg
 
     if (!EEPROM.begin(sizeof(SavedConfig)))
     {
-      if (conf::debug::ENABLE_LOGS)
-      {
-        Serial.println("SavedConfig::LoadFromEEPROM() : EEPROM.begin failed");
-      }
+      ESP_LOGE(TAG, "SavedConfig::LoadFromEEPROM() : EEPROM.begin failed");
       return std::nullopt;
     }
 
@@ -59,10 +57,7 @@ namespace fablabbg
   {
     if (!EEPROM.begin(sizeof(SavedConfig)))
     {
-      if (conf::debug::ENABLE_LOGS)
-      {
-        Serial.println("SavedConfig::SaveToEEPROM() : EEPROM.begin failed");
-      }
+      ESP_LOGE(TAG, "SavedConfig::SaveToEEPROM() : EEPROM.begin failed");
       return false;
     }
 
@@ -71,10 +66,8 @@ namespace fablabbg
     EEPROM.put(0, *this);
     auto result = EEPROM.commit();
 
-    if (conf::debug::ENABLE_LOGS)
-    {
-      Serial.printf("EEPROM commit result: %d\r\n", result);
-    }
+    ESP_LOGD(TAG, "EEPROM commit result: %d", result);
+
     return result;
   }
 

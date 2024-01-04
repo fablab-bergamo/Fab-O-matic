@@ -15,6 +15,7 @@
 #include "BaseLCDWrapper.hpp"
 #include "pins.hpp"
 #include "SavedConfig.hpp"
+#include "Logging.hpp"
 
 namespace fablabbg
 {
@@ -65,8 +66,7 @@ namespace fablabbg
   /// @brief connects and polls the server for up-to-date machine information
   void BoardLogic::refreshFromServer()
   {
-    if (conf::debug::ENABLE_LOGS)
-      Serial.printf("BoardLogic::refreshFromServer() called\r\n");
+    ESP_LOGD(TAG, "BoardLogic::refreshFromServer() called");
 
     if (server->connect())
     {
@@ -83,15 +83,11 @@ namespace fablabbg
           MachineType mt = static_cast<MachineType>(result->type);
           machine.setMachineType(mt);
 
-          if (conf::debug::ENABLE_LOGS)
-          {
-            Serial.printf("Machine data updated:%s\r\n", machine.toString().c_str());
-          }
+          ESP_LOGD(TAG, "Machine data updated:%s", machine.toString().c_str());
         }
         else
         {
-          Serial.printf("The configured machine ID %u is unknown to the server\r\n",
-                        machine.getMachineId().id);
+          ESP_LOGW(TAG, "The configured machine ID %u is unknown to the server\r\n", machine.getMachineId().id);
         }
       }
     }
@@ -100,8 +96,7 @@ namespace fablabbg
   /// @brief Called when a RFID tag has been detected
   void BoardLogic::onNewCard(card::uid_t uid)
   {
-    if (conf::debug::ENABLE_LOGS)
-      Serial.println("New card present");
+    ESP_LOGD(TAG, "New card present");
 
     if (!ready_for_a_new_card)
     {
@@ -114,9 +109,9 @@ namespace fablabbg
       // machine is free
       if (!authorize(uid))
       {
-        Serial.println("Login failed");
+        ESP_LOGI(TAG, "Login failed for %llu", uid);
       }
-      delay(1000);
+      shortDelay();
       refreshFromServer();
       return;
     }
@@ -132,7 +127,7 @@ namespace fablabbg
       // user is not the same, display who is using it
       changeStatus(Status::ALREADY_IN_USE);
     }
-    delay(1000);
+    shortDelay();
     return;
   }
 
@@ -142,13 +137,12 @@ namespace fablabbg
     auto result = server->finishUse(machine.getActiveUser().card_uid,
                                     machine.getUsageDuration());
 
-    if (conf::debug::ENABLE_LOGS)
-      Serial.printf("Result finishUse: %d\r\n", result->request_ok);
+    ESP_LOGI(TAG, "Logout, result finishUse: %d", result->request_ok);
 
     machine.logout();
     changeStatus(Status::LOGOUT);
     beep_ok();
-    delay(1000);
+    shortDelay();
   }
 
   /// @brief Asks the user to keep the RFID tag on the reader as confirmation
@@ -203,7 +197,7 @@ namespace fablabbg
     auto response = auth.tryLogin(uid, *server);
     if (!response.has_value())
     {
-      Serial.println("Failed login");
+      ESP_LOGI(TAG, "Failed login for %llu", uid);
       changeStatus(Status::LOGIN_DENIED);
       beep_failed();
       return false;
@@ -213,7 +207,7 @@ namespace fablabbg
 
     if (!machine.allowed)
     {
-      Serial.println("Machine blocked");
+      ESP_LOGI(TAG, "Login refused due to machine not allowed");
       changeStatus(Status::NOT_ALLOWED);
       beep_failed();
       return false;
@@ -226,7 +220,7 @@ namespace fablabbg
       {
         changeStatus(Status::MAINTENANCE_NEEDED);
         beep_failed();
-        delay(3000);
+        shortDelay();
         return false;
       }
       if (user.user_level >= FabUser::UserLevel::FABLAB_STAFF)
@@ -241,7 +235,7 @@ namespace fablabbg
           {
             beep_failed();
             changeStatus(Status::ERROR);
-            delay(1000);
+            shortDelay();
             // Allow bypass for admins
             if (user.user_level == FabUser::UserLevel::FABLAB_ADMIN)
             {
@@ -253,7 +247,7 @@ namespace fablabbg
             changeStatus(Status::MAINTENANCE_DONE);
             machine.maintenanceNeeded = false;
             beep_ok();
-            delay(1000);
+            shortDelay();
           }
           // Proceed to log-on the staff member to the machine in all cases
         }
@@ -263,10 +257,7 @@ namespace fablabbg
     if (machine.login(user))
     {
       auto result = server->startUse(machine.getActiveUser().card_uid);
-
-      if (conf::debug::ENABLE_LOGS)
-        Serial.printf("Result startUse: %d\r\n", result->request_ok);
-
+      ESP_LOGI(TAG, "Login, result startUse: %d", result->request_ok);
       changeStatus(Status::LOGGED_IN);
       beep_ok();
     }
@@ -274,7 +265,7 @@ namespace fablabbg
     {
       changeStatus(Status::NOT_ALLOWED);
       beep_failed();
-      delay(1000);
+      shortDelay();
     }
 
     return true;
@@ -283,8 +274,7 @@ namespace fablabbg
   /// @brief Initializes LCD and RFID classes
   bool BoardLogic::board_init()
   {
-    if (conf::debug::ENABLE_LOGS)
-      Serial.println("Initializing board...");
+    ESP_LOGD(TAG, "Board initialization...");
 
     auto success = getLcd().begin();
     success &= getRfid().init_rfid();
@@ -293,10 +283,7 @@ namespace fablabbg
     success &= (ledcSetup(conf::buzzer::LEDC_PWM_CHANNEL, conf::buzzer::BEEP_HZ, 10U) != 0);
     ledcAttachPin(pins.buzzer.pin, conf::buzzer::LEDC_PWM_CHANNEL);
 
-    if (conf::debug::ENABLE_LOGS)
-    {
-      Serial.printf("Board init complete, success = %d\r\n", success);
-    }
+    ESP_LOGI(TAG, "Board initialization complete, success = %d", success);
 
     return success;
   }
@@ -305,11 +292,9 @@ namespace fablabbg
   /// @param new_state new state
   void BoardLogic::changeStatus(Status new_state)
   {
-    if (conf::debug::ENABLE_LOGS && status != new_state)
+    if (status != new_state)
     {
-      char buffer[32] = {0};
-      if (snprintf(buffer, sizeof(buffer), "** Changing board state to %d", static_cast<int>(new_state)) > 0)
-        Serial.println(buffer);
+      ESP_LOGI(TAG, "** Changing board state to %d", static_cast<int>(new_state));
     }
 
     status = new_state;
@@ -376,7 +361,7 @@ namespace fablabbg
       break;
     case Status::CONNECTING:
       getLcd().setRow(0, "Connessione");
-      getLcd().setRow(1, "al server->..");
+      getLcd().setRow(1, "al server MQTT");
       break;
     case Status::CONNECTED:
       getLcd().setRow(0, "Connesso");
@@ -461,8 +446,7 @@ namespace fablabbg
 
   void BoardLogic::beep_failed() const
   {
-    constexpr auto NB_BEEPS = 3;
-    for (auto i = 0; i < NB_BEEPS; i++)
+    for (auto i = 0; i < conf::buzzer::NB_BEEPS; i++)
     {
       ledcWriteTone(conf::buzzer::LEDC_PWM_CHANNEL, conf::buzzer::BEEP_HZ);
       delay(duration_cast<milliseconds>(conf::buzzer::STANDARD_BEEP_DURATION).count());
@@ -488,17 +472,13 @@ namespace fablabbg
     auto config = SavedConfig::LoadFromEEPROM();
     if (!config)
     {
-      Serial.printf("Configuration file not found, creating defaults...\r\n");
+      ESP_LOGW(TAG, "No configuration found in EEPROM, using defaults.");
       auto new_config = SavedConfig::DefaultConfig();
       success &= new_config.SaveToEEPROM();
       config = new_config;
     }
 
-    if (conf::debug::ENABLE_LOGS)
-    {
-      Serial.println("Configuration from EEPROM:");
-      Serial.println(config->toString().c_str());
-    }
+    ESP_LOGD(TAG, "Configuration found in EEPROM: %s", config->toString().c_str());
 
     server->configure(config.value());
 
@@ -617,5 +597,10 @@ namespace fablabbg
   FabServer &BoardLogic::getServer() const
   {
     return *server;
+  }
+
+  void BoardLogic::shortDelay()
+  {
+    delay(duration_cast<milliseconds>(conf::lcd::SHORT_MESSAGE_DELAY).count());
   }
 } // namespace fablabbg

@@ -6,6 +6,8 @@
 #include <sstream>
 #include <iomanip>
 
+#include "Logging.hpp"
+
 namespace fablabbg::card
 {
   using uid_t = u_int64_t;
@@ -34,7 +36,7 @@ namespace fablabbg::card
   }
   inline void print(uint64_t uid)
   {
-    Serial.printf("%s", card::uid_str(uid).c_str());
+    ESP_LOGI(TAG, "Card UID = %s", card::uid_str(uid).c_str());
   }
 }
 #endif // CARD_H_

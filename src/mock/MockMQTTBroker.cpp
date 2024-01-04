@@ -1,6 +1,8 @@
 #include "mock/MockMQTTBroker.hpp"
 #include "conf.hpp"
+#include "Logging.hpp"
 
+static const char *TAG2 = "MockMQTTBroker";
 namespace fablabbg
 {
 
@@ -12,8 +14,7 @@ namespace fablabbg
   {
     while (WiFi.status() != WL_CONNECTED)
     { // Wait for the Wi-Fi to connect
-      if (conf::debug::ENABLE_LOGS)
-        Serial.printf("MQTT BROKER: WiFi status changed to %d\r\n", WiFi.status());
+      ESP_LOGD(TAG2, "MQTT BROKER: WiFi status changed to %d", WiFi.status());
       is_running = false;
       return;
     }
@@ -21,8 +22,7 @@ namespace fablabbg
     {
       is_running = init(MockMQTTBroker::MQTTPORT, true);
 
-      if (conf::debug::ENABLE_LOGS)
-        Serial.printf("MQTT BROKER: started with result %d\r\n", is_running.load());
+      ESP_LOGI(TAG2, "MQTT BROKER: started with result %d", is_running.load());
     }
   }
   bool MockMQTTBroker::onEvent(sMQTTEvent *event)
@@ -32,9 +32,7 @@ namespace fablabbg
     case NewClient_sMQTTEventType:
     {
       sMQTTNewClientEvent *e = (sMQTTNewClientEvent *)event;
-
-      if (conf::debug::ENABLE_LOGS)
-        Serial.printf("MQTT BROKER: client connected, id:%s\r\n", e->Client()->getClientId().c_str());
+      ESP_LOGD(TAG2, "MQTT BROKER: client connected, id:%s", e->Client()->getClientId().c_str());
     }
     break;
     case Public_sMQTTEventType:
@@ -43,33 +41,24 @@ namespace fablabbg
       topic = e->Topic();
       payload = e->Payload();
 
-      if (conf::debug::ENABLE_LOGS)
-        Serial.printf("MQTT BROKER: Received  %s -> %s\r\n", topic.c_str(), payload.c_str());
-      // Call the configured replies generation callback
-      std::string reply = "";
-      while (true)
-      {
-        if (lock())
-        {
-          reply = callback(payload);
-          unlock();
-          break;
-        }
-      }
-      std::string topic_reply = topic + "/reply";
-      publish(topic_reply, reply, 0, false);
+      ESP_LOGI(TAG2, "MQTT BROKER: Received  %s -> %s", topic.c_str(), payload.c_str());
+      queries.push({topic, payload, topic + "/reply"});
     }
     break;
     case RemoveClient_sMQTTEventType:
     {
       sMQTTRemoveClientEvent *e = (sMQTTRemoveClientEvent *)event;
-
-      if (conf::debug::ENABLE_LOGS)
-        Serial.printf("MQTT BROKER: removed client id: %s\r\n", e->Client()->getClientId().c_str());
+      ESP_LOGD(TAG2, "MQTT BROKER: removed client id: %s", e->Client()->getClientId().c_str());
     }
     break;
     case LostConnect_sMQTTEventType:
+    {
       is_running = false;
+      ESP_LOGD(TAG2, "MQTT BROKER: lost connection");
+    }
+    break;
+    default:
+      ESP_LOGD(TAG2, "MQTT BROKER: unhandled event %d", event->Type());
       break;
     }
     return true;
@@ -82,7 +71,7 @@ namespace fablabbg
 
   /// @brief Returns a fake server reply for testing purposes
   /// @return json payload
-  std::string MockMQTTBroker::defaultReplies(const std::string &query) const
+  const std::string MockMQTTBroker::defaultReplies(const std::string &query) const
   {
     if (query.find("checkmachine") != std::string::npos)
     {
@@ -110,11 +99,15 @@ namespace fablabbg
       auto response = "{\"request_ok\":true,\"is_valid\":true,\"level\":2,\"name\":\"USER" + uid + "\",\"is_valid\":true}";
       return response;
     }
+    if (query.find(conf::default_config::machine_topic) != std::string::npos) // Shelly doesn't reply
+    {
+      return "";
+    }
 
-    return "{\"request_ok\":true}";
+    return std::string{"{\"request_ok\":true}"};
   }
 
-  void MockMQTTBroker::configureReplies(std::function<std::string(std::string)> callback)
+  void MockMQTTBroker::configureReplies(std::function<const std::string(const std::string &, const std::string &)> callback)
   {
     while (true)
     {
@@ -124,6 +117,46 @@ namespace fablabbg
         unlock();
         break;
       }
+    }
+  }
+
+  size_t MockMQTTBroker::processQueries()
+  {
+    if (!queries.empty())
+    {
+      auto [topic, query, reply_topic] = queries.front();
+      queries.pop();
+      std::string response{""};
+      while (true)
+      {
+        if (lock())
+        {
+          response = callback(topic, query);
+          unlock();
+          break;
+        }
+        delay(1);
+      }
+      if (!response.empty())
+      {
+        ESP_LOGI(TAG2, "MQTT BROKER: Sending %s -> %s", reply_topic.c_str(), response.c_str());
+        publish(reply_topic, response);
+      }
+    }
+    return queries.size();
+  }
+
+  void MockMQTTBroker::mainLoop()
+  {
+    // Check if the server is online
+    if (!isRunning())
+    {
+      start();
+    }
+    else
+    {
+      update();
+      processQueries();
     }
   }
 } // namespace fablabbg

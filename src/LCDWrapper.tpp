@@ -4,6 +4,7 @@
 #include <sstream>
 #include "LCDWrapper.hpp"
 #include <type_traits>
+#include "Logging.hpp"
 
 namespace fablabbg
 {
@@ -41,15 +42,9 @@ namespace fablabbg
 
     backlightOn();
 
-    if (conf::debug::ENABLE_LOGS)
-    {
-      constexpr size_t MAX_LEN = 100;
-      char buf[MAX_LEN] = {0};
-      if (snprintf(buf, sizeof(buf), "Configured LCD %d x %d (d4=%d, d5=%d, d6=%d, d7=%d, en=%d, rs=%d), backlight=%d", conf::lcd::COLS, conf::lcd::ROWS,
-                   config.d0_pin, config.d1_pin, config.d2_pin, config.d3_pin,
-                   config.en_pin, config.rs_pin, config.bl_pin) > 0)
-        Serial.println(buf);
-    }
+    ESP_LOGI(TAG, "Configured LCD %d x %d (d4=%d, d5=%d, d6=%d, d7=%d, en=%d, rs=%d), backlight=%d", conf::lcd::COLS, conf::lcd::ROWS,
+             config.d0_pin, config.d1_pin, config.d2_pin, config.d3_pin,
+             config.en_pin, config.rs_pin, config.bl_pin);
 
     return true;
   }
@@ -206,7 +201,9 @@ namespace fablabbg
   void LCDWrapper<TLcdDriver>::setRow(uint8_t row, const std::string &text)
   {
     if (text.length() >= conf::lcd::COLS)
-      Serial.printf("LCDWrapper::setRow: text too long : %s\r\n", text.data());
+    {
+      ESP_LOGE(TAG, "LCDWrapper::setRow: text too long : %s\r\n", text.data());
+    }
 
     if (row < conf::lcd::ROWS)
     {

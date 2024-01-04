@@ -23,9 +23,21 @@ namespace fablabbg
   public:
     RFIDWrapper();
 
+    /// @brief Initializes the RFID driver
     bool init_rfid() const;
+
+    /// @brief Returns true if a card is present in the field
     bool isNewCardPresent() const;
+
+    /// @brief Returns true if the card is in the field, waiting up to max_delay to confirm presence
+    /// @details This function may return immediately if the card responds quickly
+    /// @param original card to look for
+    /// @param max_delay maximum delay to contact the card
+    /// @return true if the card is found
     bool cardStillThere(const card::uid_t original, milliseconds max_delay) const;
+
+    /// @brief Reads the card serial number
+    /// @return std::nullopt if the card is not present, the card serial otherwise
     std::optional<card::uid_t> readCardSerial() const;
 
     bool selfTest() const;
@@ -33,7 +45,7 @@ namespace fablabbg
     void reset() const;
     card::uid_t getUid() const;
 
-    // Testing methods
+    /// @brief Returns the driver object for testing/simulation
     Driver &getDriver();
 
     RFIDWrapper(const RFIDWrapper &) = delete;             // copy constructor

@@ -8,6 +8,7 @@
 #include <ArduinoJson.h>
 #include <chrono>
 #include "SavedConfig.hpp"
+#include "Logging.hpp"
 
 namespace fablabbg
 {
@@ -40,7 +41,9 @@ namespace fablabbg
     if (client.connected()) // Topic or IP may also have changed
     {
       client.disconnect();
+      wifi_client.stop();
     }
+    ESP_LOGD(TAG, "FabServer configured");
   }
 
   /// @brief Posts to MQTT server and waits for answer
@@ -48,15 +51,29 @@ namespace fablabbg
   /// @return true if the server answered
   bool FabServer::publishWithReply(const Query &query)
   {
-    if (publish(query))
+    constexpr auto MAX_TRIES = 3;
+    constexpr auto TIMEOUT_SERVER = 500ms;
+    static_assert(MAX_TRIES * TIMEOUT_SERVER < conf::mqtt::MAX_RETRY_DURATION, "MAX_RETRY_DURATION is too short");
+    constexpr auto SLEEP_MS = duration_cast<milliseconds>(conf::mqtt::MAX_RETRY_DURATION + MAX_TRIES * TIMEOUT_SERVER).count() / MAX_TRIES;
+    auto try_cpt = 0;
+    while (try_cpt < MAX_TRIES)
     {
-      if (waitForAnswer())
+      if (publish(query))
       {
-        if (conf::debug::ENABLE_LOGS)
-          Serial.printf("MQTT Client: received answer: %s\r\n", last_reply.data());
-        return true;
+        if (waitForAnswer(TIMEOUT_SERVER))
+        {
+          ESP_LOGD(TAG, "MQTT Client: received answer: %s", last_reply.data());
+          return true;
+        }
+        else
+        {
+          ESP_LOGW(TAG, "MQTT Client: no answer received, retrying %d/%d", (try_cpt + 1), MAX_TRIES);
+          delay(SLEEP_MS);
+        }
       }
+      try_cpt++;
     }
+    ESP_LOGE(TAG, "MQTT Client: failure to send query %s", query.payload().data());
     return false;
   }
 
@@ -66,17 +83,16 @@ namespace fablabbg
   /// @return true if successfull
   bool FabServer::publish(String mqtt_topic, String mqtt_payload)
   {
-    if (mqtt_payload.length() > FabServer::MAX_MQTT_LENGTH)
+    if (mqtt_payload.length() + mqtt_topic.length() > FabServer::MAX_MSG_SIZE - 8)
     {
-      Serial.printf("MQTT Client: Message is too long: %s\r\n", mqtt_payload.c_str());
+      ESP_LOGE(TAG, "MQTT Client: Message is too long: %s", mqtt_payload.c_str());
       return false;
     }
 
     answer_pending = true;
     last_query.assign(mqtt_payload.c_str());
 
-    if (conf::debug::ENABLE_LOGS)
-      Serial.printf("MQTT Client: sending message %s on topic %s\r\n", mqtt_payload.c_str(), mqtt_topic.c_str());
+    ESP_LOGI(TAG, "MQTT Client: sending message %s on topic %s", mqtt_payload.c_str(), mqtt_topic.c_str());
 
     return client.publish(mqtt_topic.c_str(), mqtt_payload.c_str());
   }
@@ -89,17 +105,16 @@ namespace fablabbg
     String s_payload(query.payload().data());
     String s_topic(topic.c_str());
 
-    if (s_payload.length() > FabServer::MAX_MQTT_LENGTH)
+    if (s_payload.length() + topic.length() > FabServer::MAX_MSG_SIZE - 8)
     {
-      Serial.printf("MQTT Client: Message is too long: %s\r\n", s_payload.c_str());
+      ESP_LOGE(TAG, "MQTT Client: Message is too long: %s", s_payload.c_str());
       return false;
     }
 
     answer_pending = true;
     last_query.assign(s_payload.c_str());
 
-    if (conf::debug::ENABLE_LOGS)
-      Serial.printf("MQTT Client: sending message %s on topic %s\r\n", s_payload.c_str(), s_topic.c_str());
+    ESP_LOGD(TAG, "MQTT Client: sending message %s on topic %s", s_payload.c_str(), s_topic.c_str());
 
     return client.publish(s_topic, s_payload);
   }
@@ -108,9 +123,9 @@ namespace fablabbg
   {
     if (!client.loop())
     {
-      if (online && conf::debug::ENABLE_LOGS)
+      if (online)
       {
-        Serial.println("MQTT Client: connection lost");
+        ESP_LOGI(TAG, "MQTT Client: connection lost");
       }
       online = false;
       return false;
@@ -120,17 +135,22 @@ namespace fablabbg
 
   /// @brief blocks until the server answers or until the timeout is reached
   /// @return true if the server answered
-  bool FabServer::waitForAnswer()
+  bool FabServer::waitForAnswer(milliseconds max_duration)
   {
-    constexpr auto MAX_DURATION_MS = 2000;
-    constexpr auto DELAY_MS = 50;
-    constexpr auto NB_TRIES = (MAX_DURATION_MS / DELAY_MS);
+    const auto MAX_DURATION_MS = max_duration.count();
+    const auto DELAY_MS{50};
+    const auto NB_TRIES{MAX_DURATION_MS / DELAY_MS};
 
     for (auto i = 0; i < NB_TRIES; i++)
     {
       if (answer_pending)
       {
         client.loop();
+        if (!client.connected())
+        {
+          ESP_LOGW(TAG, "MQTT Client: connection lost while waiting for answer");
+          connect();
+        }
         delay(DELAY_MS);
       }
       else
@@ -138,7 +158,7 @@ namespace fablabbg
         return true;
       }
     }
-    Serial.printf("Failure, no answer from MQTT server (timeout:%d ms)\r\n", MAX_DURATION_MS);
+    ESP_LOGE(TAG, "Failure, no answer from MQTT server (timeout:%d ms)", MAX_DURATION_MS);
     return false;
   }
 
@@ -154,12 +174,7 @@ namespace fablabbg
   /// @param payload payload of the message
   void FabServer::messageReceived(String &s_topic, String &s_payload)
   {
-    if (conf::debug::ENABLE_LOGS)
-    {
-      std::stringstream ss;
-      ss << "MQTT Client: Received " << s_topic.c_str() << " -> " << s_payload.c_str();
-      Serial.println(ss.str().c_str());
-    }
+    ESP_LOGI(TAG, "MQTT Client: Received on %s -> %s", s_topic.c_str(), s_payload.c_str());
 
     last_reply.assign(s_payload.c_str());
     answer_pending = false;
@@ -169,32 +184,33 @@ namespace fablabbg
   /// @return true if the connection succeeded
   bool FabServer::connectWiFi() noexcept
   {
-    static constexpr auto NB_TRIES = 3;
-    static constexpr auto DELAY_MS = 1000;
+    static constexpr auto NB_TRIES = 30;
+    static constexpr auto DELAY_MS = 100;
 
     try
     {
       // Connect WiFi if needed
-      if (WiFiConnection.status() != WL_CONNECTED)
+      if (WiFi.status() != WL_CONNECTED)
       {
-        if (conf::debug::ENABLE_LOGS)
-          Serial.printf("FabServer::connectWiFi() : WiFi connection state=%d\n\r", WiFiConnection.status());
-
-        WiFiConnection.begin(wifi_ssid.data(), wifi_password.data(), channel);
+        WiFi.mode(WIFI_STA);
+        ESP_LOGD(TAG, "FabServer::connectWiFi() : WiFi connection state=%d, connecting to SSID:%s (channel:%d)", WiFi.status(), wifi_ssid.c_str(), channel);
+        WiFi.begin(wifi_ssid.data(), wifi_password.data(), channel);
+        delay(DELAY_MS);
         for (auto i = 0; i < NB_TRIES; i++)
         {
-          if (conf::debug::ENABLE_LOGS && WiFiConnection.status() == WL_CONNECTED)
-            Serial.println("FabServer::connectWiFi() : WiFi connection successfull");
-          break;
+          if (WiFi.status() == WL_CONNECTED)
+          {
+            ESP_LOGD(TAG, "FabServer::connectWiFi() : WiFi connection successfull");
+            break;
+          }
           delay(DELAY_MS);
         }
       }
-
-      return WiFiConnection.status() == WL_CONNECTED;
+      return WiFi.status() == WL_CONNECTED;
     }
     catch (const std::exception &e)
     {
-      Serial.println(e.what());
+      ESP_LOGE(TAG, "connectWiFi exception %s", e.what());
       return false;
     }
   }
@@ -203,10 +219,9 @@ namespace fablabbg
   /// @return true if both operations succeeded
   bool FabServer::connect()
   {
-    auto status = WiFiConnection.status();
+    auto status = WiFi.status();
 
-    if (conf::debug::ENABLE_LOGS)
-      Serial.printf("FabServer::connect() called, Wifi status=%d\r\n", status);
+    ESP_LOGD(TAG, "FabServer::connect() called, Wifi status=%d", status);
 
     // Check if WiFi nextwork is available, and if not, try to connect
     if (status != WL_CONNECTED)
@@ -215,8 +230,7 @@ namespace fablabbg
 
       if (client.connected())
       {
-        if (conf::debug::ENABLE_LOGS)
-          Serial.printf("Closing MQTT client due to WiFi down\r\n");
+        ESP_LOGD(TAG, "Closing MQTT client due to WiFi down");
         client.disconnect();
       }
 
@@ -224,13 +238,11 @@ namespace fablabbg
     }
 
     // Check if WiFi is available but MQTT client is not
-    if (WiFiConnection.status() == WL_CONNECTED &&
+    if (WiFi.status() == WL_CONNECTED &&
         !client.connected())
     {
-      if (conf::debug::ENABLE_LOGS)
-        Serial.printf("Connecting to MQTT server %s\r\n", server_ip.c_str());
-
-      client.begin(server_ip.data(), net);
+      ESP_LOGD(TAG, "Connecting to MQTT server %s", server_ip.c_str());
+      client.begin(server_ip.data(), wifi_client);
 
       callback = [&](String &a, String &b)
       { return messageReceived(a, b); };
@@ -241,7 +253,7 @@ namespace fablabbg
                           mqtt_user.c_str(),
                           mqtt_password.c_str(), false))
       {
-        Serial.printf("Failure to connect as client: %s\r\n", mqtt_client_name.c_str());
+        ESP_LOGW(TAG, "Failure to connect as client: %s with username %s, last error %d", mqtt_client_name.c_str(), mqtt_user.c_str(), client.lastError());
       }
 
       // Setup subscriptions
@@ -253,16 +265,17 @@ namespace fablabbg
 
         if (!client.subscribe(response_topic.c_str()))
         {
-          Serial.printf("MQTT Client: failure to subscribe to reply topic %s\r\n", response_topic.c_str());
+          ESP_LOGE(TAG, "MQTT Client: failure to subscribe to reply topic %s", response_topic.c_str());
         }
         else
         {
+          ESP_LOGD(TAG, "MQTT Client: subscribed to reply topic %s", response_topic.c_str());
           online = true;
         }
       }
       else
       {
-        Serial.printf("Failure to connect to MQTT server %s\r\n", server_ip.c_str());
+        ESP_LOGW(TAG, "Failure to connect to MQTT server %s", server_ip.c_str());
       }
     }
 
@@ -300,7 +313,7 @@ namespace fablabbg
           auto payload = last_reply.c_str();
           if (DeserializationError error = deserializeJson(doc, payload))
           {
-            Serial.printf("Failed to parse json: %s (%s)", payload, error.c_str());
+            ESP_LOGE(TAG, "Failed to parse json: %s (%s)", payload, error.c_str());
             throw std::runtime_error("Failed to parse json");
           }
           return RespT::fromJson(doc);
@@ -309,7 +322,7 @@ namespace fablabbg
     }
     catch (const std::exception &e)
     {
-      Serial.println(e.what());
+      ESP_LOGE(TAG, "processQuery exception %s", e.what());
     }
     return std::make_unique<RespT>(false);
   }
@@ -323,7 +336,6 @@ namespace fablabbg
   }
 
   /// @brief Checks the machine status on the server
-  /// @param mid machine id
   /// @return server response (if request_ok)
   std::unique_ptr<MachineResponse> FabServer::checkMachine()
   {
@@ -332,7 +344,6 @@ namespace fablabbg
 
   /// @brief register the starting of a machine usage
   /// @param uid card uid
-  /// @param mid machine id
   /// @return server response (if request_ok)
   std::unique_ptr<SimpleResponse> FabServer::startUse(card::uid_t uid)
   {
@@ -341,7 +352,6 @@ namespace fablabbg
 
   /// @brief Register end of machine usage
   /// @param uid card ID of the machine user
-  /// @param mid machine used ID
   /// @param duration_s duration of usage in seconds
   /// @return server response (if request_ok)
   std::unique_ptr<SimpleResponse> FabServer::finishUse(card::uid_t uid, std::chrono::seconds duration_s)
@@ -351,7 +361,6 @@ namespace fablabbg
 
   /// @brief Registers a maintenance action
   /// @param maintainer who performed the maintenance
-  /// @param mid machine maintenance done
   /// @return server response (if request_ok)
   std::unique_ptr<SimpleResponse> FabServer::registerMaintenance(card::uid_t maintainer)
   {
@@ -359,10 +368,16 @@ namespace fablabbg
   }
 
   /// @brief Sends a ping to the server
-  /// @param mid machine ID
   /// @return server response (if request_ok)
   std::unique_ptr<SimpleResponse> FabServer::alive()
   {
     return processQuery<SimpleResponse, AliveQuery>();
+  }
+
+  /// @brief set channel to use for WiFi connection
+  /// @param channel
+  void FabServer::setChannel(int32_t channel)
+  {
+    this->channel = channel;
   }
 } // namespace fablabbg

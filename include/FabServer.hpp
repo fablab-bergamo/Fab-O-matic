@@ -22,6 +22,8 @@ namespace fablabbg
   class FabServer
   {
   private:
+    constexpr static auto MAX_MSG_SIZE = 255;
+
     std::string wifi_ssid;
     std::string wifi_password;
     std::string server_ip;
@@ -30,10 +32,9 @@ namespace fablabbg
     std::string mqtt_client_name;
 
     MQTTClientCallbackSimpleFunction callback;
-    WiFiClass WiFiConnection;
-    WiFiClient net;
-    MQTTClient client;
-    StaticJsonDocument<256> doc;
+    WiFiClient wifi_client;
+    MQTTClient client{MAX_MSG_SIZE}; // Default is 128, and can be reached with some messages
+    StaticJsonDocument<MAX_MSG_SIZE> doc;
 
     std::string topic{""};
     std::string response_topic{""};
@@ -42,17 +43,15 @@ namespace fablabbg
 
     bool online = false;
     bool answer_pending = false;
-    uint8_t channel = -1;
+    int32_t channel{-1};
 
     void messageReceived(String &topic, String &payload);
     bool publish(const Query &payload);
-    bool waitForAnswer();
+    bool waitForAnswer(milliseconds timeout);
     bool publishWithReply(const Query &payload);
 
     template <typename RespT, typename QueryT, typename... QueryArgs>
     [[nodiscard]] std::unique_ptr<RespT> processQuery(QueryArgs &&...);
-
-    static constexpr unsigned int MAX_MQTT_LENGTH = 128;
 
   public:
     FabServer() = default;
@@ -71,6 +70,8 @@ namespace fablabbg
     bool loop();
     void configure(const SavedConfig &config); // Must be called before using the server
     void disconnect();
+
+    void setChannel(int32_t channel);
 
     // Rule of 5 https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rc-five
     FabServer(const FabServer &) = delete;            // copy constructor

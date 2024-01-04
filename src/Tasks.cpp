@@ -4,6 +4,8 @@
 
 #include <algorithm>
 
+#include "Logging.hpp"
+
 namespace fablabbg::Tasks
 {
   using namespace std::chrono;
@@ -48,7 +50,7 @@ namespace fablabbg::Tasks
       avg_delay /= nb_runs;
     }
 
-    Serial.printf("Scheduler::execute complete: %d tasks total, %lu runs, avg delay/run: %llu ms\r\n", tasks.size(), nb_runs, avg_delay.count());
+    ESP_LOGD(TAG, "Scheduler::execute complete: %d tasks total, %lu runs, avg delay/run: %llu ms\r\n", tasks.size(), nb_runs, avg_delay.count());
 
     for (const auto &task : tasks)
     {
@@ -56,31 +58,46 @@ namespace fablabbg::Tasks
       {
         if (task.get().getRunCounter() > 0)
         {
-          Serial.printf("\t Task: %s, %lu runs, avg tardiness/run: %llu ms, period %llu ms, delay %llu ms, average task duration %llu ms\r\n",
-                        task.get().getId().c_str(), task.get().getRunCounter(),
-                        task.get().getAvgTardiness().count(), task.get().getPeriod().count(),
-                        task.get().getDelay().count(),
-                        task.get().getTotalRuntime().count() / task.get().getRunCounter());
+          ESP_LOGD(TAG, "\t Task: %s, %lu runs, avg tardiness/run: %llu ms, period %llu ms, delay %llu ms, average task duration %llu ms\r\n",
+                   task.get().getId().c_str(), task.get().getRunCounter(),
+                   task.get().getAvgTardiness().count(), task.get().getPeriod().count(),
+                   task.get().getDelay().count(),
+                   task.get().getTotalRuntime().count() / task.get().getRunCounter());
         }
         else
         {
-          Serial.printf("\t Task: %s, never ran, period %llu ms, delay %llu ms\r\n",
-                        task.get().getId().c_str(), task.get().getPeriod().count(),
-                        task.get().getDelay().count());
+          ESP_LOGD(TAG, "\t Task: %s, never ran, period %llu ms, delay %llu ms\r\n",
+                   task.get().getId().c_str(), task.get().getPeriod().count(),
+                   task.get().getDelay().count());
         }
       }
       else
       {
-        Serial.printf("\t Task: %s, inactive\r\n", task.get().getId().c_str());
+        ESP_LOGD(TAG, "\t Task: %s, inactive\r\n", task.get().getId().c_str());
       }
     }
   }
 
   void Scheduler::execute() const
   {
-    for (const auto &task : tasks)
+    // Tasks shall be run in order of expiration (the most expired task shall run first)
+    std::vector<decltype(tasks)::const_iterator> iters;
+    for (auto it = tasks.begin(); it != tasks.end(); ++it)
     {
-      task.get().run();
+      iters.push_back(it); // Vector of iterators
+    }
+
+    // Sort the iterators array as we cannot sort directly reference_wrappers
+    std::sort(iters.begin(), iters.end(),
+              [](const auto &it1, const auto &it2)
+              {
+                return (it1->get().getNextRun() < it2->get().getNextRun());
+              });
+
+    // Now iterate over the sorted iterators to run the tasks
+    for (const auto &it : iters)
+    {
+      it->get().run();
     }
 
     if (conf::debug::ENABLE_TASK_LOGS && millis() % 1024 == 0)
@@ -100,6 +117,11 @@ namespace fablabbg::Tasks
     return tasks.size();
   }
 
+  const std::vector<std::reference_wrapper<Task>> Scheduler::getTasks() const
+  {
+    return {tasks};
+  }
+
   /// @brief Creates a new task
   /// @param id task id
   /// @param period task period (if 0, will be run only once)
@@ -116,7 +138,7 @@ namespace fablabbg::Tasks
                                                                       average_tardiness(0ms), total_runtime(0ms),
                                                                       callback(callback), run_counter(0)
   {
-    scheduler.addTask(*this);
+    scheduler.addTask(std::ref(*this));
   }
 
   void Task::run()
@@ -130,7 +152,7 @@ namespace fablabbg::Tasks
 
       if (conf::debug::ENABLE_TASK_LOGS)
       {
-        Serial.printf("Task %s\r\n", getId().c_str());
+        ESP_LOGD(TAG, "Task %s\r\n", getId().c_str());
       }
 
       try
@@ -139,7 +161,7 @@ namespace fablabbg::Tasks
       }
       catch (const std::exception &e)
       {
-        Serial.printf("EXCEPTION while executing %s : %s\r\n", getId().c_str(), e.what());
+        ESP_LOGE(TAG, "EXCEPTION while executing %s : %s\r\n", getId().c_str(), e.what());
       }
 
       total_runtime += duration_cast<milliseconds>(system_clock::now() - last_run);
@@ -233,5 +255,10 @@ namespace fablabbg::Tasks
   milliseconds Task::getTotalRuntime() const
   {
     return total_runtime;
+  }
+
+  time_point<system_clock> Task::getNextRun() const
+  {
+    return next_run;
   }
 } // namespace fablab::tasks

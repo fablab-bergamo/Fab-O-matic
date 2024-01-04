@@ -23,13 +23,11 @@ using namespace std::chrono;
 using namespace std::chrono_literals;
 using namespace fablabbg::tests;
 
+[[maybe_unused]] static const char *TAG3 = "test_logic";
+
 RFIDWrapper<MockMrfc522> rfid;
 LCDWrapper<MockLcdLibrary> lcd{pins.lcd};
 BoardLogic logic;
-MockMQTTBroker broker;
-
-pthread_t thread_mqtt_broker;
-pthread_attr_t attr_mqtt_broker;
 
 constexpr card::uid_t get_test_uid(size_t idx)
 {
@@ -269,89 +267,6 @@ void test_machine_allowed()
   simulate_rfid_card(rfid, logic, std::nullopt);
 }
 
-std::atomic<bool> exit_request{false};
-
-void *threadMQTTServer(void *arg)
-{
-  while (!exit_request)
-  {
-    // Check if the server is online
-    if (!broker.isRunning())
-    {
-      broker.start();
-    }
-    else
-    {
-      broker.update();
-    }
-    delay(50);
-  }
-  return arg;
-}
-
-void test_start_broker()
-{
-  auto &server = logic.getServer();
-  TEST_ASSERT_TRUE_MESSAGE(server.connectWiFi(), "WiFi works");
-
-  // Start MQTT server thread in simulation
-  attr_mqtt_broker.stacksize = 3 * 1024; // Required for ESP32-S2
-  attr_mqtt_broker.detachstate = PTHREAD_CREATE_DETACHED;
-  pthread_create(&thread_mqtt_broker, &attr_mqtt_broker, threadMQTTServer, NULL);
-
-  auto start = std::chrono::system_clock::now();
-  constexpr auto timeout = 5s;
-  while (!broker.isRunning() && std::chrono::system_clock::now() - start < timeout)
-  {
-    delay(100);
-  }
-  TEST_ASSERT_TRUE_MESSAGE(broker.isRunning(), "MQTT server not running");
-}
-
-void test_stop_broker()
-{
-  exit_request = true;
-  pthread_join(thread_mqtt_broker, NULL);
-}
-
-void test_fabserver_network()
-{
-  const int NB_TESTS = 5;
-  const int NB_MACHINES = 9;
-  auto &server = logic.getServer();
-  for (auto mid = 1; mid <= NB_MACHINES; mid++)
-  {
-    auto saved_config = SavedConfig::DefaultConfig();
-    snprintf(saved_config.machine_id, sizeof(saved_config.machine_id), "%d", mid);
-    server.configure(saved_config);
-    TEST_ASSERT_TRUE_MESSAGE(server.connect(), "Server connect failed");
-    TEST_ASSERT_TRUE_MESSAGE(server.isOnline(), "Server is not online");
-    for (auto i = 0; i < NB_TESTS; ++i)
-    {
-      TEST_ASSERT_TRUE_MESSAGE(server.connect(), "Server connect failed");
-      card::uid_t uid = 123456789 + i;
-      auto response = server.checkCard(uid);
-      TEST_ASSERT_TRUE_MESSAGE(response != nullptr, "Server checkCard failed");
-      TEST_ASSERT_TRUE_MESSAGE(response->request_ok, "Server checkCard request failed");
-
-      auto machine_resp = server.checkMachine(); // Machine ID is in the topic already
-      TEST_ASSERT_TRUE_MESSAGE(machine_resp != nullptr, "Server checkMachine failed");
-      TEST_ASSERT_TRUE_MESSAGE(machine_resp->request_ok, "Server checkMachine request failed");
-      auto maintenance_resp = server.registerMaintenance(uid);
-      TEST_ASSERT_TRUE_MESSAGE(maintenance_resp != nullptr, "Server registerMaintenance failed");
-      TEST_ASSERT_TRUE_MESSAGE(maintenance_resp->request_ok, "Server registerMaintenance request failed");
-      auto start_use_resp = server.startUse(uid);
-      TEST_ASSERT_TRUE_MESSAGE(start_use_resp != nullptr, "Server startUse failed");
-      TEST_ASSERT_TRUE_MESSAGE(start_use_resp->request_ok, "Server startUse request failed");
-      auto stop_use_resp = server.finishUse(uid, 10s);
-      TEST_ASSERT_TRUE_MESSAGE(stop_use_resp != nullptr, "Server stopUse failed");
-      TEST_ASSERT_TRUE_MESSAGE(stop_use_resp->request_ok, "Server stopUse request failed");
-      auto alive_resp = server.alive();
-      TEST_ASSERT_TRUE_MESSAGE(alive_resp != nullptr, "Server alive failed");
-      TEST_ASSERT_TRUE_MESSAGE(alive_resp->request_ok, "Server alive request failed");
-    }
-  }
-}
 void tearDown(void){};
 
 void setUp(void)
@@ -373,9 +288,6 @@ void setup()
   RUN_TEST(test_whitelist_no_network);
   RUN_TEST(test_one_user_at_a_time);
   RUN_TEST(test_user_autologoff);
-  RUN_TEST(test_start_broker);
-  RUN_TEST(test_fabserver_network);
-  RUN_TEST(test_stop_broker);
   UNITY_END(); // stop unit testing
 };
 

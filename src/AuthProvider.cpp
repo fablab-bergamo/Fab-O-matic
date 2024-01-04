@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <string>
 
+#include "Logging.hpp"
 #include "FabServer.hpp"
 
 namespace fablabbg
@@ -62,8 +63,7 @@ namespace fablabbg
     FabUser user;
     auto uid_str = card::uid_str(uid);
 
-    if (conf::debug::ENABLE_LOGS)
-      Serial.printf("tryLogin called for %s\r\n", uid_str.c_str());
+    ESP_LOGD(TAG, "tryLogin called for %s", uid_str.c_str());
 
     if (!server.isOnline())
       server.connect();
@@ -79,15 +79,13 @@ namespace fablabbg
         // Cache the positive result
         add_in_cache(uid, user.holder_name, response->user_level);
 
-        if (conf::debug::ENABLE_LOGS)
-          Serial.printf(" -> online check OK (%s)\r\n", user.toString().c_str());
+        ESP_LOGD(TAG, " -> online check OK (%s)", user.toString().c_str());
 
         return user;
       }
       else
       {
-        if (conf::debug::ENABLE_LOGS)
-          Serial.println(" -> online check NOT OK");
+        ESP_LOGD(TAG, " -> online check NOT OK");
 
         user.authenticated = false;
 
@@ -105,13 +103,12 @@ namespace fablabbg
       user.authenticated = true;
       user.user_level = level;
       user.holder_name = name;
-      if (conf::debug::ENABLE_LOGS)
-        Serial.printf(" -> whilelist check OK (%s)\r\n", user.toString().c_str());
+      ESP_LOGD(TAG, " -> whilelist check OK (%s)", user.toString().c_str());
+
       return user;
     }
 
-    if (conf::debug::ENABLE_LOGS)
-      Serial.println(" -> whilelist check NOK");
+    ESP_LOGD(TAG, " -> whilelist check NOK");
     return std::nullopt;
   }
 
@@ -129,7 +126,7 @@ namespace fablabbg
 
     if (elem == end(whitelist))
     {
-      Serial.printf("%s not found in whitelist\r\n", card::uid_str(candidate_uid).c_str());
+      ESP_LOGD(TAG, "%s not found in whitelist", card::uid_str(candidate_uid).c_str());
       return std::nullopt;
     }
 

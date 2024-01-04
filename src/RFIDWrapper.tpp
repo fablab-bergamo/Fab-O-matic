@@ -4,6 +4,7 @@
 #include "pins.hpp"
 #include "conf.hpp"
 #include "card.hpp"
+#include "Logging.hpp"
 
 namespace fablabbg
 {
@@ -19,7 +20,7 @@ namespace fablabbg
     auto result = driver->PICC_IsNewCardPresent();
 
     if (conf::debug::ENABLE_LOGS && result)
-      Serial.printf("isNewCardPresent=%d\r\n", result);
+      ESP_LOGD(TAG, "isNewCardPresent=%d", result);
 
     return result;
   }
@@ -30,13 +31,6 @@ namespace fablabbg
   std::optional<card::uid_t> RFIDWrapper<Driver>::readCardSerial() const
   {
     auto result = driver->PICC_ReadCardSerial();
-    const auto &uid = driver->getDriverUid();
-
-    if (conf::debug::ENABLE_LOGS)
-    {
-      Serial.printf("readCardSerial=%d (SAK=%d, Size=%d)\r\n", result,
-                    uid.sak, uid.size);
-    }
     if (result)
     {
       return getUid();
@@ -78,7 +72,7 @@ namespace fablabbg
     auto result = driver->PCD_PerformSelfTest();
     if (conf::debug::ENABLE_LOGS)
     {
-      Serial.printf("RFID self test = %d\r\n", result);
+      ESP_LOGD(TAG, "RFID self test = %d", result);
     }
     return result;
   }
@@ -112,21 +106,15 @@ namespace fablabbg
   bool RFIDWrapper<Driver>::init_rfid() const
   {
 
-    if (conf::debug::ENABLE_LOGS)
-    {
-      constexpr auto MAX_LEN = 80;
-      char buffer[MAX_LEN] = {0};
-      if (snprintf(buffer, sizeof(buffer), "Configuring SPI RFID (SCK=%d, MISO=%d, MOSI=%d, SDA=%d) RESET=%d",
-                   pins.mfrc522.sck_pin, pins.mfrc522.miso_pin, pins.mfrc522.mosi_pin,
-                   pins.mfrc522.sda_pin, pins.mfrc522.reset_pin) > 0)
-        Serial.println(buffer);
-    }
+    ESP_LOGI(TAG, "Configuring SPI RFID (SCK=%d, MISO=%d, MOSI=%d, SDA=%d) RESET=%d",
+             pins.mfrc522.sck_pin, pins.mfrc522.miso_pin, pins.mfrc522.mosi_pin,
+             pins.mfrc522.sda_pin, pins.mfrc522.reset_pin);
 
     reset();
 
     if (!driver->PCD_Init())
     {
-      Serial.println("mfrc522 Init failed");
+      ESP_LOGE(TAG, "mfrc522 Init failed");
       return false;
     }
 
@@ -138,7 +126,7 @@ namespace fablabbg
 
     if (!driver->PCD_PerformSelfTest())
     {
-      Serial.println("Self-test failure for RFID");
+      ESP_LOGE(TAG, "Self-test failure for RFID");
       return false;
     }
     return true;

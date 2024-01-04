@@ -4,6 +4,7 @@
 #include <atomic>
 #include <functional>
 #include <string>
+#include <queue>
 
 #include "sMQTTBroker.h"
 #include "BaseRfidWrapper.hpp"
@@ -19,20 +20,31 @@ namespace fablabbg
     bool isRunning() const;
     void start();
     bool onEvent(sMQTTEvent *event);
-    std::string defaultReplies(const std::string &query) const;
+    const std::string defaultReplies(const std::string &query) const;
     /// @brief set the reply generation function. May be called from a different thread
     /// @param callback
-    void configureReplies(std::function<std::string(std::string)> callback);
+    void configureReplies(std::function<const std::string(const std::string &, const std::string &)> callback);
+    size_t processQueries();
+
+    void mainLoop();
 
   private:
     constexpr static uint16_t MQTTPORT = 1883;
     std::atomic<bool> is_running{false};
     std::string topic = "";
     std::string payload = "";
+    struct query
+    {
+      std::string source_topic{""};
+      std::string source_query{""};
+      std::string reply_topic{""};
+    };
+    std::queue<query> queries{};
+
+    std::function<const std::string(const std::string &, const std::string &)> callback = [this](const std::string &topic, const std::string &query)
+    { return defaultReplies(query); };
 
     // Maybe set outside the MQTT broker thread
-    std::function<std::string(const std::string &)> callback = [this](const std::string &query)
-    { return defaultReplies(query); };
     std::atomic<bool> isLocked;
 
     bool lock() { return !isLocked.exchange(true); }
