@@ -7,7 +7,7 @@
 #include "card.hpp"
 #include "BoardLogic.hpp"
 #include "mock/MockMrfc522.hpp"
-#include "RfidWrapper.hpp"
+#include "RFIDWrapper.hpp"
 
 namespace fablabbg::tests
 {
