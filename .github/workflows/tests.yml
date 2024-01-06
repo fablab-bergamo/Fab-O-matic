@@ -24,10 +24,6 @@ jobs:
         run: pip install --upgrade platformio
       - name: Use secrets.hpp.example as base for the build
         run: cp include/secrets.hpp.example include/secrets.hpp
-      - name: Install curl if needed
-        run: sudo apt-get install curl
-      - name: Install Wokwi CLI
-        run: curl -L https://wokwi.com/ci/install.sh | sh
       - name: Build 1st test
         run: pio test -e wokwi --without-testing --without-uploading -f test_mqtt
       - name: Run 1st test with Wokwi CLI
