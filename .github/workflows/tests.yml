@@ -1,0 +1,68 @@
+name: PlatformIO CI
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.platformio/.cache
+          key: ${{ runner.os }}-pio
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - name: Install PlatformIO Core
+        run: pip install --upgrade platformio
+      - name: Use secrets.hpp.example as base for the build
+        run: cp include/secrets.hpp.example include/secrets.hpp
+      - name: Install curl if needed
+        run: sudo apt-get install curl
+      - name: Install Wokwi CLI
+        run: curl -L https://wokwi.com/ci/install.sh | sh
+      - name: Build 1st test
+        run: pio test -e wokwi --without-testing --without-uploading -f test_mqtt
+      - name: Run 1st test with Wokwi CLI
+        uses: wokwi/wokwi-ci-action@v1
+        with:
+          token: ${{ secrets.WOKWI_CLI_TOKEN }}
+          path: / # directory with wokwi.toml, relative to repo's root
+          timeout: 180000
+          expect_text: 'Tests 0 Failures 0 Ignored'
+          fail_text: ':FAIL:'
+      - name: Build 2nd test
+        run: pio test -e wokwi --without-testing --without-uploading -f test_logic
+      - name: Run 2nd test with Wokwi CLI
+        uses: wokwi/wokwi-ci-action@v1
+        with:
+          token: ${{ secrets.WOKWI_CLI_TOKEN }}
+          path: / # directory with wokwi.toml, relative to repo's root
+          timeout: 180000
+          expect_text: 'Tests 0 Failures 0 Ignored'
+          fail_text: ':FAIL:'
+      - name: Build 3rd test
+        run: pio test -e wokwi --without-testing --without-uploading -f test_savedconfig
+      - name: Run 3rd test with Wokwi CLI
+        uses: wokwi/wokwi-ci-action@v1
+        with:
+          token: ${{ secrets.WOKWI_CLI_TOKEN }}
+          path: / # directory with wokwi.toml, relative to repo's root
+          timeout: 180000
+          expect_text: 'Tests 0 Failures 0 Ignored'
+          fail_text: ':FAIL:'
+      - name: Build 4th test
+        run: pio test -e wokwi --without-testing --without-uploading -f test_tasks
+      - name: Run 4th test with Wokwi CLI
+        uses: wokwi/wokwi-ci-action@v1
+        with:
+          token: ${{ secrets.WOKWI_CLI_TOKEN }}
+          path: / # directory with wokwi.toml, relative to repo's root
+          timeout: 180000
+          expect_text: 'Tests 0 Failures 0 Ignored'
+          fail_text: ':FAIL:'
