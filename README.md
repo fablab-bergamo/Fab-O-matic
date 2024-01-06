@@ -34,12 +34,14 @@ Test suite : [![Test suite](https://github.com/PBrunot/rfid-arduino-copy/actions
 
 - A set a test scripts based on Platformio+Unity is included in the project.
 - There are two ways to run the tests:
-  -  Use real hardware connected over USB with Platform.io command
+
+1.  Use real hardware connected over USB with Platform.io command
 
 ```shell
 pio test --environment esp32-s3
 ```
-  - Use Wokwi-CLI with test images built by Platform.io. It requires a wokwi access token (free as per Jan 2024). The Github action "tests.yml" uses this mechanism.
+
+2. Use Wokwi-CLI with test images built by Platform.io. It requires a wokwi access token (free as per Jan 2024). The Github action "tests.yml" uses this mechanism.
 
 ## DEMO - view it in the browser
 
