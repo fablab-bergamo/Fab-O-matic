@@ -35,6 +35,12 @@ jobs:
           expect_text: 'Tests 0 Failures 0 Ignored'
           fail_text: ':FAIL:'
           serial_log_file: 'test_mqtt.log'
+      - name: Upload test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: test_mqtt.log
+          path: test_mqtt.log
+          retention-days: 15
       - name: Build 2nd test
         run: pio test -e wokwi --without-testing --without-uploading -f test_logic
       - name: Run 2nd test with Wokwi CLI
