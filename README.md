@@ -1,10 +1,11 @@
 # rfid-arduino
 
 Build status : [![PlatformIO CI](https://github.com/fablab-bergamo/rfid-arduino/actions/workflows/platformio.yml/badge.svg)](https://github.com/fablab-bergamo/rfid-arduino/actions/workflows/platformio.yml)
+Test suite : [![Test suite](https://github.com/PBrunot/rfid-arduino-copy/actions/workflows/tests.yml/badge.svg)](https://github.com/PBrunot/rfid-arduino-copy/actions/workflows/tests.yml)
 
 ## Hardware requirements
 
-- ESP32, ESP32-S2 or ESP32-S3 chip
+- ESP32, ESP32-S2 or ESP32-S3 chips
 - RFID reader (using mfrc522 compatible chip)
 - LCD driver (using Hitachi HD44780 compatible chip)
 - 3.3V Relay (or [Shelly](https://www.shellyitalia.com/shelly-plus-1-mini-gen3/) MQTT device)
@@ -14,13 +15,13 @@ Build status : [![PlatformIO CI](https://github.com/fablab-bergamo/rfid-arduino/
 
 ### Other requirements
 
-- MQTT Broker on WiFi network. Board can work in offline mode with whitelisted RFID tags.
+- MQTT Broker on WiFi network. Board can also work in offline mode with whitelisted RFID tags.
 
 > Tested with Mosquitto. See the backend side project in [Github rfid-backend](https://github.com/fablab-bergamo/rfid-backend)
 
 ## Build environment
 
-- Language: C++17 with ArduinoFramework for ESP32
+- Language: C++20 with ArduinoFramework for ESP32
 - IDE: VSCode + Platform.io extension as a minimun
 - To build, rename <code>secrets.hpp.example</code> to <code>secrets.hpp</code>.
 
@@ -29,16 +30,18 @@ Build status : [![PlatformIO CI](https://github.com/fablab-bergamo/rfid-arduino/
 
 - To use hostname for MQTT server, mDNS is used by the Arduino stack built over ESP-IDF 4.4. When Arduino core for ESP will move to ESP-IDF 5.0+ an additional dependency to mDNS will be needed as mDNS is now an independent component.
 
-## TESTING
+## TEST Suite
 
 - A set a test scripts based on Platformio+Unity is included in the project.
-- Currently, the only way to run the tests is to use real hardware (esp32-s3) with Platform.io command
+- There are two ways to run the tests:
+  -  Use real hardware connected over USB with Platform.io command
 
 ```shell
 pio test --environment esp32-s3
 ```
+  - Use Wokwi-CLI with test images built by Platform.io. It requires a wokwi access token (free as per Jan 2024). The Github action "tests.yml" uses this mechanism.
 
-## DEMO - Testing in the browser
+## DEMO - view it in the browser
 
 - Download latest <code>esp32-wokwi.zip</code> file from Github Actions / platformio.yml / Artifacts
 - Extract <code>esp32-wokwi.bin</code> file from artifact ZIP
