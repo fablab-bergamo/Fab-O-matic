@@ -114,7 +114,7 @@ namespace fablabbg
       {
         auto secs = duration_cast<seconds>(conf::tasks::WATCHDOG_TIMEOUT).count();
         esp_task_wdt_init(secs, true); // enable panic so ESP32 restarts
-        ESP_LOGI(TAG, "taskEspWatchdog - initialized %d seconds", secs);
+        ESP_LOGI(TAG, "taskEspWatchdog - initialized %lld seconds", secs);
         esp_task_wdt_add(NULL); // add current thread to WDT watch
         initialized = true;
       }

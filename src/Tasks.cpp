@@ -155,14 +155,7 @@ namespace fablabbg::Tasks
         ESP_LOGD(TAG, "Task %s\r\n", getId().c_str());
       }
 
-      try
-      {
-        callback();
-      }
-      catch (const std::exception &e)
-      {
-        ESP_LOGE(TAG, "EXCEPTION while executing %s : %s\r\n", getId().c_str(), e.what());
-      }
+      callback();
 
       total_runtime += duration_cast<milliseconds>(system_clock::now() - last_run);
 
