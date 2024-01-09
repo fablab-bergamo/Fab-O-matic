@@ -92,7 +92,10 @@ void test_fabserver_calls()
   {
     // Change MachineID on the fly
     auto saved_config = SavedConfig::DefaultConfig();
-    snprintf(saved_config.machine_id, sizeof(saved_config.machine_id), "%d", mid);
+    if (mid < 99999)
+    {
+      snprintf(saved_config.machine_id, sizeof(saved_config.machine_id), "%d", mid);
+    }
     ESP_LOGI(TAG3, "Testing machine %d", mid);
     server.configure(saved_config);
 

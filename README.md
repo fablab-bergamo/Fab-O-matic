@@ -35,7 +35,7 @@ Test suite : [![Test suite](https://github.com/PBrunot/rfid-arduino-copy/actions
 - A set a test scripts based on Platformio+Unity is included in the project.
 - There are two ways to run the tests:
 
-1.  Use real hardware connected over USB with Platform.io command
+1. Use real hardware connected over USB with Platform.io command
 
 ```shell
 pio test --environment esp32-s3
@@ -47,7 +47,7 @@ pio test --environment esp32-s3
 
 - Download latest <code>esp32-wokwi.zip</code> file from Github Actions / platformio.yml / Artifacts
 - Extract <code>esp32-wokwi.bin</code> file from artifact ZIP
-- Open WOKWI Circuit https://wokwi.com/projects/363448917434192897
+- Open WOKWI Circuit [link](https://wokwi.com/projects/363448917434192897)
 - In code editor, press F1 > Upload firmware ... and pick the <code>esp32-wokwi.bin</code> file
 
 ![image](https://github.com/fablab-bergamo/rfid-arduino/assets/6236243/5c41092e-f8bf-451a-95ec-8dc6d7e07824)
@@ -56,7 +56,7 @@ pio test --environment esp32-s3
   - RFID chip is replaced with a mockup simulating random RFID tags from whitelist from time to time (<code>MockRFIDWrapper</code> class).
   - A simple MQTT broker (<code>MockMQTTBroker</code> class) is run in a separate thread on esp32s2
 
-## Configuration steps
+## Configuration steps (/conf folder)
 
 - See <code>pins.hpp</code> to set the GPIO pins for LCD parallel interface, relay, buzzer and RFID reader SPI interface.
 - See <code>conf.hpp</code> to configure LCD dimensions, timeouts, debug logs and some behaviours (e.g. time before to power off the machine)
