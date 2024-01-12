@@ -22,7 +22,7 @@ jobs:
       - name: Install PlatformIO Core
         run: pip install --upgrade platformio
       - name: Use secrets.hpp.example as base for the build
-        run: cp include/secrets.hpp.example include/secrets.hpp
+        run: cp conf/secrets.hpp.example conf/secrets.hpp
       - name: Build 1st test
         run: pio test -e wokwi --without-testing --without-uploading -f test_mqtt
       - name: Run 1st test with Wokwi CLI
