@@ -60,7 +60,12 @@ namespace fablabbg
     if (rfid.has_value())
       return rfid.value().get();
     else
-      throw std::runtime_error("RFID not initialized");
+    {
+      ESP_LOGE(TAG, "RFID not initialized");
+      while (true)
+      {
+      };
+    }
   }
 
   /// @brief connects and polls the server for up-to-date machine information
@@ -577,9 +582,16 @@ namespace fablabbg
   BaseLCDWrapper &BoardLogic::getLcd() const
   {
     if (lcd.has_value())
+    {
       return lcd.value().get();
+    }
     else
-      throw std::runtime_error("LCD not initialized");
+    {
+      ESP_LOGE(TAG, "LCD not initialized");
+      while (true)
+      {
+      };
+    }
   }
 
   /// @brief Sets the autologoff delay

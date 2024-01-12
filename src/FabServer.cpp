@@ -158,7 +158,7 @@ namespace fablabbg
         return true;
       }
     }
-    ESP_LOGE(TAG, "Failure, no answer from MQTT server (timeout:%d ms)", MAX_DURATION_MS);
+    ESP_LOGE(TAG, "Failure, no answer from MQTT server (timeout:%lld ms)", MAX_DURATION_MS);
     return false;
   }
 
@@ -187,32 +187,24 @@ namespace fablabbg
     static constexpr auto NB_TRIES = 30;
     static constexpr auto DELAY_MS = 100;
 
-    try
+    // Connect WiFi if needed
+    if (WiFi.status() != WL_CONNECTED)
     {
-      // Connect WiFi if needed
-      if (WiFi.status() != WL_CONNECTED)
+      WiFi.mode(WIFI_STA);
+      ESP_LOGD(TAG, "FabServer::connectWiFi() : WiFi connection state=%d, connecting to SSID:%s (channel:%d)", WiFi.status(), wifi_ssid.c_str(), channel);
+      WiFi.begin(wifi_ssid.data(), wifi_password.data(), channel);
+      delay(DELAY_MS);
+      for (auto i = 0; i < NB_TRIES; i++)
       {
-        WiFi.mode(WIFI_STA);
-        ESP_LOGD(TAG, "FabServer::connectWiFi() : WiFi connection state=%d, connecting to SSID:%s (channel:%d)", WiFi.status(), wifi_ssid.c_str(), channel);
-        WiFi.begin(wifi_ssid.data(), wifi_password.data(), channel);
-        delay(DELAY_MS);
-        for (auto i = 0; i < NB_TRIES; i++)
+        if (WiFi.status() == WL_CONNECTED)
         {
-          if (WiFi.status() == WL_CONNECTED)
-          {
-            ESP_LOGD(TAG, "FabServer::connectWiFi() : WiFi connection successfull");
-            break;
-          }
-          delay(DELAY_MS);
+          ESP_LOGD(TAG, "FabServer::connectWiFi() : WiFi connection successfull");
+          break;
         }
+        delay(DELAY_MS);
       }
-      return WiFi.status() == WL_CONNECTED;
     }
-    catch (const std::exception &e)
-    {
-      ESP_LOGE(TAG, "connectWiFi exception %s", e.what());
-      return false;
-    }
+    return WiFi.status() == WL_CONNECTED;
   }
 
   /// @brief Establish WiFi connection and connects to FabServer
@@ -303,26 +295,20 @@ namespace fablabbg
   {
     static_assert(std::is_base_of<ServerMQTT::Query, QueryT>::value, "QueryT must inherit from Query");
     static_assert(std::is_base_of<ServerMQTT::Response, RespT>::value, "RespT must inherit from Response");
-    try
+
+    if (isOnline())
     {
-      if (isOnline())
+      if (QueryT query{args...}; publishWithReply(query))
       {
-        if (QueryT query{args...}; publishWithReply(query))
+        // Deserialize the JSON document
+        auto payload = last_reply.c_str();
+        if (DeserializationError error = deserializeJson(doc, payload))
         {
-          // Deserialize the JSON document
-          auto payload = last_reply.c_str();
-          if (DeserializationError error = deserializeJson(doc, payload))
-          {
-            ESP_LOGE(TAG, "Failed to parse json: %s (%s)", payload, error.c_str());
-            throw std::runtime_error("Failed to parse json");
-          }
-          return RespT::fromJson(doc);
+          ESP_LOGE(TAG, "Failed to parse json: %s (%s)", payload, error.c_str());
+          return std::make_unique<RespT>(false);
         }
+        return RespT::fromJson(doc);
       }
-    }
-    catch (const std::exception &e)
-    {
-      ESP_LOGE(TAG, "processQuery exception %s", e.what());
     }
     return std::make_unique<RespT>(false);
   }
