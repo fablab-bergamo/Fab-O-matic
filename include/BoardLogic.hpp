@@ -40,7 +40,8 @@ namespace fablabbg
       ERROR_HW,
       PORTAL_FAILED,
       PORTAL_OK,
-      PORTAL_STARTING
+      PORTAL_STARTING,
+      BOOT
     };
 
     BoardLogic();

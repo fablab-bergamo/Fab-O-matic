@@ -425,6 +425,10 @@ namespace fablabbg
       getLcd().setRow(0, "Apri portale");
       getLcd().setRow(1, WiFi.softAPIP().toString().c_str());
       break;
+    case Status::BOOT:
+      getLcd().setRow(0, "Avvio...");
+      getLcd().setRow(1, GIT_VERSION);
+      break;
     default:
       getLcd().setRow(0, "Unhandled status");
       if (snprintf(buffer, sizeof(buffer), "Value %d", static_cast<int>(status)) > 0)
