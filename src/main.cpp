@@ -334,6 +334,8 @@ void setup()
   auto success = logic.configure(Board::rfid, Board::lcd);
   success &= logic.board_init();
 
+  logic.changeStatus(Status::BOOT);
+
   if (!success)
   {
     logic.changeStatus(Status::ERROR_HW);

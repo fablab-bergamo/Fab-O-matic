@@ -56,7 +56,7 @@ namespace fablabbg
       {15U, 2U, 0U, 4U, 16U, 17U, 18U, false}, // LCD
       {14U, 27U},                              // relay
       {12U},                                   // buzzer
-      {19U, false}                             // Neopixel (non testato)
+      {19U, true}                              // Neopixel
   };
 #endif
 #if (WOKWI_SIMULATION)

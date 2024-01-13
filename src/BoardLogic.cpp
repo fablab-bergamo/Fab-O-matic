@@ -17,6 +17,10 @@
 #include "SavedConfig.hpp"
 #include "Logging.hpp"
 
+#ifndef GIT_VERSION
+#define GIT_VERSION "??????"
+#endif
+
 namespace fablabbg
 {
   BoardLogic::BoardLogic() : server(std::make_unique<FabServer>())
@@ -424,6 +428,10 @@ namespace fablabbg
     case Status::PORTAL_STARTING:
       getLcd().setRow(0, "Apri portale");
       getLcd().setRow(1, WiFi.softAPIP().toString().c_str());
+      break;
+    case Status::BOOT:
+      getLcd().setRow(0, "Avvio...");
+      getLcd().setRow(1, "V" GIT_VERSION);
       break;
     default:
       getLcd().setRow(0, "Unhandled status");
