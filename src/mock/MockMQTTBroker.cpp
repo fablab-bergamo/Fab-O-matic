@@ -20,7 +20,7 @@ namespace fablabbg
     }
     if (!is_running)
     {
-      is_running = init(MockMQTTBroker::MQTTPORT, true);
+      is_running = init(conf::mqtt::PORT_NUMBER, true);
 
       ESP_LOGI(TAG2, "MQTT BROKER: started with result %d", is_running.load());
     }

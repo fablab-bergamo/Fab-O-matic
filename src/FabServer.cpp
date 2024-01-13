@@ -233,8 +233,20 @@ namespace fablabbg
     if (WiFi.status() == WL_CONNECTED &&
         !client.connected())
     {
-      ESP_LOGD(TAG, "Connecting to MQTT server %s", server_ip.c_str());
-      client.begin(server_ip.data(), wifi_client);
+      IPAddress ip;
+      if (WiFi.hostByName(server_ip.c_str(), ip))
+      {
+        ESP_LOGD(TAG, "Resolved MQTT server [%s] as [%s]", server_ip.c_str(), ip.toString().c_str());
+      }
+      else
+      {
+        ESP_LOGE(TAG, "Failed to resolve MQTT server [%s]", server_ip.c_str());
+        return false;
+      }
+
+      ESP_LOGD(TAG, "Connecting to MQTT server [%s:%d]...", ip.toString().c_str(), conf::mqtt::PORT_NUMBER);
+
+      client.begin(ip, conf::mqtt::PORT_NUMBER, wifi_client);
 
       callback = [&](String &a, String &b)
       { return messageReceived(a, b); };

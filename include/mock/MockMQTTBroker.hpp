@@ -29,7 +29,6 @@ namespace fablabbg
     void mainLoop();
 
   private:
-    constexpr static uint16_t MQTTPORT = 1883;
     std::atomic<bool> is_running{false};
     std::string topic = "";
     std::string payload = "";
