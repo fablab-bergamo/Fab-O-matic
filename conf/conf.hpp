@@ -14,7 +14,7 @@ namespace fablabbg
 {
   namespace conf::default_config
   {
-    static constexpr std::string_view mqtt_server = "127.0.0.1";
+    static constexpr std::string_view mqtt_server = "fabpi";
     static constexpr std::string_view machine_topic = "shelly/command/switch:0";
     static constexpr MachineID machine_id{1};
     static constexpr std::string_view machine_name = "MACHINE1";
@@ -25,14 +25,16 @@ namespace fablabbg
   {
     static constexpr uint8_t UID_BYTE_LEN{4}; /* Number of bytes in RFID cards UID */
     static constexpr uint8_t CACHE_LEN{10};   /* Number of cached UID */
-  }                                           // namespace conf::rfid_tags
+
+  } // namespace conf::rfid_tags
 
   namespace conf::lcd
   {
     static constexpr uint8_t ROWS{2};              /* Number of rows for LCD display */
     static constexpr uint8_t COLS{16};             /* Number of cols for LCD display */
     static constexpr auto SHORT_MESSAGE_DELAY{1s}; /* How much time shall we wait for a short message on LCD for user */
-  }                                                // namespace conf::lcd
+
+  } // namespace conf::lcd
 
   namespace conf::machine
   {
@@ -42,8 +44,7 @@ namespace fablabbg
     static constexpr auto DELAY_BETWEEN_BEEPS{30s};      /* Beeps will be heard every 30s when the machine is about to shutdown */
     static constexpr bool MAINTENANCE_BLOCK{true};       /* If true, machine needing maintenance will be blocked for normal users */
     static constexpr auto LONG_TAP_DURATION{10s};        /* Minimum time to confirm by long tap maintenance*/
-    static_assert(BEEP_PERIOD <= POWEROFF_GRACE_PERIOD);
-    static_assert(DELAY_BETWEEN_BEEPS < BEEP_PERIOD);
+
   } // namespace conf::machine
 
   namespace conf::debug
@@ -52,15 +53,17 @@ namespace fablabbg
     static constexpr bool ENABLE_TASK_LOGS{false};           /* True to add logs regarding tasks scheduling and statistics */
     static constexpr unsigned long SERIAL_SPEED_BDS{115200}; /* Serial speed in bauds */
     static constexpr bool FORCE_PORTAL_RESET{false};         /* True to force EEPROM reset */
-  }                                                          // namespace conf::debug
+
+  } // namespace conf::debug
 
   namespace conf::buzzer
   {
     static constexpr unsigned short LEDC_PWM_CHANNEL{0}; /* Esp32 pwm channel for beep generation */
-    static constexpr auto STANDARD_BEEP_DURATION{200ms}; /* Single beep duration, typical value 200ms */
+    static constexpr auto STANDARD_BEEP_DURATION{200ms}; /* Single beep duration, typical value 200ms. Set to 0 to disable beeps. */
     static constexpr auto NB_BEEPS{3};                   /* Number of beeps every time the function is callsed */
     static constexpr unsigned int BEEP_HZ{660};          /* Beep frequency in Hz */
-  }                                                      // namespace conf::buzzer
+
+  } // namespace conf::buzzer
 
   namespace conf::tasks
   {
@@ -69,20 +72,30 @@ namespace fablabbg
     static constexpr auto MQTT_REFRESH_PERIOD{30s};    /* Query the MQTT broker for machine state at given period (default: 30s) */
     static constexpr auto WATCHDOG_TIMEOUT{30s};       /* Timeout for hardware watchdog, set to 0s to disable (default: 30s) */
     static constexpr auto PORTAL_CONFIG_TIMEOUT{5min}; /* Timeout for portal configuration (default: 5min) */
-  }                                                    // namespace conf::tasks
+
+  } // namespace conf::tasks
 
   namespace conf::mqtt
   {
     static constexpr std::string_view topic{"machine"};         /* Initial part of the topic, machine ID will be added */
-    static constexpr std::string_view response_topic{"/reply"}; /* Server reply (sub-topic of the full machine topic) */
-    static constexpr auto MAX_RETRY_DURATION{2s};               /* How much time should we spend at maximum trying to contact the broker for a single request */
-    static constexpr auto PORT_NUMBER{1883};                    /* MQTT port */
-  }                                                             // namespace conf::mqtt
+    static constexpr std::string_view response_topic{"/reply"}; /* Backend reply (sub-topic of the full machine topic) */
+    static constexpr auto MAX_TRIES{3};                         /* Number of tries to get a reply from the backend */
+    static constexpr auto TIMEOUT_REPLY_SERVER{1s};             /* Timeout for a single backend reply request. */
+    static constexpr auto PORT_NUMBER{1883};                    /* MQTT port for broker */
+
+  } // namespace conf::mqtt
+
+  // Checks on configured values
+  static_assert(conf::machine::BEEP_PERIOD <= conf::machine::POWEROFF_GRACE_PERIOD, "BEEP_PERIOD must be <= POWEROFF_GRACE_PERIOD");
+  static_assert(conf::machine::DELAY_BETWEEN_BEEPS < conf::machine::BEEP_PERIOD, "DELAY_BETWEEN_BEEPS must be < BEEP_PERIOD");
+  static_assert(conf::buzzer::STANDARD_BEEP_DURATION <= 1s, "STANDARD_BEEP_DURATION must be <= 1s");
+  static_assert(conf::mqtt::TIMEOUT_REPLY_SERVER > 500ms, "TIMEOUT_REPLY_SERVER must be > 500ms");
+  static_assert(conf::mqtt::MAX_TRIES > 0, "MAX_TRIES must be > 0");
 
   // Make sure the hardware watchdog period is not too short considering we're blocking tasks for some operations
   static_assert(conf::tasks::WATCHDOG_TIMEOUT == 0s ||
                     conf::tasks::WATCHDOG_TIMEOUT > (conf::machine::LONG_TAP_DURATION +
-                                                     conf::mqtt::MAX_RETRY_DURATION * 3 +
+                                                     conf::mqtt::TIMEOUT_REPLY_SERVER * conf::mqtt::MAX_TRIES +
                                                      conf::lcd::SHORT_MESSAGE_DELAY * 3 +
                                                      conf::buzzer::STANDARD_BEEP_DURATION * conf::buzzer::NB_BEEPS * 2 +
                                                      1s),

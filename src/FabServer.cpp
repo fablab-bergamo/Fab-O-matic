@@ -51,28 +51,39 @@ namespace fablabbg
   /// @return true if the server answered
   bool FabServer::publishWithReply(const Query &query)
   {
-    constexpr auto MAX_TRIES = 3;
-    constexpr auto TIMEOUT_SERVER = 500ms;
-    static_assert(MAX_TRIES * TIMEOUT_SERVER < conf::mqtt::MAX_RETRY_DURATION, "MAX_RETRY_DURATION is too short");
-    constexpr auto SLEEP_MS = duration_cast<milliseconds>(conf::mqtt::MAX_RETRY_DURATION + MAX_TRIES * TIMEOUT_SERVER).count() / MAX_TRIES;
+    auto duration_sleep = duration_cast<milliseconds>(conf::mqtt::TIMEOUT_REPLY_SERVER).count();
     auto try_cpt = 0;
-    while (try_cpt < MAX_TRIES)
+    auto published = false;
+
+    while (try_cpt < conf::mqtt::MAX_TRIES)
     {
-      if (publish(query))
+      try_cpt++;
+
+      if (!published)
       {
-        if (waitForAnswer(TIMEOUT_SERVER))
+        if (publish(query))
         {
-          ESP_LOGD(TAG, "MQTT Client: received answer: %s", last_reply.data());
-          return true;
+          published = true;
         }
         else
         {
-          ESP_LOGW(TAG, "MQTT Client: no answer received, retrying %d/%d", (try_cpt + 1), MAX_TRIES);
-          delay(SLEEP_MS);
+          ESP_LOGE(TAG, "MQTT Client: failure to send query %s", query.payload().data());
+          delay(duration_sleep);
         }
       }
-      try_cpt++;
+
+      if (waitForAnswer(conf::mqtt::TIMEOUT_REPLY_SERVER))
+      {
+        ESP_LOGD(TAG, "MQTT Client: received answer: %s", last_reply.data());
+        return true;
+      }
+      else
+      {
+        ESP_LOGW(TAG, "MQTT Client: no answer received, retrying %d/%d", try_cpt, conf::mqtt::MAX_TRIES);
+        delay(duration_sleep);
+      }
     }
+
     ESP_LOGE(TAG, "MQTT Client: failure to send query %s", query.payload().data());
     return false;
   }
@@ -139,9 +150,9 @@ namespace fablabbg
   {
     const auto MAX_DURATION_MS = max_duration.count();
     const auto DELAY_MS{50};
-    const auto NB_TRIES{MAX_DURATION_MS / DELAY_MS};
+    const auto NB_LOOPS{std::max(MAX_DURATION_MS / DELAY_MS, 1LL)};
 
-    for (auto i = 0; i < NB_TRIES; i++)
+    for (auto i = 0; i < NB_LOOPS; i++)
     {
       if (answer_pending)
       {
