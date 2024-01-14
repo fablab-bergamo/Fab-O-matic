@@ -164,8 +164,7 @@ namespace fablabbg
     String payload = value ? act_config.mqtt_config.on_message.data() : act_config.mqtt_config.off_message.data();
 
     auto retries = 0;
-    constexpr auto MAX_TRIES = 3;
-    constexpr auto DELAY_MS = duration_cast<milliseconds>(conf::mqtt::MAX_RETRY_DURATION).count() / MAX_TRIES;
+    constexpr auto DELAY_MS = duration_cast<milliseconds>(conf::mqtt::TIMEOUT_REPLY_SERVER).count();
     while (!mqtt_server.publish(topic, payload))
     {
       ESP_LOGE(TAG, "Error while publishing %s to %s", payload.c_str(), topic.c_str());
@@ -173,9 +172,9 @@ namespace fablabbg
       mqtt_server.connect();
       delay(DELAY_MS);
       retries++;
-      if (retries > MAX_TRIES)
+      if (retries > conf::mqtt::MAX_TRIES)
       {
-        ESP_LOGW(TAG, "Unable to publish to MQTT (%d/%d)", retries, MAX_TRIES);
+        ESP_LOGW(TAG, "Unable to publish to MQTT (%d/%d)", retries, conf::mqtt::MAX_TRIES);
         return;
       }
     }

@@ -456,19 +456,25 @@ namespace fablabbg
 
   void BoardLogic::beep_ok() const
   {
-    ledcWriteTone(conf::buzzer::LEDC_PWM_CHANNEL, conf::buzzer::BEEP_HZ);
-    delay(duration_cast<milliseconds>(conf::buzzer::STANDARD_BEEP_DURATION).count());
-    ledcWrite(conf::buzzer::LEDC_PWM_CHANNEL, 0UL);
+    if (auto ms = duration_cast<milliseconds>(conf::buzzer::STANDARD_BEEP_DURATION).count(); ms > 0)
+    {
+      ledcWriteTone(conf::buzzer::LEDC_PWM_CHANNEL, conf::buzzer::BEEP_HZ);
+      delay(ms);
+      ledcWrite(conf::buzzer::LEDC_PWM_CHANNEL, 0UL);
+    }
   }
 
   void BoardLogic::beep_failed() const
   {
-    for (auto i = 0; i < conf::buzzer::NB_BEEPS; i++)
+    if (auto ms = duration_cast<milliseconds>(conf::buzzer::STANDARD_BEEP_DURATION).count(); ms > 0)
     {
-      ledcWriteTone(conf::buzzer::LEDC_PWM_CHANNEL, conf::buzzer::BEEP_HZ);
-      delay(duration_cast<milliseconds>(conf::buzzer::STANDARD_BEEP_DURATION).count());
-      ledcWrite(conf::buzzer::LEDC_PWM_CHANNEL, 0UL);
-      delay(duration_cast<milliseconds>(conf::buzzer::STANDARD_BEEP_DURATION).count());
+      for (auto i = 0; i < conf::buzzer::NB_BEEPS; i++)
+      {
+        ledcWriteTone(conf::buzzer::LEDC_PWM_CHANNEL, conf::buzzer::BEEP_HZ);
+        delay(ms);
+        ledcWrite(conf::buzzer::LEDC_PWM_CHANNEL, 0UL);
+        delay(ms);
+      }
     }
   }
 
