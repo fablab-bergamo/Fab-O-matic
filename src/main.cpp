@@ -83,6 +83,7 @@ namespace fablabbg
   {
     if (Board::logic.getMachine().isShutdownImminent())
     {
+      logic.changeStatus(Status::SHUTDOWN_IMMINENT);
       logic.beep_failed();
       if (conf::debug::ENABLE_LOGS)
         ESP_LOGI(TAG, "Machine is about to shutdown");

@@ -411,11 +411,11 @@ namespace fablabbg
       break;
     case Status::ERROR:
       getLcd().setRow(0, "Errore");
-      getLcd().setRow(1, "");
+      getLcd().setRow(1, "V" GIT_VERSION);
       break;
     case Status::ERROR_HW:
-      getLcd().setRow(0, "Errore");
-      getLcd().setRow(1, "Hardware");
+      getLcd().setRow(0, "Errore HW");
+      getLcd().setRow(1, "V" GIT_VERSION);
       break;
     case Status::PORTAL_FAILED:
       getLcd().setRow(0, "Errore portale");
@@ -423,7 +423,7 @@ namespace fablabbg
       break;
     case Status::PORTAL_OK:
       getLcd().setRow(0, "AP config OK");
-      getLcd().setRow(1, "Avvio...");
+      getLcd().setRow(1, "V" GIT_VERSION);
       break;
     case Status::PORTAL_STARTING:
       getLcd().setRow(0, "Apri portale");
@@ -432,6 +432,10 @@ namespace fablabbg
     case Status::BOOT:
       getLcd().setRow(0, "Avvio...");
       getLcd().setRow(1, "V" GIT_VERSION);
+      break;
+    case Status::SHUTDOWN_IMMINENT:
+      getLcd().setRow(0, machine_name);
+      getLcd().setRow(1, "In spegnimento!");
       break;
     default:
       getLcd().setRow(0, "Unhandled status");

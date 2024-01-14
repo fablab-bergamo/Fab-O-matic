@@ -41,7 +41,8 @@ namespace fablabbg
       PORTAL_FAILED,
       PORTAL_OK,
       PORTAL_STARTING,
-      BOOT
+      BOOT,
+      SHUTDOWN_IMMINENT
     };
 
     BoardLogic();
