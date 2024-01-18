@@ -44,10 +44,10 @@ namespace fablabbg
     seconds autologoff;
 
     MachineConfig(MachineID id, MachineType type, const std::string &name,
-                  uint8_t pin, bool act_low, const std::string &topic,
+                  const pins_config::relay_config &relay, const std::string &topic,
                   seconds autologoff) : machine_id(id), machine_type(type),
                                         machine_name(name),
-                                        relay_config{pin, act_low},
+                                        relay_config{relay.ch1_pin, relay.active_low},
                                         mqtt_config{topic},
                                         autologoff(autologoff){};
     std::string toString() const;

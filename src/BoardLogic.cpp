@@ -509,7 +509,7 @@ namespace fablabbg
     MachineConfig machine_conf(mid,
                                conf::default_config::machine_type,
                                std::string{conf::default_config::machine_name},
-                               pins.relay.ch1_pin, false,
+                               pins.relay,
                                std::string{config.value().machine_topic},
                                conf::machine::DEFAULT_AUTO_LOGOFF_DELAY);
 

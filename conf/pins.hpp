@@ -31,7 +31,7 @@ namespace fablabbg
     struct relay_config
     {
       uint8_t ch1_pin; /* Control pin for Machine 1 */
-      uint8_t ch2_pin; /* unclear */
+      bool active_low;
     };
     struct buzzer_config
     {
@@ -54,7 +54,7 @@ namespace fablabbg
   constexpr pins_config pins{
       {27U, 33U, 32U, 26U, 4U},                // RFID
       {15U, 2U, 0U, 4U, 16U, 17U, 18U, false}, // LCD
-      {14U, 27U},                              // relay
+      {14U, true},                             // relay
       {12U},                                   // buzzer
       {19U, true}                              // Neopixel
   };
@@ -63,7 +63,7 @@ namespace fablabbg
   static constexpr pins_config pins{
       {27U, 26U, 33U, 32U, 4U},               // RFID
       {15U, 18U, 2U, 4U, 5U, 19U, 9U, false}, // LCD
-      {14U, 27U},                             // relay
+      {14U, true},                            // relay
       {12U},                                  // buzzer
       {18U, true}                             // Neopixel
   };
@@ -72,7 +72,7 @@ namespace fablabbg
   static constexpr pins_config pins{
       {17U, 8U, 3U, 18U, 12U},               // RFID
       {5U, 4U, 6U, 7U, 15U, 2U, 13U, false}, // LCD
-      {10U, 11U},                            // relay
+      {10U, true},                           // relay
       {9U},                                  // buzzer
       {48U, true}                            // Neopixel
   };
