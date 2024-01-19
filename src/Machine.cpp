@@ -30,8 +30,12 @@ namespace fablabbg
 
     if (config.value().hasRelay())
     {
+      digitalWrite(config.value().relay_config.pin,
+                   config.value().relay_config.active_low ? HIGH : LOW);
       pinMode(config.value().relay_config.pin, OUTPUT);
     }
+
+    power(false); // Ensure the machine is powered off at boot
 
     ESP_LOGD(TAG, "Machine configured : %s", toString().c_str());
   }

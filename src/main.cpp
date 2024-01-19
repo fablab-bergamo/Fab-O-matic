@@ -54,6 +54,7 @@ namespace fablabbg
 
     if (server.isOnline())
     {
+      logic.set_led_color(0, 255, 0);
       ESP_LOGI(TAG, "taskConnect - online, calling refreshFromServer");
       // Get machine data from the server if it is online
       logic.refreshFromServer();
@@ -348,6 +349,11 @@ void setup()
     while (true)
       ;
 #endif
+  }
+  else
+  {
+    logic.set_led_color(127, 83, 16);
+    logic.led(true);
   }
 
   // Network configuration setup

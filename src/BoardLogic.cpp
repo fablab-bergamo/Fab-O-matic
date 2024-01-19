@@ -536,12 +536,26 @@ namespace fablabbg
       }
       else
       {
-        set_led_color(0, 64, 0); // Green
+        if (machine.isFree())
+        {
+          if (machine.isShutdownImminent())
+          {
+            set_led_color(64, 0, 64); // Purple
+          }
+          else
+          {
+            set_led_color(0, 64, 0); // Green
+          }
+        }
+        else
+        {
+          set_led_color(0, 0, 64); // Blue
+        }
       }
     }
     else
     {
-      set_led_color(127, 83, 16); // Orange
+      set_led_color(128, 255, 0); // Orange
     }
     invert_led(); // Blink when in use
   }

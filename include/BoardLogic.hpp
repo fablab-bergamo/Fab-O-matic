@@ -89,7 +89,7 @@ namespace fablabbg
   private:
     Status status{Status::CLEAR};
     uint8_t led_color[3] = {0, 255, 0};
-    Adafruit_NeoPixel pixels{1, pins.led.pin, NEO_GRB + NEO_KHZ800};
+    Adafruit_NeoPixel pixels{1, pins.led.pin, NEO_RGB + NEO_KHZ800};
     std::unique_ptr<FabServer> server;
     std::optional<std::reference_wrapper<BaseRFIDWrapper>> rfid{std::nullopt};
     std::optional<std::reference_wrapper<BaseLCDWrapper>> lcd{std::nullopt};
