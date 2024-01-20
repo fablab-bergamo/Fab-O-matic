@@ -35,7 +35,11 @@ namespace fablabbg
     topic = ss.str();
 
     char client_name[16]{0};
-    [[maybe_unused]] std::snprintf(client_name, sizeof(client_name), "BOARD%ld", random(0, 1000));
+    if (auto result = std::snprintf(client_name, sizeof(client_name), "BOARD%ld", random(0, 1000));
+        result < 0)
+    {
+      ESP_LOGE(TAG, "Failure to generate client name");
+    }
     mqtt_client_name = client_name;
 
     if (client.connected()) // Topic or IP may also have changed
