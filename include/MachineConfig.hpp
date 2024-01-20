@@ -64,6 +64,6 @@ namespace fablabbg
     MachineConfig(MachineConfig &&) = delete;                   // move constructor
     MachineConfig &operator=(MachineConfig &&) = delete;        // move assignment
   };
-}
+} // namespace fablabbg
 
 #endif // MACHINE_CONFIG_H_

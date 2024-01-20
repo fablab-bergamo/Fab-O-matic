@@ -88,4 +88,4 @@ namespace fablabbg
     serializeJson(doc, result);
     return result;
   }
-}
+} // namespace fablabbg

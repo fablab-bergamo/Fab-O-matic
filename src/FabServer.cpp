@@ -77,11 +77,9 @@ namespace fablabbg
         ESP_LOGD(TAG, "MQTT Client: received answer: %s", last_reply.data());
         return true;
       }
-      else
-      {
-        ESP_LOGW(TAG, "MQTT Client: no answer received, retrying %d/%d", try_cpt, conf::mqtt::MAX_TRIES);
-        delay(duration_sleep);
-      }
+
+      ESP_LOGW(TAG, "MQTT Client: no answer received, retrying %d/%d", try_cpt, conf::mqtt::MAX_TRIES);
+      delay(duration_sleep);
     }
 
     ESP_LOGE(TAG, "MQTT Client: failure to send query %s", query.payload().data());

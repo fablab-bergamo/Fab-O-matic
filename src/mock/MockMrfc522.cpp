@@ -29,10 +29,7 @@ namespace fablabbg
     {
       return true;
     }
-    else
-    {
-      return false;
-    }
+    return false;
   }
 
   bool MockMrfc522::PCD_PerformSelfTest() { return true; }
@@ -66,9 +63,6 @@ namespace fablabbg
     {
       return std::nullopt;
     }
-    else
-    {
-      return uid;
-    }
+    return uid;
   }
-}
+} // namespace fablabbg

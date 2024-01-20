@@ -20,7 +20,7 @@
 #include "Mrfc522Driver.hpp"
 #if (WOKWI_SIMULATION)
 #include "mock/MockMQTTBroker.hpp"
-#endif 
+#endif
 
 using namespace fablabbg;
 
@@ -36,6 +36,6 @@ namespace fablabbg::Board
   DRAM_ATTR LCDWrapper<LiquidCrystal> lcd{pins.lcd};
   DRAM_ATTR BoardLogic logic;
   DRAM_ATTR Tasks::Scheduler scheduler;
-} // namespace Board
+} // namespace fablabbg::Board
 
 #endif // GLOBALS_H_

@@ -18,4 +18,4 @@ namespace fablabbg
 
     return {buf};
   }
-}
+} // namespace fablabbg

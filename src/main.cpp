@@ -32,7 +32,7 @@ namespace fablabbg
 #endif
     extern Scheduler scheduler;
     extern BoardLogic logic;
-  }
+  } // namespace Board
 
   /// @brief Opens WiFi and server connection and updates board state accordingly
   void taskConnect()

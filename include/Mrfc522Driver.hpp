@@ -1,5 +1,5 @@
-#ifndef _MRFC522_DRIVER_HPP_
-#define _MRFC522_DRIVER_HPP_
+#ifndef MRFC522_DRIVER_HPP_
+#define MRFC522_DRIVER_HPP_
 
 #include <memory>
 #include "Arduino.h"
@@ -43,4 +43,4 @@ namespace fablabbg
   };
 } // namespace fablabbg
 
-#endif // _MRFC522_DRIVER_HPP_
+#endif // MRFC522_DRIVER_HPP_

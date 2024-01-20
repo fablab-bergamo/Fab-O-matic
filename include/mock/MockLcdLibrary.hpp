@@ -1,5 +1,5 @@
-#ifndef _MOCK_LCDLIBRARY_HPP_
-#define _MOCK_LCDLIBRARY_HPP_
+#ifndef MOCK_LCDLIBRARY_HPP_
+#define MOCK_LCDLIBRARY_HPP_
 
 #include <stdint.h>
 
@@ -17,5 +17,6 @@ namespace fablabbg
     void setCursor(uint8_t col, uint8_t row){};
     void write(uint8_t value){};
   };
-}
-#endif // _MOCK_LCDLIBRARY_HPP_
+} // namespace fablabbg
+
+#endif // MOCK_LCDLIBRARY_HPP_

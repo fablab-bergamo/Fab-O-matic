@@ -124,5 +124,5 @@ namespace fablabbg::Tasks
 
     void printStats() const;
   };
-}
+} // namespace fablabbg::Tasks
 #endif

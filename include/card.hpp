@@ -38,5 +38,5 @@ namespace fablabbg::card
   {
     ESP_LOGI(TAG, "Card UID = %s", card::uid_str(uid).c_str());
   }
-}
+} // namespace fablabbg::card
 #endif // CARD_H_

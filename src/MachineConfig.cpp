@@ -32,4 +32,4 @@ namespace fablabbg
   {
     return !mqtt_config.topic.empty();
   }
-}
+} // namespace fablabbg

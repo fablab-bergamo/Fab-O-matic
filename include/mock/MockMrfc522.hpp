@@ -1,5 +1,5 @@
-#ifndef _MOCKMRFC522_HPP_
-#define _MOCKMRFC522_HPP_
+#ifndef MOCKMRFC522_HPP_
+#define MOCKMRFC522_HPP_
 
 #include <memory>
 #include <optional>
@@ -47,4 +47,4 @@ namespace fablabbg
   };
 } // namespace fablabbg
 
-#endif // _MOCKMRFC522_HPP_
+#endif // MOCKMRFC522_HPP_
