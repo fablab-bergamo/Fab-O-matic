@@ -2,6 +2,7 @@
 #define PINS_H_
 
 #include <cstdint>
+#include <Adafruit_NeoPixel.h>
 
 namespace fablabbg
 {
@@ -41,6 +42,7 @@ namespace fablabbg
     {
       uint8_t pin;
       bool is_neopixel;
+      uint32_t neopixel_config;
     };
     // Struct members
     mfrc522_config mfrc522;
@@ -56,7 +58,7 @@ namespace fablabbg
       {15U, 2U, 0U, 4U, 16U, 17U, 18U, false}, // LCD
       {14U, true},                             // relay
       {12U},                                   // buzzer
-      {19U, true}                              // Neopixel
+      {19U, true, NEO_RGB + NEO_KHZ800}        // Neopixel
   };
 #endif
 #if (WOKWI_SIMULATION)

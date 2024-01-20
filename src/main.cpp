@@ -54,7 +54,6 @@ namespace fablabbg
 
     if (server.isOnline())
     {
-      logic.set_led_color(0, 255, 0);
       ESP_LOGI(TAG, "taskConnect - online, calling refreshFromServer");
       // Get machine data from the server if it is online
       logic.refreshFromServer();
@@ -332,6 +331,8 @@ void setup()
     ESP_LOGD(TAG, "Starting setup!");
   }
 
+  logic.blinkLed();
+
   // Initialize hardware (RFID, LCD)
   auto success = logic.configure(Board::rfid, Board::lcd);
   success &= logic.board_init();
@@ -341,19 +342,13 @@ void setup()
   if (!success)
   {
     logic.changeStatus(Status::ERROR_HW);
-    logic.set_led_color(255, 0, 0);
-    logic.led(true);
     logic.beep_failed();
+    logic.blinkLed();
 #ifndef DEBUG
     // Cannot continue without RFID or LCD
     while (true)
       ;
 #endif
-  }
-  else
-  {
-    logic.set_led_color(127, 83, 16);
-    logic.led(true);
   }
 
   // Network configuration setup

@@ -23,42 +23,6 @@
 
 namespace fablabbg
 {
-  BoardLogic::BoardLogic() : server(std::make_unique<FabServer>())
-  {
-    pinMode(pins.led.pin, OUTPUT);
-    if (pins.led.is_neopixel)
-    {
-      pixels.begin();
-    }
-  }
-
-  void BoardLogic::set_led_color(uint8_t r, uint8_t g, uint8_t b)
-  {
-    led_color[0] = r;
-    led_color[1] = g;
-    led_color[2] = b;
-  }
-
-  void BoardLogic::led(bool value)
-  {
-    if (pins.led.is_neopixel)
-    {
-      auto color = value ? pixels.Color(led_color[0], led_color[1], led_color[2]) : pixels.Color(0, 0, 0);
-      pixels.setPixelColor(0, color);
-      pixels.show();
-    }
-    else
-    {
-      digitalWrite(pins.led.pin, value ? HIGH : LOW);
-    }
-    led_status = value;
-  }
-
-  void BoardLogic::invert_led()
-  {
-    led(!led_status);
-  }
-
   BaseRFIDWrapper &BoardLogic::getRfid() const
   {
     if (rfid.has_value())
@@ -77,10 +41,10 @@ namespace fablabbg
   {
     ESP_LOGD(TAG, "BoardLogic::refreshFromServer() called");
 
-    if (server->connect())
+    if (server.connect())
     {
       // Check the configured machine data from the server
-      auto result = server->checkMachine();
+      auto result = server.checkMachine();
       if (result->request_ok)
       {
         if (result->is_valid)
@@ -143,8 +107,8 @@ namespace fablabbg
   /// @brief Removes the current machine user and changes the status to LOGOUT
   void BoardLogic::logout()
   {
-    auto result = server->finishUse(machine.getActiveUser().card_uid,
-                                    machine.getUsageDuration());
+    auto result = server.finishUse(machine.getActiveUser().card_uid,
+                                   machine.getUsageDuration());
 
     ESP_LOGI(TAG, "Logout, result finishUse: %d", result->request_ok);
 
@@ -160,7 +124,7 @@ namespace fablabbg
   {
     constexpr auto STEPS_COUNT = 6;
     constexpr milliseconds delay_per_step = duration_cast<milliseconds>(conf::machine::LONG_TAP_DURATION) / STEPS_COUNT;
-    const BoardInfo bi = {server->isOnline(), machine.getPowerState(), machine.isShutdownImminent()};
+    const BoardInfo bi = {server.isOnline(), machine.getPowerState(), machine.isShutdownImminent()};
 
     for (auto step = 0; step < STEPS_COUNT; step++)
     {
@@ -203,7 +167,7 @@ namespace fablabbg
     user.card_uid = uid;
     user.user_level = FabUser::UserLevel::UNKNOWN;
 
-    auto response = auth.tryLogin(uid, *server);
+    auto response = auth.tryLogin(uid, server);
     if (!response.has_value())
     {
       ESP_LOGI(TAG, "Failed login for %llu", uid);
@@ -239,7 +203,7 @@ namespace fablabbg
 
         if (longTap(user.card_uid, "Registra"))
         {
-          auto maint_resp = server->registerMaintenance(user.card_uid);
+          auto maint_resp = server.registerMaintenance(user.card_uid);
           if (!maint_resp->request_ok)
           {
             beep_failed();
@@ -265,7 +229,7 @@ namespace fablabbg
 
     if (machine.login(user))
     {
-      auto result = server->startUse(machine.getActiveUser().card_uid);
+      auto result = server.startUse(machine.getActiveUser().card_uid);
       ESP_LOGI(TAG, "Login, result startUse: %d", result->request_ok);
       changeStatus(Status::LOGGED_IN);
       beep_ok();
@@ -443,7 +407,7 @@ namespace fablabbg
         getLcd().setRow(1, buffer);
       break;
     }
-    BoardInfo bi = {server->isOnline(), machine.getPowerState(), machine.isShutdownImminent()};
+    BoardInfo bi = {server.isOnline(), machine.getPowerState(), machine.isShutdownImminent()};
     getLcd().update(bi, false);
   }
 
@@ -503,7 +467,7 @@ namespace fablabbg
 
     ESP_LOGD(TAG, "Configuration found in EEPROM: %s", config->toString().c_str());
 
-    server->configure(config.value());
+    server.configure(config.value());
 
     MachineID mid{(uint16_t)atoi(config.value().machine_id)};
     MachineConfig machine_conf(mid,
@@ -513,7 +477,7 @@ namespace fablabbg
                                std::string{config.value().machine_topic},
                                conf::machine::DEFAULT_AUTO_LOGOFF_DELAY);
 
-    machine.configure(machine_conf, *server);
+    machine.configure(machine_conf, server);
 
     return success;
   }
@@ -521,18 +485,20 @@ namespace fablabbg
   /// @brief Refreshes the LCD screen
   void BoardLogic::refreshLCD() const
   {
-    BoardInfo bi = {server->isOnline(), machine.getPowerState(), machine.isShutdownImminent()};
+    BoardInfo bi = {server.isOnline(), machine.getPowerState(), machine.isShutdownImminent()};
     getLcd().update(bi, true);
   }
 
   /// @brief Blinks the LED
   void BoardLogic::blinkLed()
   {
-    if (server->isOnline())
+    led.set(Led::Status::BLINK);
+
+    if (server.isOnline())
     {
       if (!machine.allowed || machine.maintenanceNeeded)
       {
-        set_led_color(64, 0, 0); // Red
+        led.setColor(64, 0, 0); // Red
       }
       else
       {
@@ -540,24 +506,31 @@ namespace fablabbg
         {
           if (machine.isShutdownImminent())
           {
-            set_led_color(64, 0, 64); // Purple
+            led.setColor(64, 0, 64); // Purple
           }
           else
           {
-            set_led_color(0, 64, 0); // Green
+            led.setColor(0, 64, 0); // Green
           }
         }
         else
         {
-          set_led_color(0, 0, 64); // Blue
+          led.setColor(0, 0, 64); // Blue
         }
       }
     }
     else
     {
-      set_led_color(128, 255, 0); // Orange
+      led.setColor(128, 255, 0); // Orange
     }
-    invert_led(); // Blink when in use
+
+    // Color override
+    if (status == Status::ERROR_HW || status == Status::ERROR)
+    {
+      led.setColor(255, 0, 0); // Red
+    }
+
+    led.update();
   }
 
   /// @brief Checks if a new card is present
@@ -638,9 +611,9 @@ namespace fablabbg
     auth.setWhitelist(whitelist);
   }
 
-  FabServer &BoardLogic::getServer() const
+  FabServer &BoardLogic::getServer()
   {
-    return *server;
+    return server;
   }
 
   void BoardLogic::shortDelay()

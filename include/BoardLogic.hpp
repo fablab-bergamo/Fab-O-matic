@@ -12,6 +12,7 @@
 #include "secrets.hpp"
 #include "BaseLCDWrapper.hpp"
 #include "BaseRfidWrapper.hpp"
+#include "Led.hpp"
 
 namespace fablabbg
 {
@@ -45,7 +46,7 @@ namespace fablabbg
       SHUTDOWN_IMMINENT
     };
 
-    BoardLogic();
+    BoardLogic() = default;
 
     Status getStatus() const;
 
@@ -58,9 +59,6 @@ namespace fablabbg
     void updateLCD() const;
     void beep_ok() const;
     void beep_failed() const;
-    void led(bool value);
-    void invert_led();
-    void set_led_color(uint8_t r, uint8_t g, uint8_t b);
     void shortDelay(); // Waits for some time to allow the user to read the LCD screen
 
     bool configure(BaseRFIDWrapper &rfid, BaseLCDWrapper &lcd);
@@ -71,7 +69,7 @@ namespace fablabbg
     void checkPowerOff();
     void setAutologoffDelay(seconds delay);
     void setWhitelist(WhiteList whitelist);
-    FabServer &getServer() const;
+    FabServer &getServer();
     bool reconfigure();
 
     Machine &getMachineForTesting();
@@ -88,9 +86,8 @@ namespace fablabbg
 
   private:
     Status status{Status::CLEAR};
-    uint8_t led_color[3] = {0, 255, 0};
-    Adafruit_NeoPixel pixels{1, pins.led.pin, NEO_RGB + NEO_KHZ800};
-    std::unique_ptr<FabServer> server;
+    Led led;
+    FabServer server;
     std::optional<std::reference_wrapper<BaseRFIDWrapper>> rfid{std::nullopt};
     std::optional<std::reference_wrapper<BaseLCDWrapper>> lcd{std::nullopt};
     bool ready_for_a_new_card{true};
