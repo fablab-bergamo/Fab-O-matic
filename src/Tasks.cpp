@@ -224,10 +224,7 @@ namespace fablabbg::Tasks
     {
       return average_tardiness - period;
     }
-    else
-    {
-      return 0ms;
-    }
+    return 0ms;
   }
 
   unsigned long Task::getRunCounter() const
@@ -254,4 +251,4 @@ namespace fablabbg::Tasks
   {
     return next_run;
   }
-} // namespace fablab::tasks
+} // namespace fablabbg::Tasks

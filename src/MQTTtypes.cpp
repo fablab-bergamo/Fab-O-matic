@@ -105,4 +105,4 @@ namespace fablabbg::ServerMQTT
     auto response = std::make_unique<SimpleResponse>(doc["request_ok"].as<bool>());
     return response;
   }
-} // namespace ServerMQTT
+} // namespace fablabbg::ServerMQTT
