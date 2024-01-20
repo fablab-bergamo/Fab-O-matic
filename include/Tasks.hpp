@@ -100,7 +100,7 @@ namespace fablabbg::Tasks
   class Scheduler
   {
   public:
-    Scheduler();
+    Scheduler() noexcept;
     ~Scheduler() = default;
 
     void addTask(Task &task);

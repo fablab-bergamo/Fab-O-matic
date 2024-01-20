@@ -11,7 +11,7 @@ namespace fablabbg::Tasks
   using namespace std::chrono;
   using namespace std::chrono_literals;
 
-  Scheduler::Scheduler() : tasks()
+  Scheduler::Scheduler() noexcept : tasks()
   {
   }
 

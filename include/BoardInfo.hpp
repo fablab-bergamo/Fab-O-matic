@@ -18,5 +18,5 @@ namespace fablabbg
              power_warning == other.power_warning;
     };
   };
-}
+} // namespace fablabbg
 #endif // BOARDINFO_HPP

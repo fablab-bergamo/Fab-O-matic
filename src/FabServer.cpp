@@ -35,7 +35,7 @@ namespace fablabbg
     topic = ss.str();
 
     char client_name[16]{0};
-    std::snprintf(client_name, sizeof(client_name), "BOARD%ld", random(0, 1000));
+    [[maybe_unused]] std::snprintf(client_name, sizeof(client_name), "BOARD%ld", random(0, 1000));
     mqtt_client_name = client_name;
 
     if (client.connected()) // Topic or IP may also have changed
