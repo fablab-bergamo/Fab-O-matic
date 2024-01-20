@@ -31,15 +31,15 @@ namespace fablabbg
     Machine &operator=(Machine &&) = delete;       // move assignment
 
     /// @brief If true, machine needs maintenance
-    bool maintenanceNeeded{false}; 
+    bool maintenanceNeeded{false};
     /// @brief If true, machine is allowed to be used by anybody
     bool allowed{true};
 
     FabUser getActiveUser() const;
-    
+
     /// @brief Configure the machine, it must be called before most methods.
     void configure(const MachineConfig &new_config, FabServer &serv);
-    
+
     MachineID getMachineId() const;
     std::string getMachineName() const;
 
@@ -49,11 +49,11 @@ namespace fablabbg
     seconds getAutologoffDelay() const;
 
     /// @brief Try to login the user and start the usage timer
-    bool login(FabUser user);                         
-    
+    bool login(FabUser user);
+
     /// @brief Logoff the user and stop the usage timer
-    void logout();                                    
-    
+    void logout();
+
     /// @brief Sets the delay after which the user will be logged off automatically
     void setAutologoffDelay(seconds new_delay);
 
@@ -63,16 +63,16 @@ namespace fablabbg
 
     /// @brief Sets the machine name as per backend configuration
     /// @param new_name Will be shown on LCD, keep it short.
-    void setMachineName(const std::string &new_name); 
+    void setMachineName(const std::string &new_name);
 
     /// @brief Sets the machine type as per backend configuration
-    void setMachineType(MachineType new_type);        
+    void setMachineType(MachineType new_type);
 
     /// @brief Returns the current power state of the machine
-    PowerState getPowerState() const; 
+    PowerState getPowerState() const;
 
     /// @brief Indicates if the machine will power down in less than BEEP_REMAINING_MINUTES
-    bool isShutdownImminent() const;  
+    bool isShutdownImminent() const;
 
     /// @brief Indicates is the machine is not used by anybody
     bool isFree() const;
@@ -84,7 +84,7 @@ namespace fablabbg
     /// @brief Indicates ff the user shall be logged off automatically
     bool isAutologoffExpired() const;
 
-    /// @brief Indicates if the machine has been configured 
+    /// @brief Indicates if the machine has been configured
     bool isConfigured() const;
 
     /// @brief Returns the current configuration of the machine, used for testing.
@@ -99,7 +99,7 @@ namespace fablabbg
 
     std::optional<time_point<system_clock>> usage_start_timestamp{std::nullopt}; // When did the machine start?
     std::optional<time_point<system_clock>> logoff_timestamp{std::nullopt};      // When did the last user log off?
-    PowerState power_state{PowerState::UNKNOWN};
+    PowerState power_state{PowerState::POWERED_OFF};
 
     void power_mqtt(bool on_or_off);
     void power_relay(bool on_or_off);
