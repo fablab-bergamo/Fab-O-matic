@@ -88,16 +88,14 @@ void test_simple_methods()
     TEST_ASSERT_EQUAL_UINT8_MESSAGE(status, logic.getStatus(), "Status mismatch");
   }
 
-  logic.checkPowerOff();
-  logic.invert_led();
-  logic.led(true);
-  logic.led(false);
-  logic.refreshLCD();
-  logic.set_led_color(random(0, 255), random(0, 255), random(0, 255));
-  logic.led(true);
-  logic.updateLCD();
-  logic.refreshLCD();
-  logic.reconfigure();
+  for (auto i = 0; i < 3; ++i)
+  {
+    logic.checkPowerOff();
+    logic.blinkLed();
+    logic.refreshLCD();
+    logic.updateLCD();
+    logic.reconfigure();
+  }
 }
 
 void test_whitelist_no_network()
@@ -229,7 +227,7 @@ void test_machine_maintenance()
   TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::MAINTENANCE_NEEDED, logic.getStatus(), "Status not MAINTENANCE_NEEDED");
 
   simulate_rfid_card(rfid, logic, std::nullopt);
-  simulate_rfid_card(rfid, logic, card_admin, conf::machine::LONG_TAP_DURATION + 1s); // Log in + Conferma manutenzione perché non ritorna prima della conclusione
+  simulate_rfid_card(rfid, logic, card_admin, conf::machine::LONG_TAP_DURATION + 3s); // Log in + Conferma manutenzione perché non ritorna prima della conclusione
   simulate_rfid_card(rfid, logic, std::nullopt);                                      // Card away
   TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::IN_USE, logic.getStatus(), "Status not IN_USE by admin");
   TEST_ASSERT_FALSE_MESSAGE(logic.getMachine().maintenanceNeeded, "Maintenance not cleared by admin");
@@ -275,6 +273,13 @@ void setUp(void)
   TEST_ASSERT_TRUE_MESSAGE(logic.configure(rfid, lcd), "BoardLogic configure failed");
   TEST_ASSERT_TRUE_MESSAGE(logic.board_init(), "BoardLogic init failed");
   logic.setWhitelist(test_whitelist);
+  // Disable MQTT for tests
+  if (auto server_config = SavedConfig::LoadFromEEPROM(); server_config.has_value())
+  {
+    auto conf = server_config.value();
+    strncpy(conf.mqtt_server, "INVALID_SERVER\0", sizeof(conf.mqtt_server));
+    logic.getServer().configure(conf);
+  }
 };
 
 void setup()

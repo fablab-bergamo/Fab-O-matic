@@ -116,6 +116,7 @@ namespace fablabbg::ServerMQTT
 
     [[nodiscard]] static std::unique_ptr<UserResponse> fromJson(JsonDocument &doc);
     UserResult getResult() const;
+    std::string toString() const;
   };
 
   class MachineResponse : public Response

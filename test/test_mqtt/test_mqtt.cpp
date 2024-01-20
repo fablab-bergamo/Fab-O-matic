@@ -56,7 +56,7 @@ void test_start_broker()
   // Set the same IP Adress as MQTT server
   auto config = SavedConfig::LoadFromEEPROM();
   TEST_ASSERT_TRUE_MESSAGE(config.has_value(), "Config load failed");
-  strncpy(config.value().mqtt_server, "127.0.0.1", sizeof(config.value().mqtt_server));
+  strncpy(config.value().mqtt_server, "127.0.0.1\0", sizeof(config.value().mqtt_server));
   TEST_ASSERT_TRUE_MESSAGE(config.value().SaveToEEPROM(), "Config save failed");
   server.configure(config.value());
 
@@ -95,6 +95,7 @@ void test_fabserver_calls()
     if (mid < 99999)
     {
       snprintf(saved_config.machine_id, sizeof(saved_config.machine_id), "%d", mid);
+      strncpy(saved_config.mqtt_server, "127.0.0.1\0", sizeof(saved_config.mqtt_server));
     }
     ESP_LOGI(TAG3, "Testing machine %d", mid);
     server.configure(saved_config);
@@ -108,6 +109,7 @@ void test_fabserver_calls()
       card::uid_t uid = 123456789 + i;
       auto response = server.checkCard(uid);
       TEST_ASSERT_TRUE_MESSAGE(response != nullptr, "Server checkCard failed");
+      ESP_LOGD(TAG3, "Server checkCard response: %s", response->toString().c_str());
       TEST_ASSERT_TRUE_MESSAGE(response->request_ok, "Server checkCard request failed");
 
       auto machine_resp = server.checkMachine(); // Machine ID is in the topic already
@@ -203,7 +205,7 @@ void test_taskRfidWatchdog()
 {
   auto result = rfid.selfTest();
   TEST_ASSERT_TRUE_MESSAGE(result, "test_taskRfidWatchdog: RFID chip failure");
-  if (result)
+  if (!result)
   {
     ESP_LOGE(TAG3, "RFID chip failure");
 
