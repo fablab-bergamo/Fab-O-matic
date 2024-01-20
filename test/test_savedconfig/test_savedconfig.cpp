@@ -122,11 +122,18 @@ void setUp(void)
 void setup()
 {
   delay(1000);
+  auto original = SavedConfig::LoadFromEEPROM();
+
   UNITY_BEGIN();
   RUN_TEST(test_defaults);
   RUN_TEST(test_changes);
   RUN_TEST(test_magic_number);
   UNITY_END(); // stop unit testing
+
+  if (original.has_value())
+  {
+    original.value().SaveToEEPROM();
+  }
 }
 
 void loop()

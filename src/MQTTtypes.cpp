@@ -76,6 +76,17 @@ namespace fablabbg::ServerMQTT
     return response;
   }
 
+  std::string UserResponse::toString() const
+  {
+    std::stringstream ss;
+    ss << "UserResponse: "
+       << "request_ok: " << request_ok << ", "
+       << "result: " << static_cast<int>(result) << ", "
+       << "holder_name: " << holder_name << ", "
+       << "user_level: " << static_cast<int>(user_level);
+    return ss.str();
+  }
+
   std::unique_ptr<MachineResponse> MachineResponse::fromJson(JsonDocument &doc)
   {
     auto response = std::make_unique<MachineResponse>(doc["request_ok"].as<bool>());
