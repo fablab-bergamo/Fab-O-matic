@@ -21,8 +21,8 @@
     {
       "type": "wokwi-buzzer",
       "id": "bz1",
-      "top": 217.91,
-      "left": -47.61,
+      "top": 216.3,
+      "left": -60.3,
       "rotate": 270,
       "attrs": {
         "volume": "0.1"
@@ -31,9 +31,16 @@
     {
       "type": "wokwi-relay-module",
       "id": "relay1",
-      "top": 142.36,
-      "left": -93.29,
+      "top": 143.4,
+      "left": -99.2,
       "rotate": 180,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-neopixel",
+      "id": "rgb1",
+      "top": 15.7,
+      "left": 75.8,
       "attrs": {}
     }
   ],
@@ -265,6 +272,39 @@
         "h39.12",
         "v-135.51",
         "h104.89"
+      ]
+    ],
+    [
+      "esp:5V",
+      "rgb1:VDD",
+      "red",
+      [
+        "v-97.23",
+        "h-76.3",
+        "v-38.4"
+      ]
+    ],
+    [
+      "rgb1:VSS",
+      "lcd1:K",
+      "black",
+      [
+        "v8.7",
+        "h37.6",
+        "v28.8",
+        "h182.4"
+      ]
+    ],
+    [
+      "rgb1:DIN",
+      "esp:20",
+      "white",
+      [
+        "h8.8",
+        "v-19.2",
+        "h-67.2",
+        "v278.4",
+        "h95.5"
       ]
     ]
   ],

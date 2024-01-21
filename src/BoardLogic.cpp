@@ -482,13 +482,6 @@ namespace fablabbg
     return success;
   }
 
-  /// @brief Refreshes the LCD screen
-  void BoardLogic::refreshLCD() const
-  {
-    BoardInfo bi = {server.isOnline(), machine.getPowerState(), machine.isShutdownImminent()};
-    getLcd().update(bi, true);
-  }
-
   /// @brief Blinks the LED
   void BoardLogic::blinkLed()
   {

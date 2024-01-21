@@ -146,11 +146,6 @@ namespace fablabbg
     }
   }
 
-  void taskLcdRefresh()
-  {
-    Board::logic.refreshLCD();
-  }
-
 #if (WOKWI_SIMULATION)
   void taskRFIDCardSim()
   {
@@ -222,9 +217,7 @@ namespace fablabbg
   Task t9("LED", 1s, &taskBlink, scheduler, true);
 
 #if (WOKWI_SIMULATION)
-  // Wokwi requires LCD refresh unlike real hardware
-  Task t10("LCDRefresh", 2s, &taskLcdRefresh, scheduler, true);
-  Task t11("RFIDCardsSim", 1s, &taskRFIDCardSim, scheduler, true, 30s);
+  Task t10("RFIDCardsSim", 1s, &taskRFIDCardSim, scheduler, true, 30s);
 #endif
 
   // flag for saving data

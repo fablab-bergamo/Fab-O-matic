@@ -92,7 +92,6 @@ void test_simple_methods()
   {
     logic.checkPowerOff();
     logic.blinkLed();
-    logic.refreshLCD();
     logic.updateLCD();
     logic.reconfigure();
   }

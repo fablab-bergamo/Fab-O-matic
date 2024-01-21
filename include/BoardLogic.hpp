@@ -63,7 +63,6 @@ namespace fablabbg
 
     bool configure(BaseRFIDWrapper &rfid, BaseLCDWrapper &lcd);
 
-    void refreshLCD() const;
     void blinkLed();
     void checkRfid();
     void checkPowerOff();

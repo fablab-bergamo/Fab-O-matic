@@ -13,6 +13,19 @@ namespace fablabbg
                                                                             lcd(config.rs_pin, config.en_pin, config.d0_pin, config.d1_pin, config.d2_pin, config.d3_pin),
                                                                             show_connection_status(true), show_power_status(true), forceUpdate(true)
   {
+    digitalWrite(config.rs_pin, LOW);
+    pinMode(config.rs_pin, OUTPUT);
+    digitalWrite(config.en_pin, HIGH);
+    pinMode(config.en_pin, OUTPUT);
+    digitalWrite(config.d0_pin, LOW);
+    pinMode(config.d0_pin, OUTPUT);
+    digitalWrite(config.d1_pin, LOW);
+    pinMode(config.d1_pin, OUTPUT);
+    digitalWrite(config.d2_pin, LOW);
+    pinMode(config.d2_pin, OUTPUT);
+    digitalWrite(config.d3_pin, LOW);
+    pinMode(config.d3_pin, OUTPUT);
+
     for (auto &row : buffer)
       row.fill({0});
     for (auto &row : current)

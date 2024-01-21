@@ -2,6 +2,7 @@
 #define PINS_H_
 
 #include <cstdint>
+#include <array>
 #include <Adafruit_NeoPixel.h>
 
 namespace fablabbg
@@ -65,9 +66,9 @@ namespace fablabbg
   static constexpr pins_config pins{
       {27U, 26U, 33U, 32U, 16U},              // RFID
       {15U, 18U, 2U, 4U, 5U, 19U, 9U, false}, // LCD
-      {14U, true},                            // relay
+      {14U, false},                           // relay
       {12U},                                  // buzzer
-      {18U, true, NEO_RGB + NEO_KHZ800}       // Neopixel
+      {20U, true, NEO_GRB + NEO_KHZ800}       // Neopixel
   };
 #endif
 #ifdef PINS_ESP32S3
@@ -88,5 +89,43 @@ namespace fablabbg
       {19U, true, NEO_RGB + NEO_KHZ800}         // Neopixel
   };
 #endif
+
+  // Check at compile time that there are no duplicate pin definitions
+  constexpr bool no_duplicates()
+  {
+    std::array<uint8_t, 15> pin_nums{NO_PIN};
+    pin_nums[0] = pins.mfrc522.sda_pin;
+    pin_nums[1] = pins.mfrc522.mosi_pin;
+    pin_nums[2] = pins.mfrc522.miso_pin;
+    pin_nums[3] = pins.mfrc522.sck_pin;
+    pin_nums[4] = pins.mfrc522.reset_pin;
+    pin_nums[5] = pins.lcd.rs_pin;
+    pin_nums[6] = pins.lcd.en_pin;
+    pin_nums[7] = pins.lcd.d0_pin;
+    pin_nums[8] = pins.lcd.d1_pin;
+    pin_nums[9] = pins.lcd.d2_pin;
+    pin_nums[10] = pins.lcd.d3_pin;
+    pin_nums[11] = pins.lcd.bl_pin;
+    pin_nums[12] = pins.relay.ch1_pin;
+    pin_nums[13] = pins.buzzer.pin;
+    pin_nums[14] = pins.led.pin;
+
+    // No constexpr std::sort available
+    for (auto i = 0; i < pin_nums.size(); ++i)
+    {
+      if (pin_nums[i] == NO_PIN)
+        continue;
+
+      for (auto j = i + 1; j < pin_nums.size(); ++j)
+      {
+        if (pin_nums[i] == pin_nums[j])
+          return false;
+      }
+    }
+    return true;
+  }
+
+  static_assert(no_duplicates(), "Duplicate pin definition, check pins.hpp");
+
 } // namespace fablabbg
 #endif // PINS_H_
