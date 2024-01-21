@@ -29,7 +29,7 @@ jobs:
       - name: Build 1st test
         run: pio test -e wokwi --without-testing --without-uploading -f test_mqtt
       - name: Run 1st test with Wokwi CLI
-        uses: wokwi/wokwi-ci-action
+        uses: wokwi/wokwi-ci-action@v1
         with:
           token: ${{ secrets.WOKWI_CLI_TOKEN }}
           path: / # directory with wokwi.toml, relative to repo's root
@@ -41,7 +41,7 @@ jobs:
       - name: Build 2nd test
         run: pio test -e wokwi --without-testing --without-uploading -f test_logic
       - name: Run 2nd test with Wokwi CLI
-        uses: wokwi/wokwi-ci-action
+        uses: wokwi/wokwi-ci-action@v1
         with:
           token: ${{ secrets.WOKWI_CLI_TOKEN }}
           path: / # directory with wokwi.toml, relative to repo's root
@@ -53,7 +53,7 @@ jobs:
       - name: Build 3rd test
         run: pio test -e wokwi --without-testing --without-uploading -f test_savedconfig
       - name: Run 3rd test with Wokwi CLI
-        uses: wokwi/wokwi-ci-action
+        uses: wokwi/wokwi-ci-action@v1
         with:
           token: ${{ secrets.WOKWI_CLI_TOKEN }}
           path: / # directory with wokwi.toml, relative to repo's root
@@ -65,7 +65,7 @@ jobs:
       - name: Build 4th test
         run: pio test -e wokwi --without-testing --without-uploading -f test_tasks
       - name: Run 4th test with Wokwi CLI
-        uses: wokwi/wokwi-ci-action
+        uses: wokwi/wokwi-ci-action@v1
         with:
           token: ${{ secrets.WOKWI_CLI_TOKEN }}
           path: / # directory with wokwi.toml, relative to repo's root
