@@ -63,11 +63,11 @@ namespace fablabbg
 #endif
 #if (WOKWI_SIMULATION)
   static constexpr pins_config pins{
-      {27U, 26U, 33U, 32U, 4U},               // RFID
+      {27U, 26U, 33U, 32U, 16U},              // RFID
       {15U, 18U, 2U, 4U, 5U, 19U, 9U, false}, // LCD
       {14U, true},                            // relay
       {12U},                                  // buzzer
-      {18U, true}                             // Neopixel
+      {18U, true, NEO_RGB + NEO_KHZ800}       // Neopixel
   };
 #endif
 #ifdef PINS_ESP32S3
@@ -76,16 +76,16 @@ namespace fablabbg
       {5U, 4U, 6U, 7U, 15U, 2U, 13U, false}, // LCD
       {10U, true},                           // relay
       {9U},                                  // buzzer
-      {48U, true}                            // Neopixel
+      {48U, true, NEO_RGB + NEO_KHZ800}      // Neopixel
   };
 #endif
 #ifdef PINS_ESP32_WROVERKIT
   constexpr pins_config pins{
-      {27U, 33U, 32U, 26U, 4U},                // RFID
-      {19U, 2U, 0U, 4U, 16U, 17U, 18U, false}, // LCD
-      {20U, true},                             // relay
-      {25U},                                   // buzzer
-      {19U, true, NEO_RGB + NEO_KHZ800}        // Neopixel
+      {27U, 26U, 33U, 32U, 4U},                 // RFID
+      {19U, 2U, 0U, 13U, 16U, 17U, 18U, false}, // LCD
+      {20U, true},                              // relay
+      {25U},                                    // buzzer
+      {19U, true, NEO_RGB + NEO_KHZ800}         // Neopixel
   };
 #endif
 } // namespace fablabbg
