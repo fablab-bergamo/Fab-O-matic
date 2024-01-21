@@ -83,7 +83,7 @@ namespace fablabbg
 #ifdef PINS_ESP32_WROVERKIT
   constexpr pins_config pins{
       {27U, 26U, 33U, 32U, 4U},                 // RFID
-      {19U, 2U, 0U, 13U, 16U, 17U, 18U, false}, // LCD
+      {15U, 2U, 0U, 13U, 16U, 17U, 18U, false}, // LCD
       {20U, true},                              // relay
       {25U},                                    // buzzer
       {19U, true, NEO_RGB + NEO_KHZ800}         // Neopixel

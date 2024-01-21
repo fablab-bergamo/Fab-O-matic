@@ -242,6 +242,7 @@ namespace fablabbg
   void config_portal()
   {
     WiFiManager wifiManager;
+
     SavedConfig config = SavedConfig::LoadFromEEPROM().value_or(SavedConfig::DefaultConfig());
 
     WiFiManagerParameter custom_mqtt_server("Broker", "MQTT Broker address", config.mqtt_server, sizeof(config.mqtt_server));
@@ -318,10 +319,17 @@ void setup()
   Serial.begin(conf::debug::SERIAL_SPEED_BDS); // Initialize serial communications with the PC for debugging.
   delay(500);
 
-  if (conf::debug::ENABLE_LOGS)
+  if constexpr (conf::debug::ENABLE_LOGS)
   {
     Serial.setDebugOutput(true);
     ESP_LOGD(TAG, "Starting setup!");
+  }
+
+  if constexpr (conf::debug::LOAD_EEPROM_DEFAULTS)
+  {
+    auto defaults = SavedConfig::DefaultConfig();
+    ESP_LOGW(TAG, "Forcing EEPROM defaults : %s", defaults.toString().c_str());
+    defaults.SaveToEEPROM();
   }
 
   logic.blinkLed();

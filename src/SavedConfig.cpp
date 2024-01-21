@@ -66,9 +66,14 @@ namespace fablabbg
     EEPROM.put(0, *this);
     auto result = EEPROM.commit();
 
-    ESP_LOGD(TAG, "EEPROM commit result: %d", result);
+    if (result)
+    {
+      ESP_LOGD(TAG, "EEPROM commit success");
+      return result;
+    }
 
-    return result;
+    ESP_LOGE(TAG, "EEPROM commit failure");
+    return false;
   }
 
   std::string SavedConfig::toString() const
