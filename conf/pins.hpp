@@ -55,7 +55,7 @@ namespace fablabbg
 
 #ifdef PINS_ESP32
   constexpr pins_config pins{
-      {27U, 33U, 32U, 26U, 4U},                // RFID
+      {27U, 33U, 32U, 26U, 20U},               // RFID
       {15U, 2U, 0U, 4U, 16U, 17U, 18U, false}, // LCD
       {14U, true},                             // relay
       {12U},                                   // buzzer
