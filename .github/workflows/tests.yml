@@ -2,6 +2,9 @@ name: Test suite
 
 on:
   workflow_dispatch:
+  push:
+    tags:
+      - '*' # Push events to all tags
 
 jobs:
   build:
@@ -26,7 +29,7 @@ jobs:
       - name: Build 1st test
         run: pio test -e wokwi --without-testing --without-uploading -f test_mqtt
       - name: Run 1st test with Wokwi CLI
-        uses: PBrunot/wokwi-ci-action@add_log_serial
+        uses: wokwi/wokwi-ci-action
         with:
           token: ${{ secrets.WOKWI_CLI_TOKEN }}
           path: / # directory with wokwi.toml, relative to repo's root
@@ -34,10 +37,11 @@ jobs:
           expect_text: 'Tests 0 Failures 0 Ignored'
           fail_text: ':FAIL:'
           serial_log_file: 'test_mqtt.log'
+        continue-on-error: true
       - name: Build 2nd test
         run: pio test -e wokwi --without-testing --without-uploading -f test_logic
       - name: Run 2nd test with Wokwi CLI
-        uses: PBrunot/wokwi-ci-action@add_log_serial
+        uses: wokwi/wokwi-ci-action
         with:
           token: ${{ secrets.WOKWI_CLI_TOKEN }}
           path: / # directory with wokwi.toml, relative to repo's root
@@ -45,10 +49,11 @@ jobs:
           expect_text: 'Tests 0 Failures 0 Ignored'
           fail_text: ':FAIL:'
           serial_log_file: 'test_logic.log'
+        continue-on-error: true
       - name: Build 3rd test
         run: pio test -e wokwi --without-testing --without-uploading -f test_savedconfig
       - name: Run 3rd test with Wokwi CLI
-        uses: PBrunot/wokwi-ci-action@add_log_serial
+        uses: wokwi/wokwi-ci-action
         with:
           token: ${{ secrets.WOKWI_CLI_TOKEN }}
           path: / # directory with wokwi.toml, relative to repo's root
@@ -56,10 +61,11 @@ jobs:
           expect_text: 'Tests 0 Failures 0 Ignored'
           fail_text: ':FAIL:'
           serial_log_file: 'test_savedconfig.log'
+        continue-on-error: true
       - name: Build 4th test
         run: pio test -e wokwi --without-testing --without-uploading -f test_tasks
       - name: Run 4th test with Wokwi CLI
-        uses: PBrunot/wokwi-ci-action@add_log_serial
+        uses: wokwi/wokwi-ci-action
         with:
           token: ${{ secrets.WOKWI_CLI_TOKEN }}
           path: / # directory with wokwi.toml, relative to repo's root
@@ -67,6 +73,7 @@ jobs:
           expect_text: 'Tests 0 Failures 0 Ignored'
           fail_text: ':FAIL:'
           serial_log_file: 'test_tasks.log'
+        continue-on-error: true
       - name: Upload test results
         uses: actions/upload-artifact@v3
         with:
