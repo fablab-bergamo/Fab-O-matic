@@ -9,7 +9,7 @@
 
 namespace fablabbg
 {
-  class FabServer;
+  class FabBackend;
 
   class Machine
   {
@@ -38,7 +38,7 @@ namespace fablabbg
     FabUser getActiveUser() const;
 
     /// @brief Configure the machine, it must be called before most methods.
-    void configure(const MachineConfig &new_config, FabServer &serv);
+    void configure(const MachineConfig &new_config, FabBackend &serv);
 
     MachineID getMachineId() const;
     std::string getMachineName() const;
@@ -92,7 +92,7 @@ namespace fablabbg
 
   private:
     std::optional<MachineConfig> config{std::nullopt};
-    std::optional<std::reference_wrapper<FabServer>> server{std::nullopt};
+    std::optional<std::reference_wrapper<FabBackend>> server{std::nullopt};
 
     bool active{false};
     FabUser current_user{};

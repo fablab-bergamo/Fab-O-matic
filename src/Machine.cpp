@@ -6,7 +6,7 @@
 #include <chrono>
 #include "pins.hpp"
 #include "secrets.hpp"
-#include "FabServer.hpp"
+#include "FabBackend.hpp"
 #include "Logging.hpp"
 
 namespace fablabbg
@@ -21,12 +21,12 @@ namespace fablabbg
     return ret_type();                               \
   }
 
-  void Machine::configure(const MachineConfig &new_config, FabServer &serv)
+  void Machine::configure(const MachineConfig &new_config, FabBackend &serv)
   {
     // https://stackoverflow.com/questions/67596731/why-is-stdoptionaltoperator-deleted-when-t-contains-a-const-data-memb
     config.emplace(new_config);
 
-    server = std::reference_wrapper<FabServer>(serv);
+    server = std::reference_wrapper<FabBackend>(serv);
 
     if (config.value().hasRelay())
     {

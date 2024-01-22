@@ -5,7 +5,7 @@
 #include "card.hpp"
 #include <Adafruit_NeoPixel.h>
 #include "pins.hpp"
-#include "FabServer.hpp"
+#include "FabBackend.hpp"
 #include "BaseRfidWrapper.hpp"
 #include "AuthProvider.hpp"
 #include "Machine.hpp"
@@ -68,7 +68,7 @@ namespace fablabbg
     void checkPowerOff();
     void setAutologoffDelay(seconds delay);
     void setWhitelist(WhiteList whitelist);
-    FabServer &getServer();
+    FabBackend &getServer();
     bool reconfigure();
 
     Machine &getMachineForTesting();
@@ -86,7 +86,7 @@ namespace fablabbg
   private:
     Status status{Status::CLEAR};
     Led led;
-    FabServer server;
+    FabBackend server;
     std::optional<std::reference_wrapper<BaseRFIDWrapper>> rfid{std::nullopt};
     std::optional<std::reference_wrapper<BaseLCDWrapper>> lcd{std::nullopt};
     bool ready_for_a_new_card{true};

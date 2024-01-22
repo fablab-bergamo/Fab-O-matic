@@ -53,6 +53,16 @@ namespace fablabbg::ServerMQTT
     return ss.str();
   }
 
+  std::string InUseQuery::payload() const
+  {
+    std::stringstream ss;
+    ss << "{\"action\":\"inuse\", "
+       << "\"uid\":\"" << card::uid_str(uid) << "\","
+       << "\"duration\":" << duration_s.count()
+       << "}";
+    return ss.str();
+  }
+
   std::string RegisterMaintenanceQuery::payload() const
   {
     std::stringstream ss;

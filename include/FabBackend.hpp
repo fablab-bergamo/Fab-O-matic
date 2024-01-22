@@ -19,7 +19,7 @@ namespace fablabbg
 {
   using namespace ServerMQTT;
 
-  class FabServer
+  class FabBackend
   {
   private:
     constexpr static auto MAX_MSG_SIZE = 255;
@@ -54,11 +54,12 @@ namespace fablabbg
     [[nodiscard]] std::unique_ptr<RespT> processQuery(QueryArgs &&...);
 
   public:
-    FabServer() = default;
+    FabBackend() = default;
 
     [[nodiscard]] std::unique_ptr<UserResponse> checkCard(const card::uid_t uid);
     [[nodiscard]] std::unique_ptr<MachineResponse> checkMachine();
     [[nodiscard]] std::unique_ptr<SimpleResponse> startUse(const card::uid_t uid);
+    [[nodiscard]] std::unique_ptr<SimpleResponse> inUse(const card::uid_t uid, std::chrono::seconds duration);
     [[nodiscard]] std::unique_ptr<SimpleResponse> finishUse(const card::uid_t uid, std::chrono::seconds duration);
     [[nodiscard]] std::unique_ptr<SimpleResponse> registerMaintenance(const card::uid_t maintainer);
     [[nodiscard]] std::unique_ptr<SimpleResponse> alive();
@@ -74,10 +75,10 @@ namespace fablabbg
     void setChannel(int32_t channel);
 
     // Rule of 5 https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rc-five
-    FabServer(const FabServer &) = delete;            // copy constructor
-    FabServer &operator=(const FabServer &) = delete; // copy assignment
-    FabServer(FabServer &&) = delete;                 // move constructor
-    FabServer &operator=(FabServer &&) = delete;      // move assignment
+    FabBackend(const FabBackend &) = delete;            // copy constructor
+    FabBackend &operator=(const FabBackend &) = delete; // copy assignment
+    FabBackend(FabBackend &&) = delete;                 // move constructor
+    FabBackend &operator=(FabBackend &&) = delete;      // move assignment
   };
 } // namespace fablabbg
 #endif // FABSERVER_H_

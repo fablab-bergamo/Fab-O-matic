@@ -4,14 +4,14 @@
 #include <string>
 
 #include "Logging.hpp"
-#include "FabServer.hpp"
+#include "FabBackend.hpp"
 
 namespace fablabbg
 {
   namespace Board
   {
     // Only main.cpp instanciates the variables through Board.h file
-    extern FabServer server;
+    extern FabBackend server;
   } // namespace Board
 
   AuthProvider::AuthProvider(WhiteList list) : whitelist(list) {}
@@ -58,7 +58,7 @@ namespace fablabbg
   /// @param uid card ID
   /// @param out a FabUser with an authenticated flag==true if server or whitelist confirmed the ID
   /// @return false if the user was not found on server or whitelist
-  std::optional<FabUser> AuthProvider::tryLogin(card::uid_t uid, FabServer &server) const
+  std::optional<FabUser> AuthProvider::tryLogin(card::uid_t uid, FabBackend &server) const
   {
     FabUser user;
     auto uid_str = card::uid_str(uid);

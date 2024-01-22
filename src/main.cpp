@@ -57,6 +57,16 @@ namespace fablabbg
       ESP_LOGI(TAG, "taskConnect - online, calling refreshFromServer");
       // Get machine data from the server if it is online
       logic.refreshFromServer();
+      if (auto &machine = logic.getMachine(); !machine.isFree())
+      {
+        auto response = logic.getServer().inUse(
+            machine.getActiveUser().card_uid,
+            machine.getUsageDuration());
+        if (!response)
+        {
+          ESP_LOGE(TAG, "taskConnect - inUse failed");
+        }
+      }
     }
   }
 
@@ -206,7 +216,7 @@ namespace fablabbg
   // The scheduler will take care of the timing and will call the task callback
 
   Task t1("RFIDChip", conf::tasks::RFID_CHECK_PERIOD, &taskCheckRfid, scheduler, true);
-  Task t2("Wifi/MQQT init", conf::tasks::MQTT_REFRESH_PERIOD, &taskConnect, scheduler, true, 20s);
+  Task t2("Wifi/MQTT", conf::tasks::MQTT_REFRESH_PERIOD, &taskConnect, scheduler, true, 20s);
   Task t3("Poweroff", 1s, &taskPoweroffCheck, scheduler, true);
   Task t4("Logoff", 1s, &taskLogoffCheck, scheduler, true);
   // Hardware watchdog will run at one third the frequency

@@ -70,6 +70,22 @@ namespace fablabbg::ServerMQTT
     std::string payload() const;
   };
 
+  class InUseQuery : public Query
+  {
+  public:
+    const card::uid_t uid;
+    const std::chrono::seconds duration_s;
+
+    InUseQuery() = delete;
+
+    /// @brief Request to register machine usage stop
+    /// @param card_uid machine user card id
+    /// @param mid machine id
+    /// @param duration duration of usage, in seconds
+    constexpr InUseQuery(card::uid_t card_uid, std::chrono::seconds duration) : uid(card_uid), duration_s(duration){};
+    std::string payload() const;
+  };
+
   class RegisterMaintenanceQuery : public Query
   {
   public:

@@ -1,4 +1,4 @@
-#include "FabServer.hpp"
+#include "FabBackend.hpp"
 #include "secrets.hpp"
 
 #include <string>
@@ -15,7 +15,7 @@ namespace fablabbg
 
   using namespace ServerMQTT;
 
-  void FabServer::configure(const SavedConfig &config)
+  void FabBackend::configure(const SavedConfig &config)
   {
     wifi_ssid = config.ssid;
     wifi_password = config.password;
@@ -53,7 +53,7 @@ namespace fablabbg
   /// @brief Posts to MQTT server and waits for answer
   /// @param query query to be posted
   /// @return true if the server answered
-  bool FabServer::publishWithReply(const Query &query)
+  bool FabBackend::publishWithReply(const Query &query)
   {
     auto duration_sleep = duration_cast<milliseconds>(conf::mqtt::TIMEOUT_REPLY_SERVER).count();
     auto try_cpt = 0;
@@ -94,9 +94,9 @@ namespace fablabbg
   /// @param mqtt_topic topic to publish to
   /// @param mqtt_payload payload to publish
   /// @return true if successfull
-  bool FabServer::publish(String mqtt_topic, String mqtt_payload)
+  bool FabBackend::publish(String mqtt_topic, String mqtt_payload)
   {
-    if (mqtt_payload.length() + mqtt_topic.length() > FabServer::MAX_MSG_SIZE - 8)
+    if (mqtt_payload.length() + mqtt_topic.length() > FabBackend::MAX_MSG_SIZE - 8)
     {
       ESP_LOGE(TAG, "MQTT Client: Message is too long: %s", mqtt_payload.c_str());
       return false;
@@ -113,12 +113,12 @@ namespace fablabbg
   /// @brief posts to MQTT server
   /// @param query message to post
   /// @return true if the message was published
-  bool FabServer::publish(const Query &query)
+  bool FabBackend::publish(const Query &query)
   {
     String s_payload(query.payload().data());
     String s_topic(topic.c_str());
 
-    if (s_payload.length() + topic.length() > FabServer::MAX_MSG_SIZE - 8)
+    if (s_payload.length() + topic.length() > FabBackend::MAX_MSG_SIZE - 8)
     {
       ESP_LOGE(TAG, "MQTT Client: Message is too long: %s", s_payload.c_str());
       return false;
@@ -132,7 +132,7 @@ namespace fablabbg
     return client.publish(s_topic, s_payload);
   }
 
-  bool FabServer::loop()
+  bool FabBackend::loop()
   {
     if (!client.loop())
     {
@@ -148,7 +148,7 @@ namespace fablabbg
 
   /// @brief blocks until the server answers or until the timeout is reached
   /// @return true if the server answered
-  bool FabServer::waitForAnswer(milliseconds max_duration)
+  bool FabBackend::waitForAnswer(milliseconds max_duration)
   {
     const auto MAX_DURATION_MS = max_duration.count();
     const auto DELAY_MS{50};
@@ -177,7 +177,7 @@ namespace fablabbg
 
   /// @brief true if the server has been reached successfully
   /// @return boolean
-  bool FabServer::isOnline() const
+  bool FabBackend::isOnline() const
   {
     return online;
   }
@@ -185,7 +185,7 @@ namespace fablabbg
   /// @brief Callback for MQTT messages
   /// @param topic topic the message was received on
   /// @param payload payload of the message
-  void FabServer::messageReceived(String &s_topic, String &s_payload)
+  void FabBackend::messageReceived(String &s_topic, String &s_payload)
   {
     ESP_LOGI(TAG, "MQTT Client: Received on %s -> %s", s_topic.c_str(), s_payload.c_str());
 
@@ -195,7 +195,7 @@ namespace fablabbg
 
   /// @brief Connects to the WiFi network
   /// @return true if the connection succeeded
-  bool FabServer::connectWiFi() noexcept
+  bool FabBackend::connectWiFi() noexcept
   {
     static constexpr auto NB_TRIES = 30;
     static constexpr auto DELAY_MS = 100;
@@ -222,7 +222,7 @@ namespace fablabbg
 
   /// @brief Establish WiFi connection and connects to FabServer
   /// @return true if both operations succeeded
-  bool FabServer::connect()
+  bool FabBackend::connect()
   {
     auto status = WiFi.status();
 
@@ -305,7 +305,7 @@ namespace fablabbg
   }
 
   /// @brief Disconnects from the server
-  void FabServer::disconnect()
+  void FabBackend::disconnect()
   {
     client.disconnect();
   }
@@ -314,9 +314,9 @@ namespace fablabbg
   /// @tparam T type of the response returned to the caller (it will be wrapped in a unique_ptr)
   /// @tparam Q type of the query sent to the server
   /// @tparam ...Args arguments to be passed to the constructor of Q
-  /// @return server response (if request_ok)
+  /// @return backend response (if request_ok)
   template <typename RespT, typename QueryT, typename... QueryArgs>
-  std::unique_ptr<RespT> FabServer::processQuery(QueryArgs &&...args)
+  std::unique_ptr<RespT> FabBackend::processQuery(QueryArgs &&...args)
   {
     static_assert(std::is_base_of<ServerMQTT::Query, QueryT>::value, "QueryT must inherit from Query");
     static_assert(std::is_base_of<ServerMQTT::Response, RespT>::value, "RespT must inherit from Response");
@@ -340,23 +340,23 @@ namespace fablabbg
 
   /// @brief Checks if the card ID is known to the server
   /// @param uid card uid
-  /// @return server response (if request_ok)
-  std::unique_ptr<UserResponse> FabServer::checkCard(card::uid_t uid)
+  /// @return backend response (if request_ok)
+  std::unique_ptr<UserResponse> FabBackend::checkCard(card::uid_t uid)
   {
     return processQuery<UserResponse, UserQuery>(uid);
   }
 
   /// @brief Checks the machine status on the server
-  /// @return server response (if request_ok)
-  std::unique_ptr<MachineResponse> FabServer::checkMachine()
+  /// @return backend response (if request_ok)
+  std::unique_ptr<MachineResponse> FabBackend::checkMachine()
   {
     return processQuery<MachineResponse, MachineQuery>();
   }
 
   /// @brief register the starting of a machine usage
   /// @param uid card uid
-  /// @return server response (if request_ok)
-  std::unique_ptr<SimpleResponse> FabServer::startUse(card::uid_t uid)
+  /// @return backend response (if request_ok)
+  std::unique_ptr<SimpleResponse> FabBackend::startUse(card::uid_t uid)
   {
     return processQuery<SimpleResponse, StartUseQuery>(uid);
   }
@@ -364,30 +364,40 @@ namespace fablabbg
   /// @brief Register end of machine usage
   /// @param uid card ID of the machine user
   /// @param duration_s duration of usage in seconds
-  /// @return server response (if request_ok)
-  std::unique_ptr<SimpleResponse> FabServer::finishUse(card::uid_t uid, std::chrono::seconds duration_s)
+  /// @return backend response (if request_ok)
+  std::unique_ptr<SimpleResponse> FabBackend::finishUse(card::uid_t uid, std::chrono::seconds duration_s)
   {
     return processQuery<SimpleResponse, StopUseQuery>(uid, duration_s);
+  }
+
+  /// @brief Inform the backend that the machine is in use. This is used to prevent
+  ///        loosing information if the machine is rebooted while in use.
+  /// @param uid card ID of the machine user
+  /// @param duration_s duration of usage in seconds
+  /// @return backend response (if request_ok)
+  std::unique_ptr<SimpleResponse> FabBackend::inUse(card::uid_t uid, std::chrono::seconds duration_s)
+  {
+    return processQuery<SimpleResponse, InUseQuery>(uid, duration_s);
   }
 
   /// @brief Registers a maintenance action
   /// @param maintainer who performed the maintenance
   /// @return server response (if request_ok)
-  std::unique_ptr<SimpleResponse> FabServer::registerMaintenance(card::uid_t maintainer)
+  std::unique_ptr<SimpleResponse> FabBackend::registerMaintenance(card::uid_t maintainer)
   {
     return processQuery<SimpleResponse, RegisterMaintenanceQuery>(maintainer);
   }
 
   /// @brief Sends a ping to the server
   /// @return server response (if request_ok)
-  std::unique_ptr<SimpleResponse> FabServer::alive()
+  std::unique_ptr<SimpleResponse> FabBackend::alive()
   {
     return processQuery<SimpleResponse, AliveQuery>();
   }
 
   /// @brief set channel to use for WiFi connection
   /// @param channel
-  void FabServer::setChannel(int32_t channel)
+  void FabBackend::setChannel(int32_t channel)
   {
     this->channel = channel;
   }

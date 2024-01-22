@@ -8,7 +8,7 @@
 #include <esp_task_wdt.h>
 #include <Arduino.h>
 #include <unity.h>
-#include "FabServer.hpp"
+#include "FabBackend.hpp"
 #include "LCDWrapper.hpp"
 #include "RFIDWrapper.hpp"
 #include "mock/MockMrfc522.hpp"
@@ -121,6 +121,9 @@ void test_fabserver_calls()
       auto start_use_resp = server.startUse(uid);
       TEST_ASSERT_TRUE_MESSAGE(start_use_resp != nullptr, "Server startUse failed");
       TEST_ASSERT_TRUE_MESSAGE(start_use_resp->request_ok, "Server startUse request failed");
+      auto in_use_resp = server.inUse(uid, 5s);
+      TEST_ASSERT_TRUE_MESSAGE(in_use_resp != nullptr, "Server inUse failed");
+      TEST_ASSERT_TRUE_MESSAGE(in_use_resp->request_ok, "Server inUse request failed");
       auto stop_use_resp = server.finishUse(uid, 10s);
       TEST_ASSERT_TRUE_MESSAGE(stop_use_resp != nullptr, "Server stopUse failed");
       TEST_ASSERT_TRUE_MESSAGE(stop_use_resp->request_ok, "Server stopUse request failed");

@@ -9,7 +9,7 @@
 #include "secrets.hpp"
 #include "conf.hpp"
 #include "Machine.hpp"
-#include "FabServer.hpp"
+#include "FabBackend.hpp"
 #include "BaseRfidWrapper.hpp"
 #include "AuthProvider.hpp"
 #include "BaseLCDWrapper.hpp"
@@ -604,7 +604,7 @@ namespace fablabbg
     auth.setWhitelist(whitelist);
   }
 
-  FabServer &BoardLogic::getServer()
+  FabBackend &BoardLogic::getServer()
   {
     return server;
   }
