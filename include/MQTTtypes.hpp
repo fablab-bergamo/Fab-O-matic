@@ -18,7 +18,7 @@ namespace fablabbg::ServerMQTT
     virtual ~Query() = default;
   };
 
-  class UserQuery : public Query
+  class UserQuery final : public Query
   {
   public:
     const card::uid_t uid;
@@ -29,21 +29,21 @@ namespace fablabbg::ServerMQTT
     std::string payload() const;
   };
 
-  class MachineQuery : public Query
+  class MachineQuery final : public Query
   {
   public:
     constexpr MachineQuery() = default;
     std::string payload() const;
   };
 
-  class AliveQuery : public Query
+  class AliveQuery final : public Query
   {
   public:
     constexpr AliveQuery() = default;
     std::string payload() const;
   };
 
-  class StartUseQuery : public Query
+  class StartUseQuery final : public Query
   {
   public:
     const card::uid_t uid;
@@ -54,7 +54,7 @@ namespace fablabbg::ServerMQTT
     std::string payload() const;
   };
 
-  class StopUseQuery : public Query
+  class StopUseQuery final : public Query
   {
   public:
     const card::uid_t uid;
@@ -70,7 +70,7 @@ namespace fablabbg::ServerMQTT
     std::string payload() const;
   };
 
-  class InUseQuery : public Query
+  class InUseQuery final : public Query
   {
   public:
     const card::uid_t uid;
@@ -86,7 +86,7 @@ namespace fablabbg::ServerMQTT
     std::string payload() const;
   };
 
-  class RegisterMaintenanceQuery : public Query
+  class RegisterMaintenanceQuery final : public Query
   {
   public:
     const card::uid_t uid;
@@ -117,7 +117,7 @@ namespace fablabbg::ServerMQTT
     USER_UNAUTHORIZED_MAINTENANCE = 3
   };
 
-  class UserResponse : public Response
+  class UserResponse final : public Response
   {
   public:
     uint8_t result{static_cast<uint8_t>(UserResult::USER_INVALID)}; /* Result of the user check */
@@ -135,7 +135,7 @@ namespace fablabbg::ServerMQTT
     std::string toString() const;
   };
 
-  class MachineResponse : public Response
+  class MachineResponse final : public Response
   {
   public:
     bool is_valid = false;   /* True if the machine has a valid ID */
@@ -150,7 +150,7 @@ namespace fablabbg::ServerMQTT
     [[nodiscard]] static std::unique_ptr<MachineResponse> fromJson(JsonDocument &doc);
   };
 
-  class SimpleResponse : public Response
+  class SimpleResponse final : public Response
   {
   public:
     SimpleResponse() = delete;

@@ -15,7 +15,7 @@ namespace fablabbg
   using namespace std::chrono;
 
   template <typename Driver>
-  class RFIDWrapper : public BaseRFIDWrapper
+  class RFIDWrapper final : public BaseRFIDWrapper
   {
   private:
     std::unique_ptr<Driver> driver;

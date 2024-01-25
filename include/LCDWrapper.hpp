@@ -13,7 +13,7 @@ using namespace std::chrono;
 namespace fablabbg
 {
   template <typename LcdDriver>
-  class LCDWrapper : public BaseLCDWrapper
+  class LCDWrapper final : public BaseLCDWrapper
   {
   public:
     LCDWrapper(const pins_config::lcd_config &config);

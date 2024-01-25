@@ -11,7 +11,7 @@
 
 namespace fablabbg
 {
-  class MockMQTTBroker : public sMQTTBroker
+  class MockMQTTBroker final : public sMQTTBroker
   {
   public:
     MockMQTTBroker();

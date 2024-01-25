@@ -87,13 +87,13 @@ namespace fablabbg
     Status status{Status::CLEAR};
     Led led;
     FabBackend server;
-    std::optional<std::reference_wrapper<BaseRFIDWrapper>> rfid{std::nullopt};
-    std::optional<std::reference_wrapper<BaseLCDWrapper>> lcd{std::nullopt};
+    std::optional<std::reference_wrapper<BaseRFIDWrapper>> rfid{std::nullopt}; // Configured at runtime
+    std::optional<std::reference_wrapper<BaseLCDWrapper>> lcd{std::nullopt};   // Configured at runtime
     bool ready_for_a_new_card{true};
     bool led_status{false};
 
-    mutable Machine machine;
-    mutable AuthProvider auth{secrets::cards::whitelist};
+    Machine machine;
+    AuthProvider auth{secrets::cards::whitelist};
 
     BaseRFIDWrapper &getRfid() const;
     BaseLCDWrapper &getLcd() const;
