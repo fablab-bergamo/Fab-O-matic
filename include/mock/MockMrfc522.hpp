@@ -9,7 +9,6 @@
 #include "MFRC522DriverSPI.h"
 #include "MFRC522DriverPinSimple.h"
 #include "FabUser.hpp"
-#include "pins.hpp"
 
 namespace fablabbg
 {

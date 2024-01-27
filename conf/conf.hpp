@@ -19,6 +19,8 @@ namespace fablabbg
     static constexpr MachineID machine_id{1};
     static constexpr std::string_view machine_name = "MACHINE1";
     static constexpr MachineType machine_type = MachineType::LASER;
+    static constexpr std::string_view hostname = "BOARD1";
+
   } // namespace conf::default_config
 
   namespace conf::rfid_tags

@@ -43,7 +43,8 @@ namespace fablabbg
       PORTAL_OK,
       PORTAL_STARTING,
       BOOT,
-      SHUTDOWN_IMMINENT
+      SHUTDOWN_IMMINENT,
+      OTA_START
     };
 
     BoardLogic() = default;
@@ -59,7 +60,6 @@ namespace fablabbg
     void updateLCD() const;
     void beep_ok() const;
     void beep_failed() const;
-    void shortDelay(); // Waits for some time to allow the user to read the LCD screen
 
     bool configure(BaseRFIDWrapper &rfid, BaseLCDWrapper &lcd);
 
@@ -73,6 +73,8 @@ namespace fablabbg
 
     Machine &getMachineForTesting();
     const Machine &getMachine() const;
+
+    bool rebootRequest{false};
 
     // copy reference
     BoardLogic &operator=(const BoardLogic &board) = delete;

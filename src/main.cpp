@@ -5,6 +5,7 @@
 
 #include <esp_task_wdt.h>
 #include <WiFiManager.h>
+#include "ArduinoOTA.h"
 
 #include "globals.hpp"
 #include "pins.hpp"
@@ -14,6 +15,10 @@
 #include "Mrfc522Driver.hpp"
 #include "mock/MockMQTTBroker.hpp"
 #include "Logging.hpp"
+
+// For ArduinoOTA
+const char *ssid = secrets::credentials::ssid.data();
+const char *password = secrets::credentials::password.data();
 
 namespace fablabbg
 {
@@ -49,7 +54,7 @@ namespace fablabbg
       logic.changeStatus(server.isOnline() ? Status::CONNECTED : Status::OFFLINE);
 
       // Briefly show to the user
-      logic.shortDelay();
+      Tasks::task_delay(conf::lcd::SHORT_MESSAGE_DELAY);
     }
 
     if (server.isOnline())
@@ -98,6 +103,15 @@ namespace fablabbg
       if (conf::debug::ENABLE_LOGS)
         ESP_LOGI(TAG, "Machine is about to shutdown");
     }
+
+    if (Board::logic.rebootRequest)
+    {
+      if (Board::logic.getMachine().getPowerState() == Machine::PowerState::POWERED_OFF)
+      {
+        ESP_LOGI(TAG, "Rebooting after OTA");
+        ESP.restart();
+      }
+    }
   }
 
   /// @brief periodic check if the user shall be logged off
@@ -141,7 +155,7 @@ namespace fablabbg
       ESP_LOGE(TAG, "RFID chip failure");
 
       // Infinite retry until success or hw watchdog timeout
-      while (!rfid.init_rfid())
+      while (!rfid.init_rfid() && !DEBUG)
         delay(duration_cast<milliseconds>(conf::tasks::RFID_CHECK_PERIOD).count());
     }
   }
@@ -319,6 +333,23 @@ namespace fablabbg
       }
     }
   }
+
+  void OTAComplete()
+  {
+    ESP_LOGI(TAG, "OTA complete, reboot requested");
+    logic.rebootRequest = true;
+  }
+
+  void setupOTA()
+  {
+    ArduinoOTA.setHostname(conf::default_config::hostname.data());
+    ArduinoOTA.onStart([]()
+                       { logic.changeStatus(Status::OTA_START); });
+    ArduinoOTA.onEnd(OTAComplete);
+    ArduinoOTA.setRebootOnSuccess(false);
+    ArduinoOTA.setTimeout(45000);
+    ArduinoOTA.begin();
+  }
 } // namespace fablabbg
 
 using namespace fablabbg;
@@ -368,13 +399,15 @@ void setup()
 #if (WOKWI_SIMULATION)
   startMQTTBrocker();
 #endif
-
   logic.beep_ok();
 
   // Join the AP and try to connect to broker
   logic.getServer().connect();
 
   t5.start(); // Enable the HW watchdog
+
+  setupOTA();
+
   // Since the WiFiManager may have taken minutes, recompute the tasks schedule
   scheduler.restart();
 }
@@ -382,5 +415,6 @@ void setup()
 void loop()
 {
   scheduler.execute();
+  ArduinoOTA.handle();
 }
 #endif // PIO_UNIT_TESTING

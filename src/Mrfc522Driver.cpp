@@ -24,7 +24,11 @@ namespace fablabbg
 
   void Mrfc522Driver::reset() { mfrc522->PCD_Reset(); }
 
-  bool Mrfc522Driver::PCD_Init() { return mfrc522->PCD_Init(); }
+  bool Mrfc522Driver::PCD_Init()
+  {
+    SPI.end();
+    return mfrc522->PCD_Init();
+  }
 
   bool Mrfc522Driver::PICC_WakeupA(byte *bufferATQA, byte bufferSize) { return mfrc522->PICC_WakeupA(bufferATQA, &bufferSize) == MFRC522::StatusCode::STATUS_OK; }
 

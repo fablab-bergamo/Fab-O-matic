@@ -81,10 +81,10 @@ namespace fablabbg
   template <typename Driver>
   void RFIDWrapper<Driver>::reset() const
   {
-    digitalWrite(pins.mfrc522.reset_pin, 1);
-    delay(25);
-    digitalWrite(pins.mfrc522.reset_pin, 0);
-    delay(25);
+    digitalWrite(pins.mfrc522.reset_pin, HIGH);
+    delay(15);
+    digitalWrite(pins.mfrc522.reset_pin, LOW);
+    delay(15);
   }
 
   /// @brief Transforms the RFID acquired bytes into a uid_id object

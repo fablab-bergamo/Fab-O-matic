@@ -3,6 +3,8 @@
 #include "Arduino.h"
 
 #include <algorithm>
+#include "Arduino.h"
+#include "ArduinoOTA.h"
 
 #include "Logging.hpp"
 
@@ -250,5 +252,23 @@ namespace fablabbg::Tasks
   time_point<system_clock> Task::getNextRun() const
   {
     return next_run;
+  }
+
+  /// @brief Wait for a delay, allowing OTA updates
+  /// @param delay period to wait (should be > 50 ms)
+  void task_delay(const milliseconds duration)
+  {
+    if (duration < 50ms)
+    {
+      delay(duration.count());
+      return;
+    }
+
+    const auto start = system_clock::now();
+    do
+    {
+      delay(50);
+      ArduinoOTA.handle();
+    } while (system_clock::now() - start < duration);
   }
 } // namespace fablabbg::Tasks
