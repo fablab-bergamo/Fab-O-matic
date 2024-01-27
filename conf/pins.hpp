@@ -55,60 +55,116 @@ namespace fablabbg
 
 #ifdef PINS_ESP32
   constexpr pins_config pins{
-      {27U, 33U, 32U, 26U, 20U},               // RFID
-      {15U, 2U, 0U, 4U, 16U, 17U, 18U, false}, // LCD
-      {14U, true},                             // relay
-      {12U},                                   // buzzer
-      {19U, true, NEO_RGB + NEO_KHZ800}        // Neopixel
+      {.sda_pin = 27U,
+       .mosi_pin = 33U,
+       .miso_pin = 32U,
+       .sck_pin = 26U,
+       .reset_pin = 20U}, // RFID
+      {.rs_pin = 15U,
+       .en_pin = 2U,
+       .d0_pin = 0U,
+       .d1_pin = 4U,
+       .d2_pin = 16U,
+       .d3_pin = 17U,
+       .bl_pin = 18U,
+       .active_low = false}, // LCD
+      {.ch1_pin = 14U,
+       .active_low = true}, // relay
+      {.pin = 12U},         // buzzer
+      {.pin = 19U,
+       .is_neopixel = true,
+       .neopixel_config = NEO_RGB + NEO_KHZ800} // Neopixel
   };
 #endif
 #if (WOKWI_SIMULATION)
-  static constexpr pins_config pins{
-      {27U, 26U, 33U, 32U, 16U},                  // RFID
-      {15U, 18U, 2U, 4U, 5U, 19U, NO_PIN, false}, // LCD
-      {14U, false},                               // relay
-      {12U},                                      // buzzer
-      {20U, true, NEO_GRB + NEO_KHZ800}           // Neopixel
+  constexpr pins_config pins{
+      {.sda_pin = 27U,
+       .mosi_pin = 26U,
+       .miso_pin = 33U,
+       .sck_pin = 32U,
+       .reset_pin = 16U}, // RFID
+      {.rs_pin = 15U,
+       .en_pin = 18U,
+       .d0_pin = 2U,
+       .d1_pin = 4U,
+       .d2_pin = 5U,
+       .d3_pin = 19U,
+       .bl_pin = NO_PIN,
+       .active_low = false}, // LCD
+      {.ch1_pin = 14U,
+       .active_low = false}, // relay
+      {.pin = 12U},          // buzzer
+      {.pin = 20U,
+       .is_neopixel = true,
+       .neopixel_config = NEO_GRB + NEO_KHZ800} // Neopixel
   };
 #endif
 #ifdef PINS_ESP32S3
-  static constexpr pins_config pins{
-      {17U, 8U, 3U, 18U, 12U},               // RFID
-      {5U, 4U, 6U, 7U, 15U, 2U, 13U, false}, // LCD
-      {10U, true},                           // relay
-      {9U},                                  // buzzer
-      {48U, true, NEO_RGB + NEO_KHZ800}      // Neopixel
+  constexpr pins_config pins{
+      {.sda_pin = 17U,
+       .mosi_pin = 8U,
+       .miso_pin = 3U,
+       .sck_pin = 18U,
+       .reset_pin = 12U}, // RFID
+      {.rs_pin = 5U,
+       .en_pin = 4U,
+       .d0_pin = 6U,
+       .d1_pin = 7U,
+       .d2_pin = 15U,
+       .d3_pin = 2U,
+       .bl_pin = 13U,
+       .active_low = false}, // LCD
+      {.ch1_pin = 10U,
+       .active_low = true}, // relay
+      {.pin = 9U},          // buzzer
+      {.pin = 48U,
+       .is_neopixel = true,
+       .neopixel_config = NEO_GRB + NEO_KHZ800} // Neopixel
   };
 #endif
 #ifdef PINS_ESP32_WROVERKIT
   constexpr pins_config pins{
-      {15U, 0U, 16U, 5U, 4U},                        // RFID
-      {12U, 14U, 26U, 21U, 22U, 23U, NO_PIN, false}, // LCD
-      {2U, true},                                    // relay
-      {13U},                                         // buzzer
-      {27U, true, NEO_RGB + NEO_KHZ800}              // Neopixel
+      {.sda_pin = 15U,
+       .mosi_pin = 0U,
+       .miso_pin = 16U,
+       .sck_pin = 5U,
+       .reset_pin = 4U}, // RFID
+      {.rs_pin = 12U,
+       .en_pin = 14U,
+       .d0_pin = 26U,
+       .d1_pin = 21U,
+       .d2_pin = 22U,
+       .d3_pin = 23U,
+       .bl_pin = NO_PIN,
+       .active_low = false}, // LCD
+      {.ch1_pin = 2U,
+       .active_low = true}, // relay
+      {.pin = 13U},         // buzzer
+      {.pin = 27U,
+       .is_neopixel = true,
+       .neopixel_config = NEO_RGB + NEO_KHZ800} // Neopixel
   };
 #endif
 
   // Check at compile time that there are no duplicate pin definitions
   constexpr bool no_duplicates()
   {
-    std::array<uint8_t, 15> pin_nums{NO_PIN};
-    pin_nums[0] = pins.mfrc522.sda_pin;
-    pin_nums[1] = pins.mfrc522.mosi_pin;
-    pin_nums[2] = pins.mfrc522.miso_pin;
-    pin_nums[3] = pins.mfrc522.sck_pin;
-    pin_nums[4] = pins.mfrc522.reset_pin;
-    pin_nums[5] = pins.lcd.rs_pin;
-    pin_nums[6] = pins.lcd.en_pin;
-    pin_nums[7] = pins.lcd.d0_pin;
-    pin_nums[8] = pins.lcd.d1_pin;
-    pin_nums[9] = pins.lcd.d2_pin;
-    pin_nums[10] = pins.lcd.d3_pin;
-    pin_nums[11] = pins.lcd.bl_pin;
-    pin_nums[12] = pins.relay.ch1_pin;
-    pin_nums[13] = pins.buzzer.pin;
-    pin_nums[14] = pins.led.pin;
+    std::array<uint8_t, 15> pin_nums{
+        pins.mfrc522.sda_pin,
+        pins.mfrc522.mosi_pin,
+        pins.mfrc522.miso_pin,
+        pins.mfrc522.sck_pin,
+        pins.mfrc522.reset_pin,
+        pins.lcd.rs_pin,
+        pins.lcd.en_pin,
+        pins.lcd.d0_pin,
+        pins.lcd.d1_pin,
+        pins.lcd.d2_pin,
+        pins.lcd.d3_pin,
+        pins.lcd.bl_pin,
+        pins.relay.ch1_pin,
+        pins.buzzer.pin,
+        pins.led.pin};
 
     // No constexpr std::sort available
     for (auto i = 0; i < pin_nums.size(); ++i)
