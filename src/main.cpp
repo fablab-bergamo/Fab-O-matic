@@ -157,7 +157,7 @@ namespace fablabbg
       // Infinite retry until success or hw watchdog timeout
       while (!rfid.init_rfid())
       {
-        delay(duration_cast<milliseconds>(conf::tasks::RFID_CHECK_PERIOD).count());
+        Tasks::task_delay(conf::tasks::RFID_CHECK_PERIOD);
 #ifdef DEBUG
         break;
 #endif
@@ -394,7 +394,9 @@ void setup()
 #ifndef DEBUG
     // Cannot continue without RFID or LCD
     while (true)
-      ;
+    {
+      Tasks::task_delay(500ms); // Allow OTA
+    }
 #endif
   }
 

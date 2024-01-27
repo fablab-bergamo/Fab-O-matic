@@ -33,6 +33,7 @@ namespace fablabbg
       ESP_LOGE(TAG, "RFID not initialized");
       while (true)
       {
+        Tasks::task_delay(1s);
       };
     }
   }
@@ -593,6 +594,7 @@ namespace fablabbg
       ESP_LOGE(TAG, "LCD not initialized");
       while (true)
       {
+        Tasks::task_delay(1s);
       };
     }
   }
