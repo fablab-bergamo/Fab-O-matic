@@ -8,6 +8,7 @@
 #include "secrets.hpp"
 #include "FabBackend.hpp"
 #include "Logging.hpp"
+#include "Tasks.hpp"
 
 namespace fablabbg
 {
@@ -166,13 +167,12 @@ namespace fablabbg
     String payload = value ? act_config.mqtt_config.on_message.data() : act_config.mqtt_config.off_message.data();
 
     auto retries = 0;
-    constexpr auto DELAY_MS = duration_cast<milliseconds>(conf::mqtt::TIMEOUT_REPLY_SERVER).count();
     while (!mqtt_server.publish(topic, payload))
     {
       ESP_LOGE(TAG, "Error while publishing %s to %s", payload.c_str(), topic.c_str());
 
       mqtt_server.connect();
-      delay(DELAY_MS);
+      Tasks::task_delay(conf::mqtt::TIMEOUT_REPLY_SERVER);
       retries++;
       if (retries > conf::mqtt::MAX_TRIES)
       {

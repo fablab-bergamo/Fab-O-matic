@@ -16,6 +16,7 @@
 #include "pins.hpp"
 #include "SavedConfig.hpp"
 #include "Logging.hpp"
+#include "Tasks.hpp"
 
 #ifndef GIT_VERSION
 #define GIT_VERSION "??????"
@@ -84,7 +85,7 @@ namespace fablabbg
       {
         ESP_LOGI(TAG, "Login failed for %llu", uid);
       }
-      shortDelay();
+      Tasks::task_delay(conf::lcd::SHORT_MESSAGE_DELAY);
       refreshFromServer();
       return;
     }
@@ -100,7 +101,7 @@ namespace fablabbg
       // user is not the same, display who is using it
       changeStatus(Status::ALREADY_IN_USE);
     }
-    shortDelay();
+    Tasks::task_delay(conf::lcd::SHORT_MESSAGE_DELAY);
     return;
   }
 
@@ -115,7 +116,7 @@ namespace fablabbg
     machine.logout();
     changeStatus(Status::LOGOUT);
     beep_ok();
-    shortDelay();
+    Tasks::task_delay(conf::lcd::SHORT_MESSAGE_DELAY);
   }
 
   /// @brief Asks the user to keep the RFID tag on the reader as confirmation
@@ -142,10 +143,10 @@ namespace fablabbg
       }
 
       // cardStillThere may have returned immediately, so we need to wait a bit
-      auto elapsed = std::chrono::system_clock::now() - start;
+      const auto elapsed = duration_cast<milliseconds>(std::chrono::system_clock::now() - start);
       if (delay_per_step - elapsed > 10ms)
       {
-        delay(duration_cast<milliseconds>(delay_per_step - elapsed).count());
+        Tasks::task_delay(delay_per_step - elapsed);
       }
     }
 
@@ -193,7 +194,7 @@ namespace fablabbg
       {
         changeStatus(Status::MAINTENANCE_NEEDED);
         beep_failed();
-        shortDelay();
+        Tasks::task_delay(conf::lcd::SHORT_MESSAGE_DELAY);
         return false;
       }
       if (user.user_level >= FabUser::UserLevel::FABLAB_STAFF)
@@ -208,7 +209,7 @@ namespace fablabbg
           {
             beep_failed();
             changeStatus(Status::ERROR);
-            shortDelay();
+            Tasks::task_delay(conf::lcd::SHORT_MESSAGE_DELAY);
             // Allow bypass for admins
             if (user.user_level == FabUser::UserLevel::FABLAB_ADMIN)
             {
@@ -220,7 +221,7 @@ namespace fablabbg
             changeStatus(Status::MAINTENANCE_DONE);
             machine.maintenanceNeeded = false;
             beep_ok();
-            shortDelay();
+            Tasks::task_delay(conf::lcd::SHORT_MESSAGE_DELAY);
           }
           // Proceed to log-on the staff member to the machine in all cases
         }
@@ -238,7 +239,7 @@ namespace fablabbg
     {
       changeStatus(Status::NOT_ALLOWED);
       beep_failed();
-      shortDelay();
+      Tasks::task_delay(conf::lcd::SHORT_MESSAGE_DELAY);
     }
 
     return true;
@@ -401,6 +402,10 @@ namespace fablabbg
       getLcd().setRow(0, machine_name);
       getLcd().setRow(1, "In spegnimento!");
       break;
+    case Status::OTA_START:
+      getLcd().setRow(0, "Aggiornamento");
+      getLcd().setRow(1, "OTA...");
+      break;
     default:
       getLcd().setRow(0, "Unhandled status");
       if (snprintf(buffer, sizeof(buffer), "Value %d", static_cast<int>(status)) > 0)
@@ -420,24 +425,24 @@ namespace fablabbg
 
   void BoardLogic::beep_ok() const
   {
-    if (auto ms = duration_cast<milliseconds>(conf::buzzer::STANDARD_BEEP_DURATION).count(); ms > 0)
+    if (conf::buzzer::STANDARD_BEEP_DURATION > 0ms)
     {
       ledcWriteTone(conf::buzzer::LEDC_PWM_CHANNEL, conf::buzzer::BEEP_HZ);
-      delay(ms);
+      Tasks::task_delay(conf::buzzer::STANDARD_BEEP_DURATION);
       ledcWrite(conf::buzzer::LEDC_PWM_CHANNEL, 0UL);
     }
   }
 
   void BoardLogic::beep_failed() const
   {
-    if (auto ms = duration_cast<milliseconds>(conf::buzzer::STANDARD_BEEP_DURATION).count(); ms > 0)
+    if (conf::buzzer::STANDARD_BEEP_DURATION > 0ms)
     {
       for (auto i = 0; i < conf::buzzer::NB_BEEPS; i++)
       {
         ledcWriteTone(conf::buzzer::LEDC_PWM_CHANNEL, conf::buzzer::BEEP_HZ);
-        delay(ms);
+        Tasks::task_delay(conf::buzzer::STANDARD_BEEP_DURATION);
         ledcWrite(conf::buzzer::LEDC_PWM_CHANNEL, 0UL);
-        delay(ms);
+        Tasks::task_delay(conf::buzzer::STANDARD_BEEP_DURATION);
       }
     }
   }
@@ -607,10 +612,5 @@ namespace fablabbg
   FabBackend &BoardLogic::getServer()
   {
     return server;
-  }
-
-  void BoardLogic::shortDelay()
-  {
-    delay(duration_cast<milliseconds>(conf::lcd::SHORT_MESSAGE_DELAY).count());
   }
 } // namespace fablabbg

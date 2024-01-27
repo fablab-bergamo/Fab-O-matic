@@ -9,6 +9,7 @@
 #include <chrono>
 #include "SavedConfig.hpp"
 #include "Logging.hpp"
+#include "Tasks.hpp"
 
 namespace fablabbg
 {
@@ -55,7 +56,6 @@ namespace fablabbg
   /// @return true if the server answered
   bool FabBackend::publishWithReply(const Query &query)
   {
-    auto duration_sleep = duration_cast<milliseconds>(conf::mqtt::TIMEOUT_REPLY_SERVER).count();
     auto try_cpt = 0;
     auto published = false;
 
@@ -72,7 +72,7 @@ namespace fablabbg
         else
         {
           ESP_LOGE(TAG, "MQTT Client: failure to send query %s", query.payload().data());
-          delay(duration_sleep);
+          Tasks::task_delay(conf::mqtt::TIMEOUT_REPLY_SERVER);
         }
       }
 
@@ -83,7 +83,7 @@ namespace fablabbg
       }
 
       ESP_LOGW(TAG, "MQTT Client: no answer received, retrying %d/%d", try_cpt, conf::mqtt::MAX_TRIES);
-      delay(duration_sleep);
+      Tasks::task_delay(conf::mqtt::TIMEOUT_REPLY_SERVER);
     }
 
     ESP_LOGE(TAG, "MQTT Client: failure to send query %s", query.payload().data());
@@ -151,8 +151,8 @@ namespace fablabbg
   bool FabBackend::waitForAnswer(milliseconds max_duration)
   {
     const auto MAX_DURATION_MS = max_duration.count();
-    const auto DELAY_MS{50};
-    const auto NB_LOOPS{std::max(MAX_DURATION_MS / DELAY_MS, 1LL)};
+    const auto DELAY_MS = 50ms;
+    const auto NB_LOOPS{std::max(MAX_DURATION_MS / DELAY_MS.count(), 1LL)};
 
     for (auto i = 0; i < NB_LOOPS; i++)
     {
@@ -164,7 +164,7 @@ namespace fablabbg
           ESP_LOGW(TAG, "MQTT Client: connection lost while waiting for answer");
           connect();
         }
-        delay(DELAY_MS);
+        Tasks::task_delay(DELAY_MS);
       }
       else
       {
@@ -198,7 +198,7 @@ namespace fablabbg
   bool FabBackend::connectWiFi() noexcept
   {
     static constexpr auto NB_TRIES = 30;
-    static constexpr auto DELAY_MS = 100;
+    static constexpr auto DELAY_MS = 100ms;
 
     // Connect WiFi if needed
     if (WiFi.status() != WL_CONNECTED)
@@ -206,7 +206,7 @@ namespace fablabbg
       WiFi.mode(WIFI_STA);
       ESP_LOGD(TAG, "FabServer::connectWiFi() : WiFi connection state=%d, connecting to SSID:%s (channel:%d)", WiFi.status(), wifi_ssid.c_str(), channel);
       WiFi.begin(wifi_ssid.data(), wifi_password.data(), channel);
-      delay(DELAY_MS);
+      Tasks::task_delay(DELAY_MS);
       for (auto i = 0; i < NB_TRIES; i++)
       {
         if (WiFi.status() == WL_CONNECTED)
@@ -214,7 +214,7 @@ namespace fablabbg
           ESP_LOGD(TAG, "FabServer::connectWiFi() : WiFi connection successfull");
           break;
         }
-        delay(DELAY_MS);
+        Tasks::task_delay(DELAY_MS);
       }
     }
     return WiFi.status() == WL_CONNECTED;
@@ -224,7 +224,7 @@ namespace fablabbg
   /// @return true if both operations succeeded
   bool FabBackend::connect()
   {
-    auto status = WiFi.status();
+    const auto status = WiFi.status();
 
     ESP_LOGD(TAG, "FabServer::connect() called, Wifi status=%d", status);
 

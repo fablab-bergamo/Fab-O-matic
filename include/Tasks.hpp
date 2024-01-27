@@ -124,5 +124,8 @@ namespace fablabbg::Tasks
 
     void printStats() const;
   };
+
+  void task_delay(const milliseconds delay);
+
 } // namespace fablabbg::Tasks
 #endif
