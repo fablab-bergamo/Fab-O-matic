@@ -3,9 +3,20 @@
 Build status : [![PlatformIO CI](https://github.com/fablab-bergamo/rfid-arduino/actions/workflows/platformio.yml/badge.svg)](https://github.com/fablab-bergamo/rfid-arduino/actions/workflows/platformio.yml)
 Test suite : [![Test suite](https://github.com/PBrunot/rfid-arduino-copy/actions/workflows/tests.yml/badge.svg)](https://github.com/PBrunot/rfid-arduino-copy/actions/workflows/tests.yml)
 
+## What is this project?
+
+A RFID-card reader to control machine usage in a Fab Lab environment. Together with the backend project (which can run on a Raspberry Pi Zero), it manages user authentication, track machine usage / maintenance needs. 
+
+Assembled version: 
+
+![image](https://github.com/fablab-bergamo/rfid-arduino/assets/6236243/9898c6a5-cc16-4479-851a-b326ad31a4d6)
+
+It uses MQTT to talk to the backend. Machine control is achieved through an external relay.
+
 ## Hardware requirements
 
 - ESP32, ESP32-S2 or ESP32-S3 chips
+- WiFi connection to the backend
 - RFID reader (using mfrc522 compatible chip)
 - LCD driver (using Hitachi HD44780 compatible chip)
 - 3.3V Relay (or [Shelly](https://www.shellyitalia.com/shelly-plus-1-mini-gen3/) MQTT device)
