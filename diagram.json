@@ -42,6 +42,24 @@
       "top": 15.7,
       "left": 75.8,
       "attrs": {}
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn1",
+      "top": 342.2,
+      "left": 192,
+      "attrs": {
+        "color": "green"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r1",
+      "top": 349.55,
+      "left": 268.8,
+      "attrs": {
+        "value": "1000"
+      }
     }
   ],
   "connections": [
@@ -305,6 +323,33 @@
         "h-67.2",
         "v278.4",
         "h95.5"
+      ]
+    ],
+    [
+      "btn1:1.r",
+      "r1:1",
+      "red",
+      [
+        "v0"
+      ]
+    ],
+    [
+      "r1:2",
+      "esp:3V3",
+      "red",
+      [
+        "v0",
+        "h27.6",
+        "v-220.8",
+        "h-38.4"
+      ]
+    ],
+    [
+      "esp:21",
+      "btn1:2.l",
+      "gray",
+      [
+        "v0"
       ]
     ]
   ],

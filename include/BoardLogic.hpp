@@ -44,7 +44,8 @@ namespace fablabbg
       PORTAL_STARTING,
       BOOT,
       SHUTDOWN_IMMINENT,
-      OTA_START
+      OTA_START,
+      FACTORY_RESET
     };
 
     BoardLogic() = default;
@@ -63,7 +64,7 @@ namespace fablabbg
 
     bool configure(BaseRFIDWrapper &rfid, BaseLCDWrapper &lcd);
 
-    void blinkLed();
+    void blinkLed(uint8_t r = 0, uint8_t g = 0, uint8_t b = 0);
     void checkRfid();
     void checkPowerOff();
     void setAutologoffDelay(seconds delay);

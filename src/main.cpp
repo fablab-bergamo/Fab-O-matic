@@ -108,7 +108,7 @@ namespace fablabbg
     {
       if (Board::logic.getMachine().getPowerState() == Machine::PowerState::POWERED_OFF)
       {
-        ESP_LOGI(TAG, "Rebooting after OTA");
+        ESP_LOGI(TAG, "Rebooting as per request");
         ESP.restart();
       }
     }
@@ -175,6 +175,45 @@ namespace fablabbg
     }
   }
 
+  void taskFactoryReset()
+  {
+    static auto start = system_clock::now();
+
+    if (pins.buttons.factory_defaults_pin == NO_PIN)
+      return;
+
+    pinMode(pins.buttons.factory_defaults_pin, INPUT_PULLDOWN);
+
+    if (digitalRead(pins.buttons.factory_defaults_pin) == HIGH)
+    {
+      if (system_clock::now() - start > conf::tasks::FACTORY_DEFAULTS_DELAY)
+      {
+        ESP_LOGW(TAG, "Factory reset requested");
+        if (auto config = SavedConfig::DefaultConfig(); config.SaveToEEPROM())
+        {
+          logic.rebootRequest = true;
+          start = system_clock::now();
+
+          logic.changeStatus(Status::FACTORY_RESET);
+          Tasks::task_delay(1s);
+        }
+        else
+        {
+          ESP_LOGE(TAG, "Factory reset failed");
+          logic.changeStatus(Status::ERROR);
+          Tasks::task_delay(1s);
+        }
+        return;
+      }
+      logic.blinkLed(255, 165, 0); // Blink orange
+      ESP_LOGI(TAG, "Factory reset pending...");
+    }
+    else
+    {
+      start = system_clock::now();
+    }
+  }
+
 #if (WOKWI_SIMULATION)
   void taskRFIDCardSim()
   {
@@ -234,19 +273,20 @@ namespace fablabbg
   // They will be executed at the required frequency during loop()->scheduler.execute() call
   // The scheduler will take care of the timing and will call the task callback
 
-  Task t1("RFIDChip", conf::tasks::RFID_CHECK_PERIOD, &taskCheckRfid, scheduler, true);
-  Task t2("Wifi/MQTT", conf::tasks::MQTT_REFRESH_PERIOD, &taskConnect, scheduler, true, 20s);
-  Task t3("Poweroff", 1s, &taskPoweroffCheck, scheduler, true);
-  Task t4("Logoff", 1s, &taskLogoffCheck, scheduler, true);
+  Task t_rfid("RFIDChip", conf::tasks::RFID_CHECK_PERIOD, &taskCheckRfid, scheduler, true);
+  Task t_net("Wifi/MQTT", conf::tasks::MQTT_REFRESH_PERIOD, &taskConnect, scheduler, true, 20s);
+  Task t_powoff("Poweroff", 1s, &taskPoweroffCheck, scheduler, true);
+  Task t_log("Logoff", 1s, &taskLogoffCheck, scheduler, true);
   // Hardware watchdog will run at one third the frequency
-  Task t5("Watchdog", conf::tasks::WATCHDOG_TIMEOUT / 3, &taskEspWatchdog, scheduler, false);
-  Task t6("Selftest", conf::tasks::RFID_SELFTEST_PERIOD, &taskRfidWatchdog, scheduler, true);
-  Task t7("PoweroffWarning", conf::machine::DELAY_BETWEEN_BEEPS, &taskPoweroffWarning, scheduler, true);
-  Task t8("MQTT keepalive", 1s, &taskMQTTAlive, scheduler, true);
-  Task t9("LED", 1s, &taskBlink, scheduler, true);
+  Task t_wdg("Watchdog", conf::tasks::WATCHDOG_TIMEOUT / 3, &taskEspWatchdog, scheduler, false);
+  Task t_test("Selftest", conf::tasks::RFID_SELFTEST_PERIOD, &taskRfidWatchdog, scheduler, true);
+  Task t_warn("PoweroffWarning", conf::machine::DELAY_BETWEEN_BEEPS, &taskPoweroffWarning, scheduler, true);
+  Task t_mqtt("MQTT keepalive", 1s, &taskMQTTAlive, scheduler, true);
+  Task t_led("LED", 1s, &taskBlink, scheduler, true);
+  Task t_rst("FactoryReset", 500ms, &taskFactoryReset, scheduler, pins.buttons.factory_defaults_pin != NO_PIN);
 
 #if (WOKWI_SIMULATION)
-  Task t10("RFIDCardsSim", 1s, &taskRFIDCardSim, scheduler, true, 30s);
+  Task t_sim("RFIDCardsSim", 1s, &taskRFIDCardSim, scheduler, true, 30s);
 #endif
 
   // flag for saving data
@@ -411,7 +451,7 @@ void setup()
   // Join the AP and try to connect to broker
   logic.getServer().connect();
 
-  t5.start(); // Enable the HW watchdog
+  t_wdg.start(); // Enable the HW watchdog
 
   setupOTA();
 

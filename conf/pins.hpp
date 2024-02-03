@@ -45,12 +45,17 @@ namespace fablabbg
       bool is_neopixel;
       uint32_t neopixel_config;
     };
+    struct buttons_config
+    {
+      uint8_t factory_defaults_pin;
+    };
     // Struct members
     mfrc522_config mfrc522;
     lcd_config lcd;
     relay_config relay;
     buzzer_config buzzer;
     led_config led;
+    buttons_config buttons;
   };
 
 #ifdef PINS_ESP32
@@ -73,7 +78,8 @@ namespace fablabbg
       {.pin = 12U},         // buzzer
       {.pin = 19U,
        .is_neopixel = true,
-       .neopixel_config = NEO_RGB + NEO_KHZ800} // Neopixel
+       .neopixel_config = NEO_RGB + NEO_KHZ800}, // Neopixel
+      {.factory_defaults_pin = NO_PIN}           // Factory defaults button
   };
 #endif
 #if (WOKWI_SIMULATION)
@@ -96,7 +102,8 @@ namespace fablabbg
       {.pin = 12U},          // buzzer
       {.pin = 20U,
        .is_neopixel = true,
-       .neopixel_config = NEO_GRB + NEO_KHZ800} // Neopixel
+       .neopixel_config = NEO_GRB + NEO_KHZ800}, // Neopixel
+      {.factory_defaults_pin = 21U}              // Factory defaults button
   };
 #endif
 #ifdef PINS_ESP32S3
@@ -119,7 +126,8 @@ namespace fablabbg
       {.pin = 9U},          // buzzer
       {.pin = 48U,
        .is_neopixel = true,
-       .neopixel_config = NEO_GRB + NEO_KHZ800} // Neopixel
+       .neopixel_config = NEO_GRB + NEO_KHZ800}, // Neopixel
+      {.factory_defaults_pin = NO_PIN}           // Factory defaults button
   };
 #endif
 #ifdef PINS_ESP32_WROVERKIT
@@ -142,14 +150,15 @@ namespace fablabbg
       {.pin = 13U},         // buzzer
       {.pin = 27U,
        .is_neopixel = true,
-       .neopixel_config = NEO_RGB + NEO_KHZ800} // Neopixel
+       .neopixel_config = NEO_RGB + NEO_KHZ800}, // Neopixel
+      {.factory_defaults_pin = NO_PIN}           // Factory defaults button
   };
 #endif
 
   // Check at compile time that there are no duplicate pin definitions
   constexpr bool no_duplicates()
   {
-    std::array<uint8_t, 15> pin_nums{
+    std::array<uint8_t, 16> pin_nums{
         pins.mfrc522.sda_pin,
         pins.mfrc522.mosi_pin,
         pins.mfrc522.miso_pin,
@@ -164,7 +173,8 @@ namespace fablabbg
         pins.lcd.bl_pin,
         pins.relay.ch1_pin,
         pins.buzzer.pin,
-        pins.led.pin};
+        pins.led.pin,
+        pins.buttons.factory_defaults_pin};
 
     // No constexpr std::sort available
     for (auto i = 0; i < pin_nums.size(); ++i)

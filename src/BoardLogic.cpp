@@ -407,6 +407,10 @@ namespace fablabbg
       getLcd().setRow(0, "Aggiornamento");
       getLcd().setRow(1, "OTA...");
       break;
+    case Status::FACTORY_RESET:
+      getLcd().setRow(0, "EEPROM reset!");
+      getLcd().setRow(1, "Riavvio richiesto");
+      break;
     default:
       getLcd().setRow(0, "Unhandled status");
       if (snprintf(buffer, sizeof(buffer), "Value %d", static_cast<int>(status)) > 0)
@@ -489,7 +493,7 @@ namespace fablabbg
   }
 
   /// @brief Blinks the LED
-  void BoardLogic::blinkLed()
+  void BoardLogic::blinkLed(uint8_t r, uint8_t g, uint8_t b)
   {
     led.set(Led::Status::BLINK);
 
@@ -521,6 +525,12 @@ namespace fablabbg
     else
     {
       led.setColor(128, 255, 0); // Orange
+    }
+
+    // User override
+    if (r != 0 || g != 0 || b != 0)
+    {
+      led.setColor(r, g, b);
     }
 
     // Color override

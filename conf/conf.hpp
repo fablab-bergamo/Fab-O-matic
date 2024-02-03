@@ -75,6 +75,7 @@ namespace fablabbg
     static constexpr auto MQTT_REFRESH_PERIOD{30s};    /* Query the MQTT broker for machine state at given period (default: 30s) */
     static constexpr auto WATCHDOG_TIMEOUT{30s};       /* Timeout for hardware watchdog, set to 0s to disable (default: 30s) */
     static constexpr auto PORTAL_CONFIG_TIMEOUT{5min}; /* Timeout for portal configuration (default: 5min) */
+    static constexpr auto FACTORY_DEFAULTS_DELAY{10s}; /* Press the button for X s to force reset to defaults and reboot */
 
   } // namespace conf::tasks
 
