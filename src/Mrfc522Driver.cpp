@@ -26,7 +26,6 @@ namespace fablabbg
 
   bool Mrfc522Driver::PCD_Init()
   {
-    SPI.end();
     return mfrc522->PCD_Init();
   }
 

@@ -5,13 +5,15 @@ Test suite : [![Test suite](https://github.com/PBrunot/rfid-arduino-copy/actions
 
 ## What is this project?
 
-A RFID-card reader to control machine usage in a Fab Lab environment. Together with the backend project (which can run on a Raspberry Pi Zero), it manages user authentication, track machine usage / maintenance needs. 
+* A low-cost RFID-card reader to control machine usage in a Fab Lab environment.
 
-Assembled version: 
+* Together with the [backend project](https://github.com/fablab-bergamo/rfid-backend) which can run on a Raspberry Pi Zero, it manages user authentication, track machine usage / maintenance needs.
+
+* Assembled version: 
 
 ![image](https://github.com/fablab-bergamo/rfid-arduino/assets/6236243/9898c6a5-cc16-4479-851a-b326ad31a4d6)
 
-It uses MQTT to talk to the backend. Machine control is achieved through an external relay.
+* It uses MQTT to talk to the backend. Machine control is achieved through an external relay.
 
 ## Hardware requirements
 
