@@ -136,3 +136,12 @@ This is a facultative but very helpful setup to shorten the development workflow
 * You can then run the application, setup breakpoints, inspect variables from the Wokwi debugger:
 
 ![image](https://github.com/fablab-bergamo/rfid-arduino/assets/6236243/55f926b5-eec8-49d9-b217-628e07f7e3b8)
+
+## PCB Details
+
+* Not yet built. Can contain modules for RFID, LCD, Power DC-DC buck converter
+
+![image](https://github.com/fablab-bergamo/rfid-arduino/assets/6236243/7a64bf13-23d7-47c7-965a-540bbb7d6ff6)
+
+![image](https://github.com/fablab-bergamo/rfid-arduino/assets/6236243/86a1f4e2-ba7f-47b7-90fb-470d4ee859b0)
+
