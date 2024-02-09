@@ -16,7 +16,7 @@ namespace fablabbg
     {
       OFF,
       ON,
-      BLINK
+      BLINK,
     };
 
     Led() = default;

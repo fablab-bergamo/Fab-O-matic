@@ -114,7 +114,7 @@ namespace fablabbg::ServerMQTT
     USER_INVALID = 0,
     USER_AUTHORIZED = 1,
     USER_UNAUTHORIZED = 2,
-    USER_UNAUTHORIZED_MAINTENANCE = 3
+    USER_UNAUTHORIZED_MAINTENANCE = 3,
   };
 
   class UserResponse final : public Response

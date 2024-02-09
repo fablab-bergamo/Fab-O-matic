@@ -45,7 +45,7 @@ namespace fablabbg
       BOOT,
       SHUTDOWN_IMMINENT,
       OTA_START,
-      FACTORY_RESET
+      FACTORY_RESET,
     };
 
     BoardLogic() = default;

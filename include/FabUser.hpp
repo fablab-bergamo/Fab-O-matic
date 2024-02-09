@@ -18,7 +18,7 @@ namespace fablabbg
       UNKNOWN,
       FABLAB_USER,
       FABLAB_STAFF,
-      FABLAB_ADMIN
+      FABLAB_ADMIN,
     };
 
     card::uid_t card_uid = card::INVALID;

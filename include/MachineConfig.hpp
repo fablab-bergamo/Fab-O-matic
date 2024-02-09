@@ -16,7 +16,7 @@ namespace fablabbg
     PRINTER3D = 1,
     LASER = 2,
     CNC = 3,
-    UNKNOWN = 4
+    UNKNOWN = 4,
   };
 
   struct MachineID

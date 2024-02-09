@@ -19,7 +19,7 @@ namespace fablabbg
       UNKNOWN,
       POWERED_ON,
       WAITING_FOR_POWER_OFF,
-      POWERED_OFF
+      POWERED_OFF,
     };
 
     constexpr Machine(){};
