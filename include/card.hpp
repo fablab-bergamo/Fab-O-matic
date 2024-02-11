@@ -1,10 +1,10 @@
-#ifndef CARD_H_
-#define CARD_H_
+#ifndef CARD_HPP_
+#define CARD_HPP_
 
 #include "Arduino.h"
 #include "conf.hpp"
-#include <sstream>
 #include <iomanip>
+#include <sstream>
 
 #include "Logging.hpp"
 
@@ -39,4 +39,4 @@ namespace fablabbg::card
     ESP_LOGI(TAG, "Card UID = %s", card::uid_str(uid).c_str());
   }
 } // namespace fablabbg::card
-#endif // CARD_H_
+#endif // CARD_HPP_

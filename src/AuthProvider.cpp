@@ -3,8 +3,8 @@
 #include <cstdint>
 #include <string>
 
-#include "Logging.hpp"
 #include "FabBackend.hpp"
+#include "Logging.hpp"
 
 namespace fablabbg
 {
@@ -70,7 +70,8 @@ namespace fablabbg
 
     if (server.isOnline())
     {
-      if (auto response = server.checkCard(uid); response->request_ok && response->getResult() == UserResult::USER_AUTHORIZED)
+      auto response = server.checkCard(uid);
+      if (response->request_ok && response->getResult() == UserResult::USER_AUTHORIZED)
       {
         user.authenticated = true;
         user.card_uid = uid;
@@ -83,17 +84,15 @@ namespace fablabbg
 
         return user;
       }
-      else
-      {
-        ESP_LOGD(TAG, " -> online check NOT OK");
 
-        user.authenticated = false;
+      ESP_LOGD(TAG, " -> online check NOT OK");
 
-        if (response->request_ok)
-          return std::nullopt;
+      user.authenticated = false;
 
-        // If request failed, we need to check the whitelist
-      }
+      if (response->request_ok)
+        return std::nullopt;
+
+      // If request failed, we need to check the whitelist
     }
 
     if (auto result = WhiteListLookup(uid); result.has_value())

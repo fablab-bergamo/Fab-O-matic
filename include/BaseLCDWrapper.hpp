@@ -1,10 +1,10 @@
-#ifndef BASELCDWRAPPER_H_
-#define BASELCDWRAPPER_H_
+#ifndef BASELCDWRAPPER_HPP_
+#define BASELCDWRAPPER_HPP_
 
-#include <string>
 #include "BoardInfo.hpp"
 #include "Machine.hpp"
 #include <chrono>
+#include <string>
 
 using namespace std::chrono;
 
@@ -23,4 +23,4 @@ namespace fablabbg
   };
 } // namespace fablabbg
 
-#endif // BASELCDWRAPPER_H_
+#endif // BASELCDWRAPPER_HPP_

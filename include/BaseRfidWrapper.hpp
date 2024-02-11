@@ -1,5 +1,5 @@
-#ifndef BASE_RFID_WRAPPER_HPP_
-#define BASE_RFID_WRAPPER_HPP_
+#ifndef BASERFIDWRAPPER_HPP_
+#define BASERFIDWRAPPER_HPP_
 #include <optional>
 
 #include "card.hpp"
@@ -18,4 +18,4 @@ namespace fablabbg
     virtual card::uid_t getUid() const = 0;
   };
 } // namespace fablabbg
-#endif // BASE_RFID_WRAPPER_HPP_
+#endif // BASERFIDWRAPPER_HPP_

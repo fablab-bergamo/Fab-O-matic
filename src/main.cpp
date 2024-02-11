@@ -1,20 +1,20 @@
+#include "pthread.h"
+#include <array>
 #include <cstdint>
 #include <string>
-#include <array>
-#include "pthread.h"
 
-#include <esp_task_wdt.h>
-#include <WiFiManager.h>
 #include "ArduinoOTA.h"
+#include <WiFiManager.h>
+#include <esp_task_wdt.h>
 
-#include "globals.hpp"
-#include "pins.hpp"
 #include "BoardLogic.hpp"
-#include "Tasks.hpp"
-#include "SavedConfig.hpp"
-#include "Mrfc522Driver.hpp"
-#include "mock/MockMQTTBroker.hpp"
 #include "Logging.hpp"
+#include "Mrfc522Driver.hpp"
+#include "SavedConfig.hpp"
+#include "Tasks.hpp"
+#include "globals.hpp"
+#include "mock/MockMQTTBroker.hpp"
+#include "pins.hpp"
 
 // For ArduinoOTA
 const char *ssid = secrets::credentials::ssid.data();

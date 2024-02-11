@@ -1,10 +1,10 @@
-#ifndef MACHINE_CONFIG_H_
-#define MACHINE_CONFIG_H_
+#ifndef MACHINECONFIG_HPP_
+#define MACHINECONFIG_HPP_
 
+#include "pins.hpp"
+#include <chrono>
 #include <cstdint>
 #include <string>
-#include <chrono>
-#include "pins.hpp"
 
 using namespace std::chrono;
 
@@ -66,4 +66,4 @@ namespace fablabbg
   };
 } // namespace fablabbg
 
-#endif // MACHINE_CONFIG_H_
+#endif // MACHINECONFIG_HPP_

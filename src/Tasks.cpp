@@ -1,10 +1,10 @@
 #include "Tasks.hpp"
-#include "conf.hpp"
 #include "Arduino.h"
+#include "conf.hpp"
 
-#include <algorithm>
 #include "Arduino.h"
 #include "ArduinoOTA.h"
+#include <algorithm>
 
 #include "Logging.hpp"
 

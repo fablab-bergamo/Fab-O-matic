@@ -1,5 +1,5 @@
-#ifndef TASKS_H_
-#define TASKS_H_
+#ifndef TASKS_HPP_
+#define TASKS_HPP_
 
 #include <chrono>
 #include <functional>
@@ -128,4 +128,4 @@ namespace fablabbg::Tasks
   void task_delay(const milliseconds delay);
 
 } // namespace fablabbg::Tasks
-#endif
+#endif // TASKS_HPP_

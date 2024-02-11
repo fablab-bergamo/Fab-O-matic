@@ -1,14 +1,14 @@
-#ifndef RFIDWRAPPER_H_
-#define RFIDWRAPPER_H_
+#ifndef RFIDWRAPPER_HPP_
+#define RFIDWRAPPER_HPP_
 
-#include <string>
+#include <chrono>
 #include <memory>
 #include <optional>
-#include <chrono>
+#include <string>
 
-#include "conf.hpp"
-#include "card.hpp"
 #include "BaseRfidWrapper.hpp"
+#include "card.hpp"
+#include "conf.hpp"
 
 namespace fablabbg
 {
@@ -57,4 +57,4 @@ namespace fablabbg
 
 #include "RFIDWrapper.tpp"
 
-#endif // RFIDWRAPPER_H_
+#endif // RFIDWRAPPER_HPP_

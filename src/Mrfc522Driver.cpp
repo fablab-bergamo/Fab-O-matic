@@ -1,9 +1,9 @@
-#include <memory>
 #include "Arduino.h"
+#include <memory>
 
-#include "MFRC522v2.h"
-#include "MFRC522DriverSPI.h"
 #include "MFRC522DriverPinSimple.h"
+#include "MFRC522DriverSPI.h"
+#include "MFRC522v2.h"
 
 #include "Mrfc522Driver.hpp"
 

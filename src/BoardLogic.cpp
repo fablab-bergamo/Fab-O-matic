@@ -2,21 +2,21 @@
 
 #include "Arduino.h"
 #include "WiFi.h"
-#include <esp_task_wdt.h>
 #include <Adafruit_NeoPixel.h>
+#include <esp_task_wdt.h>
 
-#include "BoardLogic.hpp"
-#include "secrets.hpp"
-#include "conf.hpp"
-#include "Machine.hpp"
-#include "FabBackend.hpp"
-#include "BaseRfidWrapper.hpp"
 #include "AuthProvider.hpp"
 #include "BaseLCDWrapper.hpp"
-#include "pins.hpp"
-#include "SavedConfig.hpp"
+#include "BaseRfidWrapper.hpp"
+#include "BoardLogic.hpp"
+#include "FabBackend.hpp"
 #include "Logging.hpp"
+#include "Machine.hpp"
+#include "SavedConfig.hpp"
 #include "Tasks.hpp"
+#include "conf.hpp"
+#include "pins.hpp"
+#include "secrets.hpp"
 
 #ifndef GIT_VERSION
 #define GIT_VERSION "??????"

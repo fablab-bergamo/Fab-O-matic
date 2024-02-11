@@ -1,13 +1,13 @@
-#ifndef FABUSER_H_
-#define FABUSER_H_
+#ifndef FABUSER_HPP_
+#define FABUSER_HPP_
 
-#include <cstdint>
-#include <string>
-#include <array>
 #include "Arduino.h"
-#include "conf.hpp"
 #include "card.hpp"
+#include "conf.hpp"
+#include <array>
+#include <cstdint>
 #include <sstream>
+#include <string>
 
 namespace fablabbg
 {
@@ -56,4 +56,4 @@ namespace fablabbg
     }
   };
 } // namespace fablabbg
-#endif // FABUSER_H_
+#endif // FABUSER_HPP_

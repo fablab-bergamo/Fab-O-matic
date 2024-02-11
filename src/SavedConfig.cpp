@@ -3,10 +3,10 @@
 #include <ArduinoJson.h>
 #include <EEPROM.h>
 
-#include "SavedConfig.hpp"
-#include "secrets.hpp"
-#include "conf.hpp"
 #include "Logging.hpp"
+#include "SavedConfig.hpp"
+#include "conf.hpp"
+#include "secrets.hpp"
 
 namespace fablabbg
 {
