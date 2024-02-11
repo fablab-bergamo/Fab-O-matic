@@ -66,7 +66,7 @@ namespace fablabbg
     void blinkLed(uint8_t r = 0, uint8_t g = 0, uint8_t b = 0);
     void checkRfid();
     void checkPowerOff();
-    void setAutologoffDelay(seconds delay);
+    void setAutologoffDelay(std::chrono::seconds delay);
     void setWhitelist(WhiteList whitelist);
     FabBackend &getServer();
     bool reconfigure();

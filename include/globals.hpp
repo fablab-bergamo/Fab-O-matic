@@ -20,8 +20,6 @@
 #include "mock/MockMQTTBroker.hpp"
 #endif
 
-using namespace fablabbg;
-
 namespace fablabbg::Board
 {
   // Global variables

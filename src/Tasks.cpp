@@ -10,7 +10,8 @@
 
 namespace fablabbg::Tasks
 {
-  using namespace std::chrono;
+  using milliseconds = std::chrono::milliseconds;
+  using time_point_sc = std::chrono::time_point<std::chrono::system_clock>;
   using namespace std::chrono_literals;
 
   Scheduler::Scheduler() noexcept : tasks()
@@ -135,7 +136,7 @@ namespace fablabbg::Tasks
              std::function<void()> callback,
              Scheduler &scheduler, bool active, milliseconds delay) : active(active), id(id),
                                                                       period(period), delay(delay),
-                                                                      last_run(system_clock::now() + delay),
+                                                                      last_run(std::chrono::system_clock::now() + delay),
                                                                       next_run(last_run),
                                                                       average_tardiness(0ms), total_runtime(0ms),
                                                                       callback(callback), run_counter(0)
@@ -145,12 +146,12 @@ namespace fablabbg::Tasks
 
   void Task::run()
   {
-    if (isActive() && system_clock::now() >= next_run)
+    if (isActive() && std::chrono::system_clock::now() >= next_run)
     {
       run_counter++;
-      auto last_period = duration_cast<milliseconds>(system_clock::now() - last_run);
+      auto last_period = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - last_run);
       average_tardiness = (average_tardiness * (run_counter - 1) + last_period) / run_counter;
-      last_run = system_clock::now();
+      last_run = std::chrono::system_clock::now();
 
       if (conf::debug::ENABLE_TASK_LOGS)
       {
@@ -159,7 +160,7 @@ namespace fablabbg::Tasks
 
       callback();
 
-      total_runtime += duration_cast<milliseconds>(system_clock::now() - last_run);
+      total_runtime += std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - last_run);
 
       if (period > 0ms)
       {
@@ -167,7 +168,7 @@ namespace fablabbg::Tasks
       }
       else
       {
-        next_run = system_clock::time_point::max(); // Disable the task
+        next_run = std::chrono::system_clock::time_point::max(); // Disable the task
       }
     }
   }
@@ -186,7 +187,7 @@ namespace fablabbg::Tasks
   /// @brief recompute the next run time (now + delay)
   void Task::restart()
   {
-    last_run = system_clock::now() + delay;
+    last_run = std::chrono::system_clock::now() + delay;
     next_run = last_run;
   }
 
@@ -205,7 +206,7 @@ namespace fablabbg::Tasks
     return active;
   }
 
-  milliseconds Task::getPeriod() const
+  std::chrono::milliseconds Task::getPeriod() const
   {
     return period;
   }
@@ -220,7 +221,7 @@ namespace fablabbg::Tasks
     return id;
   }
 
-  milliseconds Task::getAvgTardiness() const
+  std::chrono::milliseconds Task::getAvgTardiness() const
   {
     if (average_tardiness > period)
     {
@@ -234,29 +235,29 @@ namespace fablabbg::Tasks
     return run_counter;
   }
 
-  milliseconds Task::getDelay() const
+  std::chrono::milliseconds Task::getDelay() const
   {
     return delay;
   }
 
-  void Task::setDelay(milliseconds new_delay)
+  void Task::setDelay(std::chrono::milliseconds new_delay)
   {
     delay = new_delay;
   }
 
-  milliseconds Task::getTotalRuntime() const
+  std::chrono::milliseconds Task::getTotalRuntime() const
   {
     return total_runtime;
   }
 
-  time_point<system_clock> Task::getNextRun() const
+  std::chrono::time_point<std::chrono::system_clock> Task::getNextRun() const
   {
     return next_run;
   }
 
   /// @brief Wait for a delay, allowing OTA updates
   /// @param delay period to wait (should be > 50 ms)
-  void task_delay(const milliseconds duration)
+  void task_delay(const std::chrono::milliseconds duration)
   {
     if (duration < 50ms)
     {
@@ -264,11 +265,11 @@ namespace fablabbg::Tasks
       return;
     }
 
-    const auto start = system_clock::now();
+    const auto start = std::chrono::system_clock::now();
     do
     {
       delay(50);
       ArduinoOTA.handle();
-    } while (system_clock::now() - start < duration);
+    } while (std::chrono::system_clock::now() - start < duration);
   }
 } // namespace fablabbg::Tasks

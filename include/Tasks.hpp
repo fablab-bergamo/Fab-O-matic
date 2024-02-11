@@ -7,7 +7,8 @@
 /// @brief This namespace contains the classes that implement a cooperative task scheduler
 namespace fablabbg::Tasks
 {
-  using namespace std::chrono;
+  using milliseconds = std::chrono::milliseconds;
+  using time_point_sc = std::chrono::time_point<std::chrono::system_clock>;
   using namespace std::chrono_literals;
 
   class Scheduler;
@@ -82,15 +83,15 @@ namespace fablabbg::Tasks
 
     /// @brief When shall the task be run again
     /// @return time_point of the next run or time_point::max() if the task will not run.
-    time_point<system_clock> getNextRun() const;
+    time_point_sc getNextRun() const;
 
   private:
     bool active;
     const std::string id;
     milliseconds period;
     milliseconds delay;
-    time_point<system_clock> last_run;
-    time_point<system_clock> next_run;
+    time_point_sc last_run;
+    time_point_sc next_run;
     milliseconds average_tardiness;
     milliseconds total_runtime;
     std::function<void()> callback;

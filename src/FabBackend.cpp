@@ -13,9 +13,6 @@
 
 namespace fablabbg
 {
-
-  using namespace ServerMQTT;
-
   void FabBackend::configure(const SavedConfig &config)
   {
     wifi_ssid = config.ssid;
@@ -54,7 +51,7 @@ namespace fablabbg
   /// @brief Posts to MQTT server and waits for answer
   /// @param query query to be posted
   /// @return true if the server answered
-  bool FabBackend::publishWithReply(const Query &query)
+  bool FabBackend::publishWithReply(const ServerMQTT::Query &query)
   {
     auto try_cpt = 0;
     auto published = false;
@@ -113,7 +110,7 @@ namespace fablabbg
   /// @brief posts to MQTT server
   /// @param query message to post
   /// @return true if the message was published
-  bool FabBackend::publish(const Query &query)
+  bool FabBackend::publish(const ServerMQTT::Query &query)
   {
     String s_payload(query.payload().data());
     String s_topic(topic.c_str());
@@ -148,7 +145,7 @@ namespace fablabbg
 
   /// @brief blocks until the server answers or until the timeout is reached
   /// @return true if the server answered
-  bool FabBackend::waitForAnswer(milliseconds max_duration)
+  bool FabBackend::waitForAnswer(std::chrono::milliseconds max_duration)
   {
     const auto MAX_DURATION_MS = max_duration.count();
     const auto DELAY_MS = 50ms;
@@ -341,33 +338,33 @@ namespace fablabbg
   /// @brief Checks if the card ID is known to the server
   /// @param uid card uid
   /// @return backend response (if request_ok)
-  std::unique_ptr<UserResponse> FabBackend::checkCard(card::uid_t uid)
+  std::unique_ptr<ServerMQTT::UserResponse> FabBackend::checkCard(card::uid_t uid)
   {
-    return processQuery<UserResponse, UserQuery>(uid);
+    return processQuery<ServerMQTT::UserResponse, ServerMQTT::UserQuery>(uid);
   }
 
   /// @brief Checks the machine status on the server
   /// @return backend response (if request_ok)
-  std::unique_ptr<MachineResponse> FabBackend::checkMachine()
+  std::unique_ptr<ServerMQTT::MachineResponse> FabBackend::checkMachine()
   {
-    return processQuery<MachineResponse, MachineQuery>();
+    return processQuery<ServerMQTT::MachineResponse, ServerMQTT::MachineQuery>();
   }
 
   /// @brief register the starting of a machine usage
   /// @param uid card uid
   /// @return backend response (if request_ok)
-  std::unique_ptr<SimpleResponse> FabBackend::startUse(card::uid_t uid)
+  std::unique_ptr<ServerMQTT::SimpleResponse> FabBackend::startUse(card::uid_t uid)
   {
-    return processQuery<SimpleResponse, StartUseQuery>(uid);
+    return processQuery<ServerMQTT::SimpleResponse, ServerMQTT::StartUseQuery>(uid);
   }
 
   /// @brief Register end of machine usage
   /// @param uid card ID of the machine user
   /// @param duration_s duration of usage in seconds
   /// @return backend response (if request_ok)
-  std::unique_ptr<SimpleResponse> FabBackend::finishUse(card::uid_t uid, std::chrono::seconds duration_s)
+  std::unique_ptr<ServerMQTT::SimpleResponse> FabBackend::finishUse(card::uid_t uid, std::chrono::seconds duration_s)
   {
-    return processQuery<SimpleResponse, StopUseQuery>(uid, duration_s);
+    return processQuery<ServerMQTT::SimpleResponse, ServerMQTT::StopUseQuery>(uid, duration_s);
   }
 
   /// @brief Inform the backend that the machine is in use. This is used to prevent
@@ -375,24 +372,24 @@ namespace fablabbg
   /// @param uid card ID of the machine user
   /// @param duration_s duration of usage in seconds
   /// @return backend response (if request_ok)
-  std::unique_ptr<SimpleResponse> FabBackend::inUse(card::uid_t uid, std::chrono::seconds duration_s)
+  std::unique_ptr<ServerMQTT::SimpleResponse> FabBackend::inUse(card::uid_t uid, std::chrono::seconds duration_s)
   {
-    return processQuery<SimpleResponse, InUseQuery>(uid, duration_s);
+    return processQuery<ServerMQTT::SimpleResponse, ServerMQTT::InUseQuery>(uid, duration_s);
   }
 
   /// @brief Registers a maintenance action
   /// @param maintainer who performed the maintenance
   /// @return server response (if request_ok)
-  std::unique_ptr<SimpleResponse> FabBackend::registerMaintenance(card::uid_t maintainer)
+  std::unique_ptr<ServerMQTT::SimpleResponse> FabBackend::registerMaintenance(card::uid_t maintainer)
   {
-    return processQuery<SimpleResponse, RegisterMaintenanceQuery>(maintainer);
+    return processQuery<ServerMQTT::SimpleResponse, ServerMQTT::RegisterMaintenanceQuery>(maintainer);
   }
 
   /// @brief Sends a ping to the server
   /// @return server response (if request_ok)
-  std::unique_ptr<SimpleResponse> FabBackend::alive()
+  std::unique_ptr<ServerMQTT::SimpleResponse> FabBackend::alive()
   {
-    return processQuery<SimpleResponse, AliveQuery>();
+    return processQuery<ServerMQTT::SimpleResponse, ServerMQTT::AliveQuery>();
   }
 
   /// @brief set channel to use for WiFi connection

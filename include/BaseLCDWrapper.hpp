@@ -6,8 +6,6 @@
 #include <chrono>
 #include <string>
 
-using namespace std::chrono;
-
 namespace fablabbg
 {
   class BaseLCDWrapper
@@ -18,7 +16,7 @@ namespace fablabbg
     virtual void showConnection(bool show) = 0;
     virtual void showPower(bool show) = 0;
     virtual void setRow(uint8_t row, const std::string &text) = 0;
-    std::string convertSecondsToHHMMSS(duration<uint16_t> duration) const;
+    std::string convertSecondsToHHMMSS(std::chrono::seconds duration) const;
     virtual void update(const BoardInfo &boardinfo, bool forced = false) = 0;
   };
 } // namespace fablabbg

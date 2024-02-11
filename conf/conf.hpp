@@ -7,11 +7,10 @@
 
 #include "MachineConfig.hpp"
 
-using namespace std::chrono_literals;
-using namespace std::chrono;
-
 namespace fablabbg
 {
+  using namespace std::chrono_literals;
+
   namespace conf::default_config
   {
     static constexpr std::string_view mqtt_server = "fabpi";
@@ -83,8 +82,8 @@ namespace fablabbg
   {
     static constexpr std::string_view topic{"machine"};         /* Initial part of the topic, machine ID will be added */
     static constexpr std::string_view response_topic{"/reply"}; /* Backend reply (sub-topic of the full machine topic) */
-    static constexpr auto MAX_TRIES{3};                         /* Number of tries to get a reply from the backend */
-    static constexpr auto TIMEOUT_REPLY_SERVER{1s};             /* Timeout for a single backend reply request. */
+    static constexpr auto MAX_TRIES{2};                         /* Number of tries to get a reply from the backend */
+    static constexpr auto TIMEOUT_REPLY_SERVER{2s};             /* Timeout for a single backend reply request. */
     static constexpr auto PORT_NUMBER{1883};                    /* MQTT port for broker */
 
   } // namespace conf::mqtt

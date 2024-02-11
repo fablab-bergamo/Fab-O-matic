@@ -44,9 +44,9 @@ namespace fablabbg
     std::string getMachineName() const;
 
     /// @brief Duration of the current usage, or 0s
-    seconds getUsageDuration() const;
+    std::chrono::seconds getUsageDuration() const;
 
-    seconds getAutologoffDelay() const;
+    std::chrono::seconds getAutologoffDelay() const;
 
     /// @brief Try to login the user and start the usage timer
     bool login(FabUser user);
@@ -55,7 +55,7 @@ namespace fablabbg
     void logout();
 
     /// @brief Sets the delay after which the user will be logged off automatically
-    void setAutologoffDelay(seconds new_delay);
+    void setAutologoffDelay(std::chrono::seconds new_delay);
 
     /// @brief Powers the machine on or off using relay/MQTT/both
     /// @param on_or_off new power state
@@ -97,8 +97,8 @@ namespace fablabbg
     bool active{false};
     FabUser current_user{};
 
-    std::optional<time_point<system_clock>> usage_start_timestamp{std::nullopt}; // When did the machine start?
-    std::optional<time_point<system_clock>> logoff_timestamp{std::nullopt};      // When did the last user log off?
+    std::optional<std::chrono::time_point<std::chrono::system_clock>> usage_start_timestamp{std::nullopt}; // When did the machine start?
+    std::optional<std::chrono::time_point<std::chrono::system_clock>> logoff_timestamp{std::nullopt};      // When did the last user log off?
     PowerState power_state{PowerState::POWERED_OFF};
 
     void power_mqtt(bool on_or_off);

@@ -16,7 +16,7 @@ namespace fablabbg
   {
   private:
     std::optional<card::uid_t> uid{std::nullopt};
-    std::optional<time_point<system_clock>> stop_uid_simulate_time{std::nullopt};
+    std::optional<std::chrono::time_point<std::chrono::system_clock>> stop_uid_simulate_time{std::nullopt};
     std::optional<card::uid_t> getSimulatedUid() const;
 
   public:
@@ -39,7 +39,7 @@ namespace fablabbg
     void PCD_SetAntennaGain(MFRC522Constants::PCD_RxGain gain);
     void PCD_DumpVersionToSerial();
 
-    void setUid(const std::optional<card::uid_t> &uid, const std::optional<milliseconds> &max_delay);
+    void setUid(const std::optional<card::uid_t> &uid, const std::optional<std::chrono::milliseconds> &max_delay);
     void resetUid();
 
     static constexpr auto RxGainMax = MFRC522::PCD_RxGain::RxGain_max;

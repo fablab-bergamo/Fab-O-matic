@@ -11,9 +11,6 @@
 
 namespace fablabbg::tests
 {
-  using namespace fablabbg;
-  using namespace std::chrono;
-
   static constexpr WhiteList test_whitelist /* List of RFID tags whitelisted, regardless of connection */
       {
           std::make_tuple(0xAABBCCD1, FabUser::UserLevel::FABLAB_ADMIN, "ABCDEFG"),
@@ -28,7 +25,7 @@ namespace fablabbg::tests
   /// @param uid UID of the card to simulate or std::nullopt for no card
   /// @param duration_tap Duration of the tap
   BoardLogic::Status simulate_rfid_card(RFIDWrapper<MockMrfc522> &rfid, BoardLogic &logic, std::optional<card::uid_t> uid,
-                                        std::optional<milliseconds> duration_tap = std::nullopt);
+                                        std::optional<std::chrono::milliseconds> duration_tap = std::nullopt);
 
   void machine_init(BoardLogic &logic, RFIDWrapper<MockMrfc522> &rfid);
 }

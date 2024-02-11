@@ -13,7 +13,7 @@
 namespace fablabbg
 {
   using namespace std::chrono_literals;
-  using namespace std::chrono;
+  using milliseconds = std::chrono::milliseconds;
 
 #define CHECK_CONFIGURED(ret_type)                   \
   if (!config.has_value() || !server.has_value())    \
@@ -65,7 +65,7 @@ namespace fablabbg
       active = true;
       current_user = user;
       power(true);
-      usage_start_timestamp = system_clock::now();
+      usage_start_timestamp = std::chrono::system_clock::now();
       return true;
     }
     return false;
@@ -89,7 +89,7 @@ namespace fablabbg
       usage_start_timestamp = std::nullopt;
 
       // Sets the countdown to power off
-      logoff_timestamp = system_clock::now();
+      logoff_timestamp = std::chrono::system_clock::now();
 
       if (conf::machine::POWEROFF_GRACE_PERIOD == 0s)
       {
@@ -97,7 +97,7 @@ namespace fablabbg
       }
 
       ESP_LOGI(TAG, "Machine will be shutdown in %lld s",
-               duration_cast<seconds>(conf::machine::POWEROFF_GRACE_PERIOD).count());
+               std::chrono::duration_cast<std::chrono::seconds>(conf::machine::POWEROFF_GRACE_PERIOD).count());
     }
   }
 
@@ -109,7 +109,7 @@ namespace fablabbg
       return false;
 
     return (power_state == PowerState::WAITING_FOR_POWER_OFF &&
-            system_clock::now() - logoff_timestamp.value() > conf::machine::POWEROFF_GRACE_PERIOD);
+            std::chrono::system_clock::now() - logoff_timestamp.value() > conf::machine::POWEROFF_GRACE_PERIOD);
   }
 
   /// @brief indicates if the machine is about to shudown and board should beep
@@ -120,7 +120,7 @@ namespace fablabbg
       return false;
 
     return (power_state == PowerState::WAITING_FOR_POWER_OFF &&
-            system_clock::now() - logoff_timestamp.value() > conf::machine::BEEP_PERIOD);
+            std::chrono::system_clock::now() - logoff_timestamp.value() > conf::machine::BEEP_PERIOD);
   }
 
   /// @brief sets the machine power to on (true) or off (false)
@@ -215,11 +215,11 @@ namespace fablabbg
 
   /// @brief Gets the duration the machine has been used
   /// @return milliseconds since the machine has been started
-  seconds Machine::getUsageDuration() const
+  std::chrono::seconds Machine::getUsageDuration() const
   {
     if (usage_start_timestamp.has_value())
     {
-      return duration_cast<seconds>(system_clock::now() - usage_start_timestamp.value());
+      return std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now() - usage_start_timestamp.value());
     }
     return 0s;
   }
@@ -257,20 +257,20 @@ namespace fablabbg
     return sstream.str();
   }
 
-  seconds Machine::getAutologoffDelay() const
+  std::chrono::seconds Machine::getAutologoffDelay() const
   {
-    CHECK_CONFIGURED(seconds);
+    CHECK_CONFIGURED(std::chrono::seconds);
     return config.value().autologoff;
   }
 
-  void Machine::setAutologoffDelay(seconds new_delay)
+  void Machine::setAutologoffDelay(std::chrono::seconds new_delay)
   {
     CHECK_CONFIGURED(void);
 
     if (config.value().autologoff != new_delay)
     {
       ESP_LOGD(TAG, "Changing autologoff delay to %lld min",
-               duration_cast<minutes>(config.value().autologoff).count());
+               std::chrono::duration_cast<std::chrono::minutes>(config.value().autologoff).count());
     }
 
     config.value().autologoff = new_delay;

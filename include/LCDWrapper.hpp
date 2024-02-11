@@ -8,8 +8,6 @@
 #include <array>
 #include <chrono>
 
-using namespace std::chrono;
-
 namespace fablabbg
 {
   template <typename LcdDriver>
@@ -24,7 +22,7 @@ namespace fablabbg
     void showConnection(bool show);
     void showPower(bool show);
     void setRow(uint8_t row, const std::string &text);
-    std::string convertSecondsToHHMMSS(duration<uint16_t> duration) const;
+    std::string convertSecondsToHHMMSS(std::chrono::seconds duration) const;
     void update(const BoardInfo &boardinfo, bool forced = false);
 
   private:

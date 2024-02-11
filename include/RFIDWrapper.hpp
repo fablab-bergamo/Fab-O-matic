@@ -12,8 +12,6 @@
 
 namespace fablabbg
 {
-  using namespace std::chrono;
-
   template <typename Driver>
   class RFIDWrapper final : public BaseRFIDWrapper
   {
@@ -34,7 +32,7 @@ namespace fablabbg
     /// @param original card to look for
     /// @param max_delay maximum delay to contact the card
     /// @return true if the card is found
-    bool cardStillThere(const card::uid_t original, milliseconds max_delay) const;
+    bool cardStillThere(const card::uid_t original, std::chrono::milliseconds max_delay) const;
 
     /// @brief Reads the card serial number
     /// @return std::nullopt if the card is not present, the card serial otherwise

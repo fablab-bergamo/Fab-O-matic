@@ -6,8 +6,6 @@
 #include <cstdint>
 #include <string>
 
-using namespace std::chrono;
-
 namespace fablabbg
 {
   enum class MachineType : uint8_t
@@ -41,15 +39,15 @@ namespace fablabbg
     } mqtt_config;
 
     /// @brief Time after which the active user on the machine shall be logged-off
-    seconds autologoff;
+    std::chrono::seconds autologoff;
 
     MachineConfig(MachineID id, MachineType type, const std::string &name,
                   const pins_config::relay_config &relay, const std::string &topic,
-                  seconds autologoff) : machine_id(id), machine_type(type),
-                                        machine_name(name),
-                                        relay_config{relay.ch1_pin, relay.active_low},
-                                        mqtt_config{topic},
-                                        autologoff(autologoff){};
+                  std::chrono::seconds autologoff) : machine_id(id), machine_type(type),
+                                                     machine_name(name),
+                                                     relay_config{relay.ch1_pin, relay.active_low},
+                                                     mqtt_config{topic},
+                                                     autologoff(autologoff){};
     std::string toString() const;
 
     /// @brief Indicates if the machine is controller by hard-wired relay
