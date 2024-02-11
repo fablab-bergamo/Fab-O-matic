@@ -1,12 +1,12 @@
-#ifndef AUTHPROVIDER_H_
-#define AUTHPROVIDER_H_
+#ifndef AUTHPROVIDER_HPP_
+#define AUTHPROVIDER_HPP_
 
 #include "FabUser.hpp"
+#include "secrets.hpp"
 #include <list>
+#include <string>
 #include <string_view>
 #include <tuple>
-#include <string>
-#include "secrets.hpp"
 
 namespace fablabbg
 {
@@ -29,4 +29,4 @@ namespace fablabbg
     void setWhitelist(WhiteList list);
   };
 } // namespace fablabbg
-#endif // AUTHPROVIDER_H_
+#endif // AUTHPROVIDER_HPP_

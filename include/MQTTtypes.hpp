@@ -1,13 +1,13 @@
-#ifndef MQTTTYPES_H_
-#define MQTTTYPES_H_
+#ifndef MQTTTYPES_HPP_
+#define MQTTTYPES_HPP_
 
+#include "ArduinoJson.h"
+#include "FabUser.hpp"
+#include "Machine.hpp"
 #include "card.hpp"
 #include "string"
 #include <memory>
-#include "FabUser.hpp"
-#include "Machine.hpp"
 #include <string_view>
-#include "ArduinoJson.h"
 
 namespace fablabbg::ServerMQTT
 {
@@ -160,4 +160,4 @@ namespace fablabbg::ServerMQTT
   };
 
 } // namespace fablabbg::ServerMQTT
-#endif
+#endif // MQTTTYPES_HPP_

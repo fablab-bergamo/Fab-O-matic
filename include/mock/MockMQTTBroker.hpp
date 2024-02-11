@@ -1,20 +1,20 @@
-#ifndef MOCKMQTTBROKER_H_
-#define MOCKMQTTBROKER_H_
+#ifndef MOCK_MOCKMQTTBROKER_HPP_
+#define MOCK_MOCKMQTTBROKER_HPP_
 
 #include <atomic>
 #include <functional>
-#include <string>
 #include <queue>
+#include <string>
 
-#include "sMQTTBroker.h"
 #include "BaseRfidWrapper.hpp"
+#include "sMQTTBroker.h"
 
 namespace fablabbg
 {
   class MockMQTTBroker final : public sMQTTBroker
   {
   public:
-    MockMQTTBroker();
+    MockMQTTBroker() noexcept {};
     ~MockMQTTBroker() = default;
 
     bool isRunning() const;
@@ -50,4 +50,4 @@ namespace fablabbg
     void unlock() { isLocked = false; }
   };
 } // namespace fablabbg
-#endif // MOCKMQTTBROKER_H_
+#endif // MOCK_MOCKMQTTBROKER_HPP_

@@ -1,10 +1,10 @@
-#include <cstdint>
-#include <string>
-#include <array>
-#include <sstream>
 #include "LCDWrapper.hpp"
-#include <type_traits>
 #include "Logging.hpp"
+#include <array>
+#include <cstdint>
+#include <sstream>
+#include <string>
+#include <type_traits>
 
 namespace fablabbg
 {

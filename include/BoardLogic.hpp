@@ -1,18 +1,17 @@
-#ifndef BOARDLOGIC_H
-#define BOARDLOGIC_H
+#ifndef BOARDLOGIC_HPP_
+#define BOARDLOGIC_HPP_
 
-#include "FabUser.hpp"
-#include "card.hpp"
-#include <Adafruit_NeoPixel.h>
-#include "pins.hpp"
-#include "FabBackend.hpp"
-#include "BaseRfidWrapper.hpp"
 #include "AuthProvider.hpp"
-#include "Machine.hpp"
-#include "secrets.hpp"
 #include "BaseLCDWrapper.hpp"
 #include "BaseRfidWrapper.hpp"
+#include "FabBackend.hpp"
+#include "FabUser.hpp"
 #include "Led.hpp"
+#include "Machine.hpp"
+#include "card.hpp"
+#include "pins.hpp"
+#include "secrets.hpp"
+#include <Adafruit_NeoPixel.h>
 
 namespace fablabbg
 {
@@ -104,4 +103,4 @@ namespace fablabbg
     bool longTap(const card::uid_t card, const std::string &short_prompt) const;
   };
 } // namespace fablabbg
-#endif // BOARDLOGIC_H
+#endif // BOARDLOGIC_HPP_

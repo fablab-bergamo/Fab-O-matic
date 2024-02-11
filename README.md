@@ -1,6 +1,6 @@
 # rfid-arduino
 
-Build status : [![PlatformIO CI](https://github.com/fablab-bergamo/rfid-arduino/actions/workflows/platformio.yml/badge.svg)](https://github.com/fablab-bergamo/rfid-arduino/actions/workflows/platformio.yml)
+Build status : [![PlatformIO CI](https://github.com/fablab-bergamo/rfid-arduino/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/fablab-bergamo/rfid-arduino/actions/workflows/build.yml)
 Test suite : [![Test suite](https://github.com/PBrunot/rfid-arduino-copy/actions/workflows/tests.yml/badge.svg)](https://github.com/PBrunot/rfid-arduino-copy/actions/workflows/tests.yml)
 
 ## What is this project?

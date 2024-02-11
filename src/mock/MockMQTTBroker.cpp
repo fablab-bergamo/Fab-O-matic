@@ -1,15 +1,10 @@
 #include "mock/MockMQTTBroker.hpp"
-#include "conf.hpp"
 #include "Logging.hpp"
+#include "conf.hpp"
 
 static const char *TAG2 = "MockMQTTBroker";
 namespace fablabbg
 {
-
-  MockMQTTBroker::MockMQTTBroker()
-  {
-  }
-
   void MockMQTTBroker::start()
   {
     while (WiFi.status() != WL_CONNECTED)

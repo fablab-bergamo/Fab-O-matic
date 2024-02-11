@@ -1,8 +1,8 @@
-#ifndef FABLABBG_LED_HPP_
-#define FABLABBG_LED_HPP_
+#ifndef LED_HPP_
+#define LED_HPP_
 
-#include <Arduino.h>
 #include <Adafruit_NeoPixel.h>
+#include <Arduino.h>
 #include <memory>
 
 #include "pins.hpp"
@@ -37,4 +37,4 @@ namespace fablabbg
 
 } // namespace fablabbg
 
-#endif // FABLABBG_LED_HPP_
+#endif // LED_HPP_

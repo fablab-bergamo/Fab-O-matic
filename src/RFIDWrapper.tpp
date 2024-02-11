@@ -1,10 +1,10 @@
 #include <memory>
 
-#include "RFIDWrapper.hpp"
-#include "pins.hpp"
-#include "conf.hpp"
-#include "card.hpp"
 #include "Logging.hpp"
+#include "RFIDWrapper.hpp"
+#include "card.hpp"
+#include "conf.hpp"
+#include "pins.hpp"
 
 namespace fablabbg
 {

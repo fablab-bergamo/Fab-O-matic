@@ -1,14 +1,14 @@
 #include "Machine.hpp"
 #include "Arduino.h"
-#include <sstream>
-#include <cstdint>
-#include <type_traits>
-#include <chrono>
-#include "pins.hpp"
-#include "secrets.hpp"
 #include "FabBackend.hpp"
 #include "Logging.hpp"
 #include "Tasks.hpp"
+#include "pins.hpp"
+#include "secrets.hpp"
+#include <chrono>
+#include <cstdint>
+#include <sstream>
+#include <type_traits>
 
 namespace fablabbg
 {

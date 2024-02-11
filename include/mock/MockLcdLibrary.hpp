@@ -1,11 +1,11 @@
-#ifndef MOCK_LCDLIBRARY_HPP_
-#define MOCK_LCDLIBRARY_HPP_
+#ifndef MOCK_MOCKLCDLIBRARY_HPP_
+#define MOCK_MOCKLCDLIBRARY_HPP_
 
 #include <stdint.h>
 
 namespace fablabbg
 {
-  class MockLcdLibrary
+  class MockLcdLibrary final
   {
   public:
     constexpr MockLcdLibrary() = default;
@@ -19,4 +19,4 @@ namespace fablabbg
   };
 } // namespace fablabbg
 
-#endif // MOCK_LCDLIBRARY_HPP_
+#endif // MOCK_MOCKLCDLIBRARY_HPP_

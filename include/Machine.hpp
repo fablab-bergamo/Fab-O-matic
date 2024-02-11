@@ -1,11 +1,11 @@
-#ifndef MACHINE_H_
-#define MACHINE_H_
+#ifndef MACHINE_HPP_
+#define MACHINE_HPP_
 
-#include <cstdint>
-#include <array>
-#include <chrono>
 #include "FabUser.hpp"
 #include "MachineConfig.hpp"
+#include <array>
+#include <chrono>
+#include <cstdint>
 
 namespace fablabbg
 {
@@ -105,4 +105,4 @@ namespace fablabbg
     void power_relay(bool on_or_off);
   };
 } // namespace fablabbg
-#endif // MACHINE_H_
+#endif // MACHINE_HPP_

@@ -1,14 +1,14 @@
-#ifndef MRFC522_DRIVER_HPP_
-#define MRFC522_DRIVER_HPP_
+#ifndef MRFC522DRIVER_HPP_
+#define MRFC522DRIVER_HPP_
 
-#include <memory>
 #include "Arduino.h"
+#include <memory>
 
-#include "MFRC522v2.h"
-#include "MFRC522DriverSPI.h"
-#include "MFRC522DriverPinSimple.h"
-#include "MFRC522Debug.h"
 #include "FabUser.hpp"
+#include "MFRC522Debug.h"
+#include "MFRC522DriverPinSimple.h"
+#include "MFRC522DriverSPI.h"
+#include "MFRC522v2.h"
 #include "pins.hpp"
 
 namespace fablabbg
@@ -43,4 +43,4 @@ namespace fablabbg
   };
 } // namespace fablabbg
 
-#endif // MRFC522_DRIVER_HPP_
+#endif // MRFC522DRIVER_HPP_

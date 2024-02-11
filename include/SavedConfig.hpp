@@ -1,14 +1,14 @@
-#ifndef SAVED_CONFIG_H_
-#define SAVED_CONFIG_H_
+#ifndef SAVEDCONFIG_HPP_
+#define SAVEDCONFIG_HPP_
 
-#include <string>
 #include <cstdint>
 #include <optional>
+#include <string>
 
 #include <EEPROM.h>
 
-#include "conf.hpp"
 #include "MachineConfig.hpp"
+#include "conf.hpp"
 
 namespace fablabbg
 {
@@ -60,4 +60,4 @@ namespace fablabbg
   };
 
 } // namespace fablabbg
-#endif // SAVED_CONFIG_H_
+#endif // SAVEDCONFIG_HPP_

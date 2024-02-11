@@ -1,12 +1,12 @@
-#ifndef LCDWRAPPER_H_
-#define LCDWRAPPER_H_
+#ifndef LCDWRAPPER_HPP_
+#define LCDWRAPPER_HPP_
 
-#include <array>
+#include "BaseLCDWrapper.hpp"
 #include "BoardInfo.hpp"
 #include "Machine.hpp"
 #include "pins.hpp"
+#include <array>
 #include <chrono>
-#include "BaseLCDWrapper.hpp"
 
 using namespace std::chrono;
 
@@ -63,4 +63,4 @@ namespace fablabbg
 
 #include "LCDWrapper.tpp"
 
-#endif // LCDWRAPPER_H_
+#endif // LCDWRAPPER_HPP_

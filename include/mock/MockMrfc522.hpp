@@ -1,14 +1,14 @@
-#ifndef MOCKMRFC522_HPP_
-#define MOCKMRFC522_HPP_
+#ifndef MOCK_MOCKMRFC522_HPP_
+#define MOCK_MOCKMRFC522_HPP_
 
+#include "Arduino.h"
 #include <memory>
 #include <optional>
-#include "Arduino.h"
 
-#include "MFRC522v2.h"
-#include "MFRC522DriverSPI.h"
-#include "MFRC522DriverPinSimple.h"
 #include "FabUser.hpp"
+#include "MFRC522DriverPinSimple.h"
+#include "MFRC522DriverSPI.h"
+#include "MFRC522v2.h"
 
 namespace fablabbg
 {
@@ -46,4 +46,4 @@ namespace fablabbg
   };
 } // namespace fablabbg
 
-#endif // MOCKMRFC522_HPP_
+#endif // MOCK_MOCKMRFC522_HPP_
