@@ -7,14 +7,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/cache@v3
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
         with:
           path: |
             ~/.cache/pip
             ~/.platformio/.cache
           key: ${{ runner.os }}-pio
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.9'
       - name: Install PlatformIO Core
@@ -26,7 +26,7 @@ jobs:
       - name: Build PlatformIO Project ESP32-s3
         run: pio run -e esp32-s3
       - name: Upload ESP32S3 build
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: esp32s3.bin
           path: .pio/build/esp32-s3/firmware.bin
@@ -34,7 +34,7 @@ jobs:
       - name: Build PlatformIO Project esp32dev
         run: pio run -e esp32dev        
       - name: Upload ESP32 build
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: esp32.bin
           path: .pio/build/esp32dev/firmware.bin
@@ -42,7 +42,7 @@ jobs:
       - name: Build PlatformIO Project wokwi
         run: pio run -e wokwi
       - name: Upload WOKWI build
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: esp32-wokwi.bin
           path: .pio/build/wokwi/firmware.bin
