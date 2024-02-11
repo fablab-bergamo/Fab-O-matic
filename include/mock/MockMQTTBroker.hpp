@@ -14,7 +14,7 @@ namespace fablabbg
   class MockMQTTBroker final : public sMQTTBroker
   {
   public:
-    MockMQTTBroker();
+    MockMQTTBroker() noexcept {};
     ~MockMQTTBroker() = default;
 
     bool isRunning() const;

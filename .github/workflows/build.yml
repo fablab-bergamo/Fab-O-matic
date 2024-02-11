@@ -30,7 +30,7 @@ jobs:
         with:
           name: esp32s3.bin
           path: .pio/build/esp32-s3/firmware.bin
-          retention-days: 15
+          retention-days: 90
       - name: Build PlatformIO Project esp32dev
         run: pio run -e esp32dev        
       - name: Upload ESP32 build
@@ -38,7 +38,7 @@ jobs:
         with:
           name: esp32.bin
           path: .pio/build/esp32dev/firmware.bin
-          retention-days: 15
+          retention-days: 90
       - name: Build PlatformIO Project wokwi
         run: pio run -e wokwi
       - name: Upload WOKWI build
@@ -46,5 +46,5 @@ jobs:
         with:
           name: esp32-wokwi.bin
           path: .pio/build/wokwi/firmware.bin
-          retention-days: 180
+          retention-days: 90
 
