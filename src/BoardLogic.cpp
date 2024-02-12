@@ -24,6 +24,8 @@
 
 namespace fablabbg
 {
+  using milliseconds = std::chrono::milliseconds;
+
   BaseRFIDWrapper &BoardLogic::getRfid() const
   {
     if (rfid.has_value())
@@ -125,7 +127,7 @@ namespace fablabbg
   bool BoardLogic::longTap(const card::uid_t card, const std::string &short_prompt) const
   {
     constexpr auto STEPS_COUNT = 6;
-    constexpr milliseconds delay_per_step = duration_cast<milliseconds>(conf::machine::LONG_TAP_DURATION) / STEPS_COUNT;
+    constexpr milliseconds delay_per_step = std::chrono::duration_cast<std::chrono::milliseconds>(conf::machine::LONG_TAP_DURATION) / STEPS_COUNT;
     const BoardInfo bi = {server.isOnline(), machine.getPowerState(), machine.isShutdownImminent()};
 
     for (auto step = 0; step < STEPS_COUNT; step++)
@@ -144,7 +146,7 @@ namespace fablabbg
       }
 
       // cardStillThere may have returned immediately, so we need to wait a bit
-      const auto elapsed = duration_cast<milliseconds>(std::chrono::system_clock::now() - start);
+      const auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - start);
       if (delay_per_step - elapsed > 10ms)
       {
         Tasks::task_delay(delay_per_step - elapsed);
@@ -611,7 +613,7 @@ namespace fablabbg
 
   /// @brief Sets the autologoff delay
   /// @param delay new delay
-  void BoardLogic::setAutologoffDelay(seconds delay)
+  void BoardLogic::setAutologoffDelay(std::chrono::seconds delay)
   {
     machine.setAutologoffDelay(delay);
   }

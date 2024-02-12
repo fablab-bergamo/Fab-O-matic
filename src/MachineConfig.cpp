@@ -15,7 +15,7 @@ namespace fablabbg
     sstream << "), MQTTConfig (topic:" << mqtt_config.topic;
     sstream << ", on_message:" << mqtt_config.on_message;
     sstream << ", off_message:" << mqtt_config.off_message;
-    sstream << "), AutologoffDelay (min):" << duration_cast<minutes>(autologoff).count();
+    sstream << "), AutologoffDelay (min):" << std::chrono::duration_cast<std::chrono::minutes>(autologoff).count();
     sstream << ", HasRelay:" << hasRelay();
     sstream << ", HasMqttSwitch:" << hasMqttSwitch();
     sstream << "))";

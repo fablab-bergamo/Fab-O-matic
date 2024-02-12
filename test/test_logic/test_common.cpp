@@ -17,7 +17,7 @@ namespace fablabbg::tests
   /// @param duration_tap duration of the tap. pass milliseconds::max() to keep the card in the field
   /// @return
   BoardLogic::Status simulate_rfid_card(RFIDWrapper<MockMrfc522> &rfid, BoardLogic &logic, std::optional<card::uid_t> uid,
-                                        std::optional<milliseconds> duration_tap)
+                                        std::optional<std::chrono::milliseconds> duration_tap)
   {
     constexpr auto DEFAULT_CYCLES = 3;
     MockMrfc522 &driver = rfid.getDriver();
@@ -30,12 +30,12 @@ namespace fablabbg::tests
     {
       driver.setUid(uid.value(), duration_tap);
       TEST_ASSERT_TRUE_MESSAGE(uid == rfid.getUid(), "Card UID not equal");
-      auto start = system_clock::now();
+      auto start = std::chrono::system_clock::now();
       do
       {
         logic.checkRfid();
         delay(50);
-      } while (duration_tap.has_value() && system_clock::now() - start < duration_tap);
+      } while (duration_tap.has_value() && std::chrono::system_clock::now() - start < duration_tap);
     }
     return logic.getStatus();
   }

@@ -38,7 +38,7 @@ namespace fablabbg
 
   void MockMrfc522::PCD_DumpVersionToSerial() {}
 
-  void MockMrfc522::setUid(const std::optional<card::uid_t> &uid, const std::optional<milliseconds> &max_delay)
+  void MockMrfc522::setUid(const std::optional<card::uid_t> &uid, const std::optional<std::chrono::milliseconds> &max_delay)
   {
     this->uid = uid;
     if (max_delay.has_value())

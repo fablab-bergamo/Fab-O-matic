@@ -17,8 +17,6 @@
 
 namespace fablabbg
 {
-  using namespace ServerMQTT;
-
   class FabBackend
   {
   private:
@@ -46,9 +44,9 @@ namespace fablabbg
     int32_t channel{-1};
 
     void messageReceived(String &topic, String &payload);
-    bool publish(const Query &payload);
-    bool waitForAnswer(milliseconds timeout);
-    bool publishWithReply(const Query &payload);
+    [[nodiscard]] bool publish(const ServerMQTT::Query &payload);
+    [[nodiscard]] bool waitForAnswer(std::chrono::milliseconds timeout);
+    [[nodiscard]] bool publishWithReply(const ServerMQTT::Query &payload);
 
     template <typename RespT, typename QueryT, typename... QueryArgs>
     [[nodiscard]] std::unique_ptr<RespT> processQuery(QueryArgs &&...);
@@ -56,16 +54,16 @@ namespace fablabbg
   public:
     FabBackend() = default;
 
-    [[nodiscard]] std::unique_ptr<UserResponse> checkCard(const card::uid_t uid);
-    [[nodiscard]] std::unique_ptr<MachineResponse> checkMachine();
-    [[nodiscard]] std::unique_ptr<SimpleResponse> startUse(const card::uid_t uid);
-    [[nodiscard]] std::unique_ptr<SimpleResponse> inUse(const card::uid_t uid, std::chrono::seconds duration);
-    [[nodiscard]] std::unique_ptr<SimpleResponse> finishUse(const card::uid_t uid, std::chrono::seconds duration);
-    [[nodiscard]] std::unique_ptr<SimpleResponse> registerMaintenance(const card::uid_t maintainer);
-    [[nodiscard]] std::unique_ptr<SimpleResponse> alive();
+    [[nodiscard]] std::unique_ptr<ServerMQTT::UserResponse> checkCard(const card::uid_t uid);
+    [[nodiscard]] std::unique_ptr<ServerMQTT::MachineResponse> checkMachine();
+    [[nodiscard]] std::unique_ptr<ServerMQTT::SimpleResponse> startUse(const card::uid_t uid);
+    [[nodiscard]] std::unique_ptr<ServerMQTT::SimpleResponse> inUse(const card::uid_t uid, std::chrono::seconds duration);
+    [[nodiscard]] std::unique_ptr<ServerMQTT::SimpleResponse> finishUse(const card::uid_t uid, std::chrono::seconds duration);
+    [[nodiscard]] std::unique_ptr<ServerMQTT::SimpleResponse> registerMaintenance(const card::uid_t maintainer);
+    [[nodiscard]] std::unique_ptr<ServerMQTT::SimpleResponse> alive();
     [[nodiscard]] bool publish(String topic, String payload);
 
-    bool isOnline() const;
+    [[nodiscard]] bool isOnline() const;
     bool connect();
     bool connectWiFi() noexcept;
     bool loop();

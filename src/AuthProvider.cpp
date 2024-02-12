@@ -61,6 +61,7 @@ namespace fablabbg
   std::optional<FabUser> AuthProvider::tryLogin(card::uid_t uid, FabBackend &server) const
   {
     FabUser user;
+    using UserResult = ServerMQTT::UserResult;
     auto uid_str = card::uid_str(uid);
 
     ESP_LOGD(TAG, "tryLogin called for %s", uid_str.c_str());

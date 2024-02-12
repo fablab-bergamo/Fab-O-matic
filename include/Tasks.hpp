@@ -7,7 +7,8 @@
 /// @brief This namespace contains the classes that implement a cooperative task scheduler
 namespace fablabbg::Tasks
 {
-  using namespace std::chrono;
+  using milliseconds = std::chrono::milliseconds;
+  using time_point_sc = std::chrono::time_point<std::chrono::system_clock>;
   using namespace std::chrono_literals;
 
   class Scheduler;
@@ -62,35 +63,35 @@ namespace fablabbg::Tasks
     bool isActive() const;
 
     /// @brief Current period of the task
-    milliseconds getPeriod() const;
+    [[nodiscard]] milliseconds getPeriod() const;
 
-    std::function<void()> getCallback() const;
+    [[nodiscard]] std::function<void()> getCallback() const;
 
     /// @brief Get the Task Identifier
-    std::string getId() const;
+    [[nodiscard]] std::string getId() const;
 
-    milliseconds getDelay() const;
+    [[nodiscard]] milliseconds getDelay() const;
 
     /// @brief Get the average tardiness, i.e. the average period between scheduled start and actual start of execution.
-    milliseconds getAvgTardiness() const;
+    [[nodiscard]] milliseconds getAvgTardiness() const;
 
     /// @brief Gets the number of times the task has been run.
-    unsigned long getRunCounter() const;
+    [[nodiscard]] unsigned long getRunCounter() const;
 
     /// @brief Gets the total execution time of the task. Useful to spot slowest tasks
-    milliseconds getTotalRuntime() const;
+    [[nodiscard]] milliseconds getTotalRuntime() const;
 
     /// @brief When shall the task be run again
     /// @return time_point of the next run or time_point::max() if the task will not run.
-    time_point<system_clock> getNextRun() const;
+    [[nodiscard]] time_point_sc getNextRun() const;
 
   private:
     bool active;
     const std::string id;
     milliseconds period;
     milliseconds delay;
-    time_point<system_clock> last_run;
-    time_point<system_clock> next_run;
+    time_point_sc last_run;
+    time_point_sc next_run;
     milliseconds average_tardiness;
     milliseconds total_runtime;
     std::function<void()> callback;

@@ -44,7 +44,7 @@ namespace fablabbg
   /// @brief indicates if the card is still present in the RFID chip antenna area
   /// @param original the card ID to check
   template <typename Driver>
-  bool RFIDWrapper<Driver>::cardStillThere(const card::uid_t original, milliseconds max_delay) const
+  bool RFIDWrapper<Driver>::cardStillThere(const card::uid_t original, std::chrono::milliseconds max_delay) const
   {
     auto start = std::chrono::system_clock::now();
     do
