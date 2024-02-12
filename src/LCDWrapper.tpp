@@ -33,16 +33,17 @@ namespace fablabbg
   }
 
   template <typename TLcdDriver>
-  void LCDWrapper<TLcdDriver>::createChar(uint8_t num, const uint8_t values[8])
+  void LCDWrapper<TLcdDriver>::createChar(uint8_t num, const std::array<uint8_t, HEIGHT_PX> &values)
   {
     // Arduino LCD library only reads uint8_t* but did not flag const, so we use this wrapper
-    lcd.createChar(num, const_cast<uint8_t *>(values));
+    lcd.createChar(num, const_cast<uint8_t *>(values.data()));
   }
 
   template <typename TLcdDriver>
   bool LCDWrapper<TLcdDriver>::begin()
   {
     lcd.begin(conf::lcd::COLS, conf::lcd::ROWS);
+
     createChar(CHAR_ANTENNA, antenna_char);
     createChar(CHAR_CONNECTION, connection_char);
     createChar(CHAR_NO_CONNECTION, noconnection_char);
@@ -232,13 +233,13 @@ namespace fablabbg
   void LCDWrapper<TLcdDriver>::backlightOn() const
   {
     if (config.bl_pin != NO_PIN)
-      digitalWrite(config.bl_pin, config.active_low ? 0 : 1);
+      digitalWrite(config.bl_pin, config.active_low ? LOW : HIGH);
   }
 
   template <typename TLcdDriver>
   void LCDWrapper<TLcdDriver>::backlightOff() const
   {
     if (config.bl_pin != NO_PIN)
-      digitalWrite(config.bl_pin, config.active_low ? 1 : 0);
+      digitalWrite(config.bl_pin, config.active_low ? HIGH : LOW);
   }
 } // namespace fablabbg

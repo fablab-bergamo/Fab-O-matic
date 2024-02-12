@@ -27,9 +27,7 @@ namespace fablabbg
 
   void Led::setColor(uint8_t r, uint8_t g, uint8_t b)
   {
-    color[0] = r;
-    color[1] = g;
-    color[2] = b;
+    color = {r, g, b};
   }
 
   void Led::set(Status new_status)

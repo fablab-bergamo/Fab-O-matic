@@ -158,7 +158,7 @@ namespace fablabbg
   // Check at compile time that there are no duplicate pin definitions
   constexpr bool no_duplicates()
   {
-    std::array<uint8_t, 16> pin_nums{
+    std::array pin_nums{
         pins.mfrc522.sda_pin,
         pins.mfrc522.mosi_pin,
         pins.mfrc522.miso_pin,

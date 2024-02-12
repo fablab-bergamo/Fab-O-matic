@@ -27,7 +27,7 @@ namespace fablabbg
 
   private:
     Adafruit_NeoPixel pixel{1, pins.led.pin, pins.led.neopixel_config};
-    uint8_t color[3]{128, 128, 128};
+    std::array<uint8_t, 3> color{128, 128, 128};
     Status status{Status::ON};
     bool isOn{false};
     bool initialized{false};

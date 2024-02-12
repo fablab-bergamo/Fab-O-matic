@@ -24,11 +24,11 @@ namespace fablabbg
     void showConnection(bool show);
     void showPower(bool show);
     void setRow(uint8_t row, const std::string &text);
-    std::string convertSecondsToHHMMSS(duration<uint16_t> duration) const;
+    [[nodiscard]] std::string convertSecondsToHHMMSS(duration<uint16_t> duration) const;
     void update(const BoardInfo &boardinfo, bool forced = false);
 
   private:
-    static constexpr auto CHAR_HEIGHT_PX = 8;
+    static constexpr auto HEIGHT_PX = 8;
     static constexpr auto CHAR_ANTENNA = 0;
     static constexpr auto CHAR_CONNECTION = 1;
     static constexpr auto CHAR_NO_CONNECTION = 2;
@@ -36,12 +36,12 @@ namespace fablabbg
     static constexpr auto CHAR_POWERED_OFF = 4;
     static constexpr auto CHAR_POWERING_OFF = 5;
     // Character definitions
-    static constexpr uint8_t antenna_char[CHAR_HEIGHT_PX] = {0x15, 0x0E, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04};
-    static constexpr uint8_t connection_char[CHAR_HEIGHT_PX] = {0x00, 0x00, 0x01, 0x01, 0x05, 0x05, 0x15, 0x15};
-    static constexpr uint8_t noconnection_char[CHAR_HEIGHT_PX] = {0x00, 0x00, 0x11, 0x0A, 0x04, 0x0A, 0x11, 0x00};
-    static constexpr uint8_t powered_on_char[CHAR_HEIGHT_PX] = {0x04, 0x04, 0x04, 0x1f, 0x1f, 0x1f, 0x0a, 0x0a};
-    static constexpr uint8_t powered_off_char[CHAR_HEIGHT_PX] = {0x0a, 0x04, 0x0a, 0x00, 0x1f, 0x1f, 0x0a, 0x0a};
-    static constexpr uint8_t powering_off_char[CHAR_HEIGHT_PX] = {0x0e, 0x15, 0x15, 0x15, 0x17, 0x11, 0x11, 0x0e};
+    static constexpr std::array<uint8_t, HEIGHT_PX> antenna_char{0x15, 0x0E, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04};
+    static constexpr std::array<uint8_t, HEIGHT_PX> connection_char{0x00, 0x00, 0x01, 0x01, 0x05, 0x05, 0x15, 0x15};
+    static constexpr std::array<uint8_t, HEIGHT_PX> noconnection_char{0x00, 0x00, 0x11, 0x0A, 0x04, 0x0A, 0x11, 0x00};
+    static constexpr std::array<uint8_t, HEIGHT_PX> powered_on_char{0x04, 0x04, 0x04, 0x1f, 0x1f, 0x1f, 0x0a, 0x0a};
+    static constexpr std::array<uint8_t, HEIGHT_PX> powered_off_char{0x0a, 0x04, 0x0a, 0x00, 0x1f, 0x1f, 0x0a, 0x0a};
+    static constexpr std::array<uint8_t, HEIGHT_PX> powering_off_char{0x0e, 0x15, 0x15, 0x15, 0x17, 0x11, 0x11, 0x0e};
 
     const pins_config::lcd_config config;
 
@@ -56,8 +56,8 @@ namespace fablabbg
     void backlightOn() const;
     void backlightOff() const;
     void prettyPrint(const DisplayBuffer &buffer, const BoardInfo &bi) const;
-    bool needsUpdate(const BoardInfo &bi) const;
-    void createChar(uint8_t char_idx, const uint8_t values[8]);
+    [[nodiscard]] bool needsUpdate(const BoardInfo &bi) const;
+    void createChar(uint8_t char_idx, const std::array<uint8_t, HEIGHT_PX> &values);
   };
 } // namespace fablabbg
 
