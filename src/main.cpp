@@ -219,7 +219,7 @@ namespace fablabbg
   void taskRFIDCardSim()
   {
     static uid_t logged_uid = card::INVALID;
-    auto &driver = rfid.getDriver();
+    auto &driver = Board::rfid.getDriver();
 
     if (logged_uid == card::INVALID)
     {
@@ -228,7 +228,7 @@ namespace fablabbg
       {
         auto [card_uid, level, name] = secrets::cards::whitelist[random(0, secrets::cards::whitelist.size())];
         logged_uid = card_uid;
-        driver.setUid(card_uid, milliseconds(500));
+        driver.setUid(card_uid, 500ms);
       }
     }
     else
@@ -236,7 +236,7 @@ namespace fablabbg
       // Select logged-in card every X times
       if (random(0, 100) < 5)
       {
-        driver.setUid(logged_uid, milliseconds(500));
+        driver.setUid(logged_uid, 500ms);
         logged_uid = card::INVALID;
       }
     }
@@ -449,7 +449,7 @@ void setup()
   fablabbg::config_portal();
 
 #if (WOKWI_SIMULATION)
-  startMQTTBrocker();
+  fablabbg::startMQTTBrocker();
 #endif
   logic.beep_ok();
 
