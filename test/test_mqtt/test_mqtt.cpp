@@ -193,7 +193,7 @@ namespace fablabbg::tests
     {
       if (!initialized)
       {
-        auto secs = duration_cast<seconds>(conf::tasks::WATCHDOG_TIMEOUT).count();
+        auto secs = std::chrono::duration_cast<std::chrono::seconds>(conf::tasks::WATCHDOG_TIMEOUT).count();
         TEST_ASSERT_EQUAL_MESSAGE(ESP_OK, esp_task_wdt_init(secs, true), "taskEspWatchdog - esp_task_wdt_init failed");
         ESP_LOGI(TAG3, "taskEspWatchdog - initialized %d seconds", secs);
         TEST_ASSERT_EQUAL_MESSAGE(ESP_OK, esp_task_wdt_add(NULL), "taskEspWatchdog - esp_task_wdt_add failed");
