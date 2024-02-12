@@ -20,9 +20,10 @@
 const char *ssid = fablabbg::secrets::credentials::ssid.data();
 const char *password = fablabbg::secrets::credentials::password.data();
 
+using namespace std::chrono_literals;
+
 namespace fablabbg
 {
-  using namespace std::chrono_literals;
   using Scheduler = Tasks::Scheduler;
   using Task = Tasks::Task;
   using Status = BoardLogic::Status;
@@ -439,7 +440,7 @@ void setup()
     // Cannot continue without RFID or LCD
     while (true)
     {
-      Tasks::task_delay(500ms); // Allow OTA
+      fablabbg::Tasks::task_delay(500ms); // Allow OTA
     }
 #endif
   }
