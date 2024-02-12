@@ -53,10 +53,10 @@ namespace fablabbg
 
     /// @brief Loads the configuration from EEPROM if available and matching revision number
     /// @return std::nullopt if not valid, SavedConfig otherwise
-    static std::optional<SavedConfig> LoadFromEEPROM();
+    [[nodiscard]] static std::optional<SavedConfig> LoadFromEEPROM();
 
     /// @brief Returns the default configuration built from conf.hpp and secrets.hpp
-    static SavedConfig DefaultConfig();
+    [[nodiscard]] static SavedConfig DefaultConfig();
   };
 
 } // namespace fablabbg

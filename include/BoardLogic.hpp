@@ -54,7 +54,7 @@ namespace fablabbg
     void refreshFromServer();
     void onNewCard(card::uid_t uid);
     void logout();
-    bool authorize(const card::uid_t uid);
+    [[nodiscard]] bool authorize(const card::uid_t uid);
     void changeStatus(Status newStatus);
     bool board_init();
     void updateLCD() const;
@@ -68,11 +68,11 @@ namespace fablabbg
     void checkPowerOff();
     void setAutologoffDelay(std::chrono::seconds delay);
     void setWhitelist(WhiteList whitelist);
-    FabBackend &getServer();
+    [[nodiscard]] FabBackend &getServer();
     bool reconfigure();
 
-    Machine &getMachineForTesting();
-    const Machine &getMachine() const;
+    [[nodiscard]] Machine &getMachineForTesting();
+    [[nodiscard]] const Machine &getMachine() const;
 
     bool rebootRequest{false};
 

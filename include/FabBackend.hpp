@@ -44,9 +44,9 @@ namespace fablabbg
     int32_t channel{-1};
 
     void messageReceived(String &topic, String &payload);
-    bool publish(const ServerMQTT::Query &payload);
-    bool waitForAnswer(std::chrono::milliseconds timeout);
-    bool publishWithReply(const ServerMQTT::Query &payload);
+    [[nodiscard]] bool publish(const ServerMQTT::Query &payload);
+    [[nodiscard]] bool waitForAnswer(std::chrono::milliseconds timeout);
+    [[nodiscard]] bool publishWithReply(const ServerMQTT::Query &payload);
 
     template <typename RespT, typename QueryT, typename... QueryArgs>
     [[nodiscard]] std::unique_ptr<RespT> processQuery(QueryArgs &&...);
@@ -63,7 +63,7 @@ namespace fablabbg
     [[nodiscard]] std::unique_ptr<ServerMQTT::SimpleResponse> alive();
     [[nodiscard]] bool publish(String topic, String payload);
 
-    bool isOnline() const;
+    [[nodiscard]] bool isOnline() const;
     bool connect();
     bool connectWiFi() noexcept;
     bool loop();

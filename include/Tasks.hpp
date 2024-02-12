@@ -63,27 +63,27 @@ namespace fablabbg::Tasks
     bool isActive() const;
 
     /// @brief Current period of the task
-    milliseconds getPeriod() const;
+    [[nodiscard]] milliseconds getPeriod() const;
 
-    std::function<void()> getCallback() const;
+    [[nodiscard]] std::function<void()> getCallback() const;
 
     /// @brief Get the Task Identifier
-    std::string getId() const;
+    [[nodiscard]] std::string getId() const;
 
-    milliseconds getDelay() const;
+    [[nodiscard]] milliseconds getDelay() const;
 
     /// @brief Get the average tardiness, i.e. the average period between scheduled start and actual start of execution.
-    milliseconds getAvgTardiness() const;
+    [[nodiscard]] milliseconds getAvgTardiness() const;
 
     /// @brief Gets the number of times the task has been run.
-    unsigned long getRunCounter() const;
+    [[nodiscard]] unsigned long getRunCounter() const;
 
     /// @brief Gets the total execution time of the task. Useful to spot slowest tasks
-    milliseconds getTotalRuntime() const;
+    [[nodiscard]] milliseconds getTotalRuntime() const;
 
     /// @brief When shall the task be run again
     /// @return time_point of the next run or time_point::max() if the task will not run.
-    time_point_sc getNextRun() const;
+    [[nodiscard]] time_point_sc getNextRun() const;
 
   private:
     bool active;

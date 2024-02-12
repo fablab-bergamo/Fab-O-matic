@@ -12,7 +12,7 @@ namespace fablabbg::card
 {
   using uid_t = u_int64_t;
   static constexpr uid_t INVALID = 0ULL;
-  inline std::string uid_str(const card::uid_t uid)
+  [[nodiscard]] inline std::string uid_str(const card::uid_t uid)
   {
     uint64_t number = static_cast<uint64_t>(uid);
     uint32_t long1 = static_cast<uint32_t>(number & 0xFFFF0000) >> 16;
@@ -24,7 +24,7 @@ namespace fablabbg::card
     return ss.str();
   }
 
-  constexpr inline uid_t from_array(const uint8_t uid[conf::rfid_tags::UID_BYTE_LEN])
+  [[nodiscard]] constexpr inline uid_t from_array(const uint8_t uid[conf::rfid_tags::UID_BYTE_LEN])
   {
     card::uid_t result = 0;
     for (auto i = (conf::rfid_tags::UID_BYTE_LEN - 1); i >= 0; i--)

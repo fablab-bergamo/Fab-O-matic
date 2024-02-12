@@ -51,10 +51,10 @@ namespace fablabbg
     std::string toString() const;
 
     /// @brief Indicates if the machine is controller by hard-wired relay
-    bool hasRelay() const;
+    [[nodiscard]] bool hasRelay() const;
 
     /// @brief Indicates if the machine is controller by MQTT switch (Shelly)
-    bool hasMqttSwitch() const;
+    [[nodiscard]] bool hasMqttSwitch() const;
 
     MachineConfig() = delete;
     MachineConfig(const MachineConfig &) = default;             // copy constructor
