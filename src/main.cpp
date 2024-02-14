@@ -183,9 +183,9 @@ namespace fablabbg
     if (pins.buttons.factory_defaults_pin == NO_PIN)
       return;
 
-    pinMode(pins.buttons.factory_defaults_pin, INPUT_PULLDOWN);
+    pinMode(pins.buttons.factory_defaults_pin, INPUT_PULLUP);
 
-    if (digitalRead(pins.buttons.factory_defaults_pin) == HIGH)
+    if (digitalRead(pins.buttons.factory_defaults_pin) == LOW)
     {
       if (std::chrono::system_clock::now() - start > conf::tasks::FACTORY_DEFAULTS_DELAY)
       {
