@@ -1,12 +1,12 @@
-#include <optional>
 #include <chrono>
+#include <optional>
 
-#include "unity.h"
-#include "card.hpp"
+#include "BoardLogic.hpp"
 #include "RFIDWrapper.hpp"
+#include "card.hpp"
 #include "mock/MockMrfc522.hpp"
 #include "test_common.h"
-#include "BoardLogic.hpp"
+#include "unity.h"
 
 namespace fablabbg::tests
 {
@@ -44,11 +44,11 @@ namespace fablabbg::tests
   void machine_init(BoardLogic &logic, RFIDWrapper<MockMrfc522> &rfid)
   {
     auto &machine = logic.getMachineForTesting();
-    machine.allowed = true;
-    machine.maintenanceNeeded = false;
+    machine.setAllowed(true);
+    machine.setMaintenanceNeeded(false);
     logic.logout();
     simulate_rfid_card(rfid, logic, std::nullopt);
-    TEST_ASSERT_TRUE_MESSAGE(logic.getStatus() == BoardLogic::Status::FREE, "machine_init: Status not FREE");
+    TEST_ASSERT_TRUE_MESSAGE(logic.getStatus() == BoardLogic::Status::MachineFree, "machine_init: Status not MachineFree");
     TEST_ASSERT_TRUE_MESSAGE(logic.getMachine().isFree(), "machine_init: machine not free");
   }
 }

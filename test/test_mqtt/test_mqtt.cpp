@@ -1,23 +1,23 @@
-#include <chrono>
-#include <string>
-#include <functional>
-#include <vector>
 #include <atomic>
+#include <chrono>
+#include <functional>
 #include <pthread.h>
+#include <string>
+#include <vector>
 
-#include <esp_task_wdt.h>
-#include <Arduino.h>
-#include <unity.h>
+#include "BoardLogic.hpp"
 #include "FabBackend.hpp"
 #include "LCDWrapper.hpp"
 #include "RFIDWrapper.hpp"
-#include "mock/MockMrfc522.hpp"
-#include "mock/MockLcdLibrary.hpp"
-#include "BoardLogic.hpp"
-#include "conf.hpp"
 #include "SavedConfig.hpp"
-#include "mock/MockMQTTBroker.hpp"
 #include "Tasks.hpp"
+#include "conf.hpp"
+#include "mock/MockLcdLibrary.hpp"
+#include "mock/MockMQTTBroker.hpp"
+#include "mock/MockMrfc522.hpp"
+#include <Arduino.h>
+#include <esp_task_wdt.h>
+#include <unity.h>
 
 using namespace std::chrono_literals;
 
@@ -141,12 +141,12 @@ namespace fablabbg::tests
     if (!server.isOnline())
     {
       // connection to wifi
-      logic.changeStatus(BoardLogic::Status::CONNECTING);
+      logic.changeStatus(BoardLogic::Status::Connecting);
 
       // Try to connect
       server.connect();
       // Refresh after connection
-      logic.changeStatus(server.isOnline() ? BoardLogic::Status::CONNECTED : BoardLogic::Status::OFFLINE);
+      logic.changeStatus(server.isOnline() ? BoardLogic::Status::Connected : BoardLogic::Status::Offline);
     }
 
     if (server.isOnline())

@@ -1,22 +1,22 @@
-#include <chrono>
-#include <string>
-#include <functional>
-#include <vector>
 #include <atomic>
+#include <chrono>
+#include <functional>
 #include <pthread.h>
+#include <string>
+#include <vector>
 
-#include <Arduino.h>
-#include <unity.h>
+#include "BoardLogic.hpp"
 #include "FabBackend.hpp"
 #include "LCDWrapper.hpp"
 #include "RFIDWrapper.hpp"
-#include "mock/MockMrfc522.hpp"
-#include "mock/MockLcdLibrary.hpp"
-#include "BoardLogic.hpp"
-#include "conf.hpp"
 #include "SavedConfig.hpp"
-#include "test_common.h"
+#include "conf.hpp"
+#include "mock/MockLcdLibrary.hpp"
 #include "mock/MockMQTTBroker.hpp"
+#include "mock/MockMrfc522.hpp"
+#include "test_common.h"
+#include <Arduino.h>
+#include <unity.h>
 
 using namespace std::chrono_literals;
 
@@ -73,15 +73,15 @@ namespace fablabbg::tests
     logic.beep_ok();
     logic.blinkLed();
 
-    std::vector<BoardLogic::Status> statuses{BoardLogic::Status::ERROR_HW, BoardLogic::Status::ERROR,
-                                             BoardLogic::Status::CONNECTED, BoardLogic::Status::CONNECTING,
-                                             BoardLogic::Status::CLEAR, BoardLogic::Status::FREE, BoardLogic::Status::LOGGED_IN,
-                                             BoardLogic::Status::LOGIN_DENIED, BoardLogic::Status::BUSY, BoardLogic::Status::LOGOUT,
-                                             BoardLogic::Status::ALREADY_IN_USE, BoardLogic::Status::IN_USE, BoardLogic::Status::OFFLINE,
-                                             BoardLogic::Status::NOT_ALLOWED, BoardLogic::Status::VERIFYING,
-                                             BoardLogic::Status::MAINTENANCE_NEEDED, BoardLogic::Status::MAINTENANCE_QUERY,
-                                             BoardLogic::Status::MAINTENANCE_DONE, BoardLogic::Status::PORTAL_STARTING,
-                                             BoardLogic::Status::PORTAL_FAILED, BoardLogic::Status::PORTAL_OK};
+    std::vector statuses{BoardLogic::Status::Error, BoardLogic::Status::ErrorHardware, BoardLogic::Status::Connected,
+                         BoardLogic::Status::Connecting, BoardLogic::Status::Clear, BoardLogic::Status::MachineFree,
+                         BoardLogic::Status::LoggedIn, BoardLogic::Status::LoginDenied, BoardLogic::Status::Busy,
+                         BoardLogic::Status::LoggedOut, BoardLogic::Status::AlreadyInUse, BoardLogic::Status::MachineInUse,
+                         BoardLogic::Status::Offline, BoardLogic::Status::NotAllowed, BoardLogic::Status::Verifying,
+                         BoardLogic::Status::MaintenanceNeeded, BoardLogic::Status::MaintenanceQuery,
+                         BoardLogic::Status::MaintenanceDone, BoardLogic::Status::PortalStarting, BoardLogic::Status::PortalFailed,
+                         BoardLogic::Status::PortalSuccess, BoardLogic::Status::Booting, BoardLogic::Status::ShuttingDown,
+                         BoardLogic::Status::OTAStarting, BoardLogic::Status::FactoryDefaults};
 
     for (const auto status : statuses)
     {
@@ -107,17 +107,17 @@ namespace fablabbg::tests
     {
       const auto [card_uid, level, name] = wle;
       TEST_ASSERT_TRUE_MESSAGE(logic.authorize(card_uid), "Card not authorized");
-      TEST_ASSERT_TRUE_MESSAGE(logic.getStatus() == BoardLogic::Status::LOGGED_IN, "Status not LOGGED_IN");
+      TEST_ASSERT_TRUE_MESSAGE(logic.getStatus() == BoardLogic::Status::LoggedIn, "Status not LoggedIn");
       TEST_ASSERT_TRUE_MESSAGE(logic.getMachine().getActiveUser().card_uid == card_uid, "User UID not equal");
       TEST_ASSERT_TRUE_MESSAGE(logic.getMachine().getActiveUser().holder_name == name, "User name not equal");
       TEST_ASSERT_TRUE_MESSAGE(logic.getMachine().getActiveUser().user_level == level, "User level not equal");
       logic.logout();
-      TEST_ASSERT_TRUE_MESSAGE(logic.getStatus() == BoardLogic::Status::LOGOUT, "Status not LOGOUT");
+      TEST_ASSERT_TRUE_MESSAGE(logic.getStatus() == BoardLogic::Status::LoggedOut, "Status not LoggedOut");
     }
 
     // Check that machine is free
     logic.checkRfid();
-    TEST_ASSERT_TRUE_MESSAGE(logic.getStatus() == BoardLogic::Status::FREE, "Status not FREE");
+    TEST_ASSERT_TRUE_MESSAGE(logic.getStatus() == BoardLogic::Status::MachineFree, "Status not MachineFree");
     TEST_ASSERT_TRUE_MESSAGE(logic.getMachine().isFree(), "Machine not free");
 
     // Logon simulating RFID tag
@@ -127,16 +127,16 @@ namespace fablabbg::tests
     TEST_ASSERT_TRUE_MESSAGE(rfid.isNewCardPresent(), "New card not present");
     TEST_ASSERT_TRUE_MESSAGE(rfid.readCardSerial().has_value(), "Card serial not read");
     TEST_ASSERT_TRUE_MESSAGE(rfid.readCardSerial().value() == card_uid, "Card serial not equal");
-    TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::LOGGED_IN, logic.getStatus(), "Status not LOGGED_IN");
+    TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::LoggedIn, logic.getStatus(), "Status not LoggedIn");
 
     // Card away, machine shall be busy
     auto new_state = simulate_rfid_card(rfid, logic, std::nullopt);
-    TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::IN_USE, new_state, "Status not IN_USE");
+    TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::MachineInUse, new_state, "Status not MachineInUse");
     TEST_ASSERT_FALSE_MESSAGE(logic.getMachine().isFree(), "Machine is free");
 
     // Same card back, shall logout user
     new_state = simulate_rfid_card(rfid, logic, card_uid);
-    TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::LOGOUT, new_state, "Status not LOGOUT");
+    TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::LoggedOut, new_state, "Status not LoggedOut");
     TEST_ASSERT_TRUE_MESSAGE(logic.getMachine().isFree(), "Machine is not free");
   }
 
@@ -147,7 +147,7 @@ namespace fablabbg::tests
     const auto card_uid = get_test_uid(0);
     auto new_state = simulate_rfid_card(rfid, logic, card_uid);
 
-    TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::LOGGED_IN, new_state, "Status not LOGGED_IN");
+    TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::LoggedIn, new_state, "Status not LoggedIn");
     TEST_ASSERT_TRUE_MESSAGE(!logic.getMachine().isFree(), "Machine is free");
 
     // Card away, machine shall be busy
@@ -162,7 +162,7 @@ namespace fablabbg::tests
     // New card away, first user shall still be here
     simulate_rfid_card(rfid, logic, std::nullopt);
     TEST_ASSERT_TRUE_MESSAGE(logic.getMachine().getActiveUser().card_uid == card_uid, "User UID has changed");
-    TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::IN_USE, logic.getStatus(), "Status not IN_USE");
+    TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::MachineInUse, logic.getStatus(), "Status not MachineInUse");
 
     // Original card, shall log out
     simulate_rfid_card(rfid, logic, card_uid);
@@ -173,11 +173,11 @@ namespace fablabbg::tests
 
     // Now new card must succeed
     simulate_rfid_card(rfid, logic, card_uid2);
-    TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::LOGGED_IN, logic.getStatus(), "Status not LOGGED_IN");
+    TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::LoggedIn, logic.getStatus(), "Status not LoggedIn");
 
     // Card away
     simulate_rfid_card(rfid, logic, std::nullopt);
-    TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::IN_USE, logic.getStatus(), "Status not IN_USE");
+    TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::MachineInUse, logic.getStatus(), "Status not MachineInUse");
 
     TEST_ASSERT_TRUE_MESSAGE(logic.getMachine().getActiveUser().card_uid == card_uid2, "User UID is not expected");
     TEST_ASSERT_TRUE_MESSAGE(!logic.getMachine().isFree(), "Machine is free");
@@ -193,14 +193,14 @@ namespace fablabbg::tests
     TEST_ASSERT_TRUE_MESSAGE(logic.getMachine().getAutologoffDelay() == 2s, "Autologoff delay not 2s");
 
     simulate_rfid_card(rfid, logic, get_test_uid(0));
-    TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::LOGGED_IN, logic.getStatus(), "Status not LOGGED_IN");
+    TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::LoggedIn, logic.getStatus(), "Status not LoggedIn");
 
     // Card away
     simulate_rfid_card(rfid, logic, std::nullopt);
     delay(1000);
     TEST_ASSERT_FALSE_MESSAGE(logic.getMachine().isFree(), "Machine is free");
     TEST_ASSERT_FALSE_MESSAGE(logic.getMachine().isAutologoffExpired(), "Autologoff not expired");
-    TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::IN_USE, logic.getStatus(), "Status not IN_USE");
+    TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::MachineInUse, logic.getStatus(), "Status not MachineInUse");
 
     // Now shall expire afer 2s
     simulate_rfid_card(rfid, logic, std::nullopt);
@@ -210,7 +210,7 @@ namespace fablabbg::tests
     logic.logout();
     simulate_rfid_card(rfid, logic, std::nullopt);
     TEST_ASSERT_TRUE_MESSAGE(logic.getMachine().isFree(), "Machine is free");
-    TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::FREE, logic.getStatus(), "Status not FREE");
+    TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::MachineFree, logic.getStatus(), "Status not MachineFree");
   }
 
   void test_machine_maintenance()
@@ -221,16 +221,16 @@ namespace fablabbg::tests
     const auto card_fabuser = get_test_uid(2);
     const auto card_admin = get_test_uid(0);
 
-    machine.allowed = true;
-    machine.maintenanceNeeded = true;
+    machine.setAllowed(true);
+    machine.setMaintenanceNeeded(true);
     simulate_rfid_card(rfid, logic, card_fabuser);
-    TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::MAINTENANCE_NEEDED, logic.getStatus(), "Status not MAINTENANCE_NEEDED");
+    TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::MaintenanceNeeded, logic.getStatus(), "Status not MaintenanceNeeded");
 
     simulate_rfid_card(rfid, logic, std::nullopt);
     simulate_rfid_card(rfid, logic, card_admin, conf::machine::LONG_TAP_DURATION + 3s); // Log in + Conferma manutenzione perché non ritorna prima della conclusione
     simulate_rfid_card(rfid, logic, std::nullopt);                                      // Card away
-    TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::IN_USE, logic.getStatus(), "Status not IN_USE by admin");
-    TEST_ASSERT_FALSE_MESSAGE(logic.getMachine().maintenanceNeeded, "Maintenance not cleared by admin");
+    TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::MachineInUse, logic.getStatus(), "Status not MachineInUse by admin");
+    TEST_ASSERT_FALSE_MESSAGE(logic.getMachine().isMaintenanceNeeded(), "Maintenance not cleared by admin");
 
     // Logoff admin
     simulate_rfid_card(rfid, logic, card_admin);
@@ -240,7 +240,7 @@ namespace fablabbg::tests
     // Now try to logon with fabuser (should succeed because maintenance is cleared)
     simulate_rfid_card(rfid, logic, card_fabuser);
     simulate_rfid_card(rfid, logic, std::nullopt);
-    TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::IN_USE, logic.getStatus(), "Status not IN_USE by normal user");
+    TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::MachineInUse, logic.getStatus(), "Status not MachineInUse by normal user");
   }
 
   void test_machine_allowed()
@@ -251,17 +251,17 @@ namespace fablabbg::tests
     auto card_fabuser = get_test_uid(3);
     auto card_admin = get_test_uid(0);
 
-    machine.allowed = false;
-    machine.maintenanceNeeded = false;
+    machine.setAllowed(false);
+    machine.setMaintenanceNeeded(false);
 
     // check if blocked for normal users
     simulate_rfid_card(rfid, logic, card_fabuser);
-    TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::NOT_ALLOWED, logic.getStatus(), "Status not NOT_ALLOWED");
+    TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::NotAllowed, logic.getStatus(), "Status not NotAllowed");
     simulate_rfid_card(rfid, logic, std::nullopt);
 
     // still blocked for admins
     simulate_rfid_card(rfid, logic, card_admin);
-    TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::NOT_ALLOWED, logic.getStatus(), "Status not NOT_ALLOWED for admins");
+    TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::NotAllowed, logic.getStatus(), "Status not NotAllowed for admins");
     simulate_rfid_card(rfid, logic, std::nullopt);
   }
 } // namespace fablabbg::tests

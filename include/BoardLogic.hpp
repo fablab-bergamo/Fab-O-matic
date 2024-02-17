@@ -20,31 +20,31 @@ namespace fablabbg
   public:
     enum class Status : uint8_t
     {
-      CLEAR,
-      FREE,
-      LOGGED_IN,
-      LOGIN_DENIED,
-      BUSY,
-      LOGOUT,
-      CONNECTING,
-      CONNECTED,
-      ALREADY_IN_USE,
-      IN_USE,
-      OFFLINE,
-      NOT_ALLOWED,
-      VERIFYING,
-      MAINTENANCE_NEEDED,
-      MAINTENANCE_QUERY,
-      MAINTENANCE_DONE,
-      ERROR,
-      ERROR_HW,
-      PORTAL_FAILED,
-      PORTAL_OK,
-      PORTAL_STARTING,
-      BOOT,
-      SHUTDOWN_IMMINENT,
-      OTA_START,
-      FACTORY_RESET,
+      Clear,
+      MachineFree,
+      LoggedIn,
+      LoginDenied,
+      Busy,
+      LoggedOut,
+      Connecting,
+      Connected,
+      AlreadyInUse,
+      MachineInUse,
+      Offline,
+      NotAllowed,
+      Verifying,
+      MaintenanceNeeded,
+      MaintenanceQuery,
+      MaintenanceDone,
+      Error,
+      ErrorHardware,
+      PortalFailed,
+      PortalSuccess,
+      PortalStarting,
+      Booting,
+      ShuttingDown,
+      OTAStarting,
+      FactoryDefaults,
     };
 
     BoardLogic() = default;
@@ -87,7 +87,7 @@ namespace fablabbg
     BoardLogic &operator=(BoardLogic &&) = default;
 
   private:
-    Status status{Status::CLEAR};
+    Status status{Status::Clear};
     Led led;
     FabBackend server;
     std::optional<std::reference_wrapper<BaseRFIDWrapper>> rfid{std::nullopt}; // Configured at runtime

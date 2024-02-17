@@ -102,13 +102,13 @@ namespace fablabbg
     else
     {
       // user is not the same, display who is using it
-      changeStatus(Status::ALREADY_IN_USE);
+      changeStatus(Status::AlreadyInUse);
     }
     Tasks::task_delay(conf::lcd::SHORT_MESSAGE_DELAY);
     return;
   }
 
-  /// @brief Removes the current machine user and changes the status to LOGOUT
+  /// @brief Removes the current machine user and changes the status to LoggedOut
   void BoardLogic::logout()
   {
     auto result = server.finishUse(machine.getActiveUser().card_uid,
@@ -117,7 +117,7 @@ namespace fablabbg
     ESP_LOGI(TAG, "Logout, result finishUse: %d", result->request_ok);
 
     machine.logout();
-    changeStatus(Status::LOGOUT);
+    changeStatus(Status::LoggedOut);
     beep_ok();
     Tasks::task_delay(conf::lcd::SHORT_MESSAGE_DELAY);
   }
@@ -163,7 +163,7 @@ namespace fablabbg
   /// @return true if the user is now logged on to the machine
   bool BoardLogic::authorize(card::uid_t uid)
   {
-    changeStatus(Status::VERIFYING);
+    changeStatus(Status::Verifying);
     FabUser user;
 
     user.authenticated = false;
@@ -175,7 +175,7 @@ namespace fablabbg
     if (!response.has_value())
     {
       ESP_LOGI(TAG, "Failed login for %llu", uid);
-      changeStatus(Status::LOGIN_DENIED);
+      changeStatus(Status::LoginDenied);
       beep_failed();
       return false;
     }
@@ -185,7 +185,7 @@ namespace fablabbg
     if (!machine.isAllowed())
     {
       ESP_LOGI(TAG, "Login refused due to machine not allowed");
-      changeStatus(Status::NOT_ALLOWED);
+      changeStatus(Status::NotAllowed);
       beep_failed();
       return false;
     }
@@ -195,7 +195,7 @@ namespace fablabbg
       if (conf::machine::MAINTENANCE_BLOCK &&
           user.user_level < FabUser::UserLevel::FabStaff)
       {
-        changeStatus(Status::MAINTENANCE_NEEDED);
+        changeStatus(Status::MaintenanceNeeded);
         beep_failed();
         Tasks::task_delay(conf::lcd::SHORT_MESSAGE_DELAY);
         return false;
@@ -203,7 +203,7 @@ namespace fablabbg
       if (user.user_level >= FabUser::UserLevel::FabStaff)
       {
         beep_ok();
-        changeStatus(Status::MAINTENANCE_QUERY);
+        changeStatus(Status::MaintenanceQuery);
 
         if (longTap(user.card_uid, "Registra"))
         {
@@ -211,7 +211,7 @@ namespace fablabbg
           if (!maint_resp->request_ok)
           {
             beep_failed();
-            changeStatus(Status::ERROR);
+            changeStatus(Status::Error);
             Tasks::task_delay(conf::lcd::SHORT_MESSAGE_DELAY);
             // Allow bypass for admins
             if (user.user_level == FabUser::UserLevel::FabAdmin)
@@ -221,7 +221,7 @@ namespace fablabbg
           }
           else
           {
-            changeStatus(Status::MAINTENANCE_DONE);
+            changeStatus(Status::MaintenanceDone);
             machine.setMaintenanceNeeded(false);
             beep_ok();
             Tasks::task_delay(conf::lcd::SHORT_MESSAGE_DELAY);
@@ -235,12 +235,12 @@ namespace fablabbg
     {
       auto result = server.startUse(machine.getActiveUser().card_uid);
       ESP_LOGI(TAG, "Login, result startUse: %d", result->request_ok);
-      changeStatus(Status::LOGGED_IN);
+      changeStatus(Status::LoggedIn);
       beep_ok();
     }
     else
     {
-      changeStatus(Status::NOT_ALLOWED);
+      changeStatus(Status::NotAllowed);
       beep_failed();
       Tasks::task_delay(conf::lcd::SHORT_MESSAGE_DELAY);
     }
@@ -302,10 +302,10 @@ namespace fablabbg
 
     switch (status)
     {
-    case Status::CLEAR:
+    case Status::Clear:
       getLcd().clear();
       break;
-    case Status::FREE:
+    case Status::MachineFree:
       getLcd().setRow(0, machine_name);
       if (machine.isMaintenanceNeeded())
       {
@@ -320,96 +320,96 @@ namespace fablabbg
         getLcd().setRow(1, "Avvicina carta");
       }
       break;
-    case Status::ALREADY_IN_USE:
+    case Status::AlreadyInUse:
       getLcd().setRow(0, "In uso da");
       getLcd().setRow(1, user_name);
       break;
-    case Status::LOGGED_IN:
+    case Status::LoggedIn:
       getLcd().setRow(0, "Inizio uso");
       getLcd().setRow(1, user_name);
       break;
-    case Status::LOGIN_DENIED:
+    case Status::LoginDenied:
       getLcd().setRow(0, "Carta ignota");
       getLcd().setRow(1, uid_str);
       break;
-    case Status::LOGOUT:
+    case Status::LoggedOut:
       getLcd().setRow(0, "Arrivederci");
       getLcd().setRow(1, user_name);
       break;
-    case Status::CONNECTING:
+    case Status::Connecting:
       getLcd().setRow(0, "Connessione");
       getLcd().setRow(1, "al server MQTT");
       break;
-    case Status::CONNECTED:
+    case Status::Connected:
       getLcd().setRow(0, "Connesso");
       getLcd().setRow(1, "");
       break;
-    case Status::IN_USE:
+    case Status::MachineInUse:
       if (snprintf(buffer, sizeof(buffer), "Ciao %s", user_name.c_str()) > 0)
         getLcd().setRow(0, buffer);
       getLcd().setRow(1, getLcd().convertSecondsToHHMMSS(machine.getUsageDuration()));
       break;
-    case Status::BUSY:
+    case Status::Busy:
       getLcd().setRow(0, "Elaborazione...");
       getLcd().setRow(1, "");
       break;
-    case Status::OFFLINE:
+    case Status::Offline:
       getLcd().setRow(0, "OFFLINE MODE");
       getLcd().setRow(1, "");
       break;
-    case Status::NOT_ALLOWED:
+    case Status::NotAllowed:
       getLcd().setRow(0, "Blocco");
       getLcd().setRow(1, "amministrativo");
       break;
-    case Status::VERIFYING:
+    case Status::Verifying:
       getLcd().setRow(0, "VERIFICA IN");
       getLcd().setRow(1, "CORSO");
       break;
-    case Status::MAINTENANCE_NEEDED:
+    case Status::MaintenanceNeeded:
       getLcd().setRow(0, "Blocco per");
       getLcd().setRow(1, "manutenzione");
       break;
-    case Status::MAINTENANCE_QUERY:
+    case Status::MaintenanceQuery:
       getLcd().setRow(0, "Manutenzione?");
       getLcd().setRow(1, "Registra");
       break;
-    case Status::MAINTENANCE_DONE:
+    case Status::MaintenanceDone:
       getLcd().setRow(0, "Manutenzione");
       getLcd().setRow(1, "registrata");
       break;
-    case Status::ERROR:
+    case Status::Error:
       getLcd().setRow(0, "Errore");
       getLcd().setRow(1, "V" GIT_VERSION);
       break;
-    case Status::ERROR_HW:
+    case Status::ErrorHardware:
       getLcd().setRow(0, "Errore HW");
       getLcd().setRow(1, "V" GIT_VERSION);
       break;
-    case Status::PORTAL_FAILED:
+    case Status::PortalFailed:
       getLcd().setRow(0, "Errore portale");
       getLcd().setRow(1, WiFi.softAPIP().toString().c_str());
       break;
-    case Status::PORTAL_OK:
+    case Status::PortalSuccess:
       getLcd().setRow(0, "AP config OK");
       getLcd().setRow(1, "V" GIT_VERSION);
       break;
-    case Status::PORTAL_STARTING:
+    case Status::PortalStarting:
       getLcd().setRow(0, "Apri portale");
       getLcd().setRow(1, WiFi.softAPIP().toString().c_str());
       break;
-    case Status::BOOT:
+    case Status::Booting:
       getLcd().setRow(0, "Avvio...");
       getLcd().setRow(1, "V" GIT_VERSION);
       break;
-    case Status::SHUTDOWN_IMMINENT:
+    case Status::ShuttingDown:
       getLcd().setRow(0, machine_name);
       getLcd().setRow(1, "In spegnimento!");
       break;
-    case Status::OTA_START:
+    case Status::OTAStarting:
       getLcd().setRow(0, "Aggiornamento");
       getLcd().setRow(1, "OTA...");
       break;
-    case Status::FACTORY_RESET:
+    case Status::FactoryDefaults:
       getLcd().setRow(0, "EEPROM reset!");
       getLcd().setRow(1, "Riavvio richiesto");
       break;
@@ -536,7 +536,7 @@ namespace fablabbg
     }
 
     // Color override
-    if (status == Status::ERROR_HW || status == Status::ERROR)
+    if (status == Status::ErrorHardware || status == Status::Error)
     {
       led.setColor(255, 0, 0); // Red
     }
@@ -564,11 +564,11 @@ namespace fablabbg
     ready_for_a_new_card = true;
     if (machine.isFree())
     {
-      changeStatus(Status::FREE);
+      changeStatus(Status::MachineFree);
     }
     else
     {
-      changeStatus(Status::IN_USE);
+      changeStatus(Status::MachineInUse);
     }
   }
 

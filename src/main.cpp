@@ -47,12 +47,12 @@ namespace fablabbg
     if (!server.isOnline())
     {
       // connection to wifi
-      Board::logic.changeStatus(Status::CONNECTING);
+      Board::logic.changeStatus(Status::Connecting);
 
       // Try to connect
       server.connect();
       // Refresh after connection
-      Board::logic.changeStatus(server.isOnline() ? Status::CONNECTED : Status::OFFLINE);
+      Board::logic.changeStatus(server.isOnline() ? Status::Connected : Status::Offline);
 
       // Briefly show to the user
       Tasks::task_delay(conf::lcd::SHORT_MESSAGE_DELAY);
@@ -99,7 +99,7 @@ namespace fablabbg
   {
     if (Board::logic.getMachine().isShutdownImminent())
     {
-      Board::logic.changeStatus(Status::SHUTDOWN_IMMINENT);
+      Board::logic.changeStatus(Status::ShuttingDown);
       Board::logic.beep_failed();
       if (conf::debug::ENABLE_LOGS)
         ESP_LOGI(TAG, "Machine is about to shutdown");
@@ -195,13 +195,13 @@ namespace fablabbg
           Board::logic.setRebootRequest(true);
           start = std::chrono::system_clock::now();
 
-          Board::logic.changeStatus(Status::FACTORY_RESET);
+          Board::logic.changeStatus(Status::FactoryDefaults);
           Tasks::task_delay(1s);
         }
         else
         {
           ESP_LOGE(TAG, "Factory reset failed");
-          Board::logic.changeStatus(Status::ERROR);
+          Board::logic.changeStatus(Status::Error);
           Tasks::task_delay(1s);
         }
         return;
@@ -304,7 +304,7 @@ namespace fablabbg
     ESP_LOGI(TAG, "Entering portal config mode");
     ESP_LOGD(TAG, "%s", WiFi.softAPIP().toString().c_str());
     ESP_LOGD(TAG, "%s", myWiFiManager->getConfigPortalSSID().c_str());
-    Board::logic.changeStatus(Status::PORTAL_STARTING);
+    Board::logic.changeStatus(Status::PortalStarting);
   }
 
   // Starts the WiFi portal for configuration if needed
@@ -344,12 +344,12 @@ namespace fablabbg
 
     if (wifiManager.autoConnect())
     {
-      Board::logic.changeStatus(Status::PORTAL_OK);
+      Board::logic.changeStatus(Status::PortalSuccess);
       delay(1000);
     }
     else
     {
-      Board::logic.changeStatus(Status::PORTAL_FAILED);
+      Board::logic.changeStatus(Status::PortalFailed);
       delay(3000);
     }
 
@@ -389,7 +389,7 @@ namespace fablabbg
   {
     ArduinoOTA.setHostname(conf::default_config::hostname.data());
     ArduinoOTA.onStart([]()
-                       { Board::logic.changeStatus(Status::OTA_START); });
+                       { Board::logic.changeStatus(Status::OTAStarting); });
     ArduinoOTA.onEnd(OTAComplete);
     ArduinoOTA.setRebootOnSuccess(false);
     ArduinoOTA.setTimeout(45000);
@@ -428,11 +428,11 @@ void setup()
   auto success = logic.configure(rfid, lcd);
   success &= logic.board_init();
 
-  logic.changeStatus(Status::BOOT);
+  logic.changeStatus(Status::Booting);
 
   if (!success)
   {
-    logic.changeStatus(Status::ERROR_HW);
+    logic.changeStatus(Status::ErrorHardware);
     logic.beep_failed();
     logic.blinkLed();
 #ifndef DEBUG
