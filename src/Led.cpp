@@ -17,6 +17,12 @@ namespace fablabbg
     {
       pixel.begin();
     }
+    else if (pins.led.is_rgb)
+    {
+      pinMode(pins.led.pin, OUTPUT);
+      pinMode(pins.led.green_pin, OUTPUT);
+      pinMode(pins.led.blue_pin, OUTPUT);
+    }
     else
     {
       digitalWrite(pins.led.pin, LOW);
@@ -35,6 +41,26 @@ namespace fablabbg
     this->status = new_status;
   }
 
+  void Led::outputColor(uint8_t r, uint8_t g, uint8_t b)
+  {
+    if constexpr (pins.led.is_neopixel)
+    {
+      pixel.setPixelColor(0, r, g, b);
+      pixel.show();
+    }
+    if constexpr (pins.led.is_rgb)
+    {
+      analogWrite(pins.led.pin, r);
+      analogWrite(pins.led.green_pin, g);
+      analogWrite(pins.led.blue_pin, b);
+    }
+    if constexpr (!pins.led.is_rgb || !pins.led.is_neopixel)
+    {
+      auto light = r > 0 || g > 0 || b > 0;
+      digitalWrite(pins.led.pin, light ? HIGH : LOW);
+    }
+  }
+
   void Led::update()
   {
     init();
@@ -42,33 +68,23 @@ namespace fablabbg
     switch (status)
     {
     case Status::Off:
-      pixel.setPixelColor(0, 0, 0, 0);
       isOn = false;
       break;
     case Status::On:
-      pixel.setPixelColor(0, color[0], color[1], color[2]);
       isOn = true;
       break;
     case Status::Blinking:
-      if (isOn)
-      {
-        pixel.setPixelColor(0, color[0], color[1], color[2]);
-      }
-      else
-      {
-        pixel.setPixelColor(0, 0, 0, 0);
-      }
       isOn = !isOn;
       break;
     }
 
-    if (pins.led.is_neopixel)
+    if (isOn)
     {
-      pixel.show();
+      outputColor(color[0], color[1], color[2]);
     }
     else
     {
-      digitalWrite(pins.led.pin, isOn ? HIGH : LOW);
+      outputColor(0, 0, 0);
     }
   }
 

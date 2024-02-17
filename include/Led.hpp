@@ -31,7 +31,7 @@ namespace fablabbg
     Status status{Status::On};
     bool isOn{false};
     bool initialized{false};
-
+    void outputColor(uint8_t r, uint8_t g, uint8_t b);
     void init();
   };
 
