@@ -21,7 +21,7 @@ namespace fablabbg
     mqtt_user = config.mqtt_user;
     mqtt_password = config.mqtt_password;
 
-#if (WOKWI_SIMULATION)
+#if (PINS_WOKWI)
     channel = 6;
     broker_hostname = "localhost";
 #else
@@ -148,11 +148,9 @@ namespace fablabbg
   /// @return true if the server answered
   bool FabBackend::waitForAnswer(std::chrono::milliseconds max_duration)
   {
-    const auto MAX_DURATION_MS = max_duration.count();
+    const auto start_time = std::chrono::system_clock::now();
     const auto DELAY_MS = 50ms;
-    const auto NB_LOOPS{std::max(MAX_DURATION_MS / DELAY_MS.count(), 1LL)};
-
-    for (auto i = 0; i < NB_LOOPS; i++)
+    do
     {
       if (answer_pending)
       {
@@ -168,8 +166,9 @@ namespace fablabbg
       {
         return true;
       }
-    }
-    ESP_LOGE(TAG, "Failure, no answer from MQTT server (timeout:%lld ms)", MAX_DURATION_MS);
+    } while (std::chrono::system_clock::now() < (start_time + max_duration));
+
+    ESP_LOGE(TAG, "Failure, no answer from MQTT server (timeout:%lld ms)", max_duration.count());
     return false;
   }
 

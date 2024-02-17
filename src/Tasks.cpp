@@ -107,7 +107,7 @@ namespace fablabbg::Tasks
     {
       printStats();
     }
-#if (WOKWI_SIMULATION)
+#if (PINS_WOKWI)
     else
     {
       delay(5); // Wokwi simulation is sometimes slow and this helps to catch-up

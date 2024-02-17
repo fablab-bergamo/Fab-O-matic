@@ -31,7 +31,7 @@ namespace fablabbg
   namespace Board
   {
     // Only main.cpp instanciates the variables through Board.h file
-#if (WOKWI_SIMULATION)
+#if (RFID_SIMULATION)
     extern RFIDWrapper<MockMrfc522> rfid;
 #else
     extern RFIDWrapper<Mrfc522Driver> rfid;
@@ -215,7 +215,7 @@ namespace fablabbg
     }
   }
 
-#if (WOKWI_SIMULATION)
+#if (RFID_SIMULATION)
   void taskRFIDCardSim()
   {
     static uid_t logged_uid = card::INVALID;
@@ -241,7 +241,9 @@ namespace fablabbg
       }
     }
   }
+#endif
 
+#if (MQTT_SIMULATION)
   void *threadMQTTServer(void *arg)
   {
     ESP_LOGI(TAG, "threadMQTTServer started");
@@ -285,7 +287,7 @@ namespace fablabbg
   const Task t_led("LED", 1s, &taskBlink, Board::scheduler, true);
   const Task t_rst("FactoryReset", 500ms, &taskFactoryReset, Board::scheduler, pins.buttons.factory_defaults_pin != NO_PIN);
 
-#if (WOKWI_SIMULATION)
+#if (RFID_SIMULATION)
   const Task t_sim("RFIDCardsSim", 1s, &taskRFIDCardSim, Board::scheduler, true, 30s);
 #endif
 
@@ -336,7 +338,7 @@ namespace fablabbg
       wifiManager.resetSettings();
     }
 
-#if (WOKWI_SIMULATION)
+#if (PINS_WOKWI)
     wifiManager.setDebugOutput(true);
     wifiManager.resetSettings();
     wifiManager.setTimeout(10); // fail fast for debugging
@@ -453,7 +455,7 @@ void setup()
   // Network configuration setup
   fablabbg::config_portal();
 
-#if (WOKWI_SIMULATION)
+#if (MQTT_SIMULATION)
   fablabbg::startMQTTBrocker();
 #endif
   logic.beep_ok();
