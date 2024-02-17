@@ -17,12 +17,13 @@ namespace fablabbg
   {
     wifi_ssid = config.ssid;
     wifi_password = config.password;
-    server_ip = config.mqtt_server;
+    broker_hostname = config.mqtt_server;
     mqtt_user = config.mqtt_user;
     mqtt_password = config.mqtt_password;
 
 #if (WOKWI_SIMULATION)
     channel = 6;
+    broker_hostname = "localhost";
 #else
     channel = -1;
 #endif
@@ -244,13 +245,13 @@ namespace fablabbg
         !client.connected())
     {
       IPAddress ip;
-      if (WiFi.hostByName(server_ip.c_str(), ip))
+      if (WiFi.hostByName(broker_hostname.c_str(), ip))
       {
-        ESP_LOGD(TAG, "Resolved MQTT server [%s] as [%s]", server_ip.c_str(), ip.toString().c_str());
+        ESP_LOGD(TAG, "Resolved MQTT server [%s] as [%s]", broker_hostname.c_str(), ip.toString().c_str());
       }
       else
       {
-        ESP_LOGE(TAG, "Failed to resolve MQTT server [%s]", server_ip.c_str());
+        ESP_LOGE(TAG, "Failed to resolve MQTT server [%s]", broker_hostname.c_str());
         return false;
       }
 
@@ -289,7 +290,7 @@ namespace fablabbg
       }
       else
       {
-        ESP_LOGW(TAG, "Failure to connect to MQTT server %s", server_ip.c_str());
+        ESP_LOGW(TAG, "Failure to connect to MQTT server %s", broker_hostname.c_str());
       }
     }
 

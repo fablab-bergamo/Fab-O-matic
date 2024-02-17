@@ -24,7 +24,7 @@ namespace fablabbg
 
     std::string wifi_ssid;
     std::string wifi_password;
-    std::string server_ip;
+    std::string broker_hostname;
     std::string mqtt_user;
     std::string mqtt_password;
     std::string mqtt_client_name;
