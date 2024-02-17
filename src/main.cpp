@@ -394,6 +394,9 @@ namespace fablabbg
     ArduinoOTA.onStart([]()
                        { Board::logic.changeStatus(Status::OTAStarting); });
     ArduinoOTA.onEnd(OTAComplete);
+    ArduinoOTA.onError([](ota_error_t error)
+                       { Board::logic.changeStatus(Status::OTAError); });
+    ArduinoOTA.setMdnsEnabled(true);
     ArduinoOTA.setRebootOnSuccess(false);
     ArduinoOTA.setTimeout(45000);
     ArduinoOTA.begin();

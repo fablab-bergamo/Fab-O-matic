@@ -45,6 +45,7 @@ namespace fablabbg
       ShuttingDown,
       OTAStarting,
       FactoryDefaults,
+      OTAError,
     };
 
     BoardLogic() = default;

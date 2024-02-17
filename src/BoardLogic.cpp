@@ -413,6 +413,10 @@ namespace fablabbg
       getLcd().setRow(0, "EEPROM reset!");
       getLcd().setRow(1, "Riavvio richiesto");
       break;
+    case Status::OTAError:
+      getLcd().setRow(0, "Errore OTA");
+      getLcd().setRow(1, "");
+      break;
     default:
       getLcd().setRow(0, "Unhandled status");
       if (snprintf(buffer, sizeof(buffer), "Value %d", static_cast<int>(status)) > 0)
