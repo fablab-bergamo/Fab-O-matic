@@ -19,7 +19,7 @@ namespace fablabbg
 
   struct MachineID
   {
-    uint16_t id;
+    uint16_t id{0};
   };
   struct MachineConfig
   {

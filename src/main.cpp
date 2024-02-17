@@ -387,7 +387,10 @@ namespace fablabbg
 
   void setupOTA()
   {
-    ArduinoOTA.setHostname(conf::default_config::hostname.data());
+    std::stringstream ss{};
+    // Hostname is BOARD + machine_id (which shall be unique) e.g. BOARD1
+    ss << conf::default_config::hostname.data() << conf::default_config::machine_id.id;
+    ArduinoOTA.setHostname(ss.str().c_str());
     ArduinoOTA.onStart([]()
                        { Board::logic.changeStatus(Status::OTAStarting); });
     ArduinoOTA.onEnd(OTAComplete);
