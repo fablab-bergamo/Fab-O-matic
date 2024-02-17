@@ -105,7 +105,7 @@ namespace fablabbg
         ESP_LOGI(TAG, "Machine is about to shutdown");
     }
 
-    if (Board::logic.rebootRequest)
+    if (Board::logic.getRebootRequest())
     {
       if (Board::logic.getMachine().getPowerState() == Machine::PowerState::PoweredOff)
       {
@@ -192,7 +192,7 @@ namespace fablabbg
         ESP_LOGW(TAG, "Factory reset requested");
         if (auto config = SavedConfig::DefaultConfig(); config.SaveToEEPROM())
         {
-          Board::logic.rebootRequest = true;
+          Board::logic.setRebootRequest(true);
           start = std::chrono::system_clock::now();
 
           Board::logic.changeStatus(Status::FACTORY_RESET);
@@ -274,20 +274,20 @@ namespace fablabbg
   // They will be executed at the required frequency during loop()->scheduler.execute() call
   // The scheduler will take care of the timing and will call the task callback
 
-  Task t_rfid("RFIDChip", conf::tasks::RFID_CHECK_PERIOD, &taskCheckRfid, Board::scheduler, true);
-  Task t_net("Wifi/MQTT", conf::tasks::MQTT_REFRESH_PERIOD, &taskConnect, Board::scheduler, true, 20s);
-  Task t_powoff("Poweroff", 1s, &taskPoweroffCheck, Board::scheduler, true);
-  Task t_log("Logoff", 1s, &taskLogoffCheck, Board::scheduler, true);
+  const Task t_rfid("RFIDChip", conf::tasks::RFID_CHECK_PERIOD, &taskCheckRfid, Board::scheduler, true);
+  const Task t_net("Wifi/MQTT", conf::tasks::MQTT_REFRESH_PERIOD, &taskConnect, Board::scheduler, true, 20s);
+  const Task t_powoff("Poweroff", 1s, &taskPoweroffCheck, Board::scheduler, true);
+  const Task t_log("Logoff", 1s, &taskLogoffCheck, Board::scheduler, true);
   // Hardware watchdog will run at one third the frequency
   Task t_wdg("Watchdog", conf::tasks::WATCHDOG_TIMEOUT / 3, &taskEspWatchdog, Board::scheduler, false);
-  Task t_test("Selftest", conf::tasks::RFID_SELFTEST_PERIOD, &taskRfidWatchdog, Board::scheduler, true);
-  Task t_warn("PoweroffWarning", conf::machine::DELAY_BETWEEN_BEEPS, &taskPoweroffWarning, Board::scheduler, true);
-  Task t_mqtt("MQTT keepalive", 1s, &taskMQTTAlive, Board::scheduler, true);
-  Task t_led("LED", 1s, &taskBlink, Board::scheduler, true);
-  Task t_rst("FactoryReset", 500ms, &taskFactoryReset, Board::scheduler, pins.buttons.factory_defaults_pin != NO_PIN);
+  const Task t_test("Selftest", conf::tasks::RFID_SELFTEST_PERIOD, &taskRfidWatchdog, Board::scheduler, true);
+  const Task t_warn("PoweroffWarning", conf::machine::DELAY_BETWEEN_BEEPS, &taskPoweroffWarning, Board::scheduler, true);
+  const Task t_mqtt("MQTT keepalive", 1s, &taskMQTTAlive, Board::scheduler, true);
+  const Task t_led("LED", 1s, &taskBlink, Board::scheduler, true);
+  const Task t_rst("FactoryReset", 500ms, &taskFactoryReset, Board::scheduler, pins.buttons.factory_defaults_pin != NO_PIN);
 
 #if (WOKWI_SIMULATION)
-  Task t_sim("RFIDCardsSim", 1s, &taskRFIDCardSim, Board::scheduler, true, 30s);
+  const Task t_sim("RFIDCardsSim", 1s, &taskRFIDCardSim, Board::scheduler, true, 30s);
 #endif
 
   // flag for saving data
@@ -383,7 +383,7 @@ namespace fablabbg
   void OTAComplete()
   {
     ESP_LOGI(TAG, "OTA complete, reboot requested");
-    Board::logic.rebootRequest = true;
+    Board::logic.setRebootRequest(true);
   }
 
   void setupOTA()

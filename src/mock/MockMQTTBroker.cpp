@@ -2,7 +2,7 @@
 #include "Logging.hpp"
 #include "conf.hpp"
 
-static const char *TAG2 = "MockMQTTBroker";
+static const char *const TAG2 = "MockMQTTBroker";
 namespace fablabbg
 {
   void MockMQTTBroker::start()

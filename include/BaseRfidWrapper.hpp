@@ -9,6 +9,7 @@ namespace fablabbg
   class BaseRFIDWrapper
   {
   public:
+    virtual ~BaseRFIDWrapper() = default;
     virtual bool init_rfid() const = 0;
     [[nodiscard]] virtual bool isNewCardPresent() const = 0;
     [[nodiscard]] virtual bool cardStillThere(const card::uid_t original, std::chrono::milliseconds delay) const = 0;

@@ -4,7 +4,7 @@ namespace fablabbg
 {
   MockMrfc522::UidDriver MockMrfc522::getDriverUid() const
   {
-    UidDriver retVal;
+    UidDriver retVal{};
     memset(&retVal, 0, sizeof(retVal));
     if (getSimulatedUid().has_value())
     {

@@ -11,7 +11,7 @@ namespace fablabbg::ServerMQTT
 {
   std::string UserQuery::payload() const
   {
-    std::stringstream ss;
+    std::stringstream ss{};
     ss << "{\"action\":\"checkuser\","
        << "\"uid\":\"" << card::uid_str(uid) << "\""
        << "}";
@@ -20,7 +20,7 @@ namespace fablabbg::ServerMQTT
 
   std::string MachineQuery::payload() const
   {
-    std::stringstream ss;
+    std::stringstream ss{};
     ss << "{\"action\":\"checkmachine\""
        << "}";
     return ss.str();
@@ -28,7 +28,7 @@ namespace fablabbg::ServerMQTT
 
   std::string AliveQuery::payload() const
   {
-    std::stringstream ss;
+    std::stringstream ss{};
     ss << "{\"action\":\"alive\""
        << "}";
     return ss.str();
@@ -36,7 +36,7 @@ namespace fablabbg::ServerMQTT
 
   std::string StartUseQuery::payload() const
   {
-    std::stringstream ss;
+    std::stringstream ss{};
     ss << "{\"action\":\"startuse\", "
        << "\"uid\":\"" << card::uid_str(uid) << "\""
        << "}";
@@ -45,7 +45,7 @@ namespace fablabbg::ServerMQTT
 
   std::string StopUseQuery::payload() const
   {
-    std::stringstream ss;
+    std::stringstream ss{};
     ss << "{\"action\":\"stopuse\", "
        << "\"uid\":\"" << card::uid_str(uid) << "\","
        << "\"duration\":" << duration_s.count()
@@ -55,7 +55,7 @@ namespace fablabbg::ServerMQTT
 
   std::string InUseQuery::payload() const
   {
-    std::stringstream ss;
+    std::stringstream ss{};
     ss << "{\"action\":\"inuse\", "
        << "\"uid\":\"" << card::uid_str(uid) << "\","
        << "\"duration\":" << duration_s.count()
@@ -65,7 +65,7 @@ namespace fablabbg::ServerMQTT
 
   std::string RegisterMaintenanceQuery::payload() const
   {
-    std::stringstream ss;
+    std::stringstream ss{};
     ss << "{\"action\":\"maintenance\", "
        << "\"uid\":\"" << card::uid_str(uid) << "\""
        << "}";
@@ -88,7 +88,7 @@ namespace fablabbg::ServerMQTT
 
   std::string UserResponse::toString() const
   {
-    std::stringstream ss;
+    std::stringstream ss{};
     ss << "UserResponse: "
        << "request_ok: " << request_ok << ", "
        << "result: " << static_cast<int>(result) << ", "

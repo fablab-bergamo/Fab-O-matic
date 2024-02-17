@@ -16,7 +16,7 @@ namespace fablabbg
     enum class UserLevel : uint8_t
     {
       Unknown,
-      FabUser,
+      NormalUser,
       FabStaff,
       FabAdmin,
     };
@@ -33,17 +33,19 @@ namespace fablabbg
                                                                                           authenticated(auth),
                                                                                           user_level(level) {}
 
-    FabUser(const uint8_t uid[conf::rfid_tags::UID_BYTE_LEN], const std::string &name, bool auth, UserLevel level) : card_uid(card::from_array(uid)),
-                                                                                                                     holder_name(name),
-                                                                                                                     authenticated(auth),
-                                                                                                                     user_level(level) {}
+    FabUser(std::array<uint8_t, conf::rfid_tags::UID_BYTE_LEN> &uid,
+            const std::string &name, bool auth,
+            UserLevel level) : card_uid(card::from_array(uid)),
+                               holder_name(name),
+                               authenticated(auth),
+                               user_level(level) {}
     bool operator==(const FabUser &t) const
     {
       return card_uid == t.card_uid;
     }
     std::string toString() const
     {
-      std::stringstream sstream;
+      std::stringstream sstream{};
 
       sstream << "User (Auth:" << authenticated;
       sstream << ", UID: " << std::hex << card_uid;

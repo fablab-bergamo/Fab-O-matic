@@ -41,7 +41,7 @@ namespace fablabbg::Tasks
   void Scheduler::printStats() const
   {
     milliseconds avg_delay = 0ms;
-    unsigned long nb_runs = 0;
+    auto nb_runs = 0;
 
     for (const auto &task : tasks)
     {
@@ -84,7 +84,7 @@ namespace fablabbg::Tasks
   void Scheduler::execute() const
   {
     // Tasks shall be run in order of expiration (the most expired task shall run first)
-    std::vector<decltype(tasks)::const_iterator> iters;
+    std::vector<decltype(tasks)::const_iterator> iters{};
     for (auto it = tasks.begin(); it != tasks.end(); ++it)
     {
       iters.push_back(it); // Vector of iterators

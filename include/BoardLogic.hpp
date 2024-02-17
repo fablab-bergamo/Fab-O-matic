@@ -74,7 +74,8 @@ namespace fablabbg
     [[nodiscard]] Machine &getMachineForTesting();
     [[nodiscard]] const Machine &getMachine() const;
 
-    bool rebootRequest{false};
+    void setRebootRequest(bool request);
+    bool getRebootRequest() const;
 
     // copy reference
     BoardLogic &operator=(const BoardLogic &board) = delete;
@@ -99,6 +100,8 @@ namespace fablabbg
 
     BaseRFIDWrapper &getRfid() const;
     BaseLCDWrapper &getLcd() const;
+
+    bool rebootRequest{false};
 
     bool longTap(const card::uid_t card, const std::string &short_prompt) const;
   };

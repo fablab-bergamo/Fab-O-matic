@@ -53,8 +53,8 @@ namespace fablabbg
       {
         if (result->is_valid)
         {
-          machine.maintenanceNeeded = result->maintenance;
-          machine.allowed = result->allowed;
+          machine.setMaintenanceNeeded(result->maintenance);
+          machine.setAllowed(result->allowed);
           machine.setAutologoffDelay(std::chrono::minutes(result->logoff));
           machine.setMachineName(result->name);
           MachineType mt = static_cast<MachineType>(result->type);
@@ -182,7 +182,7 @@ namespace fablabbg
 
     user = response.value();
 
-    if (!machine.allowed)
+    if (!machine.isAllowed())
     {
       ESP_LOGI(TAG, "Login refused due to machine not allowed");
       changeStatus(Status::NOT_ALLOWED);
@@ -190,7 +190,7 @@ namespace fablabbg
       return false;
     }
 
-    if (machine.maintenanceNeeded)
+    if (machine.isMaintenanceNeeded())
     {
       if (conf::machine::MAINTENANCE_BLOCK &&
           user.user_level < FabUser::UserLevel::FabStaff)
@@ -216,13 +216,13 @@ namespace fablabbg
             // Allow bypass for admins
             if (user.user_level == FabUser::UserLevel::FabAdmin)
             {
-              machine.maintenanceNeeded = false;
+              machine.setMaintenanceNeeded(false);
             }
           }
           else
           {
             changeStatus(Status::MAINTENANCE_DONE);
-            machine.maintenanceNeeded = false;
+            machine.setMaintenanceNeeded(false);
             beep_ok();
             Tasks::task_delay(conf::lcd::SHORT_MESSAGE_DELAY);
           }
@@ -307,11 +307,11 @@ namespace fablabbg
       break;
     case Status::FREE:
       getLcd().setRow(0, machine_name);
-      if (machine.maintenanceNeeded)
+      if (machine.isMaintenanceNeeded())
       {
         getLcd().setRow(1, ">Manutenzione<");
       }
-      else if (!machine.allowed)
+      else if (!machine.isAllowed())
       {
         getLcd().setRow(1, "> BLOCCATA <");
       }
@@ -501,7 +501,7 @@ namespace fablabbg
 
     if (server.isOnline())
     {
-      if (!machine.allowed || machine.maintenanceNeeded)
+      if (!machine.isAllowed() || machine.isMaintenanceNeeded())
       {
         led.setColor(64, 0, 0); // Red
       }
@@ -626,5 +626,15 @@ namespace fablabbg
   FabBackend &BoardLogic::getServer()
   {
     return server;
+  }
+
+  void BoardLogic::setRebootRequest(bool request)
+  {
+    rebootRequest = request;
+  }
+
+  bool BoardLogic::getRebootRequest() const
+  {
+    return rebootRequest;
   }
 } // namespace fablabbg

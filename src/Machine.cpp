@@ -232,7 +232,7 @@ namespace fablabbg
 
   std::string Machine::toString() const
   {
-    std::stringstream sstream;
+    std::stringstream sstream{};
 
     if (!config.has_value() || !server.has_value())
     {
@@ -312,5 +312,25 @@ namespace fablabbg
   std::optional<MachineConfig> Machine::getConfig() const
   {
     return config;
+  }
+
+  bool Machine::isAllowed() const
+  {
+    return allowed;
+  }
+
+  void Machine::setAllowed(bool new_allowed)
+  {
+    allowed = new_allowed;
+  }
+
+  bool Machine::isMaintenanceNeeded() const
+  {
+    return maintenanceNeeded;
+  }
+
+  void Machine::setMaintenanceNeeded(bool new_maintenance_needed)
+  {
+    maintenanceNeeded = new_maintenance_needed;
   }
 } // namespace fablabbg

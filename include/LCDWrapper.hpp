@@ -17,14 +17,14 @@ namespace fablabbg
     LCDWrapper(const pins_config::lcd_config &config);
 
     using DisplayBuffer = std::array<std::array<char, conf::lcd::COLS>, conf::lcd::ROWS>;
-    bool begin();
-    void clear();
-    void showConnection(bool show);
-    void showPower(bool show);
-    void setRow(uint8_t row, const std::string &text);
+    bool begin() override;
+    void clear() override;
+    void showConnection(bool show) override;
+    void showPower(bool show) override;
+    void setRow(uint8_t row, const std::string &text) override;
     [[nodiscard]] std::string convertSecondsToHHMMSS(std::chrono::seconds duration) const;
 
-    void update(const BoardInfo &boardinfo, bool forced = false);
+    void update(const BoardInfo &boardinfo, bool forced = false) override;
 
   private:
     static constexpr auto HEIGHT_PX = 8;

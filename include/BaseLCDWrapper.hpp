@@ -11,6 +11,7 @@ namespace fablabbg
   class BaseLCDWrapper
   {
   public:
+    virtual ~BaseLCDWrapper() = default;
     virtual bool begin() = 0;
     virtual void clear() = 0;
     virtual void showConnection(bool show) = 0;

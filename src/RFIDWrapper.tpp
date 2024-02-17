@@ -92,9 +92,9 @@ namespace fablabbg
   template <typename Driver>
   card::uid_t RFIDWrapper<Driver>::getUid() const
   {
-    uint8_t arr[conf::rfid_tags::UID_BYTE_LEN]{0};
+    std::array<uint8_t, conf::rfid_tags::UID_BYTE_LEN> arr{0};
     auto const &uid = driver->getDriverUid();
-    memcpy(arr, uid.uidByte, std::min(conf::rfid_tags::UID_BYTE_LEN, uid.size));
+    memcpy(arr.data(), uid.uidByte, std::min(conf::rfid_tags::UID_BYTE_LEN, uid.size));
 
     auto c = card::from_array(arr);
 

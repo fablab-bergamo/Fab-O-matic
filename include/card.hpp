@@ -18,13 +18,13 @@ namespace fablabbg::card
     uint32_t long1 = static_cast<uint32_t>(number & 0xFFFF0000) >> 16;
     uint32_t long2 = static_cast<uint32_t>(number & 0x0000FFFF);
 
-    std::stringstream ss;
+    std::stringstream ss{};
     ss << std::setfill('0') << std::setw(4) << std::hex << long1;
     ss << std::setfill('0') << std::setw(4) << std::hex << long2;
     return ss.str();
   }
 
-  [[nodiscard]] constexpr inline uid_t from_array(const uint8_t uid[conf::rfid_tags::UID_BYTE_LEN])
+  [[nodiscard]] constexpr inline uid_t from_array(const std::array<uint8_t, conf::rfid_tags::UID_BYTE_LEN> &uid)
   {
     card::uid_t result = 0;
     for (auto i = (conf::rfid_tags::UID_BYTE_LEN - 1); i >= 0; i--)

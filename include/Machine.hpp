@@ -30,11 +30,6 @@ namespace fablabbg
     Machine(Machine &&) = delete;                  // move constructor
     Machine &operator=(Machine &&) = delete;       // move assignment
 
-    /// @brief If true, machine needs maintenance
-    bool maintenanceNeeded{false};
-    /// @brief If true, machine is allowed to be used by anybody
-    bool allowed{true};
-
     FabUser getActiveUser() const;
 
     /// @brief Configure the machine, it must be called before most methods.
@@ -90,6 +85,11 @@ namespace fablabbg
     /// @brief Returns the current configuration of the machine, used for testing.
     [[nodiscard]] std::optional<MachineConfig> getConfig() const;
 
+    bool isAllowed() const;
+    void setAllowed(bool new_allowed);
+    bool isMaintenanceNeeded() const;
+    void setMaintenanceNeeded(bool new_maintenance_needed);
+
   private:
     std::optional<MachineConfig> config{std::nullopt};
     std::optional<std::reference_wrapper<FabBackend>> server{std::nullopt};
@@ -100,6 +100,11 @@ namespace fablabbg
     std::optional<std::chrono::time_point<std::chrono::system_clock>> usage_start_timestamp{std::nullopt}; // When did the machine start?
     std::optional<std::chrono::time_point<std::chrono::system_clock>> logoff_timestamp{std::nullopt};      // When did the last user log off?
     PowerState power_state{PowerState::PoweredOff};
+
+    /// @brief If true, machine needs maintenance
+    bool maintenanceNeeded{false};
+    /// @brief If true, machine is allowed to be used by anybody
+    bool allowed{true};
 
     void power_mqtt(bool on_or_off);
     void power_relay(bool on_or_off);

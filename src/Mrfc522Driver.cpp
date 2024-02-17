@@ -35,7 +35,7 @@ namespace fablabbg
 
   Mrfc522Driver::UidDriver Mrfc522Driver::getDriverUid() const
   {
-    UidDriver retVal;
+    UidDriver retVal{};
     memset(&retVal, 0, sizeof(retVal));
     memcpy(retVal.uidByte, mfrc522->uid.uidByte, sizeof(retVal.uidByte));
     retVal.size = mfrc522->uid.size;
