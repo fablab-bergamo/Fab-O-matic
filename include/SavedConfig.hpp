@@ -12,7 +12,7 @@
 
 namespace fablabbg
 {
-
+  // NOLINTBEGIN(cppcoreguidelines-avoid-c-arrays)
   struct SavedConfig
   {
     static constexpr auto FIELD_LENGTH = 40;
@@ -58,6 +58,7 @@ namespace fablabbg
     /// @brief Returns the default configuration built from conf.hpp and secrets.hpp
     [[nodiscard]] static SavedConfig DefaultConfig();
   };
+  // NOLINTEND(cppcoreguidelines-avoid-c-arrays)
 
 } // namespace fablabbg
 #endif // SAVEDCONFIG_HPP_

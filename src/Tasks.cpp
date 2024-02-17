@@ -14,7 +14,7 @@ namespace fablabbg::Tasks
   using time_point_sc = std::chrono::time_point<std::chrono::system_clock>;
   using namespace std::chrono_literals;
 
-  Scheduler::Scheduler() noexcept : tasks()
+  Scheduler::Scheduler() noexcept : tasks{}
   {
   }
 
@@ -134,12 +134,12 @@ namespace fablabbg::Tasks
   /// @param delay initial delay before starting the task
   Task::Task(const std::string &id, milliseconds period,
              std::function<void()> callback,
-             Scheduler &scheduler, bool active, milliseconds delay) : active(active), id(id),
-                                                                      period(period), delay(delay),
-                                                                      last_run(std::chrono::system_clock::now() + delay),
-                                                                      next_run(last_run),
-                                                                      average_tardiness(0ms), total_runtime(0ms),
-                                                                      callback(callback), run_counter(0)
+             Scheduler &scheduler, bool active, milliseconds delay) : active{active}, id{id},
+                                                                      period{period}, delay{delay},
+                                                                      last_run{std::chrono::system_clock::now() + delay},
+                                                                      next_run{last_run},
+                                                                      average_tardiness{0ms}, total_runtime{0ms},
+                                                                      callback{callback}, run_counter{0}
   {
     scheduler.addTask(std::ref(*this));
   }

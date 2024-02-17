@@ -26,13 +26,13 @@ namespace fablabbg
     {
     case NewClient_sMQTTEventType:
     {
-      sMQTTNewClientEvent *e = (sMQTTNewClientEvent *)event;
+      auto *e = static_cast<sMQTTNewClientEvent *>(event);
       ESP_LOGD(TAG2, "MQTT BROKER: client connected, id:%s", e->Client()->getClientId().c_str());
     }
     break;
     case Public_sMQTTEventType:
     {
-      sMQTTPublicClientEvent *e = (sMQTTPublicClientEvent *)event;
+      auto *e = static_cast<sMQTTPublicClientEvent *>(event);
       topic = e->Topic();
       payload = e->Payload();
 
@@ -42,7 +42,7 @@ namespace fablabbg
     break;
     case RemoveClient_sMQTTEventType:
     {
-      sMQTTRemoveClientEvent *e = (sMQTTRemoveClientEvent *)event;
+      auto *e = static_cast<sMQTTRemoveClientEvent *>(event);
       ESP_LOGD(TAG2, "MQTT BROKER: removed client id: %s", e->Client()->getClientId().c_str());
     }
     break;

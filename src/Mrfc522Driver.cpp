@@ -9,9 +9,9 @@
 
 namespace fablabbg
 {
-  Mrfc522Driver::Mrfc522Driver() : rfid_simple_driver(std::make_unique<MFRC522DriverPinSimple>(pins.mfrc522.sda_pin)),
-                                   spi_rfid_driver(std::make_unique<MFRC522DriverSPI>(*rfid_simple_driver)),
-                                   mfrc522(std::make_unique<MFRC522>(*spi_rfid_driver))
+  Mrfc522Driver::Mrfc522Driver() : rfid_simple_driver{std::make_unique<MFRC522DriverPinSimple>(pins.mfrc522.sda_pin)},
+                                   spi_rfid_driver{std::make_unique<MFRC522DriverSPI>(*rfid_simple_driver)},
+                                   mfrc522{std::make_unique<MFRC522>(*spi_rfid_driver)}
   {
     // Configure SPI bus
     SPI.begin(pins.mfrc522.sck_pin, pins.mfrc522.miso_pin, pins.mfrc522.mosi_pin, pins.mfrc522.sda_pin);

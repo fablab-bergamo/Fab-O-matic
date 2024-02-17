@@ -14,12 +14,12 @@ namespace fablabbg
   class MockMQTTBroker final : public sMQTTBroker
   {
   public:
-    MockMQTTBroker() noexcept {};
+    MockMQTTBroker() noexcept : isLocked{false} {};
     ~MockMQTTBroker() = default;
 
     bool isRunning() const;
     void start();
-    bool onEvent(sMQTTEvent *event);
+    bool onEvent(sMQTTEvent *event) override;
     const std::string defaultReplies(const std::string &query) const;
     /// @brief set the reply generation function. May be called from a different thread
     /// @param callback
@@ -43,7 +43,6 @@ namespace fablabbg
     std::function<const std::string(const std::string &, const std::string &)> callback = [this](const std::string &topic, const std::string &query)
     { return defaultReplies(query); };
 
-    // Maybe set outside the MQTT broker thread
     std::atomic<bool> isLocked;
 
     bool lock() { return !isLocked.exchange(true); }

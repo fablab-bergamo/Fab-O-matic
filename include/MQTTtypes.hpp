@@ -26,21 +26,21 @@ namespace fablabbg::ServerMQTT
     UserQuery() = delete;
     constexpr UserQuery(card::uid_t card_uid) : uid(card_uid){};
 
-    std::string payload() const;
+    std::string payload() const override;
   };
 
   class MachineQuery final : public Query
   {
   public:
     constexpr MachineQuery() = default;
-    std::string payload() const;
+    std::string payload() const override;
   };
 
   class AliveQuery final : public Query
   {
   public:
     constexpr AliveQuery() = default;
-    std::string payload() const;
+    std::string payload() const override;
   };
 
   class StartUseQuery final : public Query
@@ -51,7 +51,7 @@ namespace fablabbg::ServerMQTT
     StartUseQuery() = delete;
     constexpr StartUseQuery(card::uid_t card_uid) : uid(card_uid){};
 
-    std::string payload() const;
+    std::string payload() const override;
   };
 
   class StopUseQuery final : public Query
@@ -67,7 +67,7 @@ namespace fablabbg::ServerMQTT
     /// @param mid machine id
     /// @param duration duration of usage, in seconds
     constexpr StopUseQuery(card::uid_t card_uid, std::chrono::seconds duration) : uid(card_uid), duration_s(duration){};
-    std::string payload() const;
+    std::string payload() const override;
   };
 
   class InUseQuery final : public Query
@@ -83,7 +83,7 @@ namespace fablabbg::ServerMQTT
     /// @param mid machine id
     /// @param duration duration of usage, in seconds
     constexpr InUseQuery(card::uid_t card_uid, std::chrono::seconds duration) : uid(card_uid), duration_s(duration){};
-    std::string payload() const;
+    std::string payload() const override;
   };
 
   class RegisterMaintenanceQuery final : public Query
@@ -94,7 +94,7 @@ namespace fablabbg::ServerMQTT
     RegisterMaintenanceQuery() = delete;
     constexpr RegisterMaintenanceQuery(card::uid_t card_uid) : uid(card_uid){};
 
-    std::string payload() const;
+    std::string payload() const override;
   };
 
   class Response

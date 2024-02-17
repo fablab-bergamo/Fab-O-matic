@@ -242,9 +242,6 @@ namespace fablabbg
     }
   }
 
-  pthread_t thread_mqtt_broker;
-  pthread_attr_t attr_mqtt_broker;
-
   void *threadMQTTServer(void *arg)
   {
     ESP_LOGI(TAG, "threadMQTTServer started");
@@ -259,6 +256,8 @@ namespace fablabbg
 
   void startMQTTBrocker()
   {
+    static pthread_t thread_mqtt_broker;
+    static pthread_attr_t attr_mqtt_broker;
     // Start MQTT server thread in simulation
     attr_mqtt_broker.stacksize = 3 * 1024; // Required for ESP32-S2
     attr_mqtt_broker.detachstate = PTHREAD_CREATE_DETACHED;

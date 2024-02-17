@@ -14,7 +14,7 @@ namespace fablabbg
     extern FabBackend server;
   } // namespace Board
 
-  AuthProvider::AuthProvider(WhiteList list) : whitelist(list), cache() {}
+  AuthProvider::AuthProvider(WhiteList list) : whitelist{list}, cache{} {}
 
   /// @brief Checks if the cache contains the card ID, and uses that if available
   /// @param uid card id
