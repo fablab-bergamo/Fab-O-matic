@@ -7,6 +7,10 @@
 #include <sstream>
 #include <string_view>
 
+#ifndef GIT_VERSION
+#define GIT_VERSION "unknown"
+#endif
+
 namespace fablabbg::ServerMQTT
 {
   std::string UserQuery::payload() const
@@ -29,7 +33,8 @@ namespace fablabbg::ServerMQTT
   std::string AliveQuery::payload() const
   {
     std::stringstream ss{};
-    ss << "{\"action\":\"alive\""
+    ss << "{\"action\":\"alive\","
+       << "version\":\"" << GIT_VERSION << "\""
        << "}";
     return ss.str();
   }
