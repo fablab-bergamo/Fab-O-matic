@@ -72,7 +72,7 @@ namespace fablabbg
     static constexpr auto RFID_CHECK_PERIOD{150ms};    /* Task period to check for RFID badge (should be fast: 150ms) */
     static constexpr auto RFID_SELFTEST_PERIOD{60s};   /* Performs RFID self check and reset chip if necessary (default: 60s) */
     static constexpr auto MQTT_REFRESH_PERIOD{30s};    /* Query the MQTT broker for machine state at given period (default: 30s) */
-    static constexpr auto WATCHDOG_TIMEOUT{30s};       /* Timeout for hardware watchdog, set to 0s to disable (default: 30s) */
+    static constexpr auto WATCHDOG_TIMEOUT{45s};       /* Timeout for hardware watchdog, set to 0s to disable (default: 30s) */
     static constexpr auto PORTAL_CONFIG_TIMEOUT{5min}; /* Timeout for portal configuration (default: 5min) */
     static constexpr auto FACTORY_DEFAULTS_DELAY{10s}; /* Press the button for X s to force reset to defaults and reboot */
 
@@ -98,10 +98,10 @@ namespace fablabbg
   // Make sure the hardware watchdog period is not too short considering we're blocking tasks for some operations
   static_assert(conf::tasks::WATCHDOG_TIMEOUT == 0s ||
                     conf::tasks::WATCHDOG_TIMEOUT > (conf::machine::LONG_TAP_DURATION +
-                                                     conf::mqtt::TIMEOUT_REPLY_SERVER * conf::mqtt::MAX_TRIES +
+                                                     conf::mqtt::TIMEOUT_REPLY_SERVER * conf::mqtt::MAX_TRIES * 3 +
                                                      conf::lcd::SHORT_MESSAGE_DELAY * 3 +
                                                      conf::buzzer::STANDARD_BEEP_DURATION * conf::buzzer::NB_BEEPS * 2 +
-                                                     1s),
+                                                     5s),
                 "Watchdog period too short");
 } // namespace fablabbg
 #endif // CONF_H_
