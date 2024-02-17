@@ -41,15 +41,15 @@ namespace fablabbg
 
     switch (status)
     {
-    case Status::OFF:
+    case Status::Off:
       pixel.setPixelColor(0, 0, 0, 0);
       isOn = false;
       break;
-    case Status::ON:
+    case Status::On:
       pixel.setPixelColor(0, color[0], color[1], color[2]);
       isOn = true;
       break;
-    case Status::BLINK:
+    case Status::Blinking:
       if (isOn)
       {
         pixel.setPixelColor(0, color[0], color[1], color[2]);

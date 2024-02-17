@@ -169,7 +169,7 @@ namespace fablabbg
     user.authenticated = false;
     user.holder_name = "?";
     user.card_uid = uid;
-    user.user_level = FabUser::UserLevel::UNKNOWN;
+    user.user_level = FabUser::UserLevel::Unknown;
 
     auto response = auth.tryLogin(uid, server);
     if (!response.has_value())
@@ -193,14 +193,14 @@ namespace fablabbg
     if (machine.maintenanceNeeded)
     {
       if (conf::machine::MAINTENANCE_BLOCK &&
-          user.user_level < FabUser::UserLevel::FABLAB_STAFF)
+          user.user_level < FabUser::UserLevel::FabStaff)
       {
         changeStatus(Status::MAINTENANCE_NEEDED);
         beep_failed();
         Tasks::task_delay(conf::lcd::SHORT_MESSAGE_DELAY);
         return false;
       }
-      if (user.user_level >= FabUser::UserLevel::FABLAB_STAFF)
+      if (user.user_level >= FabUser::UserLevel::FabStaff)
       {
         beep_ok();
         changeStatus(Status::MAINTENANCE_QUERY);
@@ -214,7 +214,7 @@ namespace fablabbg
             changeStatus(Status::ERROR);
             Tasks::task_delay(conf::lcd::SHORT_MESSAGE_DELAY);
             // Allow bypass for admins
-            if (user.user_level == FabUser::UserLevel::FABLAB_ADMIN)
+            if (user.user_level == FabUser::UserLevel::FabAdmin)
             {
               machine.maintenanceNeeded = false;
             }
@@ -497,7 +497,7 @@ namespace fablabbg
   /// @brief Blinks the LED
   void BoardLogic::blinkLed(uint8_t r, uint8_t g, uint8_t b)
   {
-    led.set(Led::Status::BLINK);
+    led.set(Led::Status::Blinking);
 
     if (server.isOnline())
     {

@@ -111,18 +111,18 @@ namespace fablabbg::ServerMQTT
 
   enum class UserResult : uint8_t
   {
-    USER_INVALID = 0,
-    USER_AUTHORIZED = 1,
-    USER_UNAUTHORIZED = 2,
-    USER_UNAUTHORIZED_MAINTENANCE = 3,
+    Invalid = 0,
+    Authorized = 1,
+    Unauthorized = 2,
+    MaintenanceUnauthorized = 3,
   };
 
   class UserResponse final : public Response
   {
   public:
-    uint8_t result{static_cast<uint8_t>(UserResult::USER_INVALID)}; /* Result of the user check */
-    std::string holder_name{""};                                    /* Name of the user from server DB */
-    FabUser::UserLevel user_level{FabUser::UserLevel::UNKNOWN};     /* User priviledges */
+    uint8_t result{static_cast<uint8_t>(UserResult::Invalid)};  /* Result of the user check */
+    std::string holder_name{""};                                /* Name of the user from server DB */
+    FabUser::UserLevel user_level{FabUser::UserLevel::Unknown}; /* User priviledges */
 
     UserResponse() = delete;
     UserResponse(bool rok) : Response(rok){};

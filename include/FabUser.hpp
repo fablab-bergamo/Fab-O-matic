@@ -13,18 +13,18 @@ namespace fablabbg
 {
   struct FabUser
   {
-    enum class UserLevel
+    enum class UserLevel : uint8_t
     {
-      UNKNOWN,
-      FABLAB_USER,
-      FABLAB_STAFF,
-      FABLAB_ADMIN,
+      Unknown,
+      FabUser,
+      FabStaff,
+      FabAdmin,
     };
 
     card::uid_t card_uid = card::INVALID;
     std::string holder_name{""};
     bool authenticated = false;
-    UserLevel user_level = UserLevel::UNKNOWN;
+    UserLevel user_level = UserLevel::Unknown;
 
     FabUser() = default;
 

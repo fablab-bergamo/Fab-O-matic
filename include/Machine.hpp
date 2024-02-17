@@ -14,12 +14,12 @@ namespace fablabbg
   class Machine
   {
   public:
-    enum class PowerState
+    enum class PowerState : uint8_t
     {
-      UNKNOWN,
-      POWERED_ON,
-      WAITING_FOR_POWER_OFF,
-      POWERED_OFF,
+      Unknown,
+      PoweredOn,
+      WaitingPowerOff,
+      PoweredOff,
     };
 
     constexpr Machine(){};
@@ -99,7 +99,7 @@ namespace fablabbg
 
     std::optional<std::chrono::time_point<std::chrono::system_clock>> usage_start_timestamp{std::nullopt}; // When did the machine start?
     std::optional<std::chrono::time_point<std::chrono::system_clock>> logoff_timestamp{std::nullopt};      // When did the last user log off?
-    PowerState power_state{PowerState::POWERED_OFF};
+    PowerState power_state{PowerState::PoweredOff};
 
     void power_mqtt(bool on_or_off);
     void power_relay(bool on_or_off);

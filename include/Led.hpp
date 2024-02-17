@@ -14,9 +14,9 @@ namespace fablabbg
   public:
     enum class Status : uint8_t
     {
-      OFF,
-      ON,
-      BLINK,
+      Off,
+      On,
+      Blinking,
     };
 
     Led() = default;
@@ -28,7 +28,7 @@ namespace fablabbg
   private:
     Adafruit_NeoPixel pixel{1, pins.led.pin, pins.led.neopixel_config};
     std::array<uint8_t, 3> color{128, 128, 128};
-    Status status{Status::ON};
+    Status status{Status::On};
     bool isOn{false};
     bool initialized{false};
 

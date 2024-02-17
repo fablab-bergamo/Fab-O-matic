@@ -72,7 +72,7 @@ namespace fablabbg
     if (server.isOnline())
     {
       auto response = server.checkCard(uid);
-      if (response->request_ok && response->getResult() == UserResult::USER_AUTHORIZED)
+      if (response->request_ok && response->getResult() == UserResult::Authorized)
       {
         user.authenticated = true;
         user.card_uid = uid;

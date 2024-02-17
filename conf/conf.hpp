@@ -17,7 +17,7 @@ namespace fablabbg
     static constexpr std::string_view machine_topic = "shelly/command/switch:0";
     static constexpr MachineID machine_id{1};
     static constexpr std::string_view machine_name = "MACHINE1";
-    static constexpr MachineType machine_type = MachineType::LASER;
+    static constexpr MachineType machine_type = MachineType::Laser;
     static constexpr std::string_view hostname = "BOARD1";
 
   } // namespace conf::default_config

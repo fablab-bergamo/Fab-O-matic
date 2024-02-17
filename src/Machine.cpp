@@ -85,7 +85,7 @@ namespace fablabbg
     if (active)
     {
       active = false;
-      power_state = PowerState::WAITING_FOR_POWER_OFF;
+      power_state = PowerState::WaitingPowerOff;
       usage_start_timestamp = std::nullopt;
 
       // Sets the countdown to power off
@@ -108,7 +108,7 @@ namespace fablabbg
     if (!logoff_timestamp.has_value())
       return false;
 
-    return (power_state == PowerState::WAITING_FOR_POWER_OFF &&
+    return (power_state == PowerState::WaitingPowerOff &&
             std::chrono::system_clock::now() - logoff_timestamp.value() > conf::machine::POWEROFF_GRACE_PERIOD);
   }
 
@@ -119,7 +119,7 @@ namespace fablabbg
     if (!logoff_timestamp.has_value() || conf::machine::BEEP_PERIOD == 0ms)
       return false;
 
-    return (power_state == PowerState::WAITING_FOR_POWER_OFF &&
+    return (power_state == PowerState::WaitingPowerOff &&
             std::chrono::system_clock::now() - logoff_timestamp.value() > conf::machine::BEEP_PERIOD);
   }
 
@@ -144,11 +144,11 @@ namespace fablabbg
     if (value)
     {
       logoff_timestamp = std::nullopt;
-      power_state = PowerState::POWERED_ON;
+      power_state = PowerState::PoweredOn;
     }
     else
     {
-      power_state = PowerState::POWERED_OFF;
+      power_state = PowerState::PoweredOff;
     }
   }
 
@@ -184,11 +184,11 @@ namespace fablabbg
     if (value)
     {
       logoff_timestamp = std::nullopt;
-      power_state = PowerState::POWERED_ON;
+      power_state = PowerState::PoweredOn;
     }
     else
     {
-      power_state = PowerState::POWERED_OFF;
+      power_state = PowerState::PoweredOff;
     }
   }
 

@@ -107,7 +107,7 @@ namespace fablabbg
 
     if (Board::logic.rebootRequest)
     {
-      if (Board::logic.getMachine().getPowerState() == Machine::PowerState::POWERED_OFF)
+      if (Board::logic.getMachine().getPowerState() == Machine::PowerState::PoweredOff)
       {
         ESP_LOGI(TAG, "Rebooting as per request");
         ESP.restart();

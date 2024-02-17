@@ -10,11 +10,11 @@ namespace fablabbg
 {
   enum class MachineType : uint8_t
   {
-    INVALID = 0,
-    PRINTER3D = 1,
-    LASER = 2,
-    CNC = 3,
-    UNKNOWN = 4,
+    Invalid = 0,
+    Printed3D = 1,
+    Laser = 2,
+    Cnc = 3,
+    Other = 4,
   };
 
   struct MachineID
@@ -24,7 +24,7 @@ namespace fablabbg
   struct MachineConfig
   {
     MachineID machine_id{0};
-    MachineType machine_type{MachineType::INVALID};
+    MachineType machine_type{MachineType::Invalid};
     std::string machine_name{""};
     struct RelayConfig
     {

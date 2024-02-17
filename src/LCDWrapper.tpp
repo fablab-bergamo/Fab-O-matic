@@ -103,15 +103,15 @@ namespace fablabbg
     if (show_power_status)
     {
       lcd.setCursor(conf::lcd::COLS - 1, 1);
-      if (info.power_state == Machine::PowerState::POWERED_ON)
+      if (info.power_state == Machine::PowerState::PoweredOn)
       {
         lcd.write(CHAR_POWERED_ON);
       }
-      else if (info.power_state == Machine::PowerState::POWERED_OFF)
+      else if (info.power_state == Machine::PowerState::PoweredOff)
       {
         lcd.write(CHAR_POWERED_OFF);
       }
-      else if (info.power_state == Machine::PowerState::WAITING_FOR_POWER_OFF)
+      else if (info.power_state == Machine::PowerState::WaitingPowerOff)
       {
         lcd.write(CHAR_POWERING_OFF);
       }
@@ -199,13 +199,13 @@ namespace fablabbg
 
     str[symbols_per_line * 2 - 2] = bi.server_connected ? 'Y' : 'x';
 
-    if (bi.power_state == Machine::PowerState::POWERED_ON)
+    if (bi.power_state == Machine::PowerState::PoweredOn)
       str[symbols_per_line * 3 - 1] = 'Y';
 
-    if (bi.power_state == Machine::PowerState::POWERED_OFF)
+    if (bi.power_state == Machine::PowerState::PoweredOff)
       str[symbols_per_line * 3 - 1] = 'x';
 
-    if (bi.power_state == Machine::PowerState::WAITING_FOR_POWER_OFF)
+    if (bi.power_state == Machine::PowerState::WaitingPowerOff)
       str[symbols_per_line * 3 - 1] = '!';
 
     Serial.print(str.c_str());
