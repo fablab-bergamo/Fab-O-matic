@@ -144,6 +144,7 @@ namespace fablabbg::ServerMQTT
     uint16_t logoff = 0;     /* Timeout in minutes */
     std::string name{""};    /* Name of the machine from server DB */
     uint8_t type = 0;        /* Type of the machine */
+    uint16_t grace = 0;      /* Grace period in minutes */
     MachineResponse() = delete;
     MachineResponse(bool rok) : Response(rok){};
 

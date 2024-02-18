@@ -56,6 +56,7 @@ namespace fablabbg
           machine.setMaintenanceNeeded(result->maintenance);
           machine.setAllowed(result->allowed);
           machine.setAutologoffDelay(std::chrono::minutes(result->logoff));
+          machine.setGracePeriod(std::chrono::minutes(result->grace));
           machine.setMachineName(result->name);
           MachineType mt = static_cast<MachineType>(result->type);
           machine.setMachineType(mt);
@@ -491,7 +492,8 @@ namespace fablabbg
                                std::string{conf::default_config::machine_name},
                                pins.relay,
                                std::string{config.value().machine_topic},
-                               conf::machine::DEFAULT_AUTO_LOGOFF_DELAY);
+                               conf::machine::DEFAULT_AUTO_LOGOFF_DELAY,
+                               conf::machine::DEFAULT_GRACE_PERIOD);
 
     machine.configure(machine_conf, server);
 

@@ -111,6 +111,14 @@ namespace fablabbg::ServerMQTT
     response->logoff = doc["logoff"];
     response->name = doc["name"].as<std::string>();
     response->type = doc["type"];
+    if (!doc["grace"].isNull())
+    {
+      response->grace = doc["grace"];
+    }
+    else
+    {
+      response->grace = std::chrono::duration_cast<std::chrono::minutes>(conf::machine::DEFAULT_GRACE_PERIOD).count();
+    }
 
     return response;
   }

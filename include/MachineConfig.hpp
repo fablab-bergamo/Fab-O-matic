@@ -41,13 +41,17 @@ namespace fablabbg
     /// @brief Time after which the active user on the machine shall be logged-off
     std::chrono::seconds autologoff;
 
+    /// @brief Time after which the active user on the machine shall be logged-off
+    std::chrono::seconds grace_period;
+
     MachineConfig(MachineID id, MachineType type, const std::string &name,
                   const pins_config::relay_config &relay, const std::string &topic,
-                  std::chrono::seconds autologoff) : machine_id(id), machine_type(type),
-                                                     machine_name(name),
-                                                     relay_config{relay.ch1_pin, relay.active_low},
-                                                     mqtt_config{topic},
-                                                     autologoff(autologoff){};
+                  std::chrono::seconds autologoff,
+                  std::chrono::seconds grace_period) : machine_id(id), machine_type(type),
+                                                       machine_name(name),
+                                                       relay_config{relay.ch1_pin, relay.active_low},
+                                                       mqtt_config{topic}, autologoff(autologoff),
+                                                       grace_period{grace_period} {};
     std::string toString() const;
 
     /// @brief Indicates if the machine is controller by hard-wired relay

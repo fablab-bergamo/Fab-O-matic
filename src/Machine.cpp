@@ -91,13 +91,13 @@ namespace fablabbg
       // Sets the countdown to power off
       logoff_timestamp = std::chrono::system_clock::now();
 
-      if (conf::machine::POWEROFF_GRACE_PERIOD == 0s)
+      if (config.value().grace_period == 0s)
       {
         power(false);
       }
 
       ESP_LOGI(TAG, "Machine will be shutdown in %lld s",
-               std::chrono::duration_cast<std::chrono::seconds>(conf::machine::POWEROFF_GRACE_PERIOD).count());
+               config.value().grace_period.count());
     }
   }
 
@@ -108,8 +108,10 @@ namespace fablabbg
     if (!logoff_timestamp.has_value())
       return false;
 
+    CHECK_CONFIGURED(bool);
+
     return (power_state == PowerState::WaitingPowerOff &&
-            std::chrono::system_clock::now() - logoff_timestamp.value() > conf::machine::POWEROFF_GRACE_PERIOD);
+            std::chrono::system_clock::now() - logoff_timestamp.value() > config.value().grace_period);
   }
 
   /// @brief indicates if the machine is about to shudown and board should beep
@@ -119,8 +121,10 @@ namespace fablabbg
     if (!logoff_timestamp.has_value() || conf::machine::BEEP_PERIOD == 0ms)
       return false;
 
+    CHECK_CONFIGURED(bool);
+
     return (power_state == PowerState::WaitingPowerOff &&
-            std::chrono::system_clock::now() - logoff_timestamp.value() > conf::machine::BEEP_PERIOD);
+            std::chrono::system_clock::now() - logoff_timestamp.value() > config.value().grace_period);
   }
 
   /// @brief sets the machine power to on (true) or off (false)
@@ -252,6 +256,7 @@ namespace fablabbg
     sstream << ", " << config.value().toString();
     sstream << ", Active:" << active;
     sstream << ", Last logoff:" << (logoff_timestamp.has_value() ? logoff_timestamp.value().time_since_epoch().count() : 0);
+    sstream << ", GracePeriod (s):" << getGracePeriod().count();
     sstream << ")";
 
     return sstream.str();
@@ -332,5 +337,24 @@ namespace fablabbg
   void Machine::setMaintenanceNeeded(bool new_maintenance_needed)
   {
     maintenanceNeeded = new_maintenance_needed;
+  }
+
+  std::chrono::seconds Machine::getGracePeriod() const
+  {
+    CHECK_CONFIGURED(std::chrono::seconds);
+    return config.value().grace_period;
+  }
+
+  void Machine::setGracePeriod(std::chrono::seconds new_delay)
+  {
+    CHECK_CONFIGURED(void);
+
+    if (config.value().grace_period != new_delay)
+    {
+      ESP_LOGD(TAG, "Changing grace period to %lld seconds",
+               new_delay.count());
+    }
+
+    config.value().grace_period = new_delay;
   }
 } // namespace fablabbg
