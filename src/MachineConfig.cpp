@@ -18,6 +18,7 @@ namespace fablabbg
     sstream << "), AutologoffDelay (min):" << std::chrono::duration_cast<std::chrono::minutes>(autologoff).count();
     sstream << ", HasRelay:" << hasRelay();
     sstream << ", HasMqttSwitch:" << hasMqttSwitch();
+    sstream << ", GracePeriod (s):" << grace_period.count();
     sstream << "))";
 
     return sstream.str();

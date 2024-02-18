@@ -43,6 +43,8 @@ namespace fablabbg
 
     [[nodiscard]] std::chrono::seconds getAutologoffDelay() const;
 
+    [[nodiscard]] std::chrono::seconds getGracePeriod() const;
+
     /// @brief Try to login the user and start the usage timer
     bool login(FabUser user);
 
@@ -51,6 +53,9 @@ namespace fablabbg
 
     /// @brief Sets the delay after which the user will be logged off automatically
     void setAutologoffDelay(std::chrono::seconds new_delay);
+
+    /// @brief Sets the idle period after which the machine will power off automatically
+    void setGracePeriod(std::chrono::seconds new_delay);
 
     /// @brief Powers the machine on or off using relay/MQTT/both
     /// @param on_or_off new power state
