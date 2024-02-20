@@ -1,4 +1,4 @@
-# rfid-arduino
+# RFID-arduino
 
 Build status : [![PlatformIO CI](https://github.com/fablab-bergamo/rfid-arduino/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/fablab-bergamo/rfid-arduino/actions/workflows/build.yml)
 Test suite : [![Test suite](https://github.com/PBrunot/rfid-arduino-copy/actions/workflows/tests.yml/badge.svg)](https://github.com/PBrunot/rfid-arduino-copy/actions/workflows/tests.yml)
@@ -17,7 +17,7 @@ Test suite : [![Test suite](https://github.com/PBrunot/rfid-arduino-copy/actions
 
 * View hardware project (WORK IN PROGRESS) on EASYEDA : [Electrical scheme, BOM, PCB](https://oshwlab.com/pascal.brunot/rfid-arduino-fablab-bg)
 
-## Hardware requirements
+## Hardware components
 
 * ESP32, ESP32-S2 or ESP32-S3 chips
 * WiFi connection to the backend
@@ -38,19 +38,17 @@ Test suite : [![Test suite](https://github.com/PBrunot/rfid-arduino-copy/actions
 
 * Language: C++20 with ArduinoFramework for ESP32
 * IDE: VSCode + Platform.io extension as a minimun
-* To build, rename <code>secrets.hpp.example</code> to <code>secrets.hpp</code>.
+* To build, rename <code>conf/secrets.hpp.example</code> to <code>conf/secrets.hpp</code>.
 
 > Platform IO can be used from command-line without VSCode <code>pio run</code>
 > CMakeList.txt is generated from platform.io, do not use other build tools directly (ESP, cmake...)
 
-* To use hostname for MQTT server, mDNS is used by the Arduino stack built over ESP-IDF 4.4. When Arduino core for ESP will move to ESP-IDF 5.0+ an additional dependency to mDNS will be needed as mDNS is now an independent component.
-
-## TEST Suite
+## Testing Suite
 
 * A set a test scripts based on Platformio+Unity is included in the project.
 * There are two ways to run the tests:
 
-1. Use real hardware connected over USB with Platform.io command
+1. Use real hardware (esp32s3, esp32 wroverkit) connected over USB with Platform.io command
 
 ```shell
 pio test --environment esp32-s3
@@ -58,7 +56,7 @@ pio test --environment esp32-s3
 
 2. Use Wokwi-CLI with test images built by Platform.io. It requires a wokwi access token (free as per Jan 2024). The Github action "tests.yml" uses this mechanism.
 
-## DEMO - view it in the browser
+## DEMO - View it in the browser
 
 * Download latest <code>esp32-wokwi.zip</code> file from Github Actions / platformio.yml / Artifacts
 * Extract <code>esp32-wokwi.bin</code> file from artifact ZIP
@@ -73,11 +71,11 @@ pio test --environment esp32-s3
 
 ## Configuration steps (/conf folder)
 
-* See <code>pins.hpp</code> to set the GPIO pins for LCD parallel interface, relay, buzzer and RFID reader SPI interface.
-* See <code>conf.hpp</code> to configure LCD dimensions, timeouts, debug logs and some behaviours (e.g. time before to power off the machine)
-* See <code>secrets.hpp</code> to configure network SSID/Password credentials, MQTT credentials and whitelisted RFID tags
+* See <code>conf/pins.hpp</code> to set the GPIO pins for LCD parallel interface, relay, buzzer and RFID reader SPI interface.
+* See <code>conf/conf.hpp</code> to configure LCD dimensions, timeouts, debug logs and some behaviours (e.g. time before to power off the machine)
+* See <code>conf/secrets.hpp</code> to configure network SSID/Password credentials, MQTT credentials and whitelisted RFID tags
   
-  * A configuration portal based on WiFiManager allows to configured WiFi credentials, MQTT Broker address and Shelly topic (facultative). This makes editing <code>conf.hpp</code> required only for MQTT Broker credentials settings.
+  * A configuration portal based on WiFiManager allows to configured WiFi credentials, MQTT Broker address and Shelly topic (facultative). This makes editing <code>conf/conf.hpp</code> required only for MQTT Broker credentials settings.
 
 > To add a white-listed RFID card, edit the tuples list <code>whitelist</code>. These RFID tags will be always authorized, even without server connection.
 
@@ -145,3 +143,14 @@ This is a facultative but very helpful setup to shorten the development workflow
 
 ![image](https://github.com/fablab-bergamo/rfid-arduino/assets/6236243/86a1f4e2-ba7f-47b7-90fb-470d4ee859b0)
 
+* Cost estimate < 30 eur: assembled PCB with SMD components 15eur + modules (LCD,RFID,Buck,Relay) approx 8 eur
+
+## Version history
+
+| Version | Date | Notable changes |
+|--|--|--|
+|none  | 2021 | Initial version |
+|0.1.x | August 2023 | Implemented MQTT communication with backend |
+|0.1.x | December 2023 | Added test cases, mqtt broker simulation |
+|0.2.x | January 2024 | Added over-the-air updates, WiFi portal for initial config, first deploy |
+|0.3.x | February 2024 | Added factory defaults button, power grace period config from backend, PCB draft |
