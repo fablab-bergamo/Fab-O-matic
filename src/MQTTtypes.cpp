@@ -1,11 +1,14 @@
+#include <memory>
+#include <sstream>
+#include <string>
+#include <string_view>
+
+#include <WiFi.h>
+
 #include "MQTTtypes.hpp"
 #include "ArduinoJson.hpp"
 #include "FabUser.hpp"
 #include "card.hpp"
-#include "string"
-#include <memory>
-#include <sstream>
-#include <string_view>
 
 #ifndef GIT_VERSION
 #define GIT_VERSION "unknown"
@@ -35,6 +38,7 @@ namespace fablabbg::ServerMQTT
     std::stringstream ss{};
     ss << "{\"action\":\"alive\","
        << "version\":\"" << GIT_VERSION << "\""
+       << "ip\":\"" << WiFi.localIP() << "\""
        << "}";
     return ss.str();
   }

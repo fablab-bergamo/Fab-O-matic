@@ -286,6 +286,15 @@ namespace fablabbg
           ESP_LOGD(TAG, "MQTT Client: subscribed to reply topic %s", response_topic.c_str());
           online = true;
         }
+        // Announce the board to the server
+        if (auto query = ServerMQTT::AliveQuery{}; publish(query))
+        {
+          ESP_LOGI(TAG, "MQTT Client: board announced to server");
+        }
+        else
+        {
+          ESP_LOGW(TAG, "MQTT Client: failure to announce board to server");
+        }
       }
       else
       {
