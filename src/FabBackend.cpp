@@ -344,6 +344,21 @@ namespace fablabbg
     return std::make_unique<RespT>(false);
   }
 
+  template <typename QueryT, typename... QueryArgs>
+  bool FabBackend::processQuery(QueryArgs &&...args)
+  {
+    static_assert(std::is_base_of<ServerMQTT::Query, QueryT>::value, "QueryT must inherit from Query");
+
+    if (isOnline())
+    {
+      if (QueryT query{args...}; publish(query))
+      {
+        return true;
+      }
+    }
+    return false;
+  }
+
   /// @brief Checks if the card ID is known to the server
   /// @param uid card uid
   /// @return backend response (if request_ok)
@@ -395,10 +410,10 @@ namespace fablabbg
   }
 
   /// @brief Sends a ping to the server
-  /// @return server response (if request_ok)
-  std::unique_ptr<ServerMQTT::SimpleResponse> FabBackend::alive()
+  /// @return true if packet was sent
+  bool FabBackend::alive()
   {
-    return processQuery<ServerMQTT::SimpleResponse, ServerMQTT::AliveQuery>();
+    return processQuery<ServerMQTT::AliveQuery>();
   }
 
   /// @brief set channel to use for WiFi connection

@@ -176,6 +176,19 @@ namespace fablabbg
     }
   }
 
+  void taskIsAlive()
+  {
+    // notify the server that the machine is still alive
+    auto &server = Board::logic.getServer();
+    if (server.isOnline())
+    {
+      if (auto resp = server.alive(); !resp)
+      {
+        ESP_LOGE(TAG, "taskIsAlive - alive failed");
+      }
+    }
+  }
+
   void taskFactoryReset()
   {
     static auto start = std::chrono::system_clock::now();
@@ -286,7 +299,7 @@ namespace fablabbg
   const Task t_mqtt("MQTT keepalive", 1s, &taskMQTTAlive, Board::scheduler, true);
   const Task t_led("LED", 1s, &taskBlink, Board::scheduler, true);
   const Task t_rst("FactoryReset", 500ms, &taskFactoryReset, Board::scheduler, pins.buttons.factory_defaults_pin != NO_PIN);
-
+  const Task t_alive("IsAlive", conf::tasks::MQTT_ALIVE_PERIOD, &taskIsAlive, Board::scheduler, true, 30s);
 #if (RFID_SIMULATION)
   const Task t_sim("RFIDCardsSim", 1s, &taskRFIDCardSim, Board::scheduler, true, 30s);
 #endif

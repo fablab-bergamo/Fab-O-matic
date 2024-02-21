@@ -41,7 +41,7 @@ namespace fablabbg
   {
     static constexpr auto DEFAULT_AUTO_LOGOFF_DELAY{8h}; /* User will be log out after this delay. If 0h, no auto-logout. This may be overriden by backend data */
     static constexpr auto BEEP_PERIOD{1min};             /* Device will beep before auto-poweroff. If 0min, no beeping.  */
-    static constexpr auto DEFAULT_GRACE_PERIOD{2min};   /* Idle time before poweroff. If 0min, machine will stay on. */
+    static constexpr auto DEFAULT_GRACE_PERIOD{2min};    /* Idle time before poweroff. If 0min, machine will stay on. */
     static constexpr auto DELAY_BETWEEN_BEEPS{30s};      /* Beeps will be heard every 30s when the machine is about to shutdown */
     static constexpr bool MAINTENANCE_BLOCK{true};       /* If true, machine needing maintenance will be blocked for normal users */
     static constexpr auto LONG_TAP_DURATION{10s};        /* Minimum time to confirm by long tap maintenance*/
@@ -75,6 +75,7 @@ namespace fablabbg
     static constexpr auto WATCHDOG_TIMEOUT{45s};       /* Timeout for hardware watchdog, set to 0s to disable (default: 30s) */
     static constexpr auto PORTAL_CONFIG_TIMEOUT{5min}; /* Timeout for portal configuration (default: 5min) */
     static constexpr auto FACTORY_DEFAULTS_DELAY{10s}; /* Press the button for X s to force reset to defaults and reboot */
+    static constexpr auto MQTT_ALIVE_PERIOD{2min};     /* Board announcement on the MQTT server (default: 2min)  */
 
   } // namespace conf::tasks
 

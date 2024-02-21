@@ -51,6 +51,9 @@ namespace fablabbg
     template <typename RespT, typename QueryT, typename... QueryArgs>
     [[nodiscard]] std::unique_ptr<RespT> processQuery(QueryArgs &&...);
 
+    template <typename QueryT, typename... QueryArgs>
+    bool processQuery(QueryArgs &&...args);
+
   public:
     FabBackend() = default;
 
@@ -60,7 +63,7 @@ namespace fablabbg
     [[nodiscard]] std::unique_ptr<ServerMQTT::SimpleResponse> inUse(const card::uid_t uid, std::chrono::seconds duration);
     [[nodiscard]] std::unique_ptr<ServerMQTT::SimpleResponse> finishUse(const card::uid_t uid, std::chrono::seconds duration);
     [[nodiscard]] std::unique_ptr<ServerMQTT::SimpleResponse> registerMaintenance(const card::uid_t maintainer);
-    [[nodiscard]] std::unique_ptr<ServerMQTT::SimpleResponse> alive();
+    [[nodiscard]] bool alive();
     [[nodiscard]] bool publish(String topic, String payload);
 
     [[nodiscard]] bool isOnline() const;
