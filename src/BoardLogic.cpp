@@ -87,7 +87,7 @@ namespace fablabbg
       // machine is free
       if (!authorize(uid))
       {
-        ESP_LOGI(TAG, "Login failed for %llu", uid);
+        ESP_LOGI(TAG, "Login failed for %s", card::uid_str(uid).c_str());
       }
       Tasks::task_delay(conf::lcd::SHORT_MESSAGE_DELAY);
       refreshFromServer();
