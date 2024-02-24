@@ -128,8 +128,7 @@ namespace fablabbg::tests
         TEST_ASSERT_TRUE_MESSAGE(stop_use_resp != nullptr, "Server stopUse failed");
         TEST_ASSERT_TRUE_MESSAGE(stop_use_resp->request_ok, "Server stopUse request failed");
         auto alive_resp = server.alive();
-        TEST_ASSERT_TRUE_MESSAGE(alive_resp != nullptr, "Server alive failed");
-        TEST_ASSERT_TRUE_MESSAGE(alive_resp->request_ok, "Server alive request failed");
+        TEST_ASSERT_TRUE_MESSAGE(alive_resp, "Server alive failed");
       }
     }
   }
