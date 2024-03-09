@@ -30,14 +30,12 @@ namespace fablabbg
   {
     if (rfid.has_value())
       return rfid.value().get();
-    else
+
+    ESP_LOGE(TAG, "RFID not initialized");
+    while (true)
     {
-      ESP_LOGE(TAG, "RFID not initialized");
-      while (true)
-      {
-        Tasks::task_delay(1s);
-      };
-    }
+      Tasks::task_delay(1s);
+    };
   }
 
   /// @brief connects and polls the server for up-to-date machine information

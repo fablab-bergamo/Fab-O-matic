@@ -146,7 +146,7 @@ namespace fablabbg::Tasks
     if (isActive() && std::chrono::system_clock::now() >= next_run)
     {
       run_counter++;
-      auto last_period = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - last_run);
+      auto last_period = std::chrono::duration_cast<milliseconds>(std::chrono::system_clock::now() - last_run);
       average_tardiness = (average_tardiness * (run_counter - 1) + last_period) / run_counter;
       last_run = std::chrono::system_clock::now();
 
@@ -157,7 +157,7 @@ namespace fablabbg::Tasks
 
       callback();
 
-      total_runtime += std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - last_run);
+      total_runtime += std::chrono::duration_cast<milliseconds>(std::chrono::system_clock::now() - last_run);
 
       if (period > 0ms)
       {
@@ -203,7 +203,7 @@ namespace fablabbg::Tasks
     return active;
   }
 
-  auto Task::getPeriod() const -> std::chrono::milliseconds
+  auto Task::getPeriod() const -> milliseconds
   {
     return period;
   }
@@ -218,7 +218,7 @@ namespace fablabbg::Tasks
     return id;
   }
 
-  auto Task::getAvgTardiness() const -> std::chrono::milliseconds
+  auto Task::getAvgTardiness() const -> milliseconds
   {
     if (average_tardiness > period)
     {
@@ -232,17 +232,17 @@ namespace fablabbg::Tasks
     return run_counter;
   }
 
-  auto Task::getDelay() const -> std::chrono::milliseconds
+  auto Task::getDelay() const -> milliseconds
   {
     return delay;
   }
 
-  auto Task::setDelay(std::chrono::milliseconds new_delay) -> void
+  auto Task::setDelay(milliseconds new_delay) -> void
   {
     delay = new_delay;
   }
 
-  auto Task::getTotalRuntime() const -> std::chrono::milliseconds
+  auto Task::getTotalRuntime() const -> milliseconds
   {
     return total_runtime;
   }
@@ -254,7 +254,7 @@ namespace fablabbg::Tasks
 
   /// @brief Wait for a delay, allowing OTA updates
   /// @param delay period to wait (should be > 50 ms)
-  auto task_delay(const std::chrono::milliseconds duration) -> void
+  auto task_delay(const milliseconds duration) -> void
   {
     if (duration < 50ms)
     {
