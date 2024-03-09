@@ -50,33 +50,30 @@ namespace fablabbg
 
     BoardLogic() = default;
 
-    Status getStatus() const;
+    auto refreshFromServer() -> void;
+    auto onNewCard(card::uid_t uid) -> void;
+    auto logout() -> void;
+    auto changeStatus(Status newStatus) -> void;
+    auto updateLCD() const -> void;
+    auto beep_ok() const -> void;
+    auto beep_failed() const -> void;
+    auto blinkLed(uint8_t r = 0, uint8_t g = 0, uint8_t b = 0) -> void;
+    auto checkRfid() -> void;
+    auto checkPowerOff() -> void;
+    auto setAutologoffDelay(std::chrono::seconds delay) -> void;
+    auto setWhitelist(WhiteList whitelist) -> void;
+    auto setRebootRequest(bool request) -> void;
 
-    void refreshFromServer();
-    void onNewCard(card::uid_t uid);
-    void logout();
-    [[nodiscard]] bool authorize(const card::uid_t uid);
-    void changeStatus(Status newStatus);
-    bool board_init();
-    void updateLCD() const;
-    void beep_ok() const;
-    void beep_failed() const;
+    auto board_init() -> bool;
+    auto configure(BaseRFIDWrapper &rfid, BaseLCDWrapper &lcd) -> bool;
+    auto reconfigure() -> bool;
 
-    bool configure(BaseRFIDWrapper &rfid, BaseLCDWrapper &lcd);
-
-    void blinkLed(uint8_t r = 0, uint8_t g = 0, uint8_t b = 0);
-    void checkRfid();
-    void checkPowerOff();
-    void setAutologoffDelay(std::chrono::seconds delay);
-    void setWhitelist(WhiteList whitelist);
-    [[nodiscard]] FabBackend &getServer();
-    bool reconfigure();
-
-    [[nodiscard]] Machine &getMachineForTesting();
-    [[nodiscard]] const Machine &getMachine() const;
-
-    void setRebootRequest(bool request);
-    bool getRebootRequest() const;
+    [[nodiscard]] auto getStatus() const -> Status;
+    [[nodiscard]] auto getRebootRequest() const -> bool;
+    [[nodiscard]] auto getServer() -> FabBackend &;
+    [[nodiscard]] auto getMachineForTesting() -> Machine &;
+    [[nodiscard]] auto getMachine() const -> const Machine &;
+    [[nodiscard]] auto authorize(const card::uid_t uid) -> bool;
 
     // copy reference
     BoardLogic &operator=(const BoardLogic &board) = delete;
@@ -104,7 +101,7 @@ namespace fablabbg
 
     bool rebootRequest{false};
 
-    bool longTap(const card::uid_t card, const std::string &short_prompt) const;
+    auto longTap(const card::uid_t card, const std::string &short_prompt) const -> bool;
   };
 } // namespace fablabbg
 #endif // BOARDLOGIC_HPP_

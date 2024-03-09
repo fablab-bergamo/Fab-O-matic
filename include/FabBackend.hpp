@@ -21,59 +21,60 @@ namespace fablabbg
   {
   private:
     constexpr static auto MAX_MSG_SIZE = 255;
+    MQTTClient client{MAX_MSG_SIZE}; // Default is 128, and can be reached with some messages
+    StaticJsonDocument<MAX_MSG_SIZE> doc;
 
-    std::string wifi_ssid;
-    std::string wifi_password;
-    std::string broker_hostname;
-    std::string mqtt_user;
-    std::string mqtt_password;
-    std::string mqtt_client_name;
+    std::string wifi_ssid{""};
+    std::string wifi_password{""};
+    std::string broker_hostname{""};
+    std::string mqtt_user{""};
+    std::string mqtt_password{""};
+    std::string mqtt_client_name{""};
 
     MQTTClientCallbackSimpleFunction callback;
     WiFiClient wifi_client;
-    MQTTClient client{MAX_MSG_SIZE}; // Default is 128, and can be reached with some messages
-    StaticJsonDocument<MAX_MSG_SIZE> doc;
 
     std::string topic{""};
     std::string response_topic{""};
     std::string last_query{""};
     std::string last_reply{""};
 
-    bool online = false;
-    bool answer_pending = false;
+    bool online{false};
+    bool answer_pending{false};
     int32_t channel{-1};
 
-    void messageReceived(String &topic, String &payload);
-    [[nodiscard]] bool publish(const ServerMQTT::Query &payload);
-    [[nodiscard]] bool waitForAnswer(std::chrono::milliseconds timeout);
-    [[nodiscard]] bool publishWithReply(const ServerMQTT::Query &payload);
+    auto messageReceived(String &topic, String &payload) -> void;
+
+    [[nodiscard]] auto publish(const ServerMQTT::Query &payload) -> bool;
+    [[nodiscard]] auto waitForAnswer(std::chrono::milliseconds timeout) -> bool;
+    [[nodiscard]] auto publishWithReply(const ServerMQTT::Query &payload) -> bool;
 
     template <typename RespT, typename QueryT, typename... QueryArgs>
-    [[nodiscard]] std::unique_ptr<RespT> processQuery(QueryArgs &&...);
+    [[nodiscard]] auto processQuery(QueryArgs &&...) -> std::unique_ptr<RespT>;
 
     template <typename QueryT, typename... QueryArgs>
-    bool processQuery(QueryArgs &&...args);
+    [[nodiscard]] auto processQuery(QueryArgs &&...args) -> bool;
 
   public:
     FabBackend() = default;
 
-    [[nodiscard]] std::unique_ptr<ServerMQTT::UserResponse> checkCard(const card::uid_t uid);
-    [[nodiscard]] std::unique_ptr<ServerMQTT::MachineResponse> checkMachine();
-    [[nodiscard]] std::unique_ptr<ServerMQTT::SimpleResponse> startUse(const card::uid_t uid);
-    [[nodiscard]] std::unique_ptr<ServerMQTT::SimpleResponse> inUse(const card::uid_t uid, std::chrono::seconds duration);
-    [[nodiscard]] std::unique_ptr<ServerMQTT::SimpleResponse> finishUse(const card::uid_t uid, std::chrono::seconds duration);
-    [[nodiscard]] std::unique_ptr<ServerMQTT::SimpleResponse> registerMaintenance(const card::uid_t maintainer);
-    [[nodiscard]] bool alive();
-    [[nodiscard]] bool publish(String topic, String payload);
+    [[nodiscard]] auto checkCard(const card::uid_t uid) -> std::unique_ptr<ServerMQTT::UserResponse>;
+    [[nodiscard]] auto checkMachine() -> std::unique_ptr<ServerMQTT::MachineResponse>;
+    [[nodiscard]] auto startUse(const card::uid_t uid) -> std::unique_ptr<ServerMQTT::SimpleResponse>;
+    [[nodiscard]] auto inUse(const card::uid_t uid, std::chrono::seconds duration) -> std::unique_ptr<ServerMQTT::SimpleResponse>;
+    [[nodiscard]] auto finishUse(const card::uid_t uid, std::chrono::seconds duration) -> std::unique_ptr<ServerMQTT::SimpleResponse>;
+    [[nodiscard]] auto registerMaintenance(const card::uid_t maintainer) -> std::unique_ptr<ServerMQTT::SimpleResponse>;
+    [[nodiscard]] auto alive() -> bool;
+    [[nodiscard]] auto publish(String topic, String payload) -> bool;
+    [[nodiscard]] auto isOnline() const -> bool;
 
-    [[nodiscard]] bool isOnline() const;
-    bool connect();
-    bool connectWiFi() noexcept;
-    bool loop();
-    void configure(const SavedConfig &config); // Must be called before using the server
-    void disconnect();
+    auto connect() -> bool;
+    auto connectWiFi() -> bool;
+    auto loop() -> bool;
 
-    void setChannel(int32_t channel);
+    auto configure(const SavedConfig &config) -> void; // Must be called before using the server
+    auto disconnect() -> void;
+    auto setChannel(int32_t channel) -> void;
 
     // Rule of 5 https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rc-five
     FabBackend(const FabBackend &) = delete;            // copy constructor
