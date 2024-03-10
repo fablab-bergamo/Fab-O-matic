@@ -20,7 +20,7 @@ Test suite : [![Test suite](https://github.com/PBrunot/rfid-arduino-copy/actions
 ## Hardware components
 
 * ESP32, ESP32-S2 or ESP32-S3 chips
-* WiFi connection to the backend
+* WiFi connection to the backend project
 * RFID reader (using mfrc522 compatible chip)
 * LCD driver (using Hitachi HD44780 compatible chip)
 * 3.3V Relay (or [Shelly](https://www.shellyitalia.com/shelly-plus-1-mini-gen3/) MQTT device)
@@ -28,11 +28,14 @@ Test suite : [![Test suite](https://github.com/PBrunot/rfid-arduino-copy/actions
 * A LED or NeoPixel
 * RFID tags or cards for user authentication
 
-### Other requirements
+## PCB Details
 
-* MQTT Broker on WiFi network. Board can also work in offline mode with whitelisted RFID tags.
+* See hardware folder for Gerber files and schematics.
+* First version uses modules for RFID, LCD, Power DC-DC buck converter and ESP32-S3
 
-> Tested with Mosquitto. See the backend side project in [Github rfid-backend](https://github.com/fablab-bergamo/rfid-backend)
+![back](https://github.com/fablab-bergamo/rfid-arduino/assets/6236243/7a963cb0-11fb-4afa-964d-4ea53955f577)
+
+* Cost estimate per board < 30 eur: PCB around 1 eur, components 11 eur + modules (LCD,RFID,Buck,Relay) approx 8 eur
 
 ## Build environment
 
@@ -41,7 +44,6 @@ Test suite : [![Test suite](https://github.com/PBrunot/rfid-arduino-copy/actions
 * To build, rename <code>conf/secrets.hpp.example</code> to <code>conf/secrets.hpp</code>.
 
 > Platform IO can be used from command-line without VSCode <code>pio run</code>
-> CMakeList.txt is generated from platform.io, do not use other build tools directly (ESP, cmake...)
 
 ## Testing Suite
 
@@ -101,7 +103,7 @@ namespace conf::default_config
 }
 ```
 
-## Configuration guide - debugging with Wokwi ESP32 emulator
+## Configuration guide - debugging with Wokwi ESP32 emulator integrated with VSCode
 
 This is a facultative but very helpful setup to shorten the development workflow.
 
@@ -135,15 +137,17 @@ This is a facultative but very helpful setup to shorten the development workflow
 
 ![image](https://github.com/fablab-bergamo/rfid-arduino/assets/6236243/55f926b5-eec8-49d9-b217-628e07f7e3b8)
 
-## PCB Details
+## OTA procedure
 
-* Not yet built. Can contain modules for RFID, LCD, Power DC-DC buck converter
+* Edit platform.io configuration file for the build with the following under the right environmnet
 
-![image](https://github.com/fablab-bergamo/rfid-arduino/assets/6236243/7a64bf13-23d7-47c7-965a-540bbb7d6ff6)
+```ini
+upload_protocol = espota
+upload_port = IP_ADDRESS_HERE or mDNS_NAME.local
+```
 
-![image](https://github.com/fablab-bergamo/rfid-arduino/assets/6236243/86a1f4e2-ba7f-47b7-90fb-470d4ee859b0)
-
-* Cost estimate < 30 eur: assembled PCB with SMD components 15eur + modules (LCD,RFID,Buck,Relay) approx 8 eur
+* Set serial port to AUTO in VSCODE
+* Build & Deploy from VSCode. Upload takes 1-2 minutes. Board will reboot automatically when the machine is idle.
 
 ## Version history
 
@@ -154,3 +158,4 @@ This is a facultative but very helpful setup to shorten the development workflow
 |0.1.x | December 2023 | Added test cases, mqtt broker simulation |
 |0.2.x | January 2024 | Added over-the-air updates, WiFi portal for initial config, first deploy |
 |0.3.x | February 2024 | Added factory defaults button, power grace period config from backend, PCB draft |
+|0.4.0 | March 2024 | 1st PCB manufactured (rev0.2), FW +IP address announced over MQTT |
