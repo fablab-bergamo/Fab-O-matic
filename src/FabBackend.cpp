@@ -149,7 +149,7 @@ namespace fablabbg
   bool FabBackend::waitForAnswer(std::chrono::milliseconds max_duration)
   {
     const auto start_time = std::chrono::system_clock::now();
-    const auto DELAY_MS = 50ms;
+    const auto DELAY_MS = 25ms;
     do
     {
       if (answer_pending)

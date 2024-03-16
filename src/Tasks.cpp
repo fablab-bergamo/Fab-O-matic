@@ -256,6 +256,8 @@ namespace fablabbg::Tasks
   /// @param delay period to wait (should be > 50 ms)
   auto task_delay(const milliseconds duration) -> void
   {
+    ArduinoOTA.handle();
+
     if (duration < 50ms)
     {
       delay(duration.count());
