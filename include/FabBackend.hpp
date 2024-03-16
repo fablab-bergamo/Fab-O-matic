@@ -22,7 +22,7 @@ namespace fablabbg
   private:
     constexpr static auto MAX_MSG_SIZE = 255;
     MQTTClient client{MAX_MSG_SIZE}; // Default is 128, and can be reached with some messages
-    StaticJsonDocument<MAX_MSG_SIZE> doc;
+    JsonDocument doc;
 
     std::string wifi_ssid{""};
     std::string wifi_password{""};

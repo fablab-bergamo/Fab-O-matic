@@ -78,7 +78,7 @@ namespace fablabbg
 
   auto SavedConfig::toString() const -> const std::string
   {
-    DynamicJsonDocument doc(1024);
+    JsonDocument doc;
 
     doc["ssid"] = ssid;
     doc["password"] = password;
