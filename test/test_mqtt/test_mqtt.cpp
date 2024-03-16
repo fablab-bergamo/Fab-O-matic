@@ -41,7 +41,7 @@ namespace fablabbg::tests
     while (!exit_request)
     {
       broker.mainLoop();
-      delay(50);
+      delay(25);
     }
     ESP_LOGI(TAG3, "MQTT server thread exiting");
     return arg;
@@ -85,8 +85,8 @@ namespace fablabbg::tests
 
   void test_fabserver_calls()
   {
-    const int NB_TESTS = 3;
-    const int NB_MACHINES = 10;
+    const int NB_TESTS = 10;
+    const int NB_MACHINES = 5;
     auto &server = logic.getServer();
     for (auto mid = 100; mid <= 100 + NB_MACHINES; mid++)
     {
@@ -94,13 +94,23 @@ namespace fablabbg::tests
       auto saved_config = SavedConfig::DefaultConfig();
       if (mid < 99999)
       {
-        snprintf(saved_config.machine_id, sizeof(saved_config.machine_id), "%d", mid);
+        snprintf(saved_config.machine_id, sizeof(saved_config.machine_id), "%d\0", mid);
         strncpy(saved_config.mqtt_server, "127.0.0.1\0", sizeof(saved_config.mqtt_server));
       }
       ESP_LOGI(TAG3, "Testing machine %d", mid);
       server.configure(saved_config);
 
-      TEST_ASSERT_TRUE_MESSAGE(server.connect(), "1st Server connect failed");
+      auto connected = false;
+      for (auto i = 0; i < 3; i++)
+      {
+        server.disconnect(); // Force disconnect
+        if (connected |= server.connect())
+        {
+          break;
+        }
+      }
+
+      TEST_ASSERT_TRUE_MESSAGE(connected, "Server connect failed");
       TEST_ASSERT_TRUE_MESSAGE(server.isOnline(), "Server is not online");
 
       for (auto i = 0; i < NB_TESTS; ++i)

@@ -53,6 +53,18 @@ namespace fablabbg
       ESP_LOGD(TAG2, "MQTT BROKER: lost connection");
     }
     break;
+    case Subscribe_sMQTTEventType:
+    {
+      auto *e = static_cast<sMQTTSubUnSubClientEvent *>(event);
+      ESP_LOGD(TAG2, "MQTT BROKER: client %s subscribed to %s", e->Client()->getClientId().c_str(), e->Topic().c_str());
+    }
+    break;
+    case UnSubscribe_sMQTTEventType:
+    {
+      auto *e = static_cast<sMQTTSubUnSubClientEvent *>(event);
+      ESP_LOGD(TAG2, "MQTT BROKER: got unsubscribe from %s", e->Topic().c_str());
+    }
+    break;
     default:
       ESP_LOGD(TAG2, "MQTT BROKER: unhandled event %d", event->Type());
       break;
@@ -95,6 +107,12 @@ namespace fablabbg
       auto response = "{\"request_ok\":true,\"is_valid\":true,\"level\":2,\"name\":\"USER" + uid + "\",\"is_valid\":true}";
       return response;
     }
+
+    if (query.find("alive") != std::string::npos)
+    {
+      return ""; // No reply to alive message
+    }
+
     if (query.find(conf::default_config::machine_topic) != std::string::npos) // Shelly doesn't reply
     {
       return "";

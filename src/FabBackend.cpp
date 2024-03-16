@@ -235,7 +235,7 @@ namespace fablabbg
         ESP_LOGD(TAG, "Closing MQTT client due to WiFi down");
         client.disconnect();
       }
-
+      Tasks::task_delay(100ms);
       connectWiFi();
     }
 
@@ -268,6 +268,7 @@ namespace fablabbg
                           mqtt_password.c_str(), false))
       {
         ESP_LOGW(TAG, "Failure to connect as client: %s with username %s, last error %d", mqtt_client_name.c_str(), mqtt_user.c_str(), client.lastError());
+        client.disconnect();
       }
 
       // Setup subscriptions
@@ -314,6 +315,8 @@ namespace fablabbg
   void FabBackend::disconnect()
   {
     client.disconnect();
+    wifi_client.stop();
+    Tasks::task_delay(100ms);
   }
 
   /// @brief Process a MQTT query and returns the response

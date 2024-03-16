@@ -67,8 +67,8 @@ pio test --environment esp32-s3
 
 ![image](https://github.com/fablab-bergamo/rfid-arduino/assets/6236243/5c41092e-f8bf-451a-95ec-8dc6d7e07824)
 
-* When the preprocessor constant <code>WOKWI_SIMULATION</code> is set to true:
-  * RFID chip is replaced with a mockup simulating random RFID tags from whitelist from time to time (<code>MockRFIDWrapper</code> class).
+* When the preprocessor constants <code>MQTT_SIMULATION</code> or <code>RFID_SIMULATION</code> are set to true:
+  * RFID chip is replaced with a mockup simulating random RFID tags from whitelist from time to time (<code>MockMrfc522</code> class).
   * A simple MQTT broker (<code>MockMQTTBroker</code> class) is run in a separate thread on esp32s2
 
 ## Configuration steps (/conf folder)
