@@ -252,6 +252,8 @@ namespace fablabbg
         if (pin_nums[i] == pin_nums[j])
           return false;
       }
+      // Check pins numbers are convertible to gpio_num_t
+      static_cast<gpio_num_t>(pin_nums[i]);
     }
     return true;
   }
