@@ -256,10 +256,15 @@ namespace fablabbg
     success &= getRfid().init_rfid();
 
     // Setup buzzer pin for ESP32
-    success &= (ledcSetup(conf::buzzer::LEDC_PWM_CHANNEL, conf::buzzer::BEEP_HZ, 10U) != 0);
-    ledcAttachPin(pins.buzzer.pin, conf::buzzer::LEDC_PWM_CHANNEL);
-    // Increase current to drive buzzer
-    gpio_set_drive_capability(static_cast<gpio_num_t>(pins.buzzer.pin), GPIO_DRIVE_CAP_3);
+    if constexpr (pins.buzzer.pin != NO_PIN)
+    {
+      pinMode(pins.buzzer.pin, OUTPUT);
+      success &= (ledcSetup(conf::buzzer::LEDC_PWM_CHANNEL, conf::buzzer::BEEP_HZ, 10U) != 0);
+      ledcAttachPin(pins.buzzer.pin, conf::buzzer::LEDC_PWM_CHANNEL);
+
+      // Increase current to drive buzzer
+      gpio_set_drive_capability(static_cast<gpio_num_t>(pins.buzzer.pin), GPIO_DRIVE_CAP_3);
+    }
 
     ESP_LOGI(TAG, "Board initialization complete, success = %d", success);
 

@@ -199,14 +199,14 @@ namespace fablabbg
       }, // LCD
       {
           .ch1_pin = 10U,
-          .active_low = true,
+          .active_low = false,
       }, // relay
       {
           .pin = 15U,
       }, // buzzer
       {
           .pin = 18U,
-          .is_neopixel = false,
+          .is_neopixel = true,
           .neopixel_config = NEO_GRB + NEO_KHZ800,
           .is_rgb = false,
           .green_pin = NO_PIN,
