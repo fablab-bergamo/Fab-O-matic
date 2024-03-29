@@ -178,6 +178,45 @@ namespace fablabbg
       } // Factory defaults button
   };
 #endif
+#ifdef PINS_ESP32S3_REV02
+  constexpr pins_config pins{
+      {
+          .sda_pin = 39U,
+          .mosi_pin = 37U,
+          .miso_pin = 36U,
+          .sck_pin = 38U,
+          .reset_pin = 35U,
+      }, // RFID
+      {
+          .rs_pin = 13U,
+          .en_pin = 14U,
+          .d0_pin = 21U,
+          .d1_pin = 47U,
+          .d2_pin = 48U,
+          .d3_pin = 40U,
+          .bl_pin = NO_PIN,
+          .active_low = false,
+      }, // LCD
+      {
+          .ch1_pin = 10U,
+          .active_low = true,
+      }, // relay
+      {
+          .pin = 15U,
+      }, // buzzer
+      {
+          .pin = 18U,
+          .is_neopixel = false,
+          .neopixel_config = NEO_GRB + NEO_KHZ800,
+          .is_rgb = false,
+          .green_pin = NO_PIN,
+          .blue_pin = NO_PIN,
+      }, // LED config
+      {
+          .factory_defaults_pin = 8U,
+      } // Factory defaults button
+  };
+#endif
 #ifdef PINS_ESP32_WROVERKIT
   constexpr pins_config pins{
       {
@@ -252,6 +291,8 @@ namespace fablabbg
         if (pin_nums[i] == pin_nums[j])
           return false;
       }
+      // Check pins numbers are convertible to gpio_num_t
+      static_cast<gpio_num_t>(pin_nums[i]);
     }
     return true;
   }
