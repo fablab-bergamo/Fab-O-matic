@@ -458,6 +458,8 @@ void setup()
     logic.beep_failed();
     logic.blinkLed();
 #ifndef DEBUG
+    // Start the HW watchdog to force a reset a few seconds later
+    fablabbg::taskEspWatchdog();
     // Cannot continue without RFID or LCD
     while (true)
     {
