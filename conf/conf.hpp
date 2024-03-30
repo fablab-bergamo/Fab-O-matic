@@ -60,8 +60,8 @@ namespace fablabbg
 
   namespace conf::buzzer
   {
-    static constexpr unsigned short LEDC_PWM_CHANNEL{0}; /* Esp32 pwm channel for beep generation */
-    static constexpr auto STANDARD_BEEP_DURATION{200ms}; /* Single beep duration, typical value 200ms. Set to 0 to disable beeps. */
+    static constexpr unsigned short LEDC_PWM_CHANNEL{2}; /* Esp32 pwm channel for beep generation */
+    static constexpr auto STANDARD_BEEP_DURATION{250ms}; /* Single beep duration, typical value 200ms. Set to 0 to disable beeps. */
     static constexpr auto NB_BEEPS{3};                   /* Number of beeps every time the function is callsed */
     static constexpr unsigned int BEEP_HZ{660};          /* Beep frequency in Hz */
 

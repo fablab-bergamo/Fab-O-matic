@@ -259,11 +259,10 @@ namespace fablabbg
     if constexpr (pins.buzzer.pin != NO_PIN)
     {
       pinMode(pins.buzzer.pin, OUTPUT);
-      success &= (ledcSetup(conf::buzzer::LEDC_PWM_CHANNEL, conf::buzzer::BEEP_HZ, 10U) != 0);
+      auto freq = ledcSetup(conf::buzzer::LEDC_PWM_CHANNEL, conf::buzzer::BEEP_HZ, 8U);
+      ESP_LOGD(TAG, "PWM frequency for buzzer set to %d Hz", freq);
+      success &= (freq != 0);
       ledcAttachPin(pins.buzzer.pin, conf::buzzer::LEDC_PWM_CHANNEL);
-
-      // Increase current to drive buzzer
-      gpio_set_drive_capability(static_cast<gpio_num_t>(pins.buzzer.pin), GPIO_DRIVE_CAP_3);
     }
 
     ESP_LOGI(TAG, "Board initialization complete, success = %d", success);
@@ -442,9 +441,9 @@ namespace fablabbg
 
   void BoardLogic::beep_ok() const
   {
-    if (conf::buzzer::STANDARD_BEEP_DURATION > 0ms)
+    if constexpr (conf::buzzer::STANDARD_BEEP_DURATION > 0ms && pins.buzzer.pin != NO_PIN)
     {
-      ledcWriteTone(conf::buzzer::LEDC_PWM_CHANNEL, conf::buzzer::BEEP_HZ);
+      ledcWrite(conf::buzzer::LEDC_PWM_CHANNEL, 127UL);
       Tasks::task_delay(conf::buzzer::STANDARD_BEEP_DURATION);
       ledcWrite(conf::buzzer::LEDC_PWM_CHANNEL, 0UL);
     }
@@ -452,11 +451,11 @@ namespace fablabbg
 
   void BoardLogic::beep_failed() const
   {
-    if (conf::buzzer::STANDARD_BEEP_DURATION > 0ms)
+    if constexpr (conf::buzzer::STANDARD_BEEP_DURATION > 0ms && pins.buzzer.pin != NO_PIN)
     {
       for (auto i = 0; i < conf::buzzer::NB_BEEPS; i++)
       {
-        ledcWriteTone(conf::buzzer::LEDC_PWM_CHANNEL, conf::buzzer::BEEP_HZ);
+        ledcWrite(conf::buzzer::LEDC_PWM_CHANNEL, 127UL);
         Tasks::task_delay(conf::buzzer::STANDARD_BEEP_DURATION);
         ledcWrite(conf::buzzer::LEDC_PWM_CHANNEL, 0UL);
         Tasks::task_delay(conf::buzzer::STANDARD_BEEP_DURATION);
