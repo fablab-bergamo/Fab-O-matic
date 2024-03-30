@@ -158,6 +158,7 @@ namespace fablabbg
       // Infinite retry until success or hw watchdog timeout
       while (!Board::rfid.init_rfid())
       {
+        Board::logic.changeStatus(Status::ErrorHardware);
         Tasks::task_delay(conf::tasks::RFID_CHECK_PERIOD);
 #ifdef DEBUG
         break;
@@ -457,6 +458,8 @@ void setup()
     logic.beep_failed();
     logic.blinkLed();
 #ifndef DEBUG
+    // Start the HW watchdog to force a reset a few seconds later
+    fablabbg::taskEspWatchdog();
     // Cannot continue without RFID or LCD
     while (true)
     {
