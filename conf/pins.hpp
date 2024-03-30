@@ -199,7 +199,7 @@ namespace fablabbg
       }, // LCD
       {
           .ch1_pin = 10U,
-          .active_low = false,
+          .active_low = true,
       }, // relay
       {
           .pin = 15U,
@@ -213,7 +213,7 @@ namespace fablabbg
           .blue_pin = NO_PIN,
       }, // LED config
       {
-          .factory_defaults_pin = 8U,
+          .factory_defaults_pin = 16U,
       } // Factory defaults button
   };
 #endif
