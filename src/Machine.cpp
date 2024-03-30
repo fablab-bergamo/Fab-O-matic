@@ -36,8 +36,8 @@ namespace fablabbg
                    config.value().relay_config.active_low ? HIGH : LOW);
       pinMode(pin, OUTPUT);
 
-      // Relay coil requires some juice
-      gpio_set_drive_capability(static_cast<gpio_num_t>(pin), GPIO_DRIVE_CAP_3);
+      // Relay coil is driven by a transistor, limit current
+      gpio_set_drive_capability(static_cast<gpio_num_t>(pin), GPIO_DRIVE_CAP_1);
     }
 
     ESP_LOGD(TAG, "Machine configured : %s", toString().c_str());
