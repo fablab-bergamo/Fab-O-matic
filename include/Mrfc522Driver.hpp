@@ -19,6 +19,7 @@ namespace fablabbg
     std::unique_ptr<MFRC522DriverPinSimple> rfid_simple_driver;
     std::unique_ptr<MFRC522DriverSPI> spi_rfid_driver;
     std::unique_ptr<MFRC522> mfrc522;
+    auto hardReset() -> void;
 
   public:
     struct UidDriver
