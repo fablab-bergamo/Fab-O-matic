@@ -193,7 +193,7 @@ namespace fablabbg
   {
     static auto start = std::chrono::system_clock::now();
 
-    if (pins.buttons.factory_defaults_pin == NO_PIN)
+    if constexpr (pins.buttons.factory_defaults_pin == NO_PIN)
       return;
 
     pinMode(pins.buttons.factory_defaults_pin, INPUT_PULLUP);
@@ -428,7 +428,7 @@ void setup()
   auto &lcd = fablabbg::Board::lcd;
 
   Serial.begin(fablabbg::conf::debug::SERIAL_SPEED_BDS); // Initialize serial communications with the PC for debugging.
-  delay(500);
+  delay(5000);
 
   if constexpr (fablabbg::conf::debug::ENABLE_LOGS)
   {
@@ -461,6 +461,7 @@ void setup()
     while (true)
     {
       fablabbg::Tasks::task_delay(500ms); // Allow OTA
+      Serial.println("Error initializing hardware");
     }
 #endif
   }
