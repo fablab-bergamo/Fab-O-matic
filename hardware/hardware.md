@@ -12,6 +12,12 @@ Errata in this revision:
 
 - LCD RW pin must be grounded (fix with soldering wire). Otherwise the LCD does not accept commands from ESP32.
 
+Changes during assembly:
+- Variable resistor for brightness adjustment replaced with 1k resistor
+- C2 and C3 were not mounted because their pads were damaged during ESP32 soldering. 
+- Zener protection diode D7 and F1 not mounted (overvoltage protection)
+- D4 replaced with a wire (reverse polarity protection) because voltage drop was too high (need 0.3V)
+
 ## Revision 0.3
 
 Changes:
@@ -19,6 +25,7 @@ Changes:
 - smaller footprints for capacitors
 - added values on silkscreen for all components
 - slight repositioning of RFID module to avoid overlap with default switch
+- removed terminal blocks IN+/OUT+ as there are enough connection ports on the board
 
 # Assembly instructions
 
