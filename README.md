@@ -158,4 +158,5 @@ upload_port = IP_ADDRESS_HERE or mDNS_NAME.local
 |0.1.x | December 2023 | Added test cases, mqtt broker simulation |
 |0.2.x | January 2024 | Added over-the-air updates, WiFi portal for initial config, first deploy |
 |0.3.x | February 2024 | Added factory defaults button, power grace period config from backend, PCB draft |
-|0.4.0 | March 2024 | 1st PCB manufactured (rev0.2), FW +IP address announced over MQTT |
+|0.4.x | March 2024 | 1st PCB manufactured (rev0.2), FW +IP address announced over MQTT |
+|0.5.x | April 2024 | Fully tested on PCB rev0.2 |
