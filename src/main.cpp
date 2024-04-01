@@ -290,7 +290,7 @@ namespace fablabbg
   // The scheduler will take care of the timing and will call the task callback
 
   const Task t_rfid("RFIDChip", conf::tasks::RFID_CHECK_PERIOD, &taskCheckRfid, Board::scheduler, true);
-  const Task t_network("Wifi/MQTT", conf::tasks::MQTT_REFRESH_PERIOD, &taskConnect, Board::scheduler, true, 1s);
+  const Task t_network("Wifi/MQTT", conf::tasks::MQTT_REFRESH_PERIOD, &taskConnect, Board::scheduler, true, conf::tasks::MQTT_REFRESH_PERIOD);
   const Task t_powoff("Poweroff", 1s, &taskPoweroffCheck, Board::scheduler, true);
   const Task t_log("Logoff", 1s, &taskLogoffCheck, Board::scheduler, true);
   // Hardware watchdog will run at one third the frequency
@@ -300,7 +300,7 @@ namespace fablabbg
   const Task t_mqtt("MQTT client loop", 1s, &taskMQTTClientLoop, Board::scheduler, true);
   const Task t_led("LED", 1s, &taskBlink, Board::scheduler, true);
   const Task t_rst("FactoryReset", 500ms, &taskFactoryReset, Board::scheduler, pins.buttons.factory_defaults_pin != NO_PIN);
-  const Task t_alive("IsAlive", conf::tasks::MQTT_ALIVE_PERIOD, &taskIsAlive, Board::scheduler, true, 30s);
+  const Task t_alive("IsAlive", conf::tasks::MQTT_ALIVE_PERIOD, &taskIsAlive, Board::scheduler, true, conf::tasks::MQTT_ALIVE_PERIOD);
 #if (RFID_SIMULATION)
   const Task t_sim("RFIDCardsSim", 1s, &taskRFIDCardSim, Board::scheduler, true, 30s);
 #endif
@@ -429,7 +429,7 @@ void setup()
   auto &lcd = fablabbg::Board::lcd;
 
   Serial.begin(fablabbg::conf::debug::SERIAL_SPEED_BDS); // Initialize serial communications with the PC for debugging.
-  delay(5000);
+  delay(3000);
 
   if constexpr (fablabbg::conf::debug::ENABLE_LOGS)
   {
@@ -463,7 +463,7 @@ void setup()
     // Cannot continue without RFID or LCD
     while (true)
     {
-      fablabbg::Tasks::task_delay(500ms); // Allow OTA
+      delay(500); // Can't enable OTA here
       Serial.println("Error initializing hardware");
     }
 #endif
@@ -480,12 +480,18 @@ void setup()
   // Join the AP and try to connect to broker
   logic.getServer().connect();
 
-  fablabbg::t_wdg.start(); // Enable the HW watchdog
-
   fablabbg::setupOTA();
 
+  // Let some time for WiFi to settle
+  fablabbg::Tasks::task_delay(2s);
+
+  // Enable the HW watchdog
+  fablabbg::t_wdg.start();
   // Since the WiFiManager may have taken minutes, recompute the tasks schedule
   scheduler.restart();
+
+  // Try to connect immediately
+  fablabbg::taskConnect();
 }
 
 void loop()
