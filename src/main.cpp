@@ -168,7 +168,7 @@ namespace fablabbg
   }
 
   /// @brief sends the MQTT alive message
-  void taskMQTTAlive()
+  void taskMQTTClientLoop()
   {
     auto &server = Board::logic.getServer();
     if (server.isOnline())
@@ -290,14 +290,14 @@ namespace fablabbg
   // The scheduler will take care of the timing and will call the task callback
 
   const Task t_rfid("RFIDChip", conf::tasks::RFID_CHECK_PERIOD, &taskCheckRfid, Board::scheduler, true);
-  const Task t_net("Wifi/MQTT", conf::tasks::MQTT_REFRESH_PERIOD, &taskConnect, Board::scheduler, true, 20s);
+  const Task t_network("Wifi/MQTT", conf::tasks::MQTT_REFRESH_PERIOD, &taskConnect, Board::scheduler, true, 1s);
   const Task t_powoff("Poweroff", 1s, &taskPoweroffCheck, Board::scheduler, true);
   const Task t_log("Logoff", 1s, &taskLogoffCheck, Board::scheduler, true);
   // Hardware watchdog will run at one third the frequency
   Task t_wdg("Watchdog", conf::tasks::WATCHDOG_TIMEOUT / 3, &taskEspWatchdog, Board::scheduler, false);
   const Task t_test("Selftest", conf::tasks::RFID_SELFTEST_PERIOD, &taskRfidWatchdog, Board::scheduler, true);
   const Task t_warn("PoweroffWarning", conf::machine::DELAY_BETWEEN_BEEPS, &taskPoweroffWarning, Board::scheduler, true);
-  const Task t_mqtt("MQTT keepalive", 1s, &taskMQTTAlive, Board::scheduler, true);
+  const Task t_mqtt("MQTT client loop", 1s, &taskMQTTClientLoop, Board::scheduler, true);
   const Task t_led("LED", 1s, &taskBlink, Board::scheduler, true);
   const Task t_rst("FactoryReset", 500ms, &taskFactoryReset, Board::scheduler, pins.buttons.factory_defaults_pin != NO_PIN);
   const Task t_alive("IsAlive", conf::tasks::MQTT_ALIVE_PERIOD, &taskIsAlive, Board::scheduler, true, 30s);
