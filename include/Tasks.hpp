@@ -130,7 +130,7 @@ namespace fablabbg::Tasks
     auto printStats() const -> void;
   };
 
-  void task_delay(const milliseconds delay);
+  void delay(const milliseconds delay);
 
 } // namespace fablabbg::Tasks
 #endif // TASKS_HPP_

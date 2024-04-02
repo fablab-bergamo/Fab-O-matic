@@ -103,7 +103,7 @@ namespace fablabbg
 
   /// @brief Initializes RFID chip including self test
   template <typename Driver>
-  auto RFIDWrapper<Driver>::init_rfid() const -> bool
+  auto RFIDWrapper<Driver>::rfidInit() const -> bool
   {
 
     ESP_LOGI(TAG, "Configuring SPI RFID (SCK=%d, MISO=%d, MOSI=%d, SDA=%d) RESET=%d",

@@ -22,7 +22,7 @@ namespace fablabbg
     RFIDWrapper();
 
     /// @brief Initializes the RFID driver
-    [[nodiscard]] auto init_rfid() const -> bool override;
+    [[nodiscard]] auto rfidInit() const -> bool override;
 
     /// @brief Returns true if a card is present in the field
     [[nodiscard]] auto isNewCardPresent() const -> bool override;

@@ -70,7 +70,7 @@ namespace fablabbg
         else
         {
           ESP_LOGE(TAG, "MQTT Client: failure to send query %s", query.payload().data());
-          Tasks::task_delay(conf::mqtt::TIMEOUT_REPLY_SERVER);
+          Tasks::delay(conf::mqtt::TIMEOUT_REPLY_SERVER);
         }
       }
 
@@ -81,7 +81,7 @@ namespace fablabbg
       }
 
       ESP_LOGW(TAG, "MQTT Client: no answer received, retrying %d/%d", try_cpt, conf::mqtt::MAX_TRIES);
-      Tasks::task_delay(conf::mqtt::TIMEOUT_REPLY_SERVER);
+      Tasks::delay(conf::mqtt::TIMEOUT_REPLY_SERVER);
     }
 
     ESP_LOGE(TAG, "MQTT Client: failure to send query %s", query.payload().data());
@@ -160,7 +160,7 @@ namespace fablabbg
           ESP_LOGW(TAG, "MQTT Client: connection lost while waiting for answer");
           connect();
         }
-        Tasks::task_delay(DELAY_MS);
+        Tasks::delay(DELAY_MS);
       }
       else
       {
@@ -203,7 +203,7 @@ namespace fablabbg
       WiFi.mode(WIFI_STA);
       ESP_LOGD(TAG, "FabServer::connectWiFi() : WiFi connection state=%d, connecting to SSID:%s (channel:%d)", WiFi.status(), wifi_ssid.c_str(), channel);
       WiFi.begin(wifi_ssid.data(), wifi_password.data(), channel);
-      Tasks::task_delay(DELAY_MS);
+      Tasks::delay(DELAY_MS);
       for (auto i = 0; i < NB_TRIES; i++)
       {
         if (WiFi.status() == WL_CONNECTED)
@@ -211,7 +211,7 @@ namespace fablabbg
           ESP_LOGD(TAG, "FabServer::connectWiFi() : WiFi connection successfull");
           break;
         }
-        Tasks::task_delay(DELAY_MS);
+        Tasks::delay(DELAY_MS);
       }
     }
     return WiFi.status() == WL_CONNECTED;
@@ -235,7 +235,7 @@ namespace fablabbg
         ESP_LOGD(TAG, "Closing MQTT client due to WiFi down");
         client.disconnect();
       }
-      Tasks::task_delay(100ms);
+      Tasks::delay(100ms);
       connectWiFi();
     }
 
@@ -316,7 +316,7 @@ namespace fablabbg
   {
     client.disconnect();
     wifi_client.stop();
-    Tasks::task_delay(100ms);
+    Tasks::delay(100ms);
   }
 
   /// @brief Process a MQTT query and returns the response

@@ -55,7 +55,7 @@ namespace fablabbg
       Board::logic.changeStatus(server.isOnline() ? Status::Connected : Status::Offline);
 
       // Briefly show to the user
-      Tasks::task_delay(conf::lcd::SHORT_MESSAGE_DELAY);
+      Tasks::delay(conf::lcd::SHORT_MESSAGE_DELAY);
     }
 
     if (server.isOnline())
@@ -100,7 +100,7 @@ namespace fablabbg
     if (Board::logic.getMachine().isShutdownImminent())
     {
       Board::logic.changeStatus(Status::ShuttingDown);
-      Board::logic.beep_failed();
+      Board::logic.beepFail();
       if (conf::debug::ENABLE_LOGS)
         ESP_LOGI(TAG, "Machine is about to shutdown");
     }
@@ -124,7 +124,7 @@ namespace fablabbg
     {
       ESP_LOGI(TAG, "Auto-logging out user %s\r\n", machine.getActiveUser().holder_name.data());
       Board::logic.logout();
-      Board::logic.beep_failed();
+      Board::logic.beepFail();
     }
   }
 
@@ -156,10 +156,10 @@ namespace fablabbg
       ESP_LOGE(TAG, "RFID chip failure");
 
       // Infinite retry until success or hw watchdog timeout
-      while (!Board::rfid.init_rfid())
+      while (!Board::rfid.rfidInit())
       {
         Board::logic.changeStatus(Status::ErrorHardware);
-        Tasks::task_delay(conf::tasks::RFID_CHECK_PERIOD);
+        Tasks::delay(conf::tasks::RFID_CHECK_PERIOD);
 #ifdef DEBUG
         break;
 #endif
@@ -210,13 +210,13 @@ namespace fablabbg
           start = std::chrono::system_clock::now();
 
           Board::logic.changeStatus(Status::FactoryDefaults);
-          Tasks::task_delay(1s);
+          Tasks::delay(1s);
         }
         else
         {
           ESP_LOGE(TAG, "Factory reset failed");
           Board::logic.changeStatus(Status::Error);
-          Tasks::task_delay(1s);
+          Tasks::delay(1s);
         }
         return;
       }
@@ -324,7 +324,7 @@ namespace fablabbg
   }
 
   // Starts the WiFi portal for configuration if needed
-  void config_portal()
+  void openConfigPortal()
   {
     WiFiManager wifiManager;
 
@@ -448,25 +448,25 @@ void setup()
 
   // Initialize hardware (RFID, LCD)
   auto hw_init = logic.configure(rfid, lcd);
-  hw_init &= logic.board_init();
+  hw_init &= logic.initBoard();
 
   logic.changeStatus(Status::Booting);
 
   if (!hw_init)
   {
     logic.changeStatus(Status::ErrorHardware);
-    logic.beep_failed();
+    logic.beepFail();
     logic.blinkLed();
     ESP_LOGE(TAG, "Hardware initialization failed");
     // Give the user a chance to upgrade firmware over OTA and configure IP.
   }
   else
   {
-    logic.beep_ok();
+    logic.beepOk();
   }
 
   // Network configuration setup
-  fablabbg::config_portal();
+  fablabbg::openConfigPortal();
 
 #if (MQTT_SIMULATION)
   fablabbg::startMQTTBrocker();
@@ -481,13 +481,13 @@ void setup()
     esp_task_wdt_add(NULL);          // add current thread to WDT watch
     while (true)
     {
-      fablabbg::Tasks::task_delay(1s);
+      fablabbg::Tasks::delay(1s);
       ESP_LOGE(TAG, "Hardware failed, waiting for OTA");
     }
   }
 
   // Let some time for WiFi to settle
-  fablabbg::Tasks::task_delay(2s);
+  fablabbg::Tasks::delay(2s);
 
   // Enable the HW watchdog
   fablabbg::t_wdg.enable();

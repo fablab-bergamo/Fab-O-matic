@@ -253,21 +253,21 @@ namespace fablabbg::Tasks
   }
 
   /// @brief Wait for a delay, allowing OTA updates
-  /// @param delay period to wait (should be > 50 ms)
-  auto task_delay(const milliseconds duration) -> void
+  /// @param duration period to wait
+  auto delay(const milliseconds duration) -> void
   {
     ArduinoOTA.handle();
 
     if (duration < 50ms)
     {
-      delay(duration.count());
+      ::delay(duration.count());
       return;
     }
 
     const auto start = std::chrono::system_clock::now();
     do
     {
-      delay(50);
+      ::delay(50);
       ArduinoOTA.handle();
     } while (std::chrono::system_clock::now() - start < duration);
   }

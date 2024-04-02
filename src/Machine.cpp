@@ -180,7 +180,7 @@ namespace fablabbg
       ESP_LOGE(TAG, "Error while publishing %s to %s", payload.c_str(), topic.c_str());
 
       mqtt_server.connect();
-      Tasks::task_delay(conf::mqtt::TIMEOUT_REPLY_SERVER);
+      Tasks::delay(conf::mqtt::TIMEOUT_REPLY_SERVER);
       retries++;
       if (retries > conf::mqtt::MAX_TRIES)
       {

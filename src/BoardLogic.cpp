@@ -34,7 +34,7 @@ namespace fablabbg
     ESP_LOGE(TAG, "RFID not initialized");
     while (true)
     {
-      Tasks::task_delay(1s);
+      Tasks::delay(1s);
     };
   }
 
@@ -87,7 +87,7 @@ namespace fablabbg
       {
         ESP_LOGI(TAG, "Login failed for %s", card::uid_str(uid).c_str());
       }
-      Tasks::task_delay(conf::lcd::SHORT_MESSAGE_DELAY);
+      Tasks::delay(conf::lcd::SHORT_MESSAGE_DELAY);
       refreshFromServer();
       return;
     }
@@ -103,7 +103,7 @@ namespace fablabbg
       // user is not the same, display who is using it
       changeStatus(Status::AlreadyInUse);
     }
-    Tasks::task_delay(conf::lcd::SHORT_MESSAGE_DELAY);
+    Tasks::delay(conf::lcd::SHORT_MESSAGE_DELAY);
     return;
   }
 
@@ -117,8 +117,8 @@ namespace fablabbg
 
     machine.logout();
     changeStatus(Status::LoggedOut);
-    beep_ok();
-    Tasks::task_delay(conf::lcd::SHORT_MESSAGE_DELAY);
+    beepOk();
+    Tasks::delay(conf::lcd::SHORT_MESSAGE_DELAY);
   }
 
   /// @brief Asks the user to keep the RFID tag on the reader as confirmation
@@ -148,7 +148,7 @@ namespace fablabbg
       const auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - start);
       if (delay_per_step - elapsed > 10ms)
       {
-        Tasks::task_delay(delay_per_step - elapsed);
+        Tasks::delay(delay_per_step - elapsed);
       }
     }
 
@@ -175,7 +175,7 @@ namespace fablabbg
     {
       ESP_LOGI(TAG, "Failed login for %llu", uid);
       changeStatus(Status::LoginDenied);
-      beep_failed();
+      beepFail();
       return false;
     }
 
@@ -185,7 +185,7 @@ namespace fablabbg
     {
       ESP_LOGI(TAG, "Login refused due to machine not allowed");
       changeStatus(Status::NotAllowed);
-      beep_failed();
+      beepFail();
       return false;
     }
 
@@ -195,13 +195,13 @@ namespace fablabbg
           user.user_level < FabUser::UserLevel::FabStaff)
       {
         changeStatus(Status::MaintenanceNeeded);
-        beep_failed();
-        Tasks::task_delay(conf::lcd::SHORT_MESSAGE_DELAY);
+        beepFail();
+        Tasks::delay(conf::lcd::SHORT_MESSAGE_DELAY);
         return false;
       }
       if (user.user_level >= FabUser::UserLevel::FabStaff)
       {
-        beep_ok();
+        beepOk();
         changeStatus(Status::MaintenanceQuery);
 
         if (longTap(user.card_uid, "Registra"))
@@ -209,9 +209,9 @@ namespace fablabbg
           auto maint_resp = server.registerMaintenance(user.card_uid);
           if (!maint_resp->request_ok)
           {
-            beep_failed();
+            beepFail();
             changeStatus(Status::Error);
-            Tasks::task_delay(conf::lcd::SHORT_MESSAGE_DELAY);
+            Tasks::delay(conf::lcd::SHORT_MESSAGE_DELAY);
             // Allow bypass for admins
             if (user.user_level == FabUser::UserLevel::FabAdmin)
             {
@@ -222,8 +222,8 @@ namespace fablabbg
           {
             changeStatus(Status::MaintenanceDone);
             machine.setMaintenanceNeeded(false);
-            beep_ok();
-            Tasks::task_delay(conf::lcd::SHORT_MESSAGE_DELAY);
+            beepOk();
+            Tasks::delay(conf::lcd::SHORT_MESSAGE_DELAY);
           }
           // Proceed to log-on the staff member to the machine in all cases
         }
@@ -235,25 +235,25 @@ namespace fablabbg
       auto result = server.startUse(machine.getActiveUser().card_uid);
       ESP_LOGI(TAG, "Login, result startUse: %d", result->request_ok);
       changeStatus(Status::LoggedIn);
-      beep_ok();
+      beepOk();
     }
     else
     {
       changeStatus(Status::NotAllowed);
-      beep_failed();
-      Tasks::task_delay(conf::lcd::SHORT_MESSAGE_DELAY);
+      beepFail();
+      Tasks::delay(conf::lcd::SHORT_MESSAGE_DELAY);
     }
 
     return true;
   }
 
   /// @brief Initializes LCD and RFID classes
-  bool BoardLogic::board_init()
+  bool BoardLogic::initBoard()
   {
     ESP_LOGD(TAG, "Board initialization...");
 
     auto success = getLcd().begin();
-    success &= getRfid().init_rfid();
+    success &= getRfid().rfidInit();
 
     // Setup buzzer pin for ESP32
     if constexpr (pins.buzzer.pin != NO_PIN)
@@ -440,26 +440,26 @@ namespace fablabbg
     return status;
   }
 
-  void BoardLogic::beep_ok() const
+  void BoardLogic::beepOk() const
   {
     if constexpr (conf::buzzer::STANDARD_BEEP_DURATION > 0ms && pins.buzzer.pin != NO_PIN)
     {
       ledcWrite(conf::buzzer::LEDC_PWM_CHANNEL, 127UL);
-      Tasks::task_delay(conf::buzzer::STANDARD_BEEP_DURATION);
+      Tasks::delay(conf::buzzer::STANDARD_BEEP_DURATION);
       ledcWrite(conf::buzzer::LEDC_PWM_CHANNEL, 0UL);
     }
   }
 
-  void BoardLogic::beep_failed() const
+  void BoardLogic::beepFail() const
   {
     if constexpr (conf::buzzer::STANDARD_BEEP_DURATION > 0ms && pins.buzzer.pin != NO_PIN)
     {
       for (auto i = 0; i < conf::buzzer::NB_BEEPS; i++)
       {
         ledcWrite(conf::buzzer::LEDC_PWM_CHANNEL, 127UL);
-        Tasks::task_delay(conf::buzzer::STANDARD_BEEP_DURATION);
+        Tasks::delay(conf::buzzer::STANDARD_BEEP_DURATION);
         ledcWrite(conf::buzzer::LEDC_PWM_CHANNEL, 0UL);
-        Tasks::task_delay(conf::buzzer::STANDARD_BEEP_DURATION);
+        Tasks::delay(conf::buzzer::STANDARD_BEEP_DURATION);
       }
     }
   }
@@ -617,7 +617,7 @@ namespace fablabbg
       ESP_LOGE(TAG, "LCD not initialized");
       while (true)
       {
-        Tasks::task_delay(1s);
+        Tasks::delay(1s);
       };
     }
   }

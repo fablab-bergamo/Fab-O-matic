@@ -10,7 +10,7 @@ namespace fablabbg
   {
   public:
     virtual ~BaseRFIDWrapper() = default;
-    virtual auto init_rfid() const -> bool = 0;
+    virtual auto rfidInit() const -> bool = 0;
 
     virtual auto isNewCardPresent() const -> bool = 0;
     virtual auto cardStillThere(const card::uid_t original,

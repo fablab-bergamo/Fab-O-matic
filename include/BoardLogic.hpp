@@ -55,8 +55,8 @@ namespace fablabbg
     auto logout() -> void;
     auto changeStatus(Status newStatus) -> void;
     auto updateLCD() const -> void;
-    auto beep_ok() const -> void;
-    auto beep_failed() const -> void;
+    auto beepOk() const -> void;
+    auto beepFail() const -> void;
     auto blinkLed(uint8_t r = 0, uint8_t g = 0, uint8_t b = 0) -> void;
     auto checkRfid() -> void;
     auto checkPowerOff() -> void;
@@ -64,7 +64,7 @@ namespace fablabbg
     auto setWhitelist(WhiteList whitelist) -> void;
     auto setRebootRequest(bool request) -> void;
 
-    auto board_init() -> bool;
+    auto initBoard() -> bool;
     auto configure(BaseRFIDWrapper &rfid, BaseLCDWrapper &lcd) -> bool;
     auto reconfigure() -> bool;
 
