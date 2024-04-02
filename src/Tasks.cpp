@@ -19,7 +19,7 @@ namespace fablabbg::Tasks
     tasks.push_back(task);
   }
 
-  auto Scheduler::removeTask(Task &task) -> void
+  auto Scheduler::removeTask(const Task &task) -> void
   {
     tasks.erase(std::remove_if(tasks.begin(), tasks.end(),
                                [&task](const auto &t)
@@ -27,11 +27,11 @@ namespace fablabbg::Tasks
                 tasks.end());
   }
 
-  auto Scheduler::restart() const -> void
+  auto Scheduler::updateSchedules() const -> void
   {
     for (const auto &task : tasks)
     {
-      task.get().restart();
+      task.get().updateSchedule();
     }
   }
 
@@ -170,19 +170,19 @@ namespace fablabbg::Tasks
     }
   }
 
-  auto Task::stop() -> void
+  auto Task::disable() -> void
   {
     active = false;
   }
 
-  auto Task::start() -> void
+  auto Task::enable() -> void
   {
     active = true;
-    restart();
+    updateSchedule();
   }
 
   /// @brief recompute the next run time (now + delay)
-  auto Task::restart() -> void
+  auto Task::updateSchedule() -> void
   {
     last_run = std::chrono::system_clock::now() + delay;
     next_run = last_run;

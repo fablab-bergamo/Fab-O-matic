@@ -38,13 +38,13 @@ namespace fablabbg::Tasks
     auto run() -> void;
 
     /// @brief  Prevent the task from running again
-    auto stop() -> void;
+    auto disable() -> void;
 
     /// @brief Allows the task to run again
-    auto start() -> void;
+    auto enable() -> void;
 
     /// @brief recompute the next run time (now + delay) and allows the task to run again
-    auto restart() -> void;
+    auto updateSchedule() -> void;
 
     /// @brief Change the task period
     /// @param new_period new period. Use 0ms for single shot.
@@ -65,11 +65,15 @@ namespace fablabbg::Tasks
     /// @brief Current period of the task
     [[nodiscard]] auto getPeriod() const -> milliseconds;
 
+    /// @brief Function to be called when task is run
+    /// @return Callback function
     [[nodiscard]] auto getCallback() const -> std::function<void()>;
 
     /// @brief Get the Task Identifier
     [[nodiscard]] auto getId() const -> const std::string;
 
+    /// @brief Get the initial delay before the task is run at given period
+    /// @return Delay in milliseconds
     [[nodiscard]] auto getDelay() const -> milliseconds;
 
     /// @brief Get the average tardiness, i.e. the average period between scheduled start and actual start of execution.
@@ -105,14 +109,14 @@ namespace fablabbg::Tasks
     ~Scheduler() = default;
 
     auto addTask(Task &task) -> void;
-    auto removeTask(Task &task) -> void;
+    auto removeTask(const Task &task) -> void;
 
     /// @brief Execute all tasks that are ready to run
     /// @details Tasks will be ordered by next_run time ascending, then run sequentially
     auto execute() const -> void;
 
     /// @brief Recompute all the next run times for all the tasks
-    auto restart() const -> void;
+    auto updateSchedules() const -> void;
 
     /// @brief Gets the number of tasks in the scheduler
     auto taskCount() const -> size_t;

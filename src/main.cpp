@@ -447,26 +447,22 @@ void setup()
   logic.blinkLed();
 
   // Initialize hardware (RFID, LCD)
-  auto success = logic.configure(rfid, lcd);
-  success &= logic.board_init();
+  auto hw_init = logic.configure(rfid, lcd);
+  hw_init &= logic.board_init();
 
   logic.changeStatus(Status::Booting);
 
-  if (!success)
+  if (!hw_init)
   {
     logic.changeStatus(Status::ErrorHardware);
     logic.beep_failed();
     logic.blinkLed();
-#ifndef DEBUG
-    // Start the HW watchdog to force a reset a few seconds later
-    fablabbg::taskEspWatchdog();
-    // Cannot continue without RFID or LCD
-    while (true)
-    {
-      delay(500); // Can't enable OTA here
-      Serial.println("Error initializing hardware");
-    }
-#endif
+    ESP_LOGE(TAG, "Hardware initialization failed");
+    // Give the user a chance to upgrade firmware over OTA and configure IP.
+  }
+  else
+  {
+    logic.beep_ok();
   }
 
   // Network configuration setup
@@ -475,20 +471,28 @@ void setup()
 #if (MQTT_SIMULATION)
   fablabbg::startMQTTBrocker();
 #endif
-  logic.beep_ok();
-
-  // Join the AP and try to connect to broker
-  logic.getServer().connect();
 
   fablabbg::setupOTA();
+
+  if (!hw_init)
+  {
+    // If hardware initialization failed, wait for OTA for 3 minutes
+    esp_task_wdt_init(60 * 3, true); // enable panic so ESP32 restarts
+    esp_task_wdt_add(NULL);          // add current thread to WDT watch
+    while (true)
+    {
+      fablabbg::Tasks::task_delay(1s);
+      ESP_LOGE(TAG, "Hardware failed, waiting for OTA");
+    }
+  }
 
   // Let some time for WiFi to settle
   fablabbg::Tasks::task_delay(2s);
 
   // Enable the HW watchdog
-  fablabbg::t_wdg.start();
+  fablabbg::t_wdg.enable();
   // Since the WiFiManager may have taken minutes, recompute the tasks schedule
-  scheduler.restart();
+  scheduler.updateSchedules();
 
   // Try to connect immediately
   fablabbg::taskConnect();
