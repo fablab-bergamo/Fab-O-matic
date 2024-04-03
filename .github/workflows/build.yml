@@ -23,28 +23,29 @@ jobs:
         run: cp conf/secrets.hpp.example conf/secrets.hpp
       - name: Check PlatformIO Project with linter
         run: pio check
-      - name: Build PlatformIO Project ESP32-s3
-        run: pio run -e esp32-s3
-      - name: Upload ESP32S3 build
+      - name: Build all PlatformIO Projects
+        run: pio run
+      - name: Upload ESP32-S3 Generic build
         uses: actions/upload-artifact@v4
         with:
-          name: esp32s3.bin
+          name: esp32s3-generic.bin
           path: .pio/build/esp32-s3/firmware.bin
-          retention-days: 90
-      - name: Build PlatformIO Project esp32dev
-        run: pio run -e esp32dev        
-      - name: Upload ESP32 build
+          retention-days: 90    
+      - name: Upload ESP32 Generic build
         uses: actions/upload-artifact@v4
         with:
-          name: esp32.bin
+          name: esp32-generic.bin
           path: .pio/build/esp32dev/firmware.bin
           retention-days: 90
-      - name: Build PlatformIO Project wokwi
-        run: pio run -e wokwi
-      - name: Upload WOKWI build
+      - name: Upload ESP32S2 WOKWI (RFID simulation) build
         uses: actions/upload-artifact@v4
         with:
           name: esp32-wokwi.bin
           path: .pio/build/wokwi/firmware.bin
           retention-days: 90
-
+      - name: Upload HARDWARE BOARD build
+        uses: actions/upload-artifact@v4
+        with:
+          name: hardware-rev0.bin
+          path: .pio/build/hardware-rev0/firmware.bin
+          retention-days: 90

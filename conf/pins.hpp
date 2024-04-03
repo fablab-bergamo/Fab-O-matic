@@ -178,7 +178,7 @@ namespace fablabbg
       } // Factory defaults button
   };
 #endif
-#ifdef PINS_ESP32S3_REV02
+#ifdef PINS_HARDWARE_REV0
   constexpr pins_config pins{
       {
           .sda_pin = 39U,
