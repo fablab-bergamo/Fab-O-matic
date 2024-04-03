@@ -12,7 +12,7 @@ Assembled back:
 
 ![image](https://github.com/fablab-bergamo/rfid-arduino/assets/6236243/1d27732c-2e89-48d1-b3e3-e541e1a960fa)
 
-Errata in this revision:
+⚠ Errata in this revision ⚠
 
 * Relay requires more current than ESP32 can provide. A PNP transistor can be soldered next to the terminal blocks to solve the problem. Connect Base on K pin, Emitter on 3V3 pin and Collector to coil (+). The track between CMD and Coil(+) passing below the relay must be cut. Relay takes 70 mA approx. The pin must be configured active_low.
 
@@ -32,6 +32,10 @@ Changes during assembly:
 * D4 replaced with a wire (reverse polarity protection) because voltage drop was too high (need 0.3V)
 
 ## Revision 0.3
+
+⚠ Errata in this revision ⚠
+
+* Q1 base shall be pulled up by a 5-10kohm resistor to 3V3 to avoid relay flickering at boot (while ESP32 has not pulled up the pin yet).
 
 Changes:
 
