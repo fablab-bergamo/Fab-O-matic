@@ -199,7 +199,7 @@ namespace fablabbg
       }, // LCD
       {
           .ch1_pin = 10U,
-          .active_low = false,
+          .active_low = true,
       }, // relay
       {
           .pin = 15U,
