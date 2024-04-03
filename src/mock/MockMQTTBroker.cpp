@@ -27,7 +27,7 @@ namespace fablabbg
     {
     case NewClient_sMQTTEventType:
     {
-      auto *e = static_cast<sMQTTNewClientEvent *>(event);
+      auto *e = static_cast<sMQTTNewClientEvent *>(event); // NOLINT(unused-variable)
       ESP_LOGD(TAG2, "MQTT BROKER: client connected, id:%s", e->Client()->getClientId().c_str());
     }
     break;
@@ -43,7 +43,7 @@ namespace fablabbg
     break;
     case RemoveClient_sMQTTEventType:
     {
-      auto *e = static_cast<sMQTTRemoveClientEvent *>(event);
+      auto *e = static_cast<sMQTTRemoveClientEvent *>(event); // NOLINT(unused-variable)
       ESP_LOGD(TAG2, "MQTT BROKER: removed client id: %s", e->Client()->getClientId().c_str());
     }
     break;
@@ -55,13 +55,13 @@ namespace fablabbg
     break;
     case Subscribe_sMQTTEventType:
     {
-      auto *e = static_cast<sMQTTSubUnSubClientEvent *>(event);
+      auto *e = static_cast<sMQTTSubUnSubClientEvent *>(event); // NOLINT(unused-variable)
       ESP_LOGD(TAG2, "MQTT BROKER: client %s subscribed to %s", e->Client()->getClientId().c_str(), e->Topic().c_str());
     }
     break;
     case UnSubscribe_sMQTTEventType:
     {
-      auto *e = static_cast<sMQTTSubUnSubClientEvent *>(event);
+      auto *e = static_cast<sMQTTSubUnSubClientEvent *>(event); // NOLINT(unused-variable)
       ESP_LOGD(TAG2, "MQTT BROKER: got unsubscribe from %s", e->Topic().c_str());
     }
     break;

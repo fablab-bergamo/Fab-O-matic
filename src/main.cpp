@@ -199,6 +199,13 @@ namespace fablabbg
 
     pinMode(pins.buttons.factory_defaults_pin, INPUT_PULLUP);
 
+    if (Board::logic.getRebootRequest())
+    {
+      Board::logic.blinkLed(255, 165, 0); // Blink orange
+      ESP_LOGI(TAG, "Factory reset pending...");
+      return;
+    }
+
     if (digitalRead(pins.buttons.factory_defaults_pin) == LOW)
     {
       if (std::chrono::system_clock::now() - start > conf::tasks::FACTORY_DEFAULTS_DELAY)
@@ -220,8 +227,6 @@ namespace fablabbg
         }
         return;
       }
-      Board::logic.blinkLed(255, 165, 0); // Blink orange
-      ESP_LOGI(TAG, "Factory reset pending...");
     }
     else
     {
