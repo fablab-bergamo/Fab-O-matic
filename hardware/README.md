@@ -1,5 +1,7 @@
 # PCB information
 
+This folder contains Gerber file, BOM, schematics.
+
 ## Revision 0.2
 
 Fully working with some issues requiring rework.
@@ -17,6 +19,8 @@ Assembled back:
 * Relay requires more current than ESP32 can provide. A PNP transistor can be soldered next to the terminal blocks to solve the problem. Connect Base on K pin, Emitter on 3V3 pin and Collector to coil (+). The track between CMD and Coil(+) passing below the relay must be cut. Relay takes 70 mA approx. The pin must be configured active_low.
 
 ![image](https://github.com/fablab-bergamo/rfid-arduino/assets/6236243/75bbd24b-5090-47d4-a61c-b619b16dba42)
+
+* (NOT IN THE PHOTO) : a 10k resistor shall be added too between Base and 3V3 to avoid flickering at boot. Fixed in rev 0.4.
 
 * Buzzer must be 3V3 low current. However common Arduino buzzers require 5V and high current. When using this model, the ESP32 resets due to voltage dropping. There are two solutions: use a 3 pin Arduino buzzer with VIN/GND/Signal (the PCB is compatible with such buzzers), or use a low current buzzer.
 
@@ -49,9 +53,17 @@ Changes:
 
 Link to project: <https://oshwlab.com/pascal.brunot/rfid-arduino-fablab-bg_copy>
 
+## Revision 0.4
+
+Changes:
+
+* Fixed errata of revision 0.3
+* Removed 220u CAP after testing, it is not required.
+* Moved the design to EASYEDA Pro (free) for future versions
+
 ## Assembly instructions
 
-An interactive PCB map is available under <code>rev 0.3/soldering_help.html</code>
+An interactive PCB map is available under <code>rev 0.4/soldering_map.html</code>
 
 Order is important:
 
