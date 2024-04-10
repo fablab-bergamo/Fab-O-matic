@@ -30,11 +30,8 @@ Test suite : [![Test suite](https://github.com/PBrunot/rfid-arduino-copy/actions
 
 ## PCB Details
 
-* See hardware folder for Gerber files and schematics.
-* First version uses modules for RFID, LCD, Power DC-DC buck converter and ESP32-S3
-
-![back](https://github.com/fablab-bergamo/rfid-arduino/assets/6236243/7a963cb0-11fb-4afa-964d-4ea53955f577)
-
+* See <code>hardware\README.md</code> folder for Gerber files and schematics.
+* First version uses modules for RFID, LCD, Power DC-DC buck converter and ESP32-S3 and a mix of SMD and through-hole components.
 * Cost estimate per board < 30 eur: PCB around 1 eur, components 11 eur + modules (LCD,RFID,Buck,Relay) approx 8 eur
 
 ## Build environment

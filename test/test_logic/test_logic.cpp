@@ -69,8 +69,8 @@ namespace fablabbg::tests
 
   void test_simple_methods()
   {
-    logic.beep_failed();
-    logic.beep_ok();
+    logic.beepFail();
+    logic.beepOk();
     logic.blinkLed();
 
     std::vector statuses{BoardLogic::Status::Error, BoardLogic::Status::ErrorHardware, BoardLogic::Status::Connected,
@@ -272,7 +272,7 @@ void setUp(void)
 {
   TEST_ASSERT_TRUE_MESSAGE(fablabbg::SavedConfig::DefaultConfig().SaveToEEPROM(), "Default config save failed");
   TEST_ASSERT_TRUE_MESSAGE(logic.configure(rfid, lcd), "BoardLogic configure failed");
-  TEST_ASSERT_TRUE_MESSAGE(logic.board_init(), "BoardLogic init failed");
+  TEST_ASSERT_TRUE_MESSAGE(logic.initBoard(), "BoardLogic init failed");
   logic.setWhitelist(fablabbg::tests::test_whitelist);
   // Disable MQTT for tests
   if (auto server_config = fablabbg::SavedConfig::LoadFromEEPROM(); server_config.has_value())

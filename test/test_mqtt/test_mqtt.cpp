@@ -88,13 +88,13 @@ namespace fablabbg::tests
     const int NB_TESTS = 10;
     const int NB_MACHINES = 5;
     auto &server = logic.getServer();
-    for (auto mid = 100; mid <= 100 + NB_MACHINES; mid++)
+    for (unsigned int mid = 100; mid <= 100 + NB_MACHINES; mid++)
     {
       // Change MachineID on the fly
       auto saved_config = SavedConfig::DefaultConfig();
       if (mid < 99999)
       {
-        snprintf(saved_config.machine_id, sizeof(saved_config.machine_id), "%d\0", mid);
+        snprintf(saved_config.machine_id, sizeof(saved_config.machine_id), "%u", mid);
         strncpy(saved_config.mqtt_server, "127.0.0.1\0", sizeof(saved_config.mqtt_server));
       }
       ESP_LOGI(TAG3, "Testing machine %d", mid);
@@ -266,7 +266,7 @@ namespace fablabbg::tests
   }
 } // namespace fablabbg::Tests
 
-void tearDown(void){};
+void tearDown(void) {};
 
 void setUp(void)
 {

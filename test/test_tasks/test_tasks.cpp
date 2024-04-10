@@ -102,7 +102,7 @@ namespace fablabbg::tests
 
     for (auto &t : tasks)
     {
-      t->stop();
+      t->disable();
     }
 
     task_counter = 0;
@@ -111,7 +111,7 @@ namespace fablabbg::tests
 
     for (auto &t : tasks)
     {
-      t->start();
+      t->enable();
     }
 
     task_counter = 0;
@@ -121,7 +121,7 @@ namespace fablabbg::tests
     task_counter = 0;
     for (auto &t : tasks)
     {
-      t->restart();
+      t->updateSchedule();
     }
     execute();
     TEST_ASSERT_EQUAL_MESSAGE(NB_TASKS, task_counter, "Restarted tasks did not run immediately");
