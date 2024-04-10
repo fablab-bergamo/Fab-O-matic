@@ -458,7 +458,6 @@ void setup()
     logic.beepFail();
     logic.blinkLed();
     ESP_LOGE(TAG, "Hardware initialization failed");
-    // Give the user a chance to upgrade firmware over OTA and configure IP.
   }
   else
   {

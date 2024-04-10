@@ -48,6 +48,7 @@ namespace fablabbg
 
     if (config.magic_number != MAGIC_NUMBER)
     {
+      ESP_LOGW(TAG, "Found different settings version in EEPROM, ignoring.");
       return std::nullopt;
     }
     return config;

@@ -141,4 +141,10 @@ namespace fablabbg
     cache.clear();
   }
 
+  auto AuthProvider::saveCache() -> bool
+  {
+    SavedConfig config = SavedConfig::LoadFromEEPROM().value_or(SavedConfig::DefaultConfig());
+    config.whiteList = cache;
+    return config.SaveToEEPROM();
+  }
 } // namespace fablabbg
