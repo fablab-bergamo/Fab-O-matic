@@ -45,7 +45,7 @@ namespace fablabbg
     char machine_id[INT_LENGTH]{0};
 
     /// @brief list of cached RFID cards
-    CachedList whiteList;
+    CachedList cachedRfid;
 
     /// @brief Allow compiler-time construction
     constexpr SavedConfig() = default;

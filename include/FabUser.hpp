@@ -45,6 +45,11 @@ namespace fablabbg
       return card_uid == t.card_uid;
     }
 
+    auto operator<(const FabUser &t) const -> bool
+    {
+      return card_uid < t.card_uid;
+    }
+
     auto toString() const -> const std::string
     {
       std::stringstream sstream{};

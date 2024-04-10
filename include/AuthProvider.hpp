@@ -16,7 +16,7 @@ namespace fablabbg
   {
   private:
     WhiteList whitelist;
-    mutable CachedList cache;
+    mutable std::list<FabUser> cache;
     void add_in_cache(card::uid_t uid, const std::string &name, FabUser::UserLevel level) const;
     [[nodiscard]] auto is_in_cache(card::uid_t uid) const -> std::optional<FabUser>;
     [[nodiscard]] auto WhiteListLookup(card::uid_t uid) const -> std::optional<WhiteListEntry>;
@@ -27,6 +27,7 @@ namespace fablabbg
     [[nodiscard]] auto tryLogin(card::uid_t uid, FabBackend &server) const -> std::optional<FabUser>;
     void setWhitelist(WhiteList list);
     auto saveCache() -> bool;
+    auto loadCache() -> void;
   };
 } // namespace fablabbg
 #endif // AUTHPROVIDER_HPP_

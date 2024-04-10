@@ -180,7 +180,7 @@ namespace fablabbg::tests
 
     if (logic.getMachine().isShutdownImminent())
     {
-      logic.beep_failed();
+      logic.beepFail();
       ESP_LOGI(TAG3, "Machine is about to shutdown");
     }
 
@@ -190,7 +190,7 @@ namespace fablabbg::tests
     {
       ESP_LOGI(TAG3, "Auto-logging out user %s\r\n", machine.getActiveUser().holder_name.data());
       logic.logout();
-      logic.beep_failed();
+      logic.beepFail();
     }
   }
 
@@ -222,7 +222,7 @@ namespace fablabbg::tests
       ESP_LOGE(TAG3, "RFID chip failure");
 
       // Infinite retry until success or hw watchdog timeout
-      while (!rfid.init_rfid())
+      while (!rfid.rfidInit())
         TEST_FAIL_MESSAGE("Init RFID chip failed");
     }
   }
@@ -246,7 +246,7 @@ namespace fablabbg::tests
 
   void test_normal_use()
   {
-    test_scheduler.restart();
+    test_scheduler.updateSchedules();
     TEST_ASSERT_EQUAL_UINT32_MESSAGE(6, test_scheduler.taskCount(), "Scheduler does not contain all tasks");
     auto start = std::chrono::system_clock::now();
     while (std::chrono::system_clock::now() - start <= 1min)
@@ -271,7 +271,7 @@ void tearDown(void){};
 void setUp(void)
 {
   TEST_ASSERT_TRUE_MESSAGE(fablabbg::tests::logic.configure(fablabbg::tests::rfid, fablabbg::tests::lcd), "BoardLogic configure failed");
-  TEST_ASSERT_TRUE_MESSAGE(fablabbg::tests::logic.board_init(), "BoardLogic init failed");
+  TEST_ASSERT_TRUE_MESSAGE(fablabbg::tests::logic.initBoard(), "BoardLogic init failed");
 };
 
 void setup()

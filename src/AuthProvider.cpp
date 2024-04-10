@@ -14,7 +14,10 @@ namespace fablabbg
     extern FabBackend server;
   } // namespace Board
 
-  AuthProvider::AuthProvider(WhiteList list) : whitelist{list}, cache{} {}
+  AuthProvider::AuthProvider(WhiteList list) : whitelist{list}, cache{}
+  {
+    loadCache();
+  }
 
   /// @brief Checks if the cache contains the card ID, and uses that if available
   /// @param uid card id
@@ -133,6 +136,24 @@ namespace fablabbg
     return {*elem};
   }
 
+  /// @brief Loads the cache from EEPROM
+  auto AuthProvider::loadCache() -> void
+  {
+    auto config = SavedConfig::LoadFromEEPROM();
+    if (!config.has_value())
+      return;
+
+    for (auto &user : config.value().cachedRfid)
+    {
+      cache.push_back(user);
+    }
+    // Keep cache size under CACHE_LEN
+    while (cache.size() > conf::rfid_tags::CACHE_LEN)
+    {
+      cache.pop_back();
+    }
+  }
+
   /// @brief Sets the whitelist
   /// @param list the whitelist to set
   auto AuthProvider::setWhitelist(WhiteList list) -> void
@@ -141,10 +162,35 @@ namespace fablabbg
     cache.clear();
   }
 
+  /// @brief Saves the cache of RFID to EEPROM
   auto AuthProvider::saveCache() -> bool
   {
     SavedConfig config = SavedConfig::LoadFromEEPROM().value_or(SavedConfig::DefaultConfig());
-    config.whiteList = cache;
+    SavedConfig original{config};
+
+    auto idx = 0;
+
+    // Save the cached value
+    for (auto &user : cache)
+    {
+      config.cachedRfid[idx++] = user;
+      if (idx >= conf::rfid_tags::CACHE_LEN)
+        break;
+    }
+
+    // Clear the rest of the cache
+    for (auto i = idx; i < conf::rfid_tags::CACHE_LEN; i++)
+    {
+      config.cachedRfid[i] = FabUser{};
+    }
+
+    // Check if current config is different from updated cachedRfid ignoring order of elements
+    if (ScrambledEquals<FabUser, conf::rfid_tags::CACHE_LEN>(original.cachedRfid, config.cachedRfid))
+    {
+      ESP_LOGD(TAG, "Cache is the same, not saving");
+      return true;
+    }
+
     return config.SaveToEEPROM();
   }
 } // namespace fablabbg
