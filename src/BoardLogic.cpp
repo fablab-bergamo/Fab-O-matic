@@ -601,12 +601,12 @@ namespace fablabbg
 
   /// @brief Gets the current machine
   /// @return a machine object
-  const Machine &BoardLogic::getMachine() const
+  auto BoardLogic::getMachine() const -> const Machine &
   {
     return machine;
   }
 
-  BaseLCDWrapper &BoardLogic::getLcd() const
+  auto BoardLogic::getLcd() const -> BaseLCDWrapper &
   {
     if (lcd.has_value())
     {
@@ -624,28 +624,33 @@ namespace fablabbg
 
   /// @brief Sets the autologoff delay
   /// @param delay new delay
-  void BoardLogic::setAutologoffDelay(std::chrono::seconds delay)
+  auto BoardLogic::setAutologoffDelay(std::chrono::seconds delay) -> void
   {
     machine.setAutologoffDelay(delay);
   }
 
-  void BoardLogic::setWhitelist(WhiteList whitelist)
+  auto BoardLogic::setWhitelist(WhiteList whitelist) -> void
   {
     auth.setWhitelist(whitelist);
   }
 
-  FabBackend &BoardLogic::getServer()
+  auto BoardLogic::getServer() -> FabBackend &
   {
     return server;
   }
 
-  void BoardLogic::setRebootRequest(bool request)
+  auto BoardLogic::setRebootRequest(bool request) -> void
   {
     rebootRequest = request;
   }
 
-  bool BoardLogic::getRebootRequest() const
+  auto BoardLogic::getRebootRequest() const -> bool
   {
     return rebootRequest;
+  }
+
+  auto BoardLogic::saveRfidCache() -> bool
+  {
+    return this->auth.saveCache();
   }
 } // namespace fablabbg

@@ -5,6 +5,8 @@
 #include <Arduino.h>
 #include <unity.h>
 #include "SavedConfig.hpp"
+#include <AuthProvider.hpp>
+#include <FabBackend.hpp>
 
 using namespace std::chrono_literals;
 
@@ -79,6 +81,56 @@ namespace fablabbg::tests
     TEST_ASSERT_TRUE_MESSAGE(original.SaveToEEPROM(), "Loaded config save failed");
   }
 
+  void test_rfid_cache()
+  {
+    SavedConfig config;
+    auto defaults = SavedConfig::DefaultConfig();
+    defaults.SaveToEEPROM();
+
+    TEST_ASSERT_TRUE_MESSAGE(defaults.cachedRfid.size() == conf::rfid_tags::CACHE_LEN, "Default config cachedRfid size mismatch");
+
+    // Test that default config has empty cache
+    for (const auto &tag : defaults.cachedRfid)
+    {
+      TEST_ASSERT_TRUE_MESSAGE(tag.card_uid == 0, "Default config cachedRfid not empty");
+      TEST_ASSERT_TRUE_MESSAGE(tag.user_level == FabUser::UserLevel::Unknown, "Default config cachedRfid not empty");
+    }
+
+    AuthProvider authProvider(secrets::cards::whitelist);
+    TEST_ASSERT_TRUE_MESSAGE(authProvider.saveCache(), "AuthProvider saveCache failed");
+
+    defaults = SavedConfig::LoadFromEEPROM().value_or(SavedConfig::DefaultConfig());
+
+    // Test that default config is still empty
+    for (const auto &tag : defaults.cachedRfid)
+    {
+      TEST_ASSERT_TRUE_MESSAGE(tag.card_uid == 0, "Default config cachedRfid not empty after AuthProvider saveCache");
+      TEST_ASSERT_TRUE_MESSAGE(tag.user_level == FabUser::UserLevel::Unknown, "Default config cachedRfid not empty after AuthProvider saveCache");
+    }
+    FabBackend server;
+    auto result = authProvider.tryLogin(defaults.cachedRfid[0].card_uid, server);
+    TEST_ASSERT_TRUE_MESSAGE(result.has_value(), "AuthProvider tryLogin failed");
+    TEST_ASSERT_TRUE_MESSAGE(result.value().card_uid == defaults.cachedRfid[0].card_uid, "AuthProvider tryLogin card_uid mismatch");
+    TEST_ASSERT_TRUE_MESSAGE(result.value().user_level == defaults.cachedRfid[0].user_level, "AuthProvider tryLogin user_level mismatch");
+
+    TEST_ASSERT_TRUE_MESSAGE(authProvider.saveCache(), "AuthProvider saveCache 2 failed");
+
+    defaults = SavedConfig::LoadFromEEPROM().value_or(SavedConfig::DefaultConfig());
+    // Test that the first item is cache is the tag we just added
+    TEST_ASSERT_TRUE_MESSAGE(defaults.cachedRfid[0].card_uid == result.value().card_uid, "Loaded config cachedRfid card_uid mismatch");
+    TEST_ASSERT_TRUE_MESSAGE(defaults.cachedRfid[0].user_level == result.value().user_level, "Loaded config cachedRfid user_level mismatch");
+
+    // Generate many events
+    for (auto i = 0; i < 50; i++)
+    {
+      auto rnd = random(0, conf::rfid_tags::CACHE_LEN);
+      auto result = authProvider.tryLogin(defaults.cachedRfid[rnd].card_uid, server);
+    }
+
+    TEST_ASSERT_TRUE_MESSAGE(authProvider.saveCache(), "AuthProvider saveCache 2 failed");
+    defaults = SavedConfig::LoadFromEEPROM().value_or(SavedConfig::DefaultConfig());
+    }
+
   void test_magic_number()
   {
     auto result1 = SavedConfig::LoadFromEEPROM();
@@ -129,6 +181,7 @@ void setup()
   RUN_TEST(fablabbg::tests::test_defaults);
   RUN_TEST(fablabbg::tests::test_changes);
   RUN_TEST(fablabbg::tests::test_magic_number);
+  RUN_TEST(fablabbg::tests::test_rfid_cache);
   UNITY_END(); // stop unit testing
 
   if (original.has_value())

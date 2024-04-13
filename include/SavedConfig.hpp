@@ -9,6 +9,7 @@
 
 #include "MachineConfig.hpp"
 #include "conf.hpp"
+#include "WhiteList.hpp"
 
 namespace fablabbg
 {
@@ -17,7 +18,7 @@ namespace fablabbg
   {
     static constexpr auto FIELD_LENGTH = 40;
     static constexpr auto INT_LENGTH = 5;      // Must save as string for WiFiManager
-    static constexpr auto MAGIC_NUMBER = 0x45; // Increment when changing the struct
+    static constexpr auto MAGIC_NUMBER = 0x46; // Increment when changing the struct
 
     // Magic number to check if the EEPROM is initialized
     mutable uint8_t magic_number{0};
@@ -42,6 +43,9 @@ namespace fablabbg
 
     /// @brief Machine ID connected to the board
     char machine_id[INT_LENGTH]{0};
+
+    /// @brief list of cached RFID cards
+    CachedList cachedRfid;
 
     /// @brief Allow compiler-time construction
     constexpr SavedConfig() = default;

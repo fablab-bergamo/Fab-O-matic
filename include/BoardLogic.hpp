@@ -67,6 +67,7 @@ namespace fablabbg
     auto initBoard() -> bool;
     auto configure(BaseRFIDWrapper &rfid, BaseLCDWrapper &lcd) -> bool;
     auto reconfigure() -> bool;
+    auto saveRfidCache() -> bool;
 
     [[nodiscard]] auto getStatus() const -> Status;
     [[nodiscard]] auto getRebootRequest() const -> bool;

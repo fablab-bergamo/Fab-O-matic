@@ -41,7 +41,7 @@ namespace fablabbg
   } // namespace Board
 
   // Pre-declaration
-  void openConfigPortal(bool force_reset);
+  void openConfigPortal(bool force_reset, bool disable_portal);
 
   /// @brief Opens WiFi and server connection and updates board state accordingly
   void taskConnect()
@@ -190,6 +190,10 @@ namespace fablabbg
       {
         ESP_LOGE(TAG, "taskIsAlive - alive failed");
       }
+    }
+    if (!Board::logic.saveRfidCache())
+    {
+      ESP_LOGE(TAG, "taskIsAlive - saveRfidCache failed");
     }
   }
 
@@ -452,14 +456,14 @@ void setup()
     logic.beepFail();
     logic.blinkLed();
     ESP_LOGE(TAG, "Hardware initialization failed");
-    // Give the user a chance to upgrade firmware over OTA and configure IP.
   }
   else
   {
     logic.beepOk();
   }
 
-  fablabbg::openConfigPortal(fablabbg::conf::debug::FORCE_PORTAL_RESET, true);
+  fablabbg::openConfigPortal(fablabbg::conf::debug::LOAD_EEPROM_DEFAULTS,
+                             !fablabbg::conf::debug::FORCE_PORTAL);
 
 #if (MQTT_SIMULATION)
   fablabbg::startMQTTBrocker();
