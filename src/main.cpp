@@ -40,6 +40,9 @@ namespace fablabbg
     extern BoardLogic logic;
   } // namespace Board
 
+  // Pre-declaration
+  void openConfigPortal(bool force_reset);
+
   /// @brief Opens WiFi and server connection and updates board state accordingly
   void taskConnect()
   {
@@ -192,8 +195,6 @@ namespace fablabbg
 
   void taskFactoryReset()
   {
-    static auto start = std::chrono::system_clock::now();
-
     if constexpr (pins.buttons.factory_defaults_pin == NO_PIN)
       return;
 
@@ -208,29 +209,10 @@ namespace fablabbg
 
     if (digitalRead(pins.buttons.factory_defaults_pin) == LOW)
     {
-      if (std::chrono::system_clock::now() - start > conf::tasks::FACTORY_DEFAULTS_DELAY)
-      {
-        ESP_LOGW(TAG, "Factory reset requested");
-        if (auto config = SavedConfig::DefaultConfig(); config.SaveToEEPROM())
-        {
-          Board::logic.setRebootRequest(true);
-          start = std::chrono::system_clock::now();
-
-          Board::logic.changeStatus(Status::FactoryDefaults);
-          Tasks::delay(1s);
-        }
-        else
-        {
-          ESP_LOGE(TAG, "Factory reset failed");
-          Board::logic.changeStatus(Status::Error);
-          Tasks::delay(1s);
-        }
-        return;
-      }
-    }
-    else
-    {
-      start = std::chrono::system_clock::now();
+      ESP_LOGI(TAG, "Factory reset button pressed");
+      esp_task_wdt_delete(NULL);     // remove current thread from WDT watch (it will be re-added in the next loop()
+      openConfigPortal(true, false); // Network configuration setup
+      esp_task_wdt_add(NULL);        // add current thread to WDT watch
     }
   }
 
@@ -328,8 +310,10 @@ namespace fablabbg
     Board::logic.changeStatus(Status::PortalStarting);
   }
 
-  // Starts the WiFi portal for configuration if needed
-  void openConfigPortal()
+  // Starts the WiFi and possibly open the config portal in a blocking manner
+  /// @param force_reset if true, the portal will be reset to factory defaults
+  /// @param disable_portal if true, the portal will be disabled (useful at boot-time)
+  void openConfigPortal(bool force_reset, bool disable_portal)
   {
     WiFiManager wifiManager;
 
@@ -352,7 +336,7 @@ namespace fablabbg
     wifiManager.setAPCallback(configModeCallback);
     wifiManager.setSaveConfigCallback(saveConfigCallback);
 
-    if (conf::debug::FORCE_PORTAL_RESET)
+    if (force_reset)
     {
       wifiManager.resetSettings();
     }
@@ -362,6 +346,11 @@ namespace fablabbg
     wifiManager.resetSettings();
     wifiManager.setTimeout(10); // fail fast for debugging
 #endif
+
+    if (disable_portal)
+    {
+      wifiManager.setDisableConfigPortal(true);
+    }
 
     if (wifiManager.autoConnect())
     {
@@ -470,8 +459,7 @@ void setup()
     logic.beepOk();
   }
 
-  // Network configuration setup
-  fablabbg::openConfigPortal();
+  fablabbg::openConfigPortal(fablabbg::conf::debug::FORCE_PORTAL_RESET, true);
 
 #if (MQTT_SIMULATION)
   fablabbg::startMQTTBrocker();
