@@ -21,10 +21,10 @@ jobs:
         run: pip install --upgrade platformio
       - name: Use secrets.hpp.example as base for the build
         run: cp conf/secrets.hpp.example conf/secrets.hpp
-      - name: Check PlatformIO Project with linter
-        run: pio check
       - name: Build all PlatformIO Projects
         run: pio run
+      - name: Check PlatformIO Project with linter
+        run: pio check        
       - name: Upload ESP32-S3 Generic build
         uses: actions/upload-artifact@v4
         with:
