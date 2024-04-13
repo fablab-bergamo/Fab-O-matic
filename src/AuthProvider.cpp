@@ -14,10 +14,7 @@ namespace fablabbg
     extern FabBackend server;
   } // namespace Board
 
-  AuthProvider::AuthProvider(WhiteList list) : whitelist{list}, cache{}
-  {
-    loadCache();
-  }
+  AuthProvider::AuthProvider(WhiteList list) : whitelist{list}, cache{} {}
 
   /// @brief Cache the user request
   /// @param uid card id of the user

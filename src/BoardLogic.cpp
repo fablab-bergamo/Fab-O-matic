@@ -502,6 +502,8 @@ namespace fablabbg
 
     machine.configure(machine_conf, server);
 
+    auth.loadCache();
+
     return success;
   }
 
