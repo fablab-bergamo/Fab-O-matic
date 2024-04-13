@@ -7,7 +7,7 @@
 #include <unordered_map>
 
 #include "FabUser.hpp"
-#include "secrets.hpp"
+#include "conf.hpp"
 
 namespace fablabbg
 {
