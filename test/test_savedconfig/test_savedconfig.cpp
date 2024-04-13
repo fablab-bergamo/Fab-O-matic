@@ -92,8 +92,8 @@ namespace fablabbg::tests
     // Test that default config has empty cache
     for (const auto &tag : defaults.cachedRfid)
     {
-      TEST_ASSERT_TRUE_MESSAGE(tag.card_uid == 0, "Default config cachedRfid not empty");
-      TEST_ASSERT_TRUE_MESSAGE(tag.user_level == FabUser::UserLevel::Unknown, "Default config cachedRfid not empty");
+      TEST_ASSERT_TRUE_MESSAGE(tag.uid == 0, "Default config cachedRfid not empty");
+      TEST_ASSERT_TRUE_MESSAGE(tag.level == FabUser::UserLevel::Unknown, "Default config cachedRfid not empty");
     }
 
     AuthProvider authProvider(secrets::cards::whitelist);
@@ -104,32 +104,32 @@ namespace fablabbg::tests
     // Test that default config is still empty
     for (const auto &tag : defaults.cachedRfid)
     {
-      TEST_ASSERT_TRUE_MESSAGE(tag.card_uid == 0, "Default config cachedRfid not empty after AuthProvider saveCache");
-      TEST_ASSERT_TRUE_MESSAGE(tag.user_level == FabUser::UserLevel::Unknown, "Default config cachedRfid not empty after AuthProvider saveCache");
+      TEST_ASSERT_TRUE_MESSAGE(tag.uid == 0, "Default config cachedRfid not empty after AuthProvider saveCache");
+      TEST_ASSERT_TRUE_MESSAGE(tag.level == FabUser::UserLevel::Unknown, "Default config cachedRfid not empty after AuthProvider saveCache");
     }
     FabBackend server;
-    auto result = authProvider.tryLogin(defaults.cachedRfid[0].card_uid, server);
+    auto result = authProvider.tryLogin(defaults.cachedRfid[0].uid, server);
     TEST_ASSERT_TRUE_MESSAGE(result.has_value(), "AuthProvider tryLogin failed");
-    TEST_ASSERT_TRUE_MESSAGE(result.value().card_uid == defaults.cachedRfid[0].card_uid, "AuthProvider tryLogin card_uid mismatch");
-    TEST_ASSERT_TRUE_MESSAGE(result.value().user_level == defaults.cachedRfid[0].user_level, "AuthProvider tryLogin user_level mismatch");
+    TEST_ASSERT_TRUE_MESSAGE(result.value().card_uid == defaults.cachedRfid[0].uid, "AuthProvider tryLogin card_uid mismatch");
+    TEST_ASSERT_TRUE_MESSAGE(result.value().user_level == defaults.cachedRfid[0].level, "AuthProvider tryLogin user_level mismatch");
 
     TEST_ASSERT_TRUE_MESSAGE(authProvider.saveCache(), "AuthProvider saveCache 2 failed");
 
     defaults = SavedConfig::LoadFromEEPROM().value_or(SavedConfig::DefaultConfig());
     // Test that the first item is cache is the tag we just added
-    TEST_ASSERT_TRUE_MESSAGE(defaults.cachedRfid[0].card_uid == result.value().card_uid, "Loaded config cachedRfid card_uid mismatch");
-    TEST_ASSERT_TRUE_MESSAGE(defaults.cachedRfid[0].user_level == result.value().user_level, "Loaded config cachedRfid user_level mismatch");
+    TEST_ASSERT_TRUE_MESSAGE(defaults.cachedRfid[0].uid == result.value().card_uid, "Loaded config cachedRfid card_uid mismatch");
+    TEST_ASSERT_TRUE_MESSAGE(defaults.cachedRfid[0].level == result.value().user_level, "Loaded config cachedRfid user_level mismatch");
 
     // Generate many events
     for (auto i = 0; i < 50; i++)
     {
       auto rnd = random(0, conf::rfid_tags::CACHE_LEN);
-      auto result = authProvider.tryLogin(defaults.cachedRfid[rnd].card_uid, server);
+      auto result = authProvider.tryLogin(defaults.cachedRfid[rnd].uid, server);
     }
 
     TEST_ASSERT_TRUE_MESSAGE(authProvider.saveCache(), "AuthProvider saveCache 2 failed");
     defaults = SavedConfig::LoadFromEEPROM().value_or(SavedConfig::DefaultConfig());
-    }
+  }
 
   void test_magic_number()
   {
