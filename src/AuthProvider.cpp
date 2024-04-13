@@ -71,19 +71,34 @@ namespace fablabbg
     if (server.isOnline())
     {
       auto response = server.checkCard(uid);
-      if (response->request_ok && response->getResult() == UserResult::Authorized)
+      if (response->request_ok)
       {
-        user.authenticated = true;
-        user.card_uid = uid;
-        user.holder_name = response->holder_name;
-        user.user_level = response->user_level;
-        // Cache the positive result
-        add_in_cache(uid, response->user_level);
+        if (response->getResult() == UserResult::Authorized)
+        {
+          user.authenticated = true;
+          user.card_uid = uid;
+          user.holder_name = response->holder_name;
+          user.user_level = response->user_level;
+          // Cache the positive result
+          add_in_cache(uid, response->user_level);
 
-        ESP_LOGD(TAG, " -> online check OK (%s)", user.toString().c_str());
+          ESP_LOGD(TAG, " -> online check OK (%s)", user.toString().c_str());
 
-        return user;
-      }
+          return user;
+        }
+        else // Failed auth
+        {
+          // Invalidate the cache entries
+          for (auto &cached : cache)
+          {
+            if (cached.uid == uid)
+            {
+              cached.uid = card::INVALID;
+              cached.level = FabUser::UserLevel::Unknown;
+            }
+          }
+        }
+      } // if (response->request_ok)
 
       ESP_LOGD(TAG, " -> online check NOT OK");
 
@@ -91,13 +106,19 @@ namespace fablabbg
 
       if (response->request_ok)
         return std::nullopt;
-
-      // If request failed, we need to check the whitelist
     }
-    else
+    else if (auto result = CacheLookup(uid); result.has_value()) // Try the cache
     {
+      auto [card, level] = result.value();
+      user.card_uid = card;
+      user.authenticated = true;
+      user.user_level = level;
+      user.holder_name = "???";
+      ESP_LOGD(TAG, " -> cache check OK (%s)", user.toString().c_str());
+      return user;
     }
 
+    // Last check, whitelist
     if (auto result = WhiteListLookup(uid); result.has_value())
     {
       auto [card, level, name] = result.value();
@@ -167,6 +188,7 @@ namespace fablabbg
     {
       cache.at(cache_idx).uid = user.uid;
       cache.at(cache_idx).level = user.level;
+      ESP_LOGD(TAG, "Cached RFID tag %s", card::uid_str(user.uid).c_str());
       cache_idx++;
       if (cache_idx >= cache.size())
         break;
