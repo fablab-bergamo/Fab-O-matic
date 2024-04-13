@@ -18,10 +18,10 @@ namespace fablabbg
     WhiteList whitelist;
     mutable CachedList cache;
     mutable size_t cache_idx = 0;
-    void add_in_cache(card::uid_t uid, FabUser::UserLevel level) const;
-    [[nodiscard]] auto WhiteListLookup(card::uid_t uid) const -> std::optional<WhiteListEntry>;
-    [[nodiscard]] auto is_in_cache(card::uid_t uid) const -> std::optional<CachedFabUser>;
-    [[nodiscard]] auto CacheLookup(card::uid_t candidate_uid) const -> std::optional<CachedFabUser>;
+    [[nodiscard]] auto uidInWhitelist(card::uid_t uid) const -> std::optional<WhiteListEntry>;
+    [[nodiscard]] auto uidInCache(card::uid_t uid) const -> std::optional<CachedFabUser>;
+    [[nodiscard]] auto searchCache(card::uid_t candidate_uid) const -> std::optional<CachedFabUser>;
+    auto updateCache(card::uid_t candidate_uid, FabUser::UserLevel level) const -> void;
 
   public:
     AuthProvider() = delete;

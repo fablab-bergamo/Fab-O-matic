@@ -174,7 +174,7 @@ namespace fablabbg
           .blue_pin = NO_PIN,
       }, // LED config
       {
-          .factory_defaults_pin = 8,
+          .factory_defaults_pin = NO_PIN,
       } // Factory defaults button
   };
 #endif

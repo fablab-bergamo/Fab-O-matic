@@ -19,32 +19,21 @@ namespace fablabbg
     loadCache();
   }
 
-  /// @brief Checks if the cache contains the card ID, and uses that if available
-  /// @param uid card id
-  /// @return FabUser if found
-  auto AuthProvider::is_in_cache(card::uid_t uid) const -> std::optional<CachedFabUser>
-  {
-    auto elem = std::find_if(cache.begin(), cache.end(),
-                             [uid](const auto &input)
-                             { return input.uid == uid; });
-
-    if (elem == end(cache))
-    {
-      return std::nullopt;
-    }
-
-    return {*elem};
-  }
-
   /// @brief Cache the user request
   /// @param uid card id of the user
   /// @param name name of the user to be cached
   /// @param level priviledge level of the user
-  void AuthProvider::add_in_cache(card::uid_t uid, FabUser::UserLevel level) const
+  void AuthProvider::updateCache(card::uid_t uid, FabUser::UserLevel level) const
   {
-    // Check if already in cache
-    if (is_in_cache(uid).has_value())
-      return;
+    // Search for the card in the cache
+    for (auto &cached : cache)
+    {
+      if (cached.uid == uid)
+      {
+        cached.level = level;
+        return;
+      }
+    }
 
     // Add into the list
     cache.at(cache_idx).uid = uid;
@@ -80,23 +69,16 @@ namespace fablabbg
           user.holder_name = response->holder_name;
           user.user_level = response->user_level;
           // Cache the positive result
-          add_in_cache(uid, response->user_level);
+          updateCache(uid, response->user_level);
 
           ESP_LOGD(TAG, " -> online check OK (%s)", user.toString().c_str());
 
           return user;
         }
-        else // Failed auth
+        else
         {
           // Invalidate the cache entries
-          for (auto &cached : cache)
-          {
-            if (cached.uid == uid)
-            {
-              cached.uid = card::INVALID;
-              cached.level = FabUser::UserLevel::Unknown;
-            }
-          }
+          updateCache(uid, FabUser::UserLevel::Unknown);
         }
       } // if (response->request_ok)
 
@@ -107,7 +89,7 @@ namespace fablabbg
       if (response->request_ok)
         return std::nullopt;
     }
-    else if (auto result = CacheLookup(uid); result.has_value()) // Try the cache
+    else if (auto result = uidInCache(uid); result.has_value()) // Try the cache
     {
       auto [card, level] = result.value();
       user.card_uid = card;
@@ -119,7 +101,7 @@ namespace fablabbg
     }
 
     // Last check, whitelist
-    if (auto result = WhiteListLookup(uid); result.has_value())
+    if (auto result = uidInWhitelist(uid); result.has_value())
     {
       auto [card, level, name] = result.value();
       user.card_uid = card;
@@ -138,7 +120,7 @@ namespace fablabbg
   /// @brief Checks if the card ID is whitelisted
   /// @param uid card ID
   /// @return a whitelistentry object if the card is found in whitelist
-  auto AuthProvider::WhiteListLookup(card::uid_t candidate_uid) const -> std::optional<WhiteListEntry>
+  auto AuthProvider::uidInWhitelist(card::uid_t candidate_uid) const -> std::optional<WhiteListEntry>
   {
     auto elem = std::find_if(whitelist.begin(), whitelist.end(),
                              [candidate_uid](const auto &input)
@@ -159,7 +141,7 @@ namespace fablabbg
   /// @brief Checks if the card ID is whitelisted
   /// @param uid card ID
   /// @return a whitelistentry object if the card is found in whitelist
-  auto AuthProvider::CacheLookup(card::uid_t candidate_uid) const -> std::optional<CachedFabUser>
+  auto AuthProvider::uidInCache(card::uid_t candidate_uid) const -> std::optional<CachedFabUser>
   {
     auto elem = std::find_if(cache.begin(), cache.end(),
                              [candidate_uid](const auto &input)
