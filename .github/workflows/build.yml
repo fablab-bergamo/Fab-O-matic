@@ -1,4 +1,4 @@
-name: PlatformIO CI
+name: Build firmware images
 
 on: [push]
 
@@ -22,9 +22,7 @@ jobs:
       - name: Use secrets.hpp.example as base for the build
         run: cp conf/secrets.hpp.example conf/secrets.hpp
       - name: Build all PlatformIO Projects
-        run: pio run
-      - name: Check PlatformIO Project with linter
-        run: pio check        
+        run: pio run       
       - name: Upload ESP32-S3 Generic build
         uses: actions/upload-artifact@v4
         with:

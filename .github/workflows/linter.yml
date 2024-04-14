@@ -1,0 +1,38 @@
+name: C++ Linter check
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - '*' # Push events to all tags
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.platformio/.cache
+          key: ${{ runner.os }}-pio
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+      - name: Install PlatformIO Core
+        run: pip install --upgrade platformio
+      - name: Use secrets.hpp.example as base for the build
+        run: cp conf/secrets.hpp.example conf/secrets.hpp
+        # save the output of the linter to a file
+        # and upload it as an artifact
+      - name: Check PlatformIO Project with linter
+        run: pio check --fail-on-defect=high > pio-check.txt
+      - name: Upload linter output
+        uses: actions/upload-artifact@v4
+        with:
+          name: pio-check
+          path: pio-check.txt
+          retention-days: 90
+        
