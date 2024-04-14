@@ -83,7 +83,6 @@ namespace fablabbg::tests
 
   void test_rfid_cache()
   {
-    SavedConfig config;
     auto defaults = SavedConfig::DefaultConfig();
     defaults.SaveToEEPROM();
 
@@ -108,6 +107,8 @@ namespace fablabbg::tests
       TEST_ASSERT_TRUE_MESSAGE(tag.level == FabUser::UserLevel::Unknown, "Default config cachedRfid not empty after AuthProvider saveCache");
     }
     FabBackend server;
+    server.configure(defaults);
+
     auto result = authProvider.tryLogin(defaults.cachedRfid[0].uid, server);
     TEST_ASSERT_TRUE_MESSAGE(result.has_value(), "AuthProvider tryLogin failed");
     TEST_ASSERT_TRUE_MESSAGE(result.value().card_uid == defaults.cachedRfid[0].uid, "AuthProvider tryLogin card_uid mismatch");
@@ -182,12 +183,13 @@ void setup()
   RUN_TEST(fablabbg::tests::test_changes);
   RUN_TEST(fablabbg::tests::test_magic_number);
   RUN_TEST(fablabbg::tests::test_rfid_cache);
-  UNITY_END(); // stop unit testing
 
   if (original.has_value())
   {
     original.value().SaveToEEPROM();
   }
+
+  UNITY_END(); // stop unit testing
 }
 
 void loop()
