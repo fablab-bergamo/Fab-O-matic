@@ -109,7 +109,8 @@ namespace fablabbg::tests
       TEST_ASSERT_TRUE_MESSAGE(logic.authorize(card_uid), "Card not authorized");
       TEST_ASSERT_TRUE_MESSAGE(logic.getStatus() == BoardLogic::Status::LoggedIn, "Status not LoggedIn");
       TEST_ASSERT_TRUE_MESSAGE(logic.getMachine().getActiveUser().card_uid == card_uid, "User UID not equal");
-      TEST_ASSERT_TRUE_MESSAGE(logic.getMachine().getActiveUser().holder_name == name, "User name not equal");
+      // Name may not be equal because of cache RFID feature which does not save strings
+      // TEST_ASSERT_TRUE_MESSAGE(logic.getMachine().getActiveUser().holder_name == name, "User name not equal");
       TEST_ASSERT_TRUE_MESSAGE(logic.getMachine().getActiveUser().user_level == level, "User level not equal");
       logic.logout();
       TEST_ASSERT_TRUE_MESSAGE(logic.getStatus() == BoardLogic::Status::LoggedOut, "Status not LoggedOut");

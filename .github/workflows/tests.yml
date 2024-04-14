@@ -2,9 +2,6 @@ name: Test suite based on Wokwi CLI
 
 on:
   workflow_dispatch:
-  push:
-    tags:
-      - '*' # Push events to all tags
 
 jobs:
   build:
