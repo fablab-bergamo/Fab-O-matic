@@ -51,6 +51,7 @@ namespace fablabbg
     RFIDWrapper &operator=(const RFIDWrapper &x) = delete; // copy assignment
     RFIDWrapper(RFIDWrapper &&) = delete;                  // move constructor
     RFIDWrapper &operator=(RFIDWrapper &&) = delete;       // move assignment
+    ~RFIDWrapper() = default;                              // Default destructor
   };
 } // namespace fablabbg
 

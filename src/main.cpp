@@ -17,8 +17,8 @@
 #include "pins.hpp"
 
 // For ArduinoOTA
-const char *ssid = fablabbg::secrets::credentials::ssid.data();
-const char *password = fablabbg::secrets::credentials::password.data();
+const char *const ssid = fablabbg::secrets::credentials::ssid.data();
+const char *const password = fablabbg::secrets::credentials::password.data();
 
 using namespace std::chrono_literals;
 

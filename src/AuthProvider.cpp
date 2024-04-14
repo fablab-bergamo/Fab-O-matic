@@ -72,11 +72,10 @@ namespace fablabbg
 
           return user;
         }
-        else
-        {
-          // Invalidate the cache entries
-          updateCache(uid, FabUser::UserLevel::Unknown);
-        }
+
+        // Invalidate the cache entries
+        updateCache(uid, FabUser::UserLevel::Unknown);
+
       } // if (response->request_ok)
 
       ESP_LOGD(TAG, " -> online check NOT OK");

@@ -15,7 +15,6 @@ namespace fablabbg
   {
   public:
     MockMQTTBroker() : isLocked{false} {};
-    ~MockMQTTBroker() = default;
 
     auto isRunning() const -> bool;
     auto start() -> void;

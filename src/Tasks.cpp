@@ -81,7 +81,7 @@ namespace fablabbg::Tasks
   auto Scheduler::execute() const -> void
   {
     // Tasks shall be run in order of expiration (the most expired task shall run first)
-    std::vector<decltype(tasks)::const_iterator> iters{};
+    std::vector<decltype(tasks)::const_iterator> iters{0};
     for (auto it = tasks.begin(); it != tasks.end(); ++it)
     {
       iters.push_back(it); // Vector of iterators
