@@ -85,14 +85,24 @@ Test procedure
 9. Push BOOT, Push RESET, Release RESET, release BOOT
 10. ESP32S3 shall be recognized on PC as a serial port
 
->Some troubleshooting steps if USB is not recognized:
->
->* Check ESP32 reset pin (shall be high) + voltages
->* Check USB D+/D- tracks continuity in diode mode from ESP32 to usb port.
->* Check USB port. Excessive heat can make them bad.
+💡 A fresh ESP32-S3 will be in a reboot cycle before the first flash. It is normal to have the USB connect/disconnect sounds at this stage.
 
 11. Upload software with PlatformIO
 12. Disconnect USB
 13. Connect modules (including buck converter if needed)
 14. Connect USB
 15. Open Monitor and check for errors.
+
+## Revision 1.0
+
+This version is easy to order pre-assembled on JLCPCB. For 10 boards, cost (as per April 2024) is below 150 EUR total (not considering modules and boxes).
+
+Changes from rev 0.4:
+
+* Added an integrated a buck converter for 5V generation instead of a module
+* Replaced USB B port with a USB C
+* SMD components wherever possible (Q1, USB, variable resistor, buttons)
+* Components update based on [https://github.com/yaqwsx/jlcparts] availabilities
+* ESP32-S3-WROOM-1-N4R8 selected for availability (N4 was enough).
+* More compact board design
+* Added a color printer PCB front panel design + layout adjustments to accomodate front panel design

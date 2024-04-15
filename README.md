@@ -9,23 +9,19 @@ Test suite : [![Test suite](https://github.com/PBrunot/rfid-arduino-copy/actions
 
 * Together with the [backend project](https://github.com/fablab-bergamo/rfid-backend) which can run on a Raspberry Pi Zero, it manages user authentication, track machine usage / maintenance needs.
 
-* Assembled version:
-
-![image](https://github.com/fablab-bergamo/rfid-arduino/assets/6236243/9898c6a5-cc16-4479-851a-b326ad31a4d6)
-
 * It uses MQTT to talk to the backend. Machine control is achieved through an external relay.
 
-* View hardware project (WORK IN PROGRESS) on EASYEDA : [Electrical scheme, BOM, PCB](https://oshwlab.com/pascal.brunot/rfid-arduino-fablab-bg)
+* See <code>hardware</code> folder for more information about schematics & PCB version.
 
 ## Hardware components
 
-* ESP32, ESP32-S2 or ESP32-S3 chips
+* Compatible with ESP32, ESP32-S2 or ESP32-S3 chips
 * WiFi connection to the backend project
 * RFID reader (using mfrc522 compatible chip)
 * LCD driver (using Hitachi HD44780 compatible chip)
 * 3.3V Relay (or [Shelly](https://www.shellyitalia.com/shelly-plus-1-mini-gen3/) MQTT device)
 * 3.3V Buzzer
-* A LED or NeoPixel
+* A RGB LED or a NeoPixel
 * RFID tags or cards for user authentication
 
 ## PCB Details
