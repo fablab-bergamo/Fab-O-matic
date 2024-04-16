@@ -32,6 +32,9 @@ namespace fablabbg
       }
     }
 
+    if (cache_idx >= cache.size())
+      cache_idx = 0;
+
     // Add into the list
     cache.at(cache_idx).uid = uid;
     cache.at(cache_idx).level = level;
@@ -161,15 +164,22 @@ namespace fablabbg
     if (!config.has_value())
       return;
 
-    cache_idx = 0;
+    size_t idx = 0;
     for (auto &user : config.value().cachedRfid)
     {
-      cache.at(cache_idx).uid = user.uid;
-      cache.at(cache_idx).level = user.level;
-      ESP_LOGD(TAG, "Cached RFID tag %s", card::uid_str(user.uid).c_str());
-      cache_idx++;
-      if (cache_idx >= cache.size())
+      cache.at(idx).uid = user.uid;
+      cache.at(idx).level = user.level;
+      ESP_LOGD(TAG, "Cached RFID tag %s (%d)", card::uid_str(user.uid).c_str(), user.level);
+      idx++;
+      if (idx >= cache.size())
+      {
+        idx = 0;
         break;
+      }
+      if (user.uid != 0)
+      {
+        cache_idx = idx;
+      }
     }
   }
 

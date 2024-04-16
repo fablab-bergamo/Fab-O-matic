@@ -313,13 +313,13 @@ namespace fablabbg
       break;
     case Status::MachineFree:
       getLcd().setRow(0, machine_name);
-      if (machine.isMaintenanceNeeded())
+      if (!machine.isAllowed())
+      {
+        getLcd().setRow(1, "! BLOCCATA !");
+      }
+      else if (machine.isMaintenanceNeeded())
       {
         getLcd().setRow(1, ">Manutenzione<");
-      }
-      else if (!machine.isAllowed())
-      {
-        getLcd().setRow(1, "> BLOCCATA <");
       }
       else
       {
