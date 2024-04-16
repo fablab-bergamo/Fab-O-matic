@@ -195,6 +195,10 @@ namespace fablabbg
     {
       ESP_LOGE(TAG, "taskIsAlive - saveRfidCache failed");
     }
+    if constexpr (conf::debug::ENABLE_LOGS)
+    {
+      ESP_LOGD(TAG, "taskIsAlive - free heap: %d", ESP.getFreeHeap());
+    }
   }
 
   void taskFactoryReset()

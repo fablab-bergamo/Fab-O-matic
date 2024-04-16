@@ -32,10 +32,15 @@ namespace fablabbg
       }
     }
 
+    // No need to add in cache invalid cards
+    if (level == FabUser::UserLevel::Unknown)
+      return;
+
+    // Sanity check
     if (cache_idx >= cache.size())
       cache_idx = 0;
 
-    // Add into the list
+    // Add into list
     cache.at(cache_idx).uid = uid;
     cache.at(cache_idx).level = level;
 
