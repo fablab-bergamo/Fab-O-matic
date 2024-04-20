@@ -38,7 +38,8 @@ namespace fablabbg::ServerMQTT
     std::stringstream ss{};
     ss << "{\"action\":\"alive\","
        << "\"version\":\"" << GIT_VERSION << "\","
-       << "\"ip\":\"" << WiFi.localIP().toString().c_str() << "\""
+       << "\"ip\":\"" << WiFi.localIP().toString().c_str() << "\","
+       << "\"heap\":\"" << esp_get_free_heap_size() << "\""
        << "}";
     return ss.str();
   }
