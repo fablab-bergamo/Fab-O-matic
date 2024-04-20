@@ -18,7 +18,7 @@ namespace fablabbg
   {
     static constexpr auto FIELD_LENGTH = 40;
     static constexpr auto INT_LENGTH = 5;      // Must save as string for WiFiManager
-    static constexpr auto MAGIC_NUMBER = 0x46; // Increment when changing the struct
+    static constexpr auto MAGIC_NUMBER = 0x47; // Increment when changing the struct
 
     // Magic number to check if the EEPROM is initialized
     mutable uint8_t magic_number{0};
@@ -47,6 +47,9 @@ namespace fablabbg
     /// @brief list of cached RFID cards
     CachedList cachedRfid;
 
+    /// @brief number of boot cycles
+    size_t bootCount{0};
+
     /// @brief Allow compiler-time construction
     constexpr SavedConfig() = default;
 
@@ -62,6 +65,9 @@ namespace fablabbg
 
     /// @brief Returns the default configuration built from conf.hpp and secrets.hpp
     [[nodiscard]] static auto DefaultConfig() -> SavedConfig;
+
+    /// @brief Increments the boot count and saves it to EEPROM
+    static auto IncrementBootCount() -> size_t;
   };
   // NOLINTEND(cppcoreguidelines-avoid-c-arrays)
 

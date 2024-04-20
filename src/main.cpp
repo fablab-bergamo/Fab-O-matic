@@ -452,6 +452,9 @@ void setup()
   auto hw_init = logic.configure(rfid, lcd);
   hw_init &= logic.initBoard();
 
+  auto count = fablabbg::SavedConfig::IncrementBootCount();
+  ESP_LOGI(TAG, "Boot count: %d, reset reason: %d", count, esp_reset_reason());
+
   logic.changeStatus(Status::Booting);
 
   if (!hw_init)
