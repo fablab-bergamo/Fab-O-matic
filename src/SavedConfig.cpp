@@ -81,6 +81,7 @@ namespace fablabbg
   {
     JsonDocument doc;
 
+    doc["bootCount"] = bootCount;
     doc["ssid"] = ssid;
     doc["password"] = password;
     doc["mqtt_server"] = mqtt_server;
@@ -93,5 +94,16 @@ namespace fablabbg
     std::string result;
     serializeJson(doc, result);
     return result;
+  }
+
+  auto SavedConfig::IncrementBootCount() -> size_t
+  {
+    SavedConfig config = LoadFromEEPROM().value_or(DefaultConfig());
+    config.bootCount++;
+    if (!config.SaveToEEPROM())
+    {
+      ESP_LOGE(TAG, "Failed to save boot count to EEPROM");
+    }
+    return config.bootCount;
   }
 } // namespace fablabbg
