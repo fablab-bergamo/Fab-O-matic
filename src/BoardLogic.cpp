@@ -223,7 +223,7 @@ namespace fablabbg
             changeStatus(Status::MaintenanceDone);
             machine.setMaintenanceNeeded(false);
             beepOk();
-            Tasks::delay(conf::lcd::SHORT_MESSAGE_DELAY);
+            Tasks::delay(conf::lcd::SHORT_MESSAGE_DELAY * 2);
           }
           // Proceed to log-on the staff member to the machine in all cases
         }

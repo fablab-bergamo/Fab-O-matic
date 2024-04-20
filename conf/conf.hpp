@@ -13,11 +13,11 @@ namespace fablabbg
 
   namespace conf::default_config
   {
-    static constexpr std::string_view mqtt_server = "fabpi";
-    static constexpr std::string_view machine_topic = "shelly/command/switch:0";
+    static constexpr std::string_view mqtt_server = "fabpi.local";
+    static constexpr std::string_view machine_topic = "";
     static constexpr MachineID machine_id{1};
     static constexpr std::string_view machine_name = "MACHINE1";
-    static constexpr MachineType machine_type = MachineType::Laser;
+    static constexpr MachineType machine_type = MachineType::Printed3D;
     static constexpr std::string_view hostname = "BOARD"; // Machine ID will be added to the hostname in order to form unique hostnames
 
   } // namespace conf::default_config
