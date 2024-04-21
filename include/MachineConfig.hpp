@@ -11,10 +11,11 @@ namespace fablabbg
   enum class MachineType : uint8_t
   {
     Invalid = 0,
-    Printed3D = 1,
+    Printer3D = 1,
     Laser = 2,
     Cnc = 3,
-    Other = 4,
+    PrinterResin = 4,
+    Other = 5
   };
 
   struct MachineID
@@ -52,7 +53,7 @@ namespace fablabbg
                                                        relay_config{relay.ch1_pin, relay.active_low},
                                                        mqtt_config{topic}, autologoff(autologoff),
                                                        grace_period{grace_period} {};
-                                                       
+
     [[nodiscard]] auto toString() const -> const std::string;
 
     /// @brief Indicates if the machine is controller by hard-wired relay

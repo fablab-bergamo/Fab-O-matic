@@ -290,8 +290,9 @@ namespace fablabbg
     char buffer[conf::lcd::COLS + 1] = {0}; // Null terminated strings
     std::string user_name, machine_name, uid_str;
 
-    getLcd().showConnection(true);
-    getLcd().showPower(true);
+    auto &lcd = getLcd();
+    lcd.showConnection(true);
+    lcd.showPower(true);
 
     user_name = machine.getActiveUser().holder_name;
     machine_name = machine.isConfigured() ? machine.getMachineName() : "-";
@@ -309,128 +310,128 @@ namespace fablabbg
     switch (status)
     {
     case Status::Clear:
-      getLcd().clear();
+      lcd.clear();
       break;
     case Status::MachineFree:
-      getLcd().setRow(0, machine_name);
+      lcd.setRow(0, machine_name);
       if (!machine.isAllowed())
       {
-        getLcd().setRow(1, "! BLOCCATA !");
+        lcd.setRow(1, "! BLOCCATA !");
       }
       else if (machine.isMaintenanceNeeded())
       {
-        getLcd().setRow(1, ">Manutenzione<");
+        lcd.setRow(1, ">Manutenzione<");
       }
       else
       {
-        getLcd().setRow(1, "Avvicina carta");
+        lcd.setRow(1, "Avvicina carta");
       }
       break;
     case Status::AlreadyInUse:
-      getLcd().setRow(0, "In uso da");
-      getLcd().setRow(1, user_name);
+      lcd.setRow(0, "In uso da");
+      lcd.setRow(1, user_name);
       break;
     case Status::LoggedIn:
-      getLcd().setRow(0, "Inizio uso");
-      getLcd().setRow(1, user_name);
+      lcd.setRow(0, "Inizio uso");
+      lcd.setRow(1, user_name);
       break;
     case Status::LoginDenied:
-      getLcd().setRow(0, "Carta ignota");
-      getLcd().setRow(1, uid_str);
+      lcd.setRow(0, "Carta ignota");
+      lcd.setRow(1, uid_str);
       break;
     case Status::LoggedOut:
-      getLcd().setRow(0, "Arrivederci");
-      getLcd().setRow(1, user_name);
+      lcd.setRow(0, "Arrivederci");
+      lcd.setRow(1, user_name);
       break;
     case Status::Connecting:
-      getLcd().setRow(0, "Connessione");
-      getLcd().setRow(1, "al server MQTT");
+      lcd.setRow(0, "Connessione");
+      lcd.setRow(1, "al server MQTT");
       break;
     case Status::Connected:
-      getLcd().setRow(0, "Connesso");
-      getLcd().setRow(1, "");
+      lcd.setRow(0, "Connesso");
+      lcd.setRow(1, "");
       break;
     case Status::MachineInUse:
       if (snprintf(buffer, sizeof(buffer), "Ciao %s", user_name.c_str()) > 0)
-        getLcd().setRow(0, buffer);
-      getLcd().setRow(1, getLcd().convertSecondsToHHMMSS(machine.getUsageDuration()));
+        lcd.setRow(0, buffer);
+      lcd.setRow(1, lcd.convertSecondsToHHMMSS(machine.getUsageDuration()));
       break;
     case Status::Busy:
-      getLcd().setRow(0, "Elaborazione...");
-      getLcd().setRow(1, "");
+      lcd.setRow(0, "Elaborazione...");
+      lcd.setRow(1, "");
       break;
     case Status::Offline:
-      getLcd().setRow(0, "OFFLINE MODE");
-      getLcd().setRow(1, "");
+      lcd.setRow(0, "OFFLINE MODE");
+      lcd.setRow(1, "");
       break;
     case Status::NotAllowed:
-      getLcd().setRow(0, "Blocco");
-      getLcd().setRow(1, "amministrativo");
+      lcd.setRow(0, "Blocco");
+      lcd.setRow(1, "amministrativo");
       break;
     case Status::Verifying:
-      getLcd().setRow(0, "VERIFICA IN");
-      getLcd().setRow(1, "CORSO");
+      lcd.setRow(0, "VERIFICA IN");
+      lcd.setRow(1, "CORSO");
       break;
     case Status::MaintenanceNeeded:
-      getLcd().setRow(0, "Blocco per");
-      getLcd().setRow(1, "manutenzione");
+      lcd.setRow(0, "Blocco per");
+      lcd.setRow(1, "manutenzione");
       break;
     case Status::MaintenanceQuery:
-      getLcd().setRow(0, "Manutenzione?");
-      getLcd().setRow(1, "Registra");
+      lcd.setRow(0, "Manutenzione?");
+      lcd.setRow(1, "Registra");
       break;
     case Status::MaintenanceDone:
-      getLcd().setRow(0, "Manutenzione");
-      getLcd().setRow(1, "registrata");
+      lcd.setRow(0, "Manutenzione");
+      lcd.setRow(1, "registrata");
       break;
     case Status::Error:
-      getLcd().setRow(0, "Errore");
-      getLcd().setRow(1, "V" GIT_VERSION);
+      lcd.setRow(0, "Errore");
+      lcd.setRow(1, "V" GIT_VERSION);
       break;
     case Status::ErrorHardware:
-      getLcd().setRow(0, "Errore HW");
-      getLcd().setRow(1, "V" GIT_VERSION);
+      lcd.setRow(0, "Errore HW");
+      lcd.setRow(1, "V" GIT_VERSION);
       break;
     case Status::PortalFailed:
-      getLcd().setRow(0, "Errore portale");
-      getLcd().setRow(1, WiFi.softAPIP().toString().c_str());
+      lcd.setRow(0, "Errore portale");
+      lcd.setRow(1, WiFi.softAPIP().toString().c_str());
       break;
     case Status::PortalSuccess:
-      getLcd().setRow(0, "AP config OK");
-      getLcd().setRow(1, "V" GIT_VERSION);
+      lcd.setRow(0, "AP config OK");
+      lcd.setRow(1, "V" GIT_VERSION);
       break;
     case Status::PortalStarting:
-      getLcd().setRow(0, "Apri portale");
-      getLcd().setRow(1, WiFi.softAPIP().toString().c_str());
+      lcd.setRow(0, "Apri portale");
+      lcd.setRow(1, WiFi.softAPIP().toString().c_str());
       break;
     case Status::Booting:
-      getLcd().setRow(0, "Avvio...");
-      getLcd().setRow(1, "V" GIT_VERSION);
+      lcd.setRow(0, "Avvio...");
+      lcd.setRow(1, "V" GIT_VERSION);
       break;
     case Status::ShuttingDown:
-      getLcd().setRow(0, machine_name);
-      getLcd().setRow(1, "In spegnimento!");
+      lcd.setRow(0, machine_name);
+      lcd.setRow(1, "In spegnimento!");
       break;
     case Status::OTAStarting:
-      getLcd().setRow(0, "Aggiornamento");
-      getLcd().setRow(1, "OTA...");
+      lcd.setRow(0, "Aggiornamento");
+      lcd.setRow(1, "OTA...");
       break;
     case Status::FactoryDefaults:
-      getLcd().setRow(0, "Param. reset");
-      getLcd().setRow(1, "Attesa reboot");
+      lcd.setRow(0, "Param. reset");
+      lcd.setRow(1, "Attesa reboot");
       break;
     case Status::OTAError:
-      getLcd().setRow(0, "Errore OTA");
-      getLcd().setRow(1, "");
+      lcd.setRow(0, "Errore OTA");
+      lcd.setRow(1, "");
       break;
     default:
-      getLcd().setRow(0, "Unhandled status");
+      lcd.setRow(0, "Unhandled status");
       if (snprintf(buffer, sizeof(buffer), "Value %d", static_cast<int>(status)) > 0)
-        getLcd().setRow(1, buffer);
+        lcd.setRow(1, buffer);
       break;
     }
     BoardInfo bi = {server.isOnline(), machine.getPowerState(), machine.isShutdownImminent()};
-    getLcd().update(bi, false);
+    lcd.update(bi, false);
   }
 
   /// @brief Gets the current board status

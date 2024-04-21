@@ -17,7 +17,7 @@ namespace fablabbg
     static constexpr std::string_view mqtt_switch_topic = "";
     static constexpr MachineID machine_id{1};
     static constexpr std::string_view machine_name = "MACHINE1";
-    static constexpr MachineType machine_type = MachineType::Printed3D;
+    static constexpr MachineType machine_type = MachineType::Printer3D;
     static constexpr std::string_view hostname = "BOARD"; // Machine ID will be added to the hostname in order to form unique hostnames
 
   } // namespace conf::default_config
