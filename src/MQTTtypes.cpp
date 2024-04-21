@@ -36,9 +36,22 @@ namespace fablabbg::ServerMQTT
   auto AliveQuery::payload() const -> const std::string
   {
     std::stringstream ss{};
+
+    // Get MAC address
+
+    std::array<uint8_t, 8> mac{0};
+    esp_efuse_mac_get_default(mac.data());
+
+    std::stringstream serial{};
+    for (const auto val : mac)
+    {
+      serial << std::setfill('0') << std::setw(2) << std::hex << +val;
+    }
+
     ss << "{\"action\":\"alive\","
        << "\"version\":\"" << GIT_VERSION << "\","
        << "\"ip\":\"" << WiFi.localIP().toString().c_str() << "\","
+       << "\"serial\":\"" << serial.str().substr(0U, 6 * 2) << "\","
        << "\"heap\":\"" << esp_get_free_heap_size() << "\""
        << "}";
     return ss.str();
