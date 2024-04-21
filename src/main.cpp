@@ -290,7 +290,7 @@ namespace fablabbg
   const Task t_powoff("Poweroff", 1s, &taskPoweroffCheck, Board::scheduler, true);
   const Task t_log("Logoff", 1s, &taskLogoffCheck, Board::scheduler, true);
   // Hardware watchdog will run at one third the frequency
-  Task t_wdg("Watchdog", conf::tasks::WATCHDOG_TIMEOUT / 3, &taskEspWatchdog, Board::scheduler, false);
+  Task t_wdg("Watchdog", conf::tasks::WATCHDOG_PERIOD, &taskEspWatchdog, Board::scheduler, false);
   const Task t_test("Selftest", conf::tasks::RFID_SELFTEST_PERIOD, &taskRfidWatchdog, Board::scheduler, true);
   const Task t_warn("PoweroffWarning", conf::machine::DELAY_BETWEEN_BEEPS, &taskPoweroffWarning, Board::scheduler, true);
   const Task t_mqtt("MQTT client loop", 1s, &taskMQTTClientLoop, Board::scheduler, true);
@@ -479,6 +479,7 @@ namespace fablabbg
     std::cout << "\tRFID_SELFTEST_PERIOD: " << std::chrono::seconds(tasks::RFID_SELFTEST_PERIOD).count() << "s" << std::endl;
     std::cout << "\tMQTT_REFRESH_PERIOD: " << std::chrono::seconds(tasks::MQTT_REFRESH_PERIOD).count() << "s" << std::endl;
     std::cout << "\tWATCHDOG_TIMEOUT: " << std::chrono::seconds(tasks::WATCHDOG_TIMEOUT).count() << "s" << std::endl;
+    std::cout << "\tWATCHDOG_PERIOD: " << std::chrono::seconds(tasks::WATCHDOG_PERIOD).count() << "s" << std::endl;
     std::cout << "\tPORTAL_CONFIG_TIMEOUT: " << std::chrono::seconds(tasks::PORTAL_CONFIG_TIMEOUT).count() << "s" << std::endl;
     std::cout << "\tMQTT_ALIVE_PERIOD: " << std::chrono::seconds(tasks::MQTT_ALIVE_PERIOD).count() << "s" << std::endl;
     // namespace conf::mqtt
