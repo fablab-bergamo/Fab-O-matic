@@ -174,7 +174,10 @@ namespace fablabbg
     {
       cache.at(idx).uid = user.uid;
       cache.at(idx).level = user.level;
-      ESP_LOGD(TAG, "Cached RFID tag %s (%d)", card::uid_str(user.uid).c_str(), user.level);
+      if (user.uid != 0)
+      {
+        ESP_LOGD(TAG, "Loaded cached RFID tag %s (%d)", card::uid_str(user.uid).c_str(), user.level);
+      }
       idx++;
       if (idx >= cache.size())
       {

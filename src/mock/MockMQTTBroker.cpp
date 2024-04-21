@@ -96,6 +96,11 @@ namespace fablabbg
       return "{\"request_ok\":true}";
     }
 
+    if (query.find("inuse") != std::string::npos)
+    {
+      return "{\"request_ok\":true}";
+    }
+
     if (query.find("stopuse") != std::string::npos)
     {
       return "{\"request_ok\":true}";
