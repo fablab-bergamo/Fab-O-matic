@@ -18,7 +18,7 @@ namespace fablabbg
   {
     static constexpr auto FIELD_LENGTH = 40;
     static constexpr auto INT_LENGTH = 5;      // Must save as string for WiFiManager
-    static constexpr auto MAGIC_NUMBER = 0x47; // Increment when changing the struct
+    static constexpr auto MAGIC_NUMBER = 0x48; // Increment when changing the struct
 
     // Magic number to check if the EEPROM is initialized
     mutable uint8_t magic_number{0};
@@ -46,6 +46,9 @@ namespace fablabbg
 
     /// @brief list of cached RFID cards
     CachedList cachedRfid;
+
+    /// @brief if true, the FORCE_OPEN_PORTAL flag will be ignored
+    bool disablePortal{false};
 
     /// @brief number of boot cycles
     size_t bootCount{0};

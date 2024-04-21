@@ -80,7 +80,7 @@ namespace fablabbg
   auto SavedConfig::toString() const -> const std::string
   {
     JsonDocument doc;
-
+    doc["disablePortal"] = disablePortal;
     doc["bootCount"] = bootCount;
     doc["ssid"] = ssid;
     doc["password"] = password;

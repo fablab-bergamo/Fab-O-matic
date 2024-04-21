@@ -301,12 +301,12 @@ namespace fablabbg
 #endif
 
   // flag for saving data
-  bool shouldSaveConfig = false;
+  std::atomic<bool> shouldSaveConfig = false;
 
   // callback notifying us of the need to save config
   void saveConfigCallback()
   {
-    shouldSaveConfig = true;
+    shouldSaveConfig.store(true);
   }
 
   // Called just before the webportal is started after failed WiFi connection
@@ -324,8 +324,17 @@ namespace fablabbg
   void openConfigPortal(bool force_reset, bool disable_portal)
   {
     WiFiManager wifiManager;
+    SavedConfig config;
 
-    SavedConfig config = SavedConfig::LoadFromEEPROM().value_or(SavedConfig::DefaultConfig());
+    auto opt_settings = SavedConfig::LoadFromEEPROM();
+    if (force_reset || !opt_settings)
+    {
+      config = SavedConfig::DefaultConfig();
+    }
+    else
+    {
+      config = opt_settings.value();
+    }
 
     WiFiManagerParameter custom_mqtt_server("Broker", "MQTT Broker address", config.mqtt_server, sizeof(config.mqtt_server));
     WiFiManagerParameter custom_mqtt_topic("Topic", "MQTT Switch topic (leave empty to disable)", config.machine_topic, sizeof(config.machine_topic));
@@ -355,7 +364,7 @@ namespace fablabbg
     wifiManager.setTimeout(10); // fail fast for debugging
 #endif
 
-    if (disable_portal)
+    if (disable_portal || config.disablePortal)
     {
       wifiManager.setDisableConfigPortal(true);
     }
@@ -382,18 +391,20 @@ namespace fablabbg
       strncpy(config.machine_topic, custom_mqtt_topic.getValue(), sizeof(config.machine_topic));
       strncpy(config.machine_id, custom_machine_id.getValue(), sizeof(config.machine_id));
 
+      config.disablePortal = true;
+
       // save the custom parameters to EEPROM
       if (config.SaveToEEPROM())
       {
         ESP_LOGD(TAG, "Config saved to EEPROM");
-
-        // Reconfigure all settings after changes
-        Board::logic.reconfigure();
       }
       else
       {
         ESP_LOGE(TAG, "Failed to save config to EEPROM");
       }
+
+      // WiFi settings change may require full reboot
+      Board::logic.setRebootRequest(true);
     }
   }
 
