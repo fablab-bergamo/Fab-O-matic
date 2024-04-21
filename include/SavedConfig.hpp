@@ -39,7 +39,7 @@ namespace fablabbg
     char mqtt_password[FIELD_LENGTH]{0};
 
     /// @brief MQTT topic for mqtt switch (if available)
-    char machine_topic[FIELD_LENGTH]{0};
+    char mqtt_switch_topic[FIELD_LENGTH]{0};
 
     /// @brief Machine ID connected to the board
     char machine_id[INT_LENGTH]{0};

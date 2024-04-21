@@ -113,7 +113,7 @@ namespace fablabbg
       return ""; // No reply to alive message
     }
 
-    if (query.find(conf::default_config::machine_topic) != std::string::npos) // Shelly doesn't reply
+    if (query.find(conf::default_config::mqtt_switch_topic) != std::string::npos) // Shelly doesn't reply
     {
       return "";
     }

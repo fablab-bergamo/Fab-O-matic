@@ -14,7 +14,7 @@ namespace fablabbg
   namespace conf::default_config
   {
     static constexpr std::string_view mqtt_server = "fabpi.local";
-    static constexpr std::string_view machine_topic = "";
+    static constexpr std::string_view mqtt_switch_topic = "";
     static constexpr MachineID machine_id{1};
     static constexpr std::string_view machine_name = "MACHINE1";
     static constexpr MachineType machine_type = MachineType::Printed3D;
@@ -74,7 +74,6 @@ namespace fablabbg
     static constexpr auto MQTT_REFRESH_PERIOD{30s};    /* Query the MQTT broker for machine state at given period (default: 30s) */
     static constexpr auto WATCHDOG_TIMEOUT{45s};       /* Timeout for hardware watchdog, set to 0s to disable (default: 30s) */
     static constexpr auto PORTAL_CONFIG_TIMEOUT{5min}; /* Timeout for portal configuration (default: 5min) */
-    static constexpr auto FACTORY_DEFAULTS_DELAY{10s}; /* Press the button for X s to force reset to defaults and reboot */
     static constexpr auto MQTT_ALIVE_PERIOD{2min};     /* Board announcement on the MQTT server (default: 2min)  */
 
   } // namespace conf::tasks

@@ -30,7 +30,7 @@ namespace fablabbg::tests
     TEST_ASSERT_EQUAL_STRING_MESSAGE(defaults.mqtt_server, loaded.mqtt_server, "Loaded config mqtt_server mismatch");
     TEST_ASSERT_EQUAL_STRING_MESSAGE(defaults.mqtt_user, loaded.mqtt_user, "Loaded config mqtt_user mismatch");
     TEST_ASSERT_EQUAL_STRING_MESSAGE(defaults.mqtt_password, loaded.mqtt_password, "Loaded config mqtt_password mismatch");
-    TEST_ASSERT_EQUAL_STRING_MESSAGE(defaults.machine_topic, loaded.machine_topic, "Loaded config machine_topic mismatch");
+    TEST_ASSERT_EQUAL_STRING_MESSAGE(defaults.mqtt_switch_topic, loaded.mqtt_switch_topic, "Loaded config mqtt_switch_topic mismatch");
     TEST_ASSERT_EQUAL_STRING_MESSAGE(defaults.machine_id, loaded.machine_id, "Loaded config machine_id mismatch");
     TEST_ASSERT_TRUE_MESSAGE(SavedConfig::MAGIC_NUMBER == loaded.magic_number, "Loaded config magic number mismatch");
   }
@@ -50,7 +50,7 @@ namespace fablabbg::tests
     loaded.mqtt_server[0] = 'c';
     loaded.mqtt_user[0] = 'd';
     loaded.mqtt_password[0] = 'e';
-    loaded.machine_topic[0] = 'f';
+    loaded.mqtt_switch_topic[0] = 'f';
     loaded.machine_id[0] = '9';
 
     // Save changes
@@ -64,8 +64,9 @@ namespace fablabbg::tests
     TEST_ASSERT_EQUAL_STRING_MESSAGE(loaded.mqtt_server, saved.mqtt_server, "Loaded config mqtt_server mismatch");
     TEST_ASSERT_EQUAL_STRING_MESSAGE(loaded.mqtt_user, saved.mqtt_user, "Loaded config mqtt_user mismatch");
     TEST_ASSERT_EQUAL_STRING_MESSAGE(loaded.mqtt_password, saved.mqtt_password, "Loaded config mqtt_password mismatch");
-    TEST_ASSERT_EQUAL_STRING_MESSAGE(loaded.machine_topic, saved.machine_topic, "Loaded config machine_topic mismatch");
+    TEST_ASSERT_EQUAL_STRING_MESSAGE(loaded.mqtt_switch_topic, saved.mqtt_switch_topic, "Loaded config mqtt_switch_topic mismatch");
     TEST_ASSERT_EQUAL_STRING_MESSAGE(loaded.machine_id, saved.machine_id, "Loaded config machine_id mismatch");
+    TEST_ASSERT_EQUAL_MESSAGE(loaded.disablePortal, saved.disablePortal, "Loaded config disablePortal mismatch");
     TEST_ASSERT_TRUE_MESSAGE(SavedConfig::MAGIC_NUMBER == saved.magic_number, "Loaded config magic number mismatch");
 
     // Check that changes have been saved
@@ -74,7 +75,7 @@ namespace fablabbg::tests
     TEST_ASSERT_FALSE_MESSAGE(strcmp(original.mqtt_server, saved.mqtt_server) == 0, "Loaded config mqtt_server mismatch");
     TEST_ASSERT_FALSE_MESSAGE(strcmp(original.mqtt_user, saved.mqtt_user) == 0, "Loaded config mqtt_user mismatch");
     TEST_ASSERT_FALSE_MESSAGE(strcmp(original.mqtt_password, saved.mqtt_password) == 0, "Loaded config mqtt_password mismatch");
-    TEST_ASSERT_FALSE_MESSAGE(strcmp(original.machine_topic, saved.machine_topic) == 0, "Loaded config machine_topic mismatch");
+    TEST_ASSERT_FALSE_MESSAGE(strcmp(original.mqtt_switch_topic, saved.mqtt_switch_topic) == 0, "Loaded config mqtt_switch_topic mismatch");
     TEST_ASSERT_FALSE_MESSAGE(strcmp(original.machine_id, saved.machine_id) == 0, "Loaded config machine_id mismatch");
 
     // Restore original

@@ -60,9 +60,9 @@ namespace fablabbg::tests
     TEST_ASSERT_TRUE_MESSAGE(result, "Machine toString() failed");
 
     TEST_ASSERT_TRUE_MESSAGE(config.hasRelay() || fablabbg::pins.relay.ch1_pin == fablabbg::NO_PIN, "Machine relay not configured");
-    TEST_ASSERT_TRUE_MESSAGE(config.hasMqttSwitch() || fablabbg::conf::default_config::machine_topic.empty(), "Machine MQTT switch not configured");
+    TEST_ASSERT_TRUE_MESSAGE(config.hasMqttSwitch() || fablabbg::conf::default_config::mqtt_switch_topic.empty(), "Machine MQTT switch not configured");
 
-    TEST_ASSERT_TRUE_MESSAGE(config.mqtt_config.topic == fablabbg::conf::default_config::machine_topic, "Machine MQTT topic not configured");
+    TEST_ASSERT_TRUE_MESSAGE(config.mqtt_config.topic == fablabbg::conf::default_config::mqtt_switch_topic, "Machine MQTT topic not configured");
     TEST_ASSERT_TRUE_MESSAGE(config.relay_config.pin == fablabbg::pins.relay.ch1_pin, "Machine relay pin not configured");
     TEST_ASSERT_TRUE_MESSAGE(config.machine_id.id == fablabbg::conf::default_config::machine_id.id, "Machine ID not configured");
   }

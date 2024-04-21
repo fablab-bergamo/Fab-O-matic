@@ -496,7 +496,7 @@ namespace fablabbg
                                conf::default_config::machine_type,
                                std::string{conf::default_config::machine_name},
                                pins.relay,
-                               std::string{config.value().machine_topic},
+                               std::string{config.value().mqtt_switch_topic},
                                conf::machine::DEFAULT_AUTO_LOGOFF_DELAY,
                                conf::machine::DEFAULT_GRACE_PERIOD);
 

@@ -24,7 +24,7 @@ namespace fablabbg
     strncpy(config.mqtt_password, secrets::credentials::mqtt_password.data(), FIELD_LENGTH);
 
     // MQTT Switch
-    strncpy(config.machine_topic, conf::default_config::machine_topic.data(), FIELD_LENGTH);
+    strncpy(config.mqtt_switch_topic, conf::default_config::mqtt_switch_topic.data(), FIELD_LENGTH);
 
     // Machine
     strncpy(config.machine_id, std::to_string(conf::default_config::machine_id.id).c_str(), INT_LENGTH);
@@ -48,7 +48,7 @@ namespace fablabbg
 
     if (config.magic_number != MAGIC_NUMBER)
     {
-      ESP_LOGW(TAG, "Found different settings version in EEPROM, ignoring.");
+      ESP_LOGW(TAG, "Found different settings version in EEPROM (%d vs. %d), ignoring.", config.magic_number, MAGIC_NUMBER);
       return std::nullopt;
     }
     return config;
@@ -87,12 +87,12 @@ namespace fablabbg
     doc["mqtt_server"] = mqtt_server;
     doc["mqtt_user"] = mqtt_user;
     doc["mqtt_password"] = mqtt_password;
-    doc["machine_topic"] = machine_topic;
+    doc["mqtt_switch_topic"] = mqtt_switch_topic;
     doc["machine_id"] = machine_id;
     doc["magic_number"] = magic_number;
 
     std::string result;
-    serializeJson(doc, result);
+    serializeJsonPretty(doc, result);
     return result;
   }
 
