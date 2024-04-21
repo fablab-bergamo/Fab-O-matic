@@ -416,8 +416,8 @@ namespace fablabbg
       getLcd().setRow(1, "OTA...");
       break;
     case Status::FactoryDefaults:
-      getLcd().setRow(0, "EEPROM reset!");
-      getLcd().setRow(1, "Riavvio richiesto");
+      getLcd().setRow(0, "Param. reset");
+      getLcd().setRow(1, "Attesa reboot");
       break;
     case Status::OTAError:
       getLcd().setRow(0, "Errore OTA");
