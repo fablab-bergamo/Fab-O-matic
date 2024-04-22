@@ -60,7 +60,7 @@ namespace fablabbg::Tasks
 
     /// @brief Status of the task
     /// @return True if Scheduler can launch it
-    auto isActive() const -> bool;
+    [[nodiscard]] auto isActive() const -> bool;
 
     /// @brief Current period of the task
     [[nodiscard]] auto getPeriod() const -> milliseconds;
@@ -119,10 +119,10 @@ namespace fablabbg::Tasks
     auto updateSchedules() const -> void;
 
     /// @brief Gets the number of tasks in the scheduler
-    auto taskCount() const -> size_t;
+    [[nodiscard]] auto taskCount() const -> size_t;
 
     /// @brief Get a vector of references to the tasks
-    auto getTasks() const -> const std::vector<std::reference_wrapper<Task>>;
+    [[nodiscard]] auto getTasks() const -> const std::vector<std::reference_wrapper<Task>>;
 
   private:
     std::vector<std::reference_wrapper<Task>> tasks; // Vector containing references to the tasks, not the tasks themselves

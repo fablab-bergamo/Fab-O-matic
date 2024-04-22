@@ -38,7 +38,7 @@ namespace fablabbg
   using CachedList = std::array<CachedFabUser, conf::rfid_tags::CACHE_LEN>;
 
   template <typename T, size_t N>
-  bool ScrambledEquals(const std::array<T, N> &arr1, const std::array<T, N> &arr2)
+  [[nodiscard]] bool ScrambledEquals(const std::array<T, N> &arr1, const std::array<T, N> &arr2)
   {
     std::array<T, N> sorted1 = arr1;
     std::array<T, N> sorted2 = arr2;

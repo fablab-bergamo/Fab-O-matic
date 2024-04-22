@@ -343,6 +343,11 @@ namespace fablabbg
         }
         return RespT::fromJson(doc);
       }
+      else
+      {
+        ESP_LOGE(TAG, "Failed to send query %s", query.payload().data());
+        this->disconnect();
+      }
     }
     return std::make_unique<RespT>(false);
   }

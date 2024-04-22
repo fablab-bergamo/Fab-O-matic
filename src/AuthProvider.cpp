@@ -80,10 +80,11 @@ namespace fablabbg
 
           return user;
         }
-
-        // Invalidate the cache entries
-        updateCache(uid, FabUser::UserLevel::Unknown);
-
+        else
+        {
+          // Invalidate the cache entries
+          updateCache(uid, FabUser::UserLevel::Unknown);
+        }
       } // if (response->request_ok)
 
       ESP_LOGD(TAG, " -> online check NOT OK");
@@ -93,7 +94,8 @@ namespace fablabbg
       if (response->request_ok)
         return std::nullopt;
     }
-    else if (auto result = uidInCache(uid); result.has_value()) // Try the cache
+
+    if (auto result = uidInCache(uid); result.has_value()) // Try the cache
     {
       auto [card, level] = result.value();
       user.card_uid = card;

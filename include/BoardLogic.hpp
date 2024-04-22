@@ -102,7 +102,7 @@ namespace fablabbg
 
     bool rebootRequest{false};
 
-    auto longTap(const card::uid_t card, const std::string &short_prompt) const -> bool;
+    [[nodiscard]] auto longTap(const card::uid_t card, const std::string &short_prompt) const -> bool;
   };
 } // namespace fablabbg
 #endif // BOARDLOGIC_HPP_
