@@ -171,9 +171,9 @@ namespace fablabbg
     user.user_level = FabUser::UserLevel::Unknown;
 
     auto response = auth.tryLogin(uid, server);
-    if (!response.has_value())
+    if (!response.has_value() || response.value().user_level == FabUser::UserLevel::Unknown)
     {
-      ESP_LOGI(TAG, "Failed login for %llu", uid);
+      ESP_LOGI(TAG, "Failed login for %s", card::uid_str(uid));
       changeStatus(Status::LoginDenied);
       beepFail();
       return false;

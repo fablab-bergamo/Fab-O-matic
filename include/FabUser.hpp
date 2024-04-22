@@ -59,7 +59,7 @@ namespace fablabbg
       sstream << ", Name:" << holder_name;
 
       auto i_level = static_cast<typename std::underlying_type<UserLevel>::type>(user_level);
-      sstream << ", level:" << i_level << ")";
+      sstream << ", level:" << +i_level << ")";
 
       return sstream.str();
     }

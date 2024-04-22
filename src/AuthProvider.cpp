@@ -97,11 +97,11 @@ namespace fablabbg
 
     if (auto result = uidInCache(uid); result.has_value()) // Try the cache
     {
-      auto [card, level] = result.value();
-      user.card_uid = card;
-      user.authenticated = true;
-      user.user_level = level;
-      user.holder_name = "???";
+      auto cached = result.value();
+      user.card_uid = cached.uid;
+      user.authenticated = (cached.level != FabUser::UserLevel::Unknown);
+      user.user_level = cached.level;
+      user.holder_name = card::uid_str(uid);
       ESP_LOGD(TAG, " -> cache check OK (%s)", user.toString().c_str());
       return user;
     }
