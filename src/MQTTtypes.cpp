@@ -138,6 +138,14 @@ namespace fablabbg::ServerMQTT
     {
       response->grace = std::chrono::duration_cast<std::chrono::minutes>(conf::machine::DEFAULT_GRACE_PERIOD).count();
     }
+    if (!doc["description"].isNull())
+    {
+      response->description = doc["description"].as<std::string>();
+    }
+    else
+    {
+      response->description = "";
+    }
 
     return response;
   }

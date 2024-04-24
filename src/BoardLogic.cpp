@@ -56,6 +56,7 @@ namespace fablabbg
           machine.setAutologoffDelay(std::chrono::minutes(result->logoff));
           machine.setGracePeriod(std::chrono::minutes(result->grace));
           machine.setMachineName(result->name);
+          machine.setMaintenanceInfo(result->description);
           MachineType mt = static_cast<MachineType>(result->type);
           machine.setMachineType(mt);
 
@@ -320,7 +321,8 @@ namespace fablabbg
       }
       else if (machine.isMaintenanceNeeded())
       {
-        lcd.setRow(1, ">Manutenzione<");
+        lcd.setRow(0, "Manutenzione");
+        lcd.setRow(1, machine.getMaintenanceInfo());
       }
       else
       {

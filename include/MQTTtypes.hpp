@@ -136,13 +136,14 @@ namespace fablabbg::ServerMQTT
   class MachineResponse final : public Response
   {
   public:
-    bool is_valid = false;   /* True if the machine has a valid ID */
-    bool maintenance = true; /* True if the machine needs maintenance */
-    bool allowed = false;    /* True if the machine can be used by anybody */
-    uint16_t logoff = 0;     /* Timeout in minutes */
-    std::string name{""};    /* Name of the machine from server DB */
-    uint8_t type = 0;        /* Type of the machine */
-    uint16_t grace = 0;      /* Grace period in minutes */
+    bool is_valid = false;       /* True if the machine has a valid ID */
+    bool maintenance = true;     /* True if the machine needs maintenance */
+    bool allowed = false;        /* True if the machine can be used by anybody */
+    uint16_t logoff = 0;         /* Timeout in minutes */
+    std::string name{""};        /* Name of the machine from server DB */
+    uint8_t type = 0;            /* Type of the machine */
+    uint16_t grace = 0;          /* Grace period in minutes */
+    std::string description{""}; /* Description of the expired maintenance */
     MachineResponse() = delete;
     MachineResponse(bool rok) : Response(rok){};
 

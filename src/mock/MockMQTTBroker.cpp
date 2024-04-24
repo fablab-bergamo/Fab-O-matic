@@ -83,7 +83,7 @@ namespace fablabbg
   {
     if (query.find("checkmachine") != std::string::npos)
     {
-      return "{\"request_ok\":true,\"is_valid\":true,\"allowed\":true,\"maintenance\":false,\"logoff\":30,\"name\":\"ENDER_1\",\"type\":1}";
+      return "{\"request_ok\":true,\"is_valid\":true,\"allowed\":true,\"maintenance\":false,\"logoff\":30,\"name\":\"ENDER_1\",\"type\":1,\"description\":\"\"}";
     }
 
     if (query.find("maintenance") != std::string::npos)

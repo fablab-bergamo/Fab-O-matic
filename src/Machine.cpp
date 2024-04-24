@@ -361,4 +361,14 @@ namespace fablabbg
 
     config.value().grace_period = new_delay;
   }
+
+  [[nodiscard]] auto Machine::getMaintenanceInfo() const -> const std::string
+  {
+    return maintenanceInfo;
+  }
+
+  auto Machine::setMaintenanceInfo(const std::string &new_description) -> void
+  {
+    maintenanceInfo = new_description;
+  }
 } // namespace fablabbg

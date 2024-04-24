@@ -22,8 +22,7 @@ namespace fablabbg
       PoweredOff,
     };
 
-    constexpr Machine(){};
-
+    Machine() = default;
     ~Machine() = default;
     Machine(const Machine &) = delete;             // copy constructor
     Machine &operator=(const Machine &x) = delete; // copy assignment
@@ -96,6 +95,9 @@ namespace fablabbg
     auto isMaintenanceNeeded() const -> bool;
     auto setMaintenanceNeeded(bool new_maintenance_needed) -> void;
 
+    [[nodiscard]] auto getMaintenanceInfo() const -> const std::string;
+    auto setMaintenanceInfo(const std::string &new_description) -> void;
+
   private:
     std::optional<MachineConfig> config{std::nullopt};
     std::optional<std::reference_wrapper<FabBackend>> server{std::nullopt};
@@ -111,6 +113,8 @@ namespace fablabbg
     bool maintenanceNeeded{false};
     /// @brief If true, machine is allowed to be used by anybody
     bool allowed{true};
+
+    std::string maintenanceInfo{""};
 
     auto power_mqtt(bool on_or_off) -> void;
     auto power_relay(bool on_or_off) -> void;
