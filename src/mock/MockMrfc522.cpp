@@ -7,11 +7,11 @@ namespace fablabbg
   auto MockMrfc522::getDriverUid() const -> MockMrfc522::UidDriver
   {
     UidDriver retVal{};
-    if (auto sim = getSimulatedUid(); sim.has_value())
+    if (getSimulatedUid().has_value())
     {
       retVal.size = sizeof(uid.value());
-      auto uid = card::to_array(sim.value());
-      std::copy(uid.begin(), uid.end(), retVal.uidByte.begin());
+      auto arr_uid = card::to_array(uid.value());
+      std::copy(arr_uid.begin(), arr_uid.end(), retVal.uidByte.begin());
       retVal.sak = 1;
     }
     return retVal;

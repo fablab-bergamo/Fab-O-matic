@@ -288,7 +288,7 @@ namespace fablabbg
   /// @brief Updates the LCD screen as per the current status
   void BoardLogic::updateLCD() const
   {
-    char buffer[conf::lcd::COLS + 1] = {0}; // Null terminated strings
+    std::stringstream buffer; // Null terminated strings
     std::string user_name, machine_name, uid_str;
 
     auto &lcd = getLcd();
@@ -354,8 +354,8 @@ namespace fablabbg
       lcd.setRow(1, "");
       break;
     case Status::MachineInUse:
-      if (snprintf(buffer, sizeof(buffer), "Ciao %s", user_name.c_str()) > 0)
-        lcd.setRow(0, buffer);
+      buffer << "Ciao " << user_name;
+      lcd.setRow(0, buffer.str());
       lcd.setRow(1, lcd.convertSecondsToHHMMSS(machine.getUsageDuration()));
       break;
     case Status::Busy:
@@ -428,8 +428,8 @@ namespace fablabbg
       break;
     default:
       lcd.setRow(0, "Unhandled status");
-      if (snprintf(buffer, sizeof(buffer), "Value %d", static_cast<int>(status)) > 0)
-        lcd.setRow(1, buffer);
+      buffer << "Value " << static_cast<int>(status);
+      lcd.setRow(1, buffer.str());
       break;
     }
     BoardInfo bi = {server.isOnline(), machine.getPowerState(), machine.isShutdownImminent()};

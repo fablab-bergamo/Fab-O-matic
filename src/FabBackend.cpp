@@ -29,17 +29,12 @@ namespace fablabbg
 #endif
     online = false;
 
-    std::stringstream ss;
-    ss << conf::mqtt::topic << "/" << config.machine_id;
-    topic = ss.str();
+    std::stringstream ss_topic_name, ss_client_name;
+    ss_topic_name << conf::mqtt::topic << "/" << config.machine_id;
+    topic = ss_topic_name.str();
 
-    char client_name[16]{0};
-    if (auto result = std::snprintf(client_name, sizeof(client_name), "BOARD%ld", random(0, 1000));
-        result < 0)
-    {
-      ESP_LOGE(TAG, "Failure to generate client name");
-    }
-    mqtt_client_name = client_name;
+    ss_client_name << "BOARD" << random(0, 1000);
+    mqtt_client_name = ss_client_name.str();
 
     if (client.connected()) // Topic or IP may also have changed
     {

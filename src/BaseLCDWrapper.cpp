@@ -1,21 +1,25 @@
 
 #include <chrono>
 #include <string>
+#include <sstream>
 
 #include "BaseLCDWrapper.hpp"
 
 namespace fablabbg
 {
+  using namespace std::chrono;
+
   auto BaseLCDWrapper::convertSecondsToHHMMSS(std::chrono::seconds duration) const -> const std::string
   {
-    //! since something something does not support to_string we have to resort to ye olde cstring stuff
-    char buf[9] = {0};
+    std::stringstream ss{};
+    const auto hrs = duration_cast<hours>(duration);
+    const auto mins = duration_cast<minutes>(duration - hrs);
+    const auto secs = duration_cast<seconds>(duration - hrs - mins);
 
-    [[maybe_unused]] auto count = snprintf(buf, sizeof(buf), "%02llu:%02llu:%02llu",
-                                           duration.count() / 3600UL,
-                                           (duration.count() % 3600UL) / 60UL,
-                                           duration.count() % 60UL);
+    ss << std::setfill('0') << std::setw(2) << hrs.count() << ":"
+       << std::setfill('0') << std::setw(2) << mins.count() << ":"
+       << std::setfill('0') << std::setw(2) << secs.count();
 
-    return {buf};
+    return ss.str();
   }
 } // namespace fablabbg
