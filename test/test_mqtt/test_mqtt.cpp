@@ -41,7 +41,7 @@ namespace fablabbg::tests
     while (!exit_request)
     {
       broker.mainLoop();
-      delay(25);
+      delay(15);
     }
     ESP_LOGI(TAG3, "MQTT server thread exiting");
     return arg;

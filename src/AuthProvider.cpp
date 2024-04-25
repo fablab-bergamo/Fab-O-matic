@@ -148,6 +148,11 @@ namespace fablabbg
   /// @return a whitelistentry object if the card is found in whitelist
   auto AuthProvider::uidInCache(card::uid_t candidate_uid) const -> std::optional<CachedFabUser>
   {
+    if (candidate_uid == card::INVALID)
+    {
+      return std::nullopt;
+    }
+
     auto elem = std::find_if(cache.begin(), cache.end(),
                              [candidate_uid](const auto &input)
                              {
