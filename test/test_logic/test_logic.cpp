@@ -15,15 +15,17 @@
 #include "mock/MockMQTTBroker.hpp"
 #include "mock/MockMrfc522.hpp"
 #include "test_common.h"
+
 #include <Arduino.h>
 #include <unity.h>
+#include "LiquidCrystal.h"
 
 using namespace std::chrono_literals;
 
 [[maybe_unused]] static const char *TAG3 = "test_logic";
 
 fablabbg::RFIDWrapper<fablabbg::MockMrfc522> rfid;
-fablabbg::LCDWrapper<fablabbg::MockLcdLibrary> lcd{fablabbg::pins.lcd};
+fablabbg::LCDWrapper<LiquidCrystal> lcd{fablabbg::pins.lcd};
 fablabbg::BoardLogic logic;
 
 using BoardLogic = fablabbg::BoardLogic;
@@ -190,22 +192,21 @@ namespace fablabbg::tests
 
     TEST_ASSERT_TRUE_MESSAGE(logic.getMachine().getAutologoffDelay() == conf::machine::DEFAULT_AUTO_LOGOFF_DELAY, "Autologoff delay not default");
 
-    logic.setAutologoffDelay(2s);
-    TEST_ASSERT_TRUE_MESSAGE(logic.getMachine().getAutologoffDelay() == 2s, "Autologoff delay not 2s");
+    logic.setAutologoffDelay(10s);
+    TEST_ASSERT_TRUE_MESSAGE(logic.getMachine().getAutologoffDelay() == 10s, "Autologoff delay not 10s");
 
     simulate_rfid_card(rfid, logic, get_test_uid(0));
     TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::LoggedIn, logic.getStatus(), "Status not LoggedIn");
-
     // Card away
     simulate_rfid_card(rfid, logic, std::nullopt);
-    delay(1000);
+
     TEST_ASSERT_FALSE_MESSAGE(logic.getMachine().isFree(), "Machine is free");
     TEST_ASSERT_FALSE_MESSAGE(logic.getMachine().isAutologoffExpired(), "Autologoff not expired");
     TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::MachineInUse, logic.getStatus(), "Status not MachineInUse");
 
-    // Now shall expire afer 2s
+    // Now shall expire afer 10s
     simulate_rfid_card(rfid, logic, std::nullopt);
-    delay(1000);
+    delay(10000);
     TEST_ASSERT_TRUE_MESSAGE(logic.getMachine().isAutologoffExpired(), "Autologoff expired");
 
     logic.logout();
@@ -228,8 +229,8 @@ namespace fablabbg::tests
     TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::MaintenanceNeeded, logic.getStatus(), "Status not MaintenanceNeeded");
 
     simulate_rfid_card(rfid, logic, std::nullopt);
-    simulate_rfid_card(rfid, logic, card_admin, conf::machine::LONG_TAP_DURATION + 3s); // Log in + Conferma manutenzione perché non ritorna prima della conclusione
-    simulate_rfid_card(rfid, logic, std::nullopt);                                      // Card away
+    simulate_rfid_card(rfid, logic, card_admin, conf::machine::LONG_TAP_DURATION + 10s); // Log in + Conferma manutenzione perché non ritorna prima della conclusione
+    simulate_rfid_card(rfid, logic, std::nullopt);                                       // Card away
     TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::MachineInUse, logic.getStatus(), "Status not MachineInUse by admin");
     TEST_ASSERT_FALSE_MESSAGE(logic.getMachine().isMaintenanceNeeded(), "Maintenance not cleared by admin");
 
@@ -267,7 +268,7 @@ namespace fablabbg::tests
   }
 } // namespace fablabbg::tests
 
-void tearDown(void){};
+void tearDown(void) {};
 
 void setUp(void)
 {
