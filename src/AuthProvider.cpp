@@ -127,6 +127,11 @@ namespace fablabbg
   /// @return a whitelistentry object if the card is found in whitelist
   auto AuthProvider::uidInWhitelist(card::uid_t candidate_uid) const -> std::optional<WhiteListEntry>
   {
+    if (candidate_uid == card::INVALID)
+    {
+      return std::nullopt;
+    }
+
     auto elem = std::find_if(whitelist.begin(), whitelist.end(),
                              [candidate_uid](const auto &input)
                              {
