@@ -108,7 +108,7 @@ namespace fablabbg
   /// @return true if the message was published
   bool FabBackend::publish(const ServerMQTT::Query &query)
   {
-    String s_payload(query.payload().data());
+    String s_payload(query.payload().c_str());
     String s_topic(topic.c_str());
 
     if (s_payload.length() + topic.length() > FabBackend::MAX_MSG_SIZE - 8)
@@ -190,8 +190,8 @@ namespace fablabbg
   /// @return true if the connection succeeded
   bool FabBackend::connectWiFi()
   {
-    static constexpr auto NB_TRIES = 30;
-    static constexpr auto DELAY_MS = 100ms;
+    static constexpr auto NB_TRIES = 15;
+    static constexpr auto DELAY_MS = 250ms;
 
     // Connect WiFi if needed
     if (WiFi.status() != WL_CONNECTED)

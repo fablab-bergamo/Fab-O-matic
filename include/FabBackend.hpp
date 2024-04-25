@@ -20,7 +20,7 @@ namespace fablabbg
   class FabBackend
   {
   private:
-    constexpr static auto MAX_MSG_SIZE = 255;
+    constexpr static auto MAX_MSG_SIZE = 300;
     MQTTClient client{MAX_MSG_SIZE}; // Default is 128, and can be reached with some messages
     JsonDocument doc;
 

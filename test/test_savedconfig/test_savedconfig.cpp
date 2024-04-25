@@ -109,11 +109,17 @@ namespace fablabbg::tests
     }
     FabBackend server;
     server.configure(defaults);
-
-    auto result = authProvider.tryLogin(defaults.cachedRfid[0].uid, server);
+    auto [wl_uid, wl_level, name] = secrets::cards::whitelist[0];
+    auto result = authProvider.tryLogin(wl_uid, server);
     TEST_ASSERT_TRUE_MESSAGE(result.has_value(), "AuthProvider tryLogin failed");
-    TEST_ASSERT_TRUE_MESSAGE(result.value().card_uid == defaults.cachedRfid[0].uid, "AuthProvider tryLogin card_uid mismatch");
-    TEST_ASSERT_TRUE_MESSAGE(result.value().user_level == defaults.cachedRfid[0].level, "AuthProvider tryLogin user_level mismatch");
+
+    // Now save the positive result
+    TEST_ASSERT_TRUE_MESSAGE(authProvider.saveCache(), "AuthProvider saveCache 2 failed");
+    // Reload the cache
+    defaults = SavedConfig::LoadFromEEPROM().value_or(SavedConfig::DefaultConfig());
+
+    TEST_ASSERT_TRUE_MESSAGE(wl_uid == defaults.cachedRfid[0].uid, "AuthProvider tryLogin card_uid mismatch");
+    TEST_ASSERT_TRUE_MESSAGE(wl_level == defaults.cachedRfid[0].level, "AuthProvider tryLogin user_level mismatch");
 
     TEST_ASSERT_TRUE_MESSAGE(authProvider.saveCache(), "AuthProvider saveCache 2 failed");
 
