@@ -175,7 +175,7 @@ namespace fablabbg
     String payload = value ? act_config.mqtt_config.on_message.data() : act_config.mqtt_config.off_message.data();
 
     auto retries = 0;
-    while (!mqtt_server.publish(topic, payload))
+    while (!mqtt_server.publish(topic, payload, false))
     {
       ESP_LOGE(TAG, "Error while publishing %s to %s", payload.c_str(), topic.c_str());
 

@@ -87,7 +87,7 @@ namespace fablabbg
   /// @param mqtt_topic topic to publish to
   /// @param mqtt_payload payload to publish
   /// @return true if successfull
-  bool FabBackend::publish(String mqtt_topic, String mqtt_payload)
+  bool FabBackend::publish(String mqtt_topic, String mqtt_payload, bool waitForAnswer)
   {
     if (mqtt_payload.length() + mqtt_topic.length() > FabBackend::MAX_MSG_SIZE - 8)
     {
@@ -95,7 +95,7 @@ namespace fablabbg
       return false;
     }
 
-    answer_pending = true;
+    answer_pending = waitForAnswer;
     last_query.assign(mqtt_payload.c_str());
 
     ESP_LOGI(TAG, "MQTT Client: sending message %s on topic %s", mqtt_payload.c_str(), mqtt_topic.c_str());
@@ -117,8 +117,9 @@ namespace fablabbg
       return false;
     }
 
-    answer_pending = true;
+    answer_pending = query.waitForReply(); // Don't wait if not needed
     last_query.assign(s_payload.c_str());
+    last_reply.clear();
 
     ESP_LOGD(TAG, "MQTT Client: sending message %s on topic %s", s_payload.c_str(), s_topic.c_str());
 
@@ -340,7 +341,7 @@ namespace fablabbg
       }
       else
       {
-        ESP_LOGE(TAG, "Failed to send query %s", query.payload().data());
+        ESP_LOGE(TAG, "Failed to publish query %s", query.payload().data());
         this->disconnect();
       }
     }
@@ -357,6 +358,11 @@ namespace fablabbg
       if (QueryT query{args...}; publish(query))
       {
         return true;
+      }
+      else
+      {
+        ESP_LOGW(TAG, "Failed to publish query %s", query.payload().data());
+        this->disconnect();
       }
     }
     return false;

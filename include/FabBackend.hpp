@@ -65,7 +65,7 @@ namespace fablabbg
     [[nodiscard]] auto finishUse(const card::uid_t uid, std::chrono::seconds duration) -> std::unique_ptr<ServerMQTT::SimpleResponse>;
     [[nodiscard]] auto registerMaintenance(const card::uid_t maintainer) -> std::unique_ptr<ServerMQTT::SimpleResponse>;
     [[nodiscard]] auto alive() -> bool;
-    [[nodiscard]] auto publish(String topic, String payload) -> bool;
+    [[nodiscard]] auto publish(String topic, String payload, bool waitForAnswer) -> bool;
     [[nodiscard]] auto isOnline() const -> bool;
 
     auto connect() -> bool;
