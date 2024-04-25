@@ -1,4 +1,5 @@
 #include "Arduino.h"
+#include <algorithm>
 #include <memory>
 
 #include "MFRC522DriverPinSimple.h"
@@ -57,11 +58,10 @@ namespace fablabbg
 
   bool Mrfc522Driver::PCD_PerformSelfTest() { return mfrc522->PCD_PerformSelfTest(); }
 
-  Mrfc522Driver::UidDriver Mrfc522Driver::getDriverUid() const
+  auto Mrfc522Driver::getDriverUid() const -> UidDriver
   {
     UidDriver retVal{};
-    memset(&retVal, 0, sizeof(retVal));
-    memcpy(retVal.uidByte, mfrc522->uid.uidByte, sizeof(retVal.uidByte));
+    std::copy(mfrc522->uid.uidByte, mfrc522->uid.uidByte + 10, retVal.uidByte.begin());
     retVal.size = mfrc522->uid.size;
     retVal.sak = mfrc522->uid.sak;
     return retVal;

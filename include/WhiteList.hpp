@@ -14,7 +14,7 @@ namespace fablabbg
   namespace conf::cards
   {
     static constexpr auto LEN = 10U; /* Number of whitelisted cards */
-  }
+  } // namespace conf::cards
 
   using WhiteListEntry = std::tuple<card::uid_t, FabUser::UserLevel, std::string_view>;
   using WhiteList = std::array<WhiteListEntry, conf::cards::LEN>;
@@ -47,6 +47,6 @@ namespace fablabbg
 
     return sorted1 == sorted2;
   }
-}
+} // namespace fablabbg
 
 #endif // WHITELIST_HPP

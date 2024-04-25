@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <memory>
 
 #include "Logging.hpp"
@@ -94,11 +95,9 @@ namespace fablabbg
   {
     std::array<uint8_t, conf::rfid_tags::UID_BYTE_LEN> arr{0};
     auto const &uid = driver->getDriverUid();
-    memcpy(arr.data(), uid.uidByte, std::min(conf::rfid_tags::UID_BYTE_LEN, uid.size));
-
-    auto c = card::from_array(arr);
-
-    return c;
+    size_t size = std::min(uid.size, conf::rfid_tags::UID_BYTE_LEN);
+    std::copy(uid.uidByte.cbegin(), uid.uidByte.cbegin() + size, arr.begin());
+    return card::from_array(arr);
   }
 
   /// @brief Initializes RFID chip including self test

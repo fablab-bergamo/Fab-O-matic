@@ -12,7 +12,7 @@ namespace fablabbg::card
 {
   using uid_t = u_int64_t;
   static constexpr uid_t INVALID = 0ULL;
-  
+
   /// @brief Returns a string representation of the UID
   /// @param uid number to convert
   /// @return an hex string representation of the UID (e.g. "123456ADCD")
@@ -40,6 +40,19 @@ namespace fablabbg::card
       result |= uid[i];
     }
     return result;
+  }
+
+  /// @brief Converts a UID from an array of bytes to a number
+  /// @param uid array of bytes
+  /// @return the UID as a number
+  [[nodiscard]] constexpr inline auto to_array(const uid_t uid) -> std::array<uint8_t, conf::rfid_tags::UID_BYTE_LEN>
+  {
+    std::array<uint8_t, conf::rfid_tags::UID_BYTE_LEN> retVal{0};
+    for (auto i = (conf::rfid_tags::UID_BYTE_LEN - 1); i >= 0; i--)
+    {
+      retVal[i] = (uid >> (i * 8)) & 0xFF;
+    }
+    return retVal;
   }
 
   inline void print(uint64_t uid)

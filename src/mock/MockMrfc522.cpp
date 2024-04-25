@@ -1,15 +1,17 @@
 #include "mock/MockMrfc522.hpp"
 
+#include <algorithm>
+
 namespace fablabbg
 {
   auto MockMrfc522::getDriverUid() const -> MockMrfc522::UidDriver
   {
     UidDriver retVal{};
-    memset(&retVal, 0, sizeof(retVal));
-    if (getSimulatedUid().has_value())
+    if (auto sim = getSimulatedUid(); sim.has_value())
     {
-      memcpy(retVal.uidByte, &uid.value(), sizeof(uid.value()));
       retVal.size = sizeof(uid.value());
+      auto uid = card::to_array(sim.value());
+      std::copy(uid.begin(), uid.end(), retVal.uidByte.begin());
       retVal.sak = 1;
     }
     return retVal;

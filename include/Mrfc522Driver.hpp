@@ -3,6 +3,7 @@
 
 #include "Arduino.h"
 #include <memory>
+#include <array>
 
 #include "FabUser.hpp"
 #include "MFRC522Debug.h"
@@ -24,9 +25,9 @@ namespace fablabbg
   public:
     struct UidDriver
     {
-      byte size; // Number of bytes in the UID. 4, 7 or 10.
-      byte uidByte[10];
-      byte sak; // The SAK (Select acknowledge) byte returned from the PICC after successful selection.
+      byte size;                       // Number of bytes in the UID. 4, 7 or 10.
+      std::array<byte, 10> uidByte{0}; // The UID (Unique Identifier) of the PICC.
+      byte sak;                        // The SAK (Select acknowledge) byte returned from the PICC after successful selection.
     };
 
     Mrfc522Driver();

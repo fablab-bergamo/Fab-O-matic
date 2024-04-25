@@ -105,9 +105,6 @@ namespace fablabbg::Tasks
   class Scheduler
   {
   public:
-    Scheduler() : tasks{} {};
-    ~Scheduler() = default;
-
     auto addTask(Task &task) -> void;
     auto removeTask(const Task &task) -> void;
 
