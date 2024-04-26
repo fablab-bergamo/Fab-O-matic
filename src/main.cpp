@@ -435,82 +435,82 @@ namespace fablabbg
   void printCompileSettings()
   {
     using namespace conf;
-    std::cout << "Compile-time settings (may be overriden)" << std::endl;
+    std::cout << "Compile-time settings (may be overriden)" << '\n';
     // namespace conf::default_config
-    std::cout << "Machine defaults:" << std::endl;
-    std::cout << "\tmqtt_server: " << default_config::mqtt_server << std::endl;
-    std::cout << "\tmqtt_switch_topic: " << default_config::mqtt_switch_topic << std::endl;
-    std::cout << "\tmachine_id: " << default_config::machine_id.id << std::endl;
-    std::cout << "\tmachine_name: " << default_config::machine_name << std::endl;
-    std::cout << "\tmachine_type: " << static_cast<int>(default_config::machine_type) << std::endl;
-    std::cout << "\thostname: " << default_config::hostname << std::endl;
+    std::cout << "Machine defaults:" << '\n';
+    std::cout << "\tmqtt_server: " << default_config::mqtt_server << '\n';
+    std::cout << "\tmqtt_switch_topic: " << default_config::mqtt_switch_topic << '\n';
+    std::cout << "\tmachine_id: " << default_config::machine_id.id << '\n';
+    std::cout << "\tmachine_name: " << default_config::machine_name << '\n';
+    std::cout << "\tmachine_type: " << static_cast<int>(default_config::machine_type) << '\n';
+    std::cout << "\thostname: " << default_config::hostname << '\n';
     // namespace conf::rfid_tags
-    std::cout << "RFID tags:" << std::endl;
-    std::cout << "\tUID_BYTE_LEN: " << +rfid_tags::UID_BYTE_LEN << std::endl;
-    std::cout << "\tCACHE_LEN: " << +rfid_tags::CACHE_LEN << std::endl;
+    std::cout << "RFID tags:" << '\n';
+    std::cout << "\tUID_BYTE_LEN: " << +rfid_tags::UID_BYTE_LEN << '\n';
+    std::cout << "\tCACHE_LEN: " << +rfid_tags::CACHE_LEN << '\n';
     // namespace conf::lcd
-    std::cout << "LCD config" << std::endl;
-    std::cout << "\tLCD ROWS: " << +lcd::ROWS << ", COLS: " << +lcd::COLS << std::endl;
-    std::cout << "\tSHORT_MESSAGE_DELAY: " << std::chrono::milliseconds(lcd::SHORT_MESSAGE_DELAY).count() << "ms" << std::endl;
+    std::cout << "LCD config" << '\n';
+    std::cout << "\tLCD ROWS: " << +lcd::ROWS << ", COLS: " << +lcd::COLS << '\n';
+    std::cout << "\tSHORT_MESSAGE_DELAY: " << std::chrono::milliseconds(lcd::SHORT_MESSAGE_DELAY).count() << "ms" << '\n';
     // namespace conf::machine
-    std::cout << "General settings:" << std::endl;
-    std::cout << "\tDEFAULT_AUTO_LOGOFF_DELAY: " << std::chrono::hours(machine::DEFAULT_AUTO_LOGOFF_DELAY).count() << "h" << std::endl;
-    std::cout << "\tBEEP_PERIOD: " << std::chrono::seconds(machine::BEEP_PERIOD).count() << "s" << std::endl;
-    std::cout << "\tDEFAULT_GRACE_PERIOD: " << std::chrono::minutes(machine::DEFAULT_GRACE_PERIOD).count() << "min" << std::endl;
-    std::cout << "\tDELAY_BETWEEN_BEEPS: " << std::chrono::seconds(machine::DELAY_BETWEEN_BEEPS).count() << "s" << std::endl;
-    std::cout << "\tMAINTENANCE_BLOCK: " << machine::MAINTENANCE_BLOCK << std::endl;
-    std::cout << "\tLONG_TAP_DURATION: " << std::chrono::seconds(machine::LONG_TAP_DURATION).count() << "s" << std::endl;
+    std::cout << "General settings:" << '\n';
+    std::cout << "\tDEFAULT_AUTO_LOGOFF_DELAY: " << std::chrono::hours(machine::DEFAULT_AUTO_LOGOFF_DELAY).count() << "h" << '\n';
+    std::cout << "\tBEEP_PERIOD: " << std::chrono::seconds(machine::BEEP_PERIOD).count() << "s" << '\n';
+    std::cout << "\tDEFAULT_GRACE_PERIOD: " << std::chrono::minutes(machine::DEFAULT_GRACE_PERIOD).count() << "min" << '\n';
+    std::cout << "\tDELAY_BETWEEN_BEEPS: " << std::chrono::seconds(machine::DELAY_BETWEEN_BEEPS).count() << "s" << '\n';
+    std::cout << "\tMAINTENANCE_BLOCK: " << machine::MAINTENANCE_BLOCK << '\n';
+    std::cout << "\tLONG_TAP_DURATION: " << std::chrono::seconds(machine::LONG_TAP_DURATION).count() << "s" << '\n';
     // namespace conf::debug
-    std::cout << "Debug settings:" << std::endl;
-    std::cout << "\tENABLE_LOGS: " << debug::ENABLE_LOGS << std::endl;
-    std::cout << "\tENABLE_TASK_LOGS: " << debug::ENABLE_TASK_LOGS << std::endl;
-    std::cout << "\tSERIAL_SPEED_BDS: " << debug::SERIAL_SPEED_BDS << std::endl;
-    std::cout << "\tFORCE_PORTAL: " << debug::FORCE_PORTAL << std::endl;
-    std::cout << "\tLOAD_EEPROM_DEFAULTS: " << debug::LOAD_EEPROM_DEFAULTS << std::endl;
+    std::cout << "Debug settings:" << '\n';
+    std::cout << "\tENABLE_LOGS: " << debug::ENABLE_LOGS << '\n';
+    std::cout << "\tENABLE_TASK_LOGS: " << debug::ENABLE_TASK_LOGS << '\n';
+    std::cout << "\tSERIAL_SPEED_BDS: " << debug::SERIAL_SPEED_BDS << '\n';
+    std::cout << "\tFORCE_PORTAL: " << debug::FORCE_PORTAL << '\n';
+    std::cout << "\tLOAD_EEPROM_DEFAULTS: " << debug::LOAD_EEPROM_DEFAULTS << '\n';
     // namespace conf::buzzer
-    std::cout << "Buzzer settings:" << std::endl;
-    std::cout << "\tLEDC_PWM_CHANNEL: " << buzzer::LEDC_PWM_CHANNEL << std::endl;
-    std::cout << "\tSTANDARD_BEEP_DURATION: " << std::chrono::milliseconds(buzzer::STANDARD_BEEP_DURATION).count() << "ms" << std::endl;
-    std::cout << "\tNB_BEEPS: " << buzzer::NB_BEEPS << std::endl;
-    std::cout << "\tBEEP_HZ: " << buzzer::BEEP_HZ << std::endl;
+    std::cout << "Buzzer settings:" << '\n';
+    std::cout << "\tLEDC_PWM_CHANNEL: " << buzzer::LEDC_PWM_CHANNEL << '\n';
+    std::cout << "\tSTANDARD_BEEP_DURATION: " << std::chrono::milliseconds(buzzer::STANDARD_BEEP_DURATION).count() << "ms" << '\n';
+    std::cout << "\tNB_BEEPS: " << buzzer::NB_BEEPS << '\n';
+    std::cout << "\tBEEP_HZ: " << buzzer::BEEP_HZ << '\n';
     // namespace conf::tasks
-    std::cout << "Tasks settings:" << std::endl;
-    std::cout << "\tRFID_CHECK_PERIOD: " << std::chrono::milliseconds(tasks::RFID_CHECK_PERIOD).count() << "ms" << std::endl;
-    std::cout << "\tRFID_SELFTEST_PERIOD: " << std::chrono::seconds(tasks::RFID_SELFTEST_PERIOD).count() << "s" << std::endl;
-    std::cout << "\tMQTT_REFRESH_PERIOD: " << std::chrono::seconds(tasks::MQTT_REFRESH_PERIOD).count() << "s" << std::endl;
-    std::cout << "\tWATCHDOG_TIMEOUT: " << std::chrono::seconds(tasks::WATCHDOG_TIMEOUT).count() << "s" << std::endl;
-    std::cout << "\tWATCHDOG_PERIOD: " << std::chrono::seconds(tasks::WATCHDOG_PERIOD).count() << "s" << std::endl;
-    std::cout << "\tPORTAL_CONFIG_TIMEOUT: " << std::chrono::seconds(tasks::PORTAL_CONFIG_TIMEOUT).count() << "s" << std::endl;
-    std::cout << "\tMQTT_ALIVE_PERIOD: " << std::chrono::seconds(tasks::MQTT_ALIVE_PERIOD).count() << "s" << std::endl;
+    std::cout << "Tasks settings:" << '\n';
+    std::cout << "\tRFID_CHECK_PERIOD: " << std::chrono::milliseconds(tasks::RFID_CHECK_PERIOD).count() << "ms" << '\n';
+    std::cout << "\tRFID_SELFTEST_PERIOD: " << std::chrono::seconds(tasks::RFID_SELFTEST_PERIOD).count() << "s" << '\n';
+    std::cout << "\tMQTT_REFRESH_PERIOD: " << std::chrono::seconds(tasks::MQTT_REFRESH_PERIOD).count() << "s" << '\n';
+    std::cout << "\tWATCHDOG_TIMEOUT: " << std::chrono::seconds(tasks::WATCHDOG_TIMEOUT).count() << "s" << '\n';
+    std::cout << "\tWATCHDOG_PERIOD: " << std::chrono::seconds(tasks::WATCHDOG_PERIOD).count() << "s" << '\n';
+    std::cout << "\tPORTAL_CONFIG_TIMEOUT: " << std::chrono::seconds(tasks::PORTAL_CONFIG_TIMEOUT).count() << "s" << '\n';
+    std::cout << "\tMQTT_ALIVE_PERIOD: " << std::chrono::seconds(tasks::MQTT_ALIVE_PERIOD).count() << "s" << '\n';
     // namespace conf::mqtt
-    std::cout << "MQTT settings:" << std::endl;
-    std::cout << "\ttopic: " << mqtt::topic << std::endl;
-    std::cout << "\tresponse_topic: " << mqtt::response_topic << std::endl;
-    std::cout << "\tMAX_TRIES: " << mqtt::MAX_TRIES << std::endl;
-    std::cout << "\tTIMEOUT_REPLY_SERVER: " << std::chrono::milliseconds(mqtt::TIMEOUT_REPLY_SERVER).count() << "ms" << std::endl;
-    std::cout << "\tPORT_NUMBER: " << mqtt::PORT_NUMBER << std::endl;
+    std::cout << "MQTT settings:" << '\n';
+    std::cout << "\ttopic: " << mqtt::topic << '\n';
+    std::cout << "\tresponse_topic: " << mqtt::response_topic << '\n';
+    std::cout << "\tMAX_TRIES: " << mqtt::MAX_TRIES << '\n';
+    std::cout << "\tTIMEOUT_REPLY_SERVER: " << std::chrono::milliseconds(mqtt::TIMEOUT_REPLY_SERVER).count() << "ms" << '\n';
+    std::cout << "\tPORT_NUMBER: " << mqtt::PORT_NUMBER << '\n';
     // Now dump all pins.hpp settings
-    std::cout << "Hardware settings:" << std::endl;
-    std::cout << "\tLED:" << std::endl;
-    std::cout << "\t\tPin:" << +pins.led.pin << " (G:" << +pins.led.green_pin << ", B:" << +pins.led.blue_pin << ")" << std::endl;
-    std::cout << "\t\tType is neopixel:" << pins.led.is_neopixel << ", is rgb:" << pins.led.is_rgb << std::endl;
-    std::cout << "\t\tNeopixel config flags:" << pins.led.neopixel_config << std::endl;
-    std::cout << "\tMfrc522 chip:" << std::endl;
+    std::cout << "Hardware settings:" << '\n';
+    std::cout << "\tLED:" << '\n';
+    std::cout << "\t\tPin:" << +pins.led.pin << " (G:" << +pins.led.green_pin << ", B:" << +pins.led.blue_pin << ")" << '\n';
+    std::cout << "\t\tType is neopixel:" << pins.led.is_neopixel << ", is rgb:" << pins.led.is_rgb << '\n';
+    std::cout << "\t\tNeopixel config flags:" << pins.led.neopixel_config << '\n';
+    std::cout << "\tMfrc522 chip:" << '\n';
     std::cout << "\t\tSPI settings: MISO: " << +pins.mfrc522.miso_pin << ","
               << " MOSI: " << +pins.mfrc522.mosi_pin << ","
               << " SCK: " << +pins.mfrc522.sck_pin << ","
-              << " SDA: " << +pins.mfrc522.sda_pin << std::endl;
-    std::cout << "\t\tRESET pin:" << +pins.mfrc522.reset_pin << std::endl;
-    std::cout << "\tLCD module:" << std::endl;
-    std::cout << "\t\tParallel interface D0:" << +pins.lcd.d0_pin << ", D1:" << +pins.lcd.d1_pin << ", D2:" << +pins.lcd.d2_pin << ", D3:" << +pins.lcd.d3_pin << std::endl;
-    std::cout << "\t\tReset pin:" << +pins.lcd.rs_pin << ", Enable pin:" << +pins.lcd.en_pin << std::endl;
-    std::cout << "\t\tBacklight pin:" << +pins.lcd.bl_pin << " (active low:" << pins.lcd.active_low << ")" << std::endl;
-    std::cout << "\tRelay:" << std::endl;
-    std::cout << "\t\tControl pin:" << +pins.relay.ch1_pin << " (active low:" << pins.relay.active_low << ")" << std::endl;
-    std::cout << "\tBuzzer:" << std::endl;
-    std::cout << "\t\tPin:" << +pins.buzzer.pin << std::endl;
-    std::cout << "\tButtons:" << std::endl;
-    std::cout << "\t\tFactory defaults pin:" << +pins.buttons.factory_defaults_pin << std::endl;
+              << " SDA: " << +pins.mfrc522.sda_pin << '\n';
+    std::cout << "\t\tRESET pin:" << +pins.mfrc522.reset_pin << '\n';
+    std::cout << "\tLCD module:" << '\n';
+    std::cout << "\t\tParallel interface D0:" << +pins.lcd.d0_pin << ", D1:" << +pins.lcd.d1_pin << ", D2:" << +pins.lcd.d2_pin << ", D3:" << +pins.lcd.d3_pin << '\n';
+    std::cout << "\t\tReset pin:" << +pins.lcd.rs_pin << ", Enable pin:" << +pins.lcd.en_pin << '\n';
+    std::cout << "\t\tBacklight pin:" << +pins.lcd.bl_pin << " (active low:" << pins.lcd.active_low << ")" << '\n';
+    std::cout << "\tRelay:" << '\n';
+    std::cout << "\t\tControl pin:" << +pins.relay.ch1_pin << " (active low:" << pins.relay.active_low << ")" << '\n';
+    std::cout << "\tBuzzer:" << '\n';
+    std::cout << "\t\tPin:" << +pins.buzzer.pin << '\n';
+    std::cout << "\tButtons:" << '\n';
+    std::cout << "\t\tFactory defaults pin:" << +pins.buttons.factory_defaults_pin << '\n';
     std::cout << std::endl;
   }
 

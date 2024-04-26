@@ -13,11 +13,11 @@ namespace fablabbg
     ESP_LOGD(TAG, "Initializing LED (pin %d, is_neopixel %d, flags %u)",
              pins.led.pin, pins.led.is_neopixel, pins.led.neopixel_config);
 
-    if (pins.led.is_neopixel)
+    if constexpr (pins.led.is_neopixel)
     {
       pixel.begin();
     }
-    else if (pins.led.is_rgb)
+    else if constexpr (pins.led.is_rgb)
     {
       pinMode(pins.led.pin, OUTPUT);
       pinMode(pins.led.green_pin, OUTPUT);

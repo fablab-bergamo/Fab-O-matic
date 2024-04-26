@@ -154,3 +154,4 @@ upload_port = IP_ADDRESS_HERE or mDNS_NAME.local
 |0.4.x | March 2024 | 1st PCB manufactured (rev0.2), FW +IP address announced over MQTT |
 |0.5.x | April 2024 | Fully tested on PCB rev0.2 & rev 0.3 |
 |0.6.x | April 2024 | Added RFID cache for network interruptions, config portal now opens only by button push |
+|0.7.x | May 2024 | Maintenance operation is displayed on LCD, bugfixes |

@@ -33,23 +33,16 @@ namespace fablabbg
   }
 
   template <typename TLcdDriver>
-  void LCDWrapper<TLcdDriver>::createChar(uint8_t num, const std::array<uint8_t, HEIGHT_PX> &values)
-  {
-    // Arduino LCD library only reads uint8_t* but did not flag const, so we use this wrapper
-    lcd.createChar(num, const_cast<uint8_t *>(values.data()));
-  }
-
-  template <typename TLcdDriver>
   bool LCDWrapper<TLcdDriver>::begin()
   {
     lcd.begin(conf::lcd::COLS, conf::lcd::ROWS);
 
-    createChar(CHAR_ANTENNA, antenna_char);
-    createChar(CHAR_CONNECTION, connection_char);
-    createChar(CHAR_NO_CONNECTION, noconnection_char);
-    createChar(CHAR_POWERED_OFF, powered_off_char);
-    createChar(CHAR_POWERED_ON, powered_on_char);
-    createChar(CHAR_POWERING_OFF, powering_off_char);
+    lcd.createChar(CHAR_ANTENNA, antenna_char.data());
+    lcd.createChar(CHAR_CONNECTION, connection_char.data());
+    lcd.createChar(CHAR_NO_CONNECTION, noconnection_char.data());
+    lcd.createChar(CHAR_POWERED_OFF, powered_off_char.data());
+    lcd.createChar(CHAR_POWERED_ON, powered_on_char.data());
+    lcd.createChar(CHAR_POWERING_OFF, powering_off_char.data());
 
     if (config.bl_pin != NO_PIN)
       pinMode(config.bl_pin, OUTPUT);
