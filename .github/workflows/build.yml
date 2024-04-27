@@ -39,9 +39,9 @@ jobs:
         run: pip install --upgrade platformio
       - name: Use secrets.hpp.example as base for the build
         run: cp conf/secrets.hpp.example conf/secrets.hpp
-      - name: Build all PlatformIO Projects
+      - name: Build PlatformIO Project ${{ matrix.variant }}
         run: pio run --environment ${{ matrix.variant }}  
-      - name: Upload build
+      - name: Upload firmware image for ${{ matrix.variant }}
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.variant }}.bin
