@@ -23,6 +23,7 @@ jobs:
           path: |
             ~/.cache/pip
             ~/.platformio/.cache
+            ~/.platformio/packages
           key: ${{ runner.os }}-size-${{ matrix.variant }}
       - uses: actions/setup-python@v5
         with:
@@ -38,9 +39,7 @@ jobs:
       # Now build the previous version after checkout if not run by pull request
       - name: Checkout previous commit
         if: github.event_name != 'pull_request'
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.ref }}^
+        run: git checkout HEAD^
       # Get the PR head if run by pull request
       - name: Checkout PR head
         if: github.event_name == 'pull_request'

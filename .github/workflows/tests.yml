@@ -25,6 +25,7 @@ jobs:
             ~/.cache/pip
             ~/.platformio/.cache
             .pio/build_cache
+            ~/.platformio/packages
           key: ${{ runner.os }}-tests
       - uses: actions/setup-python@v5
         with:
