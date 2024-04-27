@@ -31,6 +31,8 @@ jobs:
           path: |
             ~/.cache/pip
             ~/.platformio/.cache
+            ~/.platformio/packages
+            .pio/build_cache
           key: ${{ runner.os }}-build-${{ matrix.variant }}
       - uses: actions/setup-python@v5
         with:

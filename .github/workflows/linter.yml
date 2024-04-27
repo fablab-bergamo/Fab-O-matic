@@ -21,6 +21,7 @@ jobs:
           path: |
             ~/.cache/pip
             ~/.platformio/.cache
+            ~/.platformio/packages
           key: ${{ runner.os }}-linter-${{ matrix.variant }}
       - uses: actions/setup-python@v5
         with:
