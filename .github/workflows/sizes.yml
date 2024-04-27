@@ -38,21 +38,17 @@ jobs:
       - name: Use secrets.hpp.example as base for the build
         run: cp conf/secrets.hpp.example conf/secrets.hpp
       - name: Build PlatformIO Project (current version)
-        run: pio run --environment ${{ matrix.variant }}
-      - name: Copy latest MAP file
-        run: cp .pio/build/${{ matrix.variant }}/firmware.map .pio/build/firmware.map.latest
+        run: pio run --environment ${{ matrix.variant }} --project-option="build_dir=.pio/build/latest"
       # Now build the previous version after checkout
       - name: Checkout previous commit
         run: git checkout HEAD^
       - name: Use secrets.hpp.example as base for the build
         run: cp conf/secrets.hpp.example conf/secrets.hpp
       - name: Build PlatformIO Project (previous version)
-        run: pio run --environment ${{ matrix.variant }}
-      - name: Copy previous MAP file
-        run: cp .pio/build/${{ matrix.variant }}/firmware.map .pio/build/firmware.map.previous
+        run: pio run --environment ${{ matrix.variant }} --project-option="build_dir=.pio/build/previous"
       # Now compares both MAP files with esp_idf_size
       - name: Compare MAP files
-        run: python -m esp_idf_size --format=text --diff=.pio/build/firmware.map.previous .pio/build/firmware.map.latest -o size_report.txt
+        run: python -m esp_idf_size --format=text --diff=.pio/build/previous/firmware.map .pio/build/latest/firmware.map -o size_report.txt
       # Upload the size report as an artifact
       - name: Upload size report
         uses: actions/upload-artifact@v4
