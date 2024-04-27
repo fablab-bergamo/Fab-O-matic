@@ -8,6 +8,7 @@ on:
       - 'conf/**'
       - 'include/**'
       - 'platformio.ini'
+      - '.github/workflows/sizes.yml'
 
 jobs:
   build:
