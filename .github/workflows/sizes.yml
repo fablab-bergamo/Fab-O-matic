@@ -40,7 +40,7 @@ jobs:
         if: github.event_name != 'pull_request'
         uses: actions/checkout@v4
         with:
-          ref: HEAD^
+          ref: ${{ github.ref }}^
       # Get the PR head if run by pull request
       - name: Checkout PR head
         if: github.event_name == 'pull_request'
