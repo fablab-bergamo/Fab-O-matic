@@ -62,11 +62,11 @@ jobs:
           script: |
             const fs = require('fs');
             const report = fs.readFileSync('size_report.txt', 'utf8');
-            if (comment) {
+            if (report) {
               github.issues.createComment({
                 issue_number: context.issue.number,
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                body: '## Firmware size changes for ${{ matrix.variant }}\n\n```\n' + report + '\n```'
+                body: '## Firmware size changes for ${{ matrix.variant }}\n\nCommit ${{ github.sha }}\n```\n' + report + '\n```'
               });
             }
