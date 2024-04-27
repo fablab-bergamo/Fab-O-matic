@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 50
       - uses: actions/cache@v4
         with:
           path: |
@@ -34,12 +34,18 @@ jobs:
         run: pio run --environment ${{ matrix.variant }}
       - name: Copy latest MAP file
         run: cp .pio/build/${{ matrix.variant }}/firmware.map firmware.map.latest 
-      # Now build the previous version after checkout
+      # Now build the previous version after checkout if not run by pull request
       - name: Checkout previous commit
+        if: github.event_name != 'pull_request'
         run: git checkout HEAD^
+      # Get the PR head if run by pull request
+      - name: Checkout PR head
+        if: github.event_name == 'pull_request'
+        run: git checkout ${{ github.event.pull_request.base.ref }}
+      # Now build as usual...
       - name: Use secrets.hpp.example as base for the build
         run: cp conf/secrets.hpp.example conf/secrets.hpp
-      - name: Build PlatformIO Project (previous version)
+      - name: Build PlatformIO Project (previous version ${{ github.event.pull_request.base.ref }})
         run: pio run --environment ${{ matrix.variant }}
       - name: Copy previous MAP file
         run: cp .pio/build/${{ matrix.variant }}/firmware.map firmware.map.previous
