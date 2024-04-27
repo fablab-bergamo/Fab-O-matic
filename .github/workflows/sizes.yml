@@ -37,11 +37,15 @@ jobs:
       # Now build the previous version after checkout if not run by pull request
       - name: Checkout previous commit
         if: github.event_name != 'pull_request'
-        run: git checkout HEAD^
+        uses: actions/checkout@v4
+        with:
+          ref: HEAD^
       # Get the PR head if run by pull request
       - name: Checkout PR head
         if: github.event_name == 'pull_request'
-        run: git checkout ${{ github.event.pull_request.base.ref }}
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.base.ref }}
       # Now build as usual...
       - name: Use secrets.hpp.example as base for the build
         run: cp conf/secrets.hpp.example conf/secrets.hpp
@@ -73,6 +77,6 @@ jobs:
                 issue_number: context.issue.number,
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                body: '## Firmware size changes for ${{ matrix.variant }}\n\nCommit ${{ github.sha }}\n```\n' + report + '\n```'
+                body: '## Firmware size changes for ${{ matrix.variant }}\n\nCommit CURRENT ${{ github.sha }} vs REFERENCE ${{ github.event.pull_request.base.ref }}\n```\n' + report + '\n```'
               });
             }
