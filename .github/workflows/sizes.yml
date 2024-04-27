@@ -3,13 +3,6 @@ name: Compare firmware sizes
 on: 
   workflow_dispatch:
   pull_request:
-  push:
-    paths:
-      - 'src/**'
-      - 'conf/**'
-      - 'include/**'
-      - 'platformio.ini'
-      - '.github/workflows/sizes.yml'
 
 jobs:
   build:
@@ -69,13 +62,11 @@ jobs:
           script: |
             const fs = require('fs');
             const report = fs.readFileSync('size_report.txt', 'utf8');
-            const lines = report.split('\n');
-            const comment = lines.filter(line => line.startsWith('  ')).join('\n');
             if (comment) {
               github.issues.createComment({
                 issue_number: context.issue.number,
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                body: '## Firmware size changes\n\n```\n' + comment + '\n```'
+                body: '## Firmware size changes for ${{ matrix.variant }}\n\n```\n' + report + '\n```'
               });
             }
