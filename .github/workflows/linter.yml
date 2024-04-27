@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         variant:
-          - hardware-rev0
+          - wokwi
     steps:
       - uses: actions/checkout@v4
       - uses: actions/cache@v4
@@ -33,7 +33,7 @@ jobs:
         # save the output of the linter to a file
         # and upload it as an artifact
       - name: Check PlatformIO Project with linter
-        run: pio check --environment ${{ matrix.variant }} --fail-on-defect=high > pio-check.txt
+        run: pio check --environment ${{ matrix.variant }} --fail-on-defect=high > ${{ matrix.variant }}-pio-check.txt
       - name: Upload linter output
         uses: actions/upload-artifact@v4
         with:
