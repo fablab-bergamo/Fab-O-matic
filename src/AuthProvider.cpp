@@ -93,19 +93,7 @@ namespace fablabbg
       if (response->request_ok)
         return std::nullopt;
     }
-
-    if (auto result = uidInCache(uid); result.has_value()) // Try the cache
-    {
-      auto cached = result.value();
-      user.card_uid = cached.uid;
-      user.authenticated = (cached.level != FabUser::UserLevel::Unknown);
-      user.user_level = cached.level;
-      user.holder_name = card::uid_str(uid);
-      ESP_LOGD(TAG, " -> cache check OK (%s)", user.toString().c_str());
-      return user;
-    }
-
-    // Last check, whitelist
+    // Check whitelist if offline
     if (auto result = uidInWhitelist(uid); result.has_value())
     {
       auto [card, level, name] = result.value();
@@ -115,6 +103,18 @@ namespace fablabbg
       user.holder_name = name;
       ESP_LOGD(TAG, " -> whilelist check OK (%s)", user.toString().c_str());
 
+      return user;
+    }
+
+    // Finally check the cached values
+    if (auto result = uidInCache(uid); result.has_value())
+    {
+      auto cached = result.value();
+      user.card_uid = cached.uid;
+      user.authenticated = (cached.level != FabUser::UserLevel::Unknown);
+      user.user_level = cached.level;
+      user.holder_name = card::uid_str(uid);
+      ESP_LOGD(TAG, " -> cache check OK (%s)", user.toString().c_str());
       return user;
     }
 
@@ -181,7 +181,7 @@ namespace fablabbg
       return;
 
     size_t idx = 0;
-    for (auto &user : config.value().cachedRfid)
+    for (const auto &user : config.value().cachedRfid)
     {
       cache.at(idx).uid = user.uid;
       cache.at(idx).level = user.level;

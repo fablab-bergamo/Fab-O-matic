@@ -10,6 +10,8 @@
 
 using namespace std::chrono_literals;
 
+[[maybe_unused]] static const char *TAG3 = "test_logic";
+
 namespace fablabbg::tests
 {
   SavedConfig original;
@@ -107,10 +109,12 @@ namespace fablabbg::tests
       TEST_ASSERT_TRUE_MESSAGE(tag.uid == 0, "Default config cachedRfid not empty after AuthProvider saveCache");
       TEST_ASSERT_TRUE_MESSAGE(tag.level == FabUser::UserLevel::Unknown, "Default config cachedRfid not empty after AuthProvider saveCache");
     }
+
     FabBackend server;
     server.configure(defaults);
     auto [wl_uid, wl_level, name] = secrets::cards::whitelist[0];
     auto result = authProvider.tryLogin(wl_uid, server);
+
     TEST_ASSERT_TRUE_MESSAGE(result.has_value(), "AuthProvider tryLogin failed");
 
     // Now save the positive result

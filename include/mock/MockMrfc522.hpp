@@ -24,7 +24,7 @@ namespace fablabbg
   public:
     struct UidDriver
     {
-      byte size{4}; // Number of bytes in the UID. 4, 7 or 10.
+      byte size{0}; // Number of bytes in the UID. 4, 7 or 10.
       std::array<byte, 10> uidByte{0};
       byte sak{0}; // The SAK (Select acknowledge) byte returned from the PICC after successful selection.
     };

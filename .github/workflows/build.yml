@@ -1,49 +1,49 @@
 name: Build firmware images
 
-on: [push]
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    paths:
+    - 'src/**'
+    - 'conf/**'
+    - 'include/**'
+    - 'platformio.ini'
+    - '.github/workflows/build.yml'
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    continue-on-error: true
+    strategy:
+      matrix:
+        variant:
+          - hardware-rev0
+          - esp32dev
+          - wokwi
+          - esp32-s3
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
       - uses: actions/cache@v4
         with:
           path: |
             ~/.cache/pip
             ~/.platformio/.cache
-          key: ${{ runner.os }}-pio
+          key: ${{ runner.os }}-build-${{ matrix.variant }}
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.9'
+          python-version: '3.11'
       - name: Install PlatformIO Core
         run: pip install --upgrade platformio
       - name: Use secrets.hpp.example as base for the build
         run: cp conf/secrets.hpp.example conf/secrets.hpp
-      - name: Build all PlatformIO Projects
-        run: pio run       
-      - name: Upload ESP32-S3 Generic build
+      - name: Build PlatformIO Project ${{ matrix.variant }}
+        run: pio run --environment ${{ matrix.variant }}  
+      - name: Upload firmware image for ${{ matrix.variant }}
         uses: actions/upload-artifact@v4
         with:
-          name: esp32s3-generic.bin
-          path: .pio/build/esp32-s3/firmware.bin
-          retention-days: 90    
-      - name: Upload ESP32 Generic build
-        uses: actions/upload-artifact@v4
-        with:
-          name: esp32-generic.bin
-          path: .pio/build/esp32dev/firmware.bin
-          retention-days: 90
-      - name: Upload ESP32S2 WOKWI (RFID simulation) build
-        uses: actions/upload-artifact@v4
-        with:
-          name: esp32-wokwi.bin
-          path: .pio/build/wokwi/firmware.bin
-          retention-days: 90
-      - name: Upload HARDWARE BOARD build
-        uses: actions/upload-artifact@v4
-        with:
-          name: hardware-rev0.bin
-          path: .pio/build/hardware-rev0/firmware.bin
+          name: ${{ matrix.variant }}.bin
+          path: .pio/build/${{ matrix.variant }}/firmware.bin
           retention-days: 90

@@ -260,7 +260,7 @@ namespace fablabbg
     if constexpr (pins.buzzer.pin != NO_PIN)
     {
       pinMode(pins.buzzer.pin, OUTPUT);
-      gpio_set_drive_capability(static_cast<gpio_num_t>(pins.buzzer.pin), GPIO_DRIVE_CAP_3);
+      gpio_set_drive_capability(static_cast<gpio_num_t>(pins.buzzer.pin), GPIO_DRIVE_CAP_2);
       auto freq = ledcSetup(conf::buzzer::LEDC_PWM_CHANNEL, conf::buzzer::BEEP_HZ, 8U);
       ESP_LOGD(TAG, "PWM frequency for buzzer set to %d Hz", freq);
       success &= (freq != 0);
