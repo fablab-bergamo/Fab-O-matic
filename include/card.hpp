@@ -59,5 +59,19 @@ namespace fablabbg::card
   {
     ESP_LOGI(TAG, "Card UID = %s", card::uid_str(uid).c_str());
   }
+
+  /// @brief Returns the ESP32 serial number as a string
+  inline auto esp_serial() -> std::string
+  {
+    std::stringstream serial{};
+    std::array<uint8_t, 8> mac{0};
+
+    esp_efuse_mac_get_default(mac.data());
+    for (const auto val : mac)
+    {
+      serial << std::setfill('0') << std::setw(2) << std::hex << +val;
+    }
+    return serial.str().substr(0U, 6 * 2);
+  }
 } // namespace fablabbg::card
 #endif // CARD_HPP_

@@ -196,6 +196,8 @@ namespace fablabbg
     // Connect WiFi if needed
     if (WiFi.status() != WL_CONNECTED)
     {
+      WiFi.setAutoReconnect(true);
+      WiFi.persistent(true);
       WiFi.mode(WIFI_STA);
       ESP_LOGD(TAG, "FabServer::connectWiFi() : WiFi connection state=%d, connecting to SSID:%s (channel:%d)", WiFi.status(), wifi_ssid.c_str(), channel);
       WiFi.begin(wifi_ssid.data(), wifi_password.data(), channel);

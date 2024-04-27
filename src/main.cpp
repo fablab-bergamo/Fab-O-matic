@@ -205,7 +205,15 @@ namespace fablabbg
   void taskFactoryReset()
   {
     if constexpr (pins.buttons.factory_defaults_pin == NO_PIN)
+    {
       return;
+    }
+
+    // Skip factory reset for this specific board because Factory Reset is soldered under the MCU with reset pin.
+    if (auto serial = card::esp_serial(); serial == "dcda0c419794")
+    {
+      return;
+    }
 
     pinMode(pins.buttons.factory_defaults_pin, INPUT_PULLUP);
 
@@ -367,7 +375,7 @@ namespace fablabbg
 
     if (disable_portal || config.disablePortal)
     {
-      wifiManager.setDisableConfigPortal(true);
+      wifiManager.setTimeout(1);
     }
 
     if (wifiManager.autoConnect())
