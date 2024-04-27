@@ -1,0 +1,48 @@
+name: Build firmware images
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.platformio/.cache
+          key: ${{ runner.os }}-pio
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install PlatformIO Core
+        run: pip install --upgrade platformio
+      - name: Use secrets.hpp.example as base for the build
+        run: cp conf/secrets.hpp.example conf/secrets.hpp
+      - name: Build all PlatformIO Projects
+        run: pio run --environment hardware-rev0
+      - name: Copy latest MAP file
+        run: cp .pio/build/hardware-rev0/firmware.map .pio/buildfirmware.map.latest
+      # Now build the previous version after checkout
+      - name: Checkout previous commit
+        run: git checkout HEAD^
+      - name: Use secrets.hpp.example as base for the build
+        run: cp conf/secrets.hpp.example conf/secrets.hpp
+      - name: Build all PlatformIO Projects
+        run: pio run --environment hardware-rev0
+      - name: Copy previous MAP file
+        run: cp .pio/build/hardware-rev0/firmware.map .pio/buildfirmware.map.previous
+      # Now compares both MAP files with esp_idf_size
+      - name: Compare MAP files
+        run: esp_idf_size --format=text --diff=.pio/buildfirmware.map.previous .pio/buildfirmware.map.latest -o size_report.txt
+      # Upload the size report as an artifact and as a comment
+      - name: Upload size report
+        uses: actions/upload-artifact@v4
+        with:
+          name: size_report
+          path: size_report.txt
+          retention-days: 90
