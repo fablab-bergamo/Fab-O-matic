@@ -56,7 +56,7 @@ namespace fablabbg
     }
     if constexpr (!pins.led.is_rgb || !pins.led.is_neopixel)
     {
-      auto light = r > 0 || g > 0 || b > 0;
+      const auto light = r > 0 || g > 0 || b > 0;
       digitalWrite(pins.led.pin, light ? HIGH : LOW);
     }
   }

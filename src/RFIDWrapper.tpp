@@ -18,7 +18,7 @@ namespace fablabbg
   template <typename Driver>
   bool RFIDWrapper<Driver>::isNewCardPresent() const
   {
-    auto result = driver->PICC_IsNewCardPresent();
+    const auto result = driver->PICC_IsNewCardPresent();
 
     if (conf::debug::ENABLE_LOGS && result)
       ESP_LOGD(TAG, "isNewCardPresent=%d", result);

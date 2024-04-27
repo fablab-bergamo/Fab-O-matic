@@ -55,7 +55,7 @@ namespace fablabbg
   {
     FabUser user;
     using UserResult = ServerMQTT::UserResult;
-    auto uid_str = card::uid_str(uid);
+    const auto uid_str = card::uid_str(uid);
 
     ESP_LOGD(TAG, "tryLogin called for %s", uid_str.c_str());
 
@@ -64,7 +64,7 @@ namespace fablabbg
 
     if (server.isOnline())
     {
-      auto response = server.checkCard(uid);
+      const auto response = server.checkCard(uid);
       if (response->request_ok)
       {
         if (response->getResult() == UserResult::Authorized)
@@ -96,7 +96,7 @@ namespace fablabbg
     // Check whitelist if offline
     if (auto result = uidInWhitelist(uid); result.has_value())
     {
-      auto [card, level, name] = result.value();
+      const auto [card, level, name] = result.value();
       user.card_uid = card;
       user.authenticated = true;
       user.user_level = level;
@@ -109,7 +109,7 @@ namespace fablabbg
     // Finally check the cached values
     if (auto result = uidInCache(uid); result.has_value())
     {
-      auto cached = result.value();
+      const auto cached = result.value();
       user.card_uid = cached.uid;
       user.authenticated = (cached.level != FabUser::UserLevel::Unknown);
       user.user_level = cached.level;
@@ -132,10 +132,10 @@ namespace fablabbg
       return std::nullopt;
     }
 
-    auto elem = std::find_if(whitelist.begin(), whitelist.end(),
+    const auto elem = std::find_if(whitelist.begin(), whitelist.end(),
                              [candidate_uid](const auto &input)
                              {
-                               auto [w_uid, w_level, w_name] = input;
+                               const auto [w_uid, w_level, w_name] = input;
                                return w_uid == candidate_uid;
                              });
 
@@ -158,7 +158,7 @@ namespace fablabbg
       return std::nullopt;
     }
 
-    auto elem = std::find_if(cache.begin(), cache.end(),
+    const auto elem = std::find_if(cache.begin(), cache.end(),
                              [candidate_uid](const auto &input)
                              {
                                return input.uid == candidate_uid;

@@ -38,7 +38,7 @@ namespace fablabbg::ServerMQTT
     std::stringstream ss{};
 
     // Get MAC address
-    auto serial = card::esp_serial();
+    const auto serial = card::esp_serial();
 
     ss << "{\"action\":\"alive\","
        << "\"version\":\"" << GIT_VERSION << "\","

@@ -108,8 +108,8 @@ namespace fablabbg
 
     if (query.find("checkuser") != std::string::npos)
     {
-      auto uid = query.substr(query.find("uid") + 6 + 4, 4);
-      auto response = "{\"request_ok\":true,\"is_valid\":true,\"level\":2,\"name\":\"USER" + uid + "\",\"is_valid\":true}";
+      const auto uid = query.substr(query.find("uid") + 6 + 4, 4);
+      const auto response = "{\"request_ok\":true,\"is_valid\":true,\"level\":2,\"name\":\"USER" + uid + "\",\"is_valid\":true}";
       return response;
     }
 
@@ -143,7 +143,7 @@ namespace fablabbg
   {
     if (!queries.empty())
     {
-      auto [topic, query, reply_topic] = queries.front();
+      const auto [topic, query, reply_topic] = queries.front();
       queries.pop();
       std::string response{""};
       while (true)

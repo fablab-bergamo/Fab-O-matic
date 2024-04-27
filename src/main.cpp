@@ -69,7 +69,7 @@ namespace fablabbg
       Board::logic.refreshFromServer();
       if (auto &machine = Board::logic.getMachine(); !machine.isFree())
       {
-        auto response = Board::logic.getServer().inUse(
+        const auto response = Board::logic.getServer().inUse(
             machine.getActiveUser().card_uid,
             machine.getUsageDuration());
         if (!response)
@@ -210,7 +210,7 @@ namespace fablabbg
     }
 
     // Skip factory reset for this specific board because Factory Reset is soldered under the MCU with reset pin.
-    if (auto serial = card::esp_serial(); serial == "dcda0c419794")
+    if (const auto serial = card::esp_serial(); serial == "dcda0c419794")
     {
       return;
     }
@@ -244,7 +244,7 @@ namespace fablabbg
       // Select random card every X times
       if (random(0, 100) < 5)
       {
-        auto [card_uid, level, name] = secrets::cards::whitelist[random(0, secrets::cards::whitelist.size())];
+        const auto [card_uid, level, name] = secrets::cards::whitelist[random(0, secrets::cards::whitelist.size())];
         logged_uid = card_uid;
         driver.setUid(card_uid, 500ms);
       }
@@ -335,7 +335,7 @@ namespace fablabbg
     WiFiManager wifiManager;
     SavedConfig config;
 
-    auto opt_settings = SavedConfig::LoadFromEEPROM();
+    const auto opt_settings = SavedConfig::LoadFromEEPROM();
     if (force_reset || !opt_settings)
     {
       config = SavedConfig::DefaultConfig();
@@ -545,7 +545,7 @@ void setup()
 
   if constexpr (fablabbg::conf::debug::LOAD_EEPROM_DEFAULTS)
   {
-    auto defaults = fablabbg::SavedConfig::DefaultConfig();
+    const auto defaults = fablabbg::SavedConfig::DefaultConfig();
     ESP_LOGW(TAG, "Forcing EEPROM defaults : %s", defaults.toString().c_str());
     defaults.SaveToEEPROM();
   }
@@ -556,7 +556,7 @@ void setup()
   auto hw_init = logic.configure(rfid, lcd);
   hw_init &= logic.initBoard();
 
-  auto count = fablabbg::SavedConfig::IncrementBootCount();
+  const auto count = fablabbg::SavedConfig::IncrementBootCount();
   ESP_LOGI(TAG, "Boot count: %d, reset reason: %d", count, esp_reset_reason());
 
   logic.changeStatus(Status::Booting);

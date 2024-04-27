@@ -31,7 +31,7 @@ namespace fablabbg
 
     if (config.value().hasRelay())
     {
-      auto pin = config.value().relay_config.pin;
+      const auto pin = config.value().relay_config.pin;
       digitalWrite(pin,
                    config.value().relay_config.active_low ? HIGH : LOW);
       pinMode(pin, OUTPUT);
@@ -138,7 +138,7 @@ namespace fablabbg
     CHECK_CONFIGURED(void);
     ESP_LOGI(TAG, "Machine::power_relay : power set to %d", value);
 
-    auto pin = config.value().relay_config.pin;
+    const auto pin = config.value().relay_config.pin;
 
     if (config.value().relay_config.active_low)
     {
