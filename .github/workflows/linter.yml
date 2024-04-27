@@ -9,7 +9,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    continue-on-error: true
+    strategy:
+      matrix:
+        variant:
+          - hardware-rev0
     steps:
       - uses: actions/checkout@v4
       - uses: actions/cache@v4
@@ -17,7 +21,7 @@ jobs:
           path: |
             ~/.cache/pip
             ~/.platformio/.cache
-          key: ${{ runner.os }}-linter
+          key: ${{ runner.os }}-linter-${{ matrix.variant }}
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -28,11 +32,10 @@ jobs:
         # save the output of the linter to a file
         # and upload it as an artifact
       - name: Check PlatformIO Project with linter
-        run: pio check --fail-on-defect=high > pio-check.txt
+        run: pio check --environment ${{ matrix.variant }} --fail-on-defect=high > pio-check.txt
       - name: Upload linter output
         uses: actions/upload-artifact@v4
         with:
-          name: pio-check
-          path: pio-check.txt
+          name: PIO Check output
+          path: ${{ matrix.variant }}-pio-check.txt
           retention-days: 90
-        

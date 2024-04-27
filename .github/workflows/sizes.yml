@@ -2,6 +2,7 @@ name: Compare firmware sizes
 
 on: 
   workflow_dispatch:
+  pull_request:
   push:
     paths:
       - 'src/**'
@@ -28,7 +29,7 @@ jobs:
           path: |
             ~/.cache/pip
             ~/.platformio/.cache
-          key: ${{ runner.os }}-size
+          key: ${{ runner.os }}-size-${{ matrix.variant }}
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -52,10 +53,29 @@ jobs:
       # Now compares both MAP files with esp_idf_size
       - name: Compare MAP files
         run: python -m esp_idf_size --format=text --diff=.pio/build/firmware.map.previous .pio/build/firmware.map.latest -o size_report.txt
-      # Upload the size report as an artifact and as a comment
+      # Upload the size report as an artifact
       - name: Upload size report
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.variant }}_size_report
           path: size_report.txt
           retention-days: 90
+      # If this comes from a pull request, comment the size changes
+      - name: Comment size changes
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const report = fs.readFileSync('size_report.txt', 'utf8');
+            const lines = report.split('\n');
+            const comment = lines.filter(line => line.startsWith('  ')).join('\n');
+            if (comment) {
+              github.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: '## Firmware size changes\n\n```\n' + comment + '\n```'
+              });
+            }
