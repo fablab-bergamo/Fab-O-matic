@@ -17,7 +17,13 @@ namespace fablabbg::tests
           std::make_tuple(0xAABBCCD2, FabUser::UserLevel::FabStaff, "PIPPO"),
           std::make_tuple(0xAABBCCD3, FabUser::UserLevel::NormalUser, "USER1"),
           std::make_tuple(0xAABBCCD4, FabUser::UserLevel::NormalUser, "USER2"),
-          std::make_tuple(0xAABBCCD5, FabUser::UserLevel::NormalUser, "USER3")};
+          std::make_tuple(0xAABBCCD5, FabUser::UserLevel::NormalUser, "USER3"),
+          std::make_tuple(0xAABBCCD7, FabUser::UserLevel::NormalUser, "USER4"),
+          std::make_tuple(0xAABBCCD8, FabUser::UserLevel::NormalUser, "USER5"),
+          std::make_tuple(0xAABBCCD9, FabUser::UserLevel::NormalUser, "USER6"),
+          std::make_tuple(0xAABBCCD0, FabUser::UserLevel::NormalUser, "USER7"),
+          std::make_tuple(0xAABBCCDA, FabUser::UserLevel::NormalUser, "USER8"),
+      };
 
   /// @brief Simulates RFID card tap
   /// @param rfid RFID wrapper

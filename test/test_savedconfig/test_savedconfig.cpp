@@ -7,6 +7,7 @@
 #include "SavedConfig.hpp"
 #include <AuthProvider.hpp>
 #include <FabBackend.hpp>
+#include "BoardLogic.hpp"
 
 using namespace std::chrono_literals;
 
@@ -35,6 +36,11 @@ namespace fablabbg::tests
     TEST_ASSERT_TRUE_MESSAGE(defaults.mqtt_switch_topic == loaded.mqtt_switch_topic, "Loaded config mqtt_switch_topic mismatch");
     TEST_ASSERT_TRUE_MESSAGE(defaults.machine_id == loaded.machine_id, "Loaded config machine_id mismatch");
     TEST_ASSERT_TRUE_MESSAGE(SavedConfig::MAGIC_NUMBER == loaded.magic_number, "Loaded config magic number mismatch");
+
+    // Test set and get methods
+    auto id = MachineID(123);
+    loaded.setMachineID(id);
+    TEST_ASSERT_TRUE_MESSAGE(id == loaded.getMachineID(), "Loaded config machine_id mismatch");
   }
 
   void test_changes(void)
@@ -44,23 +50,22 @@ namespace fablabbg::tests
     auto result2 = SavedConfig::LoadFromEEPROM();
     TEST_ASSERT_TRUE_MESSAGE(result2.has_value(), "Loaded config is empty");
 
-    auto original = result1.value();
-    auto loaded = result2.value();
+    auto &original = result1.value();
+    auto &loaded = result2.value();
 
-    loaded.ssid[0] = 'a';
-    loaded.password[0] = 'b';
-    loaded.mqtt_server[0] = 'c';
-    loaded.mqtt_user[0] = 'd';
-    loaded.mqtt_password[0] = 'e';
-    loaded.mqtt_switch_topic[0] = 'f';
-    loaded.machine_id[0] = '9';
+    loaded.ssid = "a";
+    loaded.password = "b";
+    loaded.mqtt_server = "c";
+    loaded.mqtt_user = "d";
+    loaded.mqtt_password = "e";
+    loaded.mqtt_switch_topic = "f";
+    loaded.machine_id = "9";
 
     // Save changes
     TEST_ASSERT_TRUE_MESSAGE(loaded.SaveToEEPROM(), "Loaded config save failed");
     result2 = SavedConfig::LoadFromEEPROM();
     TEST_ASSERT_TRUE_MESSAGE(result2.has_value(), "Loaded config is empty");
-    auto saved = result2.value();
-
+    auto &saved = result2.value();
     TEST_ASSERT_TRUE_MESSAGE(loaded.ssid == saved.ssid, "Loaded config ssid mismatch");
     TEST_ASSERT_TRUE_MESSAGE(loaded.password == saved.password, "Loaded config password mismatch");
     TEST_ASSERT_TRUE_MESSAGE(loaded.mqtt_server == saved.mqtt_server, "Loaded config mqtt_server mismatch");
@@ -72,13 +77,13 @@ namespace fablabbg::tests
     TEST_ASSERT_TRUE_MESSAGE(SavedConfig::MAGIC_NUMBER == saved.magic_number, "Loaded config magic number mismatch");
 
     // Check that changes have been saved
-    TEST_ASSERT_FALSE_MESSAGE(original.ssid != saved.ssid, "Loaded config ssid mismatch");
-    TEST_ASSERT_FALSE_MESSAGE(original.password != saved.password, "Loaded config password mismatch");
-    TEST_ASSERT_FALSE_MESSAGE(original.mqtt_server != saved.mqtt_server, "Loaded config mqtt_server mismatch");
-    TEST_ASSERT_FALSE_MESSAGE(original.mqtt_user != saved.mqtt_user, "Loaded config mqtt_user mismatch");
-    TEST_ASSERT_FALSE_MESSAGE(original.mqtt_password != saved.mqtt_password, "Loaded config mqtt_password mismatch");
-    TEST_ASSERT_FALSE_MESSAGE(original.mqtt_switch_topic != saved.mqtt_switch_topic, "Loaded config mqtt_switch_topic mismatch");
-    TEST_ASSERT_FALSE_MESSAGE(original.machine_id != saved.machine_id, "Loaded config machine_id mismatch");
+    TEST_ASSERT_TRUE_MESSAGE(original.ssid != saved.ssid, "Loaded config ssid mismatch");
+    TEST_ASSERT_TRUE_MESSAGE(original.password != saved.password, "Loaded config password mismatch");
+    TEST_ASSERT_TRUE_MESSAGE(original.mqtt_server != saved.mqtt_server, "Loaded config mqtt_server mismatch");
+    TEST_ASSERT_TRUE_MESSAGE(original.mqtt_user != saved.mqtt_user, "Loaded config mqtt_user mismatch");
+    TEST_ASSERT_TRUE_MESSAGE(original.mqtt_password != saved.mqtt_password, "Loaded config mqtt_password mismatch");
+    TEST_ASSERT_TRUE_MESSAGE(original.mqtt_switch_topic != saved.mqtt_switch_topic, "Loaded config mqtt_switch_topic mismatch");
+    TEST_ASSERT_TRUE_MESSAGE(original.machine_id != saved.machine_id, "Loaded config machine_id mismatch");
 
     // Restore original
     TEST_ASSERT_TRUE_MESSAGE(original.SaveToEEPROM(), "Loaded config save failed");
@@ -111,26 +116,21 @@ namespace fablabbg::tests
     }
 
     FabBackend server;
+    defaults.mqtt_server = "INVALID_SERVER"; // Must be invalid to test the cache
     server.configure(defaults);
+
     auto [wl_uid, wl_level, name] = secrets::cards::whitelist[0];
     auto result = authProvider.tryLogin(wl_uid, server);
 
     TEST_ASSERT_TRUE_MESSAGE(result.has_value(), "AuthProvider tryLogin failed");
 
-    // Now save the positive result
+    // Now save the positive result (should not be do anything, because offline)
     TEST_ASSERT_TRUE_MESSAGE(authProvider.saveCache(), "AuthProvider saveCache 2 failed");
     // Reload the cache
     defaults = SavedConfig::LoadFromEEPROM().value_or(SavedConfig::DefaultConfig());
 
-    TEST_ASSERT_TRUE_MESSAGE(wl_uid == defaults.cachedRfid[0].uid, "AuthProvider tryLogin card_uid mismatch");
-    TEST_ASSERT_TRUE_MESSAGE(wl_level == defaults.cachedRfid[0].level, "AuthProvider tryLogin user_level mismatch");
-
-    TEST_ASSERT_TRUE_MESSAGE(authProvider.saveCache(), "AuthProvider saveCache 2 failed");
-
-    defaults = SavedConfig::LoadFromEEPROM().value_or(SavedConfig::DefaultConfig());
-    // Test that the first item is cache is the tag we just added
-    TEST_ASSERT_TRUE_MESSAGE(defaults.cachedRfid[0].uid == result.value().card_uid, "Loaded config cachedRfid card_uid mismatch");
-    TEST_ASSERT_TRUE_MESSAGE(defaults.cachedRfid[0].level == result.value().user_level, "Loaded config cachedRfid user_level mismatch");
+    TEST_ASSERT_TRUE_MESSAGE(0 == defaults.cachedRfid[0].uid, "AuthProvider tryLogin card_uid mismatch");
+    TEST_ASSERT_TRUE_MESSAGE(FabUser::UserLevel::Unknown == defaults.cachedRfid[0].level, "AuthProvider tryLogin user_level mismatch");
 
     // Generate many events
     for (auto i = 0; i < 50; i++)
@@ -141,6 +141,8 @@ namespace fablabbg::tests
 
     TEST_ASSERT_TRUE_MESSAGE(authProvider.saveCache(), "AuthProvider saveCache 2 failed");
     defaults = SavedConfig::LoadFromEEPROM().value_or(SavedConfig::DefaultConfig());
+
+    // Online scenario with cache is testing in MQTT testcase with the broker.
   }
 
   void test_magic_number()
@@ -167,21 +169,12 @@ namespace fablabbg::tests
 
 void tearDown(void)
 {
-  fablabbg::tests::original.SaveToEEPROM();
+  // clean stuff up here
 }
 
 void setUp(void)
 {
   // set stuff up here
-  auto result = fablabbg::SavedConfig::LoadFromEEPROM();
-  if (result.has_value())
-  {
-    fablabbg::tests::original = result.value();
-  }
-  else
-  {
-    fablabbg::tests::original = fablabbg::SavedConfig::DefaultConfig();
-  }
 }
 
 void setup()

@@ -12,12 +12,12 @@
 #include "SavedConfig.hpp"
 #include "Tasks.hpp"
 #include "conf.hpp"
-#include "mock/MockLcdLibrary.hpp"
 #include "mock/MockMQTTBroker.hpp"
 #include "mock/MockMrfc522.hpp"
 #include <Arduino.h>
 #include <esp_task_wdt.h>
 #include <unity.h>
+#include "LiquidCrystal.h"
 
 using namespace std::chrono_literals;
 
@@ -29,7 +29,7 @@ pthread_attr_t attr_mqtt_broker;
 namespace fablabbg::tests
 {
   fablabbg::RFIDWrapper<fablabbg::MockMrfc522> rfid;
-  fablabbg::LCDWrapper<fablabbg::MockLcdLibrary> lcd{fablabbg::pins.lcd};
+  fablabbg::LCDWrapper<LiquidCrystal> lcd{fablabbg::pins.lcd};
   fablabbg::BoardLogic logic;
   fablabbg::MockMQTTBroker broker;
   fablabbg::Tasks::Scheduler test_scheduler;
@@ -139,6 +139,38 @@ namespace fablabbg::tests
         auto alive_resp = server.alive();
         TEST_ASSERT_TRUE_MESSAGE(alive_resp, "Server alive failed");
       }
+    }
+    // Test authentication in online scenario
+    AuthProvider auth(secrets::cards::whitelist);
+    TEST_ASSERT_TRUE_MESSAGE(server.connect(), "Server is online");
+    for (const auto &[uid, level, name] : secrets::cards::whitelist)
+    {
+      server.loop();
+      auto response = auth.tryLogin(uid, server);
+      TEST_ASSERT_TRUE_MESSAGE(response.has_value(), "Server checkCard failed");
+      if (level == FabUser::UserLevel::Unknown)
+      {
+        TEST_ASSERT_FALSE_MESSAGE(response.value().authenticated, "Server returned authenticated user for invalid one");
+      }
+      else
+      {
+        TEST_ASSERT_TRUE_MESSAGE(response.value().authenticated, "Server returned unauthenticated user for a valid one");
+        TEST_ASSERT_TRUE_MESSAGE(response.value().user_level == level, "Server returned wrong user level");
+      }
+    }
+    // Test that saving the cache works
+    TEST_ASSERT_TRUE_MESSAGE(auth.saveCache(), "AuthProvider saveCache failed");
+
+    // Test that the cache contains all the valid whitelist entries
+    auto cached_entries = SavedConfig::LoadFromEEPROM().value().cachedRfid;
+    for (const auto &[uid, level, name] : secrets::cards::whitelist)
+    {
+      auto found = std::find_if(cached_entries.begin(), cached_entries.end(),
+                                [uid, level](const auto &entry)
+                                { return entry.uid == uid && entry.level == level; });
+      TEST_ASSERT_TRUE_MESSAGE(level == FabUser::UserLevel::Unknown ||
+                                   found != cached_entries.end(),
+                               "AuthProvider saveCache failed to save all whitelist entries");
     }
   }
 
