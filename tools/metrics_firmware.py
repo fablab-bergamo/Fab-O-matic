@@ -25,7 +25,9 @@ def firm_metrics(source, target, env):
             + '"'
         )
         env.Execute(
-            '$PYTHONEXE -m esp_idf_size --format=text "' + str(firmware_file) + '"'
+            '$PYTHONEXE -m esp_idf_size --files --format=text "'
+            + str(firmware_file)
+            + '"'
         )
 
 
