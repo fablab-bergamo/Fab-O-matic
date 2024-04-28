@@ -112,7 +112,7 @@ namespace fablabbg
   void BoardLogic::logout()
   {
     const auto result = server.finishUse(machine.getActiveUser().card_uid,
-                                   machine.getUsageDuration());
+                                         machine.getUsageDuration());
 
     ESP_LOGI(TAG, "Logout, result finishUse: %d", result->request_ok);
 
@@ -494,7 +494,7 @@ namespace fablabbg
 
     server.configure(config.value());
 
-    MachineID mid{(uint16_t)atoi(config.value().machine_id)};
+    MachineID mid = config.value().getMachineID();
     MachineConfig machine_conf(mid,
                                conf::default_config::machine_type,
                                std::string{conf::default_config::machine_name},

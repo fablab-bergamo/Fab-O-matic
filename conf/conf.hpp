@@ -86,10 +86,17 @@ namespace fablabbg
     static constexpr auto MAX_TRIES{2};                         /* Number of tries to get a reply from the backend */
     static constexpr auto TIMEOUT_REPLY_SERVER{2s};             /* Timeout for a single backend reply request. */
     static constexpr auto PORT_NUMBER{1883};                    /* MQTT port for broker */
-
   } // namespace conf::mqtt
 
+  namespace conf::common
+  {
+    static constexpr auto STR_MAX_LENGTH{40U}; /* Maximum length of saved string in EEPROM. If you change it, increase MAGIC_NUMBER */
+    static constexpr auto INT_MAX_LENGTH{5U};  /* Maximum length of saved integer in EEPROM. If you change it, increase MAGIC_NUMBER */
+  }
+
   // Checks on configured values
+  static_assert(conf::mqtt::topic.size() < conf::common::STR_MAX_LENGTH, "MQTT topic too long");
+  static_assert(conf::mqtt::response_topic.size() < conf::common::STR_MAX_LENGTH, "MQTT response too long");
   static_assert(conf::machine::BEEP_PERIOD <= conf::machine::DEFAULT_GRACE_PERIOD, "BEEP_PERIOD must be <= POWEROFF_GRACE_PERIOD");
   static_assert(conf::machine::DELAY_BETWEEN_BEEPS < conf::machine::BEEP_PERIOD, "DELAY_BETWEEN_BEEPS must be < BEEP_PERIOD");
   static_assert(conf::buzzer::STANDARD_BEEP_DURATION <= 1s, "STANDARD_BEEP_DURATION must be <= 1s");

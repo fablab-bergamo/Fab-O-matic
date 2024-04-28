@@ -345,9 +345,14 @@ namespace fablabbg
       config = opt_settings.value();
     }
 
-    WiFiManagerParameter custom_mqtt_server("Broker", "MQTT Broker address", config.mqtt_server, sizeof(config.mqtt_server));
-    WiFiManagerParameter custom_mqtt_topic("Topic", "MQTT Switch topic (leave empty to disable)", config.mqtt_switch_topic, sizeof(config.mqtt_switch_topic));
-    WiFiManagerParameter custom_machine_id("MachineID", "Machine ID", config.machine_id, sizeof(config.machine_id));
+    // We are using config as a buffer for the WiFiManager parameters, make sure it can hold the content
+    config.mqtt_server.resize(conf::common::STR_MAX_LENGTH);
+    config.mqtt_switch_topic.resize(conf::common::STR_MAX_LENGTH);
+    config.machine_id.resize(conf::common::INT_MAX_LENGTH);
+
+    WiFiManagerParameter custom_mqtt_server("Broker", "MQTT Broker address", config.mqtt_server.data(), conf::common::STR_MAX_LENGTH);
+    WiFiManagerParameter custom_mqtt_topic("Topic", "MQTT Switch topic (leave empty to disable)", config.mqtt_switch_topic.data(), conf::common::STR_MAX_LENGTH);
+    WiFiManagerParameter custom_machine_id("MachineID", "Machine ID", config.machine_id.data(), conf::common::INT_MAX_LENGTH, "type='number' min='0' max='65535'");
 
     wifiManager.addParameter(&custom_mqtt_server);
     wifiManager.addParameter(&custom_mqtt_topic);
@@ -392,13 +397,13 @@ namespace fablabbg
     if (shouldSaveConfig)
     {
       // save SSID data from WiFiManager
-      strncpy(config.ssid, WiFi.SSID().c_str(), sizeof(config.ssid));
-      strncpy(config.password, WiFi.psk().c_str(), sizeof(config.password));
+      config.ssid.assign(WiFi.SSID().c_str());
+      config.password.assign(WiFi.psk().c_str());
 
       // read updated parameters
-      strncpy(config.mqtt_server, custom_mqtt_server.getValue(), sizeof(config.mqtt_server));
-      strncpy(config.mqtt_switch_topic, custom_mqtt_topic.getValue(), sizeof(config.mqtt_switch_topic));
-      strncpy(config.machine_id, custom_machine_id.getValue(), sizeof(config.machine_id));
+      config.mqtt_server.assign(custom_mqtt_server.getValue());
+      config.mqtt_switch_topic.assign(custom_mqtt_topic.getValue());
+      config.machine_id.assign(custom_machine_id.getValue());
 
       config.disablePortal = true;
 
