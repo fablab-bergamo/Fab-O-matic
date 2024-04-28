@@ -18,6 +18,7 @@ namespace fablabbg
   {
   private:
     static constexpr auto JSON_DOC_SIZE = 1024;
+    static std::string json_buffer;
 
     /// @brief Serialize the current configuration into a JsonDocument
     /// @return JsonDocument

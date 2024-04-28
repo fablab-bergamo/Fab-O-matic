@@ -11,6 +11,9 @@
 
 namespace fablabbg
 {
+  // Define the static variable
+  std::string SavedConfig::json_buffer;
+
   auto SavedConfig::setMachineID(MachineID id) -> void
   {
     machine_id = std::to_string(id);
@@ -37,7 +40,7 @@ namespace fablabbg
     config.mqtt_switch_topic = conf::default_config::mqtt_switch_topic;
 
     // Machine
-    config.machine_id = conf::default_config::machine_id;
+    config.setMachineID(conf::default_config::machine_id);
     config.magic_number = MAGIC_NUMBER;
     config.disablePortal = false;
 
@@ -46,17 +49,20 @@ namespace fablabbg
 
   auto SavedConfig::LoadFromEEPROM() -> std::optional<SavedConfig>
   {
-    std::string json(SavedConfig::JSON_DOC_SIZE, '\0');
+    SavedConfig::json_buffer.resize(JSON_DOC_SIZE);
 
-    if (!EEPROM.begin(sizeof(json)))
+    if (!EEPROM.begin(SavedConfig::json_buffer.size()))
     {
       ESP_LOGE(TAG, "SavedConfig::LoadFromEEPROM() : EEPROM.begin failed");
       return std::nullopt;
     }
 
-    EEPROM.get(0, json);
+    for (auto i = 0; i < SavedConfig::json_buffer.size(); i++)
+    {
+      SavedConfig::json_buffer[i] = EEPROM.readChar(i);
+    }
 
-    auto reply = fromJsonDocument(json);
+    auto reply = fromJsonDocument(SavedConfig::json_buffer);
     if (!reply.has_value())
     {
       ESP_LOGW(TAG, "Failed to load config from EEPROM");
@@ -98,12 +104,15 @@ namespace fablabbg
   {
     SavedConfig config;
     JsonDocument doc;
+
     auto result = deserializeJson(doc, json_text);
     if (result != DeserializationError::Ok)
     {
-      ESP_LOGE(TAG, "fromJsonDocument() : deserializeJson failed with code %d", result.code());
+      ESP_LOGE(TAG, "fromJsonDocument() : deserializeJson failed with code %s", result.c_str());
+      ESP_LOGE(TAG, "fromJsonDocument() : %s", json_text.c_str());
       return std::nullopt;
     }
+
     // Now map the JSON to the struct
     config.disablePortal = doc["disablePortal"];
     config.bootCount = doc["bootCount"];
@@ -123,28 +132,37 @@ namespace fablabbg
       auto level = static_cast<FabUser::UserLevel>(elem["level"].as<uint8_t>());
       config.cachedRfid.at(idx++) = {uid, level};
     }
+
     while (idx < conf::rfid_tags::CACHE_LEN)
     {
       config.cachedRfid.at(idx) = {0, FabUser::UserLevel::Unknown};
       idx++;
     }
+
+    ESP_LOGD(TAG, "fromJsonDocument() : data deserialized successfully");
+
     return config;
   }
 
   auto SavedConfig::SaveToEEPROM() const -> bool
   {
-    std::string json(SavedConfig::JSON_DOC_SIZE, '\0');
+    json_buffer.resize(JSON_DOC_SIZE);
+    std::fill(SavedConfig::json_buffer.begin(), SavedConfig::json_buffer.begin() + SavedConfig::json_buffer.size(), '\0');
 
-    if (!EEPROM.begin(sizeof(json)))
+    if (!EEPROM.begin(JSON_DOC_SIZE))
     {
       ESP_LOGE(TAG, "SavedConfig::SaveToEEPROM() : EEPROM.begin failed");
       return false;
     }
 
-    const auto doc = toJsonDocument();
-    serializeJson(doc, json);
+    const auto &doc = toJsonDocument();
+    serializeJson(doc, SavedConfig::json_buffer);
 
-    EEPROM.put(0, json);
+    for (auto i = 0; i < SavedConfig::json_buffer.size(); i++)
+    {
+      EEPROM.writeChar(i, SavedConfig::json_buffer[i]);
+    }
+
     auto result = EEPROM.commit();
 
     if (result)
@@ -159,7 +177,7 @@ namespace fablabbg
 
   auto SavedConfig::toString() const -> const std::string
   {
-    const auto doc = toJsonDocument();
+    const auto &doc = toJsonDocument();
     std::string result;
     serializeJsonPretty(doc, result);
     return result;

@@ -13,7 +13,6 @@ jobs:
         variant:
           - hardware-rev0
           - esp32dev
-          - esp32-s3
     steps:
       - uses: actions/checkout@v4
         with:
@@ -66,13 +65,29 @@ jobs:
       # If this comes from a pull request, comment the size changes
       - name: Comment size changes
         if: github.event_name == 'pull_request'
-        uses: actions/github-script@v4
+        uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const fs = require('fs');
             const report = fs.readFileSync('size_report.txt', 'utf8');
             if (report) {
+              # Delete previous comments
+              github.issues.listComments({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo
+              }).then(comments => {
+                comments.data.forEach(comment => {
+                  if (comment.user.login === 'github-actions[bot]') {
+                    github.issues.deleteComment({
+                      comment_id: comment.id,
+                      owner: context.repo.owner,
+                      repo: context.repo.repo
+                    });
+                  }
+                });
+              });
               github.issues.createComment({
                 issue_number: context.issue.number,
                 owner: context.repo.owner,
@@ -80,3 +95,4 @@ jobs:
                 body: '## Firmware size changes for ${{ matrix.variant }}\n\nCommit CURRENT ${{ github.event.pull_request.head.sha }} vs REFERENCE ${{ github.event.pull_request.base.sha }}\n```\n' + report + '\n```'
               });
             }
+       
