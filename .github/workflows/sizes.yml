@@ -73,14 +73,14 @@ jobs:
             const report = fs.readFileSync('size_report.txt', 'utf8');
             if (report) {
               // Delete previous comments
-              github.issues.listComments({
+              github.rest.issues.listComments({
                 issue_number: context.issue.number,
                 owner: context.repo.owner,
                 repo: context.repo.repo
               }).then(comments => {
                 comments.data.forEach(comment => {
                   if (comment.user.login === 'github-actions[bot]') {
-                    github.issues.deleteComment({
+                    github.rest.issues.deleteComment({
                       comment_id: comment.id,
                       owner: context.repo.owner,
                       repo: context.repo.repo
@@ -88,7 +88,7 @@ jobs:
                   }
                 });
               });
-              github.issues.createComment({
+              github.rest.issues.createComment({
                 issue_number: context.issue.number,
                 owner: context.repo.owner,
                 repo: context.repo.repo,
