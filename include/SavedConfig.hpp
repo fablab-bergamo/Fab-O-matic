@@ -6,6 +6,7 @@
 #include <string>
 
 #include <EEPROM.h>
+#include <ArduinoJson.h>
 
 #include "MachineConfig.hpp"
 #include "conf.hpp"
@@ -13,36 +14,48 @@
 
 namespace fablabbg
 {
-  // NOLINTBEGIN(cppcoreguidelines-avoid-c-arrays)
-  struct SavedConfig
+  class SavedConfig
   {
-    static constexpr auto FIELD_LENGTH = 40;
-    static constexpr auto INT_LENGTH = 5;      // Must save as string for WiFiManager
-    static constexpr auto MAGIC_NUMBER = 0x48; // Increment when changing the struct
+  private:
+    static constexpr auto JSON_DOC_SIZE = 1024;
+    static std::string json_buffer;
+
+    /// @brief Serialize the current configuration into a JsonDocument
+    /// @return JsonDocument
+    [[nodiscard]] auto toJsonDocument() const -> JsonDocument;
+
+    /// @brief Deserialize a JsonDocument into a SavedConfig
+    /// @param json_text json document as string to be deserialized
+    /// @return std::nullopt if the document is invalid, or a valid SavedConfig
+    [[nodiscard]] static auto fromJsonDocument(const std::string &json_text) -> std::optional<SavedConfig>;
+
+  public:
+    static constexpr auto MAGIC_NUMBER = 0x49; // Increment when changing the struct
 
     // Magic number to check if the EEPROM is initialized
     mutable uint8_t magic_number{0};
 
     /// @brief WiFi SSID
-    char ssid[FIELD_LENGTH]{0};
+    std::string ssid{""};
 
     /// @brief WiFi password
-    char password[FIELD_LENGTH]{0};
+    std::string password{""};
 
     /// @brief MQTT server
-    char mqtt_server[FIELD_LENGTH]{0};
+    std::string mqtt_server{""};
 
     /// @brief MQTT username
-    char mqtt_user[FIELD_LENGTH]{0};
+    std::string mqtt_user{""};
 
     /// @brief MQTT password
-    char mqtt_password[FIELD_LENGTH]{0};
+    std::string mqtt_password{""};
 
     /// @brief MQTT topic for mqtt switch (if available)
-    char mqtt_switch_topic[FIELD_LENGTH]{0};
+    std::string mqtt_switch_topic{""};
 
     /// @brief Machine ID connected to the board
-    char machine_id[INT_LENGTH]{0};
+    /// @details This is a string to allow for easier integration with WiFiManager parameter
+    std::string machine_id{""};
 
     /// @brief list of cached RFID cards
     CachedList cachedRfid;
@@ -60,6 +73,13 @@ namespace fablabbg
     /// @return true if successful
     auto SaveToEEPROM() const -> bool;
 
+    /// @brief Sets the machine ID (converting to string)
+    auto setMachineID(MachineID id) -> void;
+
+    /// @brief Gets the machine ID (converting from string)
+    [[nodiscard]] auto getMachineID() const -> MachineID;
+
+    /// @brief Returns a json-prettified fragment for logging
     [[nodiscard]] auto toString() const -> const std::string;
 
     /// @brief Loads the configuration from EEPROM if available and matching revision number
@@ -72,7 +92,6 @@ namespace fablabbg
     /// @brief Increments the boot count and saves it to EEPROM
     static auto IncrementBootCount() -> size_t;
   };
-  // NOLINTEND(cppcoreguidelines-avoid-c-arrays)
 
 } // namespace fablabbg
 #endif // SAVEDCONFIG_HPP_

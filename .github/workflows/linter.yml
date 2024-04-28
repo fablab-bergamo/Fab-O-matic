@@ -6,8 +6,12 @@ on:
     tags:
       - '*' # Push events to all tags
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  build:
+  linter:
     runs-on: ubuntu-latest
     continue-on-error: true
     strategy:

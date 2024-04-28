@@ -27,13 +27,13 @@ namespace fablabbg::tests
     auto result = SavedConfig::LoadFromEEPROM();
     TEST_ASSERT_TRUE_MESSAGE(result.has_value(), "Loaded config is empty");
     auto loaded = result.value();
-    TEST_ASSERT_EQUAL_STRING_MESSAGE(defaults.ssid, loaded.ssid, "Loaded config ssid mismatch");
-    TEST_ASSERT_EQUAL_STRING_MESSAGE(defaults.password, loaded.password, "Loaded config password mismatch");
-    TEST_ASSERT_EQUAL_STRING_MESSAGE(defaults.mqtt_server, loaded.mqtt_server, "Loaded config mqtt_server mismatch");
-    TEST_ASSERT_EQUAL_STRING_MESSAGE(defaults.mqtt_user, loaded.mqtt_user, "Loaded config mqtt_user mismatch");
-    TEST_ASSERT_EQUAL_STRING_MESSAGE(defaults.mqtt_password, loaded.mqtt_password, "Loaded config mqtt_password mismatch");
-    TEST_ASSERT_EQUAL_STRING_MESSAGE(defaults.mqtt_switch_topic, loaded.mqtt_switch_topic, "Loaded config mqtt_switch_topic mismatch");
-    TEST_ASSERT_EQUAL_STRING_MESSAGE(defaults.machine_id, loaded.machine_id, "Loaded config machine_id mismatch");
+    TEST_ASSERT_TRUE_MESSAGE(defaults.ssid == loaded.ssid, "Loaded config ssid mismatch");
+    TEST_ASSERT_TRUE_MESSAGE(defaults.password == loaded.password, "Loaded config password mismatch");
+    TEST_ASSERT_TRUE_MESSAGE(defaults.mqtt_server == loaded.mqtt_server, "Loaded config mqtt_server mismatch");
+    TEST_ASSERT_TRUE_MESSAGE(defaults.mqtt_user == loaded.mqtt_user, "Loaded config mqtt_user mismatch");
+    TEST_ASSERT_TRUE_MESSAGE(defaults.mqtt_password == loaded.mqtt_password, "Loaded config mqtt_password mismatch");
+    TEST_ASSERT_TRUE_MESSAGE(defaults.mqtt_switch_topic == loaded.mqtt_switch_topic, "Loaded config mqtt_switch_topic mismatch");
+    TEST_ASSERT_TRUE_MESSAGE(defaults.machine_id == loaded.machine_id, "Loaded config machine_id mismatch");
     TEST_ASSERT_TRUE_MESSAGE(SavedConfig::MAGIC_NUMBER == loaded.magic_number, "Loaded config magic number mismatch");
   }
 
@@ -61,24 +61,24 @@ namespace fablabbg::tests
     TEST_ASSERT_TRUE_MESSAGE(result2.has_value(), "Loaded config is empty");
     auto saved = result2.value();
 
-    TEST_ASSERT_EQUAL_STRING_MESSAGE(loaded.ssid, saved.ssid, "Loaded config ssid mismatch");
-    TEST_ASSERT_EQUAL_STRING_MESSAGE(loaded.password, saved.password, "Loaded config password mismatch");
-    TEST_ASSERT_EQUAL_STRING_MESSAGE(loaded.mqtt_server, saved.mqtt_server, "Loaded config mqtt_server mismatch");
-    TEST_ASSERT_EQUAL_STRING_MESSAGE(loaded.mqtt_user, saved.mqtt_user, "Loaded config mqtt_user mismatch");
-    TEST_ASSERT_EQUAL_STRING_MESSAGE(loaded.mqtt_password, saved.mqtt_password, "Loaded config mqtt_password mismatch");
-    TEST_ASSERT_EQUAL_STRING_MESSAGE(loaded.mqtt_switch_topic, saved.mqtt_switch_topic, "Loaded config mqtt_switch_topic mismatch");
-    TEST_ASSERT_EQUAL_STRING_MESSAGE(loaded.machine_id, saved.machine_id, "Loaded config machine_id mismatch");
-    TEST_ASSERT_EQUAL_MESSAGE(loaded.disablePortal, saved.disablePortal, "Loaded config disablePortal mismatch");
+    TEST_ASSERT_TRUE_MESSAGE(loaded.ssid == saved.ssid, "Loaded config ssid mismatch");
+    TEST_ASSERT_TRUE_MESSAGE(loaded.password == saved.password, "Loaded config password mismatch");
+    TEST_ASSERT_TRUE_MESSAGE(loaded.mqtt_server == saved.mqtt_server, "Loaded config mqtt_server mismatch");
+    TEST_ASSERT_TRUE_MESSAGE(loaded.mqtt_user == saved.mqtt_user, "Loaded config mqtt_user mismatch");
+    TEST_ASSERT_TRUE_MESSAGE(loaded.mqtt_password == saved.mqtt_password, "Loaded config mqtt_password mismatch");
+    TEST_ASSERT_TRUE_MESSAGE(loaded.mqtt_switch_topic == saved.mqtt_switch_topic, "Loaded config mqtt_switch_topic mismatch");
+    TEST_ASSERT_TRUE_MESSAGE(loaded.machine_id == saved.machine_id, "Loaded config machine_id mismatch");
+    TEST_ASSERT_TRUE_MESSAGE(loaded.disablePortal == saved.disablePortal, "Loaded config disablePortal mismatch");
     TEST_ASSERT_TRUE_MESSAGE(SavedConfig::MAGIC_NUMBER == saved.magic_number, "Loaded config magic number mismatch");
 
     // Check that changes have been saved
-    TEST_ASSERT_FALSE_MESSAGE(strcmp(original.ssid, saved.ssid) == 0, "Loaded config ssid mismatch");
-    TEST_ASSERT_FALSE_MESSAGE(strcmp(original.password, saved.password) == 0, "Loaded config password mismatch");
-    TEST_ASSERT_FALSE_MESSAGE(strcmp(original.mqtt_server, saved.mqtt_server) == 0, "Loaded config mqtt_server mismatch");
-    TEST_ASSERT_FALSE_MESSAGE(strcmp(original.mqtt_user, saved.mqtt_user) == 0, "Loaded config mqtt_user mismatch");
-    TEST_ASSERT_FALSE_MESSAGE(strcmp(original.mqtt_password, saved.mqtt_password) == 0, "Loaded config mqtt_password mismatch");
-    TEST_ASSERT_FALSE_MESSAGE(strcmp(original.mqtt_switch_topic, saved.mqtt_switch_topic) == 0, "Loaded config mqtt_switch_topic mismatch");
-    TEST_ASSERT_FALSE_MESSAGE(strcmp(original.machine_id, saved.machine_id) == 0, "Loaded config machine_id mismatch");
+    TEST_ASSERT_FALSE_MESSAGE(original.ssid != saved.ssid, "Loaded config ssid mismatch");
+    TEST_ASSERT_FALSE_MESSAGE(original.password != saved.password, "Loaded config password mismatch");
+    TEST_ASSERT_FALSE_MESSAGE(original.mqtt_server != saved.mqtt_server, "Loaded config mqtt_server mismatch");
+    TEST_ASSERT_FALSE_MESSAGE(original.mqtt_user != saved.mqtt_user, "Loaded config mqtt_user mismatch");
+    TEST_ASSERT_FALSE_MESSAGE(original.mqtt_password != saved.mqtt_password, "Loaded config mqtt_password mismatch");
+    TEST_ASSERT_FALSE_MESSAGE(original.mqtt_switch_topic != saved.mqtt_switch_topic, "Loaded config mqtt_switch_topic mismatch");
+    TEST_ASSERT_FALSE_MESSAGE(original.machine_id != saved.machine_id, "Loaded config machine_id mismatch");
 
     // Restore original
     TEST_ASSERT_TRUE_MESSAGE(original.SaveToEEPROM(), "Loaded config save failed");

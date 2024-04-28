@@ -333,7 +333,7 @@ namespace fablabbg
       if (QueryT query{args...}; publishWithReply(query))
       {
         // Deserialize the JSON document
-        auto payload = last_reply.c_str();
+        const auto payload = last_reply.c_str();
         if (DeserializationError error = deserializeJson(doc, payload))
         {
           ESP_LOGE(TAG, "Failed to parse json: %s (%s)", payload, error.c_str());

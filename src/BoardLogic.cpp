@@ -46,7 +46,7 @@ namespace fablabbg
     if (server.connect())
     {
       // Check the configured machine data from the server
-      auto result = server.checkMachine();
+      const auto result = server.checkMachine();
       if (result->request_ok)
       {
         if (result->is_valid)
@@ -111,8 +111,8 @@ namespace fablabbg
   /// @brief Removes the current machine user and changes the status to LoggedOut
   void BoardLogic::logout()
   {
-    auto result = server.finishUse(machine.getActiveUser().card_uid,
-                                   machine.getUsageDuration());
+    const auto result = server.finishUse(machine.getActiveUser().card_uid,
+                                         machine.getUsageDuration());
 
     ESP_LOGI(TAG, "Logout, result finishUse: %d", result->request_ok);
 
@@ -137,7 +137,7 @@ namespace fablabbg
       getLcd().setRow(1, ss.str());
       getLcd().update(bi);
 
-      auto start = std::chrono::system_clock::now();
+      const auto start = std::chrono::system_clock::now();
       if (!getRfid().cardStillThere(card, delay_per_step))
       {
         getLcd().setRow(1, "* ANNULLATO *");
@@ -171,7 +171,7 @@ namespace fablabbg
     user.card_uid = uid;
     user.user_level = FabUser::UserLevel::Unknown;
 
-    auto response = auth.tryLogin(uid, server);
+    const auto response = auth.tryLogin(uid, server);
     if (!response.has_value() || response.value().user_level == FabUser::UserLevel::Unknown)
     {
       ESP_LOGI(TAG, "Failed login for %s", card::uid_str(uid));
@@ -207,7 +207,7 @@ namespace fablabbg
 
         if (longTap(user.card_uid, "Registra"))
         {
-          auto maint_resp = server.registerMaintenance(user.card_uid);
+          const auto maint_resp = server.registerMaintenance(user.card_uid);
           if (!maint_resp->request_ok)
           {
             beepFail();
@@ -233,7 +233,7 @@ namespace fablabbg
 
     if (machine.login(user))
     {
-      auto result = server.startUse(machine.getActiveUser().card_uid);
+      const auto result = server.startUse(machine.getActiveUser().card_uid);
       ESP_LOGI(TAG, "Login, result startUse: %d", result->request_ok);
       changeStatus(Status::LoggedIn);
       beepOk();
@@ -494,7 +494,7 @@ namespace fablabbg
 
     server.configure(config.value());
 
-    MachineID mid{(uint16_t)atoi(config.value().machine_id)};
+    MachineID mid = config.value().getMachineID();
     MachineConfig machine_conf(mid,
                                conf::default_config::machine_type,
                                std::string{conf::default_config::machine_name},
@@ -568,7 +568,7 @@ namespace fablabbg
     // check if there is a card
     if (rfid.isNewCardPresent())
     {
-      auto result = rfid.readCardSerial();
+      const auto result = rfid.readCardSerial();
       if (result)
       {
         onNewCard(result.value());

@@ -58,7 +58,7 @@ namespace fablabbg
       sstream << ", UID: " << std::hex << card_uid;
       sstream << ", Name:" << holder_name;
 
-      auto i_level = static_cast<typename std::underlying_type<UserLevel>::type>(user_level);
+      const auto i_level = static_cast<typename std::underlying_type<UserLevel>::type>(user_level);
       sstream << ", level:" << +i_level << ")";
 
       return sstream.str();

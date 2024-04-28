@@ -20,7 +20,12 @@ namespace fablabbg
 
   struct MachineID
   {
-    uint16_t id{0};
+    uint16_t id;
+
+    constexpr MachineID() : id(0) {}
+    constexpr MachineID(uint16_t id) : id(id) {}
+    // Add conversion operator to uint16_t to use in print, streams...
+    constexpr operator uint16_t() const { return id; }
   };
   struct MachineConfig
   {
