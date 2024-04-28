@@ -93,9 +93,12 @@ namespace fablabbg
     auto cache = doc.createNestedArray("cachedRfid");
     for (const auto &entry : cachedRfid)
     {
-      auto obj = cache.createNestedObject();
-      obj["uid"] = entry.uid;
-      obj["level"] = static_cast<uint8_t>(entry.level);
+      if (entry.uid != 0) // Skip empty entries
+      {
+        auto obj = cache.createNestedObject();
+        obj["uid"] = entry.uid;
+        obj["level"] = static_cast<uint8_t>(entry.level);
+      }
     }
     return doc;
   }
