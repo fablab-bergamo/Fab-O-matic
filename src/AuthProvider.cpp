@@ -49,8 +49,8 @@ namespace fablabbg
 
   /// @brief Verifies the card ID against the server (if available) or the whitelist
   /// @param uid card ID
-  /// @param out a FabUser with an authenticated flag==true if server or whitelist confirmed the ID
-  /// @return false if the user was not found on server or whitelist
+  /// @param server the server to check the card against
+  /// @return a FabUser with an authenticated flag==true if valid, otherwise nullopt or FabUser with authenticated==False.
   auto AuthProvider::tryLogin(card::uid_t uid, FabBackend &server) const -> std::optional<FabUser>
   {
     FabUser user;
@@ -67,10 +67,11 @@ namespace fablabbg
       const auto response = server.checkCard(uid);
       if (response->request_ok)
       {
+        user.card_uid = uid;
+
         if (response->getResult() == UserResult::Authorized)
         {
           user.authenticated = true;
-          user.card_uid = uid;
           user.holder_name = response->holder_name;
           user.user_level = response->user_level;
           // Cache the positive result
@@ -90,8 +91,10 @@ namespace fablabbg
 
       user.authenticated = false;
 
-      if (response->request_ok)
-        return std::nullopt;
+      if (response->request_ok) // Server replied but user is not valid
+      {
+        return user;
+      }
     }
     // Check whitelist if offline
     if (auto result = uidInWhitelist(uid); result.has_value())
@@ -133,11 +136,11 @@ namespace fablabbg
     }
 
     const auto elem = std::find_if(whitelist.begin(), whitelist.end(),
-                             [candidate_uid](const auto &input)
-                             {
-                               const auto [w_uid, w_level, w_name] = input;
-                               return w_uid == candidate_uid;
-                             });
+                                   [candidate_uid](const auto &input)
+                                   {
+                                     const auto [w_uid, w_level, w_name] = input;
+                                     return w_uid == candidate_uid;
+                                   });
 
     if (elem == end(whitelist))
     {
@@ -159,10 +162,10 @@ namespace fablabbg
     }
 
     const auto elem = std::find_if(cache.begin(), cache.end(),
-                             [candidate_uid](const auto &input)
-                             {
-                               return input.uid == candidate_uid;
-                             });
+                                   [candidate_uid](const auto &input)
+                                   {
+                                     return input.uid == candidate_uid;
+                                   });
 
     if (elem == end(cache))
     {
