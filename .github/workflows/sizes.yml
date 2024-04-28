@@ -4,8 +4,12 @@ on:
   workflow_dispatch:
   pull_request:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+    
 jobs:
-  build:
+  size_report:
     runs-on: ubuntu-latest
     continue-on-error: true
     strategy:
@@ -79,7 +83,7 @@ jobs:
                 repo: context.repo.repo
               }).then(comments => {
                 comments.data.forEach(comment => {
-                  if (comment.user.login === 'github-actions[bot]') {
+                  if (comment.user.login === 'github-actions[bot]' && !comment.body.includes('${{ github.event.pull_request.head.sha }}')) {
                     github.rest.issues.deleteComment({
                       comment_id: comment.id,
                       owner: context.repo.owner,
