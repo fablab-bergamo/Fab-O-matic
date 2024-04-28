@@ -1,6 +1,9 @@
 #include "mock/MockMQTTBroker.hpp"
 #include "Logging.hpp"
 #include "conf.hpp"
+#include "secrets.hpp"
+
+#include <ArduinoJson.h>
 
 static const char *const TAG2 = "MockMQTTBroker";
 namespace fablabbg
@@ -16,8 +19,7 @@ namespace fablabbg
     if (!is_running)
     {
       is_running = init(conf::mqtt::PORT_NUMBER, true);
-
-      ESP_LOGI(TAG2, "MQTT BROKER: started with result %d", is_running.load());
+      ESP_LOGI(TAG2, "MQTT BROKER: started with result %d", is_running);
     }
   }
 
@@ -33,6 +35,7 @@ namespace fablabbg
     break;
     case Public_sMQTTEventType:
     {
+      std::lock_guard<std::mutex> lock(mutex);
       auto *e = static_cast<sMQTTPublicClientEvent *>(event);
       topic = e->Topic();
       payload = e->Payload();
@@ -108,9 +111,38 @@ namespace fablabbg
 
     if (query.find("checkuser") != std::string::npos)
     {
-      const auto uid = query.substr(query.find("uid") + 6 + 4, 4);
-      const auto response = "{\"request_ok\":true,\"is_valid\":true,\"level\":2,\"name\":\"USER" + uid + "\",\"is_valid\":true}";
-      return response;
+      JsonDocument doc;
+      if (deserializeJson(doc, query) == DeserializationError::Ok && doc.containsKey("uid"))
+      {
+        const auto uid_str = doc["uid"].as<std::string>();
+        // Check if the uid is present in the secrets::cards::whitelist
+        const auto elem = std::find_if(secrets::cards::whitelist.begin(), secrets::cards::whitelist.end(),
+                                       [&uid_str](const auto &elem)
+                                       {
+                                         const auto &[id, level, name] = elem;
+                                         return card::uid_str(id) == uid_str;
+                                       });
+        if (elem != secrets::cards::whitelist.end())
+        {
+          std::stringstream ss;
+          const auto &[id, level, name] = *elem;
+          ss << "{\"request_ok\":true,\"is_valid\":" << (level != FabUser::UserLevel::Unknown ? "true" : "false")
+             << ",\"level\":" << +static_cast<uint8_t>(level)
+             << ",\"name\":\"" << name << "\"}";
+          return ss.str();
+        }
+
+        // Still return a valid user
+        std::stringstream ss;
+        ss << "{\"request_ok\":true,\"is_valid\":true,\"level\":" << +2
+           << ",\"name\":\"User" << uid_str << "\"}";
+        return ss.str();
+      }
+      else
+      {
+        ESP_LOGE(TAG2, "Failed to parse checkuser query");
+        return "{\"request_ok\":false}";
+      }
     }
 
     if (query.find("alive") != std::string::npos)
@@ -128,34 +160,21 @@ namespace fablabbg
 
   auto MockMQTTBroker::configureReplies(std::function<const std::string(const std::string &, const std::string &)> callback) -> void
   {
-    while (true)
-    {
-      if (lock())
-      {
-        this->callback = callback;
-        unlock();
-        break;
-      }
-    }
+    std::lock_guard<std::mutex> lock(mutex);
+    this->callback = callback;
   }
 
   auto MockMQTTBroker::processQueries() -> size_t
   {
+    std::lock_guard<std::mutex> lock(mutex);
+
     if (!queries.empty())
     {
+      std::string response{""};
       const auto [topic, query, reply_topic] = queries.front();
       queries.pop();
-      std::string response{""};
-      while (true)
-      {
-        if (lock())
-        {
-          response = callback(topic, query);
-          unlock();
-          break;
-        }
-        delay(1);
-      }
+      response = callback(topic, query);
+
       if (!response.empty())
       {
         ESP_LOGI(TAG2, "MQTT BROKER: Sending %s -> %s", reply_topic.c_str(), response.c_str());
