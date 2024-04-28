@@ -209,9 +209,10 @@ namespace fablabbg
       return;
     }
 
-    // Skip factory reset for this specific board because Factory Reset is soldered under the MCU with reset pin.
+    // Skip factory reset for this specific board because Factory Reset is soldered under the MCU with the reset pin.
     if (const auto serial = card::esp_serial(); serial == "dcda0c419794")
     {
+      pinMode(pins.buttons.factory_defaults_pin, INPUT); // Disable pull-up/pull-downs
       return;
     }
 
