@@ -12,7 +12,7 @@
 
 namespace fablabbg
 {
-  // Define the static variable
+  // Define the static variables
   std::string SavedConfig::json_buffer;
   std::mutex SavedConfig::buffer_mutex;
 
