@@ -79,7 +79,7 @@ jobs:
                 repo: context.repo.repo
               }).then(comments => {
                 comments.data.forEach(comment => {
-                  if (comment.user.login === 'github-actions[bot]') {
+                  if (comment.user.login === 'github-actions[bot]' && !comment.body.includes('${{ github.event.pull_request.head.sha }}') {
                     github.rest.issues.deleteComment({
                       comment_id: comment.id,
                       owner: context.repo.owner,
