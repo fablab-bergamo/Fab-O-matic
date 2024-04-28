@@ -56,7 +56,7 @@ namespace fablabbg::tests
     // Set the same IP Adress as MQTT server
     auto config = SavedConfig::LoadFromEEPROM();
     TEST_ASSERT_TRUE_MESSAGE(config.has_value(), "Config load failed");
-    strncpy(config.value().mqtt_server, "127.0.0.1\0", sizeof(config.value().mqtt_server));
+    config.value().mqtt_server.assign("127.0.0.1");
     TEST_ASSERT_TRUE_MESSAGE(config.value().SaveToEEPROM(), "Config save failed");
     server.configure(config.value());
 
@@ -88,15 +88,14 @@ namespace fablabbg::tests
     const int NB_TESTS = 10;
     const int NB_MACHINES = 5;
     auto &server = logic.getServer();
-    for (unsigned int mid = 100; mid <= 100 + NB_MACHINES; mid++)
+    for (uint16_t mid = 100; mid <= 100 + NB_MACHINES; mid++)
     {
       // Change MachineID on the fly
       auto saved_config = SavedConfig::DefaultConfig();
-      if (mid < 99999)
-      {
-        snprintf(saved_config.machine_id, sizeof(saved_config.machine_id), "%u", mid);
-        strncpy(saved_config.mqtt_server, "127.0.0.1\0", sizeof(saved_config.mqtt_server));
-      }
+
+      saved_config.setMachineID(mid);
+      saved_config.mqtt_server.assign("127.0.0.1");
+
       ESP_LOGI(TAG3, "Testing machine %d", mid);
       server.configure(saved_config);
 

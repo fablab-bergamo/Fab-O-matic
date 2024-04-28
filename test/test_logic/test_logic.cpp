@@ -280,7 +280,7 @@ void setUp(void)
   if (auto server_config = fablabbg::SavedConfig::LoadFromEEPROM(); server_config.has_value())
   {
     auto conf = server_config.value();
-    strncpy(conf.mqtt_server, "INVALID_SERVER\0", sizeof(conf.mqtt_server));
+    conf.mqtt_server.assign("INVALID_SERVER");
     logic.getServer().configure(conf);
   }
 };
