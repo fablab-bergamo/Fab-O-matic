@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <optional>
 #include <string>
+#include <mutex>
 
 #include <EEPROM.h>
 #include <ArduinoJson.h>
@@ -18,7 +19,9 @@ namespace fablabbg
   {
   private:
     static constexpr auto JSON_DOC_SIZE = 1024;
+    static_assert(JSON_DOC_SIZE > (conf::common::STR_MAX_LENGTH * 7 + sizeof(bool) + sizeof(size_t) + sizeof(CachedList)) * 2, "JSON_DOC_SIZE must be larger than SavedConfig size in JSON");
     static std::string json_buffer;
+    static std::mutex buffer_mutex;
 
     /// @brief Serialize the current configuration into a JsonDocument
     /// @return JsonDocument
