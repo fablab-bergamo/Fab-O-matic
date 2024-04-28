@@ -15,7 +15,9 @@
 #include "SavedConfig.hpp"
 #include "Tasks.hpp"
 #include "globals.hpp"
+#if (MQTT_SIMULATION)
 #include "mock/MockMQTTBroker.hpp"
+#endif
 #include "pins.hpp"
 
 // For ArduinoOTA
