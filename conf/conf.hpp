@@ -90,8 +90,8 @@ namespace fablabbg
 
   namespace conf::common
   {
-    static constexpr auto STR_MAX_LENGTH{40U}; /* Maximum length of saved string in EEPROM. If you change it, increase MAGIC_NUMBER */
-    static constexpr auto INT_MAX_LENGTH{5U};  /* Maximum length of saved integer in EEPROM. If you change it, increase MAGIC_NUMBER */
+    static constexpr auto STR_MAX_LENGTH{40U}; /* Maximum length of saved string in WiFiManager portal. */
+    static constexpr auto INT_MAX_LENGTH{5U};  /* Maximum length of saved integer in WiFiManager portal. */
   }
 
   // Checks on configured values

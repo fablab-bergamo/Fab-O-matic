@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <iostream>
 #include <string>
+#include <atomic>
 
 #include "ArduinoOTA.h"
 #include <WiFiManager.h>
