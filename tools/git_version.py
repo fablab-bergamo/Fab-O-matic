@@ -14,4 +14,4 @@ def get_firmware_specifier_build_flag():
     return build_flag
 
 
-env.Append(BUILD_FLAGS=[get_firmware_specifier_build_flag()])
+env.Append(BUILD_SRC_FLAGS=[get_firmware_specifier_build_flag()])
