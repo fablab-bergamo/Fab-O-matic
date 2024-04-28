@@ -1,5 +1,6 @@
 #include <optional>
 #include <algorithm>
+#include <mutex>
 
 #include <ArduinoJson.h>
 #include <EEPROM.h>
@@ -13,6 +14,7 @@ namespace fablabbg
 {
   // Define the static variable
   std::string SavedConfig::json_buffer;
+  std::mutex SavedConfig::buffer_mutex;
 
   auto SavedConfig::setMachineID(MachineID id) -> void
   {
@@ -49,9 +51,11 @@ namespace fablabbg
 
   auto SavedConfig::LoadFromEEPROM() -> std::optional<SavedConfig>
   {
+    std::lock_guard<std::mutex> lock(SavedConfig::buffer_mutex);
     SavedConfig::json_buffer.resize(JSON_DOC_SIZE);
+    std::fill(SavedConfig::json_buffer.begin(), SavedConfig::json_buffer.begin() + SavedConfig::json_buffer.size(), '\0');
 
-    if (!EEPROM.begin(SavedConfig::json_buffer.size()))
+    if (!EEPROM.begin(JSON_DOC_SIZE))
     {
       ESP_LOGE(TAG, "SavedConfig::LoadFromEEPROM() : EEPROM.begin failed");
       return std::nullopt;
@@ -59,7 +63,12 @@ namespace fablabbg
 
     for (auto i = 0; i < SavedConfig::json_buffer.size(); i++)
     {
-      SavedConfig::json_buffer[i] = EEPROM.readChar(i);
+      char c = EEPROM.readChar(i);
+      SavedConfig::json_buffer.at(i) = c;
+      if (c == '\0')
+      {
+        break;
+      }
     }
 
     auto reply = fromJsonDocument(SavedConfig::json_buffer);
@@ -149,6 +158,7 @@ namespace fablabbg
 
   auto SavedConfig::SaveToEEPROM() const -> bool
   {
+    std::lock_guard<std::mutex> lock(SavedConfig::buffer_mutex);
     json_buffer.resize(JSON_DOC_SIZE);
     std::fill(SavedConfig::json_buffer.begin(), SavedConfig::json_buffer.begin() + SavedConfig::json_buffer.size(), '\0');
 
@@ -161,9 +171,16 @@ namespace fablabbg
     const auto &doc = toJsonDocument();
     serializeJson(doc, SavedConfig::json_buffer);
 
-    for (auto i = 0; i < SavedConfig::json_buffer.size(); i++)
+    json_buffer.resize(JSON_DOC_SIZE); // Ensure the buffer is the correct size as serialize may have resized it
+
+    for (auto i = 0; i < JSON_DOC_SIZE; i++)
     {
-      EEPROM.writeChar(i, SavedConfig::json_buffer[i]);
+      char c = SavedConfig::json_buffer[i];
+      EEPROM.writeChar(i, c);
+      if (c == '\0')
+      {
+        break;
+      }
     }
 
     auto result = EEPROM.commit();
