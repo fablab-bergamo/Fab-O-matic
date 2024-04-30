@@ -24,18 +24,18 @@ namespace fablabbg::Board
 {
   // Global variables
 #if (MQTT_SIMULATION)
-  DRAM_ATTR MockMQTTBroker broker;
+  MockMQTTBroker broker;
 #endif
 
 #if (RFID_SIMULATION)
-  DRAM_ATTR RFIDWrapper<MockMrfc522> rfid;
+  RFIDWrapper<MockMrfc522> rfid;
 #else
-  DRAM_ATTR RFIDWrapper<Mrfc522Driver> rfid{};
+  RFIDWrapper<Mrfc522Driver> rfid{};
 #endif
 
-  DRAM_ATTR LCDWrapper<LiquidCrystal> lcd{pins.lcd};
-  DRAM_ATTR BoardLogic logic;
-  DRAM_ATTR Tasks::Scheduler scheduler;
+  LCDWrapper<LiquidCrystal> lcd{pins.lcd};
+  BoardLogic logic;
+  Tasks::Scheduler scheduler;
 } // namespace fablabbg::Board
 
 #endif // GLOBALS_HPP_

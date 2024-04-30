@@ -58,7 +58,7 @@ jobs:
         run: cp .pio/build/${{ matrix.variant }}/firmware.map ../firmware.map.previous
       # Now compares both MAP files with esp_idf_size
       - name: Compare MAP files
-        run: python -m esp_idf_size --format=text --files --diff=../firmware.map.previous ../firmware.map.latest -o size_report.txt
+        run: python -m esp_idf_size --format=text --diff=../firmware.map.previous ../firmware.map.latest -o size_report.txt
       # Upload the size report as an artifact
       - name: Upload size report
         uses: actions/upload-artifact@v4
