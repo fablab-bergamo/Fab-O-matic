@@ -56,4 +56,5 @@ def firm_metrics(source, target, env):
         shutil.copy(str(firmware_file), str(prev_firmware_file))
 
 
+
 env.AddPostAction("$BUILD_DIR/${PROGNAME}.bin", firm_metrics)
