@@ -1,10 +1,6 @@
 #ifndef _LANGUAGE_IT_IT_HPP
 #define _LANGUAGE_IT_IT_HPP
 
-#include <string>
-
-using namespace std::string_view_literals;
-
 namespace fablabbg::strings::it_IT
 {
   static constexpr auto S_BUSY = "Occupata";
