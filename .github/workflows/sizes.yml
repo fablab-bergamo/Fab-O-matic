@@ -16,7 +16,7 @@ jobs:
       matrix:
         variant:
           - hardware-rev0
-          - esp32dev
+          - esp32-devboard
     steps:
       - uses: actions/checkout@v4
         with:

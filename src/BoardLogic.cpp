@@ -17,6 +17,7 @@
 #include "conf.hpp"
 #include "pins.hpp"
 #include "secrets.hpp"
+#include "language/lang.hpp"
 
 #ifndef GIT_VERSION
 #define GIT_VERSION "??????"
@@ -140,7 +141,7 @@ namespace fablabbg
       const auto start = std::chrono::system_clock::now();
       if (!getRfid().cardStillThere(card, delay_per_step))
       {
-        getLcd().setRow(1, "* ANNULLATO *");
+        getLcd().setRow(1, strings::S_CANCELLED);
         getLcd().update(bi);
         return false;
       }
@@ -153,7 +154,7 @@ namespace fablabbg
       }
     }
 
-    getLcd().setRow(1, "* CONFERMATO *");
+    getLcd().setRow(1, strings::S_CONFIRMED);
     getLcd().update(bi);
     return true;
   }
@@ -205,7 +206,7 @@ namespace fablabbg
         beepOk();
         changeStatus(Status::MaintenanceQuery);
 
-        if (longTap(user.card_uid, "Registra"))
+        if (longTap(user.card_uid, strings::S_LONGTAP_PROMPT))
         {
           const auto maint_resp = server.registerMaintenance(user.card_uid);
           if (!maint_resp->request_ok)
@@ -317,118 +318,118 @@ namespace fablabbg
       lcd.setRow(0, machine_name);
       if (!machine.isAllowed())
       {
-        lcd.setRow(1, "! BLOCCATA !");
+        lcd.setRow(1, strings::S_MACHINE_BLOCKED);
       }
       else if (machine.isMaintenanceNeeded())
       {
-        lcd.setRow(0, "Manutenzione");
+        lcd.setRow(0, strings::S_MACHINE_MAINTENANCE);
         lcd.setRow(1, machine.getMaintenanceInfo());
       }
       else
       {
-        lcd.setRow(1, "Avvicina carta");
+        lcd.setRow(1, strings::S_CARD_PROMPT);
       }
       break;
     case Status::AlreadyInUse:
-      lcd.setRow(0, "In uso da");
+      lcd.setRow(0, strings::S_USED_BY);
       lcd.setRow(1, user_name);
       break;
     case Status::LoggedIn:
-      lcd.setRow(0, "Inizio uso");
+      lcd.setRow(0, strings::S_START_USE);
       lcd.setRow(1, user_name);
       break;
     case Status::LoginDenied:
-      lcd.setRow(0, "Carta ignota");
+      lcd.setRow(0, strings::S_LOGIN_DENIED);
       lcd.setRow(1, uid_str);
       break;
     case Status::LoggedOut:
-      lcd.setRow(0, "Arrivederci");
+      lcd.setRow(0, strings::S_GOODBYE);
       lcd.setRow(1, user_name);
       break;
     case Status::Connecting:
-      lcd.setRow(0, "Connessione");
-      lcd.setRow(1, "al server MQTT");
+      lcd.setRow(0, strings::S_CONNECTING_MQTT_1);
+      lcd.setRow(1, strings::S_CONNECTING_MQTT_2);
       break;
     case Status::Connected:
-      lcd.setRow(0, "Connesso");
+      lcd.setRow(0, strings::S_CONNECTED);
       lcd.setRow(1, "");
       break;
     case Status::MachineInUse:
-      buffer << "Ciao " << user_name;
+      buffer << strings::S_HELLO << user_name;
       lcd.setRow(0, buffer.str());
       lcd.setRow(1, lcd.convertSecondsToHHMMSS(machine.getUsageDuration()));
       break;
     case Status::Busy:
-      lcd.setRow(0, "Elaborazione...");
+      lcd.setRow(0, strings::S_WORKING);
       lcd.setRow(1, "");
       break;
     case Status::Offline:
-      lcd.setRow(0, "OFFLINE MODE");
+      lcd.setRow(0, strings::S_OFFLINE_MODE);
       lcd.setRow(1, "");
       break;
     case Status::NotAllowed:
-      lcd.setRow(0, "Blocco");
-      lcd.setRow(1, "amministrativo");
+      lcd.setRow(0, strings::S_BLOCKED_ADMIN_1);
+      lcd.setRow(1, strings::S_BLOCKED_ADMIN_2);
       break;
     case Status::Verifying:
-      lcd.setRow(0, "VERIFICA IN");
-      lcd.setRow(1, "CORSO");
+      lcd.setRow(0, strings::S_VERIFYING_1);
+      lcd.setRow(1, strings::S_VERIFYING_2);
       break;
     case Status::MaintenanceNeeded:
-      lcd.setRow(0, "Blocco per");
-      lcd.setRow(1, "manutenzione");
+      lcd.setRow(0, strings::S_BLOCKED_MAINTENANCE_1);
+      lcd.setRow(1, strings::S_BLOCKED_MAINTENANCE_1);
       break;
     case Status::MaintenanceQuery:
-      lcd.setRow(0, "Manutenzione?");
-      lcd.setRow(1, "Registra");
+      lcd.setRow(0, strings::S_PROMPT_MAINTENANCE_1);
+      lcd.setRow(1, strings::S_PROMPT_MAINTENANCE_2);
       break;
     case Status::MaintenanceDone:
-      lcd.setRow(0, "Manutenzione");
-      lcd.setRow(1, "registrata");
+      lcd.setRow(0, strings::S_MAINTENANCE_REGISTERED_1);
+      lcd.setRow(1, strings::S_MAINTENANCE_REGISTERED_2);
       break;
     case Status::Error:
-      lcd.setRow(0, "Errore");
+      lcd.setRow(0, strings::S_GENERIC_ERROR);
       lcd.setRow(1, "V" GIT_VERSION);
       break;
     case Status::ErrorHardware:
-      lcd.setRow(0, "Errore HW");
+      lcd.setRow(0, strings::S_HW_ERROR);
       lcd.setRow(1, "V" GIT_VERSION);
       break;
     case Status::PortalFailed:
-      lcd.setRow(0, "Errore portale");
+      lcd.setRow(0, strings::S_PORTAL_ERROR);
       lcd.setRow(1, WiFi.softAPIP().toString().c_str());
       break;
     case Status::PortalSuccess:
-      lcd.setRow(0, "AP config OK");
+      lcd.setRow(0, strings::S_PORTAL_SUCCESS);
       lcd.setRow(1, "V" GIT_VERSION);
       break;
     case Status::PortalStarting:
-      lcd.setRow(0, "Apri portale");
+      lcd.setRow(0, strings::S_OPEN_PORTAL);
       lcd.setRow(1, WiFi.softAPIP().toString().c_str());
       break;
     case Status::Booting:
-      lcd.setRow(0, "Avvio...");
+      lcd.setRow(0, strings::S_BOOTING);
       lcd.setRow(1, "V" GIT_VERSION);
       break;
     case Status::ShuttingDown:
       lcd.setRow(0, machine_name);
-      lcd.setRow(1, "In spegnimento!");
+      lcd.setRow(1, strings::S_SHUTTING_DOWN);
       break;
     case Status::OTAStarting:
-      lcd.setRow(0, "Aggiornamento");
-      lcd.setRow(1, "OTA...");
+      lcd.setRow(0, strings::UPDATE_OTA_1);
+      lcd.setRow(1, strings::UPDATE_OTA_2);
       break;
     case Status::FactoryDefaults:
-      lcd.setRow(0, "Param. reset");
-      lcd.setRow(1, "Attesa reboot");
+      lcd.setRow(0, strings::FACTORY_RESET_DONE_1);
+      lcd.setRow(1, strings::FACTORY_RESET_DONE_2);
       break;
     case Status::OTAError:
-      lcd.setRow(0, "Errore OTA");
+      lcd.setRow(0, strings::S_OTA_ERROR);
       lcd.setRow(1, "");
       break;
     default:
-      lcd.setRow(0, "Unhandled status");
-      buffer << "Value " << static_cast<int>(status);
+      lcd.setRow(0, strings::S_STATUS_ERROR_1);
+      buffer << strings::S_STATUS_ERROR_2 << static_cast<int>(status);
       lcd.setRow(1, buffer.str());
       break;
     }

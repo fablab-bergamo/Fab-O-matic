@@ -21,7 +21,7 @@ namespace fablabbg
     void clear() override;
     void showConnection(bool show) override;
     void showPower(bool show) override;
-    void setRow(uint8_t row, const std::string &text) override;
+    void setRow(uint8_t row, const std::string_view &text) override;
 
     void update(const BoardInfo &boardinfo, bool forced = false) override;
 
