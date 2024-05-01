@@ -50,6 +50,8 @@ jobs:
       - name: Upload firmware image for ${{ matrix.variant }}
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.variant }}.bin
-          path: .pio/build/${{ matrix.variant }}/firmware.bin
+          name: Firmware files for ${{ matrix.variant }}
+          path: |
+                .pio/build/${{ matrix.variant }}/firmware.bin
+                .pio/build/${{ matrix.variant }}/firmware_metrics.txt
           retention-days: 90
