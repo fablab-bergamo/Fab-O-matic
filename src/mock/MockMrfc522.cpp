@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-namespace fablabbg
+namespace fabomatic
 {
   auto MockMrfc522::getDriverUid() const -> MockMrfc522::UidDriver
   {
@@ -67,4 +67,4 @@ namespace fablabbg
     }
     return uid;
   }
-} // namespace fablabbg
+} // namespace fabomatic

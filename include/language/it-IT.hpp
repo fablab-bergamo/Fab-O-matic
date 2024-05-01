@@ -1,7 +1,7 @@
 #ifndef _LANGUAGE_IT_IT_HPP
 #define _LANGUAGE_IT_IT_HPP
 
-namespace fablabbg::strings::it_IT
+namespace fabomatic::strings::it_IT
 {
   static constexpr auto S_BUSY = "Occupata";
   static constexpr auto S_CANCELLED = "* ANNULLATO *";

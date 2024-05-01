@@ -13,7 +13,7 @@
 #include "conf.hpp"
 #include "WhiteList.hpp"
 
-namespace fablabbg
+namespace fabomatic
 {
   class SavedConfig
   {
@@ -96,5 +96,5 @@ namespace fablabbg
     static auto IncrementBootCount() -> size_t;
   };
 
-} // namespace fablabbg
+} // namespace fabomatic
 #endif // SAVEDCONFIG_HPP_

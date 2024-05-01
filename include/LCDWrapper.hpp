@@ -8,7 +8,7 @@
 #include <array>
 #include <chrono>
 
-namespace fablabbg
+namespace fabomatic
 {
   template <typename LcdDriver>
   class LCDWrapper final : public BaseLCDWrapper
@@ -57,7 +57,7 @@ namespace fablabbg
     [[nodiscard]] auto needsUpdate(const BoardInfo &bi) const -> bool;
     void createChar(uint8_t char_idx, const std::array<uint8_t, HEIGHT_PX> &values);
   };
-} // namespace fablabbg
+} // namespace fabomatic
 
 #include "LCDWrapper.tpp"
 

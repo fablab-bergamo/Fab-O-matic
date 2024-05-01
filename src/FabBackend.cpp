@@ -11,7 +11,7 @@
 #include <string>
 #include <string_view>
 
-namespace fablabbg
+namespace fabomatic
 {
   void FabBackend::configure(const SavedConfig &config)
   {
@@ -433,4 +433,4 @@ namespace fablabbg
   {
     this->channel = channel;
   }
-} // namespace fablabbg
+} // namespace fabomatic

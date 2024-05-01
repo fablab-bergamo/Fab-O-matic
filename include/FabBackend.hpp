@@ -15,7 +15,7 @@
 #include "SavedConfig.hpp"
 #include "conf.hpp"
 
-namespace fablabbg
+namespace fabomatic
 {
   class FabBackend
   {
@@ -82,5 +82,5 @@ namespace fablabbg
     FabBackend(FabBackend &&) = delete;                 // move constructor
     FabBackend &operator=(FabBackend &&) = delete;      // move assignment
   };
-} // namespace fablabbg
+} // namespace fabomatic
 #endif // FABBACKEND_HPP_

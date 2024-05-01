@@ -10,7 +10,7 @@
 #include "conf.hpp"
 #include "secrets.hpp"
 
-namespace fablabbg
+namespace fabomatic
 {
   // Define the static variables
   std::string SavedConfig::json_buffer;
@@ -213,4 +213,4 @@ namespace fablabbg
     }
     return config.bootCount;
   }
-} // namespace fablabbg
+} // namespace fabomatic

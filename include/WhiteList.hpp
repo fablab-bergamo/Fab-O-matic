@@ -9,7 +9,7 @@
 #include "FabUser.hpp"
 #include "conf.hpp"
 
-namespace fablabbg
+namespace fabomatic
 {
   namespace conf::cards
   {
@@ -47,6 +47,6 @@ namespace fablabbg
 
     return sorted1 == sorted2;
   }
-} // namespace fablabbg
+} // namespace fabomatic
 
 #endif // WHITELIST_HPP

@@ -20,7 +20,7 @@
 #include "mock/MockMQTTBroker.hpp"
 #endif
 
-namespace fablabbg::Board
+namespace fabomatic::Board
 {
   // Global variables
 #if (MQTT_SIMULATION)
@@ -36,6 +36,6 @@ namespace fablabbg::Board
   LCDWrapper<LiquidCrystal> lcd{pins.lcd};
   BoardLogic logic;
   Tasks::Scheduler scheduler;
-} // namespace fablabbg::Board
+} // namespace fabomatic::Board
 
 #endif // GLOBALS_HPP_

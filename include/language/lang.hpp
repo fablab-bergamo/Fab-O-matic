@@ -4,18 +4,18 @@
 // Include Italian language
 #if FABLAB_LANG_IT_IT
 #include "language/it-IT.hpp"
-namespace fablabbg::strings
+namespace fabomatic::strings
 {
-  using namespace fablabbg::strings::it_IT;
+  using namespace fabomatic::strings::it_IT;
 }
 #endif
 
 // Include English language
 #ifdef FABLAB_LANG_EN_US
 #include "language/en-US.hpp"
-namespace fablabbg::strings
+namespace fabomatic::strings
 {
-  using namespace fablabbg::strings::en_US;
+  using namespace fabomatic::strings::en_US;
 }
 #endif
 

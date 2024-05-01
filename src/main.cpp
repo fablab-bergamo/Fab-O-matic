@@ -19,12 +19,12 @@
 #include "pins.hpp"
 
 // For ArduinoOTA
-const char *const ssid = fablabbg::secrets::credentials::ssid.data();
-const char *const password = fablabbg::secrets::credentials::password.data();
+const char *const ssid = fabomatic::secrets::credentials::ssid.data();
+const char *const password = fabomatic::secrets::credentials::password.data();
 
 using namespace std::chrono_literals;
 
-namespace fablabbg
+namespace fabomatic
 {
   using Scheduler = Tasks::Scheduler;
   using Task = Tasks::Task;
@@ -529,30 +529,30 @@ namespace fablabbg
     std::cout << std::endl;
   }
 
-} // namespace fablabbg
+} // namespace fabomatic
 
 #ifndef PIO_UNIT_TESTING
 void setup()
 {
-  using Status = fablabbg::BoardLogic::Status;
-  auto &logic = fablabbg::Board::logic;
-  auto &scheduler = fablabbg::Board::scheduler;
-  auto &rfid = fablabbg::Board::rfid;
-  auto &lcd = fablabbg::Board::lcd;
+  using Status = fabomatic::BoardLogic::Status;
+  auto &logic = fabomatic::Board::logic;
+  auto &scheduler = fabomatic::Board::scheduler;
+  auto &rfid = fabomatic::Board::rfid;
+  auto &lcd = fabomatic::Board::lcd;
 
-  Serial.begin(fablabbg::conf::debug::SERIAL_SPEED_BDS); // Initialize serial communications with the PC for debugging.
+  Serial.begin(fabomatic::conf::debug::SERIAL_SPEED_BDS); // Initialize serial communications with the PC for debugging.
   delay(3000);
 
-  if constexpr (fablabbg::conf::debug::ENABLE_LOGS)
+  if constexpr (fabomatic::conf::debug::ENABLE_LOGS)
   {
     Serial.setDebugOutput(true);
     ESP_LOGD(TAG, "Starting setup!");
-    fablabbg::printCompileSettings();
+    fabomatic::printCompileSettings();
   }
 
-  if constexpr (fablabbg::conf::debug::LOAD_EEPROM_DEFAULTS)
+  if constexpr (fabomatic::conf::debug::LOAD_EEPROM_DEFAULTS)
   {
-    const auto defaults = fablabbg::SavedConfig::DefaultConfig();
+    const auto defaults = fabomatic::SavedConfig::DefaultConfig();
     ESP_LOGW(TAG, "Forcing EEPROM defaults : %s", defaults.toString().c_str());
     defaults.SaveToEEPROM();
   }
@@ -563,7 +563,7 @@ void setup()
   auto hw_init = logic.configure(rfid, lcd);
   hw_init &= logic.initBoard();
 
-  const auto count = fablabbg::SavedConfig::IncrementBootCount();
+  const auto count = fabomatic::SavedConfig::IncrementBootCount();
   ESP_LOGI(TAG, "Boot count: %d, reset reason: %d", count, esp_reset_reason());
 
   logic.changeStatus(Status::Booting);
@@ -580,14 +580,14 @@ void setup()
     logic.beepOk();
   }
 
-  fablabbg::openConfigPortal(fablabbg::conf::debug::LOAD_EEPROM_DEFAULTS,
-                             !fablabbg::conf::debug::FORCE_PORTAL);
+  fabomatic::openConfigPortal(fabomatic::conf::debug::LOAD_EEPROM_DEFAULTS,
+                              !fabomatic::conf::debug::FORCE_PORTAL);
 
 #if (MQTT_SIMULATION)
-  fablabbg::startMQTTBrocker();
+  fabomatic::startMQTTBrocker();
 #endif
 
-  fablabbg::setupOTA();
+  fabomatic::setupOTA();
 
   if (!hw_init)
   {
@@ -596,26 +596,26 @@ void setup()
     esp_task_wdt_add(NULL);          // add current thread to WDT watch
     while (true)
     {
-      fablabbg::Tasks::delay(1s);
+      fabomatic::Tasks::delay(1s);
       ESP_LOGE(TAG, "Hardware failed, waiting for OTA");
     }
   }
 
   // Let some time for WiFi to settle
-  fablabbg::Tasks::delay(2s);
+  fabomatic::Tasks::delay(2s);
 
   // Enable the HW watchdog
-  fablabbg::t_wdg.enable();
+  fabomatic::t_wdg.enable();
   // Since the WiFiManager may have taken minutes, recompute the tasks schedule
   scheduler.updateSchedules();
 
   // Try to connect immediately
-  fablabbg::taskConnect();
+  fabomatic::taskConnect();
 }
 
 void loop()
 {
-  fablabbg::Board::scheduler.execute();
+  fabomatic::Board::scheduler.execute();
   ArduinoOTA.handle();
 }
 #endif // PIO_UNIT_TESTING

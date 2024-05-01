@@ -3,7 +3,7 @@
 
 #include "Machine.hpp"
 
-namespace fablabbg
+namespace fabomatic
 {
   struct BoardInfo
   {
@@ -18,5 +18,5 @@ namespace fablabbg
              power_warning == other.power_warning;
     };
   };
-} // namespace fablabbg
+} // namespace fabomatic
 #endif // BOARDINFO_HPP

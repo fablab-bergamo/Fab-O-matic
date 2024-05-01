@@ -7,7 +7,7 @@
 
 #include "pins.hpp"
 
-namespace fablabbg
+namespace fabomatic
 {
   class Led
   {
@@ -35,6 +35,6 @@ namespace fablabbg
     void init();
   };
 
-} // namespace fablabbg
+} // namespace fabomatic
 
 #endif // LED_HPP_

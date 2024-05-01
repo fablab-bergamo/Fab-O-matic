@@ -6,7 +6,7 @@
 #include <string>
 #include <type_traits>
 
-namespace fablabbg
+namespace fabomatic
 {
   template <typename TLcdDriver>
   LCDWrapper<TLcdDriver>::LCDWrapper(const pins_config::lcd_config &conf) : config(conf),
@@ -235,4 +235,4 @@ namespace fablabbg
     if (config.bl_pin != NO_PIN)
       digitalWrite(config.bl_pin, config.active_low ? HIGH : LOW);
   }
-} // namespace fablabbg
+} // namespace fabomatic

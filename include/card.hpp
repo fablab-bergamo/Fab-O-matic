@@ -8,7 +8,7 @@
 
 #include "Logging.hpp"
 
-namespace fablabbg::card
+namespace fabomatic::card
 {
   using uid_t = u_int64_t;
   static constexpr uid_t INVALID = 0ULL;
@@ -73,5 +73,5 @@ namespace fablabbg::card
     }
     return serial.str().substr(0U, 6 * 2);
   }
-} // namespace fablabbg::card
+} // namespace fabomatic::card
 #endif // CARD_HPP_

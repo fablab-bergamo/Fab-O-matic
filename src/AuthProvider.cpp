@@ -6,7 +6,7 @@
 #include "FabBackend.hpp"
 #include "Logging.hpp"
 
-namespace fablabbg
+namespace fabomatic
 {
   namespace Board
   {
@@ -233,4 +233,4 @@ namespace fablabbg
 
     return config.SaveToEEPROM();
   }
-} // namespace fablabbg
+} // namespace fabomatic

@@ -23,7 +23,7 @@
 #define GIT_VERSION "??????"
 #endif
 
-namespace fablabbg
+namespace fabomatic
 {
   using milliseconds = std::chrono::milliseconds;
 
@@ -659,4 +659,4 @@ namespace fablabbg
   {
     return this->auth.saveCache();
   }
-} // namespace fablabbg
+} // namespace fabomatic

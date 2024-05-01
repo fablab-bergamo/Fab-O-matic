@@ -6,7 +6,7 @@
 #include <chrono>
 #include <string>
 
-namespace fablabbg
+namespace fabomatic
 {
   class BaseLCDWrapper
   {
@@ -22,6 +22,6 @@ namespace fablabbg
 
     [[nodiscard]] auto convertSecondsToHHMMSS(std::chrono::seconds duration) const -> const std::string;
   };
-} // namespace fablabbg
+} // namespace fabomatic
 
 #endif // BASELCDWRAPPER_HPP_

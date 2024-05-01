@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-namespace fablabbg
+namespace fabomatic
 {
   class MockLcdLibrary final
   {
@@ -17,6 +17,6 @@ namespace fablabbg
     auto setCursor(uint8_t col, uint8_t row) -> void{};
     auto write(uint8_t value) -> void{};
   };
-} // namespace fablabbg
+} // namespace fabomatic
 
 #endif // MOCK_MOCKLCDLIBRARY_HPP_

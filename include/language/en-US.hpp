@@ -1,7 +1,7 @@
 #ifndef _LANGUAGE_EN_US_HPP
 #define _LANGUAGE_EN_US_HPP
 
-namespace fablabbg::strings::en_US
+namespace fabomatic::strings::en_US
 {
   static constexpr auto S_BUSY = "Busy";
   static constexpr auto S_CANCELLED = "* CANCELLED *";

@@ -9,7 +9,7 @@
 #include "BaseRfidWrapper.hpp"
 #include "sMQTTBroker.h"
 
-namespace fablabbg
+namespace fabomatic
 {
   class MockMQTTBroker final : public sMQTTBroker
   {
@@ -46,5 +46,5 @@ namespace fablabbg
 
     bool is_running{false};
   };
-} // namespace fablabbg
+} // namespace fabomatic
 #endif // MOCK_MOCKMQTTBROKER_HPP_
