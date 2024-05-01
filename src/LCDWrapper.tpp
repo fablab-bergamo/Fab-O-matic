@@ -205,7 +205,7 @@ namespace fablabbg
   }
 
   template <typename TLcdDriver>
-  void LCDWrapper<TLcdDriver>::setRow(uint8_t row, const std::string &text)
+  void LCDWrapper<TLcdDriver>::setRow(uint8_t row, const std::string_view &text)
   {
     if (text.length() >= conf::lcd::COLS)
     {

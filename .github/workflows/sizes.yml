@@ -15,8 +15,8 @@ jobs:
     strategy:
       matrix:
         variant:
-          - hardware-rev0
-          - esp32dev
+          - hardware-rev0-it_IT
+          - esp32-devboard
     steps:
       - uses: actions/checkout@v4
         with:
@@ -92,6 +92,10 @@ jobs:
                   }
                 });
               });
+              // Truncate report if it exceeds maximum comment length
+              const truncatedReport = report.length > 63*1024 ?
+                  report.substring(0, 63*1024) + '... (truncated)' :
+                  report;
               github.rest.issues.createComment({
                 issue_number: context.issue.number,
                 owner: context.repo.owner,

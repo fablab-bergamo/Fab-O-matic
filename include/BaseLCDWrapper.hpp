@@ -17,7 +17,7 @@ namespace fablabbg
     virtual auto clear() -> void = 0;
     virtual auto showConnection(bool show) -> void = 0;
     virtual auto showPower(bool show) -> void = 0;
-    virtual auto setRow(uint8_t row, const std::string &text) -> void = 0;
+    virtual auto setRow(uint8_t row, const std::string_view &text) -> void = 0;
     virtual auto update(const BoardInfo &boardinfo, bool forced = false) -> void = 0;
 
     [[nodiscard]] auto convertSecondsToHHMMSS(std::chrono::seconds duration) const -> const std::string;

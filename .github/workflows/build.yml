@@ -22,10 +22,10 @@ jobs:
     strategy:
       matrix:
         variant:
-          - hardware-rev0
-          - esp32dev
+          - hardware-rev0-it_IT
+          - hardware-rev0-en_US
+          - esp32-devboard
           - wokwi
-          - esp32-s3
     steps:
       - uses: actions/checkout@v4
         with:
