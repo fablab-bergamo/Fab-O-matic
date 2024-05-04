@@ -138,11 +138,9 @@ namespace fabomatic
            << ",\"name\":\"User" << uid_str << "\"}";
         return ss.str();
       }
-      else
-      {
-        ESP_LOGE(TAG2, "Failed to parse checkuser query");
-        return "{\"request_ok\":false}";
-      }
+
+      ESP_LOGE(TAG2, "Failed to parse checkuser query");
+      return "{\"request_ok\":false}";
     }
 
     if (query.find("alive") != std::string::npos)

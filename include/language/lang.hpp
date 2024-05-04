@@ -1,8 +1,8 @@
-#ifndef _LANGUAGE_LANG_HPP
-#define _LANGUAGE_LANG_HPP
+#ifndef _FABOMATIC_LANG_HPP
+#define _FABOMATIC_LANG_HPP
 
 // Include Italian language
-#if FABLAB_LANG_IT_IT
+#if FABOMATIC_LANG_IT_IT
 #include "language/it-IT.hpp"
 namespace fabomatic::strings
 {
@@ -11,7 +11,7 @@ namespace fabomatic::strings
 #endif
 
 // Include English language
-#ifdef FABLAB_LANG_EN_US
+#ifdef FABOMATIC_LANG_EN_US
 #include "language/en-US.hpp"
 namespace fabomatic::strings
 {
@@ -20,4 +20,5 @@ namespace fabomatic::strings
 #endif
 
 // Repeat the pattern above if other languages are needed
-#endif
+
+#endif // _FABOMATIC_LANG_HPP

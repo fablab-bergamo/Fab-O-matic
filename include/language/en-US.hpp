@@ -61,5 +61,11 @@ namespace fabomatic::strings::en_US
   static constexpr auto FACTORY_RESET_DONE_1 = "Factory reset";
   static constexpr auto FACTORY_RESET_DONE_2 = "Wait reboot";
 
-}
+  static constexpr auto PORTAL_TITLE = "FAB-O-MATIC";
+  static constexpr auto PORTAL_MACHINE_ID_PROMPT = "Machine ID";
+  static constexpr auto PORTAL_SHELLY_MQTT_PROMPT = "Shelly MQTT topic (can be empty)";
+  static constexpr auto PORTAL_MQTT_BROKER_PROMPT = "MQTT broker (IP or hostname)";
+
+} // namespace fabomatic::strings::en_US
+
 #endif

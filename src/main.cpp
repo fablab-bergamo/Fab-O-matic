@@ -19,6 +19,7 @@
 #include "mock/MockMQTTBroker.hpp"
 #endif
 #include "pins.hpp"
+#include "language/lang.hpp"
 
 // For ArduinoOTA
 const char *const ssid = fabomatic::secrets::credentials::ssid.data();
@@ -354,9 +355,9 @@ namespace fabomatic
     config.mqtt_switch_topic.resize(conf::common::STR_MAX_LENGTH);
     config.machine_id.resize(conf::common::INT_MAX_LENGTH);
 
-    WiFiManagerParameter custom_mqtt_server("Broker", "MQTT Broker address", config.mqtt_server.data(), conf::common::STR_MAX_LENGTH);
-    WiFiManagerParameter custom_mqtt_topic("Topic", "MQTT Switch topic (leave empty to disable)", config.mqtt_switch_topic.data(), conf::common::STR_MAX_LENGTH);
-    WiFiManagerParameter custom_machine_id("MachineID", "Machine ID", config.machine_id.data(), conf::common::INT_MAX_LENGTH, "type='number' min='0' max='65535'");
+    WiFiManagerParameter custom_mqtt_server("Broker", strings::PORTAL_MQTT_BROKER_PROMPT, config.mqtt_server.data(), conf::common::STR_MAX_LENGTH);
+    WiFiManagerParameter custom_mqtt_topic("Topic", strings::PORTAL_SHELLY_MQTT_PROMPT, config.mqtt_switch_topic.data(), conf::common::STR_MAX_LENGTH);
+    WiFiManagerParameter custom_machine_id("MachineID", strings::PORTAL_MACHINE_ID_PROMPT, config.machine_id.data(), conf::common::INT_MAX_LENGTH, "type='number' min='0' max='65535'");
 
     wifiManager.addParameter(&custom_mqtt_server);
     wifiManager.addParameter(&custom_mqtt_topic);
@@ -366,7 +367,7 @@ namespace fabomatic
     wifiManager.setConnectRetries(3);  // 3 retries
     wifiManager.setConnectTimeout(10); // 10 seconds
     wifiManager.setCountry("IT");
-    wifiManager.setTitle("FabLab Bergamo - RFID arduino");
+    wifiManager.setTitle(strings::PORTAL_TITLE);
     wifiManager.setCaptivePortalEnable(true);
     wifiManager.setAPCallback(configModeCallback);
     wifiManager.setSaveConfigCallback(saveConfigCallback);
