@@ -9,7 +9,7 @@
 #include <memory>
 #include <string_view>
 
-namespace fablabbg::ServerMQTT
+namespace fabomatic::ServerMQTT
 {
   class Query
   {
@@ -167,5 +167,5 @@ namespace fablabbg::ServerMQTT
     [[nodiscard]] static auto fromJson(JsonDocument &doc) -> std::unique_ptr<SimpleResponse>;
   };
 
-} // namespace fablabbg::ServerMQTT
+} // namespace fabomatic::ServerMQTT
 #endif // MQTTTYPES_HPP_

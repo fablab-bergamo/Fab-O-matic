@@ -6,7 +6,7 @@
 #include <cstdint>
 #include <string>
 
-namespace fablabbg
+namespace fabomatic
 {
   enum class MachineType : uint8_t
   {
@@ -73,6 +73,6 @@ namespace fablabbg
     MachineConfig(MachineConfig &&) = delete;                   // move constructor
     MachineConfig &operator=(MachineConfig &&) = delete;        // move assignment
   };
-} // namespace fablabbg
+} // namespace fabomatic
 
 #endif // MACHINECONFIG_HPP_

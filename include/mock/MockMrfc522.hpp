@@ -12,7 +12,7 @@
 #include "MFRC522DriverSPI.h"
 #include "MFRC522v2.h"
 
-namespace fablabbg
+namespace fabomatic
 {
   class MockMrfc522
   {
@@ -46,6 +46,6 @@ namespace fablabbg
 
     static constexpr auto RxGainMax = MFRC522::PCD_RxGain::RxGain_max;
   };
-} // namespace fablabbg
+} // namespace fabomatic
 
 #endif // MOCK_MOCKMRFC522_HPP_

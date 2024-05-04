@@ -8,7 +8,7 @@
 
 #include "Logging.hpp"
 
-namespace fablabbg::Tasks
+namespace fabomatic::Tasks
 {
   using milliseconds = std::chrono::milliseconds;
   using time_point_sc = std::chrono::time_point<std::chrono::system_clock>;
@@ -271,4 +271,4 @@ namespace fablabbg::Tasks
       ArduinoOTA.handle();
     } while (std::chrono::system_clock::now() - start < duration);
   }
-} // namespace fablabbg::Tasks
+} // namespace fabomatic::Tasks

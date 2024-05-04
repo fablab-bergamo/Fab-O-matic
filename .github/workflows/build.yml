@@ -22,10 +22,10 @@ jobs:
     strategy:
       matrix:
         variant:
-          - hardware-rev0
-          - esp32dev
+          - hardware-rev0-it_IT
+          - hardware-rev0-en_US
+          - esp32-devboard
           - wokwi
-          - esp32-s3
     steps:
       - uses: actions/checkout@v4
         with:
@@ -50,6 +50,8 @@ jobs:
       - name: Upload firmware image for ${{ matrix.variant }}
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.variant }}.bin
-          path: .pio/build/${{ matrix.variant }}/firmware.bin
+          name: Firmware files for ${{ matrix.variant }}
+          path: |
+                .pio/build/${{ matrix.variant }}/firmware.bin
+                .pio/build/${{ matrix.variant }}/firmware_metrics.txt
           retention-days: 90

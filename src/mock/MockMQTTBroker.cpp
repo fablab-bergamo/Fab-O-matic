@@ -6,7 +6,7 @@
 #include <ArduinoJson.h>
 
 static const char *const TAG2 = "MockMQTTBroker";
-namespace fablabbg
+namespace fabomatic
 {
   auto MockMQTTBroker::start() -> void
   {
@@ -197,4 +197,4 @@ namespace fablabbg
       processQueries();
     }
   }
-} // namespace fablabbg
+} // namespace fabomatic

@@ -10,7 +10,7 @@
 #include "secrets.hpp"
 #include "WhiteList.hpp"
 
-namespace fablabbg
+namespace fabomatic
 {
   class AuthProvider
   {
@@ -31,5 +31,5 @@ namespace fablabbg
     auto saveCache() const -> bool;
     auto loadCache() -> void;
   };
-} // namespace fablabbg
+} // namespace fabomatic
 #endif // AUTHPROVIDER_HPP_

@@ -9,7 +9,7 @@
 #include <sstream>
 #include <string>
 
-namespace fablabbg
+namespace fabomatic
 {
   struct FabUser
   {
@@ -64,5 +64,5 @@ namespace fablabbg
       return sstream.str();
     }
   };
-} // namespace fablabbg
+} // namespace fabomatic
 #endif // FABUSER_HPP_

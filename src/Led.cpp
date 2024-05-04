@@ -1,7 +1,7 @@
 #include "Led.hpp"
 #include "Logging.hpp"
 
-namespace fablabbg
+namespace fabomatic
 {
   auto Led::init() -> void
   {
@@ -88,4 +88,4 @@ namespace fablabbg
     }
   }
 
-} // namespace fablabbg
+} // namespace fabomatic

@@ -7,7 +7,7 @@
 #include "conf.hpp"
 #include "pins.hpp"
 
-namespace fablabbg
+namespace fabomatic
 {
   /// @brief Constructor
   template <typename Driver>
@@ -136,4 +136,4 @@ namespace fablabbg
   {
     return *driver.get();
   }
-} // namespace fablabbg
+} // namespace fabomatic

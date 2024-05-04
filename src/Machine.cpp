@@ -10,7 +10,7 @@
 #include <sstream>
 #include <type_traits>
 
-namespace fablabbg
+namespace fabomatic
 {
   using namespace std::chrono_literals;
   using milliseconds = std::chrono::milliseconds;
@@ -371,4 +371,4 @@ namespace fablabbg
   {
     maintenanceInfo = new_description;
   }
-} // namespace fablabbg
+} // namespace fabomatic

@@ -1,7 +1,7 @@
 #include "MachineConfig.hpp"
 #include <sstream>
 
-namespace fablabbg
+namespace fabomatic
 {
   auto MachineConfig::toString() const -> const std::string
   {
@@ -33,4 +33,4 @@ namespace fablabbg
   {
     return !mqtt_config.topic.empty();
   }
-} // namespace fablabbg
+} // namespace fabomatic

@@ -7,7 +7,7 @@
 
 #include "MachineConfig.hpp"
 
-namespace fablabbg
+namespace fabomatic
 {
   using namespace std::chrono_literals;
 
@@ -86,7 +86,7 @@ namespace fablabbg
     static constexpr auto MAX_TRIES{2};                         /* Number of tries to get a reply from the backend */
     static constexpr auto TIMEOUT_REPLY_SERVER{2s};             /* Timeout for a single backend reply request. */
     static constexpr auto PORT_NUMBER{1883};                    /* MQTT port for broker */
-  } // namespace conf::mqtt
+  }                                                             // namespace conf::mqtt
 
   namespace conf::common
   {
@@ -112,5 +112,5 @@ namespace fablabbg
                                                      5s),
                 "Watchdog period too short");
   static_assert(conf::tasks::WATCHDOG_PERIOD > 0s && conf::tasks::WATCHDOG_PERIOD * 10 < conf::tasks::WATCHDOG_TIMEOUT, "WATCHDOG_PERIOD must be small relative to WATCHDOG_TIMEOUT");
-} // namespace fablabbg
+} // namespace fabomatic
 #endif // CONF_H_
