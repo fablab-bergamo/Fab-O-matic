@@ -9,7 +9,7 @@
 #include "card.hpp"
 #include "mock/MockMrfc522.hpp"
 
-namespace fablabbg::tests
+namespace fabomatic::tests
 {
   static constexpr WhiteList test_whitelist /* List of RFID tags whitelisted, regardless of connection */
       {

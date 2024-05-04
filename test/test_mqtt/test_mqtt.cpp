@@ -26,13 +26,13 @@ pthread_attr_t attr_mqtt_broker;
 
 [[maybe_unused]] static const char *TAG3 = "test_mqtt";
 
-namespace fablabbg::tests
+namespace fabomatic::tests
 {
-  fablabbg::RFIDWrapper<fablabbg::MockMrfc522> rfid;
-  fablabbg::LCDWrapper<LiquidCrystal> lcd{fablabbg::pins.lcd};
-  fablabbg::BoardLogic logic;
-  fablabbg::MockMQTTBroker broker;
-  fablabbg::Tasks::Scheduler test_scheduler;
+  fabomatic::RFIDWrapper<fabomatic::MockMrfc522> rfid;
+  fabomatic::LCDWrapper<LiquidCrystal> lcd{fabomatic::pins.lcd};
+  fabomatic::BoardLogic logic;
+  fabomatic::MockMQTTBroker broker;
+  fabomatic::Tasks::Scheduler test_scheduler;
 
   std::atomic<bool> exit_request{false};
 
@@ -295,28 +295,28 @@ namespace fablabbg::tests
     // Remove the HW Watchdog
     esp_task_wdt_delete(NULL);
   }
-} // namespace fablabbg::Tests
+} // namespace fabomatic::Tests
 
 void tearDown(void) {};
 
 void setUp(void)
 {
-  TEST_ASSERT_TRUE_MESSAGE(fablabbg::tests::logic.configure(fablabbg::tests::rfid, fablabbg::tests::lcd), "BoardLogic configure failed");
-  TEST_ASSERT_TRUE_MESSAGE(fablabbg::tests::logic.initBoard(), "BoardLogic init failed");
+  TEST_ASSERT_TRUE_MESSAGE(fabomatic::tests::logic.configure(fabomatic::tests::rfid, fabomatic::tests::lcd), "BoardLogic configure failed");
+  TEST_ASSERT_TRUE_MESSAGE(fabomatic::tests::logic.initBoard(), "BoardLogic init failed");
 };
 
 void setup()
 {
   delay(1000);
   // Save original config
-  auto original = fablabbg::SavedConfig::LoadFromEEPROM();
+  auto original = fabomatic::SavedConfig::LoadFromEEPROM();
 
   UNITY_BEGIN();
 
-  RUN_TEST(fablabbg::tests::test_start_broker);
-  RUN_TEST(fablabbg::tests::test_fabserver_calls);
-  RUN_TEST(fablabbg::tests::test_normal_use);
-  RUN_TEST(fablabbg::tests::test_stop_broker);
+  RUN_TEST(fabomatic::tests::test_start_broker);
+  RUN_TEST(fabomatic::tests::test_fabserver_calls);
+  RUN_TEST(fabomatic::tests::test_normal_use);
+  RUN_TEST(fabomatic::tests::test_stop_broker);
 
   UNITY_END(); // stop unit testing
 

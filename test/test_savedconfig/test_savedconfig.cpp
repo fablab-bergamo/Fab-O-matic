@@ -13,7 +13,7 @@ using namespace std::chrono_literals;
 
 [[maybe_unused]] static const char *TAG3 = "test_logic";
 
-namespace fablabbg::tests
+namespace fabomatic::tests
 {
   SavedConfig original;
 
@@ -165,7 +165,7 @@ namespace fablabbg::tests
     auto result2 = SavedConfig::LoadFromEEPROM();
     TEST_ASSERT_FALSE_MESSAGE(result2.has_value(), "Loaded config is not empty");
   }
-} // namespace fablabbg::tests
+} // namespace fabomatic::tests
 
 void tearDown(void)
 {
@@ -180,13 +180,13 @@ void setUp(void)
 void setup()
 {
   delay(1000);
-  auto original = fablabbg::SavedConfig::LoadFromEEPROM();
+  auto original = fabomatic::SavedConfig::LoadFromEEPROM();
 
   UNITY_BEGIN();
-  RUN_TEST(fablabbg::tests::test_defaults);
-  RUN_TEST(fablabbg::tests::test_changes);
-  RUN_TEST(fablabbg::tests::test_magic_number);
-  RUN_TEST(fablabbg::tests::test_rfid_cache);
+  RUN_TEST(fabomatic::tests::test_defaults);
+  RUN_TEST(fabomatic::tests::test_changes);
+  RUN_TEST(fabomatic::tests::test_magic_number);
+  RUN_TEST(fabomatic::tests::test_rfid_cache);
 
   if (original.has_value())
   {

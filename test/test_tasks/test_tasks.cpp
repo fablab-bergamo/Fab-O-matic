@@ -9,10 +9,10 @@
 
 using namespace std::chrono_literals;
 
-namespace fablabbg::tests
+namespace fabomatic::tests
 {
-  using Task = fablabbg::Tasks::Task;
-  using Scheduler = fablabbg::Tasks::Scheduler;
+  using Task = fabomatic::Tasks::Task;
+  using Scheduler = fabomatic::Tasks::Scheduler;
 
   // Static variables for testing
   constexpr int NB_TASKS = 100;
@@ -126,14 +126,14 @@ namespace fablabbg::tests
     execute();
     TEST_ASSERT_EQUAL_MESSAGE(NB_TASKS, task_counter, "Restarted tasks did not run immediately");
   }
-} // namespace fablabbg::tests
+} // namespace fabomatic::tests
 
 void setup()
 {
   delay(1000);
   UNITY_BEGIN();
-  RUN_TEST(fablabbg::tests::test_execute_runs_all_tasks);
-  RUN_TEST(fablabbg::tests::test_stop_start_tasks);
+  RUN_TEST(fabomatic::tests::test_execute_runs_all_tasks);
+  RUN_TEST(fabomatic::tests::test_stop_start_tasks);
   UNITY_END(); // stop unit testing
 }
 

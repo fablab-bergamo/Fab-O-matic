@@ -24,19 +24,19 @@ using namespace std::chrono_literals;
 
 [[maybe_unused]] static const char *TAG3 = "test_logic";
 
-fablabbg::RFIDWrapper<fablabbg::MockMrfc522> rfid;
-fablabbg::LCDWrapper<LiquidCrystal> lcd{fablabbg::pins.lcd};
-fablabbg::BoardLogic logic;
+fabomatic::RFIDWrapper<fabomatic::MockMrfc522> rfid;
+fabomatic::LCDWrapper<LiquidCrystal> lcd{fabomatic::pins.lcd};
+fabomatic::BoardLogic logic;
 
-using BoardLogic = fablabbg::BoardLogic;
+using BoardLogic = fabomatic::BoardLogic;
 
-constexpr fablabbg::card::uid_t get_test_uid(size_t idx)
+constexpr fabomatic::card::uid_t get_test_uid(size_t idx)
 {
-  auto [card_uid, level, name] = fablabbg::tests::test_whitelist[idx];
+  auto [card_uid, level, name] = fabomatic::tests::test_whitelist[idx];
   return card_uid;
 }
 
-namespace fablabbg::tests
+namespace fabomatic::tests
 {
   void test_machine_defaults()
   {
@@ -49,24 +49,24 @@ namespace fablabbg::tests
 
     auto config = config_req.value();
 
-    auto result = machine.getMachineId().id == fablabbg::conf::default_config::machine_id.id;
+    auto result = machine.getMachineId().id == fabomatic::conf::default_config::machine_id.id;
     TEST_ASSERT_TRUE_MESSAGE(result, "Machine ID not per default configuration");
 
-    result = machine.getMachineName() == fablabbg::conf::default_config::machine_name;
+    result = machine.getMachineName() == fabomatic::conf::default_config::machine_name;
     TEST_ASSERT_TRUE_MESSAGE(result, "Machine Name not per default configuration");
 
-    result = machine.getAutologoffDelay() == fablabbg::conf::machine::DEFAULT_AUTO_LOGOFF_DELAY;
+    result = machine.getAutologoffDelay() == fabomatic::conf::machine::DEFAULT_AUTO_LOGOFF_DELAY;
     TEST_ASSERT_TRUE_MESSAGE(result, "Machine autologoff delay not per default configuration");
 
     result = machine.toString().length() > 0;
     TEST_ASSERT_TRUE_MESSAGE(result, "Machine toString() failed");
 
-    TEST_ASSERT_TRUE_MESSAGE(config.hasRelay() || fablabbg::pins.relay.ch1_pin == fablabbg::NO_PIN, "Machine relay not configured");
-    TEST_ASSERT_TRUE_MESSAGE(config.hasMqttSwitch() || fablabbg::conf::default_config::mqtt_switch_topic.empty(), "Machine MQTT switch not configured");
+    TEST_ASSERT_TRUE_MESSAGE(config.hasRelay() || fabomatic::pins.relay.ch1_pin == fabomatic::NO_PIN, "Machine relay not configured");
+    TEST_ASSERT_TRUE_MESSAGE(config.hasMqttSwitch() || fabomatic::conf::default_config::mqtt_switch_topic.empty(), "Machine MQTT switch not configured");
 
-    TEST_ASSERT_TRUE_MESSAGE(config.mqtt_config.topic == fablabbg::conf::default_config::mqtt_switch_topic, "Machine MQTT topic not configured");
-    TEST_ASSERT_TRUE_MESSAGE(config.relay_config.pin == fablabbg::pins.relay.ch1_pin, "Machine relay pin not configured");
-    TEST_ASSERT_TRUE_MESSAGE(config.machine_id.id == fablabbg::conf::default_config::machine_id.id, "Machine ID not configured");
+    TEST_ASSERT_TRUE_MESSAGE(config.mqtt_config.topic == fabomatic::conf::default_config::mqtt_switch_topic, "Machine MQTT topic not configured");
+    TEST_ASSERT_TRUE_MESSAGE(config.relay_config.pin == fabomatic::pins.relay.ch1_pin, "Machine relay pin not configured");
+    TEST_ASSERT_TRUE_MESSAGE(config.machine_id.id == fabomatic::conf::default_config::machine_id.id, "Machine ID not configured");
   }
 
   void test_simple_methods()
@@ -266,18 +266,18 @@ namespace fablabbg::tests
     TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::NotAllowed, logic.getStatus(), "Status not NotAllowed for admins");
     simulate_rfid_card(rfid, logic, std::nullopt);
   }
-} // namespace fablabbg::tests
+} // namespace fabomatic::tests
 
 void tearDown(void) {};
 
 void setUp(void)
 {
-  TEST_ASSERT_TRUE_MESSAGE(fablabbg::SavedConfig::DefaultConfig().SaveToEEPROM(), "Default config save failed");
+  TEST_ASSERT_TRUE_MESSAGE(fabomatic::SavedConfig::DefaultConfig().SaveToEEPROM(), "Default config save failed");
   TEST_ASSERT_TRUE_MESSAGE(logic.configure(rfid, lcd), "BoardLogic configure failed");
   TEST_ASSERT_TRUE_MESSAGE(logic.initBoard(), "BoardLogic init failed");
-  logic.setWhitelist(fablabbg::tests::test_whitelist);
+  logic.setWhitelist(fabomatic::tests::test_whitelist);
   // Disable MQTT for tests
-  if (auto server_config = fablabbg::SavedConfig::LoadFromEEPROM(); server_config.has_value())
+  if (auto server_config = fabomatic::SavedConfig::LoadFromEEPROM(); server_config.has_value())
   {
     auto conf = server_config.value();
     conf.mqtt_server.assign("INVALID_SERVER");
@@ -288,15 +288,15 @@ void setUp(void)
 void setup()
 {
   delay(1000);
-  auto config = fablabbg::SavedConfig::LoadFromEEPROM();
+  auto config = fabomatic::SavedConfig::LoadFromEEPROM();
   UNITY_BEGIN();
-  RUN_TEST(fablabbg::tests::test_machine_defaults);
-  RUN_TEST(fablabbg::tests::test_simple_methods);
-  RUN_TEST(fablabbg::tests::test_machine_allowed);
-  RUN_TEST(fablabbg::tests::test_machine_maintenance);
-  RUN_TEST(fablabbg::tests::test_whitelist_no_network);
-  RUN_TEST(fablabbg::tests::test_one_user_at_a_time);
-  RUN_TEST(fablabbg::tests::test_user_autologoff);
+  RUN_TEST(fabomatic::tests::test_machine_defaults);
+  RUN_TEST(fabomatic::tests::test_simple_methods);
+  RUN_TEST(fabomatic::tests::test_machine_allowed);
+  RUN_TEST(fabomatic::tests::test_machine_maintenance);
+  RUN_TEST(fabomatic::tests::test_whitelist_no_network);
+  RUN_TEST(fabomatic::tests::test_one_user_at_a_time);
+  RUN_TEST(fabomatic::tests::test_user_autologoff);
   UNITY_END(); // stop unit testing
   if (config.has_value())
   {
