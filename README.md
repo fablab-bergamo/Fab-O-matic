@@ -5,13 +5,17 @@ Test suite : [![Test suite](https://github.com/PBrunot/rfid-arduino-copy/actions
 
 ## What is this project?
 
-* A low-cost RFID-card reader to control machine usage in a Fab Lab environment.
+* A low-cost RFID-card reader with LCD display to control machine usage in a Fab Lab environment.
+* This repository includes Firmware + Hardware projects
 
-* Together with the [backend project](https://github.com/fablab-bergamo/rfid-backend) which can run on a Raspberry Pi Zero, it manages user authentication, track machine usage / maintenance needs.
+| Front panel | PCB |
+| --- | --- |
+| ![3D_Front pannel_2024-05-05](https://github.com/fablab-bergamo/rfid-arduino/assets/6236243/b7afca37-4321-4b77-a073-5d35cf670fbc) | ![3D_PCB REV1 0_2024-05-05](https://github.com/fablab-bergamo/rfid-arduino/assets/6236243/dac93cda-b271-4663-a376-2b97a6c22956) |
 
-* It uses MQTT to talk to the backend. Machine control is achieved through an external relay.
-
-* See <code>hardware</code> folder for more information about schematics & PCB version.
+* Another repository [fablab-bergamo/rfid-backend](https://github.com/fablab-bergamo/rfid-backend) contains the backend server. This server can run on a Raspberry Pi Zero, managing user RFID authentication, track machine usage / maintenance needs.
+* Communication between boards and backend uses MQTT.
+* Machine control is achieved through an external relay and/or MQTT switch.
+* See <code>hardware</code> sub-folder for more information about schematics & PCB version.
 
 ## Hardware components
 
@@ -21,8 +25,8 @@ Test suite : [![Test suite](https://github.com/PBrunot/rfid-arduino-copy/actions
 * LCD driver (using Hitachi HD44780 compatible chip)
 * 3.3V Relay (or [Shelly](https://www.shellyitalia.com/shelly-plus-1-mini-gen3/) MQTT device)
 * 3.3V Buzzer
-* A RGB LED or a NeoPixel
-* RFID tags or cards for user authentication
+* NeoPixel for status indication to the user
+* RFID cards for user authentication
 
 ## PCB Details
 
@@ -33,10 +37,10 @@ Test suite : [![Test suite](https://github.com/PBrunot/rfid-arduino-copy/actions
 ## Build environment
 
 * Language: C++20 with ArduinoFramework for ESP32
-* IDE: VSCode + Platform.io extension as a minimun
-* To build, rename <code>conf/secrets.hpp.example</code> to <code>conf/secrets.hpp</code>.
-
+* IDE: VSCode + Platform.io extension
 > Platform IO can be used from command-line without VSCode <code>pio run</code>
+
+* To build on the first time, rename <code>conf/secrets.hpp.example</code> to <code>conf/secrets.hpp</code>.
 
 ## Testing Suite
 
