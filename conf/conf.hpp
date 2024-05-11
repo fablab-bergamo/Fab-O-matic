@@ -13,7 +13,7 @@ namespace fabomatic
 
   namespace conf::default_config
   {
-    static constexpr std::string_view mqtt_server = "fabpi.local";
+    static constexpr std::string_view mqtt_server = "fabpi2.local";
     static constexpr std::string_view mqtt_switch_topic = "";
     static constexpr MachineID machine_id{1};
     static constexpr std::string_view machine_name = "MACHINE1";
@@ -86,7 +86,7 @@ namespace fabomatic
     static constexpr auto MAX_TRIES{2};                         /* Number of tries to get a reply from the backend */
     static constexpr auto TIMEOUT_REPLY_SERVER{2s};             /* Timeout for a single backend reply request. */
     static constexpr auto PORT_NUMBER{1883};                    /* MQTT port for broker */
-  }                                                             // namespace conf::mqtt
+  } // namespace conf::mqtt
 
   namespace conf::common
   {

@@ -20,7 +20,7 @@ namespace fabomatic::strings::it_IT
   static constexpr auto S_CONNECTING_MQTT_1 = "Connessione";
   static constexpr auto S_CONNECTING_MQTT_2 = "al server MQTT";
 
-  static constexpr auto S_CONNECTED = "Connesso";
+  static constexpr auto S_CONNECTED = "MQTT connesso";
   static constexpr auto S_HELLO = "Ciao";
 
   static constexpr auto S_WORKING = "Elaborazione...";
