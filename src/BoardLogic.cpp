@@ -355,7 +355,7 @@ namespace fabomatic
       lcd.setRow(1, "");
       break;
     case Status::MachineInUse:
-      buffer << strings::S_HELLO << user_name;
+      buffer << strings::S_HELLO << " " << user_name;
       lcd.setRow(0, buffer.str());
       lcd.setRow(1, lcd.convertSecondsToHHMMSS(machine.getUsageDuration()));
       break;
