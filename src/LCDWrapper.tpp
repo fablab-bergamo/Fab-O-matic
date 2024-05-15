@@ -79,9 +79,7 @@ namespace fabomatic
     for (const auto &row : buffer)
     {
       lcd.setCursor(0, row_num);
-      char why_arduino_has_not_implemented_liquidcrystal_from_char_array_yet[conf::lcd::COLS];
-      memcpy(why_arduino_has_not_implemented_liquidcrystal_from_char_array_yet, &row, conf::lcd::COLS);
-      lcd.print(why_arduino_has_not_implemented_liquidcrystal_from_char_array_yet);
+      lcd.print(row.data());
       row_num++;
     }
 
