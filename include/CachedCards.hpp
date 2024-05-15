@@ -24,12 +24,12 @@ namespace fabomatic
 
     constexpr CachedCards() : cards{card::INVALID}, levels{FabUser::UserLevel::Unknown} {};
 
-    constexpr const CachedCard operator[](int i) const
+    constexpr auto operator[](int i) const -> const CachedCard
     {
       return {cards[i], levels[i]};
     }
 
-    const std::optional<CachedCard> find_uid(const card::uid_t &search_uid) const
+    auto find_uid(const card::uid_t &search_uid) const -> const std::optional<CachedCard>
     {
       if (search_uid == card::INVALID)
       {
@@ -44,13 +44,13 @@ namespace fabomatic
       return std::nullopt;
     }
 
-    constexpr void set_at(int idx, const card::uid_t &uid, const FabUser::UserLevel &level)
+    constexpr auto set_at(int idx, const card::uid_t &uid, const FabUser::UserLevel &level) -> void
     {
       cards[idx] = uid;
       levels[idx] = level;
     }
 
-    constexpr size_t size() const
+    constexpr auto size() const -> size_t
     {
       return conf::rfid_tags::CACHE_LEN;
     }
