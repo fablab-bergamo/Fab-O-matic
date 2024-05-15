@@ -569,7 +569,7 @@ namespace fabomatic
     // check if there is a card
     if (rfid.isNewCardPresent())
     {
-      const auto result = rfid.readCardSerial();
+      const auto &result = rfid.readCardSerial();
       if (result)
       {
         onNewCard(result.value());

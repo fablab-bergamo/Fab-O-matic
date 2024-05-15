@@ -102,7 +102,7 @@ namespace fabomatic
     auto json_elem = doc.createNestedArray("cached_cards");
     for (auto idx = 0; idx < cachedRfid.size(); idx++)
     {
-      auto &entry = cachedRfid[idx];
+      const auto &entry = cachedRfid[idx];
       if (entry.uid != 0) // Skip empty entries
       {
         auto obj = json_elem.createNestedObject();
@@ -118,7 +118,7 @@ namespace fabomatic
     SavedConfig config;
     JsonDocument doc;
 
-    auto result = deserializeJson(doc, json_text);
+    const auto result = deserializeJson(doc, json_text);
     if (result != DeserializationError::Ok)
     {
       ESP_LOGE(TAG, "fromJsonDocument() : deserializeJson failed with code %s", result.c_str());
@@ -141,7 +141,7 @@ namespace fabomatic
     auto idx = 0;
     for (const auto &elem : doc["cached_cards"].as<JsonArray>())
     {
-      auto level = static_cast<FabUser::UserLevel>(elem["level"].as<uint8_t>());
+      const auto level = static_cast<FabUser::UserLevel>(elem["level"].as<uint8_t>());
       config.cachedRfid.set_at(idx, elem["uid"], level);
       idx++;
     }
@@ -176,7 +176,7 @@ namespace fabomatic
 
     for (auto i = 0; i < JSON_DOC_SIZE; i++)
     {
-      char c = SavedConfig::json_buffer[i];
+      const char c = SavedConfig::json_buffer[i];
       EEPROM.writeChar(i, c);
       if (c == '\0')
       {

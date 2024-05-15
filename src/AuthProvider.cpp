@@ -24,11 +24,11 @@ namespace fabomatic
   void AuthProvider::updateCache(card::uid_t uid, FabUser::UserLevel level) const
   {
     // Search for the card in the cache
-    auto pos = std::find(cache.cards.cbegin(), cache.cards.cend(), uid);
+    const auto pos = std::find(cache.cards.cbegin(), cache.cards.cend(), uid);
     if (pos != cache.cards.cend())
     {
       // Update the level at same index
-      auto idx = std::distance(cache.cards.cbegin(), pos);
+      const auto idx = std::distance(cache.cards.cbegin(), pos);
       cache.levels[idx] = level;
       return;
     }
@@ -97,9 +97,9 @@ namespace fabomatic
       }
     }
     // Check whitelist if offline
-    if (auto result = uidInWhitelist(uid); result.has_value())
+    if (const auto &result = uidInWhitelist(uid); result.has_value())
     {
-      const auto [card, level, name] = result.value();
+      const auto &[card, level, name] = result.value();
       user.card_uid = card;
       user.authenticated = true;
       user.user_level = level;
@@ -110,9 +110,9 @@ namespace fabomatic
     }
 
     // Finally check the cached values
-    if (auto result = uidInCache(uid); result.has_value())
+    if (const auto &result = uidInCache(uid); result.has_value())
     {
-      const auto cached = result.value();
+      const auto &cached = result.value();
       user.card_uid = cached.uid;
       user.authenticated = (cached.level != FabUser::UserLevel::Unknown);
       user.user_level = cached.level;
