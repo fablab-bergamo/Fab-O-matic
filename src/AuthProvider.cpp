@@ -42,8 +42,7 @@ namespace fabomatic
       cache_idx = 0;
 
     // Add into list
-    cache.cards.at(cache_idx) = uid;
-    cache.levels.at(cache_idx) = level;
+    cache.set_at(cache_idx, uid, level);
 
     cache_idx = (cache_idx + 1) % conf::rfid_tags::CACHE_LEN;
   }
@@ -157,20 +156,7 @@ namespace fabomatic
   /// @return a whitelistentry object if the card is found in whitelist
   auto AuthProvider::uidInCache(card::uid_t candidate_uid) const -> std::optional<CachedCard>
   {
-    if (candidate_uid == card::INVALID)
-    {
-      return std::nullopt;
-    }
-
-    const auto elem = std::find(cache.cards.cbegin(), cache.cards.cend(), candidate_uid);
-
-    if (elem == cache.cards.cend())
-    {
-      ESP_LOGD(TAG, "%s not found in cache", card::uid_str(candidate_uid).c_str());
-      return std::nullopt;
-    }
-
-    return cache[std::distance(cache.cards.cbegin(), elem)];
+    return cache.find_uid(candidate_uid);
   }
 
   /// @brief Loads the cache from EEPROM

@@ -97,8 +97,9 @@ namespace fabomatic::tests
     TEST_ASSERT_TRUE_MESSAGE(defaults.cachedRfid.size() == conf::rfid_tags::CACHE_LEN, "Default config cachedRfid size mismatch");
 
     // Test that default config has empty cache
-    for (const auto &tag : defaults.cachedRfid)
+    for (auto i = 0; i < defaults.cachedRfid.size(); i++)
     {
+      const auto &tag = defaults.cachedRfid[i];
       TEST_ASSERT_TRUE_MESSAGE(tag.uid == 0, "Default config cachedRfid not empty");
       TEST_ASSERT_TRUE_MESSAGE(tag.level == FabUser::UserLevel::Unknown, "Default config cachedRfid not empty");
     }
@@ -109,8 +110,9 @@ namespace fabomatic::tests
     defaults = SavedConfig::LoadFromEEPROM().value_or(SavedConfig::DefaultConfig());
 
     // Test that default config is still empty
-    for (const auto &tag : defaults.cachedRfid)
+    for (auto i = 0; i < defaults.cachedRfid.size(); i++)
     {
+      const auto &tag = defaults.cachedRfid[i];
       TEST_ASSERT_TRUE_MESSAGE(tag.uid == 0, "Default config cachedRfid not empty after AuthProvider saveCache");
       TEST_ASSERT_TRUE_MESSAGE(tag.level == FabUser::UserLevel::Unknown, "Default config cachedRfid not empty after AuthProvider saveCache");
     }

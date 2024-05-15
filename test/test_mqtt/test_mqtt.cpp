@@ -165,11 +165,8 @@ namespace fabomatic::tests
     auto cached_entries = SavedConfig::LoadFromEEPROM().value().cachedRfid;
     for (const auto &[uid, level, name] : secrets::cards::whitelist)
     {
-      auto found = std::find_if(cached_entries.begin(), cached_entries.end(),
-                                [uid, level](const auto &entry)
-                                { return entry.uid == uid && entry.level == level; });
-      TEST_ASSERT_TRUE_MESSAGE(level == FabUser::UserLevel::Unknown ||
-                                   found != cached_entries.end(),
+      const auto &cached_card = cached_entries.find_uid(uid);
+      TEST_ASSERT_TRUE_MESSAGE(cached_card || level == FabUser::UserLevel::Unknown,
                                "AuthProvider saveCache failed to save all whitelist entries");
     }
   }
@@ -297,7 +294,7 @@ namespace fabomatic::tests
   }
 } // namespace fabomatic::Tests
 
-void tearDown(void) {};
+void tearDown(void){};
 
 void setUp(void)
 {

@@ -29,6 +29,21 @@ namespace fabomatic
       return {cards[i], levels[i]};
     }
 
+    const std::optional<CachedCard> find_uid(const card::uid_t &search_uid) const
+    {
+      if (search_uid == card::INVALID)
+      {
+        return std::nullopt;
+      }
+      const auto pos = std::find(cards.cbegin(), cards.cend(), search_uid);
+      if (pos != cards.cend())
+      {
+        auto idx = std::distance(cards.cbegin(), pos);
+        return CachedCard{*pos, levels[idx]};
+      }
+      return std::nullopt;
+    }
+
     constexpr void set_at(int idx, const card::uid_t &uid, const FabUser::UserLevel &level)
     {
       cards[idx] = uid;
