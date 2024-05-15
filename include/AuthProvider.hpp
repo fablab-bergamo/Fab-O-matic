@@ -9,6 +9,7 @@
 #include "FabUser.hpp"
 #include "secrets.hpp"
 #include "WhiteList.hpp"
+#include "CachedCards.hpp"
 
 namespace fabomatic
 {
@@ -16,11 +17,11 @@ namespace fabomatic
   {
   private:
     WhiteList whitelist;
-    mutable CachedList cache;
+    mutable CachedCards cache;
     mutable size_t cache_idx = 0;
     [[nodiscard]] auto uidInWhitelist(card::uid_t uid) const -> std::optional<WhiteListEntry>;
-    [[nodiscard]] auto uidInCache(card::uid_t uid) const -> std::optional<CachedFabUser>;
-    [[nodiscard]] auto searchCache(card::uid_t candidate_uid) const -> std::optional<CachedFabUser>;
+    [[nodiscard]] auto uidInCache(card::uid_t uid) const -> std::optional<CachedCard>;
+    [[nodiscard]] auto searchCache(card::uid_t candidate_uid) const -> std::optional<CachedCard>;
     auto updateCache(card::uid_t candidate_uid, FabUser::UserLevel level) const -> void;
 
   public:

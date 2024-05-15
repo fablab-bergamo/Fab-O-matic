@@ -127,7 +127,7 @@ namespace fabomatic
   void taskLogoffCheck()
   {
     // auto logout after delay
-    auto &machine = Board::logic.getMachine();
+    const auto &machine = Board::logic.getMachine();
     if (machine.isAutologoffExpired())
     {
       ESP_LOGI(TAG, "Auto-logging out user %s\r\n", machine.getActiveUser().holder_name.data());
@@ -214,7 +214,7 @@ namespace fabomatic
     }
 
     // Skip factory reset for this specific board because Factory Reset is soldered under the MCU with the reset pin.
-    if (const auto serial = card::esp_serial(); serial == "dcda0c419794")
+    if (const auto &serial = card::esp_serial(); serial == "dcda0c419794")
     {
       pinMode(pins.buttons.factory_defaults_pin, INPUT); // Disable pull-up/pull-downs
       return;
@@ -332,23 +332,24 @@ namespace fabomatic
     Board::logic.changeStatus(Status::PortalStarting);
   }
 
+  auto getConfig(bool force_reset) -> SavedConfig
+  {
+    const auto &opt_settings = SavedConfig::LoadFromEEPROM();
+    if (force_reset || !opt_settings)
+    {
+      return SavedConfig::DefaultConfig();
+    }
+
+    return opt_settings.value();
+  }
+
   // Starts the WiFi and possibly open the config portal in a blocking manner
   /// @param force_reset if true, the portal will be reset to factory defaults
   /// @param disable_portal if true, the portal will be disabled (useful at boot-time)
   void openConfigPortal(bool force_reset, bool disable_portal)
   {
     WiFiManager wifiManager;
-    SavedConfig config;
-
-    const auto opt_settings = SavedConfig::LoadFromEEPROM();
-    if (force_reset || !opt_settings)
-    {
-      config = SavedConfig::DefaultConfig();
-    }
-    else
-    {
-      config = opt_settings.value();
-    }
+    auto config = getConfig(force_reset);
 
     // We are using config as a buffer for the WiFiManager parameters, make sure it can hold the content
     config.mqtt_server.resize(conf::common::STR_MAX_LENGTH);
@@ -555,7 +556,7 @@ void setup()
 
   if constexpr (fabomatic::conf::debug::LOAD_EEPROM_DEFAULTS)
   {
-    const auto defaults = fabomatic::SavedConfig::DefaultConfig();
+    const auto &defaults = fabomatic::SavedConfig::DefaultConfig();
     ESP_LOGW(TAG, "Forcing EEPROM defaults : %s", defaults.toString().c_str());
     defaults.SaveToEEPROM();
   }
