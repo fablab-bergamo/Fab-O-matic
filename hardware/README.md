@@ -16,7 +16,7 @@ This version is easy to order as pre-assembled on JLCPCB. For 10 boards, total c
 ⚠ Errata in this revision ⚠
 
 R9 shall be connected between GND and FB pin, because FB shall be the center of the voltage divider. In this version, R9 was connected between GND and 5V.
-This can be fixed by rotating R9 by 90° and solder it to R11.
+This can be fixed by rotating R9 by 90° counter-clockwise and solder it to R11.
 
 ![image](https://github.com/fablab-bergamo/fab-o-matic/assets/6236243/046bd7b5-0c89-4604-947c-9c6126ae2a86)
 
