@@ -6,7 +6,7 @@
 ## Revision 1.1
 
 Changes from rev 1.0:
-- Fixed buck converter R9 connection to FB pin instead of 5V.
+- Fixed buck converter R11 connection to FB pin instead of 5V.
 
 ## Revision 1.0
 
@@ -16,8 +16,8 @@ This version is easy to order as pre-assembled on JLCPCB. For 10 boards, total c
 
 * Buck converter is delivering 0.8V instead of 5V due to schematic error.
 
-R9 shall be connected between GND and FB pin, because FB shall be the center of the voltage divider. In this version, R9 was connected between GND and 5V.
-This can be fixed by rotating R9 by 90° counter-clockwise and solder it to R11.
+R11 shall be connected between GND and FB pin, because FB shall be the center of the voltage divider. In this version, R11 was connected between GND and 5V.
+This can be fixed by rotating R11 by 90° counter-clockwise and solder it to R11.
 
 ![image](https://github.com/fablab-bergamo/fab-o-matic/assets/6236243/046bd7b5-0c89-4604-947c-9c6126ae2a86)
 
