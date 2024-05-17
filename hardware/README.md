@@ -6,14 +6,15 @@
 ## Revision 1.1
 
 Changes from rev 1.0:
-- Fixed R9 connection to FB pin instead of 5V. This makes the 6.5-40V to 5V buck converter functional.
-
+- Fixed buck converter R9 connection to FB pin instead of 5V.
 
 ## Revision 1.0
 
 This version is easy to order as pre-assembled on JLCPCB. For 10 boards, total cost (as per April 2024) is below 200 EUR total (not considering modules and boxes). Soldering map is available is you want to assemble yourself : <code>rev 1.0/soldering_map.html</code>
 
 ⚠ Errata in this revision ⚠
+
+* Buck converter is delivering 0.8V instead of 5V due to schematic error.
 
 R9 shall be connected between GND and FB pin, because FB shall be the center of the voltage divider. In this version, R9 was connected between GND and 5V.
 This can be fixed by rotating R9 by 90° counter-clockwise and solder it to R11.
