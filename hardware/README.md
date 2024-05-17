@@ -3,9 +3,23 @@
 * This folder contains Gerber file, BOM, schematics.
 * Project has been sponsored by EasyEDA in the OpenHWLab [Project homepage](https://oshwlab.com/pascal.brunot/rfid-arduino-fablab-bg-v2_2024-04-01_14-22-11)
 
+## Revision 1.1
+
+Changes from rev 1.0:
+- Fixed buck converter R11 connection to FB pin instead of 5V.
+
 ## Revision 1.0
 
 This version is easy to order as pre-assembled on JLCPCB. For 10 boards, total cost (as per April 2024) is below 200 EUR total (not considering modules and boxes). Soldering map is available is you want to assemble yourself : <code>rev 1.0/soldering_map.html</code>
+
+⚠ Errata in this revision ⚠
+
+* Buck converter is delivering 0.8V instead of 5V due to schematic error.
+
+R11 shall be connected between GND and FB pin, because FB shall be the center of the voltage divider. In this version, R11 was connected between GND and 5V.
+This can be fixed by rotating R11 by 90° counter-clockwise and solder it to R11.
+
+![image](https://github.com/fablab-bergamo/fab-o-matic/assets/6236243/046bd7b5-0c89-4604-947c-9c6126ae2a86)
 
 Changes from rev 0.4:
 
