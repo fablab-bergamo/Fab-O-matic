@@ -6,7 +6,11 @@
 ## Revision 1.1
 
 Changes from rev 1.0:
-- Fixed buck converter R11 connection to FB pin instead of 5V.
+
+* Fixed buck converter R11 connection to FB pin instead of 5V.
+* Fixed Q1 footprint (switched model)
+* Buzzer is now on top side as it makes enough noise and it can be assembled by JLCPCB this way.
+* Slight layout changes (moved connector down, protection components done, increased distance between relay and command components)
 
 ## Revision 1.0
 
@@ -14,10 +18,16 @@ This version is easy to order as pre-assembled on JLCPCB. For 10 boards, total c
 
 ⚠ Errata in this revision ⚠
 
+* Q1 had wrong footprint, B and E pins are swapped. As a result, relay is not operative.
+
+To fix: desolder Q1 and resolder it upside down with a good amount of soldering tin.
+
 * Buck converter is delivering 0.8V instead of 5V due to schematic error.
 
-R11 shall be connected between GND and FB pin, because FB shall be the center of the voltage divider. In this version, R11 was connected between GND and 5V.
+To fix: R11 shall be connected between GND and FB pin, because FB shall be the center of the voltage divider. In this version, R11 was connected between GND and 5V.
 This can be fixed by rotating R11 by 90° counter-clockwise and solder it to R9.
+
+* The RFID pin labels printed on bottom side are wrong (text only issue).
 
 ![image](https://github.com/fablab-bergamo/fab-o-matic/assets/6236243/046bd7b5-0c89-4604-947c-9c6126ae2a86)
 
