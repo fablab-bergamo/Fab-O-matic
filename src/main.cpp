@@ -579,12 +579,13 @@ void setup()
   {
     logic.changeStatus(Status::ErrorHardware);
     logic.beepFail();
-    logic.blinkLed();
+    logic.blinkLed(64, 0, 0);
     ESP_LOGE(TAG, "Hardware initialization failed");
   }
   else
   {
     logic.beepOk();
+    logic.blinkLed(0, 64, 0);
   }
 
   fabomatic::openConfigPortal(fabomatic::conf::debug::LOAD_EEPROM_DEFAULTS,
@@ -603,6 +604,8 @@ void setup()
     esp_task_wdt_add(NULL);          // add current thread to WDT watch
     while (true)
     {
+      logic.blinkLed(64, 0, 0);
+      logic.changeStatus(fabomatic::BoardLogic::Status::ErrorHardware);
       fabomatic::Tasks::delay(1s);
       ESP_LOGE(TAG, "Hardware failed, waiting for OTA");
     }

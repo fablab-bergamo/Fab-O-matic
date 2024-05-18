@@ -206,7 +206,7 @@ namespace fabomatic
 
   auto SavedConfig::IncrementBootCount() -> size_t
   {
-    SavedConfig config = LoadFromEEPROM().value_or(DefaultConfig());
+    auto config = LoadFromEEPROM().value_or(DefaultConfig());
     config.bootCount++;
     if (!config.SaveToEEPROM())
     {
