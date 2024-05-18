@@ -39,12 +39,12 @@ namespace fabomatic
 
   namespace conf::machine
   {
-    static constexpr auto DEFAULT_AUTO_LOGOFF_DELAY{8h}; /* User will be log out after this delay. If 0h, no auto-logout. This may be overriden by backend data */
-    static constexpr auto BEEP_PERIOD{1min};             /* Device will beep before auto-poweroff. If 0min, no beeping.  */
-    static constexpr auto DEFAULT_GRACE_PERIOD{2min};    /* Idle time before poweroff. If 0min, machine will stay on. */
-    static constexpr auto DELAY_BETWEEN_BEEPS{30s};      /* Beeps will be heard every 30s when the machine is about to shutdown */
-    static constexpr bool MAINTENANCE_BLOCK{true};       /* If true, machine needing maintenance will be blocked for normal users */
-    static constexpr auto LONG_TAP_DURATION{10s};        /* Minimum time to confirm by long tap maintenance*/
+    static constexpr auto DEFAULT_AUTO_LOGOFF_DELAY{12h}; /* User will be log out after this delay. If 0h, no auto-logout. This may be overriden by backend data */
+    static constexpr auto BEEP_PERIOD{2min};              /* Device will beep before auto-poweroff. If 0min, no beeping.  */
+    static constexpr auto DEFAULT_GRACE_PERIOD{5min};     /* Idle time before poweroff. If 0min, machine will stay on. */
+    static constexpr auto DELAY_BETWEEN_BEEPS{30s};       /* Beeps will be heard every 30s when the machine is about to shutdown */
+    static constexpr bool MAINTENANCE_BLOCK{true};        /* If true, machine needing maintenance will be blocked for normal users */
+    static constexpr auto LONG_TAP_DURATION{10s};         /* Minimum time to confirm by long tap maintenance*/
 
   } // namespace conf::machine
 

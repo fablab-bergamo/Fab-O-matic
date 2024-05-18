@@ -383,8 +383,8 @@ namespace fabomatic
     wifiManager.resetSettings();
     wifiManager.setTimeout(10); // fail fast for debugging
 #endif
-
-    if (disable_portal || config.disablePortal)
+    auto must_skip = disable_portal || config.disablePortal;
+    if (must_skip)
     {
       wifiManager.setTimeout(1);
     }
@@ -396,8 +396,11 @@ namespace fabomatic
     }
     else
     {
-      Board::logic.changeStatus(Status::PortalFailed);
-      delay(3000);
+      if (!must_skip)
+      {
+        Board::logic.changeStatus(Status::PortalFailed);
+        delay(3000);
+      }
     }
 
     if (shouldSaveConfig)
