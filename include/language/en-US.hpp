@@ -3,6 +3,8 @@
 
 namespace fabomatic::strings::en_US
 {
+  static constexpr auto S_LANG_ID = "en-US";
+  
   static constexpr auto S_BUSY = "Busy";
   static constexpr auto S_CANCELLED = "* CANCELLED *";
   static constexpr auto S_CONFIRMED = "* CONFIRMED *";

@@ -466,6 +466,13 @@ namespace fabomatic
     std::cout << "\tmachine_name: " << default_config::machine_name << '\n';
     std::cout << "\tmachine_type: " << static_cast<int>(default_config::machine_type) << '\n';
     std::cout << "\thostname: " << default_config::hostname << '\n';
+    // simulation constants
+    std::cout << "Compilation settings" << '\n';
+    std::cout << "\tMQTT_SIMULATION: " << MQTT_SIMULATION << '\n';
+    std::cout << "\tRFID_SIMULATION: " << RFID_SIMULATION << '\n';
+    std::cout << "\tCORE_DEBUG_LEVEL: " << CORE_DEBUG_LEVEL << '\n';
+    std::cout << "\tLANGUAGE: " << fabomatic::strings::S_LANG_ID << '\n';
+
     // namespace conf::rfid_tags
     std::cout << "RFID tags:" << '\n';
     std::cout << "\tUID_BYTE_LEN: " << +rfid_tags::UID_BYTE_LEN << '\n';
