@@ -262,10 +262,6 @@ namespace fabomatic
     {
       pinMode(pins.buzzer.pin, OUTPUT);
       gpio_set_drive_capability(static_cast<gpio_num_t>(pins.buzzer.pin), GPIO_DRIVE_CAP_2);
-      auto freq = ledcSetup(conf::buzzer::LEDC_PWM_CHANNEL, conf::buzzer::BEEP_HZ, 8U);
-      ESP_LOGD(TAG, "PWM frequency for buzzer set to %d Hz", freq);
-      success &= (freq != 0);
-      ledcAttachPin(pins.buzzer.pin, conf::buzzer::LEDC_PWM_CHANNEL);
     }
 
     ESP_LOGI(TAG, "Board initialization complete, success = %d", success);
@@ -448,9 +444,9 @@ namespace fabomatic
   {
     if constexpr (conf::buzzer::STANDARD_BEEP_DURATION > 0ms && pins.buzzer.pin != NO_PIN)
     {
-      ledcWrite(conf::buzzer::LEDC_PWM_CHANNEL, 127UL);
+      digitalWrite(pins.buzzer.pin, 1);
       Tasks::delay(conf::buzzer::STANDARD_BEEP_DURATION);
-      ledcWrite(conf::buzzer::LEDC_PWM_CHANNEL, 0UL);
+      digitalWrite(pins.buzzer.pin, 0);
     }
   }
 
@@ -460,9 +456,9 @@ namespace fabomatic
     {
       for (auto i = 0; i < conf::buzzer::NB_BEEPS; i++)
       {
-        ledcWrite(conf::buzzer::LEDC_PWM_CHANNEL, 127UL);
+        digitalWrite(pins.buzzer.pin, 1);
         Tasks::delay(conf::buzzer::STANDARD_BEEP_DURATION);
-        ledcWrite(conf::buzzer::LEDC_PWM_CHANNEL, 0UL);
+        digitalWrite(pins.buzzer.pin, 0);
         Tasks::delay(conf::buzzer::STANDARD_BEEP_DURATION);
       }
     }
