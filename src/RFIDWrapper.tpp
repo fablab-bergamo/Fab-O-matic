@@ -51,10 +51,10 @@ namespace fabomatic
     do
     {
       // Detect Tag without looking for collisions
-      byte bufferATQA[2];
-      byte bufferSize = sizeof(bufferATQA);
+      std::array<byte, 2> bufferATQA;
+      byte len = sizeof(bufferATQA);
 
-      if (driver->PICC_WakeupA(bufferATQA, bufferSize))
+      if (driver->PICC_WakeupA(bufferATQA.data(), len))
       {
         if (readCardSerial() == original)
           return true;
