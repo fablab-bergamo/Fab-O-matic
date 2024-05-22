@@ -12,7 +12,7 @@ namespace fabomatic
   class Led
   {
   public:
-    enum class Status : uint8_t
+    enum class Status
     {
       Off,
       On,
