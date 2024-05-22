@@ -5,17 +5,28 @@
 
 #include <ArduinoJson.h>
 
+// TAG for logging purposes
 static const char *const TAG2 = "MockMQTTBroker";
+
 namespace fabomatic
 {
+  /**
+   * @brief Starts the MQTT broker.
+   *
+   * This function checks if the Wi-Fi is connected and initializes the MQTT broker.
+   * If the Wi-Fi is not connected, it logs the status and returns.
+   * If the broker is not running, it initializes the broker with the configured port number.
+   */
   auto MockMQTTBroker::start() -> void
   {
+    // Wait for the Wi-Fi to connect
     while (WiFi.status() != WL_CONNECTED)
-    { // Wait for the Wi-Fi to connect
+    {
       ESP_LOGD(TAG2, "MQTT BROKER: WiFi status changed to %d", WiFi.status());
       is_running = false;
       return;
     }
+    // Initialize the broker if it's not running
     if (!is_running)
     {
       is_running = init(conf::mqtt::PORT_NUMBER, true);
@@ -23,18 +34,29 @@ namespace fabomatic
     }
   }
 
+  /**
+   * @brief Handles MQTT events.
+   *
+   * @param event Pointer to the sMQTTEvent object containing event details.
+   * @return true if the event was handled successfully, false otherwise.
+   *
+   * This function handles various types of MQTT events such as new client connections,
+   * message publications, client removals, connection losses, subscriptions, and unsubscriptions.
+   */
   auto MockMQTTBroker::onEvent(sMQTTEvent *event) -> bool
   {
     switch (event->Type())
     {
     case NewClient_sMQTTEventType:
     {
-      auto *e = static_cast<sMQTTNewClientEvent *>(event); // NOLINT(unused-variable)
+      // Handle new client connection event
+      auto *e = static_cast<sMQTTNewClientEvent *>(event);
       ESP_LOGD(TAG2, "MQTT BROKER: client connected, id:%s", e->Client()->getClientId().c_str());
     }
     break;
     case Public_sMQTTEventType:
     {
+      // Handle publish event
       std::lock_guard<std::mutex> lock(mutex);
       auto *e = static_cast<sMQTTPublicClientEvent *>(event);
       topic = e->Topic();
@@ -46,25 +68,29 @@ namespace fabomatic
     break;
     case RemoveClient_sMQTTEventType:
     {
-      auto *e = static_cast<sMQTTRemoveClientEvent *>(event); // NOLINT(unused-variable)
+      // Handle client removal event
+      auto *e = static_cast<sMQTTRemoveClientEvent *>(event);
       ESP_LOGD(TAG2, "MQTT BROKER: removed client id: %s", e->Client()->getClientId().c_str());
     }
     break;
     case LostConnect_sMQTTEventType:
     {
+      // Handle lost connection event
       is_running = false;
       ESP_LOGD(TAG2, "MQTT BROKER: lost connection");
     }
     break;
     case Subscribe_sMQTTEventType:
     {
-      auto *e = static_cast<sMQTTSubUnSubClientEvent *>(event); // NOLINT(unused-variable)
+      // Handle subscription event
+      auto *e = static_cast<sMQTTSubUnSubClientEvent *>(event);
       ESP_LOGD(TAG2, "MQTT BROKER: client %s subscribed to %s", e->Client()->getClientId().c_str(), e->Topic().c_str());
     }
     break;
     case UnSubscribe_sMQTTEventType:
     {
-      auto *e = static_cast<sMQTTSubUnSubClientEvent *>(event); // NOLINT(unused-variable)
+      // Handle unsubscription event
+      auto *e = static_cast<sMQTTSubUnSubClientEvent *>(event);
       ESP_LOGD(TAG2, "MQTT BROKER: got unsubscribe from %s", e->Topic().c_str());
     }
     break;
@@ -75,13 +101,22 @@ namespace fabomatic
     return true;
   }
 
+  /**
+   * @brief Checks if the MQTT broker is running.
+   *
+   * @return true if the broker is running, false otherwise.
+   */
   auto MockMQTTBroker::isRunning() const -> bool
   {
     return is_running;
   }
 
-  /// @brief Returns a fake server reply for testing purposes
-  /// @return json payload
+  /**
+   * @brief Provides fake server replies for testing purposes.
+   *
+   * @param query The query string to determine the appropriate response.
+   * @return The JSON payload response as a string.
+   */
   auto MockMQTTBroker::defaultReplies(const std::string &query) const -> const std::string
   {
     if (query.find("checkmachine") != std::string::npos)
@@ -156,12 +191,25 @@ namespace fabomatic
     return std::string{"{\"request_ok\":true}"};
   }
 
+  /**
+   * @brief Configures custom replies for MQTT queries.
+   *
+   * @param callback A function that takes a topic and query as input and returns the corresponding response.
+   */
   auto MockMQTTBroker::configureReplies(std::function<const std::string(const std::string &, const std::string &)> callback) -> void
   {
     std::lock_guard<std::mutex> lock(mutex);
     this->callback = callback;
   }
 
+  /**
+   * @brief Processes pending MQTT queries.
+   *
+   * @return The number of remaining queries.
+   *
+   * This function processes the queries in the queue by invoking the configured callback function
+   * and publishes the response to the corresponding reply topic.
+   */
   auto MockMQTTBroker::processQueries() -> size_t
   {
     std::lock_guard<std::mutex> lock(mutex);
@@ -182,6 +230,12 @@ namespace fabomatic
     return queries.size();
   }
 
+  /**
+   * @brief Main loop for the MQTT broker.
+   *
+   * This function checks if the broker is running. If not, it starts the broker.
+   * If the broker is running, it updates the broker state and processes pending queries.
+   */
   void MockMQTTBroker::mainLoop()
   {
     // Check if the server is online
