@@ -55,7 +55,7 @@ namespace fabomatic::card
     return retVal;
   }
 
-  inline void print(uint64_t uid)
+  inline auto print(uint64_t uid) -> void
   {
     ESP_LOGI(TAG, "Card UID = %s", card::uid_str(uid).c_str());
   }

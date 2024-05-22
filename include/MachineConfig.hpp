@@ -17,10 +17,10 @@ namespace fabomatic
     MachineType machine_type{MachineType::Invalid};
     std::string machine_name{""};
     const pins_config::relay_config &relay_config;
-    const std::string mqtt_switch_topic;
+    const std::string mqtt_switch_topic{""};
 
     /// @brief Time after which the active user on the machine shall be logged-off
-    std::chrono::seconds autologoff;
+    std::chrono::seconds autologoff{conf::machine::DEFAULT_AUTO_LOGOFF_DELAY};
 
     /// @brief Time after which the active user on the machine shall be logged-off
     std::chrono::seconds grace_period;
@@ -31,8 +31,8 @@ namespace fabomatic
                   std::chrono::seconds grace_period) : machine_id(id), machine_type(type),
                                                        machine_name(name),
                                                        relay_config{relay},
-                                                       autologoff(autologoff),
                                                        mqtt_switch_topic(topic),
+                                                       autologoff(autologoff),
                                                        grace_period{grace_period} {};
 
     [[nodiscard]] auto toString() const -> const std::string;

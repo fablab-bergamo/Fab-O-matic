@@ -21,9 +21,9 @@ namespace fabomatic
 
     Led() = default;
 
-    void set(Status status);
-    void setColor(uint8_t r, uint8_t g, uint8_t b);
-    void update();
+    auto set(Status status) -> void;
+    auto setColor(uint8_t r, uint8_t g, uint8_t b) -> void;
+    auto update() -> void;
 
   private:
     Adafruit_NeoPixel pixel{1, pins.led.pin, pins.led.neopixel_config};
