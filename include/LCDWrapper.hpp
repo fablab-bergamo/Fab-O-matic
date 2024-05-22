@@ -41,7 +41,7 @@ namespace fabomatic
     static constexpr std::array<uint8_t, HEIGHT_PX> powered_off_char{0x0a, 0x04, 0x0a, 0x00, 0x1f, 0x1f, 0x0a, 0x0a};
     static constexpr std::array<uint8_t, HEIGHT_PX> powering_off_char{0x0e, 0x15, 0x15, 0x15, 0x17, 0x11, 0x11, 0x0e};
 
-    const pins_config::lcd_config config;
+    const pins_config::lcd_config &config;
 
     LcdDriver lcd;
     bool show_connection_status;
