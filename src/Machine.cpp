@@ -31,7 +31,7 @@ namespace fabomatic
 
     if (config.value().hasRelay())
     {
-      const auto pin = config.value().relay_config.pin;
+      const auto pin = config.value().relay_config.ch1_pin;
       digitalWrite(pin,
                    config.value().relay_config.active_low ? HIGH : LOW);
       pinMode(pin, OUTPUT);
@@ -138,7 +138,7 @@ namespace fabomatic
     CHECK_CONFIGURED(void);
     ESP_LOGI(TAG, "Machine::power_relay : power set to %d", value);
 
-    const auto pin = config.value().relay_config.pin;
+    const auto pin = config.value().relay_config.ch1_pin;
 
     if (config.value().relay_config.active_low)
     {
@@ -169,10 +169,10 @@ namespace fabomatic
     ESP_LOGI(TAG, "Machine::power_mqtt : power set to %d", value);
 
     auto &mqtt_server = server.value().get();
-    auto &act_config = config.value();
+    const auto &sw_topic = config.value().mqtt_switch_topic;
 
-    String topic{act_config.mqtt_config.topic.data()};
-    String payload = value ? act_config.mqtt_config.on_message.data() : act_config.mqtt_config.off_message.data();
+    String topic{sw_topic.data()};
+    String payload = value ? conf::default_config::mqtt_switch_on_message.data() : conf::default_config::mqtt_switch_on_message.data();
 
     auto retries = 0;
     while (!mqtt_server.publish(topic, payload, false))

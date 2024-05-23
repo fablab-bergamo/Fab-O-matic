@@ -16,9 +16,9 @@ namespace fabomatic
   /// @brief Open the ArduinoOTA configuration portal
   /// @param force_reset true to discard saved settings and restore compile-time settings
   /// @param disable_portal true to skip portal opening (used at boot time)
-  void openConfigPortal(bool force_reset, bool disable_portal);
-  
-  void setupOTA();
+  auto openConfigPortal(bool force_reset, bool disable_portal) -> void;
+
+  auto setupOTA() -> void;
 
 } // namespace fabomatic
 #endif // #ifndef OTA_HPP

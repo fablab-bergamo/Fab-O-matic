@@ -18,7 +18,7 @@ namespace fabomatic
   private:
     WhiteList whitelist;
     mutable CachedCards cache;
-    mutable size_t cache_idx = 0;
+    mutable size_t cache_idx{0};
     [[nodiscard]] auto uidInWhitelist(card::uid_t uid) const -> std::optional<WhiteListEntry>;
     [[nodiscard]] auto uidInCache(card::uid_t uid) const -> std::optional<CachedCard>;
     [[nodiscard]] auto searchCache(card::uid_t candidate_uid) const -> std::optional<CachedCard>;
@@ -28,7 +28,7 @@ namespace fabomatic
     AuthProvider() = delete;
     AuthProvider(WhiteList whitelist);
     [[nodiscard]] auto tryLogin(card::uid_t uid, FabBackend &server) const -> std::optional<FabUser>;
-    void setWhitelist(WhiteList list);
+    auto setWhitelist(WhiteList list) -> void;
     auto saveCache() const -> bool;
     auto loadCache() -> void;
   };
