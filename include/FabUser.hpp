@@ -21,10 +21,10 @@ namespace fabomatic
       FabAdmin,
     };
 
-    card::uid_t card_uid = card::INVALID;
+    card::uid_t card_uid {card::INVALID};
     std::string holder_name{""};
-    bool authenticated = false;
-    UserLevel user_level = UserLevel::Unknown;
+    bool authenticated {false};
+    UserLevel user_level {UserLevel::Unknown};
 
     FabUser() = default;
 

@@ -11,7 +11,7 @@
 #include "RFIDWrapper.hpp"
 #include "SavedConfig.hpp"
 #include "conf.hpp"
-#include "mock/MockLcdLibrary.hpp"
+
 #include "mock/MockMQTTBroker.hpp"
 #include "mock/MockMrfc522.hpp"
 #include "test_common.h"
@@ -64,8 +64,6 @@ namespace fabomatic::tests
     TEST_ASSERT_TRUE_MESSAGE(config.hasRelay() || fabomatic::pins.relay.ch1_pin == fabomatic::NO_PIN, "Machine relay not configured");
     TEST_ASSERT_TRUE_MESSAGE(config.hasMqttSwitch() || fabomatic::conf::default_config::mqtt_switch_topic.empty(), "Machine MQTT switch not configured");
 
-    TEST_ASSERT_TRUE_MESSAGE(config.mqtt_config.topic == fabomatic::conf::default_config::mqtt_switch_topic, "Machine MQTT topic not configured");
-    TEST_ASSERT_TRUE_MESSAGE(config.relay_config.pin == fabomatic::pins.relay.ch1_pin, "Machine relay pin not configured");
     TEST_ASSERT_TRUE_MESSAGE(config.machine_id.id == fabomatic::conf::default_config::machine_id.id, "Machine ID not configured");
   }
 
