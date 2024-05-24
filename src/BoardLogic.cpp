@@ -22,6 +22,7 @@
 #ifndef GIT_VERSION
 #define GIT_VERSION "??????"
 #endif
+#include <driver/gpio.h>
 
 namespace fabomatic
 {
@@ -138,7 +139,7 @@ namespace fabomatic
       getLcd().setRow(1, ss.str());
       getLcd().update(bi);
 
-      const auto start = std::chrono::system_clock::now();
+      const auto start = fabomatic::Tasks::arduinoNow();
       if (!getRfid().cardStillThere(card, delay_per_step))
       {
         getLcd().setRow(1, strings::S_CANCELLED);
@@ -147,7 +148,7 @@ namespace fabomatic
       }
 
       // cardStillThere may have returned immediately, so we need to wait a bit
-      const auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - start);
+      const auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(fabomatic::Tasks::arduinoNow() - start);
       if (delay_per_step - elapsed > 10ms)
       {
         Tasks::delay(delay_per_step - elapsed);
@@ -175,7 +176,7 @@ namespace fabomatic
     const auto response = auth.tryLogin(uid, server);
     if (!response.has_value() || response.value().user_level == FabUser::UserLevel::Unknown)
     {
-      ESP_LOGI(TAG, "Failed login for %s", card::uid_str(uid));
+      ESP_LOGI(TAG, "Failed login for %s", card::uid_str(uid).c_str());
       changeStatus(Status::LoginDenied);
       beepFail();
       return false;
@@ -304,6 +305,9 @@ namespace fabomatic
     {
       uid_str = "????????";
     }
+    std::stringstream idv;
+    idv << "ID:" << this->getMachine().getMachineId()
+        << " V" << GIT_VERSION;
 
     switch (status)
     {
@@ -373,7 +377,7 @@ namespace fabomatic
       break;
     case Status::MaintenanceNeeded:
       lcd.setRow(0, strings::S_BLOCKED_MAINTENANCE_1);
-      lcd.setRow(1, strings::S_BLOCKED_MAINTENANCE_1);
+      lcd.setRow(1, strings::S_BLOCKED_MAINTENANCE_2);
       break;
     case Status::MaintenanceQuery:
       lcd.setRow(0, strings::S_PROMPT_MAINTENANCE_1);
@@ -385,11 +389,11 @@ namespace fabomatic
       break;
     case Status::Error:
       lcd.setRow(0, strings::S_GENERIC_ERROR);
-      lcd.setRow(1, "V" GIT_VERSION);
+      lcd.setRow(1, idv.str());
       break;
     case Status::ErrorHardware:
       lcd.setRow(0, strings::S_HW_ERROR);
-      lcd.setRow(1, "V" GIT_VERSION);
+      lcd.setRow(1, idv.str());
       break;
     case Status::PortalFailed:
       lcd.setRow(0, strings::S_PORTAL_ERROR);
@@ -397,7 +401,7 @@ namespace fabomatic
       break;
     case Status::PortalSuccess:
       lcd.setRow(0, strings::S_PORTAL_SUCCESS);
-      lcd.setRow(1, "V" GIT_VERSION);
+      lcd.setRow(1, idv.str());
       break;
     case Status::PortalStarting:
       lcd.setRow(0, strings::S_OPEN_PORTAL);
@@ -405,7 +409,7 @@ namespace fabomatic
       break;
     case Status::Booting:
       lcd.setRow(0, strings::S_BOOTING);
-      lcd.setRow(1, "V" GIT_VERSION);
+      lcd.setRow(1, idv.str());
       break;
     case Status::ShuttingDown:
       lcd.setRow(0, machine_name);
@@ -631,7 +635,7 @@ namespace fabomatic
     machine.setAutologoffDelay(delay);
   }
 
-  auto BoardLogic::setWhitelist(WhiteList whitelist) -> void
+  constexpr auto BoardLogic::setWhitelist(WhiteList whitelist) -> void
   {
     auth.setWhitelist(whitelist);
   }

@@ -139,6 +139,9 @@ namespace fabomatic::tests
     new_state = simulate_rfid_card(rfid, logic, card_uid);
     TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::LoggedOut, new_state, "Status not LoggedOut");
     TEST_ASSERT_TRUE_MESSAGE(logic.getMachine().isFree(), "Machine is not free");
+
+    auto save_result = logic.getServer().saveBuffer();
+    TEST_ASSERT_TRUE_MESSAGE(save_result, "Saving buffered messages works");
   }
 
   void test_one_user_at_a_time()
@@ -182,6 +185,9 @@ namespace fabomatic::tests
 
     TEST_ASSERT_TRUE_MESSAGE(logic.getMachine().getActiveUser().card_uid == card_uid2, "User UID is not expected");
     TEST_ASSERT_TRUE_MESSAGE(!logic.getMachine().isFree(), "Machine is free");
+
+    auto save_result = logic.getServer().saveBuffer();
+    TEST_ASSERT_TRUE_MESSAGE(save_result, "Saving buffered messages works");
   }
 
   void test_user_autologoff()
@@ -211,6 +217,9 @@ namespace fabomatic::tests
     simulate_rfid_card(rfid, logic, std::nullopt);
     TEST_ASSERT_TRUE_MESSAGE(logic.getMachine().isFree(), "Machine is free");
     TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::MachineFree, logic.getStatus(), "Status not MachineFree");
+
+    auto save_result = logic.getServer().saveBuffer();
+    TEST_ASSERT_TRUE_MESSAGE(save_result, "Saving buffered messages works");
   }
 
   void test_machine_maintenance()
@@ -264,6 +273,30 @@ namespace fabomatic::tests
     TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::NotAllowed, logic.getStatus(), "Status not NotAllowed for admins");
     simulate_rfid_card(rfid, logic, std::nullopt);
   }
+
+  void test_messages_buffered()
+  {
+    auto card_admin = get_test_uid(0);
+    auto &backend = logic.getServer();
+
+    simulate_rfid_card(rfid, logic, card_admin, 500ms); // Start use
+    delay(1);                                           // 1s usage
+    simulate_rfid_card(rfid, logic, card_admin, 500ms); // End use
+
+    TEST_ASSERT_TRUE_MESSAGE(backend.hasBufferedMsg(), "Messages have been buffered");
+
+    auto result = backend.transmitBuffer();
+    TEST_ASSERT_FALSE_MESSAGE(result, "Retransmission fails");
+
+    auto save_result = backend.saveBuffer();
+    TEST_ASSERT_TRUE_MESSAGE(save_result, "Saving buffered messages works");
+
+    auto sc = SavedConfig::LoadFromEEPROM();
+    TEST_ASSERT_TRUE_MESSAGE(sc.has_value(), "SavedConfig has valid contents");
+
+    backend.configure(sc.value());
+    TEST_ASSERT_TRUE_MESSAGE(backend.hasBufferedMsg(), "Reloading buffered messages works");
+  }
 } // namespace fabomatic::tests
 
 void tearDown(void) {};
@@ -295,6 +328,7 @@ void setup()
   RUN_TEST(fabomatic::tests::test_whitelist_no_network);
   RUN_TEST(fabomatic::tests::test_one_user_at_a_time);
   RUN_TEST(fabomatic::tests::test_user_autologoff);
+  RUN_TEST(fabomatic::tests::test_messages_buffered);
   UNITY_END(); // stop unit testing
   if (config.has_value())
   {

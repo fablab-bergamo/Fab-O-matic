@@ -1,6 +1,7 @@
 #include <chrono>
 #include <string>
 #include <functional>
+#include <algorithm>
 
 #include <Arduino.h>
 #include <unity.h>
@@ -8,6 +9,7 @@
 #include <AuthProvider.hpp>
 #include <FabBackend.hpp>
 #include "BoardLogic.hpp"
+#include "BufferedMsg.hpp"
 
 using namespace std::chrono_literals;
 
@@ -167,6 +169,137 @@ namespace fabomatic::tests
     auto result2 = SavedConfig::LoadFromEEPROM();
     TEST_ASSERT_FALSE_MESSAGE(result2.has_value(), "Loaded config is not empty");
   }
+
+  bool test_deserialization(Buffer &buff)
+  {
+    JsonDocument json_doc;
+    buff.toJson(json_doc, "message_buffer");
+    std::string json_text;
+    auto chars = serializeJson(json_doc, json_text);
+    TEST_ASSERT_GREATER_THAN_MESSAGE(0, chars, "Non empty JSON text");
+
+    ESP_LOGD(TAG, "test_deserialization: json_text:%s", json_text.c_str());
+
+    auto result = Buffer::fromJsonElement(json_doc["message_buffer"]);
+    TEST_ASSERT_TRUE_MESSAGE(result.has_value(), "Deserialization succeeds");
+
+    auto &new_buff = result.value();
+
+    TEST_ASSERT_EQUAL_MESSAGE(buff.count(), new_buff.count(), "Messages are lost in json");
+
+    while (new_buff.count() > 0)
+    {
+      const auto &msg_new = new_buff.getMessage();
+      const auto &msg_old = buff.getMessage();
+      TEST_ASSERT_EQUAL_STRING_MESSAGE(msg_new.mqtt_message.c_str(), msg_old.mqtt_message.c_str(), "Messages are in different order or damaged");
+      TEST_ASSERT_EQUAL_STRING_MESSAGE(msg_new.mqtt_topic.c_str(), msg_old.mqtt_topic.c_str(), "Topics are in different order or damaged");
+      TEST_ASSERT_EQUAL_MESSAGE(msg_new.wait_for_answer, msg_old.wait_for_answer, "Wait flags are in different order or damaged");
+    }
+    return true;
+  }
+
+  void test_buffered_msg()
+  {
+    constexpr auto NUM_MESSAGES = std::min(30, Buffer::MAX_MESSAGES - 3);
+
+    Buffer buff;
+    BufferedMsg msg1{"msg1", "topic1", false};
+    BufferedMsg msg2{"msg2", "topic1", false};
+    BufferedMsg msg3{"msg3", "topic2", false};
+    std::vector messages{msg3, msg2, msg1};
+
+    TEST_ASSERT_TRUE(msg1.mqtt_message == "msg1");
+    TEST_ASSERT_TRUE(msg1.mqtt_topic == "topic1");
+    TEST_ASSERT_TRUE(msg2.mqtt_message == "msg2");
+    TEST_ASSERT_TRUE(msg2.mqtt_topic == "topic1");
+    TEST_ASSERT_TRUE(msg3.mqtt_message == "msg3");
+    TEST_ASSERT_TRUE(msg3.mqtt_topic == "topic2");
+
+    // Create some more messages
+    for (auto msg_num = 0; msg_num < NUM_MESSAGES; msg_num++)
+    {
+      std::string message{"{action=\"test\", value=\""};
+      message.append(std::to_string(msg_num));
+      message.append("\", test: true}");
+      std::string topic{"machine/TESTTOPIC/"};
+
+      topic.append(std::to_string(msg_num));
+      messages.push_back({message, topic, true});
+    }
+
+    TEST_ASSERT_TRUE_MESSAGE(buff.hasChanged(), "Buffer has pending changes");
+
+    // Nothing to test
+    if constexpr (!conf::debug::ENABLE_BUFFERING)
+      return;
+
+    // Test insertion, messages must be queued newest first (msg3-msg2-msg1)
+    auto msg_count = 0;
+    for (const auto &msg : messages)
+    {
+      TEST_ASSERT_EQUAL_MESSAGE(msg_count, buff.count(), "Push_back: Buffer count is correct");
+      buff.push_front(msg.mqtt_message, msg.mqtt_topic, msg.wait_for_answer);
+      msg_count++;
+    }
+
+    TEST_ASSERT_EQUAL_MESSAGE(messages.size(), buff.count(), "Buffer contains all expected messages");
+
+    TEST_ASSERT_TRUE_MESSAGE(buff.hasChanged(), "Buffer has pending changes");
+    buff.setChanged(false);
+
+    // Test retrieval oldest first (msg1-msg2-msg3-...)
+    for (auto elem = messages.rbegin(); elem != messages.rend(); ++elem)
+    {
+      auto &msg = buff.getMessage();
+      TEST_ASSERT_EQUAL_STRING_MESSAGE(elem->mqtt_message.c_str(), msg.mqtt_message.c_str(), "(1) Retrieval oldest first message is correct");
+      TEST_ASSERT_EQUAL_STRING_MESSAGE(elem->mqtt_topic.c_str(), msg.mqtt_topic.c_str(), "(1) Retrieval oldest first topic is correct");
+      TEST_ASSERT_EQUAL_MESSAGE(elem->wait_for_answer, msg.wait_for_answer, "(1) Retrieval oldest first wait_for_answer is correct");
+    }
+
+    TEST_ASSERT_EQUAL_MESSAGE(0, buff.count(), "Buffer is now empty");
+    TEST_ASSERT_TRUE_MESSAGE(buff.hasChanged(), "Buffer has pending changes");
+    buff.setChanged(false);
+
+    // Test insertion in reverse order
+    msg_count = 0;
+    for (const auto &msg : messages)
+    {
+      TEST_ASSERT_EQUAL_MESSAGE(msg_count, buff.count(), "(1) Push_front: Buffer count is correct");
+      buff.push_back(msg.mqtt_message, msg.mqtt_topic, msg.wait_for_answer);
+      msg_count++;
+    }
+
+    TEST_ASSERT_TRUE_MESSAGE(buff.hasChanged(), "Buffer has pending changes");
+    buff.setChanged(false);
+
+    for (auto elem = messages.begin(); elem != messages.end(); ++elem)
+    {
+      auto &msg = buff.getMessage();
+      TEST_ASSERT_EQUAL_STRING_MESSAGE(elem->mqtt_message.c_str(), msg.mqtt_message.c_str(), "(2) Retrieval oldest first message is correct");
+      TEST_ASSERT_EQUAL_STRING_MESSAGE(elem->mqtt_topic.c_str(), msg.mqtt_topic.c_str(), "(2) Retrieval oldest first topic is correct");
+      TEST_ASSERT_EQUAL_MESSAGE(elem->wait_for_answer, msg.wait_for_answer, "(2) Retrieval oldest first wait_for_answer is correct");
+    }
+
+    TEST_ASSERT_EQUAL_MESSAGE(0, buff.count(), "(2) Buffer is now empty");
+    TEST_ASSERT_TRUE_MESSAGE(buff.hasChanged(), "Buffer has pending changes");
+    buff.setChanged(false);
+
+    // Test empty buffer
+    TEST_ASSERT_TRUE_MESSAGE(test_deserialization(buff), "JSON works for empty buffer");
+    TEST_ASSERT_FALSE_MESSAGE(buff.hasChanged(), "Buffer has no pending changes");
+
+    // Insert more messages
+    msg_count = 0;
+    for (const auto &msg : messages)
+    {
+      TEST_ASSERT_EQUAL_MESSAGE(msg_count, buff.count(), "(2) Push_front: Buffer count is correct");
+      buff.push_back(msg.mqtt_message, msg.mqtt_topic, msg.wait_for_answer);
+      msg_count++;
+    }
+
+    TEST_ASSERT_TRUE_MESSAGE(test_deserialization(buff), "JSON works for full buffer");
+    TEST_ASSERT_TRUE_MESSAGE(buff.hasChanged(), "Buffer has pending changes");
+  }
 } // namespace fabomatic::tests
 
 void tearDown(void)
@@ -189,6 +322,7 @@ void setup()
   RUN_TEST(fabomatic::tests::test_changes);
   RUN_TEST(fabomatic::tests::test_magic_number);
   RUN_TEST(fabomatic::tests::test_rfid_cache);
+  RUN_TEST(fabomatic::tests::test_buffered_msg);
 
   if (original.has_value())
   {

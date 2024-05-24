@@ -7,6 +7,7 @@
 #include "mock/MockMrfc522.hpp"
 #include "test_common.h"
 #include "unity.h"
+#include "Tasks.hpp"
 
 namespace fabomatic::tests
 {
@@ -30,12 +31,12 @@ namespace fabomatic::tests
     {
       driver.setUid(uid.value(), duration_tap);
       TEST_ASSERT_TRUE_MESSAGE(uid == rfid.getUid(), "Card UID not equal");
-      auto start = std::chrono::system_clock::now();
+      auto start = fabomatic::Tasks::arduinoNow();
       do
       {
         logic.checkRfid();
         delay(50);
-      } while (duration_tap.has_value() && std::chrono::system_clock::now() - start < duration_tap);
+      } while (duration_tap.has_value() && fabomatic::Tasks::arduinoNow() - start < duration_tap);
     }
     return logic.getStatus();
   }

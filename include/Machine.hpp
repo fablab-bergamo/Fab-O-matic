@@ -6,6 +6,7 @@
 #include <array>
 #include <chrono>
 #include <cstdint>
+#include <optional>
 
 namespace fabomatic
 {
@@ -105,8 +106,8 @@ namespace fabomatic
     bool active{false};
     FabUser current_user{};
 
-    std::optional<std::chrono::time_point<std::chrono::system_clock>> usage_start_timestamp{std::nullopt}; // When did the machine start?
-    std::optional<std::chrono::time_point<std::chrono::system_clock>> logoff_timestamp{std::nullopt};      // When did the last user log off?
+    std::optional<std::chrono::milliseconds> usage_start_timestamp{std::nullopt}; // When did the machine start?
+    std::optional<std::chrono::milliseconds> logoff_timestamp{std::nullopt};      // When did the last user log off?
     PowerState power_state{PowerState::PoweredOff};
 
     /// @brief If true, machine needs maintenance

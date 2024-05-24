@@ -54,8 +54,9 @@ namespace fabomatic
     auto backlightOn() const -> void;
     auto backlightOff() const -> void;
     auto prettyPrint(const DisplayBuffer &buffer, const BoardInfo &bi) const -> void;
-    [[nodiscard]] auto needsUpdate(const BoardInfo &bi) const -> bool;
     auto createChar(uint8_t char_idx, const std::array<uint8_t, HEIGHT_PX> &values) -> void;
+
+    [[nodiscard]] auto needsUpdate(const BoardInfo &bi) const -> bool;
   };
 } // namespace fabomatic
 

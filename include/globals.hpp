@@ -34,8 +34,8 @@ namespace fabomatic::Board
 #endif
 
   LCDWrapper<LiquidCrystal> lcd{pins.lcd};
-  BoardLogic logic;
-  Tasks::Scheduler scheduler;
+  BoardLogic logic{};
+  Tasks::Scheduler scheduler{};
 } // namespace fabomatic::Board
 
 #endif // GLOBALS_HPP_

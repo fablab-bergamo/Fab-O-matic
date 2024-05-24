@@ -43,6 +43,7 @@ namespace fabomatic
   void taskConnect()
   {
     auto &server = Board::logic.getServer();
+
     if (!server.isOnline())
     {
       // connection to wifi
@@ -53,8 +54,11 @@ namespace fabomatic
       // Refresh after connection
       Board::logic.changeStatus(server.isOnline() ? Status::Connected : Status::Offline);
 
-      // Briefly show to the user
-      Tasks::delay(conf::lcd::SHORT_MESSAGE_DELAY);
+      if (server.isOnline())
+      {
+        // Briefly show to the user
+        Tasks::delay(conf::lcd::SHORT_MESSAGE_DELAY);
+      }
     }
 
     if (server.isOnline())
@@ -137,9 +141,10 @@ namespace fabomatic
     {
       if (!initialized)
       {
-        auto secs = std::chrono::duration_cast<std::chrono::seconds>(conf::tasks::WATCHDOG_TIMEOUT).count();
-        esp_task_wdt_init(secs, true); // enable panic so ESP32 restarts
-        ESP_LOGI(TAG, "taskEspWatchdog - initialized %lld seconds", secs);
+        constexpr auto msecs = std::chrono::duration_cast<std::chrono::milliseconds>(conf::tasks::WATCHDOG_TIMEOUT).count();
+        constexpr esp_task_wdt_config_t conf{.timeout_ms = msecs, .idle_core_mask = 0, .trigger_panic = true};
+        esp_task_wdt_init(&conf); // enable panic so ESP32 restarts
+        ESP_LOGI(TAG, "taskEspWatchdog - initialized %lld milliseconds", msecs);
         esp_task_wdt_add(NULL); // add current thread to WDT watch
         initialized = true;
       }
@@ -180,6 +185,7 @@ namespace fabomatic
   {
     // notify the server that the machine is still alive
     auto &server = Board::logic.getServer();
+
     if (server.isOnline())
     {
       if (auto resp = server.alive(); !resp)
@@ -187,13 +193,20 @@ namespace fabomatic
         ESP_LOGE(TAG, "taskIsAlive - alive failed");
       }
     }
+
     if (!Board::logic.saveRfidCache())
     {
       ESP_LOGE(TAG, "taskIsAlive - saveRfidCache failed");
     }
+
+    if (!server.saveBuffer())
+    {
+      ESP_LOGE(TAG, "Failure to save buffered MQTT messages");
+    }
+
     if constexpr (conf::debug::ENABLE_LOGS)
     {
-      ESP_LOGD(TAG, "taskIsAlive - free heap: %d", ESP.getFreeHeap());
+      ESP_LOGD(TAG, "taskIsAlive - free heap: %lu", ESP.getFreeHeap());
     }
   }
 
@@ -455,8 +468,9 @@ void setup()
   if (!hw_init)
   {
     // If hardware initialization failed, wait for OTA for 3 minutes
-    esp_task_wdt_init(60 * 3, true); // enable panic so ESP32 restarts
-    esp_task_wdt_add(NULL);          // add current thread to WDT watch
+    constexpr esp_task_wdt_config_t conf{.timeout_ms = 60 * 3 * 1000, .idle_core_mask = 0, .trigger_panic = true};
+    esp_task_wdt_init(&conf); // enable panic so ESP32 restarts
+    esp_task_wdt_add(NULL);   // add current thread to WDT watch
     while (true)
     {
       logic.blinkLed(64, 0, 0);

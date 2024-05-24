@@ -59,12 +59,17 @@ jobs:
       # Now compares both MAP files with esp_idf_size
       - name: Compare MAP files
         run: python -m esp_idf_size --format=text --diff=../firmware.map.previous ../firmware.map.latest -o size_report.txt
+      # Detailed report
+      - name: Compare MAP files
+        run: python -m esp_idf_size --archives --format=text --diff=../firmware.map.previous ../firmware.map.latest -o size_report_details.txt        
       # Upload the size report as an artifact
       - name: Upload size report
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.variant }}_size_report
-          path: size_report.txt
+          path: |
+            size_report.txt
+            size_report_details.txt
           retention-days: 90
       # If this comes from a pull request, comment the size changes
       - name: Comment size changes

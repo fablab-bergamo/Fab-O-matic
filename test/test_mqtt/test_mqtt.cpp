@@ -47,6 +47,53 @@ namespace fabomatic::tests
     return arg;
   }
 
+  void test_create_buffered_messages()
+  {
+    auto &server = logic.getServer();
+    for (const auto &[uid, level, name] : secrets::cards::whitelist)
+    {
+      auto result = server.startUse(uid);
+      TEST_ASSERT_FALSE_MESSAGE(result->request_ok, "(1) Request should have failed");
+
+      result = server.inUse(uid, 1s);
+      TEST_ASSERT_FALSE_MESSAGE(result->request_ok, "(2) Request should have failed");
+
+      result = server.finishUse(uid, 2s);
+      TEST_ASSERT_FALSE_MESSAGE(result->request_ok, "(3) Request should have failed");
+
+      result = server.startUse(uid);
+      TEST_ASSERT_FALSE_MESSAGE(result->request_ok, "(4) Request should have failed");
+
+      result = server.finishUse(uid, 3s);
+      TEST_ASSERT_FALSE_MESSAGE(result->request_ok, "(5) Request should have failed");
+
+      result = server.registerMaintenance(uid);
+      TEST_ASSERT_FALSE_MESSAGE(result->request_ok, "(6) Request should have failed");
+    }
+    // Should have generated 5 * 10 = 50 messages, truncated to 40.
+
+    TEST_ASSERT_TRUE_MESSAGE(server.hasBufferedMsg(), "There are pending messages");
+    TEST_ASSERT_TRUE_MESSAGE(server.saveBuffer(), "Saving pending messages works");
+  }
+
+  void test_check_transmission()
+  {
+    auto &server = logic.getServer();
+
+    TEST_ASSERT_TRUE_MESSAGE(server.hasBufferedMsg(), "(1) There are pending messages");
+
+    TEST_ASSERT_TRUE_MESSAGE(server.connect(), "Server connect works");
+
+    TEST_ASSERT_TRUE_MESSAGE(server.hasBufferedMsg(), "(2) There are pending messages");
+
+    TEST_ASSERT_TRUE_MESSAGE(server.alive(), "Alive request works");
+
+    // Since old messages must be sent first, the buffer shall be empty now
+    TEST_ASSERT_FALSE_MESSAGE(server.hasBufferedMsg(), "There are no more pending messages");
+
+    TEST_ASSERT_TRUE_MESSAGE(server.saveBuffer(), "Saving pending messages works");
+  }
+
   void test_start_broker()
   {
     auto &server = logic.getServer();
@@ -66,9 +113,9 @@ namespace fabomatic::tests
     exit_request = false;
     pthread_create(&thread_mqtt_broker, &attr_mqtt_broker, threadMQTTServer, NULL);
 
-    auto start = std::chrono::system_clock::now();
+    auto start = fabomatic::Tasks::arduinoNow();
     constexpr auto timeout = 5s;
-    while (!broker.isRunning() && std::chrono::system_clock::now() - start < timeout)
+    while (!broker.isRunning() && fabomatic::Tasks::arduinoNow() - start < timeout)
     {
       delay(100);
     }
@@ -276,16 +323,16 @@ namespace fabomatic::tests
   {
     test_scheduler.updateSchedules();
     TEST_ASSERT_EQUAL_UINT32_MESSAGE(6, test_scheduler.taskCount(), "Scheduler does not contain all tasks");
-    auto start = std::chrono::system_clock::now();
-    while (std::chrono::system_clock::now() - start <= 1min)
+    auto start = fabomatic::Tasks::arduinoNow();
+    while (fabomatic::Tasks::arduinoNow() - start <= 1min)
     {
       test_scheduler.execute();
       delay(25);
     }
     // Check that all tasks ran at least once
-    for (const auto &tw : test_scheduler.getTasks())
+    for (const auto tp : test_scheduler.getTasks())
     {
-      auto &t = tw.get();
+      const auto t = *tp;
       ESP_LOGD(TAG3, "Task %s: %lu runs, %lu ms total runtime, %lu ms avg tardiness", t.getId().c_str(), t.getRunCounter(), t.getTotalRuntime().count(), t.getAvgTardiness().count());
       TEST_ASSERT_GREATER_OR_EQUAL_MESSAGE(1, t.getRunCounter(), "Task did not run");
     }
@@ -294,7 +341,7 @@ namespace fabomatic::tests
   }
 } // namespace fabomatic::Tests
 
-void tearDown(void){};
+void tearDown(void) {};
 
 void setUp(void)
 {
@@ -309,8 +356,9 @@ void setup()
   auto original = fabomatic::SavedConfig::LoadFromEEPROM();
 
   UNITY_BEGIN();
-
+  RUN_TEST(fabomatic::tests::test_create_buffered_messages);
   RUN_TEST(fabomatic::tests::test_start_broker);
+  RUN_TEST(fabomatic::tests::test_check_transmission);
   RUN_TEST(fabomatic::tests::test_fabserver_calls);
   RUN_TEST(fabomatic::tests::test_normal_use);
   RUN_TEST(fabomatic::tests::test_stop_broker);

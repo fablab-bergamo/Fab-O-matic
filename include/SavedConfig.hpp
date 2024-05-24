@@ -12,14 +12,15 @@
 #include "MachineConfig.hpp"
 #include "conf.hpp"
 #include "CachedCards.hpp"
+#include "BufferedMsg.hpp"
 
 namespace fabomatic
 {
   class SavedConfig
   {
   private:
-    static constexpr auto JSON_DOC_SIZE = 1024;
-    static_assert(JSON_DOC_SIZE > (conf::common::STR_MAX_LENGTH * 7 + sizeof(bool) + sizeof(size_t) + sizeof(CachedCards)) * 2, "JSON_DOC_SIZE must be larger than SavedConfig size in JSON");
+    static constexpr auto JSON_DOC_SIZE = 4096;
+    static_assert(JSON_DOC_SIZE > (conf::common::STR_MAX_LENGTH * 7 + sizeof(bool) + sizeof(size_t) + sizeof(CachedCards) + (sizeof(Buffer) + 40) * 40), "JSON_DOC_SIZE must be larger than SavedConfig size in JSON");
     static std::string json_buffer;
     static std::mutex buffer_mutex;
 
@@ -33,7 +34,7 @@ namespace fabomatic
     [[nodiscard]] static auto fromJsonDocument(const std::string &json_text) -> std::optional<SavedConfig>;
 
   public:
-    static constexpr auto MAGIC_NUMBER = 0x50; // Increment when changing the struct
+    static constexpr auto MAGIC_NUMBER = 0x51; // Increment when changing the struct
 
     // Magic number to check if the EEPROM is initialized
     mutable uint8_t magic_number{0};
@@ -69,8 +70,10 @@ namespace fabomatic
     /// @brief if true, the FORCE_OPEN_PORTAL flag will be ignored
     bool disablePortal{false};
 
+    Buffer message_buffer;
+
     /// @brief Allow compiler-time construction
-    constexpr SavedConfig() = default;
+    SavedConfig() = default;
 
     /// @brief Saves the configuration to EEPROM
     /// @return true if successful
