@@ -3,13 +3,19 @@
 
 #include <chrono>
 #include <functional>
+#include "Arduino.h"
+#include <list>
 
 /// @brief This namespace contains the classes that implement a cooperative task scheduler
 namespace fabomatic::Tasks
 {
   using milliseconds = std::chrono::milliseconds;
-  using time_point_sc = std::chrono::time_point<std::chrono::system_clock>;
   using namespace std::chrono_literals;
+
+  inline auto arduinoNow() -> milliseconds
+  {
+    return milliseconds{::millis()};
+  }
 
   class Scheduler;
 
@@ -87,15 +93,17 @@ namespace fabomatic::Tasks
 
     /// @brief When shall the task be run again
     /// @return time_point of the next run or time_point::max() if the task will not run.
-    [[nodiscard]] auto getNextRun() const -> time_point_sc;
+    [[nodiscard]] auto getNextRun() const -> milliseconds;
+
+    [[nodiscard]] auto toString() const -> const std::string;
 
   private:
     bool active;
     const std::string id;
     milliseconds period;
     milliseconds delay;
-    time_point_sc last_run;
-    time_point_sc next_run;
+    milliseconds last_run;
+    milliseconds next_run;
     milliseconds average_tardiness;
     milliseconds total_runtime;
     std::function<void()> callback;
@@ -105,12 +113,13 @@ namespace fabomatic::Tasks
   class Scheduler
   {
   public:
-    auto addTask(Task &task) -> void;
-    auto removeTask(const Task &task) -> void;
+    constexpr Scheduler(){};
+    auto addTask(Task *task) -> void;
+    auto removeTask(const Task *task) -> void;
 
     /// @brief Execute all tasks that are ready to run
     /// @details Tasks will be ordered by next_run time ascending, then run sequentially
-    auto execute() const -> void;
+    auto execute() -> void;
 
     /// @brief Recompute all the next run times for all the tasks
     auto updateSchedules() const -> void;
@@ -118,11 +127,11 @@ namespace fabomatic::Tasks
     /// @brief Gets the number of tasks in the scheduler
     [[nodiscard]] auto taskCount() const -> size_t;
 
-    /// @brief Get a vector of references to the tasks
-    [[nodiscard]] auto getTasks() const -> const std::vector<std::reference_wrapper<Task>>;
+    /// @brief Get a copy vector of task pointers
+    [[nodiscard]] auto getTasks() const -> const std::vector<Task *>;
 
   private:
-    std::vector<std::reference_wrapper<Task>> tasks; // Vector containing references to the tasks, not the tasks themselves
+    std::vector<Task *> tasks;
 
     auto printStats() const -> void;
   };

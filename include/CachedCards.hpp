@@ -30,7 +30,7 @@ namespace fabomatic
       return {cards[i], levels[i]};
     }
 
-    auto find_uid(const card::uid_t &search_uid) const -> const std::optional<CachedCard>
+    constexpr auto find_uid(const card::uid_t &search_uid) const -> const std::optional<CachedCard>
     {
       if (search_uid == card::INVALID)
       {

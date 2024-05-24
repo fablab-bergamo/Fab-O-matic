@@ -22,6 +22,7 @@
 #ifndef GIT_VERSION
 #define GIT_VERSION "??????"
 #endif
+#include <driver/gpio.h>
 
 namespace fabomatic
 {
@@ -138,7 +139,7 @@ namespace fabomatic
       getLcd().setRow(1, ss.str());
       getLcd().update(bi);
 
-      const auto start = std::chrono::system_clock::now();
+      const auto start = fabomatic::Tasks::arduinoNow();
       if (!getRfid().cardStillThere(card, delay_per_step))
       {
         getLcd().setRow(1, strings::S_CANCELLED);
@@ -147,7 +148,7 @@ namespace fabomatic
       }
 
       // cardStillThere may have returned immediately, so we need to wait a bit
-      const auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - start);
+      const auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(fabomatic::Tasks::arduinoNow() - start);
       if (delay_per_step - elapsed > 10ms)
       {
         Tasks::delay(delay_per_step - elapsed);

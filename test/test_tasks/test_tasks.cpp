@@ -20,18 +20,17 @@ namespace fabomatic::tests
   Task *tasks[NB_TASKS]{nullptr};
   size_t task_counter{0};
   Scheduler scheduler;
-  auto execute = []()
+  const auto execute = []()
   { scheduler.execute(); };
 
   void delete_tasks(void)
   {
-    for (auto &t : tasks)
+    for (auto t : tasks)
     {
       if (t != nullptr)
       {
-        scheduler.removeTask(*t); // Because Task adds itself on creation
+        scheduler.removeTask(t); // Because Task adds itself on creation
         delete t;
-        t = nullptr;
       }
     }
   }
@@ -68,8 +67,8 @@ namespace fabomatic::tests
 
   void run_for_duration(std::function<void()> callback, std::chrono::milliseconds duration)
   {
-    auto start = std::chrono::high_resolution_clock::now();
-    while (std::chrono::high_resolution_clock::now() - start < duration)
+    auto start = fabomatic::Tasks::arduinoNow();
+    while (fabomatic::Tasks::arduinoNow() - start < duration)
     {
       callback();
     }
@@ -85,8 +84,10 @@ namespace fabomatic::tests
     create_tasks(scheduler, 150ms);
     TEST_ASSERT_EQUAL_MESSAGE(NB_TASKS, scheduler.taskCount(), "Scheduler does not contain all tasks");
 
-    run_for_duration(execute, 100ms);
-    TEST_ASSERT_EQUAL_MESSAGE(NB_TASKS, task_counter, "All tasks were not called once in 100 ms");
+    scheduler.updateSchedules();
+
+    run_for_duration(execute, 140ms);
+    TEST_ASSERT_EQUAL_MESSAGE(NB_TASKS, task_counter, "All tasks were not called once in 140 ms");
 
     delay(50);
 

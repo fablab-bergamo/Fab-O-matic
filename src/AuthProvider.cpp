@@ -21,7 +21,7 @@ namespace fabomatic
   /// @param uid card id of the user
   /// @param name name of the user to be cached
   /// @param level priviledge level of the user
-  void AuthProvider::updateCache(card::uid_t uid, FabUser::UserLevel level) const
+  constexpr void AuthProvider::updateCache(card::uid_t uid, FabUser::UserLevel level) const
   {
     // Search for the card in the cache
     const auto pos = std::find(cache.cards.cbegin(), cache.cards.cend(), uid);
@@ -128,7 +128,7 @@ namespace fabomatic
   /// @brief Checks if the card ID is whitelisted
   /// @param uid card ID
   /// @return a whitelistentry object if the card is found in whitelist
-  auto AuthProvider::uidInWhitelist(card::uid_t candidate_uid) const -> std::optional<WhiteListEntry>
+  constexpr auto AuthProvider::uidInWhitelist(card::uid_t candidate_uid) const -> std::optional<WhiteListEntry>
   {
     if (candidate_uid == card::INVALID)
     {
@@ -154,7 +154,7 @@ namespace fabomatic
   /// @brief Checks if the card ID is whitelisted
   /// @param uid card ID
   /// @return a whitelistentry object if the card is found in whitelist
-  auto AuthProvider::uidInCache(card::uid_t candidate_uid) const -> std::optional<CachedCard>
+  constexpr auto AuthProvider::uidInCache(card::uid_t candidate_uid) const -> std::optional<CachedCard>
   {
     return cache.find_uid(candidate_uid);
   }

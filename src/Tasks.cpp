@@ -5,25 +5,27 @@
 #include "Arduino.h"
 #include "ArduinoOTA.h"
 #include <algorithm>
+#include <sstream>
 
 #include "Logging.hpp"
 
 namespace fabomatic::Tasks
 {
   using milliseconds = std::chrono::milliseconds;
-  using time_point_sc = std::chrono::time_point<std::chrono::system_clock>;
+
   using namespace std::chrono_literals;
 
-  auto Scheduler::addTask(Task &task) -> void
+  auto Scheduler::addTask(Task *task) -> void
   {
-    tasks.push_back(task);
+    if (task != nullptr)
+      tasks.push_back(task);
   }
 
-  auto Scheduler::removeTask(const Task &task) -> void
+  auto Scheduler::removeTask(const Task *task) -> void
   {
     tasks.erase(std::remove_if(tasks.begin(), tasks.end(),
                                [&task](const auto &t)
-                               { return t.get().getId() == task.getId(); }),
+                               { return t->getId() == task->getId(); }),
                 tasks.end());
   }
 
@@ -31,7 +33,7 @@ namespace fabomatic::Tasks
   {
     for (const auto &task : tasks)
     {
-      task.get().updateSchedule();
+      task->updateSchedule();
     }
   }
 
@@ -42,8 +44,8 @@ namespace fabomatic::Tasks
 
     for (const auto &task : tasks)
     {
-      avg_delay += task.get().getAvgTardiness() * task.get().getRunCounter();
-      nb_runs += task.get().getRunCounter();
+      avg_delay += task->getAvgTardiness() * task->getRunCounter();
+      nb_runs += task->getRunCounter();
     }
     if (nb_runs > 0)
     {
@@ -54,50 +56,38 @@ namespace fabomatic::Tasks
 
     for (const auto &task : tasks)
     {
-      if (task.get().isActive())
+      if (task->isActive())
       {
-        if (task.get().getRunCounter() > 0)
+        if (task->getRunCounter() > 0)
         {
           ESP_LOGD(TAG, "\t Task: %s, %lu runs, avg tardiness/run: %llu ms, period %llu ms, delay %llu ms, average task duration %llu ms\r\n",
-                   task.get().getId().c_str(), task.get().getRunCounter(),
-                   task.get().getAvgTardiness().count(), task.get().getPeriod().count(),
-                   task.get().getDelay().count(),
-                   task.get().getTotalRuntime().count() / task.get().getRunCounter());
+                   task->getId().c_str(), task->getRunCounter(),
+                   task->getAvgTardiness().count(), task->getPeriod().count(),
+                   task->getDelay().count(),
+                   task->getTotalRuntime().count() / task->getRunCounter());
         }
         else
         {
           ESP_LOGD(TAG, "\t Task: %s, never ran, period %llu ms, delay %llu ms\r\n",
-                   task.get().getId().c_str(), task.get().getPeriod().count(),
-                   task.get().getDelay().count());
+                   task->getId().c_str(), task->getPeriod().count(),
+                   task->getDelay().count());
         }
       }
       else
       {
-        ESP_LOGD(TAG, "\t Task: %s, inactive\r\n", task.get().getId().c_str());
+        ESP_LOGD(TAG, "\t Task: %s, inactive\r\n", task->getId().c_str());
       }
     }
   }
 
-  auto Scheduler::execute() const -> void
+  auto Scheduler::execute() -> void
   {
-    // Tasks shall be run in order of expiration (the most expired task shall run first)
-    std::vector<decltype(tasks)::const_iterator> iters;
-    for (auto it = tasks.begin(); it != tasks.end(); ++it)
-    {
-      iters.push_back(it); // Vector of iterators
-    }
+    std::sort(tasks.begin(), tasks.end(), [](const auto &x, const auto &y)
+              { return x->getNextRun() < y->getNextRun(); });
 
-    // Sort the iterators array as we cannot sort directly reference_wrappers
-    std::sort(iters.begin(), iters.end(),
-              [](const auto &it1, const auto &it2)
-              {
-                return (it1->get().getNextRun() < it2->get().getNextRun());
-              });
-
-    // Now iterate over the sorted iterators to run the tasks
-    for (const auto &it : iters)
+    for (const auto &t : tasks)
     {
-      it->get().run();
+      t->run();
     }
 
     if (conf::debug::ENABLE_TASK_LOGS && millis() % 1024 == 0)
@@ -117,7 +107,7 @@ namespace fabomatic::Tasks
     return tasks.size();
   }
 
-  auto Scheduler::getTasks() const -> const std::vector<std::reference_wrapper<Task>>
+  auto Scheduler::getTasks() const -> const std::vector<Task *>
   {
     return {tasks};
   }
@@ -133,31 +123,45 @@ namespace fabomatic::Tasks
              std::function<void()> callback,
              Scheduler &scheduler, bool active, milliseconds delay) : active{active}, id{id},
                                                                       period{period}, delay{delay},
-                                                                      last_run{std::chrono::system_clock::now() + delay},
                                                                       next_run{last_run},
                                                                       average_tardiness{0ms}, total_runtime{0ms},
                                                                       callback{callback}, run_counter{0}
   {
-    scheduler.addTask(std::ref(*this));
+    last_run = arduinoNow() + period;
+    scheduler.addTask(this);
+    if constexpr (conf::debug::ENABLE_TASK_LOGS)
+    {
+      ESP_LOGD(TAG, "Constructor(%s)\r\n", toString().c_str());
+    }
+  }
+
+  auto Task::toString() const -> const std::string
+  {
+    std::stringstream ss;
+    ss << "Task " << getId() << ", active=" << active
+       << ",Period=" << period << ", Delay=" << delay
+       << ",Last run=" << last_run.count()
+       << ",Next_run=" << next_run.count()
+       << ",Avg tardiness=" << average_tardiness
+       << ",total_runtime " << total_runtime
+       << ",run_counter=" << run_counter
+       << ",clock=" << millis();
+    return ss.str();
   }
 
   auto Task::run() -> void
   {
-    if (isActive() && std::chrono::system_clock::now() >= next_run)
+    auto time_to_run = (arduinoNow() - next_run).count() > 0;
+    if (isActive() && time_to_run)
     {
       run_counter++;
-      auto last_period = std::chrono::duration_cast<milliseconds>(std::chrono::system_clock::now() - last_run);
+      auto last_period = arduinoNow() - last_run;
       average_tardiness = (average_tardiness * (run_counter - 1) + last_period) / run_counter;
-      last_run = std::chrono::system_clock::now();
-
-      if (conf::debug::ENABLE_TASK_LOGS)
-      {
-        ESP_LOGD(TAG, "Task %s\r\n", getId().c_str());
-      }
+      last_run = arduinoNow();
 
       callback();
 
-      total_runtime += std::chrono::duration_cast<milliseconds>(std::chrono::system_clock::now() - last_run);
+      total_runtime += std::chrono::duration_cast<milliseconds>(arduinoNow() - last_run);
 
       if (period > 0ms)
       {
@@ -165,7 +169,12 @@ namespace fabomatic::Tasks
       }
       else
       {
-        next_run = std::chrono::system_clock::time_point::max(); // Disable the task
+        next_run = next_run.max(); // Disable the task
+      }
+
+      if constexpr (conf::debug::ENABLE_TASK_LOGS)
+      {
+        ESP_LOGD(TAG, "Completed(%s)\r\n", toString().c_str());
       }
     }
   }
@@ -184,7 +193,7 @@ namespace fabomatic::Tasks
   /// @brief recompute the next run time (now + delay)
   auto Task::updateSchedule() -> void
   {
-    last_run = std::chrono::system_clock::now() + delay;
+    last_run = arduinoNow() + delay;
     next_run = last_run;
   }
 
@@ -247,7 +256,7 @@ namespace fabomatic::Tasks
     return total_runtime;
   }
 
-  auto Task::getNextRun() const -> std::chrono::time_point<std::chrono::system_clock>
+  auto Task::getNextRun() const -> milliseconds
   {
     return next_run;
   }
@@ -264,11 +273,11 @@ namespace fabomatic::Tasks
       return;
     }
 
-    const auto start = std::chrono::system_clock::now();
+    const auto &start = arduinoNow();
     do
     {
       ::delay(50);
       ArduinoOTA.handle();
-    } while (std::chrono::system_clock::now() - start < duration);
+    } while (arduinoNow() - start < duration);
   }
 } // namespace fabomatic::Tasks

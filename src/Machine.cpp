@@ -69,7 +69,7 @@ namespace fabomatic
       active = true;
       current_user = user;
       power(true);
-      usage_start_timestamp = std::chrono::system_clock::now();
+      usage_start_timestamp = fabomatic::Tasks::arduinoNow();
       return true;
     }
     return false;
@@ -93,7 +93,7 @@ namespace fabomatic
       usage_start_timestamp = std::nullopt;
 
       // Sets the countdown to power off
-      logoff_timestamp = std::chrono::system_clock::now();
+      logoff_timestamp = fabomatic::Tasks::arduinoNow();
 
       if (config.value().grace_period == 0s)
       {
@@ -115,7 +115,7 @@ namespace fabomatic
     CHECK_CONFIGURED(bool);
 
     return (power_state == PowerState::WaitingPowerOff &&
-            std::chrono::system_clock::now() - logoff_timestamp.value() > config.value().grace_period);
+            fabomatic::Tasks::arduinoNow() - logoff_timestamp.value() > config.value().grace_period);
   }
 
   /// @brief indicates if the machine is about to shudown and board should beep
@@ -128,7 +128,7 @@ namespace fabomatic
     CHECK_CONFIGURED(bool);
 
     return (power_state == PowerState::WaitingPowerOff &&
-            std::chrono::system_clock::now() - logoff_timestamp.value() > config.value().grace_period);
+            fabomatic::Tasks::arduinoNow() - logoff_timestamp.value() > config.value().grace_period);
   }
 
   /// @brief sets the machine power to on (true) or off (false)
@@ -227,7 +227,7 @@ namespace fabomatic
   {
     if (usage_start_timestamp.has_value())
     {
-      return std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now() - usage_start_timestamp.value());
+      return std::chrono::duration_cast<std::chrono::seconds>(fabomatic::Tasks::arduinoNow() - usage_start_timestamp.value());
     }
     return 0s;
   }
@@ -259,7 +259,7 @@ namespace fabomatic
     sstream << ", MaintenanceNeeded:" << maintenanceNeeded;
     sstream << ", " << config.value().toString();
     sstream << ", Active:" << active;
-    sstream << ", Last logoff:" << (logoff_timestamp.has_value() ? logoff_timestamp.value().time_since_epoch().count() : 0);
+    sstream << ", Last logoff:" << (logoff_timestamp.has_value() ? logoff_timestamp.value().count() : 0);
     sstream << ", GracePeriod (s):" << getGracePeriod().count();
     sstream << ")";
 

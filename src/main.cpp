@@ -137,7 +137,7 @@ namespace fabomatic
     {
       if (!initialized)
       {
-        auto secs = std::chrono::duration_cast<std::chrono::seconds>(conf::tasks::WATCHDOG_TIMEOUT).count();
+        constexpr auto secs = std::chrono::duration_cast<std::chrono::seconds>(conf::tasks::WATCHDOG_TIMEOUT).count();
         esp_task_wdt_init(secs, true); // enable panic so ESP32 restarts
         ESP_LOGI(TAG, "taskEspWatchdog - initialized %lld seconds", secs);
         esp_task_wdt_add(NULL); // add current thread to WDT watch
@@ -193,7 +193,7 @@ namespace fabomatic
     }
     if constexpr (conf::debug::ENABLE_LOGS)
     {
-      ESP_LOGD(TAG, "taskIsAlive - free heap: %d", ESP.getFreeHeap());
+      ESP_LOGD(TAG, "taskIsAlive - free heap: %lu", ESP.getFreeHeap());
     }
   }
 
