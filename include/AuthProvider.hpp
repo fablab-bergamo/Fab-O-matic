@@ -5,6 +5,7 @@
 #include <string>
 #include <string_view>
 #include <tuple>
+#include <optional>
 
 #include "FabUser.hpp"
 #include "secrets.hpp"

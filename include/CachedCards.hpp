@@ -2,6 +2,7 @@
 #define CACHEDCARDS_HPP
 
 #include <array>
+#include <optional>
 
 #include "FabUser.hpp"
 #include "conf.hpp"
