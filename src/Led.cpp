@@ -10,7 +10,7 @@ namespace fabomatic
       return;
     }
 
-    ESP_LOGD(TAG, "Initializing LED (pin %d, is_neopixel %d, flags %u)",
+    ESP_LOGD(TAG, "Initializing LED (pin %d, is_neopixel %d, flags %lu)",
              pins.led.pin, pins.led.is_neopixel, pins.led.neopixel_config);
 
     if constexpr (pins.led.is_neopixel)

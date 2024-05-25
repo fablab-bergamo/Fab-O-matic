@@ -75,6 +75,7 @@ namespace fabomatic
     [[nodiscard]] auto getMachineForTesting() -> Machine &;
     [[nodiscard]] auto getMachine() const -> const Machine &;
     [[nodiscard]] auto authorize(const card::uid_t uid) -> bool;
+    [[nodiscard]] auto getHostname() const -> const std::string;
 
     // copy reference
     BoardLogic &operator=(const BoardLogic &board) = delete;

@@ -41,7 +41,7 @@ namespace fabomatic
 
     bool online{false};
     bool answer_pending{false};
-    int32_t channel{-1};
+    int16_t channel{-1};
 
     auto messageReceived(String &topic, String &payload) -> void;
 

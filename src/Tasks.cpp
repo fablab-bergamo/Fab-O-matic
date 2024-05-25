@@ -50,7 +50,7 @@ namespace fabomatic::Tasks
       avg_delay /= nb_runs;
     }
 
-    ESP_LOGD(TAG, "Scheduler::execute complete: %d tasks total, %lu runs, avg delay/run: %llu ms\r\n", tasks.size(), nb_runs, avg_delay.count());
+    ESP_LOGD(TAG, "Scheduler::execute complete: %d tasks total, %d runs, avg delay/run: %llu ms\r\n", tasks.size(), nb_runs, avg_delay.count());
 
     for (const auto &task : tasks)
     {

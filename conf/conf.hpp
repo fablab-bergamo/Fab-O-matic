@@ -5,7 +5,7 @@
 #include <string>
 #include <chrono>
 
-#include "MachineConfig.hpp"
+#include "MachineID.hpp"
 
 namespace fabomatic
 {
@@ -13,12 +13,14 @@ namespace fabomatic
 
   namespace conf::default_config
   {
-    static constexpr std::string_view mqtt_server = "fabpi2.local";
-    static constexpr std::string_view mqtt_switch_topic = "";
+    static constexpr std::string_view mqtt_server{"fabpi2.local"};
+    static constexpr std::string_view mqtt_switch_topic{""};
+    static constexpr std::string_view mqtt_switch_on_message{"on"};
+    static constexpr std::string_view mqtt_switch_off_message{"off"};
     static constexpr MachineID machine_id{1};
-    static constexpr std::string_view machine_name = "MACHINE1";
-    static constexpr MachineType machine_type = MachineType::Printer3D;
-    static constexpr std::string_view hostname = "BOARD"; // Machine ID will be added to the hostname in order to form unique hostnames
+    static constexpr std::string_view machine_name{"MACHINE1"};
+    static constexpr MachineType machine_type{MachineType::Printer3D};
+    static constexpr std::string_view hostname{"BOARD"}; // Machine ID will be added to the hostname in order to form unique hostnames
 
   } // namespace conf::default_config
 
@@ -60,10 +62,8 @@ namespace fabomatic
 
   namespace conf::buzzer
   {
-    static constexpr unsigned short LEDC_PWM_CHANNEL{2}; /* Esp32 pwm channel for beep generation */
     static constexpr auto STANDARD_BEEP_DURATION{250ms}; /* Single beep duration, typical value 200ms. Set to 0 to disable beeps. */
     static constexpr auto NB_BEEPS{3};                   /* Number of beeps every time the function is callsed */
-    static constexpr unsigned int BEEP_HZ{660};          /* Beep frequency in Hz */
 
   } // namespace conf::buzzer
 

@@ -31,8 +31,8 @@ namespace fabomatic
 
   private:
     std::mutex mutex;
-    std::string topic = "";
-    std::string payload = "";
+    std::string topic{""};
+    std::string payload{""};
     struct query
     {
       std::string source_topic{""};
