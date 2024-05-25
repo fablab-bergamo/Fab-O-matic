@@ -304,6 +304,9 @@ namespace fabomatic
     {
       uid_str = "????????";
     }
+    std::stringstream idv;
+    idv << "ID:" << this->getMachine().getMachineId()
+        << " V" << GIT_VERSION;
 
     switch (status)
     {
@@ -385,11 +388,11 @@ namespace fabomatic
       break;
     case Status::Error:
       lcd.setRow(0, strings::S_GENERIC_ERROR);
-      lcd.setRow(1, "V" GIT_VERSION);
+      lcd.setRow(1, idv.str());
       break;
     case Status::ErrorHardware:
       lcd.setRow(0, strings::S_HW_ERROR);
-      lcd.setRow(1, "V" GIT_VERSION);
+      lcd.setRow(1, idv.str());
       break;
     case Status::PortalFailed:
       lcd.setRow(0, strings::S_PORTAL_ERROR);
@@ -397,7 +400,7 @@ namespace fabomatic
       break;
     case Status::PortalSuccess:
       lcd.setRow(0, strings::S_PORTAL_SUCCESS);
-      lcd.setRow(1, "V" GIT_VERSION);
+      lcd.setRow(1, idv.str());
       break;
     case Status::PortalStarting:
       lcd.setRow(0, strings::S_OPEN_PORTAL);
@@ -405,7 +408,7 @@ namespace fabomatic
       break;
     case Status::Booting:
       lcd.setRow(0, strings::S_BOOTING);
-      lcd.setRow(1, "V" GIT_VERSION);
+      lcd.setRow(1, idv.str());
       break;
     case Status::ShuttingDown:
       lcd.setRow(0, machine_name);
