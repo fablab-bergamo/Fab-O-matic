@@ -175,7 +175,7 @@ namespace fabomatic
     const auto response = auth.tryLogin(uid, server);
     if (!response.has_value() || response.value().user_level == FabUser::UserLevel::Unknown)
     {
-      ESP_LOGI(TAG, "Failed login for %s", card::uid_str(uid));
+      ESP_LOGI(TAG, "Failed login for %s", card::uid_str(uid).c_str());
       changeStatus(Status::LoginDenied);
       beepFail();
       return false;
