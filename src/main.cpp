@@ -442,7 +442,7 @@ void setup()
     logic.beepOk();
     logic.blinkLed(0, 64, 0);
   }
-
+  WiFi.setTxPower(WIFI_POWER_17dBm);
   fabomatic::openConfigPortal(fabomatic::conf::debug::LOAD_EEPROM_DEFAULTS,
                               !fabomatic::conf::debug::FORCE_PORTAL);
 
