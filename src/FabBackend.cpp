@@ -93,7 +93,7 @@ namespace fabomatic
 
     if (query.buffered())
     {
-      buffer.push_back(query.payload(), topic);
+      buffer.push_back(query.payload(), topic, query.waitForReply());
     }
     return false;
   }
@@ -391,7 +391,22 @@ namespace fabomatic
     static_assert(std::is_base_of<ServerMQTT::Response, RespT>::value, "RespT must inherit from Response");
     QueryT query{args...};
 
-    if (isOnline())
+    auto nb_tries = 0;
+    while (isOnline() && hasBufferedMsg() && !transmitBuffer() && nb_tries < 3)
+    {
+      // To preserve chronological order, we cannot send new messages until the old ones have been sent.
+      ESP_LOGW(TAG, "Online with pending messages that could not be transmitted, retrying...");
+
+      Tasks::delay(250ms);
+
+      if (!isOnline())
+      {
+        connect();
+      }
+      nb_tries++;
+    }
+
+    if (isOnline() && !hasBufferedMsg())
     {
       if (publishWithReply(query))
       {
@@ -413,7 +428,7 @@ namespace fabomatic
 
     if (query.buffered())
     {
-      buffer.push_back(query.payload(), topic);
+      buffer.push_back(query.payload(), topic, query.waitForReply());
     }
 
     return std::make_unique<RespT>(false);
@@ -432,7 +447,22 @@ namespace fabomatic
     static_assert(std::is_base_of<ServerMQTT::Query, QueryT>::value, "QueryT must inherit from Query");
     QueryT query{args...};
 
-    if (isOnline())
+    auto nb_tries = 0;
+    while (isOnline() && hasBufferedMsg() && !transmitBuffer() && nb_tries < 3)
+    {
+      // To preserve chronological order, we cannot send new messages until the old ones have been sent.
+      ESP_LOGW(TAG, "Online with pending messages that could not be transmitted, retrying...");
+
+      Tasks::delay(250ms);
+
+      if (!isOnline())
+      {
+        connect();
+      }
+      nb_tries++;
+    }
+
+    if (isOnline() && !hasBufferedMsg())
     {
       if (publish(query))
       {
@@ -447,7 +477,7 @@ namespace fabomatic
 
     if (query.buffered())
     {
-      buffer.push_back(query.payload(), topic);
+      buffer.push_back(query.payload(), topic, query.waitForReply());
     }
     return false;
   }
@@ -548,15 +578,31 @@ namespace fabomatic
   {
     while (hasBufferedMsg() && isOnline())
     {
+      ESP_LOGD(TAG, "Retransmitting buffered messages...");
       const auto &msg = buffer.getMessage();
-      const BufferedQuery bq{msg.mqtt_message, msg.mqtt_topic};
-      if (!publish(bq))
+      const BufferedQuery bq{msg.mqtt_message, msg.mqtt_topic, msg.wait_for_answer};
+      if (bq.waitForReply())
       {
-        // Will try again
-        buffer.push_front(msg.mqtt_message, msg.mqtt_topic);
-        break;
+        if (!publishWithReply(bq))
+        {
+          ESP_LOGW(TAG, "Retransmitting buffered message failed!");
+          // Will try again
+          buffer.push_front(msg.mqtt_message, msg.mqtt_topic, msg.wait_for_answer);
+          break;
+        }
+      }
+      else
+      {
+        if (!publish(bq))
+        {
+          // Will try again
+          ESP_LOGW(TAG, "Retransmitting buffered message failed!");
+          buffer.push_front(msg.mqtt_message, msg.mqtt_topic, msg.wait_for_answer);
+          break;
+        }
       }
     }
+    last_reply = "";
     return !hasBufferedMsg();
   }
 

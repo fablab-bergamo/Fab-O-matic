@@ -6,24 +6,34 @@
 namespace fabomatic
 {
 
-  auto Buffer::push_back(const std::string &message, const std::string &topic) -> void
+  auto Buffer::push_back(const std::string &message, const std::string &topic, bool wait) -> void
   {
     if constexpr (conf::debug::ENABLE_BUFFERING)
     {
-      BufferedMsg msg{message, topic};
+      BufferedMsg msg{message, topic, wait};
       msg_queue.push_back(msg);
+      if (msg_queue.size() > MAX_MESSAGES)
+      {
+        msg_queue.pop_front();
+        ESP_LOGW(TAG, "Removing first message from the buffer");
+      }
       has_changed = true;
 
       ESP_LOGI(TAG, "Buffered %s on %s, %lu messages queued", message.c_str(), topic.c_str(), msg_queue.size());
     }
   }
 
-  auto Buffer::push_front(const std::string &message, const std::string &topic) -> void
+  auto Buffer::push_front(const std::string &message, const std::string &topic, bool wait) -> void
   {
     if constexpr (conf::debug::ENABLE_BUFFERING)
     {
-      BufferedMsg msg{message, topic};
+      BufferedMsg msg{message, topic, wait};
       msg_queue.push_front(msg);
+      if (msg_queue.size() > MAX_MESSAGES)
+      {
+        msg_queue.pop_back();
+        ESP_LOGW(TAG, "Removing last message from the buffer");
+      }
       has_changed = true;
 
       ESP_LOGI(TAG, "Buffered %s on %s, %lu messages queued", message.c_str(), topic.c_str(), msg_queue.size());
@@ -35,7 +45,7 @@ namespace fabomatic
     if (msg_queue.size() == 0)
     {
       ESP_LOGE(TAG, "Calling getMessage() on empty queue!");
-      return {"", ""};
+      return {"", "", false};
     }
 
     auto elem = msg_queue.front();
@@ -59,8 +69,9 @@ namespace fabomatic
     for (auto elem = msg_queue.begin(); elem != msg_queue.end(); elem++)
     {
       auto obj_msg = json_elem.createNestedObject();
-      obj_msg["topic"] = elem->mqtt_topic;
-      obj_msg["message"] = elem->mqtt_message;
+      obj_msg["tp"] = elem->mqtt_topic;
+      obj_msg["msg"] = elem->mqtt_message;
+      obj_msg["wait"] = elem->wait_for_answer;
     }
   }
 
@@ -78,8 +89,9 @@ namespace fabomatic
 
     for (const auto &elem : json_obj["messages"].as<JsonArray>())
     {
-      buff.push_back(elem["message"].as<std::string>(),
-                     elem["topic"].as<std::string>());
+      buff.push_back(elem["msg"].as<std::string>(),
+                     elem["tp"].as<std::string>(),
+                     elem["wait"].as<bool>());
     }
 
     ESP_LOGD(TAG, "Buffer::fromJsonElement() : data loaded successfully");
