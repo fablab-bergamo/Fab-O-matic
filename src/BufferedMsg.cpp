@@ -12,6 +12,8 @@ namespace fabomatic
     {
       BufferedMsg msg{message, topic};
       msg_queue.push_back(msg);
+      has_changed = true;
+
       ESP_LOGI(TAG, "Buffered %s on %s, %lu messages queued", message.c_str(), topic.c_str(), msg_queue.size());
     }
   }
@@ -22,6 +24,8 @@ namespace fabomatic
     {
       BufferedMsg msg{message, topic};
       msg_queue.push_front(msg);
+      has_changed = true;
+
       ESP_LOGI(TAG, "Buffered %s on %s, %lu messages queued", message.c_str(), topic.c_str(), msg_queue.size());
     }
   }
@@ -36,6 +40,8 @@ namespace fabomatic
 
     auto elem = msg_queue.front();
     msg_queue.pop_front();
+    has_changed = true;
+
     return elem;
   }
 
@@ -44,49 +50,39 @@ namespace fabomatic
     return msg_queue.size();
   }
 
-  auto Buffer::toJson() const -> JsonDocument
+  auto Buffer::toJson(JsonDocument &doc, const std::string &element_name) const -> void
   {
-    JsonDocument doc;
-    doc["VERSION"] = MAGIC_NUMBER;
-    auto json_elem = doc.createNestedArray("messages");
+    auto obj = doc.createNestedObject(element_name);
+    obj["VERSION"] = MAGIC_NUMBER;
+    auto json_elem = obj.createNestedArray("messages");
 
     for (auto elem = msg_queue.begin(); elem != msg_queue.end(); elem++)
     {
-      auto obj = json_elem.createNestedObject();
-      obj["topic"] = elem->mqtt_topic;
-      obj["message"] = elem->mqtt_message;
+      auto obj_msg = json_elem.createNestedObject();
+      obj_msg["topic"] = elem->mqtt_topic;
+      obj_msg["message"] = elem->mqtt_message;
     }
-    return doc;
   }
 
-  auto Buffer::fromJson(const std::string &json_text) -> std::optional<Buffer>
+  auto Buffer::fromJsonElement(const JsonObject &json_obj) -> std::optional<Buffer>
   {
     Buffer buff;
-    JsonDocument doc;
-
-    const auto result = deserializeJson(doc, json_text);
-    if (result != DeserializationError::Ok)
-    {
-      ESP_LOGE(TAG, "Buffer::fromJson() : deserializeJson failed with code %s", result.c_str());
-      ESP_LOGE(TAG, "Buffer::fromJson() : %s", json_text.c_str());
-      return std::nullopt;
-    }
 
     // Check that the version is the same
-    auto version = doc["VERSION"].as<unsigned int>();
+    auto version = json_obj["VERSION"].as<unsigned int>();
     if (version != MAGIC_NUMBER)
     {
       ESP_LOGD(TAG, "Buffer::fromJson() : wrong version number (%d, expected %d)", version, MAGIC_NUMBER);
       return std::nullopt;
     }
 
-    for (const auto &elem : doc["messages"].as<JsonArray>())
+    for (const auto &elem : json_obj["messages"].as<JsonArray>())
     {
       buff.push_back(elem["message"].as<std::string>(),
                      elem["topic"].as<std::string>());
     }
 
-    ESP_LOGD(TAG, "Buffer::fromJson() : data deserialized successfully");
+    ESP_LOGD(TAG, "Buffer::fromJsonElement() : data loaded successfully");
 
     return buff;
   }

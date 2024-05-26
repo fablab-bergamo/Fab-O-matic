@@ -60,6 +60,8 @@ namespace fabomatic
     template <typename QueryT, typename... QueryArgs>
     [[nodiscard]] auto processQuery(QueryArgs &&...args) -> bool;
 
+    auto loadBuffer(const Buffer &new_buffer) -> void;
+
   public:
     FabBackend() = default;
 
@@ -74,6 +76,7 @@ namespace fabomatic
     [[nodiscard]] auto isOnline() const -> bool;
     [[nodiscard]] auto hasBufferedMsg() const -> bool;
     [[nodiscard]] auto transmitBuffer() -> bool;
+    [[nodiscard]] auto saveBuffer() -> bool;
 
     auto connect() -> bool;
     auto connectWiFi() -> bool;

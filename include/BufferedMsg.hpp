@@ -24,18 +24,21 @@ namespace fabomatic
 
   class Buffer
   {
+  private:
+    std::deque<BufferedMsg> msg_queue;
+    bool has_changed{true};
+    static constexpr auto MAGIC_NUMBER = 1;
+
   public:
     auto push_back(const std::string &message, const std::string &topic) -> void;
     auto push_front(const std::string &message, const std::string &topic) -> void;
     auto getMessage() -> const BufferedMsg;
     auto count() const -> size_t;
-    auto toJson() const -> JsonDocument;
+    auto toJson(JsonDocument &doc, const std::string &element_name) const -> void;
+    auto hasChanged() const -> bool { return has_changed; };
+    auto setChanged(bool new_value) -> void { has_changed = new_value; };
 
-    static auto fromJson(const std::string &json_text) -> std::optional<Buffer>;
-
-  private:
-    std::deque<BufferedMsg> msg_queue;
-    static constexpr auto MAGIC_NUMBER = 1;
+    static auto fromJsonElement(const JsonObject &json_obj) -> std::optional<Buffer>;
   };
 
   class BufferedQuery final : public ServerMQTT::Query

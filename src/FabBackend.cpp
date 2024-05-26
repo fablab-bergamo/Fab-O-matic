@@ -45,6 +45,9 @@ namespace fabomatic
       client.disconnect();
       wifi_client.stop();
     }
+
+    loadBuffer(config.message_buffer);
+
     ESP_LOGD(TAG, "FabServer configured");
   }
 
@@ -557,4 +560,31 @@ namespace fabomatic
     return !hasBufferedMsg();
   }
 
+  auto FabBackend::saveBuffer() -> bool
+  {
+    if (!buffer.hasChanged())
+    {
+      return true;
+    }
+
+    auto sc = SavedConfig::LoadFromEEPROM().value_or(SavedConfig::DefaultConfig());
+    sc.message_buffer = buffer;
+
+    if (sc.SaveToEEPROM())
+    {
+      buffer.setChanged(false);
+      ESP_LOGI(TAG, "Saved %d buffered messages", buffer.count());
+      return true;
+    }
+
+    ESP_LOGE(TAG, "Failed to save buffered messages!");
+    return false;
+  }
+
+  auto FabBackend::loadBuffer(const Buffer &new_buffer) -> void
+  {
+    buffer = new_buffer;
+    buffer.setChanged(false);
+    ESP_LOGI(TAG, "Loaded buffer with %d messages", buffer.count());
+  }
 } // namespace fabomatic

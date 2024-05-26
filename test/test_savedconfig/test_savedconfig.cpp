@@ -172,14 +172,15 @@ namespace fabomatic::tests
 
   bool test_deserialization(Buffer &buff)
   {
-    auto json_doc = buff.toJson();
+    JsonDocument json_doc;
+    buff.toJson(json_doc, "message_buffer");
     std::string json_text;
     auto chars = serializeJson(json_doc, json_text);
     TEST_ASSERT_GREATER_THAN_MESSAGE(0, chars, "Non empty JSON text");
 
     ESP_LOGD(TAG, "test_deserialization: json_text:%s", json_text.c_str());
 
-    auto result = Buffer::fromJson(json_text);
+    auto result = Buffer::fromJsonElement(json_doc["message_buffer"]);
     TEST_ASSERT_TRUE_MESSAGE(result.has_value(), "Deserialization succeeds");
 
     auto &new_buff = result.value();
@@ -225,6 +226,8 @@ namespace fabomatic::tests
       messages.push_back({message, topic});
     }
 
+    TEST_ASSERT_TRUE_MESSAGE(buff.hasChanged(), "Buffer has pending changes");
+
     // Nothing to test
     if constexpr (!conf::debug::ENABLE_BUFFERING)
       return;
@@ -240,6 +243,9 @@ namespace fabomatic::tests
 
     TEST_ASSERT_EQUAL_MESSAGE(messages.size(), buff.count(), "Buffer contains all expected messages");
 
+    TEST_ASSERT_TRUE_MESSAGE(buff.hasChanged(), "Buffer has pending changes");
+    buff.setChanged(false);
+
     // Test retrieval oldest first (msg1-msg2-msg3-...)
     for (auto elem = messages.rbegin(); elem != messages.rend(); ++elem)
     {
@@ -249,6 +255,8 @@ namespace fabomatic::tests
     }
 
     TEST_ASSERT_EQUAL_MESSAGE(0, buff.count(), "Buffer is now empty");
+    TEST_ASSERT_TRUE_MESSAGE(buff.hasChanged(), "Buffer has pending changes");
+    buff.setChanged(false);
 
     // Test insertion in reverse order
     msg_count = 0;
@@ -259,6 +267,9 @@ namespace fabomatic::tests
       msg_count++;
     }
 
+    TEST_ASSERT_TRUE_MESSAGE(buff.hasChanged(), "Buffer has pending changes");
+    buff.setChanged(false);
+
     for (auto elem = messages.begin(); elem != messages.end(); ++elem)
     {
       auto &msg = buff.getMessage();
@@ -267,9 +278,12 @@ namespace fabomatic::tests
     }
 
     TEST_ASSERT_EQUAL_MESSAGE(0, buff.count(), "(2) Buffer is now empty");
+    TEST_ASSERT_TRUE_MESSAGE(buff.hasChanged(), "Buffer has pending changes");
+    buff.setChanged(false);
 
     // Test empty buffer
     TEST_ASSERT_TRUE_MESSAGE(test_deserialization(buff), "JSON works for empty buffer");
+    TEST_ASSERT_FALSE_MESSAGE(buff.hasChanged(), "Buffer has no pending changes");
 
     // Insert more messages
     msg_count = 0;
@@ -281,6 +295,7 @@ namespace fabomatic::tests
     }
 
     TEST_ASSERT_TRUE_MESSAGE(test_deserialization(buff), "JSON works for full buffer");
+    TEST_ASSERT_TRUE_MESSAGE(buff.hasChanged(), "Buffer has pending changes");
   }
 } // namespace fabomatic::tests
 
