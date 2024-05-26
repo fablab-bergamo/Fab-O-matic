@@ -57,6 +57,7 @@ namespace fabomatic
     static constexpr unsigned long SERIAL_SPEED_BDS{115200}; /* Serial speed in bauds */
     static constexpr bool FORCE_PORTAL{false};               /* True to force portal startup */
     static constexpr bool LOAD_EEPROM_DEFAULTS{false};       /* True to force EEPROM settings to defaults */
+    static constexpr bool ENABLE_BUFFERING{true};            /* True if important MQTT messages should be saved when network is down */
 
   } // namespace conf::debug
 

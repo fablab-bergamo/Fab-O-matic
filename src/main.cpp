@@ -43,6 +43,7 @@ namespace fabomatic
   void taskConnect()
   {
     auto &server = Board::logic.getServer();
+
     if (!server.isOnline())
     {
       // connection to wifi
@@ -53,8 +54,11 @@ namespace fabomatic
       // Refresh after connection
       Board::logic.changeStatus(server.isOnline() ? Status::Connected : Status::Offline);
 
-      // Briefly show to the user
-      Tasks::delay(conf::lcd::SHORT_MESSAGE_DELAY);
+      if (server.isOnline())
+      {
+        // Briefly show to the user
+        Tasks::delay(conf::lcd::SHORT_MESSAGE_DELAY);
+      }
     }
 
     if (server.isOnline())
@@ -180,6 +184,7 @@ namespace fabomatic
   {
     // notify the server that the machine is still alive
     auto &server = Board::logic.getServer();
+
     if (server.isOnline())
     {
       if (auto resp = server.alive(); !resp)
@@ -187,10 +192,17 @@ namespace fabomatic
         ESP_LOGE(TAG, "taskIsAlive - alive failed");
       }
     }
+
     if (!Board::logic.saveRfidCache())
     {
       ESP_LOGE(TAG, "taskIsAlive - saveRfidCache failed");
     }
+
+    if (!server.saveBuffer())
+    {
+      ESP_LOGE(TAG, "Failure to save buffered MQTT messages");
+    }
+
     if constexpr (conf::debug::ENABLE_LOGS)
     {
       ESP_LOGD(TAG, "taskIsAlive - free heap: %d", ESP.getFreeHeap());
@@ -442,7 +454,7 @@ void setup()
     logic.beepOk();
     logic.blinkLed(0, 64, 0);
   }
-  WiFi.setTxPower(WIFI_POWER_17dBm);
+
   fabomatic::openConfigPortal(fabomatic::conf::debug::LOAD_EEPROM_DEFAULTS,
                               !fabomatic::conf::debug::FORCE_PORTAL);
 

@@ -77,9 +77,9 @@ namespace fabomatic
       ESP_LOGW(TAG, "Failed to load config from EEPROM");
       return std::nullopt;
     }
-    if (reply.value().magic_number != MAGIC_NUMBER)
+    if (reply.value().magic_number > MAGIC_NUMBER)
     {
-      ESP_LOGW(TAG, "Found different settings version in EEPROM (%d vs. %d), ignoring.", reply.value().magic_number, MAGIC_NUMBER);
+      ESP_LOGW(TAG, "Found different more recent settings version in EEPROM (%d vs. %d), ignoring.", reply.value().magic_number, MAGIC_NUMBER);
       return std::nullopt;
     }
     return reply.value();
@@ -110,6 +110,9 @@ namespace fabomatic
         obj["level"] = static_cast<uint8_t>(entry.level);
       }
     }
+
+    message_buffer.toJson(doc, "message_buffer");
+
     return doc;
   }
 
@@ -150,6 +153,16 @@ namespace fabomatic
     {
       config.cachedRfid.set_at(idx, card::INVALID, FabUser::UserLevel::Unknown);
       idx++;
+    }
+
+    if (config.magic_number >= 0x51)
+    {
+      auto mb = doc["message_buffer"];
+      auto loaded = Buffer::fromJsonElement(mb);
+      if (loaded)
+      {
+        config.message_buffer = loaded.value();
+      }
     }
 
     ESP_LOGD(TAG, "fromJsonDocument() : data deserialized successfully");

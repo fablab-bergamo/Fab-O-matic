@@ -16,6 +16,7 @@ namespace fabomatic::ServerMQTT
   public:
     virtual auto waitForReply() const -> bool = 0;
     virtual auto payload() const -> const std::string = 0;
+    virtual auto buffered() const -> bool = 0;
     virtual ~Query() = default;
   };
 
@@ -29,6 +30,7 @@ namespace fabomatic::ServerMQTT
 
     [[nodiscard]] auto waitForReply() const -> bool override { return true; };
     [[nodiscard]] auto payload() const -> const std::string override;
+    [[nodiscard]] auto buffered() const -> bool override { return false; };
   };
 
   class MachineQuery final : public Query
@@ -37,6 +39,7 @@ namespace fabomatic::ServerMQTT
     constexpr MachineQuery() = default;
     [[nodiscard]] auto payload() const -> const std::string override;
     [[nodiscard]] auto waitForReply() const -> bool override { return true; };
+    [[nodiscard]] auto buffered() const -> bool override { return false; };
   };
 
   class AliveQuery final : public Query
@@ -45,6 +48,7 @@ namespace fabomatic::ServerMQTT
     constexpr AliveQuery() = default;
     [[nodiscard]] auto payload() const -> const std::string override;
     [[nodiscard]] auto waitForReply() const -> bool override { return false; };
+    [[nodiscard]] auto buffered() const -> bool override { return false; };
   };
 
   class StartUseQuery final : public Query
@@ -57,6 +61,7 @@ namespace fabomatic::ServerMQTT
 
     [[nodiscard]] auto payload() const -> const std::string override;
     [[nodiscard]] auto waitForReply() const -> bool override { return true; };
+    [[nodiscard]] auto buffered() const -> bool override { return true; };
   };
 
   class StopUseQuery final : public Query
@@ -74,6 +79,7 @@ namespace fabomatic::ServerMQTT
     constexpr StopUseQuery(card::uid_t card_uid, std::chrono::seconds duration) : uid(card_uid), duration_s(duration){};
     [[nodiscard]] auto payload() const -> const std::string override;
     [[nodiscard]] auto waitForReply() const -> bool override { return true; };
+    [[nodiscard]] auto buffered() const -> bool override { return true; };
   };
 
   class InUseQuery final : public Query
@@ -91,6 +97,7 @@ namespace fabomatic::ServerMQTT
     constexpr InUseQuery(card::uid_t card_uid, std::chrono::seconds duration) : uid(card_uid), duration_s(duration){};
     [[nodiscard]] auto payload() const -> const std::string override;
     [[nodiscard]] auto waitForReply() const -> bool override { return true; };
+    [[nodiscard]] auto buffered() const -> bool override { return false; };
   };
 
   class RegisterMaintenanceQuery final : public Query
@@ -103,6 +110,7 @@ namespace fabomatic::ServerMQTT
 
     [[nodiscard]] auto payload() const -> const std::string override;
     [[nodiscard]] auto waitForReply() const -> bool override { return true; };
+    [[nodiscard]] auto buffered() const -> bool override { return true; };
   };
 
   class Response
@@ -147,7 +155,7 @@ namespace fabomatic::ServerMQTT
     bool is_valid = false;       /* True if the machine has a valid ID */
     bool maintenance = true;     /* True if the machine needs maintenance */
     bool allowed = false;        /* True if the machine can be used by anybody */
-    uint16_t logoff{0};         /* Timeout in minutes */
+    uint16_t logoff{0};          /* Timeout in minutes */
     std::string name{""};        /* Name of the machine from server DB */
     uint8_t type{0};             /* Type of the machine */
     uint16_t grace{0};           /* Grace period in minutes */
