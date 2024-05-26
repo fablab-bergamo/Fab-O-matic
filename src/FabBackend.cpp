@@ -619,6 +619,8 @@ namespace fabomatic
       }
     }
     last_reply = "";
+
+    ESP_LOGW(TAG, "Retransmittion completed, remaining messages=%d", buffer.count());
     return !hasBufferedMsg();
   }
 

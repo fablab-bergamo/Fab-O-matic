@@ -47,6 +47,43 @@ namespace fabomatic::tests
     return arg;
   }
 
+  void test_create_buffered_messages()
+  {
+    auto &server = logic.getServer();
+    for (const auto &[uid, level, name] : secrets::cards::whitelist)
+    {
+      auto result = server.startUse(uid);
+      TEST_ASSERT_FALSE_MESSAGE(result->request_ok, "Request should have failed");
+
+      result = server.inUse(uid, 1s);
+      TEST_ASSERT_FALSE_MESSAGE(result->request_ok, "Request should have failed");
+
+      result = server.finishUse(uid, 2s);
+      TEST_ASSERT_FALSE_MESSAGE(result->request_ok, "Request should have failed");
+    }
+
+    TEST_ASSERT_TRUE_MESSAGE(server.hasBufferedMsg(), "There are pending messages");
+    TEST_ASSERT_TRUE_MESSAGE(server.saveBuffer(), "Saving pending messages works");
+  }
+
+  void test_check_transmission()
+  {
+    auto &server = logic.getServer();
+
+    TEST_ASSERT_TRUE_MESSAGE(server.hasBufferedMsg(), "(1) There are pending messages");
+
+    TEST_ASSERT_TRUE_MESSAGE(server.connect(), "Server connect works");
+
+    TEST_ASSERT_TRUE_MESSAGE(server.hasBufferedMsg(), "(2) There are pending messages");
+
+    TEST_ASSERT_TRUE_MESSAGE(server.alive(), "Alive request works");
+
+    // Since old messages must be sent first, the buffer shall be empty now
+    TEST_ASSERT_FALSE_MESSAGE(server.hasBufferedMsg(), "There are no more pending messages");
+
+    TEST_ASSERT_TRUE_MESSAGE(server.saveBuffer(), "Saving pending messages works");
+  }
+
   void test_start_broker()
   {
     auto &server = logic.getServer();
@@ -294,7 +331,7 @@ namespace fabomatic::tests
   }
 } // namespace fabomatic::Tests
 
-void tearDown(void){};
+void tearDown(void) {};
 
 void setUp(void)
 {
@@ -309,8 +346,9 @@ void setup()
   auto original = fabomatic::SavedConfig::LoadFromEEPROM();
 
   UNITY_BEGIN();
-
+  RUN_TEST(fabomatic::tests::test_create_buffered_messages);
   RUN_TEST(fabomatic::tests::test_start_broker);
+  RUN_TEST(fabomatic::tests::test_check_transmission);
   RUN_TEST(fabomatic::tests::test_fabserver_calls);
   RUN_TEST(fabomatic::tests::test_normal_use);
   RUN_TEST(fabomatic::tests::test_stop_broker);
