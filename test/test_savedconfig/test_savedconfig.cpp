@@ -225,6 +225,10 @@ namespace fabomatic::tests
       messages.push_back({message, topic});
     }
 
+    // Nothing to test
+    if constexpr (!conf::debug::ENABLE_BUFFERING)
+      return;
+
     // Test insertion, messages must be queued newest first (msg3-msg2-msg1)
     auto msg_count = 0;
     for (const auto &msg : messages)

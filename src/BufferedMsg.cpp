@@ -8,16 +8,22 @@ namespace fabomatic
 
   auto Buffer::push_back(const std::string &message, const std::string &topic) -> void
   {
-    BufferedMsg msg{message, topic};
-    msg_queue.push_back(msg);
-    ESP_LOGI(TAG, "Buffered %s on %s, %lu messages queued", message.c_str(), topic.c_str(), msg_queue.size());
+    if constexpr (conf::debug::ENABLE_BUFFERING)
+    {
+      BufferedMsg msg{message, topic};
+      msg_queue.push_back(msg);
+      ESP_LOGI(TAG, "Buffered %s on %s, %lu messages queued", message.c_str(), topic.c_str(), msg_queue.size());
+    }
   }
 
   auto Buffer::push_front(const std::string &message, const std::string &topic) -> void
   {
-    BufferedMsg msg{message, topic};
-    msg_queue.push_front(msg);
-    ESP_LOGI(TAG, "Buffered %s on %s, %lu messages queued", message.c_str(), topic.c_str(), msg_queue.size());
+    if constexpr (conf::debug::ENABLE_BUFFERING)
+    {
+      BufferedMsg msg{message, topic};
+      msg_queue.push_front(msg);
+      ESP_LOGI(TAG, "Buffered %s on %s, %lu messages queued", message.c_str(), topic.c_str(), msg_queue.size());
+    }
   }
 
   auto Buffer::getMessage() -> const BufferedMsg
