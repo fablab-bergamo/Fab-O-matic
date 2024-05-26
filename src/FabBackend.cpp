@@ -87,6 +87,11 @@ namespace fabomatic
     }
 
     ESP_LOGE(TAG, "MQTT Client: failure to send query %s", query.payload().data());
+
+    if (query.buffered())
+    {
+      buffer.pushMessage(query.payload(), topic);
+    }
     return false;
   }
 

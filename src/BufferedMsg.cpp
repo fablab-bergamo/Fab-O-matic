@@ -1,0 +1,75 @@
+#include "BufferedMsg.hpp"
+
+#include <ArduinoJson.h>
+#include "Logging.hpp"
+
+namespace fabomatic
+{
+
+  auto Buffer::pushMessage(const std::string &message, const std::string &topic) -> void
+  {
+    BufferedMsg msg{message, topic};
+    msg_queue.push_back(msg);
+    ESP_LOGI(TAG, "Buffered %s on %s, %lu messages queued", message.c_str(), topic.c_str(), msg_queue.size());
+  }
+
+  auto Buffer::getMessage() -> const BufferedMsg
+  {
+    auto elem = msg_queue.front();
+    msg_queue.pop_front();
+    return elem;
+  }
+
+  auto Buffer::count() const -> size_t
+  {
+    return msg_queue.size();
+  }
+
+  auto Buffer::toJson() const -> JsonDocument
+  {
+    JsonDocument doc;
+    doc["VERSION"] = MAGIC_NUMBER;
+    auto json_elem = doc.createNestedArray("messages");
+    for (auto idx = 0; idx < msg_queue.size(); idx++)
+    {
+      auto elem = msg_queue.at(idx);
+      auto obj = json_elem.createNestedObject();
+      obj["topic"] = elem.mqtt_topic;
+      obj["message"] = elem.mqtt_message;
+    }
+    return doc;
+  }
+
+  auto Buffer::fromJson(const std::string &json_text) -> std::optional<Buffer>
+  {
+    Buffer buff;
+    JsonDocument doc;
+
+    const auto result = deserializeJson(doc, json_text);
+    if (result != DeserializationError::Ok)
+    {
+      ESP_LOGE(TAG, "Buffer::fromJson() : deserializeJson failed with code %s", result.c_str());
+      ESP_LOGE(TAG, "Buffer::fromJson() : %s", json_text.c_str());
+      return std::nullopt;
+    }
+
+    // Check that the version is the same
+    auto version = doc["VERSION"].as<unsigned int>();
+    if (version != MAGIC_NUMBER)
+    {
+      ESP_LOGD(TAG, "Buffer::fromJson() : wrong version number (%d, expected %d)", version, MAGIC_NUMBER);
+      return std::nullopt;
+    }
+
+    for (const auto &elem : doc["messages"].as<JsonArray>())
+    {
+      buff.pushMessage(elem["topic"].as<std::string>(),
+                       elem["message"].as<std::string>());
+    }
+
+    ESP_LOGD(TAG, "Buffer::fromJson() : data deserialized successfully");
+
+    return buff;
+  }
+
+} // namespace fabomatic

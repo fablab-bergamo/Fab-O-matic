@@ -14,6 +14,7 @@
 #include "MQTTtypes.hpp"
 #include "SavedConfig.hpp"
 #include "conf.hpp"
+#include "BufferedMsg.hpp"
 
 namespace fabomatic
 {
@@ -42,6 +43,8 @@ namespace fabomatic
     bool online{false};
     bool answer_pending{false};
     int16_t channel{-1};
+
+    Buffer buffer;
 
     auto messageReceived(String &topic, String &payload) -> void;
 
