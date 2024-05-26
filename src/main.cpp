@@ -142,11 +142,19 @@ namespace fabomatic
       if (!initialized)
       {
         constexpr auto msecs = std::chrono::duration_cast<std::chrono::milliseconds>(conf::tasks::WATCHDOG_TIMEOUT).count();
-        constexpr esp_task_wdt_config_t conf{.timeout_ms = msecs, .idle_core_mask = 0, .trigger_panic = true};
-        esp_task_wdt_init(&conf); // enable panic so ESP32 restarts
-        ESP_LOGI(TAG, "taskEspWatchdog - initialized %lld milliseconds", msecs);
-        esp_task_wdt_add(NULL); // add current thread to WDT watch
-        initialized = true;
+        constexpr esp_task_wdt_config_t conf{.timeout_ms = msecs, .idle_core_mask = 1, .trigger_panic = true};
+        esp_task_wdt_deinit();
+        auto result = esp_task_wdt_init(&conf); // enable panic so ESP32 restarts
+        if (result == ESP_OK)
+        {
+          ESP_LOGI(TAG, "taskEspWatchdog - initialized %lld milliseconds", msecs);
+          esp_task_wdt_add(NULL); // add current thread to WDT watch
+          initialized = true;
+        }
+        else
+        {
+          ESP_LOGE(TAG, "taskEspWatchdog - failed to initialize with %lld milliseconds", msecs);
+        }
       }
       esp_task_wdt_reset(); // Signal the hardware watchdog
     }
@@ -470,7 +478,8 @@ void setup()
   if (!hw_init)
   {
     // If hardware initialization failed, wait for OTA for 3 minutes
-    constexpr esp_task_wdt_config_t conf{.timeout_ms = 60 * 3 * 1000, .idle_core_mask = 0, .trigger_panic = true};
+    constexpr esp_task_wdt_config_t conf{.timeout_ms = 60 * 3 * 1000, .idle_core_mask = 1, .trigger_panic = true};
+    esp_task_wdt_deinit();
     esp_task_wdt_init(&conf); // enable panic so ESP32 restarts
     esp_task_wdt_add(NULL);   // add current thread to WDT watch
     while (true)

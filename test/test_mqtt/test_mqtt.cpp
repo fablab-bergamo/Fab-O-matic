@@ -277,11 +277,19 @@ namespace fabomatic::tests
     {
       if (!initialized)
       {
-        constexpr auto msecs = std::chrono::duration_cast<std::chrono::seconds>(conf::tasks::WATCHDOG_TIMEOUT).count();
-        constexpr esp_task_wdt_config_t conf{.timeout_ms = msecs, .idle_core_mask = 0, .trigger_panic = true};
-        TEST_ASSERT_EQUAL_MESSAGE(ESP_OK, esp_task_wdt_init(&conf), "taskEspWatchdog - esp_task_wdt_init failed");
-        ESP_LOGI(TAG3, "taskEspWatchdog - initialized %lld seconds", msecs);
-        TEST_ASSERT_EQUAL_MESSAGE(ESP_OK, esp_task_wdt_add(NULL), "taskEspWatchdog - esp_task_wdt_add failed");
+        constexpr uint32_t msecs{std::chrono::duration_cast<std::chrono::milliseconds>(conf::tasks::WATCHDOG_TIMEOUT).count()};
+        constexpr esp_task_wdt_config_t conf{.timeout_ms = msecs, .idle_core_mask = 1, .trigger_panic = true};
+
+        auto deinit = esp_task_wdt_deinit();
+        TEST_ASSERT_EQUAL_INT_MESSAGE(ESP_OK, deinit, "taskEspWatchdog - esp_task_wdt_deinit failed");
+
+        auto result = esp_task_wdt_init(&conf);
+        TEST_ASSERT_EQUAL_INT_MESSAGE(ESP_OK, result, "taskEspWatchdog - esp_task_wdt_init failed");
+
+        ESP_LOGI(TAG3, "taskEspWatchdog - initialized %lu seconds", msecs);
+
+        auto result2 = esp_task_wdt_add(NULL);
+        TEST_ASSERT_EQUAL_INT_MESSAGE(ESP_OK, result2, "taskEspWatchdog - esp_task_wdt_add failed");
         initialized = true;
       }
       TEST_ASSERT_EQUAL_MESSAGE(ESP_OK, esp_task_wdt_reset(), "taskEspWatchdog - esp_task_wdt_reset failed");
