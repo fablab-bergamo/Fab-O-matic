@@ -201,7 +201,7 @@ namespace fabomatic
    */
   bool FabBackend::waitForAnswer(std::chrono::milliseconds max_duration)
   {
-    const auto start_time = std::chrono::system_clock::now();
+    const auto start_time = Tasks::arduinoNow();
     const auto DELAY_MS = 25ms;
     do
     {
@@ -219,7 +219,7 @@ namespace fabomatic
       {
         return true;
       }
-    } while (std::chrono::system_clock::now() < (start_time + max_duration));
+    } while (Tasks::arduinoNow() < (start_time + max_duration));
 
     ESP_LOGE(TAG, "Failure, no answer from MQTT server (timeout:%lld ms)", max_duration.count());
     return false;
