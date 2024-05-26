@@ -418,6 +418,8 @@ void setup()
   Serial.begin(fabomatic::conf::debug::SERIAL_SPEED_BDS); // Initialize serial communications with the PC for debugging.
   delay(3000);
 
+  esp_log_level_set(TAG, LOG_LOCAL_LEVEL);
+
   if constexpr (fabomatic::conf::debug::ENABLE_LOGS)
   {
     Serial.setDebugOutput(true);
