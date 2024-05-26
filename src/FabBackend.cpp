@@ -90,7 +90,7 @@ namespace fabomatic
 
     if (query.buffered())
     {
-      buffer.pushMessage(query.payload(), topic);
+      buffer.push_back(query.payload(), topic);
     }
     return false;
   }
@@ -125,12 +125,26 @@ namespace fabomatic
    * @param query The query to be published.
    * @return true if the query was published successfully, false otherwise.
    */
-  bool FabBackend::publish(const ServerMQTT::Query &query)
+  template <typename QueryT>
+  bool FabBackend::publish(const QueryT &query)
   {
     String s_payload(query.payload().c_str());
-    String s_topic(topic.c_str());
+    std::string temp_topic;
 
-    if (s_payload.length() + topic.length() > FabBackend::MAX_MSG_SIZE - 8)
+    // Check at compile-time if topic is specified
+    if constexpr (std::is_base_of<BufferedQuery, QueryT>::value)
+    {
+      temp_topic = static_cast<BufferedQuery>(query).topic();
+    }
+    else
+    {
+      // Just use the default topic for the machine
+      temp_topic = this->topic;
+    }
+
+    String s_topic{temp_topic.c_str()};
+
+    if (s_payload.length() + s_topic.length() > FabBackend::MAX_MSG_SIZE - 8)
     {
       ESP_LOGE(TAG, "MQTT Client: Message is too long: %s", s_payload.c_str());
       return false;
@@ -372,10 +386,11 @@ namespace fabomatic
   {
     static_assert(std::is_base_of<ServerMQTT::Query, QueryT>::value, "QueryT must inherit from Query");
     static_assert(std::is_base_of<ServerMQTT::Response, RespT>::value, "RespT must inherit from Response");
+    QueryT query{args...};
 
     if (isOnline())
     {
-      if (QueryT query{args...}; publishWithReply(query))
+      if (publishWithReply(query))
       {
         // Deserialize the JSON document
         const auto payload = last_reply.c_str();
@@ -392,6 +407,12 @@ namespace fabomatic
         this->disconnect();
       }
     }
+
+    if (query.buffered())
+    {
+      buffer.push_back(query.payload(), topic);
+    }
+
     return std::make_unique<RespT>(false);
   }
 
@@ -406,10 +427,11 @@ namespace fabomatic
   bool FabBackend::processQuery(QueryArgs &&...args)
   {
     static_assert(std::is_base_of<ServerMQTT::Query, QueryT>::value, "QueryT must inherit from Query");
+    QueryT query{args...};
 
     if (isOnline())
     {
-      if (QueryT query{args...}; publish(query))
+      if (publish(query))
       {
         return true;
       }
@@ -418,6 +440,11 @@ namespace fabomatic
         ESP_LOGW(TAG, "Failed to publish query %s", query.payload().data());
         this->disconnect();
       }
+    }
+
+    if (query.buffered())
+    {
+      buffer.push_back(query.payload(), topic);
     }
     return false;
   }
@@ -508,4 +535,26 @@ namespace fabomatic
   {
     this->channel = channel;
   }
+
+  [[nodiscard]] auto FabBackend::hasBufferedMsg() const -> bool
+  {
+    return this->buffer.count() > 0;
+  }
+
+  [[nodiscard]] auto FabBackend::transmitBuffer() -> bool
+  {
+    while (hasBufferedMsg() && isOnline())
+    {
+      const auto &msg = buffer.getMessage();
+      const BufferedQuery bq{msg.mqtt_message, msg.mqtt_topic};
+      if (!publish(bq))
+      {
+        // Will try again
+        buffer.push_front(msg.mqtt_message, msg.mqtt_topic);
+        break;
+      }
+    }
+    return !hasBufferedMsg();
+  }
+
 } // namespace fabomatic

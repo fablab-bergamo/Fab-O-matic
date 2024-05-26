@@ -48,7 +48,9 @@ namespace fabomatic
 
     auto messageReceived(String &topic, String &payload) -> void;
 
-    [[nodiscard]] auto publish(const ServerMQTT::Query &payload) -> bool;
+    template <typename QueryT>
+    [[nodiscard]] auto publish(const QueryT &payload) -> bool;
+
     [[nodiscard]] auto waitForAnswer(std::chrono::milliseconds timeout) -> bool;
     [[nodiscard]] auto publishWithReply(const ServerMQTT::Query &payload) -> bool;
 
@@ -70,6 +72,8 @@ namespace fabomatic
     [[nodiscard]] auto alive() -> bool;
     [[nodiscard]] auto publish(String topic, String payload, bool waitForAnswer) -> bool;
     [[nodiscard]] auto isOnline() const -> bool;
+    [[nodiscard]] auto hasBufferedMsg() const -> bool;
+    [[nodiscard]] auto transmitBuffer() -> bool;
 
     auto connect() -> bool;
     auto connectWiFi() -> bool;

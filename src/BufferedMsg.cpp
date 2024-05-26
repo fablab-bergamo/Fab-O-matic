@@ -6,15 +6,28 @@
 namespace fabomatic
 {
 
-  auto Buffer::pushMessage(const std::string &message, const std::string &topic) -> void
+  auto Buffer::push_back(const std::string &message, const std::string &topic) -> void
   {
     BufferedMsg msg{message, topic};
     msg_queue.push_back(msg);
     ESP_LOGI(TAG, "Buffered %s on %s, %lu messages queued", message.c_str(), topic.c_str(), msg_queue.size());
   }
 
+  auto Buffer::push_front(const std::string &message, const std::string &topic) -> void
+  {
+    BufferedMsg msg{message, topic};
+    msg_queue.push_front(msg);
+    ESP_LOGI(TAG, "Buffered %s on %s, %lu messages queued", message.c_str(), topic.c_str(), msg_queue.size());
+  }
+
   auto Buffer::getMessage() -> const BufferedMsg
   {
+    if (msg_queue.size() == 0)
+    {
+      ESP_LOGE(TAG, "Calling getMessage() on empty queue!");
+      return {"", ""};
+    }
+
     auto elem = msg_queue.front();
     msg_queue.pop_front();
     return elem;
@@ -30,12 +43,12 @@ namespace fabomatic
     JsonDocument doc;
     doc["VERSION"] = MAGIC_NUMBER;
     auto json_elem = doc.createNestedArray("messages");
-    for (auto idx = 0; idx < msg_queue.size(); idx++)
+
+    for (auto elem = msg_queue.begin(); elem != msg_queue.end(); elem++)
     {
-      auto elem = msg_queue.at(idx);
       auto obj = json_elem.createNestedObject();
-      obj["topic"] = elem.mqtt_topic;
-      obj["message"] = elem.mqtt_message;
+      obj["topic"] = elem->mqtt_topic;
+      obj["message"] = elem->mqtt_message;
     }
     return doc;
   }
@@ -63,8 +76,8 @@ namespace fabomatic
 
     for (const auto &elem : doc["messages"].as<JsonArray>())
     {
-      buff.pushMessage(elem["topic"].as<std::string>(),
-                       elem["message"].as<std::string>());
+      buff.push_back(elem["message"].as<std::string>(),
+                     elem["topic"].as<std::string>());
     }
 
     ESP_LOGD(TAG, "Buffer::fromJson() : data deserialized successfully");
