@@ -37,6 +37,7 @@ namespace fabomatic
       has_changed = true;
 
       ESP_LOGI(TAG, "Buffered %s on %s, %u messages queued", message.c_str(), topic.c_str(), msg_queue.size());
+
     }
   }
 
