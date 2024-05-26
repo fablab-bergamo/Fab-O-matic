@@ -52,12 +52,31 @@ namespace fabomatic
 
   public:
     BufferedQuery() = delete;
-    constexpr BufferedQuery(const std::string_view &value, const std::string_view &topic, bool wait) : mqtt_value(value), mqtt_topic(topic), wait_for_answer{wait} {};
+    constexpr BufferedQuery(const std::string_view &value,
+                            const std::string_view &topic,
+                            bool wait) : mqtt_value(value),
+                                         mqtt_topic(topic),
+                                         wait_for_answer{wait} {};
 
-    [[nodiscard]] auto payload() const -> const std::string override { return std::string(mqtt_value); };
-    [[nodiscard]] auto waitForReply() const -> bool override { return wait_for_answer; };
-    [[nodiscard]] auto buffered() const -> bool override { return false; };
-    [[nodiscard]] auto topic() const -> std::string { return std::string(mqtt_topic); };
+    [[nodiscard]] auto payload() const -> const std::string override
+    {
+      return std::string(mqtt_value);
+    };
+
+    [[nodiscard]] auto waitForReply() const -> bool override
+    {
+      return wait_for_answer;
+    };
+
+    [[nodiscard]] auto buffered() const -> bool override
+    {
+      return false;
+    };
+
+    [[nodiscard]] auto topic() const -> std::string
+    {
+      return std::string(mqtt_topic);
+    };
   };
 
 } // namespace fabomatic
