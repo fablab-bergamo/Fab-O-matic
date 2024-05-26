@@ -70,7 +70,7 @@ namespace fabomatic::tests
       result = server.registerMaintenance(uid);
       TEST_ASSERT_FALSE_MESSAGE(result->request_ok, "(6) Request should have failed");
     }
-    // Should be 5 * 10 = 50 messages, truncated to 40.
+    // Should have generated 5 * 10 = 50 messages, truncated to 40.
 
     TEST_ASSERT_TRUE_MESSAGE(server.hasBufferedMsg(), "There are pending messages");
     TEST_ASSERT_TRUE_MESSAGE(server.saveBuffer(), "Saving pending messages works");
