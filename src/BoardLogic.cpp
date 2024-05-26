@@ -376,7 +376,7 @@ namespace fabomatic
       break;
     case Status::MaintenanceNeeded:
       lcd.setRow(0, strings::S_BLOCKED_MAINTENANCE_1);
-      lcd.setRow(1, strings::S_BLOCKED_MAINTENANCE_1);
+      lcd.setRow(1, strings::S_BLOCKED_MAINTENANCE_2);
       break;
     case Status::MaintenanceQuery:
       lcd.setRow(0, strings::S_PROMPT_MAINTENANCE_1);

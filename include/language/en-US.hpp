@@ -4,7 +4,7 @@
 namespace fabomatic::strings::en_US
 {
   static constexpr auto S_LANG_ID = "en-US";
-  
+
   static constexpr auto S_BUSY = "Busy";
   static constexpr auto S_CANCELLED = "* CANCELLED *";
   static constexpr auto S_CONFIRMED = "* CONFIRMED *";
@@ -28,8 +28,8 @@ namespace fabomatic::strings::en_US
   static constexpr auto S_WORKING = "Working...";
   static constexpr auto S_OFFLINE_MODE = "OFFLINE MODE";
 
-  static constexpr auto S_BLOCKED_ADMIN_1 = "Blocked";
-  static constexpr auto S_BLOCKED_ADMIN_2 = "by admin";
+  static constexpr auto S_BLOCKED_ADMIN_1 = "Blocked by";
+  static constexpr auto S_BLOCKED_ADMIN_2 = "admins";
 
   static constexpr auto S_VERIFYING_1 = "Verifying";
   static constexpr auto S_VERIFYING_2 = "card...";
@@ -37,8 +37,8 @@ namespace fabomatic::strings::en_US
   static constexpr auto S_BLOCKED_MAINTENANCE_1 = "Blocked for";
   static constexpr auto S_BLOCKED_MAINTENANCE_2 = "maintenance";
 
-  static constexpr auto S_PROMPT_MAINTENANCE_1 = "Maintenance?";
-  static constexpr auto S_PROMPT_MAINTENANCE_2 = "Record";
+  static constexpr auto S_PROMPT_MAINTENANCE_1 = "Maintenance";
+  static constexpr auto S_PROMPT_MAINTENANCE_2 = "record ?";
 
   static constexpr auto S_MAINTENANCE_REGISTERED_1 = "Maintenance";
   static constexpr auto S_MAINTENANCE_REGISTERED_2 = "recorded";
