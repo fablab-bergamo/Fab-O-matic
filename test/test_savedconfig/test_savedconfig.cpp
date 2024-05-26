@@ -193,18 +193,19 @@ namespace fabomatic::tests
       const auto &msg_old = buff.getMessage();
       TEST_ASSERT_EQUAL_STRING_MESSAGE(msg_new.mqtt_message.c_str(), msg_old.mqtt_message.c_str(), "Messages are in different order or damaged");
       TEST_ASSERT_EQUAL_STRING_MESSAGE(msg_new.mqtt_topic.c_str(), msg_old.mqtt_topic.c_str(), "Topics are in different order or damaged");
+      TEST_ASSERT_EQUAL_MESSAGE(msg_new.wait_for_answer, msg_old.wait_for_answer, "Wait flags are in different order or damaged");
     }
     return true;
   }
 
   void test_buffered_msg()
   {
-    constexpr auto NUM_MESSAGES = 100;
+    constexpr auto NUM_MESSAGES = std::min(30, Buffer::MAX_MESSAGES - 3);
 
     Buffer buff;
-    BufferedMsg msg1{"msg1", "topic1"};
-    BufferedMsg msg2{"msg2", "topic1"};
-    BufferedMsg msg3{"msg3", "topic2"};
+    BufferedMsg msg1{"msg1", "topic1", false};
+    BufferedMsg msg2{"msg2", "topic1", false};
+    BufferedMsg msg3{"msg3", "topic2", false};
     std::vector messages{msg3, msg2, msg1};
 
     TEST_ASSERT_TRUE(msg1.mqtt_message == "msg1");
@@ -223,7 +224,7 @@ namespace fabomatic::tests
       std::string topic{"machine/TESTTOPIC/"};
 
       topic.append(std::to_string(msg_num));
-      messages.push_back({message, topic});
+      messages.push_back({message, topic, true});
     }
 
     TEST_ASSERT_TRUE_MESSAGE(buff.hasChanged(), "Buffer has pending changes");
@@ -237,7 +238,7 @@ namespace fabomatic::tests
     for (const auto &msg : messages)
     {
       TEST_ASSERT_EQUAL_MESSAGE(msg_count, buff.count(), "Push_back: Buffer count is correct");
-      buff.push_front(msg.mqtt_message, msg.mqtt_topic);
+      buff.push_front(msg.mqtt_message, msg.mqtt_topic, msg.wait_for_answer);
       msg_count++;
     }
 
@@ -252,6 +253,7 @@ namespace fabomatic::tests
       auto &msg = buff.getMessage();
       TEST_ASSERT_EQUAL_STRING_MESSAGE(elem->mqtt_message.c_str(), msg.mqtt_message.c_str(), "(1) Retrieval oldest first message is correct");
       TEST_ASSERT_EQUAL_STRING_MESSAGE(elem->mqtt_topic.c_str(), msg.mqtt_topic.c_str(), "(1) Retrieval oldest first topic is correct");
+      TEST_ASSERT_EQUAL_MESSAGE(elem->wait_for_answer, msg.wait_for_answer, "(1) Retrieval oldest first wait_for_answer is correct");
     }
 
     TEST_ASSERT_EQUAL_MESSAGE(0, buff.count(), "Buffer is now empty");
@@ -263,7 +265,7 @@ namespace fabomatic::tests
     for (const auto &msg : messages)
     {
       TEST_ASSERT_EQUAL_MESSAGE(msg_count, buff.count(), "(1) Push_front: Buffer count is correct");
-      buff.push_back(msg.mqtt_message, msg.mqtt_topic);
+      buff.push_back(msg.mqtt_message, msg.mqtt_topic, msg.wait_for_answer);
       msg_count++;
     }
 
@@ -275,6 +277,7 @@ namespace fabomatic::tests
       auto &msg = buff.getMessage();
       TEST_ASSERT_EQUAL_STRING_MESSAGE(elem->mqtt_message.c_str(), msg.mqtt_message.c_str(), "(2) Retrieval oldest first message is correct");
       TEST_ASSERT_EQUAL_STRING_MESSAGE(elem->mqtt_topic.c_str(), msg.mqtt_topic.c_str(), "(2) Retrieval oldest first topic is correct");
+      TEST_ASSERT_EQUAL_MESSAGE(elem->wait_for_answer, msg.wait_for_answer, "(2) Retrieval oldest first wait_for_answer is correct");
     }
 
     TEST_ASSERT_EQUAL_MESSAGE(0, buff.count(), "(2) Buffer is now empty");
@@ -290,7 +293,7 @@ namespace fabomatic::tests
     for (const auto &msg : messages)
     {
       TEST_ASSERT_EQUAL_MESSAGE(msg_count, buff.count(), "(2) Push_front: Buffer count is correct");
-      buff.push_back(msg.mqtt_message, msg.mqtt_topic);
+      buff.push_back(msg.mqtt_message, msg.mqtt_topic, msg.wait_for_answer);
       msg_count++;
     }
 
