@@ -174,7 +174,7 @@ namespace fabomatic
 
   /// @brief Sets the whitelist
   /// @param list the whitelist to set
-  constexpr auto AuthProvider::setWhitelist(WhiteList list) -> void
+  auto AuthProvider::setWhitelist(WhiteList list) -> void
   {
     whitelist = list;
   }

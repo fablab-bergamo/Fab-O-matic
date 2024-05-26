@@ -635,7 +635,7 @@ namespace fabomatic
     machine.setAutologoffDelay(delay);
   }
 
-  constexpr auto BoardLogic::setWhitelist(WhiteList whitelist) -> void
+  auto BoardLogic::setWhitelist(WhiteList whitelist) -> void
   {
     auth.setWhitelist(whitelist);
   }

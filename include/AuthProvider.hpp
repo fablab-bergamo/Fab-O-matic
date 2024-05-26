@@ -29,7 +29,7 @@ namespace fabomatic
     AuthProvider() = delete;
     AuthProvider(WhiteList whitelist);
     [[nodiscard]] auto tryLogin(card::uid_t uid, FabBackend &server) const -> std::optional<FabUser>;
-    constexpr auto setWhitelist(WhiteList list) -> void;
+    auto setWhitelist(WhiteList list) -> void;
     auto saveCache() const -> bool;
     auto loadCache() -> void;
   };

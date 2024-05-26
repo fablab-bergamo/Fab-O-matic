@@ -61,7 +61,7 @@ namespace fabomatic
     auto checkRfid() -> void;
     auto checkPowerOff() -> void;
     auto setAutologoffDelay(std::chrono::seconds delay) -> void;
-    constexpr auto setWhitelist(WhiteList whitelist) -> void;
+    auto setWhitelist(WhiteList whitelist) -> void;
     auto setRebootRequest(bool request) -> void;
 
     auto initBoard() -> bool;
