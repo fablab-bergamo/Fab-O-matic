@@ -277,9 +277,10 @@ namespace fabomatic::tests
     {
       if (!initialized)
       {
-        auto secs = std::chrono::duration_cast<std::chrono::seconds>(conf::tasks::WATCHDOG_TIMEOUT).count();
-        TEST_ASSERT_EQUAL_MESSAGE(ESP_OK, esp_task_wdt_init(secs, true), "taskEspWatchdog - esp_task_wdt_init failed");
-        ESP_LOGI(TAG3, "taskEspWatchdog - initialized %d seconds", secs);
+        constexpr auto msecs = std::chrono::duration_cast<std::chrono::seconds>(conf::tasks::WATCHDOG_TIMEOUT).count();
+        constexpr esp_task_wdt_config_t conf{.timeout_ms = msecs, .idle_core_mask = 0, .trigger_panic = true};
+        TEST_ASSERT_EQUAL_MESSAGE(ESP_OK, esp_task_wdt_init(&conf), "taskEspWatchdog - esp_task_wdt_init failed");
+        ESP_LOGI(TAG3, "taskEspWatchdog - initialized %lld seconds", msecs);
         TEST_ASSERT_EQUAL_MESSAGE(ESP_OK, esp_task_wdt_add(NULL), "taskEspWatchdog - esp_task_wdt_add failed");
         initialized = true;
       }
