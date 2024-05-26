@@ -57,7 +57,7 @@ namespace fabomatic
    * @param query The query to be posted.
    * @return true if the server answered, false otherwise.
    */
-  bool FabBackend::publishWithReply(const ServerMQTT::Query &query)
+  auto FabBackend::publishWithReply(const ServerMQTT::Query &query) -> PublishResult
   {
     auto try_cpt = 0;
     auto published = false;
@@ -68,7 +68,7 @@ namespace fabomatic
 
       if (!published)
       {
-        if (publish(query))
+        if (publish(query) == PublishResult::PublishedWithoutAnswer)
         {
           published = true;
         }
@@ -82,7 +82,7 @@ namespace fabomatic
       if (waitForAnswer(conf::mqtt::TIMEOUT_REPLY_SERVER))
       {
         ESP_LOGD(TAG, "MQTT Client: received answer: %s", last_reply.data());
-        return true;
+        return PublishResult::PublishedWithAnswer;
       }
 
       ESP_LOGW(TAG, "MQTT Client: no answer received, retrying %d/%d", try_cpt, conf::mqtt::MAX_TRIES);
@@ -91,11 +91,18 @@ namespace fabomatic
 
     ESP_LOGE(TAG, "MQTT Client: failure to send query %s", query.payload().data());
 
-    if (query.buffered())
+    // Do not send twice if response did not arrive
+    if (query.buffered() && !published)
     {
       buffer.push_back(query.payload(), topic, query.waitForReply());
     }
-    return false;
+
+    if (published)
+    {
+      return PublishResult::PublishedWithoutAnswer;
+    }
+
+    return PublishResult::ErrorNotPublished;
   }
 
   /**
@@ -129,7 +136,7 @@ namespace fabomatic
    * @return true if the query was published successfully, false otherwise.
    */
   template <typename QueryT>
-  bool FabBackend::publish(const QueryT &query)
+  auto FabBackend::publish(const QueryT &query) -> PublishResult
   {
     String s_payload(query.payload().c_str());
     std::string temp_topic;
@@ -150,7 +157,7 @@ namespace fabomatic
     if (s_payload.length() + s_topic.length() > FabBackend::MAX_MSG_SIZE - 8)
     {
       ESP_LOGE(TAG, "MQTT Client: Message is too long: %s", s_payload.c_str());
-      return false;
+      return PublishResult::ErrorNotPublished;
     }
 
     answer_pending = query.waitForReply(); // Don't wait if not needed
@@ -159,7 +166,12 @@ namespace fabomatic
 
     ESP_LOGD(TAG, "MQTT Client: sending message %s on topic %s", s_payload.c_str(), s_topic.c_str());
 
-    return client.publish(s_topic, s_payload);
+    if (client.publish(s_topic, s_payload))
+    {
+      return PublishResult::PublishedWithoutAnswer;
+    }
+
+    return PublishResult::ErrorNotPublished;
   }
 
   /**
@@ -343,7 +355,7 @@ namespace fabomatic
           online = true;
         }
         // Announce the board to the server
-        if (auto query = ServerMQTT::AliveQuery{}; publish(query))
+        if (auto query = ServerMQTT::AliveQuery{}; publish(query) == PublishResult::PublishedWithoutAnswer)
         {
           ESP_LOGI(TAG, "MQTT Client: board announced to server");
         }
@@ -408,7 +420,7 @@ namespace fabomatic
 
     if (isOnline() && !hasBufferedMsg())
     {
-      if (publishWithReply(query))
+      if (publishWithReply(query) == PublishResult::PublishedWithAnswer)
       {
         // Deserialize the JSON document
         const auto payload = last_reply.c_str();
@@ -464,7 +476,7 @@ namespace fabomatic
 
     if (isOnline() && !hasBufferedMsg())
     {
-      if (publish(query))
+      if (publish(query) == PublishResult::PublishedWithoutAnswer)
       {
         return true;
       }
@@ -583,17 +595,21 @@ namespace fabomatic
       const BufferedQuery bq{msg.mqtt_message, msg.mqtt_topic, msg.wait_for_answer};
       if (bq.waitForReply())
       {
-        if (!publishWithReply(bq))
+        if (auto result = publishWithReply(bq); result != PublishResult::PublishedWithAnswer)
         {
           ESP_LOGW(TAG, "Retransmitting buffered message failed!");
-          // Will try again
-          buffer.push_front(msg.mqtt_message, msg.mqtt_topic, msg.wait_for_answer);
+
+          // If it has been published but not answered, do not try again
+          if (result == PublishResult::PublishedWithoutAnswer)
+          {
+            buffer.push_front(msg.mqtt_message, msg.mqtt_topic, msg.wait_for_answer);
+          }
           break;
         }
       }
       else
       {
-        if (!publish(bq))
+        if (publish(bq) == PublishResult::ErrorNotPublished)
         {
           // Will try again
           ESP_LOGW(TAG, "Retransmitting buffered message failed!");
