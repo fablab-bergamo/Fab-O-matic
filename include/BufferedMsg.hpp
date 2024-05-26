@@ -29,7 +29,6 @@ namespace fabomatic
     std::deque<BufferedMsg> msg_queue;
     bool has_changed{true};
     static constexpr auto MAGIC_NUMBER = 1;
-    static constexpr auto MAX_MESSAGES = 40;
 
   public:
     auto push_back(const std::string &message, const std::string &topic, bool wait) -> void;
@@ -41,6 +40,7 @@ namespace fabomatic
     auto setChanged(bool new_value) -> void { has_changed = new_value; };
 
     static auto fromJsonElement(const JsonObject &json_obj) -> std::optional<Buffer>;
+    static constexpr auto MAX_MESSAGES = 40;
   };
 
   class BufferedQuery final : public ServerMQTT::Query
