@@ -22,6 +22,13 @@ namespace fabomatic
   {
   private:
     constexpr static auto MAX_MSG_SIZE = 300;
+    enum class PublishResult : uint8_t
+    {
+      ErrorNotPublished,
+      PublishedWithoutAnswer,
+      PublishedWithAnswer
+    };
+
     MQTTClient client{MAX_MSG_SIZE}; // Default is 128, and can be reached with some messages
     JsonDocument doc;
 
@@ -49,10 +56,10 @@ namespace fabomatic
     auto messageReceived(String &topic, String &payload) -> void;
 
     template <typename QueryT>
-    [[nodiscard]] auto publish(const QueryT &payload) -> bool;
+    [[nodiscard]] auto publish(const QueryT &payload) -> PublishResult;
 
     [[nodiscard]] auto waitForAnswer(std::chrono::milliseconds timeout) -> bool;
-    [[nodiscard]] auto publishWithReply(const ServerMQTT::Query &payload) -> bool;
+    [[nodiscard]] auto publishWithReply(const ServerMQTT::Query &payload) -> PublishResult;
 
     template <typename RespT, typename QueryT, typename... QueryArgs>
     [[nodiscard]] auto processQuery(QueryArgs &&...) -> std::unique_ptr<RespT>;
