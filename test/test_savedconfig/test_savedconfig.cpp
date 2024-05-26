@@ -315,6 +315,8 @@ void setUp(void)
 void setup()
 {
   delay(1000);
+  esp_log_level_set(TAG, LOG_LOCAL_LEVEL);
+  
   auto original = fabomatic::SavedConfig::LoadFromEEPROM();
 
   UNITY_BEGIN();

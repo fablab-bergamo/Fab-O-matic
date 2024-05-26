@@ -334,7 +334,7 @@ namespace fabomatic::tests
     for (const auto tp : test_scheduler.getTasks())
     {
       const auto t = *tp;
-      ESP_LOGD(TAG3, "Task %s: %lu runs, %lu ms total runtime, %lu ms avg tardiness", t.getId().c_str(), t.getRunCounter(), t.getTotalRuntime().count(), t.getAvgTardiness().count());
+      ESP_LOGD(TAG3, "Task %s: %lu runs, %llu ms total runtime, %llu ms avg tardiness", t.getId().c_str(), t.getRunCounter(), t.getTotalRuntime().count(), t.getAvgTardiness().count());
       TEST_ASSERT_GREATER_OR_EQUAL_MESSAGE(1, t.getRunCounter(), "Task did not run");
     }
     // Remove the HW Watchdog
@@ -353,6 +353,8 @@ void setUp(void)
 void setup()
 {
   delay(1000);
+  esp_log_level_set(TAG, LOG_LOCAL_LEVEL);
+
   // Save original config
   auto original = fabomatic::SavedConfig::LoadFromEEPROM();
 

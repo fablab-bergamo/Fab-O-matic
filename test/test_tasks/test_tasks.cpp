@@ -6,6 +6,7 @@
 #define UNITY_INCLUDE_PRINT_FORMATTED
 #include <unity.h>
 #include "Tasks.hpp"
+#include "Logging.hpp"
 
 using namespace std::chrono_literals;
 
@@ -132,6 +133,7 @@ namespace fabomatic::tests
 void setup()
 {
   delay(1000);
+  esp_log_level_set(TAG, LOG_LOCAL_LEVEL);
   UNITY_BEGIN();
   RUN_TEST(fabomatic::tests::test_execute_runs_all_tasks);
   RUN_TEST(fabomatic::tests::test_stop_start_tasks);
