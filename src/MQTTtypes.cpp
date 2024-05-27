@@ -5,6 +5,7 @@
 
 #include <WiFi.h>
 
+#include "Espressif.hpp"
 #include "MQTTtypes.hpp"
 #include "ArduinoJson.hpp"
 #include "FabUser.hpp"
@@ -38,13 +39,13 @@ namespace fabomatic::ServerMQTT
     std::stringstream ss{};
 
     // Get MAC address
-    const auto serial = card::esp_serial();
+    const auto serial = esp32::esp_serial();
 
     ss << "{\"action\":\"alive\","
        << "\"version\":\"" << GIT_VERSION << "\","
        << "\"ip\":\"" << WiFi.localIP().toString().c_str() << "\","
        << "\"serial\":\"" << serial << "\","
-       << "\"heap\":\"" << esp_get_free_heap_size() << "\""
+       << "\"heap\":\"" << esp32::getFreeHeap() << "\""
        << "}";
     return ss.str();
   }

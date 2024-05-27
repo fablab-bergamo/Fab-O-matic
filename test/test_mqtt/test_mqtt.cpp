@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "BoardLogic.hpp"
+#include "Espressif.hpp"
 #include "FabBackend.hpp"
 #include "LCDWrapper.hpp"
 #include "RFIDWrapper.hpp"
@@ -15,7 +16,6 @@
 #include "mock/MockMQTTBroker.hpp"
 #include "mock/MockMrfc522.hpp"
 #include <Arduino.h>
-#include <esp_task_wdt.h>
 #include <unity.h>
 #include "LiquidCrystal.h"
 
@@ -269,7 +269,9 @@ namespace fabomatic::tests
     }
   }
 
-  void test_taskEspWatchdog()
+  /// @brief Keep the ESP32 HW watchdog alive.
+  /// If code gets stuck this will cause an automatic reset.
+  void taskEspWatchdog()
   {
     static auto initialized = false;
 
@@ -277,13 +279,16 @@ namespace fabomatic::tests
     {
       if (!initialized)
       {
-        auto secs = std::chrono::duration_cast<std::chrono::seconds>(conf::tasks::WATCHDOG_TIMEOUT).count();
-        TEST_ASSERT_EQUAL_MESSAGE(ESP_OK, esp_task_wdt_init(secs, true), "taskEspWatchdog - esp_task_wdt_init failed");
-        ESP_LOGI(TAG3, "taskEspWatchdog - initialized %d seconds", secs);
-        TEST_ASSERT_EQUAL_MESSAGE(ESP_OK, esp_task_wdt_add(NULL), "taskEspWatchdog - esp_task_wdt_add failed");
-        initialized = true;
+        initialized = esp32::setupWatchdog(conf::tasks::WATCHDOG_TIMEOUT);
+        TEST_ASSERT_TRUE_MESSAGE(initialized, "Watchdog initialization works")
       }
-      TEST_ASSERT_EQUAL_MESSAGE(ESP_OK, esp_task_wdt_reset(), "taskEspWatchdog - esp_task_wdt_reset failed");
+      if (initialized)
+      {
+        if (!esp32::signalWatchdog())
+        {
+          ESP_LOGE(TAG, "Failure to signal watchdog");
+        }
+      }
     }
   }
 
@@ -337,7 +342,7 @@ namespace fabomatic::tests
       TEST_ASSERT_GREATER_OR_EQUAL_MESSAGE(1, t.getRunCounter(), "Task did not run");
     }
     // Remove the HW Watchdog
-    esp_task_wdt_delete(NULL);
+    esp32::removeWatchdog();
   }
 } // namespace fabomatic::Tests
 

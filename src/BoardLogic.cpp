@@ -3,7 +3,6 @@
 #include "Arduino.h"
 #include "WiFi.h"
 #include <Adafruit_NeoPixel.h>
-#include <esp_task_wdt.h>
 
 #include "AuthProvider.hpp"
 #include "BaseLCDWrapper.hpp"
