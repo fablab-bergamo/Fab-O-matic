@@ -94,17 +94,35 @@ jobs:
             const fs = require('fs');
             const report = fs.readFileSync('size_report.txt', 'utf8');
             const previousTag = process.env.previous_tag;
+            const tagName = context.ref.substring(10);  // Remove 'refs/tags/' prefix
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const sha = context.sha;
+            const variant = context.payload.matrix.variant;
+
+            let release;
+            try {
+              release = await github.rest.repos.getReleaseByTag({ owner, repo, tag: tagName });
+            } catch (error) {
+              if (error.status === 404) {
+                release = await github.rest.repos.createRelease({
+                  owner,
+                  repo,
+                  tag_name: tagName,
+                  name: tagName,
+                  body: ''
+                });
+              } else {
+                throw error;
+              }
+            }
+
             if (report) {
-              const release = await github.rest.repos.getReleaseByTag({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                tag: context.ref.substring(10)
-              });
               const truncatedReport = report.length > 63*1024 ? report.substring(0, 63*1024) + '... (truncated)' : report;
               await github.rest.repos.updateRelease({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
+                owner,
+                repo,
                 release_id: release.data.id,
-                body: release.data.body + '\n\n## Firmware size changes for ${{ matrix.variant }}\n\nCommit CURRENT ' + context.sha + ' vs REFERENCE ' + previousTag + '\n```\n' + truncatedReport + '\n```'
+                body: release.data.body + '\n\n## Firmware size changes for ' + variant + '\n\nCommit CURRENT ' + sha + ' vs REFERENCE ' + previousTag + '\n```\n' + truncatedReport + '\n```'
               });
             }
