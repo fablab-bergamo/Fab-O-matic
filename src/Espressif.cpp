@@ -5,6 +5,7 @@
 
 #include "esp_heap_caps.h"
 #include "esp_task_wdt.h"
+#include "esp_mac.h"
 
 #include "Espressif.hpp"
 #include "Logging.hpp"
@@ -37,10 +38,10 @@ namespace fabomatic::esp32
     auto retVal = esp_task_wdt_init(secs, true);
     ESP_LOGI(TAG, "taskEspWatchdog - initialized %u seconds", secs);
 #else
-    auto msecs = static_cast<uint32_t>(msecs.count());
-    esp_task_wdt_config_t conf{.timeout_ms = msecs, .idle_core_mask = 1, .trigger_panic = true};
+    auto ui_msecs = static_cast<uint32_t>(msecs.count());
+    esp_task_wdt_config_t conf{.timeout_ms = ui_msecs, .idle_core_mask = 1, .trigger_panic = true};
     auto retVal = esp_task_wdt_init(&conf);
-    ESP_LOGI(TAG, "taskEspWatchdog - initialized %u milliseconds", msecs);
+    ESP_LOGI(TAG, "taskEspWatchdog - initialized %lu milliseconds", ui_msecs);
 #endif
 
     if (retVal != ESP_OK)
