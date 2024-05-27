@@ -271,7 +271,7 @@ namespace fabomatic::tests
 
   /// @brief Keep the ESP32 HW watchdog alive.
   /// If code gets stuck this will cause an automatic reset.
-  void taskEspWatchdog()
+  void test_taskEspWatchdog()
   {
     static auto initialized = false;
 
@@ -280,7 +280,7 @@ namespace fabomatic::tests
       if (!initialized)
       {
         initialized = esp32::setupWatchdog(conf::tasks::WATCHDOG_TIMEOUT);
-        TEST_ASSERT_TRUE_MESSAGE(initialized, "Watchdog initialization works")
+        TEST_ASSERT_TRUE_MESSAGE(initialized, "Watchdog initialization works");
       }
       if (initialized)
       {
