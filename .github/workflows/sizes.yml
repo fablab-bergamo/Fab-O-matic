@@ -2,7 +2,9 @@ name: Compare firmware sizes
 
 on: 
   workflow_dispatch:
-  pull_request:
+  workflow_run:
+    workflows: [Build firmware images]
+    types: [completed]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
