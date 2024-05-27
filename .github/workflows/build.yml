@@ -2,13 +2,10 @@ name: Build firmware images
 
 on:
   workflow_dispatch:
-  push:
-    paths:
-    - 'src/**'
-    - 'conf/**'
-    - 'include/**'
-    - 'platformio.ini'
-    - '.github/workflows/build.yml'
+  workflow_run:
+    workflows: [Test suite based on Wokwi CLI]
+    types:
+      - completed
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
