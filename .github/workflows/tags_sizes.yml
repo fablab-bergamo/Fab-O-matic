@@ -1,10 +1,10 @@
-name: Compare firmware sizes (tag)
+name: Compare firmware sizes (Tag)
 
 on: 
   workflow_dispatch:
   push:
     tags:
-      - '*'  # Trigger on all tags
+      - '*'  # Trigger on version tags
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -22,7 +22,7 @@ jobs:
       - name: Check out the code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 50
+          fetch-depth: 0  # Fetch all tags
 
       - name: Install PlatformIO Core
         uses: actions/setup-python@v5
@@ -43,14 +43,22 @@ jobs:
         id: prev_tag
         run: |
           tags=$(git tag --sort=-creatordate)
+          current_tag=${GITHUB_REF#refs/tags/}
+          previous_tag=""
+          found=false
           for tag in $tags; do
-            if [ "$tag" != "${GITHUB_REF#refs/tags/}" ]; then
-              echo "previous_tag=$tag" >> $GITHUB_ENV
+            if [ "$found" = true ]; then
+              previous_tag=$tag
               break
             fi
+            if [ "$tag" = "$current_tag" ]; then
+              found=true
+            fi
           done
+          echo "previous_tag=$previous_tag" >> $GITHUB_ENV
 
-      - name: Check out previous tag
+      - name: Checkout previous tag
+        if: env.previous_tag != ''
         run: git checkout ${{ env.previous_tag }}
 
       - name: Use secrets.hpp.example as base for the build
