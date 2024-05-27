@@ -125,7 +125,6 @@ namespace fabomatic
     if (result != DeserializationError::Ok)
     {
       ESP_LOGE(TAG, "fromJsonDocument() : deserializeJson failed with code %s", result.c_str());
-      ESP_LOGE(TAG, "fromJsonDocument() : %s", json_text.c_str());
       return std::nullopt;
     }
 
