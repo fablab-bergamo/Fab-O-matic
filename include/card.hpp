@@ -1,10 +1,11 @@
 #ifndef CARD_HPP_
 #define CARD_HPP_
 
+#include <sstream>
+#include <iomanip>
+
 #include "Arduino.h"
 #include "conf.hpp"
-#include <iomanip>
-#include <sstream>
 
 #include "Logging.hpp"
 #include <esp_mac.h>
@@ -59,28 +60,6 @@ namespace fabomatic::card
   inline auto print(uint64_t uid) -> void
   {
     ESP_LOGI(TAG, "Card UID = %s", card::uid_str(uid).c_str());
-  }
-
-  /// @brief Returns the ESP32 serial number as a string
-  [[nodiscard]] inline auto esp_serial() -> const std::string_view
-  {
-    static std::array<char, 13> result; // +1 for null termination
-
-    if (result.empty()) // Compute only once
-    {
-      std::stringstream serial{};
-      std::array<uint8_t, 8> mac{0};
-
-      esp_efuse_mac_get_default(mac.data());
-      for (const auto val : mac)
-      {
-        serial << std::setfill('0') << std::setw(2) << std::hex << +val;
-      }
-      auto res = serial.str().substr(0U, 6 * 2);
-      std::copy(res.cbegin(), res.cend(), result.begin());
-      result[result.size() - 1] = '\0';
-    }
-    return {result.data()};
   }
 } // namespace fabomatic::card
 #endif // CARD_HPP_

@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "BoardLogic.hpp"
+#include "Espressif.hpp"
 #include "FabBackend.hpp"
 #include "LCDWrapper.hpp"
 #include "RFIDWrapper.hpp"
@@ -15,7 +16,6 @@
 #include "mock/MockMQTTBroker.hpp"
 #include "mock/MockMrfc522.hpp"
 #include <Arduino.h>
-#include <esp_task_wdt.h>
 #include <unity.h>
 #include "LiquidCrystal.h"
 
@@ -269,7 +269,9 @@ namespace fabomatic::tests
     }
   }
 
-  void test_taskEspWatchdog()
+  /// @brief Keep the ESP32 HW watchdog alive.
+  /// If code gets stuck this will cause an automatic reset.
+  void taskEspWatchdog()
   {
     static auto initialized = false;
 
@@ -277,22 +279,13 @@ namespace fabomatic::tests
     {
       if (!initialized)
       {
-        constexpr uint32_t msecs{std::chrono::duration_cast<std::chrono::milliseconds>(conf::tasks::WATCHDOG_TIMEOUT).count()};
-        constexpr esp_task_wdt_config_t conf{.timeout_ms = msecs, .idle_core_mask = 1, .trigger_panic = true};
-
-        auto deinit = esp_task_wdt_deinit();
-        TEST_ASSERT_EQUAL_INT_MESSAGE(ESP_OK, deinit, "taskEspWatchdog - esp_task_wdt_deinit failed");
-
-        auto result = esp_task_wdt_init(&conf);
-        TEST_ASSERT_EQUAL_INT_MESSAGE(ESP_OK, result, "taskEspWatchdog - esp_task_wdt_init failed");
-
-        ESP_LOGI(TAG3, "taskEspWatchdog - initialized %lu seconds", msecs);
-
-        auto result2 = esp_task_wdt_add(NULL);
-        TEST_ASSERT_EQUAL_INT_MESSAGE(ESP_OK, result2, "taskEspWatchdog - esp_task_wdt_add failed");
-        initialized = true;
+        initialized = esp32::setupWatchdog(conf::tasks::WATCHDOG_TIMEOUT);
+        TEST_ASSERT_TRUE_MESSAGE(initialized, "Watchdog initialization works")
       }
-      TEST_ASSERT_EQUAL_MESSAGE(ESP_OK, esp_task_wdt_reset(), "taskEspWatchdog - esp_task_wdt_reset failed");
+      if (initialized)
+      {
+        TEST_ASSERT_TRUE_MESSAGE(esp32::signalWatchdog(), "Watchdog signalling failed");
+      }
     }
   }
 
@@ -346,7 +339,7 @@ namespace fabomatic::tests
       TEST_ASSERT_GREATER_OR_EQUAL_MESSAGE(1, t.getRunCounter(), "Task did not run");
     }
     // Remove the HW Watchdog
-    esp_task_wdt_delete(NULL);
+    esp32::removeWatchdog();
   }
 } // namespace fabomatic::Tests
 

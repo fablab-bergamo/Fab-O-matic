@@ -4,9 +4,8 @@
 #include <iostream>
 #include <string>
 
-#include <esp_task_wdt.h>
-
 #include "BoardLogic.hpp"
+#include "Espressif.hpp"
 #include "Logging.hpp"
 #include "Mrfc522Driver.hpp"
 #include "SavedConfig.hpp"
@@ -141,22 +140,15 @@ namespace fabomatic
     {
       if (!initialized)
       {
-        constexpr auto msecs = std::chrono::duration_cast<std::chrono::milliseconds>(conf::tasks::WATCHDOG_TIMEOUT).count();
-        constexpr esp_task_wdt_config_t conf{.timeout_ms = msecs, .idle_core_mask = 1, .trigger_panic = true};
-        esp_task_wdt_deinit();
-        auto result = esp_task_wdt_init(&conf); // enable panic so ESP32 restarts
-        if (result == ESP_OK)
+        initialized = esp32::setupWatchdog(conf::tasks::WATCHDOG_TIMEOUT);
+      }
+      if (initialized)
+      {
+        if (!esp32::signalWatchdog())
         {
-          ESP_LOGI(TAG, "taskEspWatchdog - initialized %lld milliseconds", msecs);
-          esp_task_wdt_add(NULL); // add current thread to WDT watch
-          initialized = true;
-        }
-        else
-        {
-          ESP_LOGE(TAG, "taskEspWatchdog - failed to initialize with %lld milliseconds", msecs);
+          ESP_LOGE(TAG, "Failure to signal watchdog");
         }
       }
-      esp_task_wdt_reset(); // Signal the hardware watchdog
     }
   }
 
@@ -214,7 +206,7 @@ namespace fabomatic
 
     if constexpr (conf::debug::ENABLE_LOGS)
     {
-      ESP_LOGD(TAG, "taskIsAlive - free heap: %lu", ESP.getFreeHeap());
+      fabomatic::esp32::showHeapStats();
     }
   }
 
@@ -226,7 +218,7 @@ namespace fabomatic
     }
 
     // Skip factory reset for this specific board because Factory Reset is soldered under the MCU with the reset pin.
-    if (const auto &serial = card::esp_serial(); serial == "dcda0c419794")
+    if (const auto &serial = esp32::esp_serial(); serial == "dcda0c419794")
     {
       pinMode(pins.buttons.factory_defaults_pin, INPUT); // Disable pull-up/pull-downs
       return;
@@ -244,9 +236,8 @@ namespace fabomatic
     if (digitalRead(pins.buttons.factory_defaults_pin) == LOW)
     {
       ESP_LOGI(TAG, "Factory reset button pressed");
-      esp_task_wdt_delete(NULL);     // remove current thread from WDT watch (it will be re-added in the next loop()
+      esp32::removeWatchdog();
       openConfigPortal(true, false); // Network configuration setup
-      esp_task_wdt_add(NULL);        // add current thread to WDT watch
     }
   }
 
@@ -478,10 +469,10 @@ void setup()
   if (!hw_init)
   {
     // If hardware initialization failed, wait for OTA for 3 minutes
-    constexpr esp_task_wdt_config_t conf{.timeout_ms = 60 * 3 * 1000, .idle_core_mask = 1, .trigger_panic = true};
-    esp_task_wdt_deinit();
-    esp_task_wdt_init(&conf); // enable panic so ESP32 restarts
-    esp_task_wdt_add(NULL);   // add current thread to WDT watch
+    if (!fabomatic::esp32::setupWatchdog(180s))
+    {
+      ESP_LOGE(TAG, "Failed to setup watchdog!");
+    }
     while (true)
     {
       logic.blinkLed(64, 0, 0);
