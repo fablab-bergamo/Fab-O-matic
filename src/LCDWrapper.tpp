@@ -207,7 +207,7 @@ namespace fabomatic
   {
     if (text.length() >= conf::lcd::COLS)
     {
-      ESP_LOGE(TAG, "LCDWrapper::setRow: text too long : %s\r\n", text.data());
+      ESP_LOGW(TAG, "LCDWrapper::setRow: text too long : %s\r\n", text.data());
     }
 
     if (row < conf::lcd::ROWS)
