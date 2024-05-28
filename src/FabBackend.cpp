@@ -45,6 +45,9 @@ namespace fabomatic
       client.disconnect();
       wifi_client.stop();
     }
+
+    loadBuffer(config.message_buffer);
+
     ESP_LOGD(TAG, "FabServer configured");
   }
 
@@ -54,7 +57,7 @@ namespace fabomatic
    * @param query The query to be posted.
    * @return true if the server answered, false otherwise.
    */
-  bool FabBackend::publishWithReply(const ServerMQTT::Query &query)
+  auto FabBackend::publishWithReply(const ServerMQTT::Query &query) -> PublishResult
   {
     auto try_cpt = 0;
     auto published = false;
@@ -65,7 +68,7 @@ namespace fabomatic
 
       if (!published)
       {
-        if (publish(query))
+        if (publish(query) == PublishResult::PublishedWithoutAnswer)
         {
           published = true;
         }
@@ -79,7 +82,7 @@ namespace fabomatic
       if (waitForAnswer(conf::mqtt::TIMEOUT_REPLY_SERVER))
       {
         ESP_LOGD(TAG, "MQTT Client: received answer: %s", last_reply.data());
-        return true;
+        return PublishResult::PublishedWithAnswer;
       }
 
       ESP_LOGW(TAG, "MQTT Client: no answer received, retrying %d/%d", try_cpt, conf::mqtt::MAX_TRIES);
@@ -87,7 +90,19 @@ namespace fabomatic
     }
 
     ESP_LOGE(TAG, "MQTT Client: failure to send query %s", query.payload().data());
-    return false;
+
+    // Do not send twice if response did not arrive
+    if (query.buffered() && !published)
+    {
+      buffer.push_back(query.payload(), topic, query.waitForReply());
+    }
+
+    if (published)
+    {
+      return PublishResult::PublishedWithoutAnswer;
+    }
+
+    return PublishResult::ErrorNotPublished;
   }
 
   /**
@@ -120,15 +135,29 @@ namespace fabomatic
    * @param query The query to be published.
    * @return true if the query was published successfully, false otherwise.
    */
-  bool FabBackend::publish(const ServerMQTT::Query &query)
+  template <typename QueryT>
+  auto FabBackend::publish(const QueryT &query) -> PublishResult
   {
     String s_payload(query.payload().c_str());
-    String s_topic(topic.c_str());
+    std::string temp_topic;
 
-    if (s_payload.length() + topic.length() > FabBackend::MAX_MSG_SIZE - 8)
+    // Check at compile-time if topic is specified
+    if constexpr (std::is_base_of<BufferedQuery, QueryT>::value)
+    {
+      temp_topic = static_cast<BufferedQuery>(query).topic();
+    }
+    else
+    {
+      // Just use the default topic for the machine
+      temp_topic = this->topic;
+    }
+
+    String s_topic{temp_topic.c_str()};
+
+    if (s_payload.length() + s_topic.length() > FabBackend::MAX_MSG_SIZE - 8)
     {
       ESP_LOGE(TAG, "MQTT Client: Message is too long: %s", s_payload.c_str());
-      return false;
+      return PublishResult::ErrorNotPublished;
     }
 
     answer_pending = query.waitForReply(); // Don't wait if not needed
@@ -137,7 +166,12 @@ namespace fabomatic
 
     ESP_LOGD(TAG, "MQTT Client: sending message %s on topic %s", s_payload.c_str(), s_topic.c_str());
 
-    return client.publish(s_topic, s_payload);
+    if (client.publish(s_topic, s_payload))
+    {
+      return PublishResult::PublishedWithoutAnswer;
+    }
+
+    return PublishResult::ErrorNotPublished;
   }
 
   /**
@@ -321,7 +355,7 @@ namespace fabomatic
           online = true;
         }
         // Announce the board to the server
-        if (auto query = ServerMQTT::AliveQuery{}; publish(query))
+        if (auto query = ServerMQTT::AliveQuery{}; publish(query) == PublishResult::PublishedWithoutAnswer)
         {
           ESP_LOGI(TAG, "MQTT Client: board announced to server");
         }
@@ -367,10 +401,26 @@ namespace fabomatic
   {
     static_assert(std::is_base_of<ServerMQTT::Query, QueryT>::value, "QueryT must inherit from Query");
     static_assert(std::is_base_of<ServerMQTT::Response, RespT>::value, "RespT must inherit from Response");
+    QueryT query{args...};
 
-    if (isOnline())
+    auto nb_tries = 0;
+    while (isOnline() && hasBufferedMsg() && !transmitBuffer() && nb_tries < 3)
     {
-      if (QueryT query{args...}; publishWithReply(query))
+      // To preserve chronological order, we cannot send new messages until the old ones have been sent.
+      ESP_LOGW(TAG, "Online with pending messages that could not be transmitted, retrying...");
+
+      Tasks::delay(250ms);
+
+      if (!isOnline())
+      {
+        connect();
+      }
+      nb_tries++;
+    }
+
+    if (isOnline() && !hasBufferedMsg())
+    {
+      if (publishWithReply(query) == PublishResult::PublishedWithAnswer)
       {
         // Deserialize the JSON document
         const auto payload = last_reply.c_str();
@@ -387,6 +437,12 @@ namespace fabomatic
         this->disconnect();
       }
     }
+
+    if (query.buffered())
+    {
+      buffer.push_back(query.payload(), topic, query.waitForReply());
+    }
+
     return std::make_unique<RespT>(false);
   }
 
@@ -401,10 +457,26 @@ namespace fabomatic
   bool FabBackend::processQuery(QueryArgs &&...args)
   {
     static_assert(std::is_base_of<ServerMQTT::Query, QueryT>::value, "QueryT must inherit from Query");
+    QueryT query{args...};
 
-    if (isOnline())
+    auto nb_tries = 0;
+    while (isOnline() && hasBufferedMsg() && !transmitBuffer() && nb_tries < 3)
     {
-      if (QueryT query{args...}; publish(query))
+      // To preserve chronological order, we cannot send new messages until the old ones have been sent.
+      ESP_LOGW(TAG, "Online with pending messages that could not be transmitted, retrying...");
+
+      Tasks::delay(250ms);
+
+      if (!isOnline())
+      {
+        connect();
+      }
+      nb_tries++;
+    }
+
+    if (isOnline() && !hasBufferedMsg())
+    {
+      if (publish(query) == PublishResult::PublishedWithoutAnswer)
       {
         return true;
       }
@@ -413,6 +485,11 @@ namespace fabomatic
         ESP_LOGW(TAG, "Failed to publish query %s", query.payload().data());
         this->disconnect();
       }
+    }
+
+    if (query.buffered())
+    {
+      buffer.push_back(query.payload(), topic, query.waitForReply());
     }
     return false;
   }
@@ -502,5 +579,76 @@ namespace fabomatic
   void FabBackend::setChannel(int32_t channel)
   {
     this->channel = channel;
+  }
+
+  [[nodiscard]] auto FabBackend::hasBufferedMsg() const -> bool
+  {
+    return this->buffer.count() > 0;
+  }
+
+  [[nodiscard]] auto FabBackend::transmitBuffer() -> bool
+  {
+    while (hasBufferedMsg() && isOnline())
+    {
+      ESP_LOGD(TAG, "Retransmitting buffered messages...");
+      const auto &msg = buffer.getMessage();
+      const BufferedQuery bq{msg.mqtt_message, msg.mqtt_topic, msg.wait_for_answer};
+      if (bq.waitForReply())
+      {
+        if (auto result = publishWithReply(bq); result != PublishResult::PublishedWithAnswer)
+        {
+          ESP_LOGW(TAG, "Retransmitting buffered message failed!");
+
+          // If it has been published but not answered, do not try again
+          if (result == PublishResult::PublishedWithoutAnswer)
+          {
+            buffer.push_front(msg.mqtt_message, msg.mqtt_topic, msg.wait_for_answer);
+          }
+          break;
+        }
+      }
+      else
+      {
+        if (publish(bq) == PublishResult::ErrorNotPublished)
+        {
+          // Will try again
+          ESP_LOGW(TAG, "Retransmitting buffered message failed!");
+          buffer.push_front(msg.mqtt_message, msg.mqtt_topic, msg.wait_for_answer);
+          break;
+        }
+      }
+    }
+    last_reply = "";
+
+    ESP_LOGW(TAG, "Retransmittion completed, remaining messages=%d", buffer.count());
+    return !hasBufferedMsg();
+  }
+
+  auto FabBackend::saveBuffer() -> bool
+  {
+    if (!buffer.hasChanged())
+    {
+      return true;
+    }
+
+    auto sc = SavedConfig::LoadFromEEPROM().value_or(SavedConfig::DefaultConfig());
+    sc.message_buffer = buffer;
+
+    if (sc.SaveToEEPROM())
+    {
+      buffer.setChanged(false);
+      ESP_LOGI(TAG, "Saved %d buffered messages", buffer.count());
+      return true;
+    }
+
+    ESP_LOGE(TAG, "Failed to save buffered messages!");
+    return false;
+  }
+
+  auto FabBackend::loadBuffer(const Buffer &new_buffer) -> void
+  {
+    buffer = new_buffer;
+    buffer.setChanged(false);
+    ESP_LOGI(TAG, "Loaded buffer with %d messages", buffer.count());
   }
 } // namespace fabomatic

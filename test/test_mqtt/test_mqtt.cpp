@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "BoardLogic.hpp"
+#include "Espressif.hpp"
 #include "FabBackend.hpp"
 #include "LCDWrapper.hpp"
 #include "RFIDWrapper.hpp"
@@ -15,7 +16,6 @@
 #include "mock/MockMQTTBroker.hpp"
 #include "mock/MockMrfc522.hpp"
 #include <Arduino.h>
-#include <esp_task_wdt.h>
 #include <unity.h>
 #include "LiquidCrystal.h"
 
@@ -45,6 +45,53 @@ namespace fabomatic::tests
     }
     ESP_LOGI(TAG3, "MQTT server thread exiting");
     return arg;
+  }
+
+  void test_create_buffered_messages()
+  {
+    auto &server = logic.getServer();
+    for (const auto &[uid, level, name] : secrets::cards::whitelist)
+    {
+      auto result = server.startUse(uid);
+      TEST_ASSERT_FALSE_MESSAGE(result->request_ok, "(1) Request should have failed");
+
+      result = server.inUse(uid, 1s);
+      TEST_ASSERT_FALSE_MESSAGE(result->request_ok, "(2) Request should have failed");
+
+      result = server.finishUse(uid, 2s);
+      TEST_ASSERT_FALSE_MESSAGE(result->request_ok, "(3) Request should have failed");
+
+      result = server.startUse(uid);
+      TEST_ASSERT_FALSE_MESSAGE(result->request_ok, "(4) Request should have failed");
+
+      result = server.finishUse(uid, 3s);
+      TEST_ASSERT_FALSE_MESSAGE(result->request_ok, "(5) Request should have failed");
+
+      result = server.registerMaintenance(uid);
+      TEST_ASSERT_FALSE_MESSAGE(result->request_ok, "(6) Request should have failed");
+    }
+    // Should have generated 5 * 10 = 50 messages, truncated to 40.
+
+    TEST_ASSERT_TRUE_MESSAGE(server.hasBufferedMsg(), "There are pending messages");
+    TEST_ASSERT_TRUE_MESSAGE(server.saveBuffer(), "Saving pending messages works");
+  }
+
+  void test_check_transmission()
+  {
+    auto &server = logic.getServer();
+
+    TEST_ASSERT_TRUE_MESSAGE(server.hasBufferedMsg(), "(1) There are pending messages");
+
+    TEST_ASSERT_TRUE_MESSAGE(server.connect(), "Server connect works");
+
+    TEST_ASSERT_TRUE_MESSAGE(server.hasBufferedMsg(), "(2) There are pending messages");
+
+    TEST_ASSERT_TRUE_MESSAGE(server.alive(), "Alive request works");
+
+    // Since old messages must be sent first, the buffer shall be empty now
+    TEST_ASSERT_FALSE_MESSAGE(server.hasBufferedMsg(), "There are no more pending messages");
+
+    TEST_ASSERT_TRUE_MESSAGE(server.saveBuffer(), "Saving pending messages works");
   }
 
   void test_start_broker()
@@ -222,6 +269,8 @@ namespace fabomatic::tests
     }
   }
 
+  /// @brief Keep the ESP32 HW watchdog alive.
+  /// If code gets stuck this will cause an automatic reset.
   void test_taskEspWatchdog()
   {
     static auto initialized = false;
@@ -230,13 +279,16 @@ namespace fabomatic::tests
     {
       if (!initialized)
       {
-        auto secs = std::chrono::duration_cast<std::chrono::seconds>(conf::tasks::WATCHDOG_TIMEOUT).count();
-        TEST_ASSERT_EQUAL_MESSAGE(ESP_OK, esp_task_wdt_init(secs, true), "taskEspWatchdog - esp_task_wdt_init failed");
-        ESP_LOGI(TAG3, "taskEspWatchdog - initialized %d seconds", secs);
-        TEST_ASSERT_EQUAL_MESSAGE(ESP_OK, esp_task_wdt_add(NULL), "taskEspWatchdog - esp_task_wdt_add failed");
-        initialized = true;
+        initialized = esp32::setupWatchdog(conf::tasks::WATCHDOG_TIMEOUT);
+        TEST_ASSERT_TRUE_MESSAGE(initialized, "Watchdog initialization works");
       }
-      TEST_ASSERT_EQUAL_MESSAGE(ESP_OK, esp_task_wdt_reset(), "taskEspWatchdog - esp_task_wdt_reset failed");
+      if (initialized)
+      {
+        if (!esp32::signalWatchdog())
+        {
+          ESP_LOGE(TAG, "Failure to signal watchdog");
+        }
+      }
     }
   }
 
@@ -290,11 +342,11 @@ namespace fabomatic::tests
       TEST_ASSERT_GREATER_OR_EQUAL_MESSAGE(1, t.getRunCounter(), "Task did not run");
     }
     // Remove the HW Watchdog
-    esp_task_wdt_delete(NULL);
+    esp32::removeWatchdog();
   }
 } // namespace fabomatic::Tests
 
-void tearDown(void){};
+void tearDown(void) {};
 
 void setUp(void)
 {
@@ -309,8 +361,9 @@ void setup()
   auto original = fabomatic::SavedConfig::LoadFromEEPROM();
 
   UNITY_BEGIN();
-
+  RUN_TEST(fabomatic::tests::test_create_buffered_messages);
   RUN_TEST(fabomatic::tests::test_start_broker);
+  RUN_TEST(fabomatic::tests::test_check_transmission);
   RUN_TEST(fabomatic::tests::test_fabserver_calls);
   RUN_TEST(fabomatic::tests::test_normal_use);
   RUN_TEST(fabomatic::tests::test_stop_broker);
