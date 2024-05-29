@@ -6,12 +6,11 @@
 namespace fabomatic
 {
 
-  auto Buffer::push_back(const std::string &message, const std::string &topic, bool wait) -> void
+  auto Buffer::push_back(const BufferedMsg &message) -> void
   {
     if constexpr (conf::debug::ENABLE_BUFFERING)
     {
-      BufferedMsg msg{message, topic, wait};
-      msg_queue.push_back(msg);
+      msg_queue.push_back(message);
       if (msg_queue.size() > MAX_MESSAGES)
       {
         msg_queue.pop_front();
@@ -19,16 +18,18 @@ namespace fabomatic
       }
       has_changed = true;
 
-      ESP_LOGI(TAG, "Buffered %s on %s, %lu messages queued", message.c_str(), topic.c_str(), msg_queue.size());
+      ESP_LOGI(TAG, "Buffered %s on %s, %lu messages queued",
+               message.mqtt_message.c_str(),
+               message.mqtt_topic.c_str(),
+               msg_queue.size());
     }
   }
 
-  auto Buffer::push_front(const std::string &message, const std::string &topic, bool wait) -> void
+  auto Buffer::push_front(const BufferedMsg &message) -> void
   {
     if constexpr (conf::debug::ENABLE_BUFFERING)
     {
-      BufferedMsg msg{message, topic, wait};
-      msg_queue.push_front(msg);
+      msg_queue.push_front(message);
       if (msg_queue.size() > MAX_MESSAGES)
       {
         msg_queue.pop_back();
@@ -36,7 +37,10 @@ namespace fabomatic
       }
       has_changed = true;
 
-      ESP_LOGI(TAG, "Buffered %s on %s, %lu messages queued", message.c_str(), topic.c_str(), msg_queue.size());
+      ESP_LOGI(TAG, "Buffered %s on %s, %lu messages queued",
+               message.mqtt_message.c_str(),
+               message.mqtt_topic.c_str(),
+               msg_queue.size());
     }
   }
 
@@ -89,9 +93,10 @@ namespace fabomatic
 
     for (const auto &elem : json_obj["messages"].as<JsonArray>())
     {
-      buff.push_back(elem["msg"].as<std::string>(),
-                     elem["tp"].as<std::string>(),
-                     elem["wait"].as<bool>());
+      const auto &msg = BufferedMsg{elem["msg"].as<std::string>(),
+                                    elem["tp"].as<std::string>(),
+                                    elem["wait"].as<bool>()};
+      buff.push_back(msg);
     }
 
     ESP_LOGD(TAG, "Buffer::fromJsonElement() : data loaded successfully");

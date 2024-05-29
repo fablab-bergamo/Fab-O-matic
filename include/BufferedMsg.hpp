@@ -31,8 +31,8 @@ namespace fabomatic
     static constexpr auto MAGIC_NUMBER = 1;
 
   public:
-    auto push_back(const std::string &message, const std::string &topic, bool wait) -> void;
-    auto push_front(const std::string &message, const std::string &topic, bool wait) -> void;
+    auto push_back(const BufferedMsg &message) -> void;
+    auto push_front(const BufferedMsg &message) -> void;
     auto getMessage() -> const BufferedMsg;
     auto count() const -> size_t;
     auto toJson(JsonDocument &doc, const std::string &element_name) const -> void;
