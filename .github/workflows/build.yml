@@ -47,7 +47,7 @@ jobs:
       - name: Upload firmware image for ${{ matrix.variant }}
         uses: actions/upload-artifact@v4
         with:
-          name: Firmware files for ${{ matrix.variant }}
+          name: ${{ matrix.variant }} - ${{ github.ref }}
           path: |
                 .pio/build/${{ matrix.variant }}/firmware.bin
                 .pio/build/${{ matrix.variant }}/firmware_metrics.txt
