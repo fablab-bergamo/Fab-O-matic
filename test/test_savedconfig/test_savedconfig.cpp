@@ -238,7 +238,8 @@ namespace fabomatic::tests
     for (const auto &msg : messages)
     {
       TEST_ASSERT_EQUAL_MESSAGE(msg_count, buff.count(), "Push_back: Buffer count is correct");
-      buff.push_front(msg.mqtt_message, msg.mqtt_topic, msg.wait_for_answer);
+      const auto &bmsg = BufferedMsg{msg.mqtt_message, msg.mqtt_topic, msg.wait_for_answer};
+      buff.push_front(bmsg);
       msg_count++;
     }
 
@@ -265,7 +266,8 @@ namespace fabomatic::tests
     for (const auto &msg : messages)
     {
       TEST_ASSERT_EQUAL_MESSAGE(msg_count, buff.count(), "(1) Push_front: Buffer count is correct");
-      buff.push_back(msg.mqtt_message, msg.mqtt_topic, msg.wait_for_answer);
+      const auto &bmsg = BufferedMsg{msg.mqtt_message, msg.mqtt_topic, msg.wait_for_answer};
+      buff.push_back(bmsg);
       msg_count++;
     }
 
@@ -293,7 +295,8 @@ namespace fabomatic::tests
     for (const auto &msg : messages)
     {
       TEST_ASSERT_EQUAL_MESSAGE(msg_count, buff.count(), "(2) Push_front: Buffer count is correct");
-      buff.push_back(msg.mqtt_message, msg.mqtt_topic, msg.wait_for_answer);
+      const auto &bmsg = BufferedMsg{msg.mqtt_message, msg.mqtt_topic, msg.wait_for_answer};
+      buff.push_back(bmsg);
       msg_count++;
     }
 
