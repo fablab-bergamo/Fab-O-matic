@@ -68,7 +68,7 @@ namespace fabomatic::esp32
   {
     static std::array<char, 13> result; // +1 for null termination
 
-    if (result.empty()) // Compute only once
+    if (result[0] == '\0') // Compute only once
     {
       std::stringstream serial{};
       std::array<uint8_t, 8> mac{0};
