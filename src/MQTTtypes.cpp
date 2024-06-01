@@ -42,7 +42,7 @@ namespace fabomatic::ServerMQTT
     const auto serial = esp32::esp_serial();
 
     ss << "{\"action\":\"alive\","
-       << "\"version\":\"" << GIT_VERSION << "\","
+       << "\"version\":\"" << FABOMATIC_BUILD << "," << GIT_VERSION << "\","
        << "\"ip\":\"" << WiFi.localIP().toString().c_str() << "\","
        << "\"serial\":\"" << serial << "\","
        << "\"heap\":\"" << esp32::getFreeHeap() << "\""

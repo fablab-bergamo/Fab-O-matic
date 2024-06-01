@@ -335,6 +335,7 @@ namespace fabomatic
     std::cout << "\tRFID_SIMULATION: " << RFID_SIMULATION << '\n';
     std::cout << "\tCORE_DEBUG_LEVEL: " << CORE_DEBUG_LEVEL << '\n';
     std::cout << "\tLANGUAGE: " << fabomatic::strings::S_LANG_ID << '\n';
+    std::cout << "\tBUILD: " << FABOMATIC_BUILD << '\n';
 
     // namespace conf::rfid_tags
     std::cout << "RFID tags:" << '\n';
