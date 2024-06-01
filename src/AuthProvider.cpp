@@ -2,11 +2,12 @@
 
 #include <cstdint>
 #include <string>
+#include <algorithm>
 
 #include "FabBackend.hpp"
 #include "Logging.hpp"
 
-namespace fablabbg
+namespace fabomatic
 {
   namespace Board
   {
@@ -23,13 +24,13 @@ namespace fablabbg
   void AuthProvider::updateCache(card::uid_t uid, FabUser::UserLevel level) const
   {
     // Search for the card in the cache
-    for (auto &cached : cache)
+    const auto pos = std::find(cache.cards.cbegin(), cache.cards.cend(), uid);
+    if (pos != cache.cards.cend())
     {
-      if (cached.uid == uid)
-      {
-        cached.level = level;
-        return;
-      }
+      // Update the level at same index
+      const auto idx = std::distance(cache.cards.cbegin(), pos);
+      cache.levels[idx] = level;
+      return;
     }
 
     // No need to add in cache invalid cards
@@ -41,21 +42,20 @@ namespace fablabbg
       cache_idx = 0;
 
     // Add into list
-    cache.at(cache_idx).uid = uid;
-    cache.at(cache_idx).level = level;
+    cache.set_at(cache_idx, uid, level);
 
     cache_idx = (cache_idx + 1) % conf::rfid_tags::CACHE_LEN;
   }
 
   /// @brief Verifies the card ID against the server (if available) or the whitelist
   /// @param uid card ID
-  /// @param out a FabUser with an authenticated flag==true if server or whitelist confirmed the ID
-  /// @return false if the user was not found on server or whitelist
+  /// @param server the server to check the card against
+  /// @return a FabUser with an authenticated flag==true if valid, otherwise nullopt or FabUser with authenticated==False.
   auto AuthProvider::tryLogin(card::uid_t uid, FabBackend &server) const -> std::optional<FabUser>
   {
     FabUser user;
     using UserResult = ServerMQTT::UserResult;
-    auto uid_str = card::uid_str(uid);
+    const auto uid_str = card::uid_str(uid);
 
     ESP_LOGD(TAG, "tryLogin called for %s", uid_str.c_str());
 
@@ -64,13 +64,14 @@ namespace fablabbg
 
     if (server.isOnline())
     {
-      auto response = server.checkCard(uid);
+      const auto response = server.checkCard(uid);
       if (response->request_ok)
       {
+        user.card_uid = uid;
+
         if (response->getResult() == UserResult::Authorized)
         {
           user.authenticated = true;
-          user.card_uid = uid;
           user.holder_name = response->holder_name;
           user.user_level = response->user_level;
           // Cache the positive result
@@ -90,13 +91,15 @@ namespace fablabbg
 
       user.authenticated = false;
 
-      if (response->request_ok)
-        return std::nullopt;
+      if (response->request_ok) // Server replied but user is not valid
+      {
+        return user;
+      }
     }
     // Check whitelist if offline
-    if (auto result = uidInWhitelist(uid); result.has_value())
+    if (const auto &result = uidInWhitelist(uid); result.has_value())
     {
-      auto [card, level, name] = result.value();
+      const auto &[card, level, name] = result.value();
       user.card_uid = card;
       user.authenticated = true;
       user.user_level = level;
@@ -107,9 +110,9 @@ namespace fablabbg
     }
 
     // Finally check the cached values
-    if (auto result = uidInCache(uid); result.has_value())
+    if (const auto &result = uidInCache(uid); result.has_value())
     {
-      auto cached = result.value();
+      const auto &cached = result.value();
       user.card_uid = cached.uid;
       user.authenticated = (cached.level != FabUser::UserLevel::Unknown);
       user.user_level = cached.level;
@@ -132,14 +135,14 @@ namespace fablabbg
       return std::nullopt;
     }
 
-    auto elem = std::find_if(whitelist.begin(), whitelist.end(),
-                             [candidate_uid](const auto &input)
-                             {
-                               auto [w_uid, w_level, w_name] = input;
-                               return w_uid == candidate_uid;
-                             });
+    const auto &elem = std::find_if(whitelist.cbegin(), whitelist.cend(),
+                                    [candidate_uid](const auto &input)
+                                    {
+                                      const auto &[w_uid, w_level, w_name] = input;
+                                      return w_uid == candidate_uid;
+                                    });
 
-    if (elem == end(whitelist))
+    if (elem == whitelist.cend())
     {
       ESP_LOGD(TAG, "%s not found in whitelist", card::uid_str(candidate_uid).c_str());
       return std::nullopt;
@@ -151,55 +154,22 @@ namespace fablabbg
   /// @brief Checks if the card ID is whitelisted
   /// @param uid card ID
   /// @return a whitelistentry object if the card is found in whitelist
-  auto AuthProvider::uidInCache(card::uid_t candidate_uid) const -> std::optional<CachedFabUser>
+  auto AuthProvider::uidInCache(card::uid_t candidate_uid) const -> std::optional<CachedCard>
   {
-    if (candidate_uid == card::INVALID)
-    {
-      return std::nullopt;
-    }
-
-    auto elem = std::find_if(cache.begin(), cache.end(),
-                             [candidate_uid](const auto &input)
-                             {
-                               return input.uid == candidate_uid;
-                             });
-
-    if (elem == end(cache))
-    {
-      ESP_LOGD(TAG, "%s not found in cache", card::uid_str(candidate_uid).c_str());
-      return std::nullopt;
-    }
-
-    return {*elem};
+    return cache.find_uid(candidate_uid);
   }
 
   /// @brief Loads the cache from EEPROM
   auto AuthProvider::loadCache() -> void
   {
-    auto config = SavedConfig::LoadFromEEPROM();
+    const auto &config = SavedConfig::LoadFromEEPROM();
     if (!config.has_value())
       return;
 
-    size_t idx = 0;
-    for (const auto &user : config.value().cachedRfid)
-    {
-      cache.at(idx).uid = user.uid;
-      cache.at(idx).level = user.level;
-      if (user.uid != 0)
-      {
-        ESP_LOGD(TAG, "Loaded cached RFID tag %s (%d)", card::uid_str(user.uid).c_str(), user.level);
-      }
-      idx++;
-      if (idx >= cache.size())
-      {
-        idx = 0;
-        break;
-      }
-      if (user.uid != 0)
-      {
-        cache_idx = idx;
-      }
-    }
+    const auto &loaded = config.value().cachedRfid;
+
+    std::copy(loaded.cards.cbegin(), loaded.cards.cend(), cache.cards.begin());
+    std::copy(loaded.levels.cbegin(), loaded.levels.cend(), cache.levels.begin());
   }
 
   /// @brief Sets the whitelist
@@ -213,21 +183,17 @@ namespace fablabbg
   auto AuthProvider::saveCache() const -> bool
   {
     SavedConfig config = SavedConfig::LoadFromEEPROM().value_or(SavedConfig::DefaultConfig());
-    SavedConfig original{config};
 
-    for (auto idx = 0; idx < cache.size(); idx++)
-    {
-      config.cachedRfid.at(idx).uid = cache.at(idx).uid;
-      config.cachedRfid.at(idx).level = cache.at(idx).level;
-    }
-
-    // Check if current config is different from updated cachedRfid ignoring order of elements
-    if (ScrambledEquals<CachedFabUser, conf::rfid_tags::CACHE_LEN>(original.cachedRfid, config.cachedRfid))
+    if (std::equal(config.cachedRfid.cards.cbegin(), config.cachedRfid.cards.cend(), cache.cards.cbegin()) &&
+        std::equal(config.cachedRfid.levels.cbegin(), config.cachedRfid.levels.cend(), cache.levels.cbegin()))
     {
       ESP_LOGD(TAG, "Cache is the same, not saving");
       return true;
     }
 
+    std::copy(cache.cards.cbegin(), cache.cards.cend(), config.cachedRfid.cards.begin());
+    std::copy(cache.levels.cbegin(), cache.levels.cend(), config.cachedRfid.levels.begin());
+
     return config.SaveToEEPROM();
   }
-} // namespace fablabbg
+} // namespace fabomatic

@@ -12,7 +12,7 @@
 #include "MFRC522v2.h"
 #include "pins.hpp"
 
-namespace fablabbg
+namespace fabomatic
 {
   class Mrfc522Driver
   {
@@ -43,6 +43,6 @@ namespace fablabbg
 
     static constexpr auto RxGainMax = MFRC522::PCD_RxGain::RxGain_max;
   };
-} // namespace fablabbg
+} // namespace fabomatic
 
 #endif // MRFC522DRIVER_HPP_

@@ -1,7 +1,7 @@
 #ifndef MOCK_MOCKMQTTBROKER_HPP_
 #define MOCK_MOCKMQTTBROKER_HPP_
 
-#include <atomic>
+#include <mutex>
 #include <functional>
 #include <queue>
 #include <string>
@@ -9,12 +9,12 @@
 #include "BaseRfidWrapper.hpp"
 #include "sMQTTBroker.h"
 
-namespace fablabbg
+namespace fabomatic
 {
   class MockMQTTBroker final : public sMQTTBroker
   {
   public:
-    MockMQTTBroker() : isLocked{false} {};
+    MockMQTTBroker() = default;
 
     auto isRunning() const -> bool;
     auto start() -> void;
@@ -30,9 +30,9 @@ namespace fablabbg
     auto mainLoop() -> void;
 
   private:
-    std::atomic<bool> is_running{false};
-    std::string topic = "";
-    std::string payload = "";
+    std::mutex mutex;
+    std::string topic{""};
+    std::string payload{""};
     struct query
     {
       std::string source_topic{""};
@@ -44,10 +44,7 @@ namespace fablabbg
     std::function<const std::string(const std::string &, const std::string &)> callback = [this](const std::string &topic, const std::string &query)
     { return defaultReplies(query); };
 
-    std::atomic<bool> isLocked;
-
-    auto lock() -> bool { return !isLocked.exchange(true); }
-    auto unlock() -> void { isLocked = false; }
+    bool is_running{false};
   };
-} // namespace fablabbg
+} // namespace fabomatic
 #endif // MOCK_MOCKMQTTBROKER_HPP_

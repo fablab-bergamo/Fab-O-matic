@@ -8,7 +8,7 @@
 
 #include "Mrfc522Driver.hpp"
 
-namespace fablabbg
+namespace fabomatic
 {
   Mrfc522Driver::Mrfc522Driver()
   {
@@ -70,4 +70,4 @@ namespace fablabbg
 
   void Mrfc522Driver::PCD_DumpVersionToSerial() { MFRC522Debug::PCD_DumpVersionToSerial(*mfrc522, Serial); }
 
-} // namespace fablabbg
+} // namespace fabomatic

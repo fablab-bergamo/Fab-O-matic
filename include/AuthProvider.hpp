@@ -9,27 +9,28 @@
 #include "FabUser.hpp"
 #include "secrets.hpp"
 #include "WhiteList.hpp"
+#include "CachedCards.hpp"
 
-namespace fablabbg
+namespace fabomatic
 {
   class AuthProvider
   {
   private:
     WhiteList whitelist;
-    mutable CachedList cache;
-    mutable size_t cache_idx = 0;
+    mutable CachedCards cache;
+    mutable size_t cache_idx{0};
     [[nodiscard]] auto uidInWhitelist(card::uid_t uid) const -> std::optional<WhiteListEntry>;
-    [[nodiscard]] auto uidInCache(card::uid_t uid) const -> std::optional<CachedFabUser>;
-    [[nodiscard]] auto searchCache(card::uid_t candidate_uid) const -> std::optional<CachedFabUser>;
+    [[nodiscard]] auto uidInCache(card::uid_t uid) const -> std::optional<CachedCard>;
+    [[nodiscard]] auto searchCache(card::uid_t candidate_uid) const -> std::optional<CachedCard>;
     auto updateCache(card::uid_t candidate_uid, FabUser::UserLevel level) const -> void;
 
   public:
     AuthProvider() = delete;
     AuthProvider(WhiteList whitelist);
     [[nodiscard]] auto tryLogin(card::uid_t uid, FabBackend &server) const -> std::optional<FabUser>;
-    void setWhitelist(WhiteList list);
+    auto setWhitelist(WhiteList list) -> void;
     auto saveCache() const -> bool;
     auto loadCache() -> void;
   };
-} // namespace fablabbg
+} // namespace fabomatic
 #endif // AUTHPROVIDER_HPP_

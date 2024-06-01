@@ -8,7 +8,7 @@
 
 #include "Logging.hpp"
 
-namespace fablabbg::Tasks
+namespace fabomatic::Tasks
 {
   using milliseconds = std::chrono::milliseconds;
   using time_point_sc = std::chrono::time_point<std::chrono::system_clock>;
@@ -50,7 +50,7 @@ namespace fablabbg::Tasks
       avg_delay /= nb_runs;
     }
 
-    ESP_LOGD(TAG, "Scheduler::execute complete: %d tasks total, %lu runs, avg delay/run: %llu ms\r\n", tasks.size(), nb_runs, avg_delay.count());
+    ESP_LOGD(TAG, "Scheduler::execute complete: %d tasks total, %d runs, avg delay/run: %llu ms\r\n", tasks.size(), nb_runs, avg_delay.count());
 
     for (const auto &task : tasks)
     {
@@ -271,4 +271,4 @@ namespace fablabbg::Tasks
       ArduinoOTA.handle();
     } while (std::chrono::system_clock::now() - start < duration);
   }
-} // namespace fablabbg::Tasks
+} // namespace fabomatic::Tasks

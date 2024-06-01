@@ -7,7 +7,7 @@
 #include "conf.hpp"
 #include "pins.hpp"
 
-namespace fablabbg
+namespace fabomatic
 {
   /// @brief Constructor
   template <typename Driver>
@@ -18,7 +18,7 @@ namespace fablabbg
   template <typename Driver>
   bool RFIDWrapper<Driver>::isNewCardPresent() const
   {
-    auto result = driver->PICC_IsNewCardPresent();
+    const auto result = driver->PICC_IsNewCardPresent();
 
     if (conf::debug::ENABLE_LOGS && result)
       ESP_LOGD(TAG, "isNewCardPresent=%d", result);
@@ -31,7 +31,7 @@ namespace fablabbg
   template <typename Driver>
   auto RFIDWrapper<Driver>::readCardSerial() const -> std::optional<card::uid_t>
   {
-    auto result = driver->PICC_ReadCardSerial();
+    const auto &result = driver->PICC_ReadCardSerial();
     if (result)
     {
       return getUid();
@@ -47,14 +47,14 @@ namespace fablabbg
   template <typename Driver>
   auto RFIDWrapper<Driver>::cardStillThere(const card::uid_t original, std::chrono::milliseconds max_delay) const -> bool
   {
-    auto start = std::chrono::system_clock::now();
+    const auto start = std::chrono::system_clock::now();
     do
     {
       // Detect Tag without looking for collisions
-      byte bufferATQA[2];
-      byte bufferSize = sizeof(bufferATQA);
+      std::array<byte, 2> bufferATQA;
+      byte len = sizeof(bufferATQA);
 
-      if (driver->PICC_WakeupA(bufferATQA, bufferSize))
+      if (driver->PICC_WakeupA(bufferATQA.data(), len))
       {
         if (readCardSerial() == original)
           return true;
@@ -70,7 +70,7 @@ namespace fablabbg
   template <typename Driver>
   auto RFIDWrapper<Driver>::selfTest() const -> bool
   {
-    auto result = driver->PCD_PerformSelfTest();
+    const auto result = driver->PCD_PerformSelfTest();
     if (conf::debug::ENABLE_LOGS)
     {
       ESP_LOGD(TAG, "RFID self test = %d", result);
@@ -94,7 +94,7 @@ namespace fablabbg
   auto RFIDWrapper<Driver>::getUid() const -> card::uid_t
   {
     std::array<uint8_t, conf::rfid_tags::UID_BYTE_LEN> arr{0};
-    auto const &uid = driver->getDriverUid();
+    const auto &uid = driver->getDriverUid();
     size_t size = std::min(uid.size, conf::rfid_tags::UID_BYTE_LEN);
     std::copy(uid.uidByte.cbegin(), uid.uidByte.cbegin() + size, arr.begin());
     return card::from_array(arr);
@@ -136,4 +136,4 @@ namespace fablabbg
   {
     return *driver.get();
   }
-} // namespace fablabbg
+} // namespace fabomatic

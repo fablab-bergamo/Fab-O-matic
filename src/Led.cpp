@@ -1,7 +1,7 @@
 #include "Led.hpp"
 #include "Logging.hpp"
 
-namespace fablabbg
+namespace fabomatic
 {
   auto Led::init() -> void
   {
@@ -10,7 +10,7 @@ namespace fablabbg
       return;
     }
 
-    ESP_LOGD(TAG, "Initializing LED (pin %d, is_neopixel %d, flags %u)",
+    ESP_LOGD(TAG, "Initializing LED (pin %d, is_neopixel %d, flags %lu)",
              pins.led.pin, pins.led.is_neopixel, pins.led.neopixel_config);
 
     if constexpr (pins.led.is_neopixel)
@@ -56,7 +56,7 @@ namespace fablabbg
     }
     if constexpr (!pins.led.is_rgb || !pins.led.is_neopixel)
     {
-      auto light = r > 0 || g > 0 || b > 0;
+      const auto light = r > 0 || g > 0 || b > 0;
       digitalWrite(pins.led.pin, light ? HIGH : LOW);
     }
   }
@@ -88,4 +88,4 @@ namespace fablabbg
     }
   }
 
-} // namespace fablabbg
+} // namespace fabomatic

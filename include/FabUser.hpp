@@ -9,7 +9,7 @@
 #include <sstream>
 #include <string>
 
-namespace fablabbg
+namespace fabomatic
 {
   struct FabUser
   {
@@ -21,10 +21,10 @@ namespace fablabbg
       FabAdmin,
     };
 
-    card::uid_t card_uid = card::INVALID;
+    card::uid_t card_uid {card::INVALID};
     std::string holder_name{""};
-    bool authenticated = false;
-    UserLevel user_level = UserLevel::Unknown;
+    bool authenticated {false};
+    UserLevel user_level {UserLevel::Unknown};
 
     FabUser() = default;
 
@@ -58,11 +58,11 @@ namespace fablabbg
       sstream << ", UID: " << std::hex << card_uid;
       sstream << ", Name:" << holder_name;
 
-      auto i_level = static_cast<typename std::underlying_type<UserLevel>::type>(user_level);
+      const auto i_level = static_cast<typename std::underlying_type<UserLevel>::type>(user_level);
       sstream << ", level:" << +i_level << ")";
 
       return sstream.str();
     }
   };
-} // namespace fablabbg
+} // namespace fabomatic
 #endif // FABUSER_HPP_

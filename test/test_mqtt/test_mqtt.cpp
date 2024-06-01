@@ -6,18 +6,18 @@
 #include <vector>
 
 #include "BoardLogic.hpp"
+#include "Espressif.hpp"
 #include "FabBackend.hpp"
 #include "LCDWrapper.hpp"
 #include "RFIDWrapper.hpp"
 #include "SavedConfig.hpp"
 #include "Tasks.hpp"
 #include "conf.hpp"
-#include "mock/MockLcdLibrary.hpp"
 #include "mock/MockMQTTBroker.hpp"
 #include "mock/MockMrfc522.hpp"
 #include <Arduino.h>
-#include <esp_task_wdt.h>
 #include <unity.h>
+#include "LiquidCrystal.h"
 
 using namespace std::chrono_literals;
 
@@ -26,13 +26,13 @@ pthread_attr_t attr_mqtt_broker;
 
 [[maybe_unused]] static const char *TAG3 = "test_mqtt";
 
-namespace fablabbg::tests
+namespace fabomatic::tests
 {
-  fablabbg::RFIDWrapper<fablabbg::MockMrfc522> rfid;
-  fablabbg::LCDWrapper<fablabbg::MockLcdLibrary> lcd{fablabbg::pins.lcd};
-  fablabbg::BoardLogic logic;
-  fablabbg::MockMQTTBroker broker;
-  fablabbg::Tasks::Scheduler test_scheduler;
+  fabomatic::RFIDWrapper<fabomatic::MockMrfc522> rfid;
+  fabomatic::LCDWrapper<LiquidCrystal> lcd{fabomatic::pins.lcd};
+  fabomatic::BoardLogic logic;
+  fabomatic::MockMQTTBroker broker;
+  fabomatic::Tasks::Scheduler test_scheduler;
 
   std::atomic<bool> exit_request{false};
 
@@ -47,6 +47,53 @@ namespace fablabbg::tests
     return arg;
   }
 
+  void test_create_buffered_messages()
+  {
+    auto &server = logic.getServer();
+    for (const auto &[uid, level, name] : secrets::cards::whitelist)
+    {
+      auto result = server.startUse(uid);
+      TEST_ASSERT_FALSE_MESSAGE(result->request_ok, "(1) Request should have failed");
+
+      result = server.inUse(uid, 1s);
+      TEST_ASSERT_FALSE_MESSAGE(result->request_ok, "(2) Request should have failed");
+
+      result = server.finishUse(uid, 2s);
+      TEST_ASSERT_FALSE_MESSAGE(result->request_ok, "(3) Request should have failed");
+
+      result = server.startUse(uid);
+      TEST_ASSERT_FALSE_MESSAGE(result->request_ok, "(4) Request should have failed");
+
+      result = server.finishUse(uid, 3s);
+      TEST_ASSERT_FALSE_MESSAGE(result->request_ok, "(5) Request should have failed");
+
+      result = server.registerMaintenance(uid);
+      TEST_ASSERT_FALSE_MESSAGE(result->request_ok, "(6) Request should have failed");
+    }
+    // Should have generated 5 * 10 = 50 messages, truncated to 40.
+
+    TEST_ASSERT_TRUE_MESSAGE(server.hasBufferedMsg(), "There are pending messages");
+    TEST_ASSERT_TRUE_MESSAGE(server.saveBuffer(), "Saving pending messages works");
+  }
+
+  void test_check_transmission()
+  {
+    auto &server = logic.getServer();
+
+    TEST_ASSERT_TRUE_MESSAGE(server.hasBufferedMsg(), "(1) There are pending messages");
+
+    TEST_ASSERT_TRUE_MESSAGE(server.connect(), "Server connect works");
+
+    TEST_ASSERT_TRUE_MESSAGE(server.hasBufferedMsg(), "(2) There are pending messages");
+
+    TEST_ASSERT_TRUE_MESSAGE(server.alive(), "Alive request works");
+
+    // Since old messages must be sent first, the buffer shall be empty now
+    TEST_ASSERT_FALSE_MESSAGE(server.hasBufferedMsg(), "There are no more pending messages");
+
+    TEST_ASSERT_TRUE_MESSAGE(server.saveBuffer(), "Saving pending messages works");
+  }
+
   void test_start_broker()
   {
     auto &server = logic.getServer();
@@ -56,7 +103,7 @@ namespace fablabbg::tests
     // Set the same IP Adress as MQTT server
     auto config = SavedConfig::LoadFromEEPROM();
     TEST_ASSERT_TRUE_MESSAGE(config.has_value(), "Config load failed");
-    strncpy(config.value().mqtt_server, "127.0.0.1\0", sizeof(config.value().mqtt_server));
+    config.value().mqtt_server.assign("127.0.0.1");
     TEST_ASSERT_TRUE_MESSAGE(config.value().SaveToEEPROM(), "Config save failed");
     server.configure(config.value());
 
@@ -88,15 +135,14 @@ namespace fablabbg::tests
     const int NB_TESTS = 10;
     const int NB_MACHINES = 5;
     auto &server = logic.getServer();
-    for (unsigned int mid = 100; mid <= 100 + NB_MACHINES; mid++)
+    for (uint16_t mid = 100; mid <= 100 + NB_MACHINES; mid++)
     {
       // Change MachineID on the fly
       auto saved_config = SavedConfig::DefaultConfig();
-      if (mid < 99999)
-      {
-        snprintf(saved_config.machine_id, sizeof(saved_config.machine_id), "%u", mid);
-        strncpy(saved_config.mqtt_server, "127.0.0.1\0", sizeof(saved_config.mqtt_server));
-      }
+
+      saved_config.setMachineID(mid);
+      saved_config.mqtt_server.assign("127.0.0.1");
+
       ESP_LOGI(TAG3, "Testing machine %d", mid);
       server.configure(saved_config);
 
@@ -140,6 +186,35 @@ namespace fablabbg::tests
         auto alive_resp = server.alive();
         TEST_ASSERT_TRUE_MESSAGE(alive_resp, "Server alive failed");
       }
+    }
+    // Test authentication in online scenario
+    AuthProvider auth(secrets::cards::whitelist);
+    TEST_ASSERT_TRUE_MESSAGE(server.connect(), "Server is online");
+    for (const auto &[uid, level, name] : secrets::cards::whitelist)
+    {
+      server.loop();
+      auto response = auth.tryLogin(uid, server);
+      TEST_ASSERT_TRUE_MESSAGE(response.has_value(), "Server checkCard failed");
+      if (level == FabUser::UserLevel::Unknown)
+      {
+        TEST_ASSERT_FALSE_MESSAGE(response.value().authenticated, "Server returned authenticated user for invalid one");
+      }
+      else
+      {
+        TEST_ASSERT_TRUE_MESSAGE(response.value().authenticated, "Server returned unauthenticated user for a valid one");
+        TEST_ASSERT_TRUE_MESSAGE(response.value().user_level == level, "Server returned wrong user level");
+      }
+    }
+    // Test that saving the cache works
+    TEST_ASSERT_TRUE_MESSAGE(auth.saveCache(), "AuthProvider saveCache failed");
+
+    // Test that the cache contains all the valid whitelist entries
+    auto cached_entries = SavedConfig::LoadFromEEPROM().value().cachedRfid;
+    for (const auto &[uid, level, name] : secrets::cards::whitelist)
+    {
+      const auto &cached_card = cached_entries.find_uid(uid);
+      TEST_ASSERT_TRUE_MESSAGE(cached_card || level == FabUser::UserLevel::Unknown,
+                               "AuthProvider saveCache failed to save all whitelist entries");
     }
   }
 
@@ -194,6 +269,8 @@ namespace fablabbg::tests
     }
   }
 
+  /// @brief Keep the ESP32 HW watchdog alive.
+  /// If code gets stuck this will cause an automatic reset.
   void test_taskEspWatchdog()
   {
     static auto initialized = false;
@@ -202,13 +279,16 @@ namespace fablabbg::tests
     {
       if (!initialized)
       {
-        auto secs = std::chrono::duration_cast<std::chrono::seconds>(conf::tasks::WATCHDOG_TIMEOUT).count();
-        TEST_ASSERT_EQUAL_MESSAGE(ESP_OK, esp_task_wdt_init(secs, true), "taskEspWatchdog - esp_task_wdt_init failed");
-        ESP_LOGI(TAG3, "taskEspWatchdog - initialized %d seconds", secs);
-        TEST_ASSERT_EQUAL_MESSAGE(ESP_OK, esp_task_wdt_add(NULL), "taskEspWatchdog - esp_task_wdt_add failed");
-        initialized = true;
+        initialized = esp32::setupWatchdog(conf::tasks::WATCHDOG_TIMEOUT);
+        TEST_ASSERT_TRUE_MESSAGE(initialized, "Watchdog initialization works");
       }
-      TEST_ASSERT_EQUAL_MESSAGE(ESP_OK, esp_task_wdt_reset(), "taskEspWatchdog - esp_task_wdt_reset failed");
+      if (initialized)
+      {
+        if (!esp32::signalWatchdog())
+        {
+          ESP_LOGE(TAG, "Failure to signal watchdog");
+        }
+      }
     }
   }
 
@@ -262,30 +342,31 @@ namespace fablabbg::tests
       TEST_ASSERT_GREATER_OR_EQUAL_MESSAGE(1, t.getRunCounter(), "Task did not run");
     }
     // Remove the HW Watchdog
-    esp_task_wdt_delete(NULL);
+    esp32::removeWatchdog();
   }
-} // namespace fablabbg::Tests
+} // namespace fabomatic::Tests
 
 void tearDown(void) {};
 
 void setUp(void)
 {
-  TEST_ASSERT_TRUE_MESSAGE(fablabbg::tests::logic.configure(fablabbg::tests::rfid, fablabbg::tests::lcd), "BoardLogic configure failed");
-  TEST_ASSERT_TRUE_MESSAGE(fablabbg::tests::logic.initBoard(), "BoardLogic init failed");
+  TEST_ASSERT_TRUE_MESSAGE(fabomatic::tests::logic.configure(fabomatic::tests::rfid, fabomatic::tests::lcd), "BoardLogic configure failed");
+  TEST_ASSERT_TRUE_MESSAGE(fabomatic::tests::logic.initBoard(), "BoardLogic init failed");
 };
 
 void setup()
 {
   delay(1000);
   // Save original config
-  auto original = fablabbg::SavedConfig::LoadFromEEPROM();
+  auto original = fabomatic::SavedConfig::LoadFromEEPROM();
 
   UNITY_BEGIN();
-
-  RUN_TEST(fablabbg::tests::test_start_broker);
-  RUN_TEST(fablabbg::tests::test_fabserver_calls);
-  RUN_TEST(fablabbg::tests::test_normal_use);
-  RUN_TEST(fablabbg::tests::test_stop_broker);
+  RUN_TEST(fabomatic::tests::test_create_buffered_messages);
+  RUN_TEST(fabomatic::tests::test_start_broker);
+  RUN_TEST(fabomatic::tests::test_check_transmission);
+  RUN_TEST(fabomatic::tests::test_fabserver_calls);
+  RUN_TEST(fabomatic::tests::test_normal_use);
+  RUN_TEST(fabomatic::tests::test_stop_broker);
 
   UNITY_END(); // stop unit testing
 

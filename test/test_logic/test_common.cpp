@@ -8,7 +8,7 @@
 #include "test_common.h"
 #include "unity.h"
 
-namespace fablabbg::tests
+namespace fabomatic::tests
 {
   /// @brief  Simulates RFID card tap
   /// @param rfid RFID wrapper for simulation

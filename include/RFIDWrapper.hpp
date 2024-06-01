@@ -10,7 +10,7 @@
 #include "card.hpp"
 #include "conf.hpp"
 
-namespace fablabbg
+namespace fabomatic
 {
   template <typename Driver>
   class RFIDWrapper final : public BaseRFIDWrapper
@@ -53,7 +53,7 @@ namespace fablabbg
     RFIDWrapper &operator=(RFIDWrapper &&) = delete;       // move assignment
     ~RFIDWrapper() override{};                             // Default destructor
   };
-} // namespace fablabbg
+} // namespace fabomatic
 
 #include "RFIDWrapper.tpp"
 

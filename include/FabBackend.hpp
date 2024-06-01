@@ -14,13 +14,21 @@
 #include "MQTTtypes.hpp"
 #include "SavedConfig.hpp"
 #include "conf.hpp"
+#include "BufferedMsg.hpp"
 
-namespace fablabbg
+namespace fabomatic
 {
   class FabBackend
   {
   private:
     constexpr static auto MAX_MSG_SIZE = 300;
+    enum class PublishResult : uint8_t
+    {
+      ErrorNotPublished,
+      PublishedWithoutAnswer,
+      PublishedWithAnswer
+    };
+
     MQTTClient client{MAX_MSG_SIZE}; // Default is 128, and can be reached with some messages
     JsonDocument doc;
 
@@ -41,19 +49,25 @@ namespace fablabbg
 
     bool online{false};
     bool answer_pending{false};
-    int32_t channel{-1};
+    int16_t channel{-1};
+
+    Buffer buffer;
 
     auto messageReceived(String &topic, String &payload) -> void;
 
-    [[nodiscard]] auto publish(const ServerMQTT::Query &payload) -> bool;
+    template <typename QueryT>
+    [[nodiscard]] auto publish(const QueryT &payload) -> PublishResult;
+
     [[nodiscard]] auto waitForAnswer(std::chrono::milliseconds timeout) -> bool;
-    [[nodiscard]] auto publishWithReply(const ServerMQTT::Query &payload) -> bool;
+    [[nodiscard]] auto publishWithReply(const ServerMQTT::Query &payload) -> PublishResult;
 
     template <typename RespT, typename QueryT, typename... QueryArgs>
     [[nodiscard]] auto processQuery(QueryArgs &&...) -> std::unique_ptr<RespT>;
 
     template <typename QueryT, typename... QueryArgs>
     [[nodiscard]] auto processQuery(QueryArgs &&...args) -> bool;
+
+    auto loadBuffer(const Buffer &new_buffer) -> void;
 
   public:
     FabBackend() = default;
@@ -67,6 +81,9 @@ namespace fablabbg
     [[nodiscard]] auto alive() -> bool;
     [[nodiscard]] auto publish(String topic, String payload, bool waitForAnswer) -> bool;
     [[nodiscard]] auto isOnline() const -> bool;
+    [[nodiscard]] auto hasBufferedMsg() const -> bool;
+    [[nodiscard]] auto transmitBuffer() -> bool;
+    [[nodiscard]] auto saveBuffer() -> bool;
 
     auto connect() -> bool;
     auto connectWiFi() -> bool;
@@ -82,5 +99,5 @@ namespace fablabbg
     FabBackend(FabBackend &&) = delete;                 // move constructor
     FabBackend &operator=(FabBackend &&) = delete;      // move assignment
   };
-} // namespace fablabbg
+} // namespace fabomatic
 #endif // FABBACKEND_HPP_

@@ -1,6 +1,5 @@
 #include "FabBackend.hpp"
 #include "secrets.hpp"
-
 #include "Logging.hpp"
 #include "SavedConfig.hpp"
 #include "Tasks.hpp"
@@ -11,8 +10,13 @@
 #include <string>
 #include <string_view>
 
-namespace fablabbg
+namespace fabomatic
 {
+  /**
+   * @brief Configures the FabBackend with the given configuration.
+   *
+   * @param config The SavedConfig object containing the configuration parameters.
+   */
   void FabBackend::configure(const SavedConfig &config)
   {
     wifi_ssid = config.ssid;
@@ -41,13 +45,19 @@ namespace fablabbg
       client.disconnect();
       wifi_client.stop();
     }
+
+    loadBuffer(config.message_buffer);
+
     ESP_LOGD(TAG, "FabServer configured");
   }
 
-  /// @brief Posts to MQTT server and waits for answer
-  /// @param query query to be posted
-  /// @return true if the server answered
-  bool FabBackend::publishWithReply(const ServerMQTT::Query &query)
+  /**
+   * @brief Posts a query to the MQTT server and waits for a reply.
+   *
+   * @param query The query to be posted.
+   * @return true if the server answered, false otherwise.
+   */
+  auto FabBackend::publishWithReply(const ServerMQTT::Query &query) -> PublishResult
   {
     auto try_cpt = 0;
     auto published = false;
@@ -58,7 +68,7 @@ namespace fablabbg
 
       if (!published)
       {
-        if (publish(query))
+        if (publish(query) == PublishResult::PublishedWithoutAnswer)
         {
           published = true;
         }
@@ -72,7 +82,7 @@ namespace fablabbg
       if (waitForAnswer(conf::mqtt::TIMEOUT_REPLY_SERVER))
       {
         ESP_LOGD(TAG, "MQTT Client: received answer: %s", last_reply.data());
-        return true;
+        return PublishResult::PublishedWithAnswer;
       }
 
       ESP_LOGW(TAG, "MQTT Client: no answer received, retrying %d/%d", try_cpt, conf::mqtt::MAX_TRIES);
@@ -80,13 +90,30 @@ namespace fablabbg
     }
 
     ESP_LOGE(TAG, "MQTT Client: failure to send query %s", query.payload().data());
-    return false;
+
+    // Do not send twice if response did not arrive
+    if (query.buffered() && !published)
+    {
+      const auto &msg = BufferedMsg{query.payload(), topic, query.waitForReply()};
+      buffer.push_back(msg);
+    }
+
+    if (published)
+    {
+      return PublishResult::PublishedWithoutAnswer;
+    }
+
+    return PublishResult::ErrorNotPublished;
   }
 
-  /// @brief publish on MQTT the requested info
-  /// @param mqtt_topic topic to publish to
-  /// @param mqtt_payload payload to publish
-  /// @return true if successfull
+  /**
+   * @brief Publishes a message on the MQTT server.
+   *
+   * @param mqtt_topic The topic to publish to.
+   * @param mqtt_payload The payload to publish.
+   * @param waitForAnswer Whether to wait for an answer.
+   * @return true if the message was published successfully, false otherwise.
+   */
   bool FabBackend::publish(String mqtt_topic, String mqtt_payload, bool waitForAnswer)
   {
     if (mqtt_payload.length() + mqtt_topic.length() > FabBackend::MAX_MSG_SIZE - 8)
@@ -103,18 +130,35 @@ namespace fablabbg
     return client.publish(mqtt_topic.c_str(), mqtt_payload.c_str());
   }
 
-  /// @brief posts to MQTT server
-  /// @param query message to post
-  /// @return true if the message was published
-  bool FabBackend::publish(const ServerMQTT::Query &query)
+  /**
+   * @brief Publishes a query on the MQTT server.
+   *
+   * @param query The query to be published.
+   * @return true if the query was published successfully, false otherwise.
+   */
+  template <typename QueryT>
+  auto FabBackend::publish(const QueryT &query) -> PublishResult
   {
     String s_payload(query.payload().c_str());
-    String s_topic(topic.c_str());
+    std::string temp_topic;
 
-    if (s_payload.length() + topic.length() > FabBackend::MAX_MSG_SIZE - 8)
+    // Check at compile-time if topic is specified
+    if constexpr (std::is_base_of<BufferedQuery, QueryT>::value)
+    {
+      temp_topic = static_cast<BufferedQuery>(query).topic();
+    }
+    else
+    {
+      // Just use the default topic for the machine
+      temp_topic = this->topic;
+    }
+
+    String s_topic{temp_topic.c_str()};
+
+    if (s_payload.length() + s_topic.length() > FabBackend::MAX_MSG_SIZE - 8)
     {
       ESP_LOGE(TAG, "MQTT Client: Message is too long: %s", s_payload.c_str());
-      return false;
+      return PublishResult::ErrorNotPublished;
     }
 
     answer_pending = query.waitForReply(); // Don't wait if not needed
@@ -123,9 +167,19 @@ namespace fablabbg
 
     ESP_LOGD(TAG, "MQTT Client: sending message %s on topic %s", s_payload.c_str(), s_topic.c_str());
 
-    return client.publish(s_topic, s_payload);
+    if (client.publish(s_topic, s_payload))
+    {
+      return PublishResult::PublishedWithoutAnswer;
+    }
+
+    return PublishResult::ErrorNotPublished;
   }
 
+  /**
+   * @brief Main loop for the MQTT client.
+   *
+   * @return true if the client is running successfully, false otherwise.
+   */
   bool FabBackend::loop()
   {
     if (!client.loop())
@@ -140,8 +194,12 @@ namespace fablabbg
     return true;
   }
 
-  /// @brief blocks until the server answers or until the timeout is reached
-  /// @return true if the server answered
+  /**
+   * @brief Waits for an answer from the MQTT server.
+   *
+   * @param max_duration The maximum duration to wait.
+   * @return true if the server answered, false otherwise.
+   */
   bool FabBackend::waitForAnswer(std::chrono::milliseconds max_duration)
   {
     const auto start_time = std::chrono::system_clock::now();
@@ -168,16 +226,22 @@ namespace fablabbg
     return false;
   }
 
-  /// @brief true if the server has been reached successfully
-  /// @return boolean
+  /**
+   * @brief Checks if the client is online.
+   *
+   * @return true if the client is online, false otherwise.
+   */
   bool FabBackend::isOnline() const
   {
     return online;
   }
 
-  /// @brief Callback for MQTT messages
-  /// @param topic topic the message was received on
-  /// @param payload payload of the message
+  /**
+   * @brief Callback function for received MQTT messages.
+   *
+   * @param s_topic The topic the message was received on.
+   * @param s_payload The payload of the message.
+   */
   void FabBackend::messageReceived(String &s_topic, String &s_payload)
   {
     ESP_LOGI(TAG, "MQTT Client: Received on %s -> %s", s_topic.c_str(), s_payload.c_str());
@@ -186,8 +250,11 @@ namespace fablabbg
     answer_pending = false;
   }
 
-  /// @brief Connects to the WiFi network
-  /// @return true if the connection succeeded
+  /**
+   * @brief Connects to the WiFi network.
+   *
+   * @return true if the connection succeeded, false otherwise.
+   */
   bool FabBackend::connectWiFi()
   {
     static constexpr auto NB_TRIES = 15;
@@ -196,6 +263,8 @@ namespace fablabbg
     // Connect WiFi if needed
     if (WiFi.status() != WL_CONNECTED)
     {
+      WiFi.setAutoReconnect(true);
+      WiFi.persistent(true);
       WiFi.mode(WIFI_STA);
       ESP_LOGD(TAG, "FabServer::connectWiFi() : WiFi connection state=%d, connecting to SSID:%s (channel:%d)", WiFi.status(), wifi_ssid.c_str(), channel);
       WiFi.begin(wifi_ssid.data(), wifi_password.data(), channel);
@@ -204,7 +273,7 @@ namespace fablabbg
       {
         if (WiFi.status() == WL_CONNECTED)
         {
-          ESP_LOGD(TAG, "FabServer::connectWiFi() : WiFi connection successfull");
+          ESP_LOGD(TAG, "FabServer::connectWiFi() : WiFi connection successful");
           break;
         }
         Tasks::delay(DELAY_MS);
@@ -213,15 +282,18 @@ namespace fablabbg
     return WiFi.status() == WL_CONNECTED;
   }
 
-  /// @brief Establish WiFi connection and connects to FabServer
-  /// @return true if both operations succeeded
+  /**
+   * @brief Establishes a connection to the WiFi network and the MQTT server.
+   *
+   * @return true if both operations succeeded, false otherwise.
+   */
   bool FabBackend::connect()
   {
     const auto status = WiFi.status();
 
     ESP_LOGD(TAG, "FabServer::connect() called, Wifi status=%d", status);
 
-    // Check if WiFi nextwork is available, and if not, try to connect
+    // Check if WiFi network is available, and if not, try to connect
     if (status != WL_CONNECTED)
     {
       online = false;
@@ -284,7 +356,7 @@ namespace fablabbg
           online = true;
         }
         // Announce the board to the server
-        if (auto query = ServerMQTT::AliveQuery{}; publish(query))
+        if (auto query = ServerMQTT::AliveQuery{}; publish(query) == PublishResult::PublishedWithoutAnswer)
         {
           ESP_LOGI(TAG, "MQTT Client: board announced to server");
         }
@@ -307,7 +379,9 @@ namespace fablabbg
     return online;
   }
 
-  /// @brief Disconnects from the server
+  /**
+   * @brief Disconnects from the MQTT server.
+   */
   void FabBackend::disconnect()
   {
     client.disconnect();
@@ -315,23 +389,42 @@ namespace fablabbg
     Tasks::delay(100ms);
   }
 
-  /// @brief Process a MQTT query and returns the response
-  /// @tparam T type of the response returned to the caller (it will be wrapped in a unique_ptr)
-  /// @tparam Q type of the query sent to the server
-  /// @tparam ...Args arguments to be passed to the constructor of Q
-  /// @return backend response (if request_ok)
+  /**
+   * @brief Processes a query and returns the response.
+   *
+   * @tparam RespT The type of the response.
+   * @tparam QueryT The type of the query.
+   * @tparam ...Args The arguments to be passed to the query constructor.
+   * @return A unique_ptr to the response.
+   */
   template <typename RespT, typename QueryT, typename... QueryArgs>
   std::unique_ptr<RespT> FabBackend::processQuery(QueryArgs &&...args)
   {
     static_assert(std::is_base_of<ServerMQTT::Query, QueryT>::value, "QueryT must inherit from Query");
     static_assert(std::is_base_of<ServerMQTT::Response, RespT>::value, "RespT must inherit from Response");
+    QueryT query{args...};
 
-    if (isOnline())
+    auto nb_tries = 0;
+    while (isOnline() && hasBufferedMsg() && !transmitBuffer() && nb_tries < 3)
     {
-      if (QueryT query{args...}; publishWithReply(query))
+      // To preserve chronological order, we cannot send new messages until the old ones have been sent.
+      ESP_LOGW(TAG, "Online with pending messages that could not be transmitted, retrying...");
+
+      Tasks::delay(250ms);
+
+      if (!isOnline())
+      {
+        connect();
+      }
+      nb_tries++;
+    }
+
+    if (isOnline() && !hasBufferedMsg())
+    {
+      if (publishWithReply(query) == PublishResult::PublishedWithAnswer)
       {
         // Deserialize the JSON document
-        auto payload = last_reply.c_str();
+        const auto payload = last_reply.c_str();
         if (DeserializationError error = deserializeJson(doc, payload))
         {
           ESP_LOGE(TAG, "Failed to parse json: %s (%s)", payload, error.c_str());
@@ -345,17 +438,47 @@ namespace fablabbg
         this->disconnect();
       }
     }
+
+    if (query.buffered())
+    {
+      const auto &msg = BufferedMsg{query.payload(), topic, query.waitForReply()};
+      buffer.push_back(msg);
+    }
+
     return std::make_unique<RespT>(false);
   }
 
+  /**
+   * @brief Processes a query.
+   *
+   * @tparam QueryT The type of the query.
+   * @tparam ...Args The arguments to be passed to the query constructor.
+   * @return true if the query was processed successfully, false otherwise.
+   */
   template <typename QueryT, typename... QueryArgs>
   bool FabBackend::processQuery(QueryArgs &&...args)
   {
     static_assert(std::is_base_of<ServerMQTT::Query, QueryT>::value, "QueryT must inherit from Query");
+    QueryT query{args...};
 
-    if (isOnline())
+    auto nb_tries = 0;
+    while (isOnline() && hasBufferedMsg() && !transmitBuffer() && nb_tries < 3)
     {
-      if (QueryT query{args...}; publish(query))
+      // To preserve chronological order, we cannot send new messages until the old ones have been sent.
+      ESP_LOGW(TAG, "Online with pending messages that could not be transmitted, retrying...");
+
+      Tasks::delay(250ms);
+
+      if (!isOnline())
+      {
+        connect();
+      }
+      nb_tries++;
+    }
+
+    if (isOnline() && !hasBufferedMsg())
+    {
+      if (publish(query) == PublishResult::PublishedWithoutAnswer)
       {
         return true;
       }
@@ -365,70 +488,172 @@ namespace fablabbg
         this->disconnect();
       }
     }
+
+    if (query.buffered())
+    {
+      const auto &msg = BufferedMsg{query.payload(), topic, query.waitForReply()};
+      buffer.push_back(msg);
+    }
     return false;
   }
 
-  /// @brief Checks if the card ID is known to the server
-  /// @param uid card uid
-  /// @return backend response (if request_ok)
+  /**
+   * @brief Checks if the card ID is known to the server.
+   *
+   * @param uid The card UID.
+   * @return A unique_ptr to the server response.
+   */
   std::unique_ptr<ServerMQTT::UserResponse> FabBackend::checkCard(card::uid_t uid)
   {
     return processQuery<ServerMQTT::UserResponse, ServerMQTT::UserQuery>(uid);
   }
 
-  /// @brief Checks the machine status on the server
-  /// @return backend response (if request_ok)
+  /**
+   * @brief Checks the machine status on the server.
+   *
+   * @return A unique_ptr to the server response.
+   */
   std::unique_ptr<ServerMQTT::MachineResponse> FabBackend::checkMachine()
   {
     return processQuery<ServerMQTT::MachineResponse, ServerMQTT::MachineQuery>();
   }
 
-  /// @brief register the starting of a machine usage
-  /// @param uid card uid
-  /// @return backend response (if request_ok)
+  /**
+   * @brief Registers the start of machine usage.
+   *
+   * @param uid The card UID of the user.
+   * @return A unique_ptr to the server response.
+   */
   std::unique_ptr<ServerMQTT::SimpleResponse> FabBackend::startUse(card::uid_t uid)
   {
     return processQuery<ServerMQTT::SimpleResponse, ServerMQTT::StartUseQuery>(uid);
   }
 
-  /// @brief Register end of machine usage
-  /// @param uid card ID of the machine user
-  /// @param duration_s duration of usage in seconds
-  /// @return backend response (if request_ok)
+  /**
+   * @brief Registers the end of machine usage.
+   *
+   * @param uid The card UID of the user.
+   * @param duration_s The duration of usage in seconds.
+   * @return A unique_ptr to the server response.
+   */
   std::unique_ptr<ServerMQTT::SimpleResponse> FabBackend::finishUse(card::uid_t uid, std::chrono::seconds duration_s)
   {
     return processQuery<ServerMQTT::SimpleResponse, ServerMQTT::StopUseQuery>(uid, duration_s);
   }
 
-  /// @brief Inform the backend that the machine is in use. This is used to prevent
-  ///        loosing information if the machine is rebooted while in use.
-  /// @param uid card ID of the machine user
-  /// @param duration_s duration of usage in seconds
-  /// @return backend response (if request_ok)
+  /**
+   * @brief Informs the backend that the machine is in use.
+   *
+   * @param uid The card UID of the user.
+   * @param duration_s The duration of usage in seconds.
+   * @return A unique_ptr to the server response.
+   */
   std::unique_ptr<ServerMQTT::SimpleResponse> FabBackend::inUse(card::uid_t uid, std::chrono::seconds duration_s)
   {
     return processQuery<ServerMQTT::SimpleResponse, ServerMQTT::InUseQuery>(uid, duration_s);
   }
 
-  /// @brief Registers a maintenance action
-  /// @param maintainer who performed the maintenance
-  /// @return server response (if request_ok)
+  /**
+   * @brief Registers a maintenance action.
+   *
+   * @param maintainer The UID of the person performing maintenance.
+   * @return A unique_ptr to the server response.
+   */
   std::unique_ptr<ServerMQTT::SimpleResponse> FabBackend::registerMaintenance(card::uid_t maintainer)
   {
     return processQuery<ServerMQTT::SimpleResponse, ServerMQTT::RegisterMaintenanceQuery>(maintainer);
   }
 
-  /// @brief Sends a ping to the server
-  /// @return true if packet was sent
+  /**
+   * @brief Sends a ping to the server.
+   *
+   * @return true if the ping was sent successfully, false otherwise.
+   */
   bool FabBackend::alive()
   {
     return processQuery<ServerMQTT::AliveQuery>();
   }
 
-  /// @brief set channel to use for WiFi connection
-  /// @param channel
+  /**
+   * @brief Sets the WiFi channel to use.
+   *
+   * @param channel The channel number.
+   */
   void FabBackend::setChannel(int32_t channel)
   {
     this->channel = channel;
   }
-} // namespace fablabbg
+
+  [[nodiscard]] auto FabBackend::hasBufferedMsg() const -> bool
+  {
+    return this->buffer.count() > 0;
+  }
+
+  [[nodiscard]] auto FabBackend::transmitBuffer() -> bool
+  {
+    while (hasBufferedMsg() && isOnline())
+    {
+      ESP_LOGD(TAG, "Retransmitting buffered messages...");
+      const auto &msg = buffer.getMessage();
+      const BufferedQuery bq{msg.mqtt_message, msg.mqtt_topic, msg.wait_for_answer};
+      if (bq.waitForReply())
+      {
+        if (auto result = publishWithReply(bq); result != PublishResult::PublishedWithAnswer)
+        {
+          ESP_LOGW(TAG, "Retransmitting buffered message failed!");
+
+          // If it has been published but not answered, do not try again
+          if (result == PublishResult::PublishedWithoutAnswer)
+          {
+            const auto &bmsg = BufferedMsg{msg.mqtt_message, msg.mqtt_topic, msg.wait_for_answer};
+            buffer.push_front(bmsg);
+          }
+          break;
+        }
+      }
+      else
+      {
+        if (publish(bq) == PublishResult::ErrorNotPublished)
+        {
+          // Will try again
+          ESP_LOGW(TAG, "Retransmitting buffered message failed!");
+          const auto &bmsg = BufferedMsg{msg.mqtt_message, msg.mqtt_topic, msg.wait_for_answer};
+          buffer.push_front(bmsg);
+          break;
+        }
+      }
+    }
+    last_reply = "";
+
+    ESP_LOGW(TAG, "Retransmittion completed, remaining messages=%d", buffer.count());
+    return !hasBufferedMsg();
+  }
+
+  auto FabBackend::saveBuffer() -> bool
+  {
+    if (!buffer.hasChanged())
+    {
+      return true;
+    }
+
+    auto sc = SavedConfig::LoadFromEEPROM().value_or(SavedConfig::DefaultConfig());
+    sc.message_buffer = buffer;
+
+    if (sc.SaveToEEPROM())
+    {
+      buffer.setChanged(false);
+      ESP_LOGI(TAG, "Saved %d buffered messages", buffer.count());
+      return true;
+    }
+
+    ESP_LOGE(TAG, "Failed to save buffered messages!");
+    return false;
+  }
+
+  auto FabBackend::loadBuffer(const Buffer &new_buffer) -> void
+  {
+    buffer = new_buffer;
+    buffer.setChanged(false);
+    ESP_LOGI(TAG, "Loaded buffer with %d messages", buffer.count());
+  }
+} // namespace fabomatic

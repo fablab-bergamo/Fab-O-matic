@@ -8,7 +8,7 @@
 #include <array>
 #include <chrono>
 
-namespace fablabbg
+namespace fabomatic
 {
   template <typename LcdDriver>
   class LCDWrapper final : public BaseLCDWrapper
@@ -17,13 +17,13 @@ namespace fablabbg
     LCDWrapper(const pins_config::lcd_config &config);
 
     using DisplayBuffer = std::array<std::array<char, conf::lcd::COLS>, conf::lcd::ROWS>;
-    bool begin() override;
-    void clear() override;
-    void showConnection(bool show) override;
-    void showPower(bool show) override;
-    void setRow(uint8_t row, const std::string &text) override;
 
-    void update(const BoardInfo &boardinfo, bool forced = false) override;
+    auto begin() -> bool override;
+    auto clear() -> void override;
+    auto showConnection(bool show) -> void override;
+    auto showPower(bool show) -> void override;
+    auto setRow(uint8_t row, const std::string_view &text) -> void override;
+    auto update(const BoardInfo &boardinfo, bool forced = false) -> void override;
 
   private:
     static constexpr auto HEIGHT_PX = 8;
@@ -41,7 +41,7 @@ namespace fablabbg
     static constexpr std::array<uint8_t, HEIGHT_PX> powered_off_char{0x0a, 0x04, 0x0a, 0x00, 0x1f, 0x1f, 0x0a, 0x0a};
     static constexpr std::array<uint8_t, HEIGHT_PX> powering_off_char{0x0e, 0x15, 0x15, 0x15, 0x17, 0x11, 0x11, 0x0e};
 
-    const pins_config::lcd_config config;
+    const pins_config::lcd_config &config;
 
     LcdDriver lcd;
     bool show_connection_status;
@@ -51,13 +51,14 @@ namespace fablabbg
     DisplayBuffer current;
     BoardInfo boardInfo;
 
-    void backlightOn() const;
-    void backlightOff() const;
-    void prettyPrint(const DisplayBuffer &buffer, const BoardInfo &bi) const;
+    auto backlightOn() const -> void;
+    auto backlightOff() const -> void;
+    auto prettyPrint(const DisplayBuffer &buffer, const BoardInfo &bi) const -> void;
+    auto createChar(uint8_t char_idx, const std::array<uint8_t, HEIGHT_PX> &values) -> void;
+
     [[nodiscard]] auto needsUpdate(const BoardInfo &bi) const -> bool;
-    void createChar(uint8_t char_idx, const std::array<uint8_t, HEIGHT_PX> &values);
   };
-} // namespace fablabbg
+} // namespace fabomatic
 
 #include "LCDWrapper.tpp"
 

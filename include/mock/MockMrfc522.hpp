@@ -12,7 +12,7 @@
 #include "MFRC522DriverSPI.h"
 #include "MFRC522v2.h"
 
-namespace fablabbg
+namespace fabomatic
 {
   class MockMrfc522
   {
@@ -33,19 +33,20 @@ namespace fablabbg
 
     auto PICC_IsNewCardPresent() -> bool;
     auto PICC_ReadCardSerial() -> bool;
-    void reset();
+    auto reset() -> void;
     auto PCD_Init() -> bool;
     auto PICC_WakeupA(byte *bufferATQA, byte &bufferSize) -> bool;
     auto PCD_PerformSelfTest() -> bool;
     auto getDriverUid() const -> MockMrfc522::UidDriver;
-    void PCD_SetAntennaGain(MFRC522Constants::PCD_RxGain gain);
-    void PCD_DumpVersionToSerial();
+    auto PCD_SetAntennaGain(MFRC522Constants::PCD_RxGain gain) -> void;
+    auto PCD_DumpVersionToSerial() -> void;
 
-    void setUid(const std::optional<card::uid_t> &uid, const std::optional<std::chrono::milliseconds> &max_delay);
-    void resetUid();
+    auto setUid(const std::optional<card::uid_t> &uid,
+                const std::optional<std::chrono::milliseconds> &max_delay) -> void;
+    auto resetUid() -> void;
 
     static constexpr auto RxGainMax = MFRC522::PCD_RxGain::RxGain_max;
   };
-} // namespace fablabbg
+} // namespace fabomatic
 
 #endif // MOCK_MOCKMRFC522_HPP_

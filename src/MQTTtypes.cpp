@@ -5,6 +5,7 @@
 
 #include <WiFi.h>
 
+#include "Espressif.hpp"
 #include "MQTTtypes.hpp"
 #include "ArduinoJson.hpp"
 #include "FabUser.hpp"
@@ -14,7 +15,7 @@
 #define GIT_VERSION "unknown"
 #endif
 
-namespace fablabbg::ServerMQTT
+namespace fabomatic::ServerMQTT
 {
   auto UserQuery::payload() const -> const std::string
   {
@@ -38,21 +39,13 @@ namespace fablabbg::ServerMQTT
     std::stringstream ss{};
 
     // Get MAC address
-
-    std::array<uint8_t, 8> mac{0};
-    esp_efuse_mac_get_default(mac.data());
-
-    std::stringstream serial{};
-    for (const auto val : mac)
-    {
-      serial << std::setfill('0') << std::setw(2) << std::hex << +val;
-    }
+    const auto serial = esp32::esp_serial();
 
     ss << "{\"action\":\"alive\","
        << "\"version\":\"" << GIT_VERSION << "\","
        << "\"ip\":\"" << WiFi.localIP().toString().c_str() << "\","
-       << "\"serial\":\"" << serial.str().substr(0U, 6 * 2) << "\","
-       << "\"heap\":\"" << esp_get_free_heap_size() << "\""
+       << "\"serial\":\"" << serial << "\","
+       << "\"heap\":\"" << esp32::getFreeHeap() << "\""
        << "}";
     return ss.str();
   }
@@ -155,4 +148,4 @@ namespace fablabbg::ServerMQTT
     auto response = std::make_unique<SimpleResponse>(doc["request_ok"].as<bool>());
     return response;
   }
-} // namespace fablabbg::ServerMQTT
+} // namespace fabomatic::ServerMQTT

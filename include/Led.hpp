@@ -7,12 +7,12 @@
 
 #include "pins.hpp"
 
-namespace fablabbg
+namespace fabomatic
 {
   class Led
   {
   public:
-    enum class Status : uint8_t
+    enum class Status
     {
       Off,
       On,
@@ -21,9 +21,9 @@ namespace fablabbg
 
     Led() = default;
 
-    void set(Status status);
-    void setColor(uint8_t r, uint8_t g, uint8_t b);
-    void update();
+    auto set(Status status) -> void;
+    auto setColor(uint8_t r, uint8_t g, uint8_t b) -> void;
+    auto update() -> void;
 
   private:
     Adafruit_NeoPixel pixel{1, pins.led.pin, pins.led.neopixel_config};
@@ -35,6 +35,6 @@ namespace fablabbg
     void init();
   };
 
-} // namespace fablabbg
+} // namespace fabomatic
 
 #endif // LED_HPP_

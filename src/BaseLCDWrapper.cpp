@@ -5,7 +5,7 @@
 
 #include "BaseLCDWrapper.hpp"
 
-namespace fablabbg
+namespace fabomatic
 {
   using namespace std::chrono;
 
@@ -22,4 +22,4 @@ namespace fablabbg
 
     return ss.str();
   }
-} // namespace fablabbg
+} // namespace fabomatic

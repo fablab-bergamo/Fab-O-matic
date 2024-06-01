@@ -3,7 +3,6 @@
 #include "Arduino.h"
 #include "WiFi.h"
 #include <Adafruit_NeoPixel.h>
-#include <esp_task_wdt.h>
 
 #include "AuthProvider.hpp"
 #include "BaseLCDWrapper.hpp"
@@ -17,12 +16,13 @@
 #include "conf.hpp"
 #include "pins.hpp"
 #include "secrets.hpp"
+#include "language/lang.hpp"
 
 #ifndef GIT_VERSION
 #define GIT_VERSION "??????"
 #endif
 
-namespace fablabbg
+namespace fabomatic
 {
   using milliseconds = std::chrono::milliseconds;
 
@@ -46,7 +46,7 @@ namespace fablabbg
     if (server.connect())
     {
       // Check the configured machine data from the server
-      auto result = server.checkMachine();
+      const auto result = server.checkMachine();
       if (result->request_ok)
       {
         if (result->is_valid)
@@ -111,8 +111,8 @@ namespace fablabbg
   /// @brief Removes the current machine user and changes the status to LoggedOut
   void BoardLogic::logout()
   {
-    auto result = server.finishUse(machine.getActiveUser().card_uid,
-                                   machine.getUsageDuration());
+    const auto result = server.finishUse(machine.getActiveUser().card_uid,
+                                         machine.getUsageDuration());
 
     ESP_LOGI(TAG, "Logout, result finishUse: %d", result->request_ok);
 
@@ -137,10 +137,10 @@ namespace fablabbg
       getLcd().setRow(1, ss.str());
       getLcd().update(bi);
 
-      auto start = std::chrono::system_clock::now();
+      const auto start = std::chrono::system_clock::now();
       if (!getRfid().cardStillThere(card, delay_per_step))
       {
-        getLcd().setRow(1, "* ANNULLATO *");
+        getLcd().setRow(1, strings::S_CANCELLED);
         getLcd().update(bi);
         return false;
       }
@@ -153,7 +153,7 @@ namespace fablabbg
       }
     }
 
-    getLcd().setRow(1, "* CONFERMATO *");
+    getLcd().setRow(1, strings::S_CONFIRMED);
     getLcd().update(bi);
     return true;
   }
@@ -171,10 +171,10 @@ namespace fablabbg
     user.card_uid = uid;
     user.user_level = FabUser::UserLevel::Unknown;
 
-    auto response = auth.tryLogin(uid, server);
+    const auto response = auth.tryLogin(uid, server);
     if (!response.has_value() || response.value().user_level == FabUser::UserLevel::Unknown)
     {
-      ESP_LOGI(TAG, "Failed login for %s", card::uid_str(uid));
+      ESP_LOGI(TAG, "Failed login for %s", card::uid_str(uid).c_str());
       changeStatus(Status::LoginDenied);
       beepFail();
       return false;
@@ -205,9 +205,9 @@ namespace fablabbg
         beepOk();
         changeStatus(Status::MaintenanceQuery);
 
-        if (longTap(user.card_uid, "Registra"))
+        if (longTap(user.card_uid, strings::S_LONGTAP_PROMPT))
         {
-          auto maint_resp = server.registerMaintenance(user.card_uid);
+          const auto maint_resp = server.registerMaintenance(user.card_uid);
           if (!maint_resp->request_ok)
           {
             beepFail();
@@ -233,7 +233,7 @@ namespace fablabbg
 
     if (machine.login(user))
     {
-      auto result = server.startUse(machine.getActiveUser().card_uid);
+      const auto result = server.startUse(machine.getActiveUser().card_uid);
       ESP_LOGI(TAG, "Login, result startUse: %d", result->request_ok);
       changeStatus(Status::LoggedIn);
       beepOk();
@@ -261,10 +261,6 @@ namespace fablabbg
     {
       pinMode(pins.buzzer.pin, OUTPUT);
       gpio_set_drive_capability(static_cast<gpio_num_t>(pins.buzzer.pin), GPIO_DRIVE_CAP_2);
-      auto freq = ledcSetup(conf::buzzer::LEDC_PWM_CHANNEL, conf::buzzer::BEEP_HZ, 8U);
-      ESP_LOGD(TAG, "PWM frequency for buzzer set to %d Hz", freq);
-      success &= (freq != 0);
-      ledcAttachPin(pins.buzzer.pin, conf::buzzer::LEDC_PWM_CHANNEL);
     }
 
     ESP_LOGI(TAG, "Board initialization complete, success = %d", success);
@@ -307,6 +303,9 @@ namespace fablabbg
     {
       uid_str = "????????";
     }
+    std::stringstream idv;
+    idv << "ID:" << this->getMachine().getMachineId()
+        << " V" << GIT_VERSION;
 
     switch (status)
     {
@@ -317,118 +316,118 @@ namespace fablabbg
       lcd.setRow(0, machine_name);
       if (!machine.isAllowed())
       {
-        lcd.setRow(1, "! BLOCCATA !");
+        lcd.setRow(1, strings::S_MACHINE_BLOCKED);
       }
       else if (machine.isMaintenanceNeeded())
       {
-        lcd.setRow(0, "Manutenzione");
+        lcd.setRow(0, strings::S_MACHINE_MAINTENANCE);
         lcd.setRow(1, machine.getMaintenanceInfo());
       }
       else
       {
-        lcd.setRow(1, "Avvicina carta");
+        lcd.setRow(1, strings::S_CARD_PROMPT);
       }
       break;
     case Status::AlreadyInUse:
-      lcd.setRow(0, "In uso da");
+      lcd.setRow(0, strings::S_USED_BY);
       lcd.setRow(1, user_name);
       break;
     case Status::LoggedIn:
-      lcd.setRow(0, "Inizio uso");
+      lcd.setRow(0, strings::S_START_USE);
       lcd.setRow(1, user_name);
       break;
     case Status::LoginDenied:
-      lcd.setRow(0, "Carta ignota");
+      lcd.setRow(0, strings::S_LOGIN_DENIED);
       lcd.setRow(1, uid_str);
       break;
     case Status::LoggedOut:
-      lcd.setRow(0, "Arrivederci");
+      lcd.setRow(0, strings::S_GOODBYE);
       lcd.setRow(1, user_name);
       break;
     case Status::Connecting:
-      lcd.setRow(0, "Connessione");
-      lcd.setRow(1, "al server MQTT");
+      lcd.setRow(0, strings::S_CONNECTING_MQTT_1);
+      lcd.setRow(1, strings::S_CONNECTING_MQTT_2);
       break;
     case Status::Connected:
-      lcd.setRow(0, "Connesso");
+      lcd.setRow(0, strings::S_CONNECTED);
       lcd.setRow(1, "");
       break;
     case Status::MachineInUse:
-      buffer << "Ciao " << user_name;
+      buffer << strings::S_HELLO << " " << user_name;
       lcd.setRow(0, buffer.str());
       lcd.setRow(1, lcd.convertSecondsToHHMMSS(machine.getUsageDuration()));
       break;
     case Status::Busy:
-      lcd.setRow(0, "Elaborazione...");
+      lcd.setRow(0, strings::S_WORKING);
       lcd.setRow(1, "");
       break;
     case Status::Offline:
-      lcd.setRow(0, "OFFLINE MODE");
+      lcd.setRow(0, strings::S_OFFLINE_MODE);
       lcd.setRow(1, "");
       break;
     case Status::NotAllowed:
-      lcd.setRow(0, "Blocco");
-      lcd.setRow(1, "amministrativo");
+      lcd.setRow(0, strings::S_BLOCKED_ADMIN_1);
+      lcd.setRow(1, strings::S_BLOCKED_ADMIN_2);
       break;
     case Status::Verifying:
-      lcd.setRow(0, "VERIFICA IN");
-      lcd.setRow(1, "CORSO");
+      lcd.setRow(0, strings::S_VERIFYING_1);
+      lcd.setRow(1, strings::S_VERIFYING_2);
       break;
     case Status::MaintenanceNeeded:
-      lcd.setRow(0, "Blocco per");
-      lcd.setRow(1, "manutenzione");
+      lcd.setRow(0, strings::S_BLOCKED_MAINTENANCE_1);
+      lcd.setRow(1, strings::S_BLOCKED_MAINTENANCE_2);
       break;
     case Status::MaintenanceQuery:
-      lcd.setRow(0, "Manutenzione?");
-      lcd.setRow(1, "Registra");
+      lcd.setRow(0, strings::S_PROMPT_MAINTENANCE_1);
+      lcd.setRow(1, strings::S_PROMPT_MAINTENANCE_2);
       break;
     case Status::MaintenanceDone:
-      lcd.setRow(0, "Manutenzione");
-      lcd.setRow(1, "registrata");
+      lcd.setRow(0, strings::S_MAINTENANCE_REGISTERED_1);
+      lcd.setRow(1, strings::S_MAINTENANCE_REGISTERED_2);
       break;
     case Status::Error:
-      lcd.setRow(0, "Errore");
-      lcd.setRow(1, "V" GIT_VERSION);
+      lcd.setRow(0, strings::S_GENERIC_ERROR);
+      lcd.setRow(1, idv.str());
       break;
     case Status::ErrorHardware:
-      lcd.setRow(0, "Errore HW");
-      lcd.setRow(1, "V" GIT_VERSION);
+      lcd.setRow(0, strings::S_HW_ERROR);
+      lcd.setRow(1, idv.str());
       break;
     case Status::PortalFailed:
-      lcd.setRow(0, "Errore portale");
+      lcd.setRow(0, strings::S_PORTAL_ERROR);
       lcd.setRow(1, WiFi.softAPIP().toString().c_str());
       break;
     case Status::PortalSuccess:
-      lcd.setRow(0, "AP config OK");
-      lcd.setRow(1, "V" GIT_VERSION);
+      lcd.setRow(0, strings::S_PORTAL_SUCCESS);
+      lcd.setRow(1, idv.str());
       break;
     case Status::PortalStarting:
-      lcd.setRow(0, "Apri portale");
+      lcd.setRow(0, strings::S_OPEN_PORTAL);
       lcd.setRow(1, WiFi.softAPIP().toString().c_str());
       break;
     case Status::Booting:
-      lcd.setRow(0, "Avvio...");
-      lcd.setRow(1, "V" GIT_VERSION);
+      lcd.setRow(0, strings::S_BOOTING);
+      lcd.setRow(1, idv.str());
       break;
     case Status::ShuttingDown:
       lcd.setRow(0, machine_name);
-      lcd.setRow(1, "In spegnimento!");
+      lcd.setRow(1, strings::S_SHUTTING_DOWN);
       break;
     case Status::OTAStarting:
-      lcd.setRow(0, "Aggiornamento");
-      lcd.setRow(1, "OTA...");
+      lcd.setRow(0, strings::UPDATE_OTA_1);
+      lcd.setRow(1, strings::UPDATE_OTA_2);
       break;
     case Status::FactoryDefaults:
-      lcd.setRow(0, "Param. reset");
-      lcd.setRow(1, "Attesa reboot");
+      lcd.setRow(0, strings::FACTORY_RESET_DONE_1);
+      lcd.setRow(1, strings::FACTORY_RESET_DONE_2);
       break;
     case Status::OTAError:
-      lcd.setRow(0, "Errore OTA");
+      lcd.setRow(0, strings::S_OTA_ERROR);
       lcd.setRow(1, "");
       break;
     default:
-      lcd.setRow(0, "Unhandled status");
-      buffer << "Value " << static_cast<int>(status);
+      lcd.setRow(0, strings::S_STATUS_ERROR_1);
+      buffer << strings::S_STATUS_ERROR_2 << static_cast<int>(status);
       lcd.setRow(1, buffer.str());
       break;
     }
@@ -447,9 +446,9 @@ namespace fablabbg
   {
     if constexpr (conf::buzzer::STANDARD_BEEP_DURATION > 0ms && pins.buzzer.pin != NO_PIN)
     {
-      ledcWrite(conf::buzzer::LEDC_PWM_CHANNEL, 127UL);
+      digitalWrite(pins.buzzer.pin, 1);
       Tasks::delay(conf::buzzer::STANDARD_BEEP_DURATION);
-      ledcWrite(conf::buzzer::LEDC_PWM_CHANNEL, 0UL);
+      digitalWrite(pins.buzzer.pin, 0);
     }
   }
 
@@ -459,9 +458,9 @@ namespace fablabbg
     {
       for (auto i = 0; i < conf::buzzer::NB_BEEPS; i++)
       {
-        ledcWrite(conf::buzzer::LEDC_PWM_CHANNEL, 127UL);
+        digitalWrite(pins.buzzer.pin, 1);
         Tasks::delay(conf::buzzer::STANDARD_BEEP_DURATION);
-        ledcWrite(conf::buzzer::LEDC_PWM_CHANNEL, 0UL);
+        digitalWrite(pins.buzzer.pin, 0);
         Tasks::delay(conf::buzzer::STANDARD_BEEP_DURATION);
       }
     }
@@ -494,7 +493,7 @@ namespace fablabbg
 
     server.configure(config.value());
 
-    MachineID mid{(uint16_t)atoi(config.value().machine_id)};
+    MachineID mid = config.value().getMachineID();
     MachineConfig machine_conf(mid,
                                conf::default_config::machine_type,
                                std::string{conf::default_config::machine_name},
@@ -568,7 +567,7 @@ namespace fablabbg
     // check if there is a card
     if (rfid.isNewCardPresent())
     {
-      auto result = rfid.readCardSerial();
+      const auto &result = rfid.readCardSerial();
       if (result)
       {
         onNewCard(result.value());
@@ -658,4 +657,10 @@ namespace fablabbg
   {
     return this->auth.saveCache();
   }
-} // namespace fablabbg
+
+  auto BoardLogic::getHostname() const -> const std::string
+  {
+    // Hostname is BOARD + machine_id (which shall be unique) e.g. BOARD1
+    return conf::default_config::hostname.data() + std::to_string(conf::default_config::machine_id.id);
+  }
+} // namespace fabomatic

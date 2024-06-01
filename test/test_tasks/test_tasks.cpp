@@ -6,13 +6,15 @@
 #define UNITY_INCLUDE_PRINT_FORMATTED
 #include <unity.h>
 #include "Tasks.hpp"
+#include "Logging.hpp"
+#include "Espressif.hpp"
 
 using namespace std::chrono_literals;
 
-namespace fablabbg::tests
+namespace fabomatic::tests
 {
-  using Task = fablabbg::Tasks::Task;
-  using Scheduler = fablabbg::Tasks::Scheduler;
+  using Task = fabomatic::Tasks::Task;
+  using Scheduler = fabomatic::Tasks::Scheduler;
 
   // Static variables for testing
   constexpr int NB_TASKS = 100;
@@ -126,14 +128,26 @@ namespace fablabbg::tests
     execute();
     TEST_ASSERT_EQUAL_MESSAGE(NB_TASKS, task_counter, "Restarted tasks did not run immediately");
   }
-} // namespace fablabbg::tests
+
+  void test_esp32()
+  {
+    auto result = fabomatic::esp32::esp_serial();
+    TEST_ASSERT_GREATER_OR_EQUAL_UINT32_MESSAGE(0, result.length(), "ESP32 serial must be non empty");
+    auto mem_free = fabomatic::esp32::getFreeHeap();
+    TEST_ASSERT_GREATER_OR_EQUAL_UINT32_MESSAGE(0, mem_free, "ESP32 mem free must be > 0");
+    fabomatic::esp32::showHeapStats();
+    TEST_ASSERT_TRUE_MESSAGE(fabomatic::esp32::setupWatchdog(30s), "Watchdog setup");
+    fabomatic::esp32::removeWatchdog();
+  }
+} // namespace fabomatic::tests
 
 void setup()
 {
   delay(1000);
   UNITY_BEGIN();
-  RUN_TEST(fablabbg::tests::test_execute_runs_all_tasks);
-  RUN_TEST(fablabbg::tests::test_stop_start_tasks);
+  RUN_TEST(fabomatic::tests::test_execute_runs_all_tasks);
+  RUN_TEST(fabomatic::tests::test_stop_start_tasks);
+  RUN_TEST(fabomatic::tests::test_esp32);
   UNITY_END(); // stop unit testing
 }
 

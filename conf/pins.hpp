@@ -5,7 +5,7 @@
 #include <array>
 #include <Adafruit_NeoPixel.h>
 
-namespace fablabbg
+namespace fabomatic
 {
   static constexpr uint8_t NO_PIN = -1;
 
@@ -300,5 +300,5 @@ namespace fablabbg
   static_assert(no_duplicates(), "Duplicate pin definition, check pins.hpp");
   static_assert(!(pins.led.is_neopixel && pins.led.is_rgb), "Neopixel and RGB led cannot be used at the same time");
 
-} // namespace fablabbg
+} // namespace fabomatic
 #endif // PINS_H_

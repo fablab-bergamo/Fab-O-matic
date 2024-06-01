@@ -7,7 +7,7 @@
 #include <chrono>
 #include <cstdint>
 
-namespace fablabbg
+namespace fabomatic
 {
   class FabBackend;
 
@@ -119,5 +119,5 @@ namespace fablabbg
     auto power_mqtt(bool on_or_off) -> void;
     auto power_relay(bool on_or_off) -> void;
   };
-} // namespace fablabbg
+} // namespace fabomatic
 #endif // MACHINE_HPP_

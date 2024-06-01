@@ -4,26 +4,23 @@
 #include <iostream>
 #include <string>
 
-#include "ArduinoOTA.h"
-#include <WiFiManager.h>
-#include <esp_task_wdt.h>
-
 #include "BoardLogic.hpp"
+#include "Espressif.hpp"
 #include "Logging.hpp"
 #include "Mrfc522Driver.hpp"
 #include "SavedConfig.hpp"
 #include "Tasks.hpp"
 #include "globals.hpp"
+#if (MQTT_SIMULATION)
 #include "mock/MockMQTTBroker.hpp"
+#endif
 #include "pins.hpp"
-
-// For ArduinoOTA
-const char *const ssid = fablabbg::secrets::credentials::ssid.data();
-const char *const password = fablabbg::secrets::credentials::password.data();
+#include "language/lang.hpp"
+#include "OTA.hpp"
 
 using namespace std::chrono_literals;
 
-namespace fablabbg
+namespace fabomatic
 {
   using Scheduler = Tasks::Scheduler;
   using Task = Tasks::Task;
@@ -41,13 +38,11 @@ namespace fablabbg
     extern BoardLogic logic;
   } // namespace Board
 
-  // Pre-declaration
-  void openConfigPortal(bool force_reset, bool disable_portal);
-
   /// @brief Opens WiFi and server connection and updates board state accordingly
   void taskConnect()
   {
     auto &server = Board::logic.getServer();
+
     if (!server.isOnline())
     {
       // connection to wifi
@@ -58,8 +53,11 @@ namespace fablabbg
       // Refresh after connection
       Board::logic.changeStatus(server.isOnline() ? Status::Connected : Status::Offline);
 
-      // Briefly show to the user
-      Tasks::delay(conf::lcd::SHORT_MESSAGE_DELAY);
+      if (server.isOnline())
+      {
+        // Briefly show to the user
+        Tasks::delay(conf::lcd::SHORT_MESSAGE_DELAY);
+      }
     }
 
     if (server.isOnline())
@@ -69,7 +67,7 @@ namespace fablabbg
       Board::logic.refreshFromServer();
       if (auto &machine = Board::logic.getMachine(); !machine.isFree())
       {
-        auto response = Board::logic.getServer().inUse(
+        const auto response = Board::logic.getServer().inUse(
             machine.getActiveUser().card_uid,
             machine.getUsageDuration());
         if (!response)
@@ -123,7 +121,7 @@ namespace fablabbg
   void taskLogoffCheck()
   {
     // auto logout after delay
-    auto &machine = Board::logic.getMachine();
+    const auto &machine = Board::logic.getMachine();
     if (machine.isAutologoffExpired())
     {
       ESP_LOGI(TAG, "Auto-logging out user %s\r\n", machine.getActiveUser().holder_name.data());
@@ -142,13 +140,15 @@ namespace fablabbg
     {
       if (!initialized)
       {
-        auto secs = std::chrono::duration_cast<std::chrono::seconds>(conf::tasks::WATCHDOG_TIMEOUT).count();
-        esp_task_wdt_init(secs, true); // enable panic so ESP32 restarts
-        ESP_LOGI(TAG, "taskEspWatchdog - initialized %lld seconds", secs);
-        esp_task_wdt_add(NULL); // add current thread to WDT watch
-        initialized = true;
+        initialized = esp32::setupWatchdog(conf::tasks::WATCHDOG_TIMEOUT);
       }
-      esp_task_wdt_reset(); // Signal the hardware watchdog
+      if (initialized)
+      {
+        if (!esp32::signalWatchdog())
+        {
+          ESP_LOGE(TAG, "Failure to signal watchdog");
+        }
+      }
     }
   }
 
@@ -185,6 +185,7 @@ namespace fablabbg
   {
     // notify the server that the machine is still alive
     auto &server = Board::logic.getServer();
+
     if (server.isOnline())
     {
       if (auto resp = server.alive(); !resp)
@@ -192,20 +193,36 @@ namespace fablabbg
         ESP_LOGE(TAG, "taskIsAlive - alive failed");
       }
     }
+
     if (!Board::logic.saveRfidCache())
     {
       ESP_LOGE(TAG, "taskIsAlive - saveRfidCache failed");
     }
+
+    if (!server.saveBuffer())
+    {
+      ESP_LOGE(TAG, "Failure to save buffered MQTT messages");
+    }
+
     if constexpr (conf::debug::ENABLE_LOGS)
     {
-      ESP_LOGD(TAG, "taskIsAlive - free heap: %d", ESP.getFreeHeap());
+      fabomatic::esp32::showHeapStats();
     }
   }
 
   void taskFactoryReset()
   {
     if constexpr (pins.buttons.factory_defaults_pin == NO_PIN)
+    {
       return;
+    }
+
+    // Skip factory reset for this specific board because Factory Reset is soldered under the MCU with the reset pin.
+    if (const auto &serial = esp32::esp_serial(); serial == "dcda0c419794")
+    {
+      pinMode(pins.buttons.factory_defaults_pin, INPUT); // Disable pull-up/pull-downs
+      return;
+    }
 
     pinMode(pins.buttons.factory_defaults_pin, INPUT_PULLUP);
 
@@ -219,9 +236,8 @@ namespace fablabbg
     if (digitalRead(pins.buttons.factory_defaults_pin) == LOW)
     {
       ESP_LOGI(TAG, "Factory reset button pressed");
-      esp_task_wdt_delete(NULL);     // remove current thread from WDT watch (it will be re-added in the next loop()
+      esp32::removeWatchdog();
       openConfigPortal(true, false); // Network configuration setup
-      esp_task_wdt_add(NULL);        // add current thread to WDT watch
     }
   }
 
@@ -236,7 +252,7 @@ namespace fablabbg
       // Select random card every X times
       if (random(0, 100) < 5)
       {
-        auto [card_uid, level, name] = secrets::cards::whitelist[random(0, secrets::cards::whitelist.size())];
+        const auto [card_uid, level, name] = secrets::cards::whitelist[random(0, secrets::cards::whitelist.size())];
         logged_uid = card_uid;
         driver.setUid(card_uid, 500ms);
       }
@@ -301,137 +317,6 @@ namespace fablabbg
   const Task t_sim("RFIDCardsSim", 1s, &taskRFIDCardSim, Board::scheduler, true, 30s);
 #endif
 
-  // flag for saving data
-  std::atomic<bool> shouldSaveConfig = false;
-
-  // callback notifying us of the need to save config
-  void saveConfigCallback()
-  {
-    shouldSaveConfig.store(true);
-  }
-
-  // Called just before the webportal is started after failed WiFi connection
-  void configModeCallback(WiFiManager *myWiFiManager)
-  {
-    ESP_LOGI(TAG, "Entering portal config mode");
-    ESP_LOGD(TAG, "%s", WiFi.softAPIP().toString().c_str());
-    ESP_LOGD(TAG, "%s", myWiFiManager->getConfigPortalSSID().c_str());
-    Board::logic.changeStatus(Status::PortalStarting);
-  }
-
-  // Starts the WiFi and possibly open the config portal in a blocking manner
-  /// @param force_reset if true, the portal will be reset to factory defaults
-  /// @param disable_portal if true, the portal will be disabled (useful at boot-time)
-  void openConfigPortal(bool force_reset, bool disable_portal)
-  {
-    WiFiManager wifiManager;
-    SavedConfig config;
-
-    auto opt_settings = SavedConfig::LoadFromEEPROM();
-    if (force_reset || !opt_settings)
-    {
-      config = SavedConfig::DefaultConfig();
-    }
-    else
-    {
-      config = opt_settings.value();
-    }
-
-    WiFiManagerParameter custom_mqtt_server("Broker", "MQTT Broker address", config.mqtt_server, sizeof(config.mqtt_server));
-    WiFiManagerParameter custom_mqtt_topic("Topic", "MQTT Switch topic (leave empty to disable)", config.mqtt_switch_topic, sizeof(config.mqtt_switch_topic));
-    WiFiManagerParameter custom_machine_id("MachineID", "Machine ID", config.machine_id, sizeof(config.machine_id));
-
-    wifiManager.addParameter(&custom_mqtt_server);
-    wifiManager.addParameter(&custom_mqtt_topic);
-    wifiManager.addParameter(&custom_machine_id);
-
-    wifiManager.setTimeout(std::chrono::duration_cast<std::chrono::seconds>(conf::tasks::PORTAL_CONFIG_TIMEOUT).count());
-    wifiManager.setConnectRetries(3);  // 3 retries
-    wifiManager.setConnectTimeout(10); // 10 seconds
-    wifiManager.setCountry("IT");
-    wifiManager.setTitle("FabLab Bergamo - RFID arduino");
-    wifiManager.setCaptivePortalEnable(true);
-    wifiManager.setAPCallback(configModeCallback);
-    wifiManager.setSaveConfigCallback(saveConfigCallback);
-
-    if (force_reset)
-    {
-      wifiManager.resetSettings();
-    }
-
-#if (PINS_WOKWI)
-    wifiManager.setDebugOutput(true);
-    wifiManager.resetSettings();
-    wifiManager.setTimeout(10); // fail fast for debugging
-#endif
-
-    if (disable_portal || config.disablePortal)
-    {
-      wifiManager.setDisableConfigPortal(true);
-    }
-
-    if (wifiManager.autoConnect())
-    {
-      Board::logic.changeStatus(Status::PortalSuccess);
-      delay(1000);
-    }
-    else
-    {
-      Board::logic.changeStatus(Status::PortalFailed);
-      delay(3000);
-    }
-
-    if (shouldSaveConfig)
-    {
-      // save SSID data from WiFiManager
-      strncpy(config.ssid, WiFi.SSID().c_str(), sizeof(config.ssid));
-      strncpy(config.password, WiFi.psk().c_str(), sizeof(config.password));
-
-      // read updated parameters
-      strncpy(config.mqtt_server, custom_mqtt_server.getValue(), sizeof(config.mqtt_server));
-      strncpy(config.mqtt_switch_topic, custom_mqtt_topic.getValue(), sizeof(config.mqtt_switch_topic));
-      strncpy(config.machine_id, custom_machine_id.getValue(), sizeof(config.machine_id));
-
-      config.disablePortal = true;
-
-      // save the custom parameters to EEPROM
-      if (config.SaveToEEPROM())
-      {
-        ESP_LOGD(TAG, "Config saved to EEPROM");
-      }
-      else
-      {
-        ESP_LOGE(TAG, "Failed to save config to EEPROM");
-      }
-
-      // WiFi settings change may require full reboot
-      Board::logic.setRebootRequest(true);
-    }
-  }
-
-  void OTAComplete()
-  {
-    ESP_LOGI(TAG, "OTA complete, reboot requested");
-    Board::logic.setRebootRequest(true);
-  }
-
-  void setupOTA()
-  {
-    std::stringstream ss{};
-    // Hostname is BOARD + machine_id (which shall be unique) e.g. BOARD1
-    ss << conf::default_config::hostname.data() << conf::default_config::machine_id.id;
-    ArduinoOTA.setHostname(ss.str().c_str());
-    ArduinoOTA.onStart([]()
-                       { Board::logic.changeStatus(Status::OTAStarting); });
-    ArduinoOTA.onEnd(OTAComplete);
-    ArduinoOTA.onError([](ota_error_t error)
-                       { Board::logic.changeStatus(Status::OTAError); });
-    ArduinoOTA.setMdnsEnabled(true);
-    ArduinoOTA.setRebootOnSuccess(false);
-    ArduinoOTA.setTimeout(45000);
-    ArduinoOTA.begin();
-  }
-
   void printCompileSettings()
   {
     using namespace conf;
@@ -444,6 +329,13 @@ namespace fablabbg
     std::cout << "\tmachine_name: " << default_config::machine_name << '\n';
     std::cout << "\tmachine_type: " << static_cast<int>(default_config::machine_type) << '\n';
     std::cout << "\thostname: " << default_config::hostname << '\n';
+    // simulation constants
+    std::cout << "Compilation settings" << '\n';
+    std::cout << "\tMQTT_SIMULATION: " << MQTT_SIMULATION << '\n';
+    std::cout << "\tRFID_SIMULATION: " << RFID_SIMULATION << '\n';
+    std::cout << "\tCORE_DEBUG_LEVEL: " << CORE_DEBUG_LEVEL << '\n';
+    std::cout << "\tLANGUAGE: " << fabomatic::strings::S_LANG_ID << '\n';
+
     // namespace conf::rfid_tags
     std::cout << "RFID tags:" << '\n';
     std::cout << "\tUID_BYTE_LEN: " << +rfid_tags::UID_BYTE_LEN << '\n';
@@ -469,10 +361,8 @@ namespace fablabbg
     std::cout << "\tLOAD_EEPROM_DEFAULTS: " << debug::LOAD_EEPROM_DEFAULTS << '\n';
     // namespace conf::buzzer
     std::cout << "Buzzer settings:" << '\n';
-    std::cout << "\tLEDC_PWM_CHANNEL: " << buzzer::LEDC_PWM_CHANNEL << '\n';
     std::cout << "\tSTANDARD_BEEP_DURATION: " << std::chrono::milliseconds(buzzer::STANDARD_BEEP_DURATION).count() << "ms" << '\n';
     std::cout << "\tNB_BEEPS: " << buzzer::NB_BEEPS << '\n';
-    std::cout << "\tBEEP_HZ: " << buzzer::BEEP_HZ << '\n';
     // namespace conf::tasks
     std::cout << "Tasks settings:" << '\n';
     std::cout << "\tRFID_CHECK_PERIOD: " << std::chrono::milliseconds(tasks::RFID_CHECK_PERIOD).count() << "ms" << '\n';
@@ -513,31 +403,30 @@ namespace fablabbg
     std::cout << "\t\tFactory defaults pin:" << +pins.buttons.factory_defaults_pin << '\n';
     std::cout << std::endl;
   }
-
-} // namespace fablabbg
+} // namespace fabomatic
 
 #ifndef PIO_UNIT_TESTING
 void setup()
 {
-  using Status = fablabbg::BoardLogic::Status;
-  auto &logic = fablabbg::Board::logic;
-  auto &scheduler = fablabbg::Board::scheduler;
-  auto &rfid = fablabbg::Board::rfid;
-  auto &lcd = fablabbg::Board::lcd;
+  using Status = fabomatic::BoardLogic::Status;
+  auto &logic = fabomatic::Board::logic;
+  auto &scheduler = fabomatic::Board::scheduler;
+  auto &rfid = fabomatic::Board::rfid;
+  auto &lcd = fabomatic::Board::lcd;
 
-  Serial.begin(fablabbg::conf::debug::SERIAL_SPEED_BDS); // Initialize serial communications with the PC for debugging.
+  Serial.begin(fabomatic::conf::debug::SERIAL_SPEED_BDS); // Initialize serial communications with the PC for debugging.
   delay(3000);
 
-  if constexpr (fablabbg::conf::debug::ENABLE_LOGS)
+  if constexpr (fabomatic::conf::debug::ENABLE_LOGS)
   {
     Serial.setDebugOutput(true);
     ESP_LOGD(TAG, "Starting setup!");
-    fablabbg::printCompileSettings();
+    fabomatic::printCompileSettings();
   }
 
-  if constexpr (fablabbg::conf::debug::LOAD_EEPROM_DEFAULTS)
+  if constexpr (fabomatic::conf::debug::LOAD_EEPROM_DEFAULTS)
   {
-    auto defaults = fablabbg::SavedConfig::DefaultConfig();
+    const auto &defaults = fabomatic::SavedConfig::DefaultConfig();
     ESP_LOGW(TAG, "Forcing EEPROM defaults : %s", defaults.toString().c_str());
     defaults.SaveToEEPROM();
   }
@@ -548,7 +437,7 @@ void setup()
   auto hw_init = logic.configure(rfid, lcd);
   hw_init &= logic.initBoard();
 
-  auto count = fablabbg::SavedConfig::IncrementBootCount();
+  const auto count = fabomatic::SavedConfig::IncrementBootCount();
   ESP_LOGI(TAG, "Boot count: %d, reset reason: %d", count, esp_reset_reason());
 
   logic.changeStatus(Status::Booting);
@@ -557,50 +446,55 @@ void setup()
   {
     logic.changeStatus(Status::ErrorHardware);
     logic.beepFail();
-    logic.blinkLed();
+    logic.blinkLed(64, 0, 0);
     ESP_LOGE(TAG, "Hardware initialization failed");
   }
   else
   {
     logic.beepOk();
+    logic.blinkLed(0, 64, 0);
   }
 
-  fablabbg::openConfigPortal(fablabbg::conf::debug::LOAD_EEPROM_DEFAULTS,
-                             !fablabbg::conf::debug::FORCE_PORTAL);
+  fabomatic::openConfigPortal(fabomatic::conf::debug::LOAD_EEPROM_DEFAULTS,
+                              !fabomatic::conf::debug::FORCE_PORTAL);
 
 #if (MQTT_SIMULATION)
-  fablabbg::startMQTTBrocker();
+  fabomatic::startMQTTBrocker();
 #endif
 
-  fablabbg::setupOTA();
+  fabomatic::setupOTA();
 
   if (!hw_init)
   {
     // If hardware initialization failed, wait for OTA for 3 minutes
-    esp_task_wdt_init(60 * 3, true); // enable panic so ESP32 restarts
-    esp_task_wdt_add(NULL);          // add current thread to WDT watch
+    if (!fabomatic::esp32::setupWatchdog(180s))
+    {
+      ESP_LOGE(TAG, "Failed to setup watchdog!");
+    }
     while (true)
     {
-      fablabbg::Tasks::delay(1s);
+      logic.blinkLed(64, 0, 0);
+      logic.changeStatus(fabomatic::BoardLogic::Status::ErrorHardware);
+      fabomatic::Tasks::delay(1s);
       ESP_LOGE(TAG, "Hardware failed, waiting for OTA");
     }
   }
 
   // Let some time for WiFi to settle
-  fablabbg::Tasks::delay(2s);
+  fabomatic::Tasks::delay(2s);
 
   // Enable the HW watchdog
-  fablabbg::t_wdg.enable();
+  fabomatic::t_wdg.enable();
   // Since the WiFiManager may have taken minutes, recompute the tasks schedule
   scheduler.updateSchedules();
 
   // Try to connect immediately
-  fablabbg::taskConnect();
+  fabomatic::taskConnect();
 }
 
 void loop()
 {
-  fablabbg::Board::scheduler.execute();
+  fabomatic::Board::scheduler.execute();
   ArduinoOTA.handle();
 }
 #endif // PIO_UNIT_TESTING

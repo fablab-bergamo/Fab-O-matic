@@ -4,7 +4,7 @@
 
 #include "card.hpp"
 
-namespace fablabbg
+namespace fabomatic
 {
   class BaseRFIDWrapper
   {
@@ -21,5 +21,5 @@ namespace fablabbg
     virtual auto selfTest() const -> bool = 0;
     virtual auto reset() const -> void = 0;
   };
-} // namespace fablabbg
+} // namespace fabomatic
 #endif // BASERFIDWRAPPER_HPP_

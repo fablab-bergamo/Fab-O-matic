@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-namespace fablabbg
+namespace fabomatic
 {
   auto MockMrfc522::getDriverUid() const -> MockMrfc522::UidDriver
   {
@@ -10,7 +10,7 @@ namespace fablabbg
     if (getSimulatedUid().has_value())
     {
       retVal.size = sizeof(uid.value());
-      auto arr_uid = card::to_array(uid.value());
+      const auto arr_uid = card::to_array(uid.value());
       std::copy(arr_uid.begin(), arr_uid.end(), retVal.uidByte.begin());
       retVal.sak = 1;
     }
@@ -67,4 +67,4 @@ namespace fablabbg
     }
     return uid;
   }
-} // namespace fablabbg
+} // namespace fabomatic

@@ -6,7 +6,7 @@
 #include <string>
 #include <type_traits>
 
-namespace fablabbg
+namespace fabomatic
 {
   template <typename TLcdDriver>
   LCDWrapper<TLcdDriver>::LCDWrapper(const pins_config::lcd_config &conf) : config(conf),
@@ -79,9 +79,7 @@ namespace fablabbg
     for (const auto &row : buffer)
     {
       lcd.setCursor(0, row_num);
-      char why_arduino_has_not_implemented_liquidcrystal_from_char_array_yet[conf::lcd::COLS];
-      memcpy(why_arduino_has_not_implemented_liquidcrystal_from_char_array_yet, &row, conf::lcd::COLS);
-      lcd.print(why_arduino_has_not_implemented_liquidcrystal_from_char_array_yet);
+      lcd.print(row.data());
       row_num++;
     }
 
@@ -205,11 +203,11 @@ namespace fablabbg
   }
 
   template <typename TLcdDriver>
-  void LCDWrapper<TLcdDriver>::setRow(uint8_t row, const std::string &text)
+  void LCDWrapper<TLcdDriver>::setRow(uint8_t row, const std::string_view &text)
   {
     if (text.length() >= conf::lcd::COLS)
     {
-      ESP_LOGE(TAG, "LCDWrapper::setRow: text too long : %s\r\n", text.data());
+      ESP_LOGW(TAG, "LCDWrapper::setRow: text too long : %s\r\n", text.data());
     }
 
     if (row < conf::lcd::ROWS)
@@ -235,4 +233,4 @@ namespace fablabbg
     if (config.bl_pin != NO_PIN)
       digitalWrite(config.bl_pin, config.active_low ? HIGH : LOW);
   }
-} // namespace fablabbg
+} // namespace fabomatic

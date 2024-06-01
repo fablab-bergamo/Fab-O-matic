@@ -3,6 +3,17 @@ name: Test suite based on Wokwi CLI
 on:
   workflow_dispatch:
   pull_request:
+  push:
+    paths:
+    - 'src/**'
+    - 'conf/**'
+    - 'include/**'
+    - 'test/**'
+    - 'platformio.ini'
+    - '.github/workflows/tests.yml'
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test:
@@ -37,11 +48,12 @@ jobs:
       - name: Build ${{ matrix.tests }}
         run: pio test -e wokwi --without-testing --without-uploading -f ${{ matrix.tests }}
       - name: Run ${{ matrix.tests }} with Wokwi CLI
+        id: wokwi-ci
         uses: wokwi/wokwi-ci-action@v1
         with:
           token: ${{ secrets.WOKWI_CLI_TOKEN }}
           path: / # directory with wokwi.toml, relative to repo's root
-          timeout: 180000
+          timeout: 240000
           expect_text: 'Tests 0 Failures 0 Ignored'
           fail_text: ':FAIL:'
           serial_log_file: '${{ matrix.tests }}.log'
@@ -52,3 +64,6 @@ jobs:
           name:  ${{ matrix.tests }}
           path: ${{ matrix.tests }}.log
           retention-days: 15
+      - name: Check if Wokwi CLI failed
+        if: ${{ steps.wokwi-ci.outcome == 'failure' }}
+        run: exit 1          

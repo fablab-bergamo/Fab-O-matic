@@ -13,7 +13,7 @@
 #include "secrets.hpp"
 #include <Adafruit_NeoPixel.h>
 
-namespace fablabbg
+namespace fabomatic
 {
   class BoardLogic
   {
@@ -75,6 +75,7 @@ namespace fablabbg
     [[nodiscard]] auto getMachineForTesting() -> Machine &;
     [[nodiscard]] auto getMachine() const -> const Machine &;
     [[nodiscard]] auto authorize(const card::uid_t uid) -> bool;
+    [[nodiscard]] auto getHostname() const -> const std::string;
 
     // copy reference
     BoardLogic &operator=(const BoardLogic &board) = delete;
@@ -104,5 +105,5 @@ namespace fablabbg
 
     [[nodiscard]] auto longTap(const card::uid_t card, const std::string &short_prompt) const -> bool;
   };
-} // namespace fablabbg
+} // namespace fabomatic
 #endif // BOARDLOGIC_HPP_
