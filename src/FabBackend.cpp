@@ -9,6 +9,7 @@
 #include <sstream>
 #include <string>
 #include <string_view>
+#include <array>
 
 namespace fabomatic
 {
@@ -94,7 +95,8 @@ namespace fabomatic
     // Do not send twice if response did not arrive
     if (query.buffered() && !published)
     {
-      buffer.push_back(query.payload(), topic, query.waitForReply());
+      const auto &msg = BufferedMsg{query.payload(), topic, query.waitForReply()};
+      buffer.push_back(msg);
     }
 
     if (published)
@@ -440,7 +442,8 @@ namespace fabomatic
 
     if (query.buffered())
     {
-      buffer.push_back(query.payload(), topic, query.waitForReply());
+      const auto &msg = BufferedMsg{query.payload(), topic, query.waitForReply()};
+      buffer.push_back(msg);
     }
 
     return std::make_unique<RespT>(false);
@@ -489,7 +492,8 @@ namespace fabomatic
 
     if (query.buffered())
     {
-      buffer.push_back(query.payload(), topic, query.waitForReply());
+      const auto &msg = BufferedMsg{query.payload(), topic, query.waitForReply()};
+      buffer.push_back(msg);
     }
     return false;
   }
@@ -602,7 +606,8 @@ namespace fabomatic
           // If it has been published but not answered, do not try again
           if (result == PublishResult::PublishedWithoutAnswer)
           {
-            buffer.push_front(msg.mqtt_message, msg.mqtt_topic, msg.wait_for_answer);
+            const auto &bmsg = BufferedMsg{msg.mqtt_message, msg.mqtt_topic, msg.wait_for_answer};
+            buffer.push_front(bmsg);
           }
           break;
         }
@@ -613,7 +618,8 @@ namespace fabomatic
         {
           // Will try again
           ESP_LOGW(TAG, "Retransmitting buffered message failed!");
-          buffer.push_front(msg.mqtt_message, msg.mqtt_topic, msg.wait_for_answer);
+          const auto &bmsg = BufferedMsg{msg.mqtt_message, msg.mqtt_topic, msg.wait_for_answer};
+          buffer.push_front(bmsg);
           break;
         }
       }
