@@ -30,12 +30,16 @@ namespace fabomatic::tests
     {
       driver.setUid(uid.value(), duration_tap);
       TEST_ASSERT_TRUE_MESSAGE(uid == rfid.getUid(), "Card UID not equal");
-      auto start = std::chrono::system_clock::now();
+      auto start = millis();
       do
       {
         logic.checkRfid();
         delay(50);
-      } while (duration_tap.has_value() && std::chrono::system_clock::now() - start < duration_tap);
+      } while (duration_tap.has_value() && millis() - start < duration_tap.value_or(0ms).count());
+    }
+    else if (duration_tap)
+    {
+      delay(duration_tap.value().count());
     }
     return logic.getStatus();
   }

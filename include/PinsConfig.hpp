@@ -3,7 +3,6 @@
 
 #include <cstdint>
 #include <array>
-#include <Adafruit_NeoPixel.h>
 
 namespace fabomatic
 {
@@ -100,6 +99,6 @@ namespace fabomatic
     }
     return true;
   }
-  
+
 } // namespace fabomatic
 #endif // PINSCONFIG_HPP_

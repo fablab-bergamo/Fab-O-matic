@@ -11,7 +11,7 @@
 #include "card.hpp"
 #include "pins.hpp"
 #include "secrets.hpp"
-#include <Adafruit_NeoPixel.h>
+#include "Buzzer.hpp"
 
 namespace fabomatic
 {
@@ -73,6 +73,7 @@ namespace fabomatic
     [[nodiscard]] auto getRebootRequest() const -> bool;
     [[nodiscard]] auto getServer() -> FabBackend &;
     [[nodiscard]] auto getMachineForTesting() -> Machine &;
+    [[nodiscard]] auto getBuzzerForTesting() -> Buzzer *;
     [[nodiscard]] auto getMachine() const -> const Machine &;
     [[nodiscard]] auto authorize(const card::uid_t uid) -> bool;
     [[nodiscard]] auto getHostname() const -> const std::string;
@@ -102,6 +103,7 @@ namespace fabomatic
     BaseLCDWrapper &getLcd() const;
 
     bool rebootRequest{false};
+    Buzzer buzzer;
 
     [[nodiscard]] auto longTap(const card::uid_t card, const std::string &short_prompt) const -> bool;
   };

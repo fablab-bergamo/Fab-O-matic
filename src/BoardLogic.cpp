@@ -444,26 +444,12 @@ namespace fabomatic
 
   void BoardLogic::beepOk() const
   {
-    if constexpr (conf::buzzer::STANDARD_BEEP_DURATION > 0ms && pins.buzzer.pin != NO_PIN)
-    {
-      digitalWrite(pins.buzzer.pin, 1);
-      Tasks::delay(conf::buzzer::STANDARD_BEEP_DURATION);
-      digitalWrite(pins.buzzer.pin, 0);
-    }
+    buzzer.beepOk();
   }
 
   void BoardLogic::beepFail() const
   {
-    if constexpr (conf::buzzer::STANDARD_BEEP_DURATION > 0ms && pins.buzzer.pin != NO_PIN)
-    {
-      for (auto i = 0; i < conf::buzzer::NB_BEEPS; i++)
-      {
-        digitalWrite(pins.buzzer.pin, 1);
-        Tasks::delay(conf::buzzer::STANDARD_BEEP_DURATION);
-        digitalWrite(pins.buzzer.pin, 0);
-        Tasks::delay(conf::buzzer::STANDARD_BEEP_DURATION);
-      }
-    }
+    buzzer.beepFail();
   }
 
   /// @brief Configures the board with the given references
@@ -503,7 +489,7 @@ namespace fabomatic
                                conf::machine::DEFAULT_GRACE_PERIOD);
 
     machine.configure(machine_conf, server);
-
+    buzzer.configure();
     auth.loadCache();
 
     return success;
@@ -598,9 +584,16 @@ namespace fabomatic
 
   /// @brief returns a modificable machine for testing only
   /// @return machine
-  Machine &BoardLogic::getMachineForTesting()
+  auto BoardLogic::getMachineForTesting() -> Machine &
   {
     return machine;
+  }
+
+  /// @brief returns a modificable machine for testing only
+  /// @return a non-null Buzzer*
+  auto BoardLogic::getBuzzerForTesting() -> Buzzer *
+  {
+    return &buzzer;
   }
 
   /// @brief Gets the current machine
@@ -661,6 +654,8 @@ namespace fabomatic
   auto BoardLogic::getHostname() const -> const std::string
   {
     // Hostname is BOARD + machine_id (which shall be unique) e.g. BOARD1
-    return conf::default_config::hostname.data() + std::to_string(conf::default_config::machine_id.id);
+    return conf::default_config::hostname.data() +
+           std::to_string(conf::default_config::machine_id.id);
   }
+
 } // namespace fabomatic
