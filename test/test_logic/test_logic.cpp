@@ -69,8 +69,19 @@ namespace fabomatic::tests
 
   void test_simple_methods()
   {
-    logic.beepFail();
-    logic.beepOk();
+    {
+      auto cpt = logic.getBuzzerForTesting()->getBeepCount();
+      logic.beepFail();
+      auto beeps = logic.getBuzzerForTesting()->getBeepCount() - cpt;
+      TEST_ASSERT_EQUAL_UINT16_MESSAGE(conf::buzzer::NB_BEEPS, beeps, "Buzzer FAIL has been beeped");
+    }
+    {
+      auto cpt = logic.getBuzzerForTesting()->getBeepCount();
+      logic.beepOk();
+      auto beeps = logic.getBuzzerForTesting()->getBeepCount() - cpt;
+      TEST_ASSERT_EQUAL_UINT16_MESSAGE(1, beeps, "Buzzer OK has been beeped");
+    }
+
     logic.blinkLed();
 
     std::vector statuses{BoardLogic::Status::Error, BoardLogic::Status::ErrorHardware, BoardLogic::Status::Connected,
@@ -193,6 +204,8 @@ namespace fabomatic::tests
   void test_user_autologoff()
   {
     machine_init(logic, rfid);
+    auto &machine = logic.getMachineForTesting();
+    machine.setGracePeriod(5s);
 
     TEST_ASSERT_TRUE_MESSAGE(logic.getMachine().getAutologoffDelay() == conf::machine::DEFAULT_AUTO_LOGOFF_DELAY, "Autologoff delay not default");
 
@@ -201,6 +214,7 @@ namespace fabomatic::tests
 
     simulate_rfid_card(rfid, logic, get_test_uid(0));
     TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::LoggedIn, logic.getStatus(), "Status not LoggedIn");
+    TEST_ASSERT_TRUE_MESSAGE(machine.getPowerState() == Machine::PowerState::PoweredOn, "Machine is powered on");
     // Card away
     simulate_rfid_card(rfid, logic, std::nullopt);
 
@@ -209,14 +223,30 @@ namespace fabomatic::tests
     TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::MachineInUse, logic.getStatus(), "Status not MachineInUse");
 
     // Now shall expire afer 10s
-    simulate_rfid_card(rfid, logic, std::nullopt);
-    delay(10000);
+    simulate_rfid_card(rfid, logic, std::nullopt, 10s);
     TEST_ASSERT_TRUE_MESSAGE(logic.getMachine().isAutologoffExpired(), "Autologoff expired");
 
     logic.logout();
-    simulate_rfid_card(rfid, logic, std::nullopt);
+    simulate_rfid_card(rfid, logic, std::nullopt, 5s);
     TEST_ASSERT_TRUE_MESSAGE(logic.getMachine().isFree(), "Machine is free");
     TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::MachineFree, logic.getStatus(), "Status not MachineFree");
+    TEST_ASSERT_TRUE_MESSAGE(machine.canPowerOff(), "Machine should be powered off");
+    machine.power(false);
+    TEST_ASSERT_EQUAL_UINT8_MESSAGE(Machine::PowerState::PoweredOff, machine.getPowerState(), "(2) Machine is powered off");
+
+    // Check Grace period
+    simulate_rfid_card(rfid, logic, get_test_uid(0), 1s); // Login
+    TEST_ASSERT_EQUAL_UINT8_MESSAGE(Machine::PowerState::PoweredOn, machine.getPowerState(), "(2) Machine is ON");
+    simulate_rfid_card(rfid, logic, get_test_uid(0), 1s); // Logout
+    TEST_ASSERT_EQUAL_UINT8_MESSAGE(Machine::PowerState::WaitingPowerOff, machine.getPowerState(), "(2) Machine is waiting for power off");
+    TEST_ASSERT_TRUE_MESSAGE(machine.isShutdownImminent(), "Machine in grace period");
+    TEST_ASSERT_FALSE_MESSAGE(machine.canPowerOff(), "Machine cannot be powered off yet");
+    simulate_rfid_card(rfid, logic, std::nullopt, 5s); // Let grace period expire
+    TEST_ASSERT_FALSE_MESSAGE(machine.isShutdownImminent(), "Machine is still in grace period");
+    TEST_ASSERT_TRUE_MESSAGE(machine.canPowerOff(), "Machine can now be powered off");
+    machine.power(false);
+
+    TEST_ASSERT_EQUAL_UINT8_MESSAGE(Machine::PowerState::PoweredOff, machine.getPowerState(), "Machine is powered off");
 
     auto save_result = logic.getServer().saveBuffer();
     TEST_ASSERT_TRUE_MESSAGE(save_result, "Saving buffered messages works");

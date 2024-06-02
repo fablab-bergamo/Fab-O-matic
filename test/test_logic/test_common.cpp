@@ -38,6 +38,10 @@ namespace fabomatic::tests
         delay(50);
       } while (duration_tap.has_value() && fabomatic::Tasks::arduinoNow() - start < duration_tap);
     }
+    else if (duration_tap)
+    {
+      delay(duration_tap.value().count());
+    }
     return logic.getStatus();
   }
 

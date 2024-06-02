@@ -107,7 +107,7 @@ namespace fabomatic
   }
 
   /// @brief indicates if the machine can be powered off
-  /// @return true if the delay has expired
+  /// @return true if the grace period has expired
   auto Machine::canPowerOff() const -> bool
   {
     if (!logoff_timestamp.has_value())
@@ -120,16 +120,16 @@ namespace fabomatic
   }
 
   /// @brief indicates if the machine is about to shudown and board should beep
-  /// @return true if shutdown is imminent
+  /// @return true if shutdown is imminent (within grace_period after last logoff)
   auto Machine::isShutdownImminent() const -> bool
   {
-    if (!logoff_timestamp.has_value() || conf::machine::BEEP_PERIOD == 0ms)
+    if (!logoff_timestamp.has_value())
       return false;
 
     CHECK_CONFIGURED(bool);
 
     return (power_state == PowerState::WaitingPowerOff &&
-            fabomatic::Tasks::arduinoNow() - logoff_timestamp.value() > config.value().grace_period);
+            fabomatic::Tasks::arduinoNow() - logoff_timestamp.value() <= config.value().grace_period);
   }
 
   /// @brief sets the machine power to on (true) or off (false)
