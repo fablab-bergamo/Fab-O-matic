@@ -12,7 +12,7 @@ namespace fabomatic::Tasks
   using milliseconds = std::chrono::milliseconds;
   using namespace std::chrono_literals;
 
-  inline auto arduinoNow() -> milliseconds
+  [[nodiscard]] inline auto arduinoNow() -> milliseconds
   {
     return milliseconds{::millis()};
   }
