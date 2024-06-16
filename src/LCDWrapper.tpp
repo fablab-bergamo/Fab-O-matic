@@ -205,11 +205,6 @@ namespace fabomatic
   template <typename TLcdDriver>
   void LCDWrapper<TLcdDriver>::setRow(uint8_t row, const std::string_view &text)
   {
-    if (text.length() >= conf::lcd::COLS)
-    {
-      ESP_LOGW(TAG, "LCDWrapper::setRow: text too long : %s\r\n", text.data());
-    }
-
     if (row < conf::lcd::ROWS)
     {
       buffer[row].fill({0});
