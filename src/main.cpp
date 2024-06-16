@@ -112,7 +112,7 @@ namespace fabomatic
       if (Board::logic.getMachine().getPowerState() == Machine::PowerState::PoweredOff)
       {
         ESP_LOGI(TAG, "Rebooting as per request");
-        ESP.restart();
+        esp32::restart();
       }
     }
   }
@@ -348,8 +348,7 @@ namespace fabomatic
     // namespace conf::machine
     std::cout << "General settings:" << '\n';
     std::cout << "\tDEFAULT_AUTO_LOGOFF_DELAY: " << std::chrono::hours(machine::DEFAULT_AUTO_LOGOFF_DELAY).count() << "h" << '\n';
-    std::cout << "\tBEEP_PERIOD: " << std::chrono::seconds(machine::BEEP_PERIOD).count() << "s" << '\n';
-    std::cout << "\tDEFAULT_GRACE_PERIOD: " << std::chrono::minutes(machine::DEFAULT_GRACE_PERIOD).count() << "min" << '\n';
+    std::cout << "\tDEFAULT_GRACE_PERIOD: " << std::chrono::seconds(machine::DEFAULT_GRACE_PERIOD).count() << "s" << '\n';
     std::cout << "\tDELAY_BETWEEN_BEEPS: " << std::chrono::seconds(machine::DELAY_BETWEEN_BEEPS).count() << "s" << '\n';
     std::cout << "\tMAINTENANCE_BLOCK: " << machine::MAINTENANCE_BLOCK << '\n';
     std::cout << "\tLONG_TAP_DURATION: " << std::chrono::seconds(machine::LONG_TAP_DURATION).count() << "s" << '\n';
