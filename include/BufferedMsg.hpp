@@ -60,7 +60,14 @@ namespace fabomatic
 
     [[nodiscard]] auto payload() const -> const std::string override
     {
-      return std::string(mqtt_value);
+      auto value = std::string{mqtt_value};
+      if (value.find("}") == value.size() - 1 &&
+          value.find("replay") == value.npos)
+      {
+        value.erase(value.end() - 1);
+        value += ", \"replay\":true}";
+      }
+      return value;
     };
 
     [[nodiscard]] auto waitForReply() const -> bool override

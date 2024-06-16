@@ -32,11 +32,13 @@ namespace fabomatic::tests
       driver.setUid(uid.value(), duration_tap);
       TEST_ASSERT_TRUE_MESSAGE(uid == rfid.getUid(), "Card UID not equal");
       auto start = fabomatic::Tasks::arduinoNow();
+
       do
       {
         logic.checkRfid();
         delay(50);
       } while (duration_tap.has_value() && fabomatic::Tasks::arduinoNow() - start < duration_tap);
+
     }
     else if (duration_tap)
     {
