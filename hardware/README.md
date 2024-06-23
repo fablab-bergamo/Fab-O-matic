@@ -2,6 +2,12 @@
 
 * This folder contains Gerber file, BOM, schematics.
 * Project has been sponsored by EasyEDA in the OpenHWLab [Project homepage](https://oshwlab.com/pascal.brunot/rfid-arduino-fablab-bg-v2_2024-04-01_14-22-11)
+* For more information, a series of articles regarding the HW & PCB design have been published on our FabLab website (Italian language 🇮🇹)
+
+> [Breadboarding](https://www.fablabbergamo.it/2024/06/03/fabomatic1/)
+> [Modules and Box](https://www.fablabbergamo.it/2024/06/09/fabomatic2/)
+> [PCB](https://www.fablabbergamo.it/2024/06/16/fabomatic3/)
+> [Electrical schema](https://www.fablabbergamo.it/2024/06/23/fabomatic4/)
 
 ## Revision 1.1
 
