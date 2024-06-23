@@ -90,4 +90,9 @@ namespace fabomatic::esp32
     return esp_get_free_heap_size();
   }
 
+  [[noreturn]] auto restart() -> void
+  {
+    esp_restart();
+  }
+
 }
