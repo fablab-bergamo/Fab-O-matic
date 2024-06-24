@@ -12,6 +12,20 @@
 >
 > [Electrical schema](https://www.fablabbergamo.it/2024/06/23/fabomatic4/)
 
+## Revision 1.2
+
+Changes from rev 1.1:
+
+* Added D7 and D8 for reverse voltage protection on 5V and POW+ external pins.
+* Removed non-working over-voltage protection zener diodes.
+* Unconnected terminal block pin 8 (previously, it was an output 3V3).
+* Added R13/R14/R15 to tolerate 5V input if R16 is removed.
+* (Color PCB) Added small vias on color PCB to allow NeoPixel light to filter through.
+
+⚠ Errata in this revision ⚠
+
+* None known
+
 ## Revision 1.1
 
 Changes from rev 1.0:
@@ -20,6 +34,11 @@ Changes from rev 1.0:
 * Fixed Q1 footprint (switched model)
 * Buzzer is now on top side as it makes enough noise and it can be assembled by JLCPCB this way.
 * Slight layout changes (moved connector down, protection components done, increased distance between relay and command components)
+
+⚠ Errata in this revision ⚠
+
+* The color PCB front panel is missing a soldermask expansion to let the NeoPixel light filter through the white silkscreen. A small spot of silkscreen can easily be removed with a Dremel as fix.
+* Reverse/under voltage protection circuit is wrong.
 
 ## Revision 1.0
 
@@ -39,6 +58,9 @@ This can be fixed by rotating R11 by 90° counter-clockwise and solder it to R9.
 * The RFID pin labels printed on bottom side are wrong (text only issue).
 
 ![image](https://github.com/fablab-bergamo/fab-o-matic/assets/6236243/046bd7b5-0c89-4604-947c-9c6126ae2a86)
+
+* The color PCB front panel is missing a soldermask expansion to let the NeoPixel light filter through the white silkscreen. A spot of silkscreen can easily be removed with a Dremel.
+* Reverse/under voltage protection circuit is wrong.
 
 Changes from rev 0.4:
 
