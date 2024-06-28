@@ -80,24 +80,17 @@ namespace fabomatic::Tasks
 
   auto Scheduler::execute() const -> void
   {
+    // Need a copy to mutate the order
+    std::vector mutableTasks(tasks.begin(), tasks.end());
+
     // Tasks shall be run in order of expiration (the most expired task shall run first)
-    std::vector<decltype(tasks)::const_iterator> iters;
-    for (auto it = tasks.begin(); it != tasks.end(); ++it)
-    {
-      iters.push_back(it); // Vector of iterators
-    }
+    std::sort(mutableTasks.begin(), mutableTasks.end(), [](const Task &a, const Task &b)
+              { return a.getNextRun() < b.getNextRun(); });
 
-    // Sort the iterators array as we cannot sort directly reference_wrappers
-    std::sort(iters.begin(), iters.end(),
-              [](const auto &it1, const auto &it2)
-              {
-                return (it1->get().getNextRun() < it2->get().getNextRun());
-              });
-
-    // Now iterate over the sorted iterators to run the tasks
-    for (const auto &it : iters)
+    // Now iterate over the sorted tasks to run the tasks
+    for (const auto &it : mutableTasks)
     {
-      it->get().run();
+      it.get().run();
     }
 
     if (conf::debug::ENABLE_TASK_LOGS && millis() % 1024 == 0)
