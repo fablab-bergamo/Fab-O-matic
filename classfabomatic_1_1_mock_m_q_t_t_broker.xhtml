@@ -307,10 +307,10 @@ Private Attributes</h2></td></tr>
 <div class="line"><span class="lineno">  192</span>  }</div>
 <div class="ttc" id="a_mock_m_q_t_t_broker_8cpp_xhtml_a1cd7583262c7df24a997b8ddbcc8397b"><div class="ttname"><a href="_mock_m_q_t_t_broker_8cpp.xhtml#a1cd7583262c7df24a997b8ddbcc8397b">TAG2</a></div><div class="ttdeci">static const char *const TAG2</div><div class="ttdef"><b>Definition</b> <a href="_mock_m_q_t_t_broker_8cpp_source.xhtml#l00009">MockMQTTBroker.cpp:9</a></div></div>
 <div class="ttc" id="anamespacefabomatic_1_1card_xhtml_aef091ec171625c69f9d4eab20ebaefec"><div class="ttname"><a href="namespacefabomatic_1_1card.xhtml#aef091ec171625c69f9d4eab20ebaefec">fabomatic::card::uid_str</a></div><div class="ttdeci">auto uid_str(const card::uid_t uid) -&gt; const std::string</div><div class="ttdoc">Returns a string representation of the UID.</div><div class="ttdef"><b>Definition</b> <a href="card_8hpp_source.xhtml#l00020">card.hpp:20</a></div></div>
-<div class="ttc" id="anamespacefabomatic_1_1conf_1_1default__config_xhtml_a5c1b455d7208bb8f3487ae6b8b432de9"><div class="ttname"><a href="namespacefabomatic_1_1conf_1_1default__config.xhtml#a5c1b455d7208bb8f3487ae6b8b432de9">fabomatic::conf::default_config::mqtt_switch_topic</a></div><div class="ttdeci">static constexpr std::string_view mqtt_switch_topic</div><div class="ttdef"><b>Definition</b> <a href="conf_8hpp_source.xhtml#l00023">conf.hpp:23</a></div></div>
+<div class="ttc" id="anamespacefabomatic_1_1conf_1_1default__config_xhtml_a5c1b455d7208bb8f3487ae6b8b432de9"><div class="ttname"><a href="namespacefabomatic_1_1conf_1_1default__config.xhtml#a5c1b455d7208bb8f3487ae6b8b432de9">fabomatic::conf::default_config::mqtt_switch_topic</a></div><div class="ttdeci">static constexpr std::string_view mqtt_switch_topic</div><div class="ttdef"><b>Definition</b> <a href="conf_8hpp_source.xhtml#l00024">conf.hpp:24</a></div></div>
 <div class="ttc" id="astructfabomatic_1_1_fab_user_xhtml_a75deeb54124600e0387550735c7a0ca0a88183b946cc5f0e8c96b2e66e1c74a7e"><div class="ttname"><a href="structfabomatic_1_1_fab_user.xhtml#a75deeb54124600e0387550735c7a0ca0a88183b946cc5f0e8c96b2e66e1c74a7e">fabomatic::FabUser::UserLevel::Unknown</a></div><div class="ttdeci">@ Unknown</div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="conf_8hpp_source.xhtml#l00023">fabomatic::conf::default_config::mqtt_switch_topic</a>, <a class="el" href="_mock_m_q_t_t_broker_8cpp_source.xhtml#l00009">TAG2</a>, <a class="el" href="card_8hpp_source.xhtml#l00020">fabomatic::card::uid_str()</a>, and <a class="el" href="structfabomatic_1_1_fab_user.xhtml#a75deeb54124600e0387550735c7a0ca0a88183b946cc5f0e8c96b2e66e1c74a7e">fabomatic::FabUser::Unknown</a>.</p>
+<p class="reference">References <a class="el" href="conf_8hpp_source.xhtml#l00024">fabomatic::conf::default_config::mqtt_switch_topic</a>, <a class="el" href="_mock_m_q_t_t_broker_8cpp_source.xhtml#l00009">TAG2</a>, <a class="el" href="card_8hpp_source.xhtml#l00020">fabomatic::card::uid_str()</a>, and <a class="el" href="structfabomatic_1_1_fab_user.xhtml#a75deeb54124600e0387550735c7a0ca0a88183b946cc5f0e8c96b2e66e1c74a7e">fabomatic::FabUser::Unknown</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -584,13 +584,12 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">   29</span>    <span class="comment">// Initialize the broker if it&#39;s not running</span></div>
 <div class="line"><span class="lineno">   30</span>    <span class="keywordflow">if</span> (!<a class="code hl_variable" href="classfabomatic_1_1_mock_m_q_t_t_broker.xhtml#aaee749f4bebf96f67e62da34998ab900">is_running</a>)</div>
 <div class="line"><span class="lineno">   31</span>    {</div>
-<div class="line"><span class="lineno">   32</span>      <a class="code hl_variable" href="classfabomatic_1_1_mock_m_q_t_t_broker.xhtml#aaee749f4bebf96f67e62da34998ab900">is_running</a> = init(<a class="code hl_variable" href="namespacefabomatic_1_1conf_1_1mqtt.xhtml#ac26a2c6d2866b19ee035b735bdfaff54">conf::mqtt::PORT_NUMBER</a>, <span class="keyword">true</span>);</div>
+<div class="line"><span class="lineno">   32</span>      <a class="code hl_variable" href="classfabomatic_1_1_mock_m_q_t_t_broker.xhtml#aaee749f4bebf96f67e62da34998ab900">is_running</a> = init(conf::mqtt::PORT_NUMBER, <span class="keyword">true</span>);</div>
 <div class="line"><span class="lineno">   33</span>      ESP_LOGI(<a class="code hl_variable" href="_mock_m_q_t_t_broker_8cpp.xhtml#a1cd7583262c7df24a997b8ddbcc8397b">TAG2</a>, <span class="stringliteral">&quot;MQTT BROKER: started with result %d&quot;</span>, <a class="code hl_variable" href="classfabomatic_1_1_mock_m_q_t_t_broker.xhtml#aaee749f4bebf96f67e62da34998ab900">is_running</a>);</div>
 <div class="line"><span class="lineno">   34</span>    }</div>
 <div class="line"><span class="lineno">   35</span>  }</div>
-<div class="ttc" id="anamespacefabomatic_1_1conf_1_1mqtt_xhtml_ac26a2c6d2866b19ee035b735bdfaff54"><div class="ttname"><a href="namespacefabomatic_1_1conf_1_1mqtt.xhtml#ac26a2c6d2866b19ee035b735bdfaff54">fabomatic::conf::mqtt::PORT_NUMBER</a></div><div class="ttdeci">static constexpr auto PORT_NUMBER</div><div class="ttdef"><b>Definition</b> <a href="conf_8hpp_source.xhtml#l00117">conf.hpp:117</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="conf_8hpp_source.xhtml#l00117">fabomatic::conf::mqtt::PORT_NUMBER</a>, and <a class="el" href="_mock_m_q_t_t_broker_8cpp_source.xhtml#l00009">TAG2</a>.</p>
+<p class="reference">References <a class="el" href="_mock_m_q_t_t_broker_8cpp_source.xhtml#l00009">TAG2</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="_mock_m_q_t_t_broker_8cpp_source.xhtml#l00239">mainLoop()</a>.</p>
 <div class="dynheader">
@@ -763,7 +762,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jun 30 2024 19:59:04 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jun 30 2024 20:13:24 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

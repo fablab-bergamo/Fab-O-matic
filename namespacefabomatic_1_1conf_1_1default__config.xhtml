@@ -120,9 +120,10 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Default hostname for the ESP32 board, <a class="el" href="classfabomatic_1_1_machine.xhtml">Machine</a> ID will be added to the hostname in order to form unique hostnames </p>
 
-<p class="definition">Definition at line <a class="el" href="conf_8hpp_source.xhtml#l00047">47</a> of file <a class="el" href="conf_8hpp_source.xhtml">conf.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   47</span>{<span class="stringliteral">&quot;BOARD&quot;</span>};</div>
+<p class="definition">Definition at line <a class="el" href="conf_8hpp_source.xhtml#l00054">54</a> of file <a class="el" href="conf_8hpp_source.xhtml">conf.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   54</span>{<span class="stringliteral">&quot;BOARD&quot;</span>};</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00654">fabomatic::BoardLogic::getHostname()</a>.</p>
 
@@ -147,9 +148,10 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Default <a class="el" href="struct_machine_i_d.xhtml">MachineID</a> for backend. Can be overriden through WiFi Portal config </p>
 
-<p class="definition">Definition at line <a class="el" href="conf_8hpp_source.xhtml#l00035">35</a> of file <a class="el" href="conf_8hpp_source.xhtml">conf.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   35</span>{1};</div>
+<p class="definition">Definition at line <a class="el" href="conf_8hpp_source.xhtml#l00039">39</a> of file <a class="el" href="conf_8hpp_source.xhtml">conf.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   39</span>{1};</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="_saved_config_8cpp_source.xhtml#l00028">fabomatic::SavedConfig::DefaultConfig()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00654">fabomatic::BoardLogic::getHostname()</a>, and <a class="el" href="test__logic_8cpp_source.xhtml#l00041">fabomatic::tests::test_machine_defaults()</a>.</p>
 
@@ -174,9 +176,10 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Default machine name for LCD. Will be overriden with Backend config data </p>
 
-<p class="definition">Definition at line <a class="el" href="conf_8hpp_source.xhtml#l00039">39</a> of file <a class="el" href="conf_8hpp_source.xhtml">conf.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   39</span>{<span class="stringliteral">&quot;MACHINE1&quot;</span>};</div>
+<p class="definition">Definition at line <a class="el" href="conf_8hpp_source.xhtml#l00044">44</a> of file <a class="el" href="conf_8hpp_source.xhtml">conf.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   44</span>{<span class="stringliteral">&quot;MACHINE1&quot;</span>};</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00464">fabomatic::BoardLogic::reconfigure()</a>, and <a class="el" href="test__logic_8cpp_source.xhtml#l00041">fabomatic::tests::test_machine_defaults()</a>.</p>
 
@@ -201,9 +204,10 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Default machine type. No impact on code </p>
 
-<p class="definition">Definition at line <a class="el" href="conf_8hpp_source.xhtml#l00043">43</a> of file <a class="el" href="conf_8hpp_source.xhtml">conf.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   43</span>{<a class="code hl_enumvalue" href="_machine_i_d_8hpp.xhtml#a35cc1c75e4e55a13e5075b9331a37dc5ab4d8d289f2efcf26d05468d1e85b248b">MachineType::Printer3D</a>};</div>
+<p class="definition">Definition at line <a class="el" href="conf_8hpp_source.xhtml#l00049">49</a> of file <a class="el" href="conf_8hpp_source.xhtml">conf.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   49</span>{<a class="code hl_enumvalue" href="_machine_i_d_8hpp.xhtml#a35cc1c75e4e55a13e5075b9331a37dc5ab4d8d289f2efcf26d05468d1e85b248b">MachineType::Printer3D</a>};</div>
 <div class="ttc" id="a_machine_i_d_8hpp_xhtml_a35cc1c75e4e55a13e5075b9331a37dc5ab4d8d289f2efcf26d05468d1e85b248b"><div class="ttname"><a href="_machine_i_d_8hpp.xhtml#a35cc1c75e4e55a13e5075b9331a37dc5ab4d8d289f2efcf26d05468d1e85b248b">MachineType::Printer3D</a></div><div class="ttdeci">@ Printer3D</div></div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00464">fabomatic::BoardLogic::reconfigure()</a>.</p>
@@ -229,6 +233,7 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Name of the default server for Backend. Will be resolved through mDNS </p>
 
 <p class="definition">Definition at line <a class="el" href="conf_8hpp_source.xhtml#l00019">19</a> of file <a class="el" href="conf_8hpp_source.xhtml">conf.hpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   19</span>{<span class="stringliteral">&quot;fabpi2.local&quot;</span>};</div>
@@ -256,9 +261,10 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>What value shall be written on the topic to switch off the Shelly device </p>
 
-<p class="definition">Definition at line <a class="el" href="conf_8hpp_source.xhtml#l00031">31</a> of file <a class="el" href="conf_8hpp_source.xhtml">conf.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   31</span>{<span class="stringliteral">&quot;off&quot;</span>};</div>
+<p class="definition">Definition at line <a class="el" href="conf_8hpp_source.xhtml#l00034">34</a> of file <a class="el" href="conf_8hpp_source.xhtml">conf.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   34</span>{<span class="stringliteral">&quot;off&quot;</span>};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -281,9 +287,10 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>What value shall be written on the topic to switch on the Shelly device </p>
 
-<p class="definition">Definition at line <a class="el" href="conf_8hpp_source.xhtml#l00027">27</a> of file <a class="el" href="conf_8hpp_source.xhtml">conf.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   27</span>{<span class="stringliteral">&quot;on&quot;</span>};</div>
+<p class="definition">Definition at line <a class="el" href="conf_8hpp_source.xhtml#l00029">29</a> of file <a class="el" href="conf_8hpp_source.xhtml">conf.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   29</span>{<span class="stringliteral">&quot;on&quot;</span>};</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="_machine_8cpp_source.xhtml#l00165">fabomatic::Machine::power_mqtt()</a>.</p>
 
@@ -308,9 +315,10 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>In case Shelly is used, name of the topic on MQTT Broker </p>
 
-<p class="definition">Definition at line <a class="el" href="conf_8hpp_source.xhtml#l00023">23</a> of file <a class="el" href="conf_8hpp_source.xhtml">conf.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   23</span>{<span class="stringliteral">&quot;&quot;</span>};</div>
+<p class="definition">Definition at line <a class="el" href="conf_8hpp_source.xhtml#l00024">24</a> of file <a class="el" href="conf_8hpp_source.xhtml">conf.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   24</span>{<span class="stringliteral">&quot;&quot;</span>};</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="_saved_config_8cpp_source.xhtml#l00028">fabomatic::SavedConfig::DefaultConfig()</a>, <a class="el" href="_mock_m_q_t_t_broker_8cpp_source.xhtml#l00120">fabomatic::MockMQTTBroker::defaultReplies()</a>, and <a class="el" href="test__logic_8cpp_source.xhtml#l00041">fabomatic::tests::test_machine_defaults()</a>.</p>
 
@@ -319,7 +327,7 @@ Variables</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jun 30 2024 19:59:04 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jun 30 2024 20:13:24 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

@@ -91,10 +91,10 @@ Variables</h2></td></tr>
 <tr class="separator:a9385c322eb16f7f09992855dec71df20"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8418761ec7353545c7130692339b9cc6" id="r_a8418761ec7353545c7130692339b9cc6"><td class="memItemLeft" align="right" valign="top">static constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefabomatic_1_1conf_1_1mqtt.xhtml#a8418761ec7353545c7130692339b9cc6">TIMEOUT_REPLY_SERVER</a> {2s}</td></tr>
 <tr class="separator:a8418761ec7353545c7130692339b9cc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac26a2c6d2866b19ee035b735bdfaff54" id="r_ac26a2c6d2866b19ee035b735bdfaff54"><td class="memItemLeft" align="right" valign="top">static constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefabomatic_1_1conf_1_1mqtt.xhtml#ac26a2c6d2866b19ee035b735bdfaff54">PORT_NUMBER</a> {1883}</td></tr>
-<tr class="separator:ac26a2c6d2866b19ee035b735bdfaff54"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Variable Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Configuration regarding MQTT broker, topics </p>
+</div><h2 class="groupheader">Variable Documentation</h2>
 <a id="a9385c322eb16f7f09992855dec71df20" name="a9385c322eb16f7f09992855dec71df20"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9385c322eb16f7f09992855dec71df20">&#9670;&#160;</a></span>MAX_TRIES</h2>
 
@@ -114,38 +114,12 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Number of tries to get a reply from the backend </p>
 
-<p class="definition">Definition at line <a class="el" href="conf_8hpp_source.xhtml#l00115">115</a> of file <a class="el" href="conf_8hpp_source.xhtml">conf.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  115</span>{2};                         <span class="comment">/* Number of tries to get a reply from the backend */</span></div>
+<p class="definition">Definition at line <a class="el" href="conf_8hpp_source.xhtml#l00227">227</a> of file <a class="el" href="conf_8hpp_source.xhtml">conf.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  227</span>{2};</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="_machine_8cpp_source.xhtml#l00165">fabomatic::Machine::power_mqtt()</a>, and <a class="el" href="_fab_backend_8cpp_source.xhtml#l00061">fabomatic::FabBackend::publishWithReply()</a>.</p>
-
-</div>
-</div>
-<a id="ac26a2c6d2866b19ee035b735bdfaff54" name="ac26a2c6d2866b19ee035b735bdfaff54"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac26a2c6d2866b19ee035b735bdfaff54">&#9670;&#160;</a></span>PORT_NUMBER</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr auto fabomatic::conf::mqtt::PORT_NUMBER {1883}</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="conf_8hpp_source.xhtml#l00117">117</a> of file <a class="el" href="conf_8hpp_source.xhtml">conf.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  117</span>{1883};                    <span class="comment">/* MQTT port for broker */</span></div>
-</div><!-- fragment -->
-<p class="reference">Referenced by <a class="el" href="_fab_backend_8cpp_source.xhtml#l00291">fabomatic::FabBackend::connect()</a>, and <a class="el" href="_mock_m_q_t_t_broker_8cpp_source.xhtml#l00020">fabomatic::MockMQTTBroker::start()</a>.</p>
 
 </div>
 </div>
@@ -168,9 +142,10 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Backend reply (sub-topic of the full machine topic) </p>
 
-<p class="definition">Definition at line <a class="el" href="conf_8hpp_source.xhtml#l00114">114</a> of file <a class="el" href="conf_8hpp_source.xhtml">conf.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  114</span>{<span class="stringliteral">&quot;/reply&quot;</span>}; <span class="comment">/* Backend reply (sub-topic of the full machine topic) */</span></div>
+<p class="definition">Definition at line <a class="el" href="conf_8hpp_source.xhtml#l00222">222</a> of file <a class="el" href="conf_8hpp_source.xhtml">conf.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  222</span>{<span class="stringliteral">&quot;/reply&quot;</span>};</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="_fab_backend_8cpp_source.xhtml#l00291">fabomatic::FabBackend::connect()</a>.</p>
 
@@ -195,9 +170,10 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Timeout for a single backend reply request. </p>
 
-<p class="definition">Definition at line <a class="el" href="conf_8hpp_source.xhtml#l00116">116</a> of file <a class="el" href="conf_8hpp_source.xhtml">conf.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  116</span>{2s};             <span class="comment">/* Timeout for a single backend reply request. */</span></div>
+<p class="definition">Definition at line <a class="el" href="conf_8hpp_source.xhtml#l00232">232</a> of file <a class="el" href="conf_8hpp_source.xhtml">conf.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  232</span>{2s};</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="_machine_8cpp_source.xhtml#l00165">fabomatic::Machine::power_mqtt()</a>, and <a class="el" href="_fab_backend_8cpp_source.xhtml#l00061">fabomatic::FabBackend::publishWithReply()</a>.</p>
 
@@ -222,9 +198,10 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Initial part of the topic, machine ID will be added </p>
 
-<p class="definition">Definition at line <a class="el" href="conf_8hpp_source.xhtml#l00113">113</a> of file <a class="el" href="conf_8hpp_source.xhtml">conf.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  113</span>{<span class="stringliteral">&quot;machine&quot;</span>};         <span class="comment">/* Initial part of the topic, machine ID will be added */</span></div>
+<p class="definition">Definition at line <a class="el" href="conf_8hpp_source.xhtml#l00217">217</a> of file <a class="el" href="conf_8hpp_source.xhtml">conf.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  217</span>{<span class="stringliteral">&quot;machine&quot;</span>};</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="_fab_backend_8cpp_source.xhtml#l00021">fabomatic::FabBackend::configure()</a>.</p>
 
@@ -233,7 +210,7 @@ Variables</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jun 30 2024 19:59:04 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jun 30 2024 20:13:24 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>
