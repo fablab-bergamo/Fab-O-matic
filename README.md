@@ -2,6 +2,7 @@
 
 Build status : [![Build firmware images](https://github.com/fablab-bergamo/Fab-O-matic/actions/workflows/build.yml/badge.svg)](https://github.com/fablab-bergamo/Fab-O-matic/actions/workflows/build.yml)
 Test suite : [![Wokwi](https://github.com/fablab-bergamo/Fab-O-matic/actions/workflows/tests.yml/badge.svg)](https://github.com/fablab-bergamo/Fab-O-matic/actions/workflows/tests.yml)
+Documentation : [![Build docs with Doxygen](https://github.com/fablab-bergamo/Fab-O-matic/actions/workflows/docs.yml/badge.svg)](https://github.com/fablab-bergamo/Fab-O-matic/actions/workflows/docs.yml)
 
 ## What is this project?
 
@@ -252,6 +253,10 @@ upload_port = IP_ADDRESS_HERE or mDNS_NAME.local
 | wrover-kit-it_IT | Version for testing with the official ESP-WROVER-KIT V4.1 with ESP32S3 | PINS_ESP32_WROVERKIT | No |
 
 * See <code>conf/pins.hpp</code> to set the GPIO pins for LCD parallel interface, relay, buzzer and RFID reader SPI interface for each model.
+
+## Doxygen class documentation
+
+* Visit [https://fablab-bergamo.github.io/Fab-O-matic/](https://fablab-bergamo.github.io/Fab-O-matic/)
 
 ## Version history
 
