@@ -11,16 +11,18 @@
 > [PCB](https://www.fablabbergamo.it/2024/06/16/fabomatic3/)
 >
 > [Electrical schema](https://www.fablabbergamo.it/2024/06/23/fabomatic4/)
+>
+> [PCB-A and costs](https://www.fablabbergamo.it/2024/06/30/fabomatic5/)
 
 ## Revision 1.2
 
 Changes from rev 1.1:
 
 * Added D7 and D8 for reverse voltage protection on 5V and POW+ external pins.
-* Removed non-working over-voltage protection zener diodes.
-* Unconnected terminal block pin 8 (previously, it was an output 3V3).
+* Removed (wrong) over-voltage protection Zener diodes.
+* Terminal block pin 8 is now left unconnected (previously, it was an output 3V3).
 * Added R13/R14/R15 to tolerate 5V input if R16 is removed.
-* (Color PCB) Added small vias on color PCB to allow NeoPixel light to filter through.
+* (Color PCB) Added small vias on color PCB to allow the NeoPixel light to filter through.
 
 ⚠ Errata in this revision ⚠
 
