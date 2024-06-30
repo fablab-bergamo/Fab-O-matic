@@ -1,0 +1,13 @@
+<map id="fabomatic::Machine::canPowerOff" name="fabomatic::Machine::canPowerOff">
+<area shape="rect" id="Node000001" title="Indicates if POWEROFF_DELAY_MINUTES delay has expired,and the machine is still idle." alt="" coords="550,55,684,96"/>
+<area shape="rect" id="Node000002" href="$classfabomatic_1_1_board_logic.xhtml#ac05af486941c620c9494ba545dd83c3d" title="Checks if the machine must be powered off." alt="" coords="352,55,502,96"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="534,78,503,78,503,73,534,73"/>
+<area shape="rect" id="Node000003" href="$namespacefabomatic.xhtml#aa56f9324b5710d12bea42757af0289f2" title="periodic check if the machine must be powered off" alt="" coords="107,5,304,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="337,55,303,46,258,34,259,29,305,41,338,50"/>
+<area shape="rect" id="Node000004" href="$namespacefabomatic_1_1tests.xhtml#aec03a7ee459718d314b930fdd75d3cee" title=" " alt="" coords="135,55,276,96"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="337,78,276,78,276,73,337,73"/>
+<area shape="rect" id="Node000006" href="$namespacefabomatic_1_1tests.xhtml#a7cd22311b16fc7c256a30ba4c2f6f387" title="blink led" alt="" coords="135,121,276,161"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="342,103,277,123,276,118,341,98"/>
+<area shape="rect" id="Node000005" href="$test__logic_8cpp.xhtml#a4fc01d736fe50cf5b977f755b675f11d" title=" " alt="" coords="5,63,59,88"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="119,78,59,78,59,73,119,73"/>
+</map>

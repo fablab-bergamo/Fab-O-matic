@@ -1,0 +1,20 @@
+var searchData=
+[
+  ['ready_5ffor_5fa_5fnew_5fcard_0',['ready_for_a_new_card',['../classfabomatic_1_1_board_logic.xhtml#a942b82f86ec363c7777f9fc2918e0f64',1,'fabomatic::BoardLogic']]],
+  ['rebootrequest_1',['rebootRequest',['../classfabomatic_1_1_board_logic.xhtml#a8e08e14e6bc026b3a695b19fe0941e14',1,'fabomatic::BoardLogic']]],
+  ['relay_2',['relay',['../structfabomatic_1_1pins__config.xhtml#a310be8cfdd1f9617522c2eb0dd02f252',1,'fabomatic::pins_config']]],
+  ['relay_5fconfig_3',['relay_config',['../structfabomatic_1_1_machine_config.xhtml#a09d8d896632def7b3c129011ba28e52b',1,'fabomatic::MachineConfig']]],
+  ['reply_5ftopic_4',['reply_topic',['../structfabomatic_1_1_mock_m_q_t_t_broker_1_1query.xhtml#ac17a16d0260a36d51fc3b0f0b56c12e5',1,'fabomatic::MockMQTTBroker::query']]],
+  ['request_5fok_5',['request_ok',['../classfabomatic_1_1_server_m_q_t_t_1_1_response.xhtml#a4fdd19ea83639a455fba841a43be1409',1,'fabomatic::ServerMQTT::Response']]],
+  ['reset_5fpin_6',['reset_pin',['../structfabomatic_1_1pins__config_1_1mfrc522__config.xhtml#a62db3302c573adaafa4c031c5512c652',1,'fabomatic::pins_config::mfrc522_config']]],
+  ['response_5ftopic_7',['response_topic',['../classfabomatic_1_1_fab_backend.xhtml#a8129677184366856b2f1c3a582e10bdb',1,'fabomatic::FabBackend::response_topic'],['../namespacefabomatic_1_1conf_1_1mqtt.xhtml#a606e6b5c7c411ba632b27c92882edb32',1,'fabomatic::conf::mqtt::response_topic']]],
+  ['result_8',['result',['../classfabomatic_1_1_server_m_q_t_t_1_1_user_response.xhtml#af86ce395e8c8f08df94f6e222bb37e47',1,'fabomatic::ServerMQTT::UserResponse']]],
+  ['rfid_9',['rfid',['../test__logic_8cpp.xhtml#af6931c3ecf1cb64d3ff6cb0eab2e590c',1,'rfid:&#160;test_logic.cpp'],['../namespacefabomatic_1_1_board.xhtml#a847a6d8ca985bca97bd3e60c3c5a7570',1,'fabomatic::Board::rfid'],['../namespacefabomatic_1_1tests.xhtml#ab11df5855a7b6969c5b44b095bce756f',1,'fabomatic::tests::rfid'],['../classfabomatic_1_1_board_logic.xhtml#a610fd3a8610427084ee039424fbe2f24',1,'fabomatic::BoardLogic::rfid']]],
+  ['rfid_5fcheck_5fperiod_10',['RFID_CHECK_PERIOD',['../namespacefabomatic_1_1conf_1_1tasks.xhtml#a71fac767ad71b5f26725d54869ed95d2',1,'fabomatic::conf::tasks']]],
+  ['rfid_5fselftest_5fperiod_11',['RFID_SELFTEST_PERIOD',['../namespacefabomatic_1_1conf_1_1tasks.xhtml#a06a612b95a0c8e7e71993a5dd6384984',1,'fabomatic::conf::tasks']]],
+  ['rfid_5fsimple_5fdriver_12',['rfid_simple_driver',['../classfabomatic_1_1_mrfc522_driver.xhtml#ad9bc8703a93ab8d97786dfe289a048c9',1,'fabomatic::Mrfc522Driver']]],
+  ['rows_13',['ROWS',['../namespacefabomatic_1_1conf_1_1lcd.xhtml#a5e11fd0bc4caad521eccdc37829489d0',1,'fabomatic::conf::lcd']]],
+  ['rs_5fpin_14',['rs_pin',['../structfabomatic_1_1pins__config_1_1lcd__config.xhtml#ab01700e546f2f4eeda250ca6bcb574d2',1,'fabomatic::pins_config::lcd_config']]],
+  ['run_5fcounter_15',['run_counter',['../classfabomatic_1_1_tasks_1_1_task.xhtml#adc90a9a7701e126e74796646be5f21bf',1,'fabomatic::Tasks::Task']]],
+  ['rxgainmax_16',['rxgainmax',['../classfabomatic_1_1_mrfc522_driver.xhtml#ada879f1dab6a269909772eb7333052d6',1,'fabomatic::Mrfc522Driver::RxGainMax'],['../classfabomatic_1_1_mock_mrfc522.xhtml#ab63703def0afb2b54e76a3e337c38c0c',1,'fabomatic::MockMrfc522::RxGainMax']]]
+];

@@ -1,0 +1,20 @@
+<map id="fabomatic::BoardLogic::reconfigure" name="fabomatic::BoardLogic::reconfigure">
+<area shape="rect" id="Node000001" title="Configures the board with the given references." alt="" coords="5,169,156,210"/>
+<area shape="rect" id="Node000002" href="$classfabomatic_1_1_buzzer.xhtml#ab94d2e6a23316fe30e909ab0e4481347" title=" " alt="" coords="219,5,348,46"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="95,167,139,113,169,84,202,57,211,51,213,56,205,61,173,88,143,117,99,171"/>
+<area shape="rect" id="Node000003" href="$classfabomatic_1_1_machine.xhtml#a75d5f7be60826db90c639b138a7153e3" title="Configure the machine, it must be called before most methods." alt="" coords="217,71,350,111"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="117,166,202,122,216,116,218,120,205,127,120,171"/>
+<area shape="rect" id="Node000004" href="$classfabomatic_1_1_fab_backend.xhtml#acf5644d920896038018f990568e710c3" title="Configures the FabBackend with the given configuration." alt="" coords="205,136,362,177"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="155,175,189,169,190,174,156,180"/>
+<area shape="rect" id="Node000006" href="$classfabomatic_1_1_saved_config.xhtml#a3a6f62510c34ed7a4491022e4e43b9c2" title="Returns the default configuration built from conf.hpp and secrets.hpp." alt="" coords="205,201,362,242"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="156,199,190,204,189,209,155,204"/>
+<area shape="rect" id="Node000008" href="$classfabomatic_1_1_auth_provider.xhtml#ac703cf6e2b6a2a10c946937e83df418d" title="Loads the cache from EEPROM." alt="" coords="204,267,363,307"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="121,208,205,251,218,258,216,262,202,256,119,213"/>
+<area shape="rect" id="Node000009" href="$classfabomatic_1_1_saved_config.xhtml#aca3fe97dfa74c005d47ffef700392d99" title="Loads the configuration from EEPROM if available and matching revision number." alt="" coords="411,295,568,335"/>
+<area shape="poly" id="edge9_Node000001_Node000009" title=" " alt="" coords="96,209,114,235,138,266,169,295,205,317,252,331,301,337,350,337,395,332,396,338,350,342,300,342,250,336,203,321,166,299,134,270,109,239,91,212"/>
+<area shape="rect" id="Node000005" href="$classfabomatic_1_1_fab_backend.xhtml#a39353e6b4057e97b216a520fc7bef017" title=" " alt="" coords="411,136,568,177"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="362,154,396,154,396,159,362,159"/>
+<area shape="rect" id="Node000007" href="$classfabomatic_1_1_saved_config.xhtml#a4ada414d31749dcd736a3fec3f759605" title="Sets the machine ID (converting to string)" alt="" coords="411,201,568,242"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="362,219,396,219,396,224,362,224"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="364,295,396,300,395,305,363,300"/>
+</map>

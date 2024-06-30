@@ -1,0 +1,28 @@
+var searchData=
+[
+  ['id_0',['id',['../struct_machine_i_d.xhtml#a4be27146270f5fccce68f1c8b951b1d8',1,'MachineID::id'],['../classfabomatic_1_1_tasks_1_1_task.xhtml#a819de0c8e46486621657e107b9101ef8',1,'fabomatic::Tasks::Task::id']]],
+  ['incrementbootcount_1',['IncrementBootCount',['../classfabomatic_1_1_saved_config.xhtml#a9992ddd6912152983a8bf0d509a815a8',1,'fabomatic::SavedConfig']]],
+  ['init_2',['init',['../classfabomatic_1_1_led.xhtml#a60938d645142e1e33ee00b2a8e733972',1,'fabomatic::Led']]],
+  ['initboard_3',['initBoard',['../classfabomatic_1_1_board_logic.xhtml#a3e9fedd51e4895834a9ebea17cba4331',1,'fabomatic::BoardLogic']]],
+  ['initialized_4',['initialized',['../classfabomatic_1_1_led.xhtml#a5e4d1fad8c3ca0336b19283efb0fe5b1',1,'fabomatic::Led']]],
+  ['int_5fmax_5flength_5',['INT_MAX_LENGTH',['../namespacefabomatic_1_1conf_1_1common.xhtml#a326784a4cb14a25063d7f1daa65a7c33',1,'fabomatic::conf::common']]],
+  ['inuse_6',['inUse',['../classfabomatic_1_1_fab_backend.xhtml#ac33b68d0146302e9db6a0adc7b8c3ac0',1,'fabomatic::FabBackend']]],
+  ['inusequery_7',['inusequery',['../classfabomatic_1_1_server_m_q_t_t_1_1_in_use_query.xhtml#a4e724ff4679319b3decb40a24896c321',1,'fabomatic::ServerMQTT::InUseQuery::InUseQuery()'],['../classfabomatic_1_1_server_m_q_t_t_1_1_in_use_query.xhtml',1,'fabomatic::ServerMQTT::InUseQuery'],['../classfabomatic_1_1_server_m_q_t_t_1_1_in_use_query.xhtml#a6a227a41d6a4d867cfbf4f6200db3f7a',1,'fabomatic::ServerMQTT::InUseQuery::InUseQuery()']]],
+  ['invalid_8',['invalid',['../_machine_i_d_8hpp.xhtml#a35cc1c75e4e55a13e5075b9331a37dc5a4bbb8f967da6d1a610596d7257179c2b',1,'Invalid:&#160;MachineID.hpp'],['../namespacefabomatic_1_1card.xhtml#a9ef4a9f5f43c63cf872a2d52a7af11cf',1,'fabomatic::card::INVALID'],['../namespacefabomatic_1_1_server_m_q_t_t.xhtml#a84cb68ff1e79f3f6d5e3cd37a3289d9da4bbb8f967da6d1a610596d7257179c2b',1,'fabomatic::ServerMQTT::Invalid']]],
+  ['is_5fneopixel_9',['is_neopixel',['../structfabomatic_1_1pins__config_1_1led__config.xhtml#a39f3d50f092e000bde262c85ba0944fc',1,'fabomatic::pins_config::led_config']]],
+  ['is_5frgb_10',['is_rgb',['../structfabomatic_1_1pins__config_1_1led__config.xhtml#abdb2f44be336d8c219be23a7ff4911fb',1,'fabomatic::pins_config::led_config']]],
+  ['is_5frunning_11',['is_running',['../classfabomatic_1_1_mock_m_q_t_t_broker.xhtml#aaee749f4bebf96f67e62da34998ab900',1,'fabomatic::MockMQTTBroker']]],
+  ['is_5fvalid_12',['is_valid',['../classfabomatic_1_1_server_m_q_t_t_1_1_machine_response.xhtml#af9410959da9b73aafed84185d377ee23',1,'fabomatic::ServerMQTT::MachineResponse']]],
+  ['isactive_13',['isActive',['../classfabomatic_1_1_tasks_1_1_task.xhtml#a8f2df2426609b7be592ab3485d9d26ed',1,'fabomatic::Tasks::Task']]],
+  ['isallowed_14',['isAllowed',['../classfabomatic_1_1_machine.xhtml#a4b40dcb31af466acc85f66c845516c82',1,'fabomatic::Machine']]],
+  ['isautologoffexpired_15',['isAutologoffExpired',['../classfabomatic_1_1_machine.xhtml#a08685d0fb2bec894f77756f79c020bf9',1,'fabomatic::Machine']]],
+  ['isconfigured_16',['isConfigured',['../classfabomatic_1_1_machine.xhtml#a9fd614d86b6108a5a7b54fc9eee0d9a6',1,'fabomatic::Machine']]],
+  ['isfree_17',['isFree',['../classfabomatic_1_1_machine.xhtml#a74aa0b2cd34205ba57710affc56f5c3c',1,'fabomatic::Machine']]],
+  ['ismaintenanceneeded_18',['isMaintenanceNeeded',['../classfabomatic_1_1_machine.xhtml#a34b0deb04494137cf321e94d50dedf90',1,'fabomatic::Machine']]],
+  ['isnewcardpresent_19',['isnewcardpresent',['../classfabomatic_1_1_base_r_f_i_d_wrapper.xhtml#a3742fa985037cb9794a39f293849bea3',1,'fabomatic::BaseRFIDWrapper::isNewCardPresent()'],['../classfabomatic_1_1_r_f_i_d_wrapper.xhtml#ada9684dd15933a28d3e44c7a76a75595',1,'fabomatic::RFIDWrapper::isNewCardPresent()']]],
+  ['ison_20',['isOn',['../classfabomatic_1_1_led.xhtml#ae0fa7a3a4a21758a82b1bd42decaa990',1,'fabomatic::Led']]],
+  ['isonline_21',['isOnline',['../classfabomatic_1_1_fab_backend.xhtml#aef092e0e1db0c3539d5474fad2456255',1,'fabomatic::FabBackend']]],
+  ['isrunning_22',['isRunning',['../classfabomatic_1_1_mock_m_q_t_t_broker.xhtml#a78a57e64b156c6d6d93104fec142740d',1,'fabomatic::MockMQTTBroker']]],
+  ['isshutdownimminent_23',['isShutdownImminent',['../classfabomatic_1_1_machine.xhtml#a871958cc57845c8651cf1058ed9b30e4',1,'fabomatic::Machine']]],
+  ['it_2dit_2ehpp_24',['it-IT.hpp',['../it-_i_t_8hpp.xhtml',1,'']]]
+];

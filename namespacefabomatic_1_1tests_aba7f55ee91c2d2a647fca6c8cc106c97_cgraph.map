@@ -1,0 +1,37 @@
+<map id="fabomatic::tests::test_start_broker" name="fabomatic::tests::test_start_broker">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,280,147,321"/>
+<area shape="rect" id="Node000002" href="$classfabomatic_1_1_fab_backend.xhtml#acf5644d920896038018f990568e710c3" title="Configures the FabBackend with the given configuration." alt="" coords="195,9,352,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="84,279,127,197,158,147,193,99,232,58,236,62,197,102,162,150,132,200,89,281"/>
+<area shape="rect" id="Node000004" href="$classfabomatic_1_1_fab_backend.xhtml#a1a45f556aadcbc428d14b7c7577ed43d" title="Establishes a connection to the WiFi network and the MQTT server." alt="" coords="195,185,352,226"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="114,277,193,237,207,230,209,235,196,241,117,282"/>
+<area shape="rect" id="Node000005" href="$classfabomatic_1_1_fab_backend.xhtml#ad928751b2f967feaac0f2cb708c0d6e9" title="Connects to the WiFi network." alt="" coords="417,71,574,111"/>
+<area shape="poly" id="edge10_Node000001_Node000005" title=" " alt="" coords="89,278,131,225,160,196,193,171,244,146,298,126,401,100,402,106,299,131,246,150,196,176,164,200,135,228,93,281"/>
+<area shape="rect" id="Node000009" href="$classfabomatic_1_1_board_logic.xhtml#ac2feade03b2a74a1998dcec282a8eacb" title=" " alt="" coords="198,251,349,291"/>
+<area shape="poly" id="edge11_Node000001_Node000009" title=" " alt="" coords="147,287,183,282,183,287,147,292"/>
+<area shape="rect" id="Node000010" href="$classfabomatic_1_1_mock_m_q_t_t_broker.xhtml#a78a57e64b156c6d6d93104fec142740d" title="Checks if the MQTT broker is running." alt="" coords="639,331,831,371"/>
+<area shape="poly" id="edge12_Node000001_Node000010" title=" " alt="" coords="147,303,624,340,623,345,147,308"/>
+<area shape="rect" id="Node000011" href="$classfabomatic_1_1_saved_config.xhtml#aca3fe97dfa74c005d47ffef700392d99" title="Loads the configuration from EEPROM if available and matching revision number." alt="" coords="195,365,352,406"/>
+<area shape="poly" id="edge13_Node000001_Node000011" title=" " alt="" coords="126,319,211,356,209,361,124,324"/>
+<area shape="rect" id="Node000012" href="$classfabomatic_1_1_fab_backend.xhtml#a492c94ed0682ad834ccd7ddc7c20a55a" title="Sets the WiFi channel to use." alt="" coords="195,431,352,471"/>
+<area shape="poly" id="edge14_Node000001_Node000012" title=" " alt="" coords="96,319,139,367,166,392,196,415,205,421,202,425,193,420,163,396,135,370,92,323"/>
+<area shape="rect" id="Node000013" href="$namespacefabomatic_1_1tests.xhtml#af046ac0a4d53b62e8f3bf0cec2d07440" title=" " alt="" coords="196,496,351,537"/>
+<area shape="poly" id="edge15_Node000001_Node000013" title=" " alt="" coords="88,320,128,397,159,442,196,481,202,486,199,490,193,485,155,445,123,400,83,322"/>
+<area shape="rect" id="Node000003" href="$classfabomatic_1_1_fab_backend.xhtml#a39353e6b4057e97b216a520fc7bef017" title=" " alt="" coords="417,5,574,46"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="352,26,401,25,402,30,352,31"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="304,183,399,127,425,115,427,120,401,132,307,187"/>
+<area shape="rect" id="Node000006" href="$namespacefabomatic_1_1_tasks.xhtml#a5c20f560f5934822d39ba116a16f3ab6" title="Wait for a delay, allowing OTA updates." alt="" coords="657,108,813,133"/>
+<area shape="poly" id="edge7_Node000004_Node000006" title=" " alt="" coords="352,182,399,171,526,148,641,130,642,135,526,153,401,176,353,187"/>
+<area shape="rect" id="Node000007" href="$classfabomatic_1_1_fab_backend.xhtml#a3ab102598ee93269de90a0170e024619" title="Callback function for received MQTT messages." alt="" coords="417,185,574,226"/>
+<area shape="poly" id="edge8_Node000004_Node000007" title=" " alt="" coords="352,203,402,203,402,208,352,208"/>
+<area shape="rect" id="Node000008" href="$classfabomatic_1_1_fab_backend.xhtml#aee0cf549bea2daebc3e08742853d36c1" title="Publishes a query on the MQTT server." alt="" coords="417,251,574,291"/>
+<area shape="poly" id="edge9_Node000004_Node000008" title=" " alt="" coords="346,224,410,243,408,248,344,229"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="575,98,642,106,641,112,574,103"/>
+<area shape="poly" id="edge6_Node000006_Node000006" title=" " alt="" coords="696,109,688,99,692,89,708,83,735,81,765,84,779,91,777,96,763,89,735,86,710,88,696,93,693,98,700,105"/>
+<area shape="rect" id="Node000014" href="$classfabomatic_1_1_mock_m_q_t_t_broker.xhtml#a4cd18cc3fb887b17e4668bbf99a531e5" title="Main loop for the MQTT broker." alt="" coords="400,473,591,514"/>
+<area shape="poly" id="edge16_Node000013_Node000014" title=" " alt="" coords="351,506,384,502,385,508,352,511"/>
+<area shape="poly" id="edge17_Node000014_Node000010" title=" " alt="" coords="530,471,685,377,688,382,533,475"/>
+<area shape="rect" id="Node000015" href="$classfabomatic_1_1_mock_m_q_t_t_broker.xhtml#a119e59001d5ce25708aa2198623505c6" title="Processes pending MQTT queries." alt="" coords="639,441,831,482"/>
+<area shape="poly" id="edge18_Node000014_Node000015" title=" " alt="" coords="592,478,623,474,624,479,592,483"/>
+<area shape="rect" id="Node000016" href="$classfabomatic_1_1_mock_m_q_t_t_broker.xhtml#ac6c05df03ca2f41d6a9b48d17ce84ab1" title="Starts the MQTT broker." alt="" coords="639,507,831,547"/>
+<area shape="poly" id="edge19_Node000014_Node000016" title=" " alt="" coords="592,504,624,509,623,514,592,510"/>
+</map>

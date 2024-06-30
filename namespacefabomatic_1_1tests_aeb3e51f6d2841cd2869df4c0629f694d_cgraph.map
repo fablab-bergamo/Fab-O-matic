@@ -1,0 +1,47 @@
+<map id="fabomatic::tests::test_rfid_cache" name="fabomatic::tests::test_rfid_cache">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,136,147,177"/>
+<area shape="rect" id="Node000002" href="$classfabomatic_1_1_fab_backend.xhtml#acf5644d920896038018f990568e710c3" title="Configures the FabBackend with the given configuration." alt="" coords="196,12,353,53"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="105,133,193,74,220,58,223,63,196,79,108,138"/>
+<area shape="rect" id="Node000004" href="$classfabomatic_1_1_saved_config.xhtml#a3a6f62510c34ed7a4491022e4e43b9c2" title="Returns the default configuration built from conf.hpp and secrets.hpp." alt="" coords="402,71,559,111"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="146,133,194,122,293,106,386,96,387,101,294,111,195,127,148,138"/>
+<area shape="rect" id="Node000006" href="$classfabomatic_1_1_saved_config.xhtml#aca3fe97dfa74c005d47ffef700392d99" title="Loads the configuration from EEPROM if available and matching revision number." alt="" coords="402,201,559,242"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="148,175,195,186,294,201,387,212,386,217,293,207,194,191,146,180"/>
+<area shape="rect" id="Node000007" href="$classfabomatic_1_1_auth_provider.xhtml#acb92a9381bc8e14bd57b819fc9162750" title="Saves the cache of RFID to EEPROM." alt="" coords="195,136,354,177"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="147,154,179,154,179,159,147,159"/>
+<area shape="rect" id="Node000012" href="$classfabomatic_1_1_auth_provider.xhtml#aeae9923535dcf6cfa9eaf9e5f90e5e64" title="Verifies the card ID against the server (if available) or the whitelist." alt="" coords="195,364,354,405"/>
+<area shape="poly" id="edge13_Node000001_Node000012" title=" " alt="" coords="97,175,248,351,244,355,93,179"/>
+<area shape="rect" id="Node000003" href="$classfabomatic_1_1_fab_backend.xhtml#a39353e6b4057e97b216a520fc7bef017" title=" " alt="" coords="402,5,559,46"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="353,27,386,26,387,31,353,32"/>
+<area shape="rect" id="Node000005" href="$classfabomatic_1_1_saved_config.xhtml#a4ada414d31749dcd736a3fec3f759605" title="Sets the machine ID (converting to string)" alt="" coords="607,71,765,111"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="560,88,592,88,592,94,560,94"/>
+<area shape="poly" id="edge7_Node000007_Node000004" title=" " alt="" coords="340,133,398,114,400,119,341,138"/>
+<area shape="poly" id="edge8_Node000007_Node000006" title=" " alt="" coords="341,175,400,193,398,199,340,180"/>
+<area shape="rect" id="Node000008" href="$classfabomatic_1_1_saved_config.xhtml#a312c74363068192ae80df24140f82874" title="Saves the configuration to EEPROM." alt="" coords="402,136,559,177"/>
+<area shape="poly" id="edge9_Node000007_Node000008" title=" " alt="" coords="354,154,386,154,386,159,354,159"/>
+<area shape="rect" id="Node000009" href="$classfabomatic_1_1_saved_config.xhtml#ae0af7670707ed5a51c69197eb6fadbe5" title="Serialize the current configuration into a JsonDocument." alt="" coords="607,136,765,177"/>
+<area shape="poly" id="edge10_Node000008_Node000009" title=" " alt="" coords="560,154,592,154,592,159,560,159"/>
+<area shape="rect" id="Node000010" href="$structfabomatic_1_1_cached_cards.xhtml#a128c3db6758b1e630855e673a44c585f" title=" " alt="" coords="813,169,975,210"/>
+<area shape="poly" id="edge11_Node000009_Node000010" title=" " alt="" coords="765,166,797,172,797,177,764,172"/>
+<area shape="rect" id="Node000011" href="$classfabomatic_1_1_buffer.xhtml#a72f029c82552ccea45eaf611f345c079" title=" " alt="" coords="832,104,956,145"/>
+<area shape="poly" id="edge12_Node000009_Node000011" title=" " alt="" coords="764,142,816,134,817,139,765,147"/>
+<area shape="rect" id="Node000013" href="$classfabomatic_1_1_fab_backend.xhtml#aec5c26ad6c62b7446ca18841910ef82d" title="Checks if the card ID is known to the server." alt="" coords="402,512,559,553"/>
+<area shape="poly" id="edge14_Node000012_Node000013" title=" " alt="" coords="296,403,342,450,404,498,411,502,408,507,400,503,339,454,292,407"/>
+<area shape="rect" id="Node000014" href="$classfabomatic_1_1_fab_backend.xhtml#a1a45f556aadcbc428d14b7c7577ed43d" title="Establishes a connection to the WiFi network and the MQTT server." alt="" coords="402,267,559,307"/>
+<area shape="poly" id="edge15_Node000012_Node000014" title=" " alt="" coords="314,361,401,318,415,312,417,316,403,323,316,366"/>
+<area shape="rect" id="Node000019" href="$classfabomatic_1_1_fab_backend.xhtml#aef092e0e1db0c3539d5474fad2456255" title="Checks if the client is online." alt="" coords="402,332,559,373"/>
+<area shape="poly" id="edge22_Node000012_Node000019" title=" " alt="" coords="354,369,386,364,387,370,355,375"/>
+<area shape="rect" id="Node000020" href="$structfabomatic_1_1_fab_user.xhtml#ab4b54f1830f1536824583e973d670582" title=" " alt="" coords="414,397,548,438"/>
+<area shape="poly" id="edge23_Node000012_Node000020" title=" " alt="" coords="355,395,399,402,398,407,354,400"/>
+<area shape="rect" id="Node000021" href="$namespacefabomatic_1_1card.xhtml#aef091ec171625c69f9d4eab20ebaefec" title="Returns a string representation of the UID." alt="" coords="404,462,558,488"/>
+<area shape="poly" id="edge24_Node000012_Node000021" title=" " alt="" coords="313,403,403,447,421,454,419,459,401,452,311,407"/>
+<area shape="rect" id="Node000015" href="$classfabomatic_1_1_fab_backend.xhtml#ad928751b2f967feaac0f2cb708c0d6e9" title="Connects to the WiFi network." alt="" coords="607,332,765,373"/>
+<area shape="poly" id="edge16_Node000014_Node000015" title=" " alt="" coords="548,305,606,324,604,329,546,310"/>
+<area shape="rect" id="Node000016" href="$namespacefabomatic_1_1_tasks.xhtml#a5c20f560f5934822d39ba116a16f3ab6" title="Wait for a delay, allowing OTA updates." alt="" coords="816,368,972,393"/>
+<area shape="poly" id="edge19_Node000014_Node000016" title=" " alt="" coords="541,306,561,318,576,336,584,353,592,369,609,382,635,393,664,400,722,406,779,403,830,394,830,400,780,408,722,411,663,405,634,398,606,387,588,372,579,356,572,339,558,322,538,310"/>
+<area shape="rect" id="Node000017" href="$classfabomatic_1_1_fab_backend.xhtml#a3ab102598ee93269de90a0170e024619" title="Callback function for received MQTT messages." alt="" coords="607,201,765,242"/>
+<area shape="poly" id="edge20_Node000014_Node000017" title=" " alt="" coords="546,264,604,245,606,250,548,269"/>
+<area shape="rect" id="Node000018" href="$classfabomatic_1_1_fab_backend.xhtml#aee0cf549bea2daebc3e08742853d36c1" title="Publishes a query on the MQTT server." alt="" coords="607,267,765,307"/>
+<area shape="poly" id="edge21_Node000014_Node000018" title=" " alt="" coords="560,284,592,284,592,290,560,290"/>
+<area shape="poly" id="edge17_Node000015_Node000016" title=" " alt="" coords="765,360,801,365,800,370,765,366"/>
+<area shape="poly" id="edge18_Node000016_Node000016" title=" " alt="" coords="859,369,852,359,856,349,871,343,894,341,919,344,932,350,930,355,918,349,894,346,872,348,860,353,858,358,863,366"/>
+</map>

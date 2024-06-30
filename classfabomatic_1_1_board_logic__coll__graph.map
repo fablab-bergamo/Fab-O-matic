@@ -1,0 +1,48 @@
+<map id="fabomatic::BoardLogic" name="fabomatic::BoardLogic">
+<area shape="rect" id="Node000001" title=" " alt="" coords="841,2262,995,2687"/>
+<area shape="rect" id="Node000002" href="$classfabomatic_1_1_led.xhtml" title=" " alt="" coords="656,1404,753,1629"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="716,1629,728,1748,748,1891,774,2045,810,2198,838,2284,833,2285,805,2199,769,2046,742,1892,723,1748,711,1630"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="588,751,728,817"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="663,816,699,1387,694,1387,657,816"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="397,348,492,413"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="501,421,543,459,579,506,611,571,633,639,648,702,657,751,652,752,643,703,628,640,606,573,574,509,539,463,498,424"/>
+<area shape="rect" id="Node000016" title=" " alt="" coords="363,1031,527,1111"/>
+<area shape="poly" id="edge20_Node000016_Node000004" title=" " alt="" coords="446,428,444,507,444,537,447,1031,442,1031,439,537,439,507,440,428"/>
+<area shape="rect" id="Node000018" title=" " alt="" coords="5,737,129,831"/>
+<area shape="poly" id="edge23_Node000018_Node000004" title=" " alt="" coords="382,385,308,392,222,412,179,428,139,449,103,476,73,509,58,535,48,564,42,594,40,625,45,685,56,736,50,737,40,686,35,625,37,594,43,563,53,533,69,506,99,472,136,444,177,423,220,407,307,387,382,380"/>
+<area shape="rect" id="Node000019" title=" " alt="" coords="165,737,305,831"/>
+<area shape="poly" id="edge25_Node000019_Node000004" title=" " alt="" coords="385,403,346,420,305,442,268,472,240,509,227,536,219,566,213,627,217,686,225,736,220,737,211,687,207,627,213,565,222,534,235,506,265,468,302,438,343,415,383,398"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="549,135,570,200"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="551,181,515,225,486,280,464,333,459,331,481,278,510,223,547,177"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="643,348,745,413"/>
+<area shape="poly" id="edge13_Node000012_Node000005" title=" " alt="" coords="572,184,667,332,663,335,568,187"/>
+<area shape="rect" id="Node000006" href="$classfabomatic_1_1_fab_backend.xhtml" title=" " alt="" coords="843,1653,993,2199"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="921,2199,921,2245,915,2245,915,2199"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="993,135,1062,200"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="1021,200,1004,281,997,330,994,379,994,1259,992,1354,986,1451,966,1637,961,1636,980,1450,986,1354,989,1259,989,379,991,330,998,280,1016,199"/>
+<area shape="rect" id="Node000011" href="$structfabomatic_1_1_buffered_msg.xhtml" title=" " alt="" coords="802,318,951,443"/>
+<area shape="poly" id="edge11_Node000011_Node000007" title=" " alt="" coords="993,173,964,178,932,187,902,202,878,226,869,243,863,261,861,301,856,301,858,261,864,241,874,222,898,198,930,182,962,172,992,168"/>
+<area shape="rect" id="Node000013" href="$classfabomatic_1_1_machine.xhtml" title=" " alt="" coords="1122,561,1282,1007"/>
+<area shape="poly" id="edge17_Node000013_Node000007" title=" " alt="" coords="1063,176,1104,193,1125,206,1144,222,1161,247,1169,277,1183,343,1193,411,1205,544,1199,545,1188,412,1177,344,1163,279,1156,250,1140,226,1122,211,1102,198,1061,181"/>
+<area shape="rect" id="Node000014" href="$structfabomatic_1_1_fab_user.xhtml" title=" " alt="" coords="1029,278,1154,483"/>
+<area shape="poly" id="edge16_Node000014_Node000007" title=" " alt="" coords="1039,199,1058,261,1053,263,1034,201"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="970,5,1085,85"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="1030,100,1030,135,1025,135,1025,100"/>
+<area shape="rect" id="Node000009" href="$classfabomatic_1_1_buffer.xhtml" title=" " alt="" coords="815,1135,947,1380"/>
+<area shape="poly" id="edge8_Node000006_Node000009" title=" " alt="" coords="890,1380,904,1636,899,1636,885,1380"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="803,744,943,824"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="876,824,881,1118,876,1118,871,824"/>
+<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="880,443,881,507,877,727,872,727,875,507,875,443"/>
+<area shape="poly" id="edge12_Node000010_Node000012" title=" " alt="" coords="693,428,697,482,703,510,714,536,726,548,741,559,777,607,809,656,857,743,852,746,804,659,773,610,737,563,723,552,709,539,698,511,692,483,688,428"/>
+<area shape="poly" id="edge14_Node000001_Node000013" title=" " alt="" coords="1168,1007,1119,1313,1070,1654,1054,1807,1046,1927,1034,2047,1007,2199,996,2246,991,2245,1002,2198,1029,2046,1040,1927,1048,1807,1065,1653,1114,1313,1163,1006"/>
+<area shape="poly" id="edge15_Node000013_Node000014" title=" " alt="" coords="1098,483,1107,537,1119,582,1114,583,1102,538,1093,483"/>
+<area shape="rect" id="Node000015" href="$classfabomatic_1_1_auth_provider.xhtml" title=" " alt="" coords="369,1803,520,2049"/>
+<area shape="poly" id="edge18_Node000001_Node000015" title=" " alt="" coords="522,2040,592,2137,672,2236,751,2319,831,2394,827,2398,748,2323,668,2239,588,2141,518,2043"/>
+<area shape="poly" id="edge19_Node000015_Node000016" title=" " alt="" coords="447,1110,447,1786,442,1786,442,1110"/>
+<area shape="rect" id="Node000017" href="$structfabomatic_1_1_cached_cards.xhtml" title=" " alt="" coords="159,1185,312,1330"/>
+<area shape="poly" id="edge21_Node000015_Node000017" title=" " alt="" coords="260,1329,404,1786,399,1788,255,1331"/>
+<area shape="poly" id="edge22_Node000017_Node000018" title=" " alt="" coords="86,830,207,1168,202,1169,81,832"/>
+<area shape="poly" id="edge24_Node000017_Node000019" title=" " alt="" coords="238,831,238,1167,233,1167,233,831"/>
+<area shape="rect" id="Node000020" href="$classfabomatic_1_1_buzzer.xhtml" title=" " alt="" coords="1079,1863,1194,1989"/>
+<area shape="poly" id="edge26_Node000001_Node000020" title=" " alt="" coords="1130,1989,1105,2107,1087,2174,1063,2239,1037,2295,1006,2349,1001,2346,1032,2293,1058,2237,1082,2172,1100,2105,1125,1988"/>
+</map>

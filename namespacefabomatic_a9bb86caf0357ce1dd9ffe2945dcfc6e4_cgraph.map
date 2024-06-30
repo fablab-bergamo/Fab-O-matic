@@ -1,0 +1,21 @@
+<map id="fabomatic::taskBlink" name="fabomatic::taskBlink">
+<area shape="rect" id="Node000001" title="blink led" alt="" coords="5,242,144,268"/>
+<area shape="rect" id="Node000002" href="$classfabomatic_1_1_board_logic.xhtml#ad05b4db308773e56d866fe87d34022d9" title="Blinks the LED." alt="" coords="192,235,342,275"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="144,252,176,252,176,258,144,258"/>
+<area shape="rect" id="Node000003" href="$classfabomatic_1_1_machine.xhtml#a4b40dcb31af466acc85f66c845516c82" title=" " alt="" coords="404,5,537,46"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="274,233,290,196,315,149,348,100,388,57,394,52,398,56,392,61,352,104,319,152,295,199,278,235"/>
+<area shape="rect" id="Node000004" href="$classfabomatic_1_1_machine.xhtml#a74aa0b2cd34205ba57710affc56f5c3c" title="Indicates is the machine is not used by anybody." alt="" coords="404,71,537,111"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="281,233,326,179,355,149,388,122,397,117,400,121,392,126,359,153,329,182,285,236"/>
+<area shape="rect" id="Node000005" href="$classfabomatic_1_1_machine.xhtml#a34b0deb04494137cf321e94d50dedf90" title=" " alt="" coords="392,136,548,177"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="304,232,389,187,403,181,405,186,391,192,306,236"/>
+<area shape="rect" id="Node000006" href="$classfabomatic_1_1_fab_backend.xhtml#aef092e0e1db0c3539d5474fad2456255" title="Checks if the client is online." alt="" coords="392,201,549,242"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="342,240,376,234,377,240,343,245"/>
+<area shape="rect" id="Node000007" href="$classfabomatic_1_1_machine.xhtml#a871958cc57845c8651cf1058ed9b30e4" title="Indicates if the machine will power down in less than BEEP_REMAINING_MINUTES." alt="" coords="396,267,545,307"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="343,264,380,270,379,275,342,269"/>
+<area shape="rect" id="Node000008" href="$classfabomatic_1_1_led.xhtml#ae7fd966ebaea3198dfe49b73e963e9cb" title=" " alt="" coords="405,332,535,357"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="305,273,391,317,409,324,407,328,389,321,302,278"/>
+<area shape="rect" id="Node000009" href="$classfabomatic_1_1_led.xhtml#afe933127b5e25e5972e3120bc276b599" title=" " alt="" coords="390,381,550,407"/>
+<area shape="poly" id="edge8_Node000002_Node000009" title=" " alt="" coords="287,274,331,321,360,346,391,367,400,372,398,377,389,372,357,350,328,325,283,278"/>
+<area shape="rect" id="Node000010" href="$classfabomatic_1_1_led.xhtml#a959b8bbb2fe1acb5cbffba251bcb8c4c" title=" " alt="" coords="395,430,546,456"/>
+<area shape="poly" id="edge9_Node000002_Node000010" title=" " alt="" coords="280,275,323,345,354,384,392,417,398,421,395,425,388,421,350,387,318,348,276,277"/>
+</map>

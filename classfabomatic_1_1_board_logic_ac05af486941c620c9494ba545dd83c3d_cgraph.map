@@ -1,0 +1,7 @@
+<map id="fabomatic::BoardLogic::checkPowerOff" name="fabomatic::BoardLogic::checkPowerOff">
+<area shape="rect" id="Node000001" title="Checks if the machine must be powered off." alt="" coords="5,39,156,79"/>
+<area shape="rect" id="Node000002" href="$classfabomatic_1_1_machine.xhtml#a1161d52e85bff96812852f50f53335c9" title="Indicates if POWEROFF_DELAY_MINUTES delay has expired,and the machine is still idle." alt="" coords="204,5,337,46"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="155,43,188,37,189,43,156,48"/>
+<area shape="rect" id="Node000003" href="$classfabomatic_1_1_machine.xhtml#a0aa6c35ee214314d87297013cc29a8aa" title="Powers the machine on or off using relay/MQTT/both." alt="" coords="204,71,337,111"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="156,69,189,75,188,80,155,74"/>
+</map>

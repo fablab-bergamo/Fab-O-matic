@@ -1,0 +1,16 @@
+<map id="fabomatic::FabBackend::waitForAnswer" name="fabomatic::FabBackend::waitForAnswer">
+<area shape="rect" id="Node000001" title="Waits for an answer from the MQTT server." alt="" coords="5,181,163,222"/>
+<area shape="rect" id="Node000002" href="$classfabomatic_1_1_fab_backend.xhtml#a1a45f556aadcbc428d14b7c7577ed43d" title="Establishes a connection to the WiFi network and the MQTT server." alt="" coords="211,120,368,161"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="154,178,204,163,205,168,155,183"/>
+<area shape="rect" id="Node000004" href="$namespacefabomatic_1_1_tasks.xhtml#a5c20f560f5934822d39ba116a16f3ab6" title="Wait for a delay, allowing OTA updates." alt="" coords="621,70,778,96"/>
+<area shape="poly" id="edge8_Node000001_Node000004" title=" " alt="" coords="141,220,228,246,281,257,338,265,398,269,458,266,517,256,572,235,610,210,642,176,666,140,684,108,688,111,671,143,646,179,614,214,575,240,518,261,458,272,398,274,338,271,280,262,227,251,139,225"/>
+<area shape="rect" id="Node000003" href="$classfabomatic_1_1_fab_backend.xhtml#ad928751b2f967feaac0f2cb708c0d6e9" title="Connects to the WiFi network." alt="" coords="416,5,573,46"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="322,117,415,62,435,51,438,56,417,67,325,122"/>
+<area shape="poly" id="edge5_Node000002_Node000004" title=" " alt="" coords="364,117,416,106,514,93,606,85,606,90,514,98,416,111,365,122"/>
+<area shape="rect" id="Node000005" href="$classfabomatic_1_1_fab_backend.xhtml#a3ab102598ee93269de90a0170e024619" title="Callback function for received MQTT messages." alt="" coords="416,120,573,161"/>
+<area shape="poly" id="edge6_Node000002_Node000005" title=" " alt="" coords="368,138,400,138,400,143,368,143"/>
+<area shape="rect" id="Node000006" href="$classfabomatic_1_1_fab_backend.xhtml#aee0cf549bea2daebc3e08742853d36c1" title="Publishes a query on the MQTT server." alt="" coords="416,185,573,226"/>
+<area shape="poly" id="edge7_Node000002_Node000006" title=" " alt="" coords="356,159,415,177,413,183,355,164"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="570,44,637,63,635,68,569,49"/>
+<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="665,71,659,62,663,52,677,46,700,44,725,46,737,53,735,58,723,51,699,49,678,51,666,56,664,61,670,68"/>
+</map>
