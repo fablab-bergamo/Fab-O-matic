@@ -7,6 +7,7 @@ Test suite : [![Wokwi](https://github.com/fablab-bergamo/Fab-O-matic/actions/wor
 
 * A low-cost RFID-card reader with LCD display to monitor and allow machine usage in a Fab Lab environment (e.g. 3D printers, lasers, CNC).
 * This repository includes Firmware + Hardware projects
+* You can find more information in a set of articles regarding the design of this project on [FabLab Bergamo website](https://www.fablabbergamo.it/2024/06/03/fabomatic1/)
 
 | Front panel | PCB |
 | --- | --- |
