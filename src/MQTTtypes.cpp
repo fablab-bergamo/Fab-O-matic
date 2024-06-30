@@ -43,7 +43,7 @@ namespace fabomatic::ServerMQTT
 
     ss << "{\"action\":\"alive\","
        << "\"version\":\"" << FABOMATIC_BUILD << "," << GIT_VERSION << "\","
-       << "\"ip\":\"" << WiFi.localIP().toString().c_str() << "\","
+       << "\"ip\":\"" << WiFi.localIP().toString() << "\","
        << "\"serial\":\"" << serial << "\","
        << "\"heap\":\"" << esp32::getFreeHeap() << "\""
        << "}";
