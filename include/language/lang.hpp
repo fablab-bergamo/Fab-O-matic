@@ -2,7 +2,7 @@
 #define _FABOMATIC_LANG_HPP
 
 // Include Italian language
-#if FABOMATIC_LANG_IT_IT
+#ifdef FABOMATIC_LANG_IT_IT
 #include "language/it-IT.hpp"
 namespace fabomatic::strings
 {
