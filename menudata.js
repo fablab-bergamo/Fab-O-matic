@@ -80,11 +80,11 @@ var menudata={children:[
 {text:"w",url:"namespacemembers_vars.xhtml#index_w"}]},
 {text:"Typedefs",url:"namespacemembers_type.xhtml"},
 {text:"Enumerations",url:"namespacemembers_enum.xhtml"}]}]},
-{text:"Data Structures",url:"annotated.xhtml",children:[
-{text:"Data Structures",url:"annotated.xhtml"},
-{text:"Data Structure Index",url:"classes.xhtml"},
+{text:"Classes",url:"annotated.xhtml",children:[
+{text:"Class List",url:"annotated.xhtml"},
+{text:"Class Index",url:"classes.xhtml"},
 {text:"Class Hierarchy",url:"inherits.xhtml"},
-{text:"Data Fields",url:"functions.xhtml",children:[
+{text:"Class Members",url:"functions.xhtml",children:[
 {text:"All",url:"functions.xhtml",children:[
 {text:"a",url:"functions.xhtml#index_a"},
 {text:"b",url:"functions_b.xhtml#index_b"},
@@ -155,7 +155,7 @@ var menudata={children:[
 {text:"Enumerations",url:"functions_enum.xhtml"}]}]},
 {text:"Files",url:"files.xhtml",children:[
 {text:"File List",url:"files.xhtml"},
-{text:"Globals",url:"globals.xhtml",children:[
+{text:"File Members",url:"globals.xhtml",children:[
 {text:"All",url:"globals.xhtml",children:[
 {text:"a",url:"globals.xhtml#index_a"},
 {text:"b",url:"globals.xhtml#index_b"},
