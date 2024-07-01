@@ -120,8 +120,9 @@ Private Attributes</h2></td></tr>
 <tr class="separator:ae6009edad63f4ffa5790dce3c4cf5f27"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00046">46</a> of file <a class="el" href="_buffered_msg_8hpp_source.xhtml">BufferedMsg.hpp</a>.</p>
+<div class="textblock"><p>Query to be replayed </p>
+
+<p class="definition">Definition at line <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00055">55</a> of file <a class="el" href="_buffered_msg_8hpp_source.xhtml">BufferedMsg.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ab79dc2dc1491da2424cae1d226cfc084" name="ab79dc2dc1491da2424cae1d226cfc084"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab79dc2dc1491da2424cae1d226cfc084">&#9670;&#160;</a></span>BufferedQuery() <span class="overload">[1/2]</span></h2>
@@ -188,14 +189,14 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00055">55</a> of file <a class="el" href="_buffered_msg_8hpp_source.xhtml">BufferedMsg.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   57</span>                                       : <a class="code hl_variable" href="classfabomatic_1_1_buffered_query.xhtml#aba7437ac8cd821313cb13bb1e9bf90dd">mqtt_value</a>(value),</div>
-<div class="line"><span class="lineno">   58</span>                                         <a class="code hl_variable" href="classfabomatic_1_1_buffered_query.xhtml#ab97558c0fc507f0c0c4da32252a0a063">mqtt_topic</a>(<a class="code hl_function" href="classfabomatic_1_1_buffered_query.xhtml#a85f1a2490c3e92ff70deb6226634d6c5">topic</a>),</div>
-<div class="line"><span class="lineno">   59</span>                                         <a class="code hl_variable" href="classfabomatic_1_1_buffered_query.xhtml#ae6009edad63f4ffa5790dce3c4cf5f27">wait_for_answer</a>{wait} {};</div>
-<div class="ttc" id="aclassfabomatic_1_1_buffered_query_xhtml_a85f1a2490c3e92ff70deb6226634d6c5"><div class="ttname"><a href="classfabomatic_1_1_buffered_query.xhtml#a85f1a2490c3e92ff70deb6226634d6c5">fabomatic::BufferedQuery::topic</a></div><div class="ttdeci">auto topic() const -&gt; std::string</div><div class="ttdef"><b>Definition</b> <a href="_buffered_msg_8hpp_source.xhtml#l00083">BufferedMsg.hpp:83</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_buffered_query_xhtml_ab97558c0fc507f0c0c4da32252a0a063"><div class="ttname"><a href="classfabomatic_1_1_buffered_query.xhtml#ab97558c0fc507f0c0c4da32252a0a063">fabomatic::BufferedQuery::mqtt_topic</a></div><div class="ttdeci">std::string_view mqtt_topic</div><div class="ttdef"><b>Definition</b> <a href="_buffered_msg_8hpp_source.xhtml#l00050">BufferedMsg.hpp:50</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_buffered_query_xhtml_aba7437ac8cd821313cb13bb1e9bf90dd"><div class="ttname"><a href="classfabomatic_1_1_buffered_query.xhtml#aba7437ac8cd821313cb13bb1e9bf90dd">fabomatic::BufferedQuery::mqtt_value</a></div><div class="ttdeci">std::string_view mqtt_value</div><div class="ttdef"><b>Definition</b> <a href="_buffered_msg_8hpp_source.xhtml#l00049">BufferedMsg.hpp:49</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_buffered_query_xhtml_ae6009edad63f4ffa5790dce3c4cf5f27"><div class="ttname"><a href="classfabomatic_1_1_buffered_query.xhtml#ae6009edad63f4ffa5790dce3c4cf5f27">fabomatic::BufferedQuery::wait_for_answer</a></div><div class="ttdeci">bool wait_for_answer</div><div class="ttdef"><b>Definition</b> <a href="_buffered_msg_8hpp_source.xhtml#l00051">BufferedMsg.hpp:51</a></div></div>
+<p class="definition">Definition at line <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00064">64</a> of file <a class="el" href="_buffered_msg_8hpp_source.xhtml">BufferedMsg.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   66</span>                                       : <a class="code hl_variable" href="classfabomatic_1_1_buffered_query.xhtml#aba7437ac8cd821313cb13bb1e9bf90dd">mqtt_value</a>(value),</div>
+<div class="line"><span class="lineno">   67</span>                                         <a class="code hl_variable" href="classfabomatic_1_1_buffered_query.xhtml#ab97558c0fc507f0c0c4da32252a0a063">mqtt_topic</a>(<a class="code hl_function" href="classfabomatic_1_1_buffered_query.xhtml#a85f1a2490c3e92ff70deb6226634d6c5">topic</a>),</div>
+<div class="line"><span class="lineno">   68</span>                                         <a class="code hl_variable" href="classfabomatic_1_1_buffered_query.xhtml#ae6009edad63f4ffa5790dce3c4cf5f27">wait_for_answer</a>{wait} {};</div>
+<div class="ttc" id="aclassfabomatic_1_1_buffered_query_xhtml_a85f1a2490c3e92ff70deb6226634d6c5"><div class="ttname"><a href="classfabomatic_1_1_buffered_query.xhtml#a85f1a2490c3e92ff70deb6226634d6c5">fabomatic::BufferedQuery::topic</a></div><div class="ttdeci">auto topic() const -&gt; std::string</div><div class="ttdef"><b>Definition</b> <a href="_buffered_msg_8hpp_source.xhtml#l00092">BufferedMsg.hpp:92</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_buffered_query_xhtml_ab97558c0fc507f0c0c4da32252a0a063"><div class="ttname"><a href="classfabomatic_1_1_buffered_query.xhtml#ab97558c0fc507f0c0c4da32252a0a063">fabomatic::BufferedQuery::mqtt_topic</a></div><div class="ttdeci">std::string_view mqtt_topic</div><div class="ttdef"><b>Definition</b> <a href="_buffered_msg_8hpp_source.xhtml#l00059">BufferedMsg.hpp:59</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_buffered_query_xhtml_aba7437ac8cd821313cb13bb1e9bf90dd"><div class="ttname"><a href="classfabomatic_1_1_buffered_query.xhtml#aba7437ac8cd821313cb13bb1e9bf90dd">fabomatic::BufferedQuery::mqtt_value</a></div><div class="ttdeci">std::string_view mqtt_value</div><div class="ttdef"><b>Definition</b> <a href="_buffered_msg_8hpp_source.xhtml#l00058">BufferedMsg.hpp:58</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_buffered_query_xhtml_ae6009edad63f4ffa5790dce3c4cf5f27"><div class="ttname"><a href="classfabomatic_1_1_buffered_query.xhtml#ae6009edad63f4ffa5790dce3c4cf5f27">fabomatic::BufferedQuery::wait_for_answer</a></div><div class="ttdeci">bool wait_for_answer</div><div class="ttdef"><b>Definition</b> <a href="_buffered_msg_8hpp_source.xhtml#l00060">BufferedMsg.hpp:60</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -225,10 +226,10 @@ Private Attributes</h2></td></tr>
 
 <p>Implements <a class="el" href="classfabomatic_1_1_server_m_q_t_t_1_1_query.xhtml#a030134b26b722150484ae1aaa101e8e5">fabomatic::ServerMQTT::Query</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00078">78</a> of file <a class="el" href="_buffered_msg_8hpp_source.xhtml">BufferedMsg.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   79</span>    {</div>
-<div class="line"><span class="lineno">   80</span>      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><span class="lineno">   81</span>    };</div>
+<p class="definition">Definition at line <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00087">87</a> of file <a class="el" href="_buffered_msg_8hpp_source.xhtml">BufferedMsg.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   88</span>    {</div>
+<div class="line"><span class="lineno">   89</span>      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">   90</span>    };</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -257,19 +258,19 @@ Private Attributes</h2></td></tr>
 
 <p>Implements <a class="el" href="classfabomatic_1_1_server_m_q_t_t_1_1_query.xhtml#a09c1b44286f828e0927274cdd8f272f2">fabomatic::ServerMQTT::Query</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00061">61</a> of file <a class="el" href="_buffered_msg_8hpp_source.xhtml">BufferedMsg.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   62</span>    {</div>
-<div class="line"><span class="lineno">   63</span>      <span class="keyword">auto</span> value = std::string{<a class="code hl_variable" href="classfabomatic_1_1_buffered_query.xhtml#aba7437ac8cd821313cb13bb1e9bf90dd">mqtt_value</a>};</div>
-<div class="line"><span class="lineno">   64</span>      <span class="keywordflow">if</span> (value.find(<span class="stringliteral">&quot;}&quot;</span>) == value.size() - 1 &amp;&amp;</div>
-<div class="line"><span class="lineno">   65</span>          value.find(<span class="stringliteral">&quot;replay&quot;</span>) == value.npos)</div>
-<div class="line"><span class="lineno">   66</span>      {</div>
-<div class="line"><span class="lineno">   67</span>        value.erase(value.end() - 1);</div>
-<div class="line"><span class="lineno">   68</span>        value += <span class="stringliteral">&quot;, \&quot;replay\&quot;:true}&quot;</span>;</div>
-<div class="line"><span class="lineno">   69</span>      }</div>
-<div class="line"><span class="lineno">   70</span>      <span class="keywordflow">return</span> value;</div>
-<div class="line"><span class="lineno">   71</span>    };</div>
+<p class="definition">Definition at line <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00070">70</a> of file <a class="el" href="_buffered_msg_8hpp_source.xhtml">BufferedMsg.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   71</span>    {</div>
+<div class="line"><span class="lineno">   72</span>      <span class="keyword">auto</span> value = std::string{<a class="code hl_variable" href="classfabomatic_1_1_buffered_query.xhtml#aba7437ac8cd821313cb13bb1e9bf90dd">mqtt_value</a>};</div>
+<div class="line"><span class="lineno">   73</span>      <span class="keywordflow">if</span> (value.find(<span class="stringliteral">&quot;}&quot;</span>) == value.size() - 1 &amp;&amp;</div>
+<div class="line"><span class="lineno">   74</span>          value.find(<span class="stringliteral">&quot;replay&quot;</span>) == value.npos)</div>
+<div class="line"><span class="lineno">   75</span>      {</div>
+<div class="line"><span class="lineno">   76</span>        value.erase(value.end() - 1);</div>
+<div class="line"><span class="lineno">   77</span>        value += <span class="stringliteral">&quot;, \&quot;replay\&quot;:true}&quot;</span>;</div>
+<div class="line"><span class="lineno">   78</span>      }</div>
+<div class="line"><span class="lineno">   79</span>      <span class="keywordflow">return</span> value;</div>
+<div class="line"><span class="lineno">   80</span>    };</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00049">mqtt_value</a>.</p>
+<p class="reference">References <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00058">mqtt_value</a>.</p>
 
 </div>
 </div>
@@ -297,12 +298,12 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00083">83</a> of file <a class="el" href="_buffered_msg_8hpp_source.xhtml">BufferedMsg.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   84</span>    {</div>
-<div class="line"><span class="lineno">   85</span>      <span class="keywordflow">return</span> std::string(<a class="code hl_variable" href="classfabomatic_1_1_buffered_query.xhtml#ab97558c0fc507f0c0c4da32252a0a063">mqtt_topic</a>);</div>
-<div class="line"><span class="lineno">   86</span>    };</div>
+<p class="definition">Definition at line <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00092">92</a> of file <a class="el" href="_buffered_msg_8hpp_source.xhtml">BufferedMsg.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   93</span>    {</div>
+<div class="line"><span class="lineno">   94</span>      <span class="keywordflow">return</span> std::string(<a class="code hl_variable" href="classfabomatic_1_1_buffered_query.xhtml#ab97558c0fc507f0c0c4da32252a0a063">mqtt_topic</a>);</div>
+<div class="line"><span class="lineno">   95</span>    };</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00050">mqtt_topic</a>.</p>
+<p class="reference">References <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00059">mqtt_topic</a>.</p>
 
 </div>
 </div>
@@ -331,12 +332,12 @@ Private Attributes</h2></td></tr>
 
 <p>Implements <a class="el" href="classfabomatic_1_1_server_m_q_t_t_1_1_query.xhtml#a3a9b87239a67e97e13baa28657f31a06">fabomatic::ServerMQTT::Query</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00073">73</a> of file <a class="el" href="_buffered_msg_8hpp_source.xhtml">BufferedMsg.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   74</span>    {</div>
-<div class="line"><span class="lineno">   75</span>      <span class="keywordflow">return</span> <a class="code hl_variable" href="classfabomatic_1_1_buffered_query.xhtml#ae6009edad63f4ffa5790dce3c4cf5f27">wait_for_answer</a>;</div>
-<div class="line"><span class="lineno">   76</span>    };</div>
+<p class="definition">Definition at line <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00082">82</a> of file <a class="el" href="_buffered_msg_8hpp_source.xhtml">BufferedMsg.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   83</span>    {</div>
+<div class="line"><span class="lineno">   84</span>      <span class="keywordflow">return</span> <a class="code hl_variable" href="classfabomatic_1_1_buffered_query.xhtml#ae6009edad63f4ffa5790dce3c4cf5f27">wait_for_answer</a>;</div>
+<div class="line"><span class="lineno">   85</span>    };</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00051">wait_for_answer</a>.</p>
+<p class="reference">References <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00060">wait_for_answer</a>.</p>
 
 </div>
 </div>
@@ -361,9 +362,9 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00050">50</a> of file <a class="el" href="_buffered_msg_8hpp_source.xhtml">BufferedMsg.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00059">59</a> of file <a class="el" href="_buffered_msg_8hpp_source.xhtml">BufferedMsg.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00083">topic()</a>, and <a class="el" href="_fab_backend_8cpp_source.xhtml#l00593">fabomatic::FabBackend::transmitBuffer()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00092">topic()</a>, and <a class="el" href="_fab_backend_8cpp_source.xhtml#l00593">fabomatic::FabBackend::transmitBuffer()</a>.</p>
 
 </div>
 </div>
@@ -387,9 +388,9 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00049">49</a> of file <a class="el" href="_buffered_msg_8hpp_source.xhtml">BufferedMsg.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00058">58</a> of file <a class="el" href="_buffered_msg_8hpp_source.xhtml">BufferedMsg.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00061">payload()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00070">payload()</a>.</p>
 
 </div>
 </div>
@@ -413,9 +414,9 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00051">51</a> of file <a class="el" href="_buffered_msg_8hpp_source.xhtml">BufferedMsg.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00060">60</a> of file <a class="el" href="_buffered_msg_8hpp_source.xhtml">BufferedMsg.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00073">waitForReply()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00082">waitForReply()</a>.</p>
 
 </div>
 </div>
@@ -425,7 +426,7 @@ Private Attributes</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jun 30 2024 20:15:48 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Mon Jul 1 2024 20:53:05 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

@@ -180,8 +180,9 @@ Private Attributes</h2></td></tr>
 <tr class="separator:adc90a9a7701e126e74796646be5f21bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="_tasks_8hpp_source.xhtml#l00017">17</a> of file <a class="el" href="_tasks_8hpp_source.xhtml">Tasks.hpp</a>.</p>
+<div class="textblock"><p>A task class which represents a function to be called at requested intervals </p>
+
+<p class="definition">Definition at line <a class="el" href="_tasks_8hpp_source.xhtml#l00019">19</a> of file <a class="el" href="_tasks_8hpp_source.xhtml">Tasks.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a1963aeb170d8cbdd22e8ac5d1f906c91" name="a1963aeb170d8cbdd22e8ac5d1f906c91"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1963aeb170d8cbdd22e8ac5d1f906c91">&#9670;&#160;</a></span>Task() <span class="overload">[1/4]</span></h2>
@@ -288,15 +289,15 @@ Private Attributes</h2></td></tr>
 <div class="line"><span class="lineno">  134</span>    <a class="code hl_variable" href="namespacefabomatic_1_1_board.xhtml#af9268221ea7bfdcc46c3862fa7996d3d">scheduler</a>.<a class="code hl_function" href="classfabomatic_1_1_tasks_1_1_scheduler.xhtml#a36f6c3f66951bd53e6873459bed0b76e">addTask</a>(std::ref(*<span class="keyword">this</span>));</div>
 <div class="line"><span class="lineno">  135</span>  }</div>
 <div class="ttc" id="aclassfabomatic_1_1_tasks_1_1_scheduler_xhtml_a36f6c3f66951bd53e6873459bed0b76e"><div class="ttname"><a href="classfabomatic_1_1_tasks_1_1_scheduler.xhtml#a36f6c3f66951bd53e6873459bed0b76e">fabomatic::Tasks::Scheduler::addTask</a></div><div class="ttdeci">auto addTask(Task &amp;task) -&gt; void</div><div class="ttdef"><b>Definition</b> <a href="_tasks_8cpp_source.xhtml#l00017">Tasks.cpp:17</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_tasks_1_1_task_xhtml_a033906c8fc5c8d929c4336d4ed988207"><div class="ttname"><a href="classfabomatic_1_1_tasks_1_1_task.xhtml#a033906c8fc5c8d929c4336d4ed988207">fabomatic::Tasks::Task::total_runtime</a></div><div class="ttdeci">milliseconds total_runtime</div><div class="ttdef"><b>Definition</b> <a href="_tasks_8hpp_source.xhtml#l00100">Tasks.hpp:100</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_tasks_1_1_task_xhtml_a195917ecd47b52f9e924a220cbd812e5"><div class="ttname"><a href="classfabomatic_1_1_tasks_1_1_task.xhtml#a195917ecd47b52f9e924a220cbd812e5">fabomatic::Tasks::Task::active</a></div><div class="ttdeci">bool active</div><div class="ttdef"><b>Definition</b> <a href="_tasks_8hpp_source.xhtml#l00093">Tasks.hpp:93</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_tasks_1_1_task_xhtml_a46a71ed2fe769cbf21bd093c3452a5a8"><div class="ttname"><a href="classfabomatic_1_1_tasks_1_1_task.xhtml#a46a71ed2fe769cbf21bd093c3452a5a8">fabomatic::Tasks::Task::average_tardiness</a></div><div class="ttdeci">milliseconds average_tardiness</div><div class="ttdef"><b>Definition</b> <a href="_tasks_8hpp_source.xhtml#l00099">Tasks.hpp:99</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_tasks_1_1_task_xhtml_a7016ab8ad769034f28f927be739b9bf6"><div class="ttname"><a href="classfabomatic_1_1_tasks_1_1_task.xhtml#a7016ab8ad769034f28f927be739b9bf6">fabomatic::Tasks::Task::next_run</a></div><div class="ttdeci">time_point_sc next_run</div><div class="ttdef"><b>Definition</b> <a href="_tasks_8hpp_source.xhtml#l00098">Tasks.hpp:98</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_tasks_1_1_task_xhtml_a8ed7793f31565370d833323b37f43903"><div class="ttname"><a href="classfabomatic_1_1_tasks_1_1_task.xhtml#a8ed7793f31565370d833323b37f43903">fabomatic::Tasks::Task::period</a></div><div class="ttdeci">milliseconds period</div><div class="ttdef"><b>Definition</b> <a href="_tasks_8hpp_source.xhtml#l00095">Tasks.hpp:95</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_tasks_1_1_task_xhtml_ab4fc14614c8b11776381958539a544e8"><div class="ttname"><a href="classfabomatic_1_1_tasks_1_1_task.xhtml#ab4fc14614c8b11776381958539a544e8">fabomatic::Tasks::Task::last_run</a></div><div class="ttdeci">time_point_sc last_run</div><div class="ttdef"><b>Definition</b> <a href="_tasks_8hpp_source.xhtml#l00097">Tasks.hpp:97</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_tasks_1_1_task_xhtml_aca74ea0431e61fc3cf414f0425332ec0"><div class="ttname"><a href="classfabomatic_1_1_tasks_1_1_task.xhtml#aca74ea0431e61fc3cf414f0425332ec0">fabomatic::Tasks::Task::callback</a></div><div class="ttdeci">std::function&lt; void()&gt; callback</div><div class="ttdef"><b>Definition</b> <a href="_tasks_8hpp_source.xhtml#l00101">Tasks.hpp:101</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_tasks_1_1_task_xhtml_adc90a9a7701e126e74796646be5f21bf"><div class="ttname"><a href="classfabomatic_1_1_tasks_1_1_task.xhtml#adc90a9a7701e126e74796646be5f21bf">fabomatic::Tasks::Task::run_counter</a></div><div class="ttdeci">unsigned long run_counter</div><div class="ttdef"><b>Definition</b> <a href="_tasks_8hpp_source.xhtml#l00102">Tasks.hpp:102</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_tasks_1_1_task_xhtml_afcd445681f5c92b55b601aff90f41f05"><div class="ttname"><a href="classfabomatic_1_1_tasks_1_1_task.xhtml#afcd445681f5c92b55b601aff90f41f05">fabomatic::Tasks::Task::delay</a></div><div class="ttdeci">milliseconds delay</div><div class="ttdef"><b>Definition</b> <a href="_tasks_8hpp_source.xhtml#l00096">Tasks.hpp:96</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_tasks_1_1_task_xhtml_a033906c8fc5c8d929c4336d4ed988207"><div class="ttname"><a href="classfabomatic_1_1_tasks_1_1_task.xhtml#a033906c8fc5c8d929c4336d4ed988207">fabomatic::Tasks::Task::total_runtime</a></div><div class="ttdeci">milliseconds total_runtime</div><div class="ttdef"><b>Definition</b> <a href="_tasks_8hpp_source.xhtml#l00102">Tasks.hpp:102</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_tasks_1_1_task_xhtml_a195917ecd47b52f9e924a220cbd812e5"><div class="ttname"><a href="classfabomatic_1_1_tasks_1_1_task.xhtml#a195917ecd47b52f9e924a220cbd812e5">fabomatic::Tasks::Task::active</a></div><div class="ttdeci">bool active</div><div class="ttdef"><b>Definition</b> <a href="_tasks_8hpp_source.xhtml#l00095">Tasks.hpp:95</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_tasks_1_1_task_xhtml_a46a71ed2fe769cbf21bd093c3452a5a8"><div class="ttname"><a href="classfabomatic_1_1_tasks_1_1_task.xhtml#a46a71ed2fe769cbf21bd093c3452a5a8">fabomatic::Tasks::Task::average_tardiness</a></div><div class="ttdeci">milliseconds average_tardiness</div><div class="ttdef"><b>Definition</b> <a href="_tasks_8hpp_source.xhtml#l00101">Tasks.hpp:101</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_tasks_1_1_task_xhtml_a7016ab8ad769034f28f927be739b9bf6"><div class="ttname"><a href="classfabomatic_1_1_tasks_1_1_task.xhtml#a7016ab8ad769034f28f927be739b9bf6">fabomatic::Tasks::Task::next_run</a></div><div class="ttdeci">time_point_sc next_run</div><div class="ttdef"><b>Definition</b> <a href="_tasks_8hpp_source.xhtml#l00100">Tasks.hpp:100</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_tasks_1_1_task_xhtml_a8ed7793f31565370d833323b37f43903"><div class="ttname"><a href="classfabomatic_1_1_tasks_1_1_task.xhtml#a8ed7793f31565370d833323b37f43903">fabomatic::Tasks::Task::period</a></div><div class="ttdeci">milliseconds period</div><div class="ttdef"><b>Definition</b> <a href="_tasks_8hpp_source.xhtml#l00097">Tasks.hpp:97</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_tasks_1_1_task_xhtml_ab4fc14614c8b11776381958539a544e8"><div class="ttname"><a href="classfabomatic_1_1_tasks_1_1_task.xhtml#ab4fc14614c8b11776381958539a544e8">fabomatic::Tasks::Task::last_run</a></div><div class="ttdeci">time_point_sc last_run</div><div class="ttdef"><b>Definition</b> <a href="_tasks_8hpp_source.xhtml#l00099">Tasks.hpp:99</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_tasks_1_1_task_xhtml_aca74ea0431e61fc3cf414f0425332ec0"><div class="ttname"><a href="classfabomatic_1_1_tasks_1_1_task.xhtml#aca74ea0431e61fc3cf414f0425332ec0">fabomatic::Tasks::Task::callback</a></div><div class="ttdeci">std::function&lt; void()&gt; callback</div><div class="ttdef"><b>Definition</b> <a href="_tasks_8hpp_source.xhtml#l00103">Tasks.hpp:103</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_tasks_1_1_task_xhtml_adc90a9a7701e126e74796646be5f21bf"><div class="ttname"><a href="classfabomatic_1_1_tasks_1_1_task.xhtml#adc90a9a7701e126e74796646be5f21bf">fabomatic::Tasks::Task::run_counter</a></div><div class="ttdeci">unsigned long run_counter</div><div class="ttdef"><b>Definition</b> <a href="_tasks_8hpp_source.xhtml#l00104">Tasks.hpp:104</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_tasks_1_1_task_xhtml_afcd445681f5c92b55b601aff90f41f05"><div class="ttname"><a href="classfabomatic_1_1_tasks_1_1_task.xhtml#afcd445681f5c92b55b601aff90f41f05">fabomatic::Tasks::Task::delay</a></div><div class="ttdeci">milliseconds delay</div><div class="ttdef"><b>Definition</b> <a href="_tasks_8hpp_source.xhtml#l00098">Tasks.hpp:98</a></div></div>
 <div class="ttc" id="anamespacefabomatic_1_1_board_xhtml_af9268221ea7bfdcc46c3862fa7996d3d"><div class="ttname"><a href="namespacefabomatic_1_1_board.xhtml#af9268221ea7bfdcc46c3862fa7996d3d">fabomatic::Board::scheduler</a></div><div class="ttdeci">Scheduler scheduler</div><div class="ttdef"><b>Definition</b> <a href="globals_8hpp_source.xhtml#l00038">globals.hpp:38</a></div></div>
 </div><!-- fragment -->
 <p class="reference">References <a class="el" href="_tasks_8cpp_source.xhtml#l00017">fabomatic::Tasks::Scheduler::addTask()</a>.</p>
@@ -469,7 +470,7 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  220</span>    <span class="keywordflow">return</span> 0ms;</div>
 <div class="line"><span class="lineno">  221</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_tasks_8hpp_source.xhtml#l00099">average_tardiness</a>, and <a class="el" href="_tasks_8hpp_source.xhtml#l00095">period</a>.</p>
+<p class="reference">References <a class="el" href="_tasks_8hpp_source.xhtml#l00101">average_tardiness</a>, and <a class="el" href="_tasks_8hpp_source.xhtml#l00097">period</a>.</p>
 
 </div>
 </div>
@@ -496,7 +497,7 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  206</span>    <span class="keywordflow">return</span> <a class="code hl_variable" href="classfabomatic_1_1_tasks_1_1_task.xhtml#aca74ea0431e61fc3cf414f0425332ec0">callback</a>;</div>
 <div class="line"><span class="lineno">  207</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_tasks_8hpp_source.xhtml#l00101">callback</a>.</p>
+<p class="reference">References <a class="el" href="_tasks_8hpp_source.xhtml#l00103">callback</a>.</p>
 
 </div>
 </div>
@@ -523,7 +524,7 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  230</span>    <span class="keywordflow">return</span> <a class="code hl_variable" href="classfabomatic_1_1_tasks_1_1_task.xhtml#afcd445681f5c92b55b601aff90f41f05">delay</a>;</div>
 <div class="line"><span class="lineno">  231</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_tasks_8hpp_source.xhtml#l00096">delay</a>.</p>
+<p class="reference">References <a class="el" href="_tasks_8hpp_source.xhtml#l00098">delay</a>.</p>
 
 </div>
 </div>
@@ -548,9 +549,9 @@ Here is the caller graph for this function:</div>
 <div class="fragment"><div class="line"><span class="lineno">  210</span>  {</div>
 <div class="line"><span class="lineno">  211</span>    <span class="keywordflow">return</span> <a class="code hl_variable" href="classfabomatic_1_1_tasks_1_1_task.xhtml#a819de0c8e46486621657e107b9101ef8">id</a>;</div>
 <div class="line"><span class="lineno">  212</span>  }</div>
-<div class="ttc" id="aclassfabomatic_1_1_tasks_1_1_task_xhtml_a819de0c8e46486621657e107b9101ef8"><div class="ttname"><a href="classfabomatic_1_1_tasks_1_1_task.xhtml#a819de0c8e46486621657e107b9101ef8">fabomatic::Tasks::Task::id</a></div><div class="ttdeci">const std::string id</div><div class="ttdef"><b>Definition</b> <a href="_tasks_8hpp_source.xhtml#l00094">Tasks.hpp:94</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_tasks_1_1_task_xhtml_a819de0c8e46486621657e107b9101ef8"><div class="ttname"><a href="classfabomatic_1_1_tasks_1_1_task.xhtml#a819de0c8e46486621657e107b9101ef8">fabomatic::Tasks::Task::id</a></div><div class="ttdeci">const std::string id</div><div class="ttdef"><b>Definition</b> <a href="_tasks_8hpp_source.xhtml#l00096">Tasks.hpp:96</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_tasks_8hpp_source.xhtml#l00094">id</a>.</p>
+<p class="reference">References <a class="el" href="_tasks_8hpp_source.xhtml#l00096">id</a>.</p>
 
 </div>
 </div>
@@ -577,7 +578,7 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  245</span>    <span class="keywordflow">return</span> <a class="code hl_variable" href="classfabomatic_1_1_tasks_1_1_task.xhtml#a7016ab8ad769034f28f927be739b9bf6">next_run</a>;</div>
 <div class="line"><span class="lineno">  246</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_tasks_8hpp_source.xhtml#l00098">next_run</a>.</p>
+<p class="reference">References <a class="el" href="_tasks_8hpp_source.xhtml#l00100">next_run</a>.</p>
 
 </div>
 </div>
@@ -603,7 +604,7 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  201</span>    <span class="keywordflow">return</span> <a class="code hl_variable" href="classfabomatic_1_1_tasks_1_1_task.xhtml#a8ed7793f31565370d833323b37f43903">period</a>;</div>
 <div class="line"><span class="lineno">  202</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_tasks_8hpp_source.xhtml#l00095">period</a>.</p>
+<p class="reference">References <a class="el" href="_tasks_8hpp_source.xhtml#l00097">period</a>.</p>
 
 </div>
 </div>
@@ -629,7 +630,7 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  225</span>    <span class="keywordflow">return</span> <a class="code hl_variable" href="classfabomatic_1_1_tasks_1_1_task.xhtml#adc90a9a7701e126e74796646be5f21bf">run_counter</a>;</div>
 <div class="line"><span class="lineno">  226</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_tasks_8hpp_source.xhtml#l00102">run_counter</a>.</p>
+<p class="reference">References <a class="el" href="_tasks_8hpp_source.xhtml#l00104">run_counter</a>.</p>
 
 </div>
 </div>
@@ -655,7 +656,7 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  240</span>    <span class="keywordflow">return</span> <a class="code hl_variable" href="classfabomatic_1_1_tasks_1_1_task.xhtml#a033906c8fc5c8d929c4336d4ed988207">total_runtime</a>;</div>
 <div class="line"><span class="lineno">  241</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_tasks_8hpp_source.xhtml#l00100">total_runtime</a>.</p>
+<p class="reference">References <a class="el" href="_tasks_8hpp_source.xhtml#l00102">total_runtime</a>.</p>
 
 </div>
 </div>
@@ -682,7 +683,7 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  196</span>    <span class="keywordflow">return</span> <a class="code hl_variable" href="classfabomatic_1_1_tasks_1_1_task.xhtml#a195917ecd47b52f9e924a220cbd812e5">active</a>;</div>
 <div class="line"><span class="lineno">  197</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_tasks_8hpp_source.xhtml#l00093">active</a>.</p>
+<p class="reference">References <a class="el" href="_tasks_8hpp_source.xhtml#l00095">active</a>.</p>
 
 </div>
 </div>
@@ -953,7 +954,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_tasks_8hpp_source.xhtml#l00093">93</a> of file <a class="el" href="_tasks_8hpp_source.xhtml">Tasks.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_tasks_8hpp_source.xhtml#l00095">95</a> of file <a class="el" href="_tasks_8hpp_source.xhtml">Tasks.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="_tasks_8cpp_source.xhtml#l00194">isActive()</a>.</p>
 
@@ -979,7 +980,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_tasks_8hpp_source.xhtml#l00099">99</a> of file <a class="el" href="_tasks_8hpp_source.xhtml">Tasks.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_tasks_8hpp_source.xhtml#l00101">101</a> of file <a class="el" href="_tasks_8hpp_source.xhtml">Tasks.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="_tasks_8cpp_source.xhtml#l00214">getAvgTardiness()</a>.</p>
 
@@ -1005,7 +1006,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_tasks_8hpp_source.xhtml#l00101">101</a> of file <a class="el" href="_tasks_8hpp_source.xhtml">Tasks.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_tasks_8hpp_source.xhtml#l00103">103</a> of file <a class="el" href="_tasks_8hpp_source.xhtml">Tasks.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="_tasks_8cpp_source.xhtml#l00204">getCallback()</a>.</p>
 
@@ -1031,7 +1032,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_tasks_8hpp_source.xhtml#l00096">96</a> of file <a class="el" href="_tasks_8hpp_source.xhtml">Tasks.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_tasks_8hpp_source.xhtml#l00098">98</a> of file <a class="el" href="_tasks_8hpp_source.xhtml">Tasks.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="_tasks_8cpp_source.xhtml#l00228">getDelay()</a>.</p>
 
@@ -1057,7 +1058,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_tasks_8hpp_source.xhtml#l00094">94</a> of file <a class="el" href="_tasks_8hpp_source.xhtml">Tasks.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_tasks_8hpp_source.xhtml#l00096">96</a> of file <a class="el" href="_tasks_8hpp_source.xhtml">Tasks.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="_tasks_8cpp_source.xhtml#l00209">getId()</a>.</p>
 
@@ -1083,7 +1084,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_tasks_8hpp_source.xhtml#l00097">97</a> of file <a class="el" href="_tasks_8hpp_source.xhtml">Tasks.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_tasks_8hpp_source.xhtml#l00099">99</a> of file <a class="el" href="_tasks_8hpp_source.xhtml">Tasks.hpp</a>.</p>
 
 </div>
 </div>
@@ -1107,7 +1108,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_tasks_8hpp_source.xhtml#l00098">98</a> of file <a class="el" href="_tasks_8hpp_source.xhtml">Tasks.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_tasks_8hpp_source.xhtml#l00100">100</a> of file <a class="el" href="_tasks_8hpp_source.xhtml">Tasks.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="_tasks_8cpp_source.xhtml#l00243">getNextRun()</a>.</p>
 
@@ -1133,7 +1134,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_tasks_8hpp_source.xhtml#l00095">95</a> of file <a class="el" href="_tasks_8hpp_source.xhtml">Tasks.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_tasks_8hpp_source.xhtml#l00097">97</a> of file <a class="el" href="_tasks_8hpp_source.xhtml">Tasks.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="_tasks_8cpp_source.xhtml#l00214">getAvgTardiness()</a>, and <a class="el" href="_tasks_8cpp_source.xhtml#l00199">getPeriod()</a>.</p>
 
@@ -1159,7 +1160,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_tasks_8hpp_source.xhtml#l00102">102</a> of file <a class="el" href="_tasks_8hpp_source.xhtml">Tasks.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_tasks_8hpp_source.xhtml#l00104">104</a> of file <a class="el" href="_tasks_8hpp_source.xhtml">Tasks.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="_tasks_8cpp_source.xhtml#l00223">getRunCounter()</a>.</p>
 
@@ -1185,7 +1186,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_tasks_8hpp_source.xhtml#l00100">100</a> of file <a class="el" href="_tasks_8hpp_source.xhtml">Tasks.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_tasks_8hpp_source.xhtml#l00102">102</a> of file <a class="el" href="_tasks_8hpp_source.xhtml">Tasks.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="_tasks_8cpp_source.xhtml#l00238">getTotalRuntime()</a>.</p>
 
@@ -1198,7 +1199,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jun 30 2024 20:15:49 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Mon Jul 1 2024 20:53:05 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

@@ -105,8 +105,9 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a0dc9d91453196e161f4ec01b8642f831"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="_board_info_8hpp_source.xhtml#l00008">8</a> of file <a class="el" href="_board_info_8hpp_source.xhtml">BoardInfo.hpp</a>.</p>
+<div class="textblock"><p>Helper struct representing the display state </p>
+
+<p class="definition">Definition at line <a class="el" href="_board_info_8hpp_source.xhtml#l00011">11</a> of file <a class="el" href="_board_info_8hpp_source.xhtml">BoardInfo.hpp</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a7db6ab1b4db86569cbba04b855ea0908" name="a7db6ab1b4db86569cbba04b855ea0908"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7db6ab1b4db86569cbba04b855ea0908">&#9670;&#160;</a></span>operator==()</h2>
@@ -133,17 +134,17 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_board_info_8hpp_source.xhtml#l00014">14</a> of file <a class="el" href="_board_info_8hpp_source.xhtml">BoardInfo.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   15</span>    {</div>
-<div class="line"><span class="lineno">   16</span>      <span class="keywordflow">return</span> <a class="code hl_variable" href="structfabomatic_1_1_board_info.xhtml#a51fc86bf0f5919a4ac0911bd9a9dbedb">server_connected</a> == other.server_connected &amp;&amp;</div>
-<div class="line"><span class="lineno">   17</span>             <a class="code hl_variable" href="structfabomatic_1_1_board_info.xhtml#a1b469e101a86ce94e184d205525488a9">power_state</a> == other.power_state &amp;&amp;</div>
-<div class="line"><span class="lineno">   18</span>             <a class="code hl_variable" href="structfabomatic_1_1_board_info.xhtml#a0dc9d91453196e161f4ec01b8642f831">power_warning</a> == other.power_warning;</div>
-<div class="line"><span class="lineno">   19</span>    };</div>
-<div class="ttc" id="astructfabomatic_1_1_board_info_xhtml_a0dc9d91453196e161f4ec01b8642f831"><div class="ttname"><a href="structfabomatic_1_1_board_info.xhtml#a0dc9d91453196e161f4ec01b8642f831">fabomatic::BoardInfo::power_warning</a></div><div class="ttdeci">bool power_warning</div><div class="ttdef"><b>Definition</b> <a href="_board_info_8hpp_source.xhtml#l00012">BoardInfo.hpp:12</a></div></div>
-<div class="ttc" id="astructfabomatic_1_1_board_info_xhtml_a1b469e101a86ce94e184d205525488a9"><div class="ttname"><a href="structfabomatic_1_1_board_info.xhtml#a1b469e101a86ce94e184d205525488a9">fabomatic::BoardInfo::power_state</a></div><div class="ttdeci">Machine::PowerState power_state</div><div class="ttdef"><b>Definition</b> <a href="_board_info_8hpp_source.xhtml#l00011">BoardInfo.hpp:11</a></div></div>
-<div class="ttc" id="astructfabomatic_1_1_board_info_xhtml_a51fc86bf0f5919a4ac0911bd9a9dbedb"><div class="ttname"><a href="structfabomatic_1_1_board_info.xhtml#a51fc86bf0f5919a4ac0911bd9a9dbedb">fabomatic::BoardInfo::server_connected</a></div><div class="ttdeci">bool server_connected</div><div class="ttdef"><b>Definition</b> <a href="_board_info_8hpp_source.xhtml#l00010">BoardInfo.hpp:10</a></div></div>
+<p class="definition">Definition at line <a class="el" href="_board_info_8hpp_source.xhtml#l00017">17</a> of file <a class="el" href="_board_info_8hpp_source.xhtml">BoardInfo.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   18</span>    {</div>
+<div class="line"><span class="lineno">   19</span>      <span class="keywordflow">return</span> <a class="code hl_variable" href="structfabomatic_1_1_board_info.xhtml#a51fc86bf0f5919a4ac0911bd9a9dbedb">server_connected</a> == other.server_connected &amp;&amp;</div>
+<div class="line"><span class="lineno">   20</span>             <a class="code hl_variable" href="structfabomatic_1_1_board_info.xhtml#a1b469e101a86ce94e184d205525488a9">power_state</a> == other.power_state &amp;&amp;</div>
+<div class="line"><span class="lineno">   21</span>             <a class="code hl_variable" href="structfabomatic_1_1_board_info.xhtml#a0dc9d91453196e161f4ec01b8642f831">power_warning</a> == other.power_warning;</div>
+<div class="line"><span class="lineno">   22</span>    };</div>
+<div class="ttc" id="astructfabomatic_1_1_board_info_xhtml_a0dc9d91453196e161f4ec01b8642f831"><div class="ttname"><a href="structfabomatic_1_1_board_info.xhtml#a0dc9d91453196e161f4ec01b8642f831">fabomatic::BoardInfo::power_warning</a></div><div class="ttdeci">bool power_warning</div><div class="ttdef"><b>Definition</b> <a href="_board_info_8hpp_source.xhtml#l00015">BoardInfo.hpp:15</a></div></div>
+<div class="ttc" id="astructfabomatic_1_1_board_info_xhtml_a1b469e101a86ce94e184d205525488a9"><div class="ttname"><a href="structfabomatic_1_1_board_info.xhtml#a1b469e101a86ce94e184d205525488a9">fabomatic::BoardInfo::power_state</a></div><div class="ttdeci">Machine::PowerState power_state</div><div class="ttdef"><b>Definition</b> <a href="_board_info_8hpp_source.xhtml#l00014">BoardInfo.hpp:14</a></div></div>
+<div class="ttc" id="astructfabomatic_1_1_board_info_xhtml_a51fc86bf0f5919a4ac0911bd9a9dbedb"><div class="ttname"><a href="structfabomatic_1_1_board_info.xhtml#a51fc86bf0f5919a4ac0911bd9a9dbedb">fabomatic::BoardInfo::server_connected</a></div><div class="ttdeci">bool server_connected</div><div class="ttdef"><b>Definition</b> <a href="_board_info_8hpp_source.xhtml#l00013">BoardInfo.hpp:13</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_board_info_8hpp_source.xhtml#l00011">power_state</a>, <a class="el" href="_board_info_8hpp_source.xhtml#l00012">power_warning</a>, and <a class="el" href="_board_info_8hpp_source.xhtml#l00010">server_connected</a>.</p>
+<p class="reference">References <a class="el" href="_board_info_8hpp_source.xhtml#l00014">power_state</a>, <a class="el" href="_board_info_8hpp_source.xhtml#l00015">power_warning</a>, and <a class="el" href="_board_info_8hpp_source.xhtml#l00013">server_connected</a>.</p>
 
 </div>
 </div>
@@ -160,9 +161,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_board_info_8hpp_source.xhtml#l00011">11</a> of file <a class="el" href="_board_info_8hpp_source.xhtml">BoardInfo.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_board_info_8hpp_source.xhtml#l00014">14</a> of file <a class="el" href="_board_info_8hpp_source.xhtml">BoardInfo.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_board_info_8hpp_source.xhtml#l00014">operator==()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_board_info_8hpp_source.xhtml#l00017">operator==()</a>, <a class="el" href="_l_c_d_wrapper_8cpp_source.xhtml#l00155">fabomatic::LCDWrapper::prettyPrint()</a>, and <a class="el" href="_l_c_d_wrapper_8cpp_source.xhtml#l00066">fabomatic::LCDWrapper::update()</a>.</p>
 
 </div>
 </div>
@@ -178,9 +179,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_board_info_8hpp_source.xhtml#l00012">12</a> of file <a class="el" href="_board_info_8hpp_source.xhtml">BoardInfo.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_board_info_8hpp_source.xhtml#l00015">15</a> of file <a class="el" href="_board_info_8hpp_source.xhtml">BoardInfo.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_board_info_8hpp_source.xhtml#l00014">operator==()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_board_info_8hpp_source.xhtml#l00017">operator==()</a>.</p>
 
 </div>
 </div>
@@ -196,9 +197,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_board_info_8hpp_source.xhtml#l00010">10</a> of file <a class="el" href="_board_info_8hpp_source.xhtml">BoardInfo.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_board_info_8hpp_source.xhtml#l00013">13</a> of file <a class="el" href="_board_info_8hpp_source.xhtml">BoardInfo.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_board_info_8hpp_source.xhtml#l00014">operator==()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_board_info_8hpp_source.xhtml#l00017">operator==()</a>, <a class="el" href="_l_c_d_wrapper_8cpp_source.xhtml#l00155">fabomatic::LCDWrapper::prettyPrint()</a>, and <a class="el" href="_l_c_d_wrapper_8cpp_source.xhtml#l00066">fabomatic::LCDWrapper::update()</a>.</p>
 
 </div>
 </div>
@@ -208,7 +209,7 @@ Public Attributes</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jun 30 2024 20:15:48 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Mon Jul 1 2024 20:53:05 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

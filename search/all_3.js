@@ -15,7 +15,7 @@ var searchData=
   ['disable_12',['disable',['../classfabomatic_1_1_tasks_1_1_task.xhtml#a10175ec4fc2f54f444850b01426c95f7',1,'fabomatic::Tasks::Task']]],
   ['disableportal_13',['disablePortal',['../classfabomatic_1_1_saved_config.xhtml#a6510074227a78d4f5093b7aed88bdbef',1,'fabomatic::SavedConfig']]],
   ['disconnect_14',['disconnect',['../classfabomatic_1_1_fab_backend.xhtml#ad558116614ee45601f4665d395838727',1,'fabomatic::FabBackend']]],
-  ['displaybuffer_15',['DisplayBuffer',['../classfabomatic_1_1_l_c_d_wrapper.xhtml#aa15eaf0725ed9012a1aab20d644576a1',1,'fabomatic::LCDWrapper']]],
+  ['displaybuffer_15',['DisplayBuffer',['../classfabomatic_1_1_l_c_d_wrapper.xhtml#a33031e81d3859551ea8f69aa4e226ae8',1,'fabomatic::LCDWrapper']]],
   ['doc_16',['doc',['../classfabomatic_1_1_fab_backend.xhtml#a1218ae004e0146262801967ee50ec17a',1,'fabomatic::FabBackend']]],
   ['driver_17',['driver',['../classfabomatic_1_1_r_f_i_d_wrapper.xhtml#a414c071efd649a809be405eadf7022b8',1,'fabomatic::RFIDWrapper']]],
   ['duration_5fs_18',['duration_s',['../classfabomatic_1_1_server_m_q_t_t_1_1_stop_use_query.xhtml#a8a6fd6be04bf9a2cfca116926508516b',1,'fabomatic::ServerMQTT::StopUseQuery::duration_s'],['../classfabomatic_1_1_server_m_q_t_t_1_1_in_use_query.xhtml#adbbea3cfe94c3b33051b0874024866be',1,'fabomatic::ServerMQTT::InUseQuery::duration_s']]]

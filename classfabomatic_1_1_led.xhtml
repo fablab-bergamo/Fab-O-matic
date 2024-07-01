@@ -132,8 +132,9 @@ Private Attributes</h2></td></tr>
 <tr class="separator:a5e4d1fad8c3ca0336b19283efb0fe5b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="_led_8hpp_source.xhtml#l00012">12</a> of file <a class="el" href="_led_8hpp_source.xhtml">Led.hpp</a>.</p>
+<div class="textblock"><p>RGB/LED/NeoPixel class </p>
+
+<p class="definition">Definition at line <a class="el" href="_led_8hpp_source.xhtml#l00015">15</a> of file <a class="el" href="_led_8hpp_source.xhtml">Led.hpp</a>.</p>
 </div><h2 class="groupheader">Member Enumeration Documentation</h2>
 <a id="a95d9e85bc7bfbb2517b52d184f7b1aa0" name="a95d9e85bc7bfbb2517b52d184f7b1aa0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a95d9e85bc7bfbb2517b52d184f7b1aa0">&#9670;&#160;</a></span>Status</h2>
@@ -160,12 +161,12 @@ Private Attributes</h2></td></tr>
 <tr><td class="fieldname"><a id="a95d9e85bc7bfbb2517b52d184f7b1aa0ad366ecd8db9ac16ebbad30064e35ec35" name="a95d9e85bc7bfbb2517b52d184f7b1aa0ad366ecd8db9ac16ebbad30064e35ec35"></a>Blinking&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="_led_8hpp_source.xhtml#l00015">15</a> of file <a class="el" href="_led_8hpp_source.xhtml">Led.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   16</span>    {</div>
-<div class="line"><span class="lineno">   17</span>      <a class="code hl_enumvalue" href="classfabomatic_1_1_led.xhtml#a95d9e85bc7bfbb2517b52d184f7b1aa0ad15305d7a4e34e02489c74a5ef542f36">Off</a>,</div>
-<div class="line"><span class="lineno">   18</span>      <a class="code hl_enumvalue" href="classfabomatic_1_1_led.xhtml#a95d9e85bc7bfbb2517b52d184f7b1aa0a521c36a31c2762741cf0f8890cbe05e3">On</a>,</div>
-<div class="line"><span class="lineno">   19</span>      <a class="code hl_enumvalue" href="classfabomatic_1_1_led.xhtml#a95d9e85bc7bfbb2517b52d184f7b1aa0ad366ecd8db9ac16ebbad30064e35ec35">Blinking</a>,</div>
-<div class="line"><span class="lineno">   20</span>    };</div>
+<p class="definition">Definition at line <a class="el" href="_led_8hpp_source.xhtml#l00018">18</a> of file <a class="el" href="_led_8hpp_source.xhtml">Led.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   19</span>    {</div>
+<div class="line"><span class="lineno">   20</span>      <a class="code hl_enumvalue" href="classfabomatic_1_1_led.xhtml#a95d9e85bc7bfbb2517b52d184f7b1aa0ad15305d7a4e34e02489c74a5ef542f36">Off</a>,</div>
+<div class="line"><span class="lineno">   21</span>      <a class="code hl_enumvalue" href="classfabomatic_1_1_led.xhtml#a95d9e85bc7bfbb2517b52d184f7b1aa0a521c36a31c2762741cf0f8890cbe05e3">On</a>,</div>
+<div class="line"><span class="lineno">   22</span>      <a class="code hl_enumvalue" href="classfabomatic_1_1_led.xhtml#a95d9e85bc7bfbb2517b52d184f7b1aa0ad366ecd8db9ac16ebbad30064e35ec35">Blinking</a>,</div>
+<div class="line"><span class="lineno">   23</span>    };</div>
 <div class="ttc" id="aclassfabomatic_1_1_led_xhtml_a95d9e85bc7bfbb2517b52d184f7b1aa0a521c36a31c2762741cf0f8890cbe05e3"><div class="ttname"><a href="classfabomatic_1_1_led.xhtml#a95d9e85bc7bfbb2517b52d184f7b1aa0a521c36a31c2762741cf0f8890cbe05e3">fabomatic::Led::Status::On</a></div><div class="ttdeci">@ On</div></div>
 <div class="ttc" id="aclassfabomatic_1_1_led_xhtml_a95d9e85bc7bfbb2517b52d184f7b1aa0ad15305d7a4e34e02489c74a5ef542f36"><div class="ttname"><a href="classfabomatic_1_1_led.xhtml#a95d9e85bc7bfbb2517b52d184f7b1aa0ad15305d7a4e34e02489c74a5ef542f36">fabomatic::Led::Status::Off</a></div><div class="ttdeci">@ Off</div></div>
 <div class="ttc" id="aclassfabomatic_1_1_led_xhtml_a95d9e85bc7bfbb2517b52d184f7b1aa0ad366ecd8db9ac16ebbad30064e35ec35"><div class="ttname"><a href="classfabomatic_1_1_led.xhtml#a95d9e85bc7bfbb2517b52d184f7b1aa0ad366ecd8db9ac16ebbad30064e35ec35">fabomatic::Led::Status::Blinking</a></div><div class="ttdeci">@ Blinking</div></div>
@@ -250,8 +251,8 @@ Private Attributes</h2></td></tr>
 <div class="line"><span class="lineno">   31</span>    <a class="code hl_variable" href="classfabomatic_1_1_led.xhtml#a5e4d1fad8c3ca0336b19283efb0fe5b1">initialized</a> = <span class="keyword">true</span>;</div>
 <div class="line"><span class="lineno">   32</span>  }</div>
 <div class="ttc" id="a_logging_8hpp_xhtml_a4ef5b5f197804a60836ab1e8907d8301"><div class="ttname"><a href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a></div><div class="ttdeci">static const char *const TAG</div><div class="ttdef"><b>Definition</b> <a href="_logging_8hpp_source.xhtml#l00006">Logging.hpp:6</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_led_xhtml_a433958857690b7bd7b74045577b5b6eb"><div class="ttname"><a href="classfabomatic_1_1_led.xhtml#a433958857690b7bd7b74045577b5b6eb">fabomatic::Led::pixel</a></div><div class="ttdeci">Adafruit_NeoPixel pixel</div><div class="ttdef"><b>Definition</b> <a href="_led_8hpp_source.xhtml#l00029">Led.hpp:29</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_led_xhtml_a5e4d1fad8c3ca0336b19283efb0fe5b1"><div class="ttname"><a href="classfabomatic_1_1_led.xhtml#a5e4d1fad8c3ca0336b19283efb0fe5b1">fabomatic::Led::initialized</a></div><div class="ttdeci">bool initialized</div><div class="ttdef"><b>Definition</b> <a href="_led_8hpp_source.xhtml#l00033">Led.hpp:33</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_led_xhtml_a433958857690b7bd7b74045577b5b6eb"><div class="ttname"><a href="classfabomatic_1_1_led.xhtml#a433958857690b7bd7b74045577b5b6eb">fabomatic::Led::pixel</a></div><div class="ttdeci">Adafruit_NeoPixel pixel</div><div class="ttdef"><b>Definition</b> <a href="_led_8hpp_source.xhtml#l00032">Led.hpp:32</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_led_xhtml_a5e4d1fad8c3ca0336b19283efb0fe5b1"><div class="ttname"><a href="classfabomatic_1_1_led.xhtml#a5e4d1fad8c3ca0336b19283efb0fe5b1">fabomatic::Led::initialized</a></div><div class="ttdeci">bool initialized</div><div class="ttdef"><b>Definition</b> <a href="_led_8hpp_source.xhtml#l00036">Led.hpp:36</a></div></div>
 <div class="ttc" id="anamespacefabomatic_xhtml_a01a9e2e5f9e92f6f3fa9204ba3d946b9"><div class="ttname"><a href="namespacefabomatic.xhtml#a01a9e2e5f9e92f6f3fa9204ba3d946b9">fabomatic::NO_PIN</a></div><div class="ttdeci">static constexpr uint8_t NO_PIN</div><div class="ttdef"><b>Definition</b> <a href="_pins_config_8hpp_source.xhtml#l00009">PinsConfig.hpp:9</a></div></div>
 <div class="ttc" id="anamespacefabomatic_xhtml_a90e4180ab5a1ffd3393b4f0d6b01f2b3"><div class="ttname"><a href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">fabomatic::pins</a></div><div class="ttdeci">static constexpr pins_config pins</div><div class="ttdef"><b>Definition</b> <a href="pins_8hpp_source.xhtml#l00246">pins.hpp:246</a></div></div>
 <div class="ttc" id="astructfabomatic_1_1pins__config_1_1led__config_xhtml_a39f3d50f092e000bde262c85ba0944fc"><div class="ttname"><a href="structfabomatic_1_1pins__config_1_1led__config.xhtml#a39f3d50f092e000bde262c85ba0944fc">fabomatic::pins_config::led_config::is_neopixel</a></div><div class="ttdeci">bool is_neopixel</div><div class="ttdef"><b>Definition</b> <a href="_pins_config_8hpp_source.xhtml#l00044">PinsConfig.hpp:44</a></div></div>
@@ -350,9 +351,9 @@ Private Attributes</h2></td></tr>
 <div class="fragment"><div class="line"><span class="lineno">   40</span>  {</div>
 <div class="line"><span class="lineno">   41</span>    this-&gt;<a class="code hl_variable" href="classfabomatic_1_1_led.xhtml#afab9df2a855038184f73dfb4a201a178">status</a> = new_status;</div>
 <div class="line"><span class="lineno">   42</span>  }</div>
-<div class="ttc" id="aclassfabomatic_1_1_led_xhtml_afab9df2a855038184f73dfb4a201a178"><div class="ttname"><a href="classfabomatic_1_1_led.xhtml#afab9df2a855038184f73dfb4a201a178">fabomatic::Led::status</a></div><div class="ttdeci">Status status</div><div class="ttdef"><b>Definition</b> <a href="_led_8hpp_source.xhtml#l00031">Led.hpp:31</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_led_xhtml_afab9df2a855038184f73dfb4a201a178"><div class="ttname"><a href="classfabomatic_1_1_led.xhtml#afab9df2a855038184f73dfb4a201a178">fabomatic::Led::status</a></div><div class="ttdeci">Status status</div><div class="ttdef"><b>Definition</b> <a href="_led_8hpp_source.xhtml#l00034">Led.hpp:34</a></div></div>
 </div><!-- fragment -->
-<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00499">fabomatic::BoardLogic::blinkLed()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00498">fabomatic::BoardLogic::blinkLed()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -397,9 +398,9 @@ Here is the caller graph for this function:</div>
 <div class="fragment"><div class="line"><span class="lineno">   35</span>  {</div>
 <div class="line"><span class="lineno">   36</span>    <a class="code hl_variable" href="classfabomatic_1_1_led.xhtml#afc33320937cd5b4c28ae4f767fdb9613">color</a> = {r, g, b};</div>
 <div class="line"><span class="lineno">   37</span>  }</div>
-<div class="ttc" id="aclassfabomatic_1_1_led_xhtml_afc33320937cd5b4c28ae4f767fdb9613"><div class="ttname"><a href="classfabomatic_1_1_led.xhtml#afc33320937cd5b4c28ae4f767fdb9613">fabomatic::Led::color</a></div><div class="ttdeci">std::array&lt; uint8_t, 3 &gt; color</div><div class="ttdef"><b>Definition</b> <a href="_led_8hpp_source.xhtml#l00030">Led.hpp:30</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_led_xhtml_afc33320937cd5b4c28ae4f767fdb9613"><div class="ttname"><a href="classfabomatic_1_1_led.xhtml#afc33320937cd5b4c28ae4f767fdb9613">fabomatic::Led::color</a></div><div class="ttdeci">std::array&lt; uint8_t, 3 &gt; color</div><div class="ttdef"><b>Definition</b> <a href="_led_8hpp_source.xhtml#l00033">Led.hpp:33</a></div></div>
 </div><!-- fragment -->
-<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00499">fabomatic::BoardLogic::blinkLed()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00498">fabomatic::BoardLogic::blinkLed()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -451,9 +452,9 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">   89</span>  }</div>
 <div class="ttc" id="aclassfabomatic_1_1_led_xhtml_a60938d645142e1e33ee00b2a8e733972"><div class="ttname"><a href="classfabomatic_1_1_led.xhtml#a60938d645142e1e33ee00b2a8e733972">fabomatic::Led::init</a></div><div class="ttdeci">void init()</div><div class="ttdef"><b>Definition</b> <a href="_led_8cpp_source.xhtml#l00006">Led.cpp:6</a></div></div>
 <div class="ttc" id="aclassfabomatic_1_1_led_xhtml_aa2544c4f03572834c6a37b948058f1e8"><div class="ttname"><a href="classfabomatic_1_1_led.xhtml#aa2544c4f03572834c6a37b948058f1e8">fabomatic::Led::outputColor</a></div><div class="ttdeci">void outputColor(uint8_t r, uint8_t g, uint8_t b)</div><div class="ttdef"><b>Definition</b> <a href="_led_8cpp_source.xhtml#l00044">Led.cpp:44</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_led_xhtml_ae0fa7a3a4a21758a82b1bd42decaa990"><div class="ttname"><a href="classfabomatic_1_1_led.xhtml#ae0fa7a3a4a21758a82b1bd42decaa990">fabomatic::Led::isOn</a></div><div class="ttdeci">bool isOn</div><div class="ttdef"><b>Definition</b> <a href="_led_8hpp_source.xhtml#l00032">Led.hpp:32</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_led_xhtml_ae0fa7a3a4a21758a82b1bd42decaa990"><div class="ttname"><a href="classfabomatic_1_1_led.xhtml#ae0fa7a3a4a21758a82b1bd42decaa990">fabomatic::Led::isOn</a></div><div class="ttdeci">bool isOn</div><div class="ttdef"><b>Definition</b> <a href="_led_8hpp_source.xhtml#l00035">Led.hpp:35</a></div></div>
 </div><!-- fragment -->
-<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00499">fabomatic::BoardLogic::blinkLed()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00498">fabomatic::BoardLogic::blinkLed()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -483,8 +484,8 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_led_8hpp_source.xhtml#l00030">30</a> of file <a class="el" href="_led_8hpp_source.xhtml">Led.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   30</span>{128, 128, 128};</div>
+<p class="definition">Definition at line <a class="el" href="_led_8hpp_source.xhtml#l00033">33</a> of file <a class="el" href="_led_8hpp_source.xhtml">Led.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   33</span>{128, 128, 128};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -508,8 +509,8 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_led_8hpp_source.xhtml#l00033">33</a> of file <a class="el" href="_led_8hpp_source.xhtml">Led.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   33</span>{<span class="keyword">false</span>};</div>
+<p class="definition">Definition at line <a class="el" href="_led_8hpp_source.xhtml#l00036">36</a> of file <a class="el" href="_led_8hpp_source.xhtml">Led.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   36</span>{<span class="keyword">false</span>};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -533,8 +534,8 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_led_8hpp_source.xhtml#l00032">32</a> of file <a class="el" href="_led_8hpp_source.xhtml">Led.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   32</span>{<span class="keyword">false</span>};</div>
+<p class="definition">Definition at line <a class="el" href="_led_8hpp_source.xhtml#l00035">35</a> of file <a class="el" href="_led_8hpp_source.xhtml">Led.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   35</span>{<span class="keyword">false</span>};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -558,8 +559,8 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_led_8hpp_source.xhtml#l00029">29</a> of file <a class="el" href="_led_8hpp_source.xhtml">Led.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   29</span>{1, <a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#a5d85a2cde0f38b6fa413d40fb871c01f">led</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1led__config.xhtml#a77f7c0b888321527f09d6f5c9a73d613">pin</a>, <a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#a5d85a2cde0f38b6fa413d40fb871c01f">led</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1led__config.xhtml#abcb9f08ec0d07153bdafb39845164672">neopixel_config</a>};</div>
+<p class="definition">Definition at line <a class="el" href="_led_8hpp_source.xhtml#l00032">32</a> of file <a class="el" href="_led_8hpp_source.xhtml">Led.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   32</span>{1, <a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#a5d85a2cde0f38b6fa413d40fb871c01f">led</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1led__config.xhtml#a77f7c0b888321527f09d6f5c9a73d613">pin</a>, <a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#a5d85a2cde0f38b6fa413d40fb871c01f">led</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1led__config.xhtml#abcb9f08ec0d07153bdafb39845164672">neopixel_config</a>};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -583,8 +584,8 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_led_8hpp_source.xhtml#l00031">31</a> of file <a class="el" href="_led_8hpp_source.xhtml">Led.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   31</span>{Status::On};</div>
+<p class="definition">Definition at line <a class="el" href="_led_8hpp_source.xhtml#l00034">34</a> of file <a class="el" href="_led_8hpp_source.xhtml">Led.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   34</span>{Status::On};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -595,7 +596,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jun 30 2024 20:15:48 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Mon Jul 1 2024 20:53:05 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

@@ -663,39 +663,39 @@ var sectionId = 'dynsection-28';
 </a>
 </g>
 </g>
-<!-- Node60 -->
-<g id="Node000060" class="node">
-<title>Node60</title>
-<g id="a_Node000060"><a xlink:href="classfabomatic_1_1_mock_mrfc522.xhtml#a4c9904c7fe8ef1d9ab3a0b32a60c0c17" target="_top" xlink:title=" ">
+<!-- Node61 -->
+<g id="Node000061" class="node">
+<title>Node61</title>
+<g id="a_Node000061"><a xlink:href="classfabomatic_1_1_mock_mrfc522.xhtml#a4c9904c7fe8ef1d9ab3a0b32a60c0c17" target="_top" xlink:title=" ">
 <polygon fill="white" stroke="#666666" points="607,-1103.25 484.5,-1103.25 484.5,-1072.75 607,-1072.75 607,-1103.25"/>
 <text text-anchor="start" x="492.5" y="-1089.75" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::MockMrfc522</text>
 <text text-anchor="middle" x="545.75" y="-1078.5" font-family="Helvetica,sans-Serif" font-size="10.00">::resetUid</text>
 </a>
 </g>
 </g>
-<!-- Node27&#45;&gt;Node60 -->
-<g id="edge83_Node000027_Node000060" class="edge">
-<title>Node27&#45;&gt;Node60</title>
-<g id="a_edge83_Node000027_Node000060"><a xlink:title=" ">
+<!-- Node27&#45;&gt;Node61 -->
+<g id="edge83_Node000027_Node000061" class="edge">
+<title>Node27&#45;&gt;Node61</title>
+<g id="a_edge83_Node000027_Node000061"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M411.28,-1154.29C430.82,-1142.28 458.9,-1125.68 484.5,-1113 487.75,-1111.39 491.12,-1109.8 494.55,-1108.23"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="495.76,-1111.52 503.49,-1104.28 492.93,-1105.12 495.76,-1111.52"/>
 </a>
 </g>
 </g>
-<!-- Node61 -->
-<g id="Node000061" class="node">
-<title>Node61</title>
-<g id="a_Node000061"><a xlink:href="classfabomatic_1_1_mock_mrfc522.xhtml#aa5243105821375118132fe7a3e5d7ea3" target="_top" xlink:title=" ">
+<!-- Node62 -->
+<g id="Node000062" class="node">
+<title>Node62</title>
+<g id="a_Node000062"><a xlink:href="classfabomatic_1_1_mock_mrfc522.xhtml#aa5243105821375118132fe7a3e5d7ea3" target="_top" xlink:title=" ">
 <polygon fill="white" stroke="#666666" points="607,-1054.25 484.5,-1054.25 484.5,-1023.75 607,-1023.75 607,-1054.25"/>
 <text text-anchor="start" x="492.5" y="-1040.75" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::MockMrfc522</text>
 <text text-anchor="middle" x="545.75" y="-1029.5" font-family="Helvetica,sans-Serif" font-size="10.00">::setUid</text>
 </a>
 </g>
 </g>
-<!-- Node27&#45;&gt;Node61 -->
-<g id="edge84_Node000027_Node000061" class="edge">
-<title>Node27&#45;&gt;Node61</title>
-<g id="a_edge84_Node000027_Node000061"><a xlink:title=" ">
+<!-- Node27&#45;&gt;Node62 -->
+<g id="edge84_Node000027_Node000062" class="edge">
+<title>Node27&#45;&gt;Node62</title>
+<g id="a_edge84_Node000027_Node000062"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M397.39,-1154.34C414,-1131.73 447.47,-1089.81 484.5,-1064 486.54,-1062.58 488.67,-1061.22 490.86,-1059.92"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="492.29,-1063.13 499.45,-1055.32 488.98,-1056.96 492.29,-1063.13"/>
 </a>
@@ -849,20 +849,20 @@ var sectionId = 'dynsection-28';
 </a>
 </g>
 </g>
-<!-- Node49 -->
-<g id="Node000049" class="node">
-<title>Node49</title>
-<g id="a_Node000049"><a xlink:href="classfabomatic_1_1_board_logic.xhtml#aa0d3d3aa742eba1ffd00b97868ce7edc" target="_top" xlink:title="connects and polls the server for up&#45;to&#45;date machine information">
+<!-- Node50 -->
+<g id="Node000050" class="node">
+<title>Node50</title>
+<g id="a_Node000050"><a xlink:href="classfabomatic_1_1_board_logic.xhtml#aa0d3d3aa742eba1ffd00b97868ce7edc" target="_top" xlink:title="connects and polls the server for up&#45;to&#45;date machine information">
 <polygon fill="#fff0f0" stroke="red" points="904.5,-279.25 791.75,-279.25 791.75,-248.75 904.5,-248.75 904.5,-279.25"/>
 <text text-anchor="start" x="799.75" y="-265.75" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::BoardLogic</text>
 <text text-anchor="middle" x="848.12" y="-254.5" font-family="Helvetica,sans-Serif" font-size="10.00">::refreshFromServer</text>
 </a>
 </g>
 </g>
-<!-- Node31&#45;&gt;Node49 -->
-<g id="edge71_Node000031_Node000049" class="edge">
-<title>Node31&#45;&gt;Node49</title>
-<g id="a_edge71_Node000031_Node000049"><a xlink:title=" ">
+<!-- Node31&#45;&gt;Node50 -->
+<g id="edge71_Node000031_Node000050" class="edge">
+<title>Node31&#45;&gt;Node50</title>
+<g id="a_edge71_Node000031_Node000050"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M702.7,-992.67C712.29,-930.04 750.18,-687.49 791.75,-490 807.04,-417.35 828.92,-332.53 840.04,-290.46"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="843.37,-291.56 842.56,-281 836.61,-289.77 843.37,-291.56"/>
 </a>
@@ -988,77 +988,77 @@ var sectionId = 'dynsection-28';
 </a>
 </g>
 </g>
-<!-- Node39 -->
-<g id="Node000039" class="node">
-<title>Node39</title>
-<g id="a_Node000039"><a xlink:href="classfabomatic_1_1_fab_backend.xhtml#a4a2b36c40f955744965d385e8cad6fb7" target="_top" xlink:title="Registers a maintenance action.">
+<!-- Node40 -->
+<g id="Node000040" class="node">
+<title>Node40</title>
+<g id="a_Node000040"><a xlink:href="classfabomatic_1_1_fab_backend.xhtml#a4a2b36c40f955744965d385e8cad6fb7" target="_top" xlink:title="Registers a maintenance action.">
 <polygon fill="white" stroke="#666666" points="1061.12,-763.25 943.12,-763.25 943.12,-732.75 1061.12,-732.75 1061.12,-763.25"/>
 <text text-anchor="start" x="951.12" y="-749.75" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::FabBackend</text>
 <text text-anchor="middle" x="1002.12" y="-738.5" font-family="Helvetica,sans-Serif" font-size="10.00">::registerMaintenance</text>
 </a>
 </g>
 </g>
-<!-- Node32&#45;&gt;Node39 -->
-<g id="edge57_Node000032_Node000039" class="edge">
-<title>Node32&#45;&gt;Node39</title>
-<g id="a_edge57_Node000032_Node000039"><a xlink:title=" ">
+<!-- Node32&#45;&gt;Node40 -->
+<g id="edge57_Node000032_Node000040" class="edge">
+<title>Node32&#45;&gt;Node40</title>
+<g id="a_edge57_Node000032_Node000040"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M897.64,-781.36C911.55,-776.88 926.89,-771.93 941.4,-767.25"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="942.41,-770.61 950.85,-764.21 940.26,-763.94 942.41,-770.61"/>
-</a>
-</g>
-</g>
-<!-- Node40 -->
-<g id="Node000040" class="node">
-<title>Node40</title>
-<g id="a_Node000040"><a xlink:href="classfabomatic_1_1_machine.xhtml#a921c78777a6cb9f7fdb9780a8c1aa8c0" target="_top" xlink:title=" ">
-<polygon fill="white" stroke="#666666" points="1063.75,-476.25 940.5,-476.25 940.5,-445.75 1063.75,-445.75 1063.75,-476.25"/>
-<text text-anchor="start" x="948.5" y="-462.75" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::Machine</text>
-<text text-anchor="middle" x="1002.12" y="-451.5" font-family="Helvetica,sans-Serif" font-size="10.00">::setMaintenanceNeeded</text>
-</a>
-</g>
-</g>
-<!-- Node32&#45;&gt;Node40 -->
-<g id="edge58_Node000032_Node000040" class="edge">
-<title>Node32&#45;&gt;Node40</title>
-<g id="a_edge58_Node000032_Node000040"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M852.07,-781.5C860.68,-738.75 888.51,-616.44 940.5,-528 949.93,-511.96 963.64,-496.4 975.64,-484.32"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="977.8,-487.09 982.51,-477.6 972.91,-482.08 977.8,-487.09"/>
 </a>
 </g>
 </g>
 <!-- Node41 -->
 <g id="Node000041" class="node">
 <title>Node41</title>
-<g id="a_Node000041"><a xlink:href="classfabomatic_1_1_fab_backend.xhtml#a2b45b2e58a6358c640c48e636e3cb5db" target="_top" xlink:title="Registers the start of machine usage.">
-<polygon fill="white" stroke="#666666" points="1061.12,-714.25 943.12,-714.25 943.12,-683.75 1061.12,-683.75 1061.12,-714.25"/>
-<text text-anchor="start" x="951.12" y="-700.75" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::FabBackend</text>
-<text text-anchor="middle" x="1002.12" y="-689.5" font-family="Helvetica,sans-Serif" font-size="10.00">::startUse</text>
+<g id="a_Node000041"><a xlink:href="classfabomatic_1_1_machine.xhtml#a921c78777a6cb9f7fdb9780a8c1aa8c0" target="_top" xlink:title=" ">
+<polygon fill="white" stroke="#666666" points="1063.75,-476.25 940.5,-476.25 940.5,-445.75 1063.75,-445.75 1063.75,-476.25"/>
+<text text-anchor="start" x="948.5" y="-462.75" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::Machine</text>
+<text text-anchor="middle" x="1002.12" y="-451.5" font-family="Helvetica,sans-Serif" font-size="10.00">::setMaintenanceNeeded</text>
 </a>
 </g>
 </g>
 <!-- Node32&#45;&gt;Node41 -->
-<g id="edge59_Node000032_Node000041" class="edge">
+<g id="edge58_Node000032_Node000041" class="edge">
 <title>Node32&#45;&gt;Node41</title>
-<g id="a_edge59_Node000032_Node000041"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M865.58,-781.46C883.1,-765.5 912.16,-740.7 940.5,-724 943.08,-722.48 945.77,-721.01 948.51,-719.59"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="949.78,-722.87 957.27,-715.37 946.74,-716.56 949.78,-722.87"/>
+<g id="a_edge58_Node000032_Node000041"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M852.07,-781.5C860.68,-738.75 888.51,-616.44 940.5,-528 949.93,-511.96 963.64,-496.4 975.64,-484.32"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="977.8,-487.09 982.51,-477.6 972.91,-482.08 977.8,-487.09"/>
 </a>
 </g>
 </g>
 <!-- Node42 -->
 <g id="Node000042" class="node">
 <title>Node42</title>
-<g id="a_Node000042"><a xlink:href="classfabomatic_1_1_auth_provider.xhtml#aeae9923535dcf6cfa9eaf9e5f90e5e64" target="_top" xlink:title="Verifies the card ID against the server (if available) or the whitelist.">
+<g id="a_Node000042"><a xlink:href="classfabomatic_1_1_fab_backend.xhtml#a2b45b2e58a6358c640c48e636e3cb5db" target="_top" xlink:title="Registers the start of machine usage.">
+<polygon fill="white" stroke="#666666" points="1061.12,-714.25 943.12,-714.25 943.12,-683.75 1061.12,-683.75 1061.12,-714.25"/>
+<text text-anchor="start" x="951.12" y="-700.75" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::FabBackend</text>
+<text text-anchor="middle" x="1002.12" y="-689.5" font-family="Helvetica,sans-Serif" font-size="10.00">::startUse</text>
+</a>
+</g>
+</g>
+<!-- Node32&#45;&gt;Node42 -->
+<g id="edge59_Node000032_Node000042" class="edge">
+<title>Node32&#45;&gt;Node42</title>
+<g id="a_edge59_Node000032_Node000042"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M865.58,-781.46C883.1,-765.5 912.16,-740.7 940.5,-724 943.08,-722.48 945.77,-721.01 948.51,-719.59"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="949.78,-722.87 957.27,-715.37 946.74,-716.56 949.78,-722.87"/>
+</a>
+</g>
+</g>
+<!-- Node43 -->
+<g id="Node000043" class="node">
+<title>Node43</title>
+<g id="a_Node000043"><a xlink:href="classfabomatic_1_1_auth_provider.xhtml#aeae9923535dcf6cfa9eaf9e5f90e5e64" target="_top" xlink:title="Verifies the card ID against the server (if available) or the whitelist.">
 <polygon fill="#fff0f0" stroke="red" points="1219.25,-600.25 1099.75,-600.25 1099.75,-569.75 1219.25,-569.75 1219.25,-600.25"/>
 <text text-anchor="start" x="1107.75" y="-586.75" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::AuthProvider</text>
 <text text-anchor="middle" x="1159.5" y="-575.5" font-family="Helvetica,sans-Serif" font-size="10.00">::tryLogin</text>
 </a>
 </g>
 </g>
-<!-- Node32&#45;&gt;Node42 -->
-<g id="edge60_Node000032_Node000042" class="edge">
-<title>Node32&#45;&gt;Node42</title>
-<g id="a_edge60_Node000032_Node000042"><a xlink:title=" ">
+<!-- Node32&#45;&gt;Node43 -->
+<g id="edge60_Node000032_Node000043" class="edge">
+<title>Node32&#45;&gt;Node43</title>
+<g id="a_edge60_Node000032_Node000043"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M851.26,-781.41C857.36,-743.63 878.57,-647.08 940.5,-604 983.05,-574.4 1042.17,-570.96 1088.11,-574.19"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="1087.72,-577.67 1097.98,-575.02 1088.3,-570.7 1087.72,-577.67"/>
 </a>
@@ -1118,198 +1118,198 @@ var sectionId = 'dynsection-28';
 </a>
 </g>
 </g>
-<!-- Node42&#45;&gt;Node22 -->
-<g id="edge63_Node000042_Node000022" class="edge">
-<title>Node42&#45;&gt;Node22</title>
-<g id="a_edge63_Node000042_Node000022"><a xlink:title=" ">
+<!-- Node43&#45;&gt;Node22 -->
+<g id="edge63_Node000043_Node000022" class="edge">
+<title>Node43&#45;&gt;Node22</title>
+<g id="a_edge63_Node000043_Node000022"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M1219.56,-585C1227.43,-585 1235.57,-585 1243.6,-585"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="1243.34,-588.5 1253.34,-585 1243.34,-581.5 1243.34,-588.5"/>
 </a>
 </g>
 </g>
-<!-- Node42&#45;&gt;Node24 -->
-<g id="edge64_Node000042_Node000024" class="edge">
-<title>Node42&#45;&gt;Node24</title>
-<g id="a_edge64_Node000042_Node000024"><a xlink:title=" ">
+<!-- Node43&#45;&gt;Node24 -->
+<g id="edge64_Node000043_Node000024" class="edge">
+<title>Node43&#45;&gt;Node24</title>
+<g id="a_edge64_Node000043_Node000024"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M1216.08,-569.35C1232.71,-564.67 1250.77,-559.59 1266.76,-555.09"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="1267.31,-558.57 1275.99,-552.49 1265.42,-551.83 1267.31,-558.57"/>
 </a>
 </g>
 </g>
-<!-- Node44 -->
-<g id="Node000044" class="node">
-<title>Node44</title>
-<g id="a_Node000044"><a xlink:href="classfabomatic_1_1_fab_backend.xhtml#a1a45f556aadcbc428d14b7c7577ed43d" target="_top" xlink:title="Establishes a connection to the WiFi network and the MQTT server.">
+<!-- Node45 -->
+<g id="Node000045" class="node">
+<title>Node45</title>
+<g id="a_Node000045"><a xlink:href="classfabomatic_1_1_fab_backend.xhtml#a1a45f556aadcbc428d14b7c7577ed43d" target="_top" xlink:title="Establishes a connection to the WiFi network and the MQTT server.">
 <polygon fill="#fff0f0" stroke="red" points="1373.25,-465.25 1255.25,-465.25 1255.25,-434.75 1373.25,-434.75 1373.25,-465.25"/>
 <text text-anchor="start" x="1263.25" y="-451.75" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::FabBackend</text>
 <text text-anchor="middle" x="1314.25" y="-440.5" font-family="Helvetica,sans-Serif" font-size="10.00">::connect</text>
 </a>
 </g>
 </g>
-<!-- Node42&#45;&gt;Node44 -->
-<g id="edge61_Node000042_Node000044" class="edge">
-<title>Node42&#45;&gt;Node44</title>
-<g id="a_edge61_Node000042_Node000044"><a xlink:title=" ">
+<!-- Node43&#45;&gt;Node45 -->
+<g id="edge61_Node000043_Node000045" class="edge">
+<title>Node43&#45;&gt;Node45</title>
+<g id="a_edge61_Node000043_Node000045"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M1170.41,-569.55C1185.98,-546.29 1218.27,-502.15 1255.25,-475 1257.01,-473.71 1258.84,-472.47 1260.73,-471.28"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="1262.22,-474.46 1269.2,-466.49 1258.77,-468.37 1262.22,-474.46"/>
 </a>
 </g>
 </g>
-<!-- Node44&#45;&gt;Node10 -->
-<g id="edge62_Node000044_Node000010" class="edge">
-<title>Node44&#45;&gt;Node10</title>
-<g id="a_edge62_Node000044_Node000010"><a xlink:title=" ">
+<!-- Node45&#45;&gt;Node10 -->
+<g id="edge62_Node000045_Node000010" class="edge">
+<title>Node45&#45;&gt;Node10</title>
+<g id="a_edge62_Node000045_Node000010"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M1361.13,-465.65C1365.54,-468.32 1369.69,-471.42 1373.25,-475 1430.87,-532.98 1455.16,-631.87 1463.37,-674.93"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="1459.9,-675.46 1465.11,-684.69 1466.79,-674.23 1459.9,-675.46"/>
 </a>
 </g>
 </g>
-<!-- Node49&#45;&gt;Node40 -->
-<g id="edge80_Node000049_Node000040" class="edge">
-<title>Node49&#45;&gt;Node40</title>
-<g id="a_edge80_Node000049_Node000040"><a xlink:title=" ">
+<!-- Node50&#45;&gt;Node41 -->
+<g id="edge80_Node000050_Node000041" class="edge">
+<title>Node50&#45;&gt;Node41</title>
+<g id="a_edge80_Node000050_Node000041"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M859.22,-279.65C875.47,-304.53 908.82,-354.34 940.5,-394 952.43,-408.94 966.74,-424.84 978.47,-437.4"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="975.66,-439.53 985.07,-444.41 980.76,-434.73 975.66,-439.53"/>
 </a>
 </g>
 </g>
-<!-- Node49&#45;&gt;Node44 -->
-<g id="edge73_Node000049_Node000044" class="edge">
-<title>Node49&#45;&gt;Node44</title>
-<g id="a_edge73_Node000049_Node000044"><a xlink:title=" ">
+<!-- Node50&#45;&gt;Node45 -->
+<g id="edge73_Node000050_Node000045" class="edge">
+<title>Node50&#45;&gt;Node45</title>
+<g id="a_edge73_Node000050_Node000045"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M858.76,-279.45C873.44,-301.54 903.64,-341.62 940.5,-361 1051.45,-419.35 1099.65,-366.47 1219.25,-404 1238.92,-410.17 1259.61,-419.91 1276.57,-428.84"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="1274.8,-431.86 1285.26,-433.53 1278.13,-425.7 1274.8,-431.86"/>
-</a>
-</g>
-</g>
-<!-- Node50 -->
-<g id="Node000050" class="node">
-<title>Node50</title>
-<g id="a_Node000050"><a xlink:href="classfabomatic_1_1_fab_backend.xhtml#a78f56442b255e95b0930f9800bd91ec4" target="_top" xlink:title="Checks the machine status on the server.">
-<polygon fill="white" stroke="#666666" points="1061.12,-352.25 943.12,-352.25 943.12,-321.75 1061.12,-321.75 1061.12,-352.25"/>
-<text text-anchor="start" x="951.12" y="-338.75" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::FabBackend</text>
-<text text-anchor="middle" x="1002.12" y="-327.5" font-family="Helvetica,sans-Serif" font-size="10.00">::checkMachine</text>
-</a>
-</g>
-</g>
-<!-- Node49&#45;&gt;Node50 -->
-<g id="edge72_Node000049_Node000050" class="edge">
-<title>Node49&#45;&gt;Node50</title>
-<g id="a_edge72_Node000049_Node000050"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M877.19,-279.6C895.09,-289.34 918.91,-301.9 940.5,-312 943.96,-313.62 947.55,-315.24 951.18,-316.84"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="949.48,-319.91 960.04,-320.65 952.24,-313.48 949.48,-319.91"/>
 </a>
 </g>
 </g>
 <!-- Node51 -->
 <g id="Node000051" class="node">
 <title>Node51</title>
-<g id="a_Node000051"><a xlink:href="classfabomatic_1_1_machine.xhtml#a8bde1bdf40d146c521b623d54e2df1cf" target="_top" xlink:title="Returns the machine identifier.">
-<polygon fill="white" stroke="#666666" points="1052.12,-303.25 952.12,-303.25 952.12,-272.75 1052.12,-272.75 1052.12,-303.25"/>
-<text text-anchor="start" x="960.12" y="-289.75" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::Machine</text>
-<text text-anchor="middle" x="1002.12" y="-278.5" font-family="Helvetica,sans-Serif" font-size="10.00">::getMachineId</text>
+<g id="a_Node000051"><a xlink:href="classfabomatic_1_1_fab_backend.xhtml#a78f56442b255e95b0930f9800bd91ec4" target="_top" xlink:title="Checks the machine status on the server.">
+<polygon fill="white" stroke="#666666" points="1061.12,-352.25 943.12,-352.25 943.12,-321.75 1061.12,-321.75 1061.12,-352.25"/>
+<text text-anchor="start" x="951.12" y="-338.75" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::FabBackend</text>
+<text text-anchor="middle" x="1002.12" y="-327.5" font-family="Helvetica,sans-Serif" font-size="10.00">::checkMachine</text>
 </a>
 </g>
 </g>
-<!-- Node49&#45;&gt;Node51 -->
-<g id="edge74_Node000049_Node000051" class="edge">
-<title>Node49&#45;&gt;Node51</title>
-<g id="a_edge74_Node000049_Node000051"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M904.86,-272.8C916.55,-274.65 928.92,-276.6 940.77,-278.47"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="940,-281.89 950.43,-280 941.1,-274.98 940,-281.89"/>
+<!-- Node50&#45;&gt;Node51 -->
+<g id="edge72_Node000050_Node000051" class="edge">
+<title>Node50&#45;&gt;Node51</title>
+<g id="a_edge72_Node000050_Node000051"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M877.19,-279.6C895.09,-289.34 918.91,-301.9 940.5,-312 943.96,-313.62 947.55,-315.24 951.18,-316.84"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="949.48,-319.91 960.04,-320.65 952.24,-313.48 949.48,-319.91"/>
 </a>
 </g>
 </g>
 <!-- Node52 -->
 <g id="Node000052" class="node">
 <title>Node52</title>
-<g id="a_Node000052"><a xlink:href="classfabomatic_1_1_machine.xhtml#addd23c892c39f3c1e26d611059273081" target="_top" xlink:title=" ">
-<polygon fill="white" stroke="#666666" points="1052.12,-254.25 952.12,-254.25 952.12,-223.75 1052.12,-223.75 1052.12,-254.25"/>
-<text text-anchor="start" x="960.12" y="-240.75" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::Machine</text>
-<text text-anchor="middle" x="1002.12" y="-229.5" font-family="Helvetica,sans-Serif" font-size="10.00">::setAllowed</text>
+<g id="a_Node000052"><a xlink:href="classfabomatic_1_1_machine.xhtml#a8bde1bdf40d146c521b623d54e2df1cf" target="_top" xlink:title="Returns the machine identifier.">
+<polygon fill="white" stroke="#666666" points="1052.12,-303.25 952.12,-303.25 952.12,-272.75 1052.12,-272.75 1052.12,-303.25"/>
+<text text-anchor="start" x="960.12" y="-289.75" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::Machine</text>
+<text text-anchor="middle" x="1002.12" y="-278.5" font-family="Helvetica,sans-Serif" font-size="10.00">::getMachineId</text>
 </a>
 </g>
 </g>
-<!-- Node49&#45;&gt;Node52 -->
-<g id="edge75_Node000049_Node000052" class="edge">
-<title>Node49&#45;&gt;Node52</title>
-<g id="a_edge75_Node000049_Node000052"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M904.86,-254.83C916.55,-252.91 928.92,-250.88 940.77,-248.93"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="941.13,-252.41 950.43,-247.34 939.99,-245.51 941.13,-252.41"/>
+<!-- Node50&#45;&gt;Node52 -->
+<g id="edge74_Node000050_Node000052" class="edge">
+<title>Node50&#45;&gt;Node52</title>
+<g id="a_edge74_Node000050_Node000052"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M904.86,-272.8C916.55,-274.65 928.92,-276.6 940.77,-278.47"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="940,-281.89 950.43,-280 941.1,-274.98 940,-281.89"/>
 </a>
 </g>
 </g>
 <!-- Node53 -->
 <g id="Node000053" class="node">
 <title>Node53</title>
-<g id="a_Node000053"><a xlink:href="classfabomatic_1_1_machine.xhtml#ace7ccce1b3fabde562cfc7c5645dd6a3" target="_top" xlink:title="Sets the delay after which the user will be logged off automatically.">
-<polygon fill="white" stroke="#666666" points="1052.88,-205.25 951.38,-205.25 951.38,-174.75 1052.88,-174.75 1052.88,-205.25"/>
-<text text-anchor="start" x="959.38" y="-191.75" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::Machine</text>
-<text text-anchor="middle" x="1002.12" y="-180.5" font-family="Helvetica,sans-Serif" font-size="10.00">::setAutologoffDelay</text>
+<g id="a_Node000053"><a xlink:href="classfabomatic_1_1_machine.xhtml#addd23c892c39f3c1e26d611059273081" target="_top" xlink:title=" ">
+<polygon fill="white" stroke="#666666" points="1052.12,-254.25 952.12,-254.25 952.12,-223.75 1052.12,-223.75 1052.12,-254.25"/>
+<text text-anchor="start" x="960.12" y="-240.75" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::Machine</text>
+<text text-anchor="middle" x="1002.12" y="-229.5" font-family="Helvetica,sans-Serif" font-size="10.00">::setAllowed</text>
 </a>
 </g>
 </g>
-<!-- Node49&#45;&gt;Node53 -->
-<g id="edge76_Node000049_Node000053" class="edge">
-<title>Node49&#45;&gt;Node53</title>
-<g id="a_edge76_Node000049_Node000053"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M876.34,-248.47C894.32,-238.45 918.53,-225.39 940.5,-215 943.95,-213.37 947.54,-211.74 951.16,-210.13"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="952.23,-213.48 960.02,-206.3 949.46,-207.06 952.23,-213.48"/>
+<!-- Node50&#45;&gt;Node53 -->
+<g id="edge75_Node000050_Node000053" class="edge">
+<title>Node50&#45;&gt;Node53</title>
+<g id="a_edge75_Node000050_Node000053"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M904.86,-254.83C916.55,-252.91 928.92,-250.88 940.77,-248.93"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="941.13,-252.41 950.43,-247.34 939.99,-245.51 941.13,-252.41"/>
 </a>
 </g>
 </g>
 <!-- Node54 -->
 <g id="Node000054" class="node">
 <title>Node54</title>
-<g id="a_Node000054"><a xlink:href="classfabomatic_1_1_machine.xhtml#a30c12cef5abca43d82f7c378430a79b6" target="_top" xlink:title="Sets the idle period after which the machine will power off automatically.">
-<polygon fill="white" stroke="#666666" points="1052.12,-156.25 952.12,-156.25 952.12,-125.75 1052.12,-125.75 1052.12,-156.25"/>
-<text text-anchor="start" x="960.12" y="-142.75" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::Machine</text>
-<text text-anchor="middle" x="1002.12" y="-131.5" font-family="Helvetica,sans-Serif" font-size="10.00">::setGracePeriod</text>
+<g id="a_Node000054"><a xlink:href="classfabomatic_1_1_machine.xhtml#ace7ccce1b3fabde562cfc7c5645dd6a3" target="_top" xlink:title="Sets the delay after which the user will be logged off automatically.">
+<polygon fill="white" stroke="#666666" points="1052.88,-205.25 951.38,-205.25 951.38,-174.75 1052.88,-174.75 1052.88,-205.25"/>
+<text text-anchor="start" x="959.38" y="-191.75" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::Machine</text>
+<text text-anchor="middle" x="1002.12" y="-180.5" font-family="Helvetica,sans-Serif" font-size="10.00">::setAutologoffDelay</text>
 </a>
 </g>
 </g>
-<!-- Node49&#45;&gt;Node54 -->
-<g id="edge77_Node000049_Node000054" class="edge">
-<title>Node49&#45;&gt;Node54</title>
-<g id="a_edge77_Node000049_Node000054"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M860.19,-248.46C875.93,-227.32 906.65,-189.44 940.5,-166 942.44,-164.66 944.46,-163.37 946.54,-162.13"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="948.09,-165.28 955.24,-157.46 944.78,-159.11 948.09,-165.28"/>
+<!-- Node50&#45;&gt;Node54 -->
+<g id="edge76_Node000050_Node000054" class="edge">
+<title>Node50&#45;&gt;Node54</title>
+<g id="a_edge76_Node000050_Node000054"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M876.34,-248.47C894.32,-238.45 918.53,-225.39 940.5,-215 943.95,-213.37 947.54,-211.74 951.16,-210.13"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="952.23,-213.48 960.02,-206.3 949.46,-207.06 952.23,-213.48"/>
 </a>
 </g>
 </g>
 <!-- Node55 -->
 <g id="Node000055" class="node">
 <title>Node55</title>
-<g id="a_Node000055"><a xlink:href="classfabomatic_1_1_machine.xhtml#ac8513321c0c184312c66087e7104d066" target="_top" xlink:title="Sets the machine name as per backend configuration.">
-<polygon fill="white" stroke="#666666" points="1052.12,-107.25 952.12,-107.25 952.12,-76.75 1052.12,-76.75 1052.12,-107.25"/>
-<text text-anchor="start" x="960.12" y="-93.75" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::Machine</text>
-<text text-anchor="middle" x="1002.12" y="-82.5" font-family="Helvetica,sans-Serif" font-size="10.00">::setMachineName</text>
+<g id="a_Node000055"><a xlink:href="classfabomatic_1_1_machine.xhtml#a30c12cef5abca43d82f7c378430a79b6" target="_top" xlink:title="Sets the idle period after which the machine will power off automatically.">
+<polygon fill="white" stroke="#666666" points="1052.12,-156.25 952.12,-156.25 952.12,-125.75 1052.12,-125.75 1052.12,-156.25"/>
+<text text-anchor="start" x="960.12" y="-142.75" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::Machine</text>
+<text text-anchor="middle" x="1002.12" y="-131.5" font-family="Helvetica,sans-Serif" font-size="10.00">::setGracePeriod</text>
 </a>
 </g>
 </g>
-<!-- Node49&#45;&gt;Node55 -->
-<g id="edge78_Node000049_Node000055" class="edge">
-<title>Node49&#45;&gt;Node55</title>
-<g id="a_edge78_Node000049_Node000055"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M854.96,-248.49C866.79,-219 896.25,-154.49 940.5,-117 941.93,-115.79 943.43,-114.62 944.99,-113.51"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="946.42,-116.74 953.07,-108.5 942.72,-110.8 946.42,-116.74"/>
+<!-- Node50&#45;&gt;Node55 -->
+<g id="edge77_Node000050_Node000055" class="edge">
+<title>Node50&#45;&gt;Node55</title>
+<g id="a_edge77_Node000050_Node000055"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M860.19,-248.46C875.93,-227.32 906.65,-189.44 940.5,-166 942.44,-164.66 944.46,-163.37 946.54,-162.13"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="948.09,-165.28 955.24,-157.46 944.78,-159.11 948.09,-165.28"/>
 </a>
 </g>
 </g>
 <!-- Node56 -->
 <g id="Node000056" class="node">
 <title>Node56</title>
-<g id="a_Node000056"><a xlink:href="classfabomatic_1_1_machine.xhtml#a9d109ed7b9c5e40768bc4edf62377aa8" target="_top" xlink:title="Sets the machine type as per backend configuration.">
+<g id="a_Node000056"><a xlink:href="classfabomatic_1_1_machine.xhtml#ac8513321c0c184312c66087e7104d066" target="_top" xlink:title="Sets the machine name as per backend configuration.">
+<polygon fill="white" stroke="#666666" points="1052.12,-107.25 952.12,-107.25 952.12,-76.75 1052.12,-76.75 1052.12,-107.25"/>
+<text text-anchor="start" x="960.12" y="-93.75" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::Machine</text>
+<text text-anchor="middle" x="1002.12" y="-82.5" font-family="Helvetica,sans-Serif" font-size="10.00">::setMachineName</text>
+</a>
+</g>
+</g>
+<!-- Node50&#45;&gt;Node56 -->
+<g id="edge78_Node000050_Node000056" class="edge">
+<title>Node50&#45;&gt;Node56</title>
+<g id="a_edge78_Node000050_Node000056"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M854.96,-248.49C866.79,-219 896.25,-154.49 940.5,-117 941.93,-115.79 943.43,-114.62 944.99,-113.51"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="946.42,-116.74 953.07,-108.5 942.72,-110.8 946.42,-116.74"/>
+</a>
+</g>
+</g>
+<!-- Node57 -->
+<g id="Node000057" class="node">
+<title>Node57</title>
+<g id="a_Node000057"><a xlink:href="classfabomatic_1_1_machine.xhtml#a9d109ed7b9c5e40768bc4edf62377aa8" target="_top" xlink:title="Sets the machine type as per backend configuration.">
 <polygon fill="white" stroke="#666666" points="1052.12,-58.25 952.12,-58.25 952.12,-27.75 1052.12,-27.75 1052.12,-58.25"/>
 <text text-anchor="start" x="960.12" y="-44.75" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::Machine</text>
 <text text-anchor="middle" x="1002.12" y="-33.5" font-family="Helvetica,sans-Serif" font-size="10.00">::setMachineType</text>
 </a>
 </g>
 </g>
-<!-- Node49&#45;&gt;Node56 -->
-<g id="edge79_Node000049_Node000056" class="edge">
-<title>Node49&#45;&gt;Node56</title>
-<g id="a_edge79_Node000049_Node000056"><a xlink:title=" ">
+<!-- Node50&#45;&gt;Node57 -->
+<g id="edge79_Node000050_Node000057" class="edge">
+<title>Node50&#45;&gt;Node57</title>
+<g id="a_edge79_Node000050_Node000057"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M852.29,-248.51C860.48,-212.14 885.68,-120.4 940.5,-68 941.54,-67 942.63,-66.05 943.75,-65.12"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="945.52,-68.16 951.76,-59.6 941.54,-62.4 945.52,-68.16"/>
 </a>

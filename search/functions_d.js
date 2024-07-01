@@ -11,7 +11,7 @@ var searchData=
   ['power_8',['power',['../classfabomatic_1_1_machine.xhtml#a0aa6c35ee214314d87297013cc29a8aa',1,'fabomatic::Machine']]],
   ['power_5fmqtt_9',['power_mqtt',['../classfabomatic_1_1_machine.xhtml#a116376ca892e59b8f754696161657631',1,'fabomatic::Machine']]],
   ['power_5frelay_10',['power_relay',['../classfabomatic_1_1_machine.xhtml#af80723250a85368e53055b5f91c14840',1,'fabomatic::Machine']]],
-  ['prettyprint_11',['prettyPrint',['../classfabomatic_1_1_l_c_d_wrapper.xhtml#a0cb56aedab5fa556c247cebf74e68cd8',1,'fabomatic::LCDWrapper']]],
+  ['prettyprint_11',['prettyPrint',['../classfabomatic_1_1_l_c_d_wrapper.xhtml#a4c22bc5714e0992aaf7c434f0c5df003',1,'fabomatic::LCDWrapper']]],
   ['print_12',['print',['../namespacefabomatic_1_1card.xhtml#adc7e60eb73b943f32b5ca61a6c81f45f',1,'fabomatic::card']]],
   ['printcompilesettings_13',['printCompileSettings',['../namespacefabomatic.xhtml#aba5f28d2cdf80fb0270592238bfee443',1,'fabomatic']]],
   ['printstats_14',['printStats',['../classfabomatic_1_1_tasks_1_1_scheduler.xhtml#a0619cf06b6427ba332296ffcceffcb8c',1,'fabomatic::Tasks::Scheduler']]],

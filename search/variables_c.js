@@ -6,5 +6,5 @@ var searchData=
   ['neopixel_5fconfig_3',['neopixel_config',['../structfabomatic_1_1pins__config_1_1led__config.xhtml#abcb9f08ec0d07153bdafb39845164672',1,'fabomatic::pins_config::led_config']]],
   ['next_5frun_4',['next_run',['../classfabomatic_1_1_tasks_1_1_task.xhtml#a7016ab8ad769034f28f927be739b9bf6',1,'fabomatic::Tasks::Task']]],
   ['no_5fpin_5',['NO_PIN',['../namespacefabomatic.xhtml#a01a9e2e5f9e92f6f3fa9204ba3d946b9',1,'fabomatic']]],
-  ['noconnection_5fchar_6',['noconnection_char',['../classfabomatic_1_1_l_c_d_wrapper.xhtml#ab9b33322ffb024be85e7fd4114099b7e',1,'fabomatic::LCDWrapper']]]
+  ['noconnection_5fchar_6',['noconnection_char',['../classfabomatic_1_1_l_c_d_wrapper.xhtml#af5370c9b87cdda8746ad8e520d5058ec',1,'fabomatic::LCDWrapper']]]
 ];

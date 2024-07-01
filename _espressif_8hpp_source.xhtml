@@ -89,18 +89,18 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;chrono&gt;</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;string_view&gt;</span></div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacefabomatic_1_1esp32.xhtml">fabomatic::esp32</a></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>{</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>  [[nodiscard]] <span class="keyword">auto</span> <a class="code hl_function" href="namespacefabomatic_1_1esp32.xhtml#a8bec49abfae47da0cadccb6e486f69bb">setupWatchdog</a>(std::chrono::milliseconds timeout) -&gt; bool;</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>  <span class="keyword">auto</span> <a class="code hl_function" href="namespacefabomatic_1_1esp32.xhtml#ac7eca0f98345aa2c296103d6dc9fff01">signalWatchdog</a>() -&gt; bool;</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>  <span class="keyword">auto</span> <a class="code hl_function" href="namespacefabomatic_1_1esp32.xhtml#a5f5bb4a72418870dbcddd266b5bb0fcd">showHeapStats</a>() -&gt; void;</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>  <span class="keyword">auto</span> <a class="code hl_function" href="namespacefabomatic_1_1esp32.xhtml#ae78a1408710128cb446f2cde991017dd">removeWatchdog</a>() -&gt; void;</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>  [[nodiscard]] <span class="keyword">auto</span> <a class="code hl_function" href="namespacefabomatic_1_1esp32.xhtml#ac8d867c42c073a3e44e6292db72e1f94">esp_serial</a>() -&gt; <span class="keyword">const</span> std::string_view;</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>  <span class="keyword">auto</span> <a class="code hl_function" href="namespacefabomatic_1_1esp32.xhtml#a07750a641e5cfe3207bbdf72813af628">getFreeHeap</a>() -&gt; uint32_t;</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>  [[noreturn]] <span class="keyword">auto</span> <a class="code hl_function" href="namespacefabomatic_1_1esp32.xhtml#a6afa9ef478bc8a9ca73049f33b8fb8af">restart</a>() -&gt; void;</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>}</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#endif </span><span class="comment">// ESPRESSIF_HPP</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacefabomatic_1_1esp32.xhtml">fabomatic::esp32</a></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>{</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>  [[nodiscard]] <span class="keyword">auto</span> <a class="code hl_function" href="namespacefabomatic_1_1esp32.xhtml#a8bec49abfae47da0cadccb6e486f69bb">setupWatchdog</a>(std::chrono::milliseconds timeout) -&gt; bool;</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>  <span class="keyword">auto</span> <a class="code hl_function" href="namespacefabomatic_1_1esp32.xhtml#ac7eca0f98345aa2c296103d6dc9fff01">signalWatchdog</a>() -&gt; bool;</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>  <span class="keyword">auto</span> <a class="code hl_function" href="namespacefabomatic_1_1esp32.xhtml#a5f5bb4a72418870dbcddd266b5bb0fcd">showHeapStats</a>() -&gt; void;</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>  <span class="keyword">auto</span> <a class="code hl_function" href="namespacefabomatic_1_1esp32.xhtml#ae78a1408710128cb446f2cde991017dd">removeWatchdog</a>() -&gt; void;</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>  [[nodiscard]] <span class="keyword">auto</span> <a class="code hl_function" href="namespacefabomatic_1_1esp32.xhtml#ac8d867c42c073a3e44e6292db72e1f94">esp_serial</a>() -&gt; <span class="keyword">const</span> std::string_view;</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>  <span class="keyword">auto</span> <a class="code hl_function" href="namespacefabomatic_1_1esp32.xhtml#a07750a641e5cfe3207bbdf72813af628">getFreeHeap</a>() -&gt; uint32_t;</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>  [[noreturn]] <span class="keyword">auto</span> <a class="code hl_function" href="namespacefabomatic_1_1esp32.xhtml#a6afa9ef478bc8a9ca73049f33b8fb8af">restart</a>() -&gt; void;</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>}</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#endif </span><span class="comment">// ESPRESSIF_HPP</span></div>
 <div class="ttc" id="anamespacefabomatic_1_1esp32_xhtml"><div class="ttname"><a href="namespacefabomatic_1_1esp32.xhtml">fabomatic::esp32</a></div><div class="ttdef"><b>Definition</b> <a href="_espressif_8cpp_source.xhtml#l00013">Espressif.cpp:14</a></div></div>
 <div class="ttc" id="anamespacefabomatic_1_1esp32_xhtml_a07750a641e5cfe3207bbdf72813af628"><div class="ttname"><a href="namespacefabomatic_1_1esp32.xhtml#a07750a641e5cfe3207bbdf72813af628">fabomatic::esp32::getFreeHeap</a></div><div class="ttdeci">auto getFreeHeap() -&gt; uint32_t</div><div class="ttdef"><b>Definition</b> <a href="_espressif_8cpp_source.xhtml#l00088">Espressif.cpp:88</a></div></div>
 <div class="ttc" id="anamespacefabomatic_1_1esp32_xhtml_a5f5bb4a72418870dbcddd266b5bb0fcd"><div class="ttname"><a href="namespacefabomatic_1_1esp32.xhtml#a5f5bb4a72418870dbcddd266b5bb0fcd">fabomatic::esp32::showHeapStats</a></div><div class="ttdeci">void showHeapStats()</div><div class="ttdef"><b>Definition</b> <a href="_espressif_8cpp_source.xhtml#l00015">Espressif.cpp:15</a></div></div>
@@ -112,7 +112,7 @@ $(document).ready(function() { init_codefold(0); });
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jun 30 2024 20:15:48 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Mon Jul 1 2024 20:53:05 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>
