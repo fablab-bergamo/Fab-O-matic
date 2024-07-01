@@ -33,9 +33,9 @@ namespace fabomatic::Board
   RFIDWrapper<Mrfc522Driver> rfid{};
 #endif
 
-  LCDWrapper<LiquidCrystal> lcd{pins.lcd};
-  BoardLogic logic{};
-  Tasks::Scheduler scheduler{};
+  LCDWrapper lcd{pins.lcd};
+  BoardLogic logic;
+  Tasks::Scheduler scheduler;
 } // namespace fabomatic::Board
 
 #endif // GLOBALS_HPP_

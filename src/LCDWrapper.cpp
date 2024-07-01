@@ -8,10 +8,10 @@
 
 namespace fabomatic
 {
-  template <typename TLcdDriver>
-  LCDWrapper<TLcdDriver>::LCDWrapper(const pins_config::lcd_config &conf) : config(conf),
-                                                                            lcd(config.rs_pin, config.en_pin, config.d0_pin, config.d1_pin, config.d2_pin, config.d3_pin),
-                                                                            show_connection_status(true), show_power_status(true), forceUpdate(true)
+
+  LCDWrapper::LCDWrapper(const pins_config::lcd_config &conf) : config(conf),
+                                                                lcd(config.rs_pin, config.en_pin, config.d0_pin, config.d1_pin, config.d2_pin, config.d3_pin),
+                                                                show_connection_status(true), show_power_status(true), forceUpdate(true)
   {
     digitalWrite(config.rs_pin, LOW);
     pinMode(config.rs_pin, OUTPUT);
@@ -32,8 +32,7 @@ namespace fabomatic
       row.fill({0});
   }
 
-  template <typename TLcdDriver>
-  bool LCDWrapper<TLcdDriver>::begin()
+  bool LCDWrapper::begin()
   {
     lcd.begin(conf::lcd::COLS, conf::lcd::ROWS);
 
@@ -56,8 +55,7 @@ namespace fabomatic
     return true;
   }
 
-  template <typename TLcdDriver>
-  void LCDWrapper<TLcdDriver>::clear()
+  void LCDWrapper::clear()
   {
     for (auto &row : current)
       row.fill({' '});
@@ -65,8 +63,7 @@ namespace fabomatic
     forceUpdate = true;
   }
 
-  template <typename TLcdDriver>
-  void LCDWrapper<TLcdDriver>::update(const BoardInfo &info, bool forced)
+  void LCDWrapper::update(const BoardInfo &info, bool forced)
   {
     if (!forced && !needsUpdate(info))
     {
@@ -117,8 +114,7 @@ namespace fabomatic
     forceUpdate = false;
   }
 
-  template <typename TLcdDriver>
-  void LCDWrapper<TLcdDriver>::showConnection(bool show)
+  void LCDWrapper::showConnection(bool show)
   {
     if (show_connection_status != show)
       forceUpdate = true;
@@ -126,8 +122,7 @@ namespace fabomatic
     show_connection_status = show;
   }
 
-  template <typename TLcdDriver>
-  void LCDWrapper<TLcdDriver>::showPower(bool show)
+  void LCDWrapper::showPower(bool show)
   {
     if (show_power_status != show)
       forceUpdate = true;
@@ -138,8 +133,8 @@ namespace fabomatic
   /// @brief Checks if the LCD buffer has changed since last write to the LCD, or forced update has been requested.
   /// @param bi current state of the board
   /// @return true if the buffer has changed, false otherwise
-  template <typename TLcdDriver>
-  bool LCDWrapper<TLcdDriver>::needsUpdate(const BoardInfo &bi) const
+
+  bool LCDWrapper::needsUpdate(const BoardInfo &bi) const
   {
     if (forceUpdate || !(bi == boardInfo) || current != buffer)
     {
@@ -156,9 +151,9 @@ namespace fabomatic
   /// @brief Debug utility to print in the console the current buffer contents
   /// @param buf character buffer
   /// @param bi board info, used for special indicators status
-  template <typename TLcdDriver>
-  void LCDWrapper<TLcdDriver>::prettyPrint(const DisplayBuffer &buf,
-                                           const BoardInfo &bi) const
+
+  void LCDWrapper::prettyPrint(const DisplayBuffer &buf,
+                               const BoardInfo &bi) const
   {
     std::stringstream ss;
     ss << "/" << std::string(conf::lcd::COLS, '-') << "\\\r\n"; // LCD top
@@ -202,8 +197,7 @@ namespace fabomatic
     Serial.print(str.c_str());
   }
 
-  template <typename TLcdDriver>
-  void LCDWrapper<TLcdDriver>::setRow(uint8_t row, const std::string_view &text)
+  void LCDWrapper::setRow(uint8_t row, const std::string_view &text)
   {
     if (row < conf::lcd::ROWS)
     {
@@ -215,17 +209,29 @@ namespace fabomatic
     }
   }
 
-  template <typename TLcdDriver>
-  void LCDWrapper<TLcdDriver>::backlightOn() const
+  void LCDWrapper::backlightOn() const
   {
     if (config.bl_pin != NO_PIN)
       digitalWrite(config.bl_pin, config.active_low ? LOW : HIGH);
   }
 
-  template <typename TLcdDriver>
-  void LCDWrapper<TLcdDriver>::backlightOff() const
+  void LCDWrapper::backlightOff() const
   {
     if (config.bl_pin != NO_PIN)
       digitalWrite(config.bl_pin, config.active_low ? HIGH : LOW);
+  }
+
+  auto LCDWrapper::convertSecondsToHHMMSS(std::chrono::seconds duration) const -> const std::string
+  {
+    std::stringstream ss{};
+    const auto hrs = std::chrono::duration_cast<std::chrono::hours>(duration);
+    const auto mins = std::chrono::duration_cast<std::chrono::minutes>(duration - hrs);
+    const auto secs = std::chrono::duration_cast<std::chrono::seconds>(duration - hrs - mins);
+
+    ss << std::setfill('0') << std::setw(2) << hrs.count() << ":"
+       << std::setfill('0') << std::setw(2) << mins.count() << ":"
+       << std::setfill('0') << std::setw(2) << secs.count();
+
+    return ss.str();
   }
 } // namespace fabomatic

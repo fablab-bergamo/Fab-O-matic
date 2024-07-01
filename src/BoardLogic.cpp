@@ -5,7 +5,6 @@
 #include <Adafruit_NeoPixel.h>
 
 #include "AuthProvider.hpp"
-#include "BaseLCDWrapper.hpp"
 #include "BaseRfidWrapper.hpp"
 #include "BoardLogic.hpp"
 #include "FabBackend.hpp"
@@ -454,7 +453,7 @@ namespace fabomatic
   }
 
   /// @brief Configures the board with the given references
-  bool BoardLogic::configure(BaseRFIDWrapper &rfid, BaseLCDWrapper &lcd)
+  bool BoardLogic::configure(BaseRFIDWrapper &rfid, LCDWrapper &lcd)
   {
     this->rfid = rfid;
     this->lcd = lcd;
@@ -604,7 +603,7 @@ namespace fabomatic
     return machine;
   }
 
-  auto BoardLogic::getLcd() const -> BaseLCDWrapper &
+  auto BoardLogic::getLcd() const -> LCDWrapper &
   {
     if (lcd.has_value())
     {
