@@ -234,7 +234,7 @@ namespace fabomatic
     /**
      * MQTT port for broker
      */
-    static constexpr auto PORT_NUMBER { 1883 }
+    static constexpr auto PORT_NUMBER{1883};
   } // namespace conf::mqtt
 
   namespace conf::common
