@@ -9,6 +9,9 @@
 
 namespace fabomatic
 {
+  /**
+   * RGB/LED/NeoPixel class
+   */
   class Led
   {
   public:

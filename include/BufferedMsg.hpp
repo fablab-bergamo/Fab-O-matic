@@ -12,6 +12,9 @@
 
 namespace fabomatic
 {
+  /**
+   * Message that can be saved in Flash for future replay
+   */
   struct BufferedMsg
   {
     std::string mqtt_message;
@@ -23,6 +26,9 @@ namespace fabomatic
     BufferedMsg(BufferedMsg &source) = default;
   };
 
+  /**
+   * Class containing the buffered messages for future replay
+   */
   class Buffer
   {
   private:
@@ -43,6 +49,9 @@ namespace fabomatic
     static constexpr auto MAX_MESSAGES = 40;
   };
 
+  /**
+   * Query to be replayed
+   */
   class BufferedQuery final : public ServerMQTT::Query
   {
   private:

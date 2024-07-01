@@ -9,14 +9,21 @@
 
 namespace fabomatic
 {
+  /**
+   * A Cached card contains only RFID tag ID + access level. Name is intentionally not saved.
+   */
   struct CachedCard
   {
     card::uid_t uid;
     FabUser::UserLevel level;
-    constexpr CachedCard() : uid(card::INVALID), level(FabUser::UserLevel::Unknown){};
-    constexpr CachedCard(card::uid_t uid, FabUser::UserLevel level) : uid(uid), level(level){};
+    constexpr CachedCard() : uid(card::INVALID), level(FabUser::UserLevel::Unknown) {};
+    constexpr CachedCard(card::uid_t uid, FabUser::UserLevel level) : uid(uid), level(level) {};
   };
 
+  /**
+   * This struct contains CACHE_LEN RFID tags with their authentication by the backend.
+   * It is used to provide some resiliency in case of network failure.
+   */
   struct CachedCards
   {
     std::array<card::uid_t, conf::rfid_tags::CACHE_LEN> cards;

@@ -7,7 +7,7 @@
 
 namespace fabomatic
 {
-  /// @brief Returns configuration for an ESP32 dev board used in revision 0.1
+  /// @brief Returns configuration for an ESP32 dev board used in HW revision 0.1
   /// @return pins_config
   constexpr auto configure_pins_esp32() -> const pins_config
   {

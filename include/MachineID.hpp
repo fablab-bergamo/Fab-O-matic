@@ -13,6 +13,9 @@ enum class MachineType : uint8_t
   Other = 5
 };
 
+/**
+ * The unique machine identifier for the backend
+ */
 struct MachineID
 {
   uint16_t id;

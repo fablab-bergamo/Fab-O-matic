@@ -18,7 +18,8 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v4
-        
+    - name: Use secrets.hpp.example as base for the build
+      run: cp conf/secrets.hpp.example conf/secrets.hpp
     - name: Doxygen Action
       uses: mattnotmitt/doxygen-action@v1.9.8
       with:

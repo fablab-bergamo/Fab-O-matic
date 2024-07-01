@@ -11,6 +11,9 @@
 
 namespace fabomatic
 {
+  /**
+   * Represents a user with access level, name, RFID tag, and auth result.
+   */
   struct FabUser
   {
     enum class UserLevel : uint8_t
@@ -21,10 +24,10 @@ namespace fabomatic
       FabAdmin,
     };
 
-    card::uid_t card_uid {card::INVALID};
+    card::uid_t card_uid{card::INVALID};
     std::string holder_name{""};
-    bool authenticated {false};
-    UserLevel user_level {UserLevel::Unknown};
+    bool authenticated{false};
+    UserLevel user_level{UserLevel::Unknown};
 
     FabUser() = default;
 
