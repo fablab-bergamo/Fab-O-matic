@@ -29,7 +29,7 @@ pthread_attr_t attr_mqtt_broker;
 namespace fabomatic::tests
 {
   fabomatic::RFIDWrapper<fabomatic::MockMrfc522> rfid;
-  fabomatic::LCDWrapper<LiquidCrystal> lcd{fabomatic::pins.lcd};
+  fabomatic::LCDWrapper lcd{fabomatic::pins.lcd};
   fabomatic::BoardLogic logic;
   fabomatic::MockMQTTBroker broker;
   fabomatic::Tasks::Scheduler test_scheduler;

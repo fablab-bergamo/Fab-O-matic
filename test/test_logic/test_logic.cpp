@@ -25,7 +25,7 @@ using namespace std::chrono_literals;
 [[maybe_unused]] static const char *TAG3 = "test_logic";
 
 fabomatic::RFIDWrapper<fabomatic::MockMrfc522> rfid;
-fabomatic::LCDWrapper<LiquidCrystal> lcd{fabomatic::pins.lcd};
+fabomatic::LCDWrapper lcd{fabomatic::pins.lcd};
 fabomatic::BoardLogic logic;
 
 using BoardLogic = fabomatic::BoardLogic;
