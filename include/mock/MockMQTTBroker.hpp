@@ -11,6 +11,9 @@
 
 namespace fabomatic
 {
+  /**
+   * This class implements an MQTT broker with predefined responses to FabBackend requests.
+   */
   class MockMQTTBroker final : public sMQTTBroker
   {
   public:

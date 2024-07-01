@@ -10,6 +10,9 @@
 
 namespace fabomatic
 {
+  /**
+   * LCD display wrapper
+   */
   class LCDWrapper
   {
   public:

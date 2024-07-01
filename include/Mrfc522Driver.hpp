@@ -14,6 +14,9 @@
 
 namespace fabomatic
 {
+  /**
+   * The real Mrfc522Driver around the Arduino library.
+   */
   class Mrfc522Driver
   {
   private:

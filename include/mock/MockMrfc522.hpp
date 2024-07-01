@@ -14,6 +14,9 @@
 
 namespace fabomatic
 {
+  /**
+   * This class implements a Mrfc522 with settable tag ID in order to allow simulation
+   */
   class MockMrfc522
   {
   private:
@@ -29,7 +32,7 @@ namespace fabomatic
       byte sak{0}; // The SAK (Select acknowledge) byte returned from the PICC after successful selection.
     };
 
-    constexpr MockMrfc522(){};
+    constexpr MockMrfc522() {};
 
     auto PICC_IsNewCardPresent() -> bool;
     auto PICC_ReadCardSerial() -> bool;
