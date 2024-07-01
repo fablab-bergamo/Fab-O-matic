@@ -2,10 +2,10 @@
 #define BOARDLOGIC_HPP_
 
 #include "AuthProvider.hpp"
-#include "BaseLCDWrapper.hpp"
 #include "BaseRfidWrapper.hpp"
 #include "FabBackend.hpp"
 #include "FabUser.hpp"
+#include "LCDWrapper.hpp"
 #include "Led.hpp"
 #include "Machine.hpp"
 #include "card.hpp"
@@ -15,9 +15,15 @@
 
 namespace fabomatic
 {
+  /**
+   * Main class implementing the state changes
+   */
   class BoardLogic
   {
   public:
+    /**
+     * Main states of the board
+     */
     enum class Status : uint8_t
     {
       Clear,
@@ -65,7 +71,7 @@ namespace fabomatic
     auto setRebootRequest(bool request) -> void;
 
     auto initBoard() -> bool;
-    auto configure(BaseRFIDWrapper &rfid, BaseLCDWrapper &lcd) -> bool;
+    auto configure(BaseRFIDWrapper &rfid, LCDWrapper &lcd) -> bool;
     auto reconfigure() -> bool;
     auto saveRfidCache() -> bool;
 
@@ -92,7 +98,7 @@ namespace fabomatic
     Led led;
     FabBackend server;
     std::optional<std::reference_wrapper<BaseRFIDWrapper>> rfid{std::nullopt}; // Configured at runtime
-    std::optional<std::reference_wrapper<BaseLCDWrapper>> lcd{std::nullopt};   // Configured at runtime
+    std::optional<std::reference_wrapper<LCDWrapper>> lcd{std::nullopt};       // Configured at runtime
     bool ready_for_a_new_card{true};
     bool led_status{false};
 
@@ -100,7 +106,7 @@ namespace fabomatic
     AuthProvider auth{secrets::cards::whitelist};
 
     BaseRFIDWrapper &getRfid() const;
-    BaseLCDWrapper &getLcd() const;
+    LCDWrapper &getLcd() const;
 
     bool rebootRequest{false};
     Buzzer buzzer;

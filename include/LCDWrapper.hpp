@@ -1,29 +1,30 @@
 #ifndef LCDWRAPPER_HPP_
 #define LCDWRAPPER_HPP_
 
-#include "BaseLCDWrapper.hpp"
 #include "BoardInfo.hpp"
 #include "Machine.hpp"
 #include "pins.hpp"
 #include <array>
 #include <chrono>
+#include <LiquidCrystal.h>
 
 namespace fabomatic
 {
-  template <typename LcdDriver>
-  class LCDWrapper final : public BaseLCDWrapper
+  class LCDWrapper
   {
   public:
     LCDWrapper(const pins_config::lcd_config &config);
 
     using DisplayBuffer = std::array<std::array<char, conf::lcd::COLS>, conf::lcd::ROWS>;
 
-    auto begin() -> bool override;
-    auto clear() -> void override;
-    auto showConnection(bool show) -> void override;
-    auto showPower(bool show) -> void override;
-    auto setRow(uint8_t row, const std::string_view &text) -> void override;
-    auto update(const BoardInfo &boardinfo, bool forced = false) -> void override;
+    auto begin() -> bool;
+    auto clear() -> void;
+    auto showConnection(bool show) -> void;
+    auto showPower(bool show) -> void;
+    auto setRow(uint8_t row, const std::string_view &text) -> void;
+    auto update(const BoardInfo &boardinfo, bool forced = false) -> void;
+
+    [[nodiscard]] auto convertSecondsToHHMMSS(std::chrono::seconds duration) const -> const std::string;
 
   private:
     static constexpr auto HEIGHT_PX = 8;
@@ -43,7 +44,7 @@ namespace fabomatic
 
     const pins_config::lcd_config &config;
 
-    LcdDriver lcd;
+    LiquidCrystal lcd;
     bool show_connection_status;
     bool show_power_status;
     bool forceUpdate;
@@ -59,7 +60,5 @@ namespace fabomatic
     [[nodiscard]] auto needsUpdate(const BoardInfo &bi) const -> bool;
   };
 } // namespace fabomatic
-
-#include "LCDWrapper.tpp"
 
 #endif // LCDWRAPPER_HPP_
