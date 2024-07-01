@@ -5,6 +5,9 @@
 
 namespace fabomatic
 {
+  /**
+   * Helper struct representing the display state
+   */
   struct BoardInfo
   {
     bool server_connected;

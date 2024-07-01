@@ -12,6 +12,10 @@
 
 namespace fabomatic
 {
+  /**
+   * This class can be instanciated with a real or mock RFID driver.
+   * Users of this class use the BaseRFIDWrapper interface
+   */
   template <typename Driver>
   class RFIDWrapper final : public BaseRFIDWrapper
   {
@@ -51,7 +55,7 @@ namespace fabomatic
     RFIDWrapper &operator=(const RFIDWrapper &x) = delete; // copy assignment
     RFIDWrapper(RFIDWrapper &&) = delete;                  // move constructor
     RFIDWrapper &operator=(RFIDWrapper &&) = delete;       // move assignment
-    ~RFIDWrapper() override{};                             // Default destructor
+    ~RFIDWrapper() override {};                            // Default destructor
   };
 } // namespace fabomatic
 

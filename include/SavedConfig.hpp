@@ -16,6 +16,9 @@
 
 namespace fabomatic
 {
+  /**
+   * Persisted settings and facilities to load/save settings from Flash
+   */
   class SavedConfig
   {
   private:

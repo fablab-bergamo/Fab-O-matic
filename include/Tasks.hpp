@@ -19,7 +19,9 @@ namespace fabomatic::Tasks
 
   class Scheduler;
 
-  // A task is a function that is executed periodically
+  /**
+   * A task class which represents a function to be called at requested intervals
+   */
   class Task
   {
   public:
@@ -110,6 +112,9 @@ namespace fabomatic::Tasks
     unsigned long run_counter;
   };
 
+  /**
+   * The schedule is in charge of running tasks in the right order based on their requested intervals.
+   */
   class Scheduler
   {
   public:
