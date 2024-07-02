@@ -11,6 +11,7 @@ namespace fabomatic
 {
   using namespace std::chrono_literals;
 
+  /// @brief Machine-related default settings
   namespace conf::default_config
   {
     /// @brief Default MachineID for backend. Can be overriden through WiFi Portal config
@@ -27,7 +28,7 @@ namespace fabomatic
 
   } // namespace conf::default_config
 
-  /// @brief Configuration for RFID related settings
+  /// @brief RFID-related settings
   namespace conf::rfid_tags
   {
     /// @brief Number of bytes in RFID cards UID, may depend on specific RFID chip
@@ -71,6 +72,7 @@ namespace fabomatic
 
   } // namespace conf::machine
 
+  /// @brief Debug settings
   namespace conf::debug
   {
     /// @brief True to add logs to serial output
@@ -161,6 +163,7 @@ namespace fabomatic
     static constexpr std::string_view mqtt_switch_off_message{"off"};
   } // namespace conf::mqtt
 
+  /// @brief Other compile-time settings
   namespace conf::common
   {
     /// @brief Maximum length of saved string in WiFiManager portal.

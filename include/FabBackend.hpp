@@ -60,7 +60,7 @@ namespace fabomatic
     [[nodiscard]] auto publish(const QueryT &payload) -> PublishResult;
 
     [[nodiscard]] auto waitForAnswer(std::chrono::milliseconds timeout) -> bool;
-    [[nodiscard]] auto publishWithReply(const ServerMQTT::Query &payload) -> PublishResult;
+    [[nodiscard]] auto publishWithReply(const MQTTInterface::Query &payload) -> PublishResult;
 
     template <typename RespT, typename QueryT, typename... QueryArgs>
     [[nodiscard]] auto processQuery(QueryArgs &&...) -> std::unique_ptr<RespT>;
@@ -73,12 +73,12 @@ namespace fabomatic
   public:
     FabBackend() = default;
 
-    [[nodiscard]] auto checkCard(const card::uid_t uid) -> std::unique_ptr<ServerMQTT::UserResponse>;
-    [[nodiscard]] auto checkMachine() -> std::unique_ptr<ServerMQTT::MachineResponse>;
-    [[nodiscard]] auto startUse(const card::uid_t uid) -> std::unique_ptr<ServerMQTT::SimpleResponse>;
-    [[nodiscard]] auto inUse(const card::uid_t uid, std::chrono::seconds duration) -> std::unique_ptr<ServerMQTT::SimpleResponse>;
-    [[nodiscard]] auto finishUse(const card::uid_t uid, std::chrono::seconds duration) -> std::unique_ptr<ServerMQTT::SimpleResponse>;
-    [[nodiscard]] auto registerMaintenance(const card::uid_t maintainer) -> std::unique_ptr<ServerMQTT::SimpleResponse>;
+    [[nodiscard]] auto checkCard(const card::uid_t uid) -> std::unique_ptr<MQTTInterface::UserResponse>;
+    [[nodiscard]] auto checkMachine() -> std::unique_ptr<MQTTInterface::MachineResponse>;
+    [[nodiscard]] auto startUse(const card::uid_t uid) -> std::unique_ptr<MQTTInterface::SimpleResponse>;
+    [[nodiscard]] auto inUse(const card::uid_t uid, std::chrono::seconds duration) -> std::unique_ptr<MQTTInterface::SimpleResponse>;
+    [[nodiscard]] auto finishUse(const card::uid_t uid, std::chrono::seconds duration) -> std::unique_ptr<MQTTInterface::SimpleResponse>;
+    [[nodiscard]] auto registerMaintenance(const card::uid_t maintainer) -> std::unique_ptr<MQTTInterface::SimpleResponse>;
     [[nodiscard]] auto alive() -> bool;
     [[nodiscard]] auto publish(String topic, String payload, bool waitForAnswer) -> bool;
     [[nodiscard]] auto isOnline() const -> bool;

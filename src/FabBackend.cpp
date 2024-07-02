@@ -58,7 +58,7 @@ namespace fabomatic
    * @param query The query to be posted.
    * @return true if the server answered, false otherwise.
    */
-  auto FabBackend::publishWithReply(const ServerMQTT::Query &query) -> PublishResult
+  auto FabBackend::publishWithReply(const MQTTInterface::Query &query) -> PublishResult
   {
     auto try_cpt = 0;
     auto published = false;
@@ -357,7 +357,7 @@ namespace fabomatic
           online = true;
         }
         // Announce the board to the server
-        if (auto query = ServerMQTT::AliveQuery{}; publish(query) == PublishResult::PublishedWithoutAnswer)
+        if (auto query = MQTTInterface::AliveQuery{}; publish(query) == PublishResult::PublishedWithoutAnswer)
         {
           ESP_LOGI(TAG, "MQTT Client: board announced to server");
         }
@@ -401,8 +401,8 @@ namespace fabomatic
   template <typename RespT, typename QueryT, typename... QueryArgs>
   std::unique_ptr<RespT> FabBackend::processQuery(QueryArgs &&...args)
   {
-    static_assert(std::is_base_of<ServerMQTT::Query, QueryT>::value, "QueryT must inherit from Query");
-    static_assert(std::is_base_of<ServerMQTT::Response, RespT>::value, "RespT must inherit from Response");
+    static_assert(std::is_base_of<MQTTInterface::Query, QueryT>::value, "QueryT must inherit from Query");
+    static_assert(std::is_base_of<MQTTInterface::Response, RespT>::value, "RespT must inherit from Response");
     QueryT query{args...};
 
     auto nb_tries = 0;
@@ -459,7 +459,7 @@ namespace fabomatic
   template <typename QueryT, typename... QueryArgs>
   bool FabBackend::processQuery(QueryArgs &&...args)
   {
-    static_assert(std::is_base_of<ServerMQTT::Query, QueryT>::value, "QueryT must inherit from Query");
+    static_assert(std::is_base_of<MQTTInterface::Query, QueryT>::value, "QueryT must inherit from Query");
     QueryT query{args...};
 
     auto nb_tries = 0;
@@ -504,9 +504,9 @@ namespace fabomatic
    * @param uid The card UID.
    * @return A unique_ptr to the server response.
    */
-  std::unique_ptr<ServerMQTT::UserResponse> FabBackend::checkCard(card::uid_t uid)
+  std::unique_ptr<MQTTInterface::UserResponse> FabBackend::checkCard(card::uid_t uid)
   {
-    return processQuery<ServerMQTT::UserResponse, ServerMQTT::UserQuery>(uid);
+    return processQuery<MQTTInterface::UserResponse, MQTTInterface::UserQuery>(uid);
   }
 
   /**
@@ -514,9 +514,9 @@ namespace fabomatic
    *
    * @return A unique_ptr to the server response.
    */
-  std::unique_ptr<ServerMQTT::MachineResponse> FabBackend::checkMachine()
+  std::unique_ptr<MQTTInterface::MachineResponse> FabBackend::checkMachine()
   {
-    return processQuery<ServerMQTT::MachineResponse, ServerMQTT::MachineQuery>();
+    return processQuery<MQTTInterface::MachineResponse, MQTTInterface::MachineQuery>();
   }
 
   /**
@@ -525,9 +525,9 @@ namespace fabomatic
    * @param uid The card UID of the user.
    * @return A unique_ptr to the server response.
    */
-  std::unique_ptr<ServerMQTT::SimpleResponse> FabBackend::startUse(card::uid_t uid)
+  std::unique_ptr<MQTTInterface::SimpleResponse> FabBackend::startUse(card::uid_t uid)
   {
-    return processQuery<ServerMQTT::SimpleResponse, ServerMQTT::StartUseQuery>(uid);
+    return processQuery<MQTTInterface::SimpleResponse, MQTTInterface::StartUseQuery>(uid);
   }
 
   /**
@@ -537,9 +537,9 @@ namespace fabomatic
    * @param duration_s The duration of usage in seconds.
    * @return A unique_ptr to the server response.
    */
-  std::unique_ptr<ServerMQTT::SimpleResponse> FabBackend::finishUse(card::uid_t uid, std::chrono::seconds duration_s)
+  std::unique_ptr<MQTTInterface::SimpleResponse> FabBackend::finishUse(card::uid_t uid, std::chrono::seconds duration_s)
   {
-    return processQuery<ServerMQTT::SimpleResponse, ServerMQTT::StopUseQuery>(uid, duration_s);
+    return processQuery<MQTTInterface::SimpleResponse, MQTTInterface::StopUseQuery>(uid, duration_s);
   }
 
   /**
@@ -549,9 +549,9 @@ namespace fabomatic
    * @param duration_s The duration of usage in seconds.
    * @return A unique_ptr to the server response.
    */
-  std::unique_ptr<ServerMQTT::SimpleResponse> FabBackend::inUse(card::uid_t uid, std::chrono::seconds duration_s)
+  std::unique_ptr<MQTTInterface::SimpleResponse> FabBackend::inUse(card::uid_t uid, std::chrono::seconds duration_s)
   {
-    return processQuery<ServerMQTT::SimpleResponse, ServerMQTT::InUseQuery>(uid, duration_s);
+    return processQuery<MQTTInterface::SimpleResponse, MQTTInterface::InUseQuery>(uid, duration_s);
   }
 
   /**
@@ -560,9 +560,9 @@ namespace fabomatic
    * @param maintainer The UID of the person performing maintenance.
    * @return A unique_ptr to the server response.
    */
-  std::unique_ptr<ServerMQTT::SimpleResponse> FabBackend::registerMaintenance(card::uid_t maintainer)
+  std::unique_ptr<MQTTInterface::SimpleResponse> FabBackend::registerMaintenance(card::uid_t maintainer)
   {
-    return processQuery<ServerMQTT::SimpleResponse, ServerMQTT::RegisterMaintenanceQuery>(maintainer);
+    return processQuery<MQTTInterface::SimpleResponse, MQTTInterface::RegisterMaintenanceQuery>(maintainer);
   }
 
   /**
@@ -572,7 +572,7 @@ namespace fabomatic
    */
   bool FabBackend::alive()
   {
-    return processQuery<ServerMQTT::AliveQuery>();
+    return processQuery<MQTTInterface::AliveQuery>();
   }
 
   /**
