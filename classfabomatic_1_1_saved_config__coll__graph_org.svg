@@ -11,7 +11,7 @@
 <!-- Node1 -->
 <g id="Node000001" class="node">
 <title>Node1</title>
-<g id="a_Node000001"><a xlink:title=" ">
+<g id="a_Node000001"><a xlink:title="Facility to load or save data from Flash.">
 <polygon fill="#999999" stroke="none" points="554,-244 441,-244 441,0 554,0 554,-244"/>
 <text text-anchor="start" x="446.5" y="-230.5" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::SavedConfig</text>
 <text text-anchor="start" x="445" y="-215.5" font-family="Helvetica,sans-Serif" font-size="10.00">+</text>
@@ -85,7 +85,7 @@
 <!-- Node12 -->
 <g id="Node000012" class="node">
 <title>Node12</title>
-<g id="a_Node000012"><a xlink:href="structfabomatic_1_1_buffered_msg.xhtml" target="_top" xlink:title=" ">
+<g id="a_Node000012"><a xlink:href="structfabomatic_1_1_buffered_msg.xhtml" target="_top" xlink:title="Message that can be saved in Flash for future replay.">
 <polygon fill="white" stroke="none" points="513.5,-765 401.5,-765 401.5,-671 513.5,-671 513.5,-765"/>
 <text text-anchor="start" x="406.5" y="-751.5" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::BufferedMsg</text>
 <text text-anchor="start" x="411" y="-736.5" font-family="Helvetica,sans-Serif" font-size="10.00">+</text>
@@ -167,7 +167,7 @@
 <!-- Node5 -->
 <g id="Node000005" class="node">
 <title>Node5</title>
-<g id="a_Node000005"><a xlink:href="structfabomatic_1_1_cached_cards.xhtml" target="_top" xlink:title=" ">
+<g id="a_Node000005"><a xlink:href="structfabomatic_1_1_cached_cards.xhtml" target="_top" xlink:title="This struct contains CACHE_LEN RFID tags with their authentication by the backend.">
 <polygon fill="white" stroke="none" points="247,-437.75 132,-437.75 132,-328.75 247,-328.75 247,-437.75"/>
 <text text-anchor="start" x="136.62" y="-424.25" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::CachedCards</text>
 <text text-anchor="start" x="188" y="-409.25" font-family="Helvetica,sans-Serif" font-size="10.00"> </text>
@@ -340,7 +340,7 @@
 <!-- Node10 -->
 <g id="Node000010" class="node">
 <title>Node10</title>
-<g id="a_Node000010"><a xlink:href="classfabomatic_1_1_buffer.xhtml" target="_top" xlink:title=" ">
+<g id="a_Node000010"><a xlink:href="classfabomatic_1_1_buffer.xhtml" target="_top" xlink:title="Class containing the buffered messages for future replay.">
 <polygon fill="white" stroke="none" points="501,-475.25 402,-475.25 402,-291.25 501,-291.25 501,-475.25"/>
 <text text-anchor="start" x="415.12" y="-461.75" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::Buffer</text>
 <text text-anchor="start" x="406" y="-446.75" font-family="Helvetica,sans-Serif" font-size="10.00">+</text>

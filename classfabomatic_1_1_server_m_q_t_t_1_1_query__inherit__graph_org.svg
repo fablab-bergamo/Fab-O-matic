@@ -11,7 +11,7 @@
 <!-- Node1 -->
 <g id="Node000001" class="node">
 <title>Node1</title>
-<g id="a_Node000001"><a xlink:title=" ">
+<g id="a_Node000001"><a xlink:title="base class for all MQTT request to the backend">
 <polygon fill="#999999" stroke="none" points="583.5,-295 470.5,-295 470.5,-190 583.5,-190 583.5,-295"/>
 <text text-anchor="start" x="475.25" y="-281.5" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::ServerMQTT</text>
 <text text-anchor="start" x="512" y="-270.25" font-family="Helvetica,sans-Serif" font-size="10.00">::Query</text>
@@ -33,7 +33,7 @@
 <!-- Node2 -->
 <g id="Node000002" class="node">
 <title>Node2</title>
-<g id="a_Node000002"><a xlink:href="classfabomatic_1_1_buffered_query.xhtml" target="_top" xlink:title=" ">
+<g id="a_Node000002"><a xlink:href="classfabomatic_1_1_buffered_query.xhtml" target="_top" xlink:title="Query to be replayed.">
 <polygon fill="white" stroke="none" points="118,-154 0,-154 0,0 118,0 118,-154"/>
 <text text-anchor="start" x="4.62" y="-140.5" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::BufferedQuery</text>
 <text text-anchor="start" x="12.5" y="-125.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45;</text>

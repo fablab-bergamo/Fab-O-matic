@@ -57,7 +57,7 @@ var sectionId = 'dynsection-0';
 <!-- Node1 -->
 <g id="Node000001" class="node">
 <title>Node1</title>
-<g id="a_Node000001"><a xlink:title=" ">
+<g id="a_Node000001"><a xlink:title="This class manages authentication of a RFID tag through cache, whitelist or network request.">
 <polygon fill="#999999" stroke="none" points="136,-184 23,-184 23,0 136,0 136,-184"/>
 <text text-anchor="start" x="27.75" y="-170.5" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::AuthProvider</text>
 <text text-anchor="start" x="36" y="-155.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45;</text>
@@ -226,7 +226,7 @@ var sectionId = 'dynsection-0';
 <!-- Node5 -->
 <g id="Node000005" class="node">
 <title>Node5</title>
-<g id="a_Node000005"><a xlink:href="structfabomatic_1_1_cached_cards.xhtml" target="_top" xlink:title=" ">
+<g id="a_Node000005"><a xlink:href="structfabomatic_1_1_cached_cards.xhtml" target="_top" xlink:title="This struct contains CACHE_LEN RFID tags with their authentication by the backend.">
 <polygon fill="white" stroke="none" points="239,-340.25 124,-340.25 124,-231.25 239,-231.25 239,-340.25"/>
 <text text-anchor="start" x="128.62" y="-326.75" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::CachedCards</text>
 <text text-anchor="start" x="180" y="-311.75" font-family="Helvetica,sans-Serif" font-size="10.00"> </text>

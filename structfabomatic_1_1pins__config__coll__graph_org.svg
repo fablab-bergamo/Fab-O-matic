@@ -25,7 +25,7 @@
 <!-- Node2 -->
 <g id="Node000002" class="node">
 <title>Node2</title>
-<g id="a_Node000002"><a xlink:href="structfabomatic_1_1pins__config_1_1mfrc522__config.xhtml" target="_top" xlink:title=" ">
+<g id="a_Node000002"><a xlink:href="structfabomatic_1_1pins__config_1_1mfrc522__config.xhtml" target="_top" xlink:title="SPI RFID chip pins definition.">
 <polygon fill="white" stroke="none" points="106,-238.75 0,-238.75 0,-118.75 106,-118.75 106,-238.75"/>
 <text text-anchor="start" x="5" y="-225.25" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::pins_config</text>
 <text text-anchor="start" x="17.75" y="-214" font-family="Helvetica,sans-Serif" font-size="10.00">::mfrc522_config</text>
@@ -60,7 +60,7 @@
 <!-- Node3 -->
 <g id="Node000003" class="node">
 <title>Node3</title>
-<g id="a_Node000003"><a xlink:href="structfabomatic_1_1pins__config_1_1lcd__config.xhtml" target="_top" xlink:title=" ">
+<g id="a_Node000003"><a xlink:href="structfabomatic_1_1pins__config_1_1lcd__config.xhtml" target="_top" xlink:title="LCD parallel interface pins definition.">
 <polygon fill="white" stroke="none" points="230,-261.25 124,-261.25 124,-96.25 230,-96.25 230,-261.25"/>
 <text text-anchor="start" x="129" y="-247.75" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::pins_config</text>
 <text text-anchor="start" x="153" y="-236.5" font-family="Helvetica,sans-Serif" font-size="10.00">::lcd_config</text>
@@ -101,7 +101,7 @@
 <!-- Node4 -->
 <g id="Node000004" class="node">
 <title>Node4</title>
-<g id="a_Node000004"><a xlink:href="structfabomatic_1_1pins__config_1_1relay__config.xhtml" target="_top" xlink:title=" ">
+<g id="a_Node000004"><a xlink:href="structfabomatic_1_1pins__config_1_1relay__config.xhtml" target="_top" xlink:title="Hardwired relay configuration.">
 <polygon fill="white" stroke="none" points="354,-216.25 248,-216.25 248,-141.25 354,-141.25 354,-216.25"/>
 <text text-anchor="start" x="253" y="-202.75" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::pins_config</text>
 <text text-anchor="start" x="273.25" y="-191.5" font-family="Helvetica,sans-Serif" font-size="10.00">::relay_config</text>
@@ -130,7 +130,7 @@
 <!-- Node5 -->
 <g id="Node000005" class="node">
 <title>Node5</title>
-<g id="a_Node000005"><a xlink:href="structfabomatic_1_1pins__config_1_1buzzer__config.xhtml" target="_top" xlink:title=" ">
+<g id="a_Node000005"><a xlink:href="structfabomatic_1_1pins__config_1_1buzzer__config.xhtml" target="_top" xlink:title="Configuration of the buzzer.">
 <polygon fill="white" stroke="none" points="478,-208.75 372,-208.75 372,-148.75 478,-148.75 478,-208.75"/>
 <text text-anchor="start" x="377" y="-195.25" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::pins_config</text>
 <text text-anchor="start" x="393.5" y="-184" font-family="Helvetica,sans-Serif" font-size="10.00">::buzzer_config</text>
@@ -157,7 +157,7 @@
 <!-- Node6 -->
 <g id="Node000006" class="node">
 <title>Node6</title>
-<g id="a_Node000006"><a xlink:href="structfabomatic_1_1pins__config_1_1led__config.xhtml" target="_top" xlink:title=" ">
+<g id="a_Node000006"><a xlink:href="structfabomatic_1_1pins__config_1_1led__config.xhtml" target="_top" xlink:title="Configuration of the LED/NeoPixel/RGB led.">
 <polygon fill="white" stroke="none" points="602,-246.25 496,-246.25 496,-111.25 602,-111.25 602,-246.25"/>
 <text text-anchor="start" x="501" y="-232.75" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::pins_config</text>
 <text text-anchor="start" x="525" y="-221.5" font-family="Helvetica,sans-Serif" font-size="10.00">::led_config</text>
@@ -194,7 +194,7 @@
 <!-- Node7 -->
 <g id="Node000007" class="node">
 <title>Node7</title>
-<g id="a_Node000007"><a xlink:href="structfabomatic_1_1pins__config_1_1buttons__config.xhtml" target="_top" xlink:title=" ">
+<g id="a_Node000007"><a xlink:href="structfabomatic_1_1pins__config_1_1buttons__config.xhtml" target="_top" xlink:title="Physical buttons wired to the ESP32.">
 <polygon fill="white" stroke="none" points="726,-208.75 620,-208.75 620,-148.75 726,-148.75 726,-208.75"/>
 <text text-anchor="start" x="625" y="-195.25" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::pins_config</text>
 <text text-anchor="start" x="639.25" y="-184" font-family="Helvetica,sans-Serif" font-size="10.00">::buttons_config</text>

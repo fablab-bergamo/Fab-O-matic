@@ -159,19 +159,19 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the UID as a number </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="card_8hpp_source.xhtml#l00035">35</a> of file <a class="el" href="card_8hpp_source.xhtml">card.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   36</span>  {</div>
-<div class="line"><span class="lineno">   37</span>    <a class="code hl_typedef" href="namespacefabomatic_1_1card.xhtml#aa36a4f716561b5c72d144ad55bc3e53b">card::uid_t</a> result = 0;</div>
-<div class="line"><span class="lineno">   38</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> i = (conf::rfid_tags::UID_BYTE_LEN - 1); i &gt;= 0; i--)</div>
-<div class="line"><span class="lineno">   39</span>    {</div>
-<div class="line"><span class="lineno">   40</span>      result &lt;&lt;= 8;</div>
-<div class="line"><span class="lineno">   41</span>      result |= uid[i];</div>
-<div class="line"><span class="lineno">   42</span>    }</div>
-<div class="line"><span class="lineno">   43</span>    <span class="keywordflow">return</span> result;</div>
-<div class="line"><span class="lineno">   44</span>  }</div>
+<p class="definition">Definition at line <a class="el" href="card_8hpp_source.xhtml#l00039">39</a> of file <a class="el" href="card_8hpp_source.xhtml">card.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   40</span>  {</div>
+<div class="line"><span class="lineno">   41</span>    <a class="code hl_typedef" href="namespacefabomatic_1_1card.xhtml#aa36a4f716561b5c72d144ad55bc3e53b">card::uid_t</a> result = 0;</div>
+<div class="line"><span class="lineno">   42</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> i = (conf::rfid_tags::UID_BYTE_LEN - 1); i &gt;= 0; i--)</div>
+<div class="line"><span class="lineno">   43</span>    {</div>
+<div class="line"><span class="lineno">   44</span>      result &lt;&lt;= 8;</div>
+<div class="line"><span class="lineno">   45</span>      result |= uid[i];</div>
+<div class="line"><span class="lineno">   46</span>    }</div>
+<div class="line"><span class="lineno">   47</span>    <span class="keywordflow">return</span> result;</div>
+<div class="line"><span class="lineno">   48</span>  }</div>
 <div class="ttc" id="anamespacefabomatic_1_1card_xhtml_aa36a4f716561b5c72d144ad55bc3e53b"><div class="ttname"><a href="namespacefabomatic_1_1card.xhtml#aa36a4f716561b5c72d144ad55bc3e53b">fabomatic::card::uid_t</a></div><div class="ttdeci">u_int64_t uid_t</div><div class="ttdef"><b>Definition</b> <a href="card_8hpp_source.xhtml#l00014">card.hpp:14</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="conf_8hpp_source.xhtml#l00064">fabomatic::conf::rfid_tags::UID_BYTE_LEN</a>.</p>
+<p class="reference">References <a class="el" href="conf_8hpp_source.xhtml#l00034">fabomatic::conf::rfid_tags::UID_BYTE_LEN</a>.</p>
 
 </div>
 </div>
@@ -200,13 +200,13 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="card_8hpp_source.xhtml#l00059">59</a> of file <a class="el" href="card_8hpp_source.xhtml">card.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   60</span>  {</div>
-<div class="line"><span class="lineno">   61</span>    ESP_LOGI(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <span class="stringliteral">&quot;Card UID = %s&quot;</span>, card::uid_str(uid).c_str());</div>
-<div class="line"><span class="lineno">   62</span>  }</div>
+<p class="definition">Definition at line <a class="el" href="card_8hpp_source.xhtml#l00063">63</a> of file <a class="el" href="card_8hpp_source.xhtml">card.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   64</span>  {</div>
+<div class="line"><span class="lineno">   65</span>    ESP_LOGI(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <span class="stringliteral">&quot;Card UID = %s&quot;</span>, card::uid_str(uid).c_str());</div>
+<div class="line"><span class="lineno">   66</span>  }</div>
 <div class="ttc" id="a_logging_8hpp_xhtml_a4ef5b5f197804a60836ab1e8907d8301"><div class="ttname"><a href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a></div><div class="ttdeci">static const char *const TAG</div><div class="ttdef"><b>Definition</b> <a href="_logging_8hpp_source.xhtml#l00006">Logging.hpp:6</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_logging_8hpp_source.xhtml#l00006">TAG</a>, and <a class="el" href="card_8hpp_source.xhtml#l00020">uid_str()</a>.</p>
+<p class="reference">References <a class="el" href="_logging_8hpp_source.xhtml#l00006">TAG</a>, and <a class="el" href="card_8hpp_source.xhtml#l00022">uid_str()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -249,17 +249,17 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the UID as a number </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="card_8hpp_source.xhtml#l00049">49</a> of file <a class="el" href="card_8hpp_source.xhtml">card.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   50</span>  {</div>
-<div class="line"><span class="lineno">   51</span>    std::array&lt;uint8_t, conf::rfid_tags::UID_BYTE_LEN&gt; retVal{0};</div>
-<div class="line"><span class="lineno">   52</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> i = (conf::rfid_tags::UID_BYTE_LEN - 1); i &gt;= 0; i--)</div>
-<div class="line"><span class="lineno">   53</span>    {</div>
-<div class="line"><span class="lineno">   54</span>      retVal[i] = (uid &gt;&gt; (i * 8)) &amp; 0xFF;</div>
-<div class="line"><span class="lineno">   55</span>    }</div>
-<div class="line"><span class="lineno">   56</span>    <span class="keywordflow">return</span> retVal;</div>
-<div class="line"><span class="lineno">   57</span>  }</div>
+<p class="definition">Definition at line <a class="el" href="card_8hpp_source.xhtml#l00053">53</a> of file <a class="el" href="card_8hpp_source.xhtml">card.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   54</span>  {</div>
+<div class="line"><span class="lineno">   55</span>    std::array&lt;uint8_t, conf::rfid_tags::UID_BYTE_LEN&gt; retVal{0};</div>
+<div class="line"><span class="lineno">   56</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> i = (conf::rfid_tags::UID_BYTE_LEN - 1); i &gt;= 0; i--)</div>
+<div class="line"><span class="lineno">   57</span>    {</div>
+<div class="line"><span class="lineno">   58</span>      retVal[i] = (uid &gt;&gt; (i * 8)) &amp; 0xFF;</div>
+<div class="line"><span class="lineno">   59</span>    }</div>
+<div class="line"><span class="lineno">   60</span>    <span class="keywordflow">return</span> retVal;</div>
+<div class="line"><span class="lineno">   61</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="conf_8hpp_source.xhtml#l00064">fabomatic::conf::rfid_tags::UID_BYTE_LEN</a>.</p>
+<p class="reference">References <a class="el" href="conf_8hpp_source.xhtml#l00034">fabomatic::conf::rfid_tags::UID_BYTE_LEN</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="_mock_mrfc522_8cpp_source.xhtml#l00007">fabomatic::MockMrfc522::getDriverUid()</a>.</p>
 <div class="dynheader">
@@ -304,19 +304,19 @@ Here is the caller graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>an hex string representation of the UID (e.g. "123456ADCD") </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="card_8hpp_source.xhtml#l00020">20</a> of file <a class="el" href="card_8hpp_source.xhtml">card.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   21</span>  {</div>
-<div class="line"><span class="lineno">   22</span>    uint64_t number = <span class="keyword">static_cast&lt;</span>uint64_t<span class="keyword">&gt;</span>(uid);</div>
-<div class="line"><span class="lineno">   23</span>    uint32_t long1 = <span class="keyword">static_cast&lt;</span>uint32_t<span class="keyword">&gt;</span>(number &amp; 0xFFFF0000) &gt;&gt; 16;</div>
-<div class="line"><span class="lineno">   24</span>    uint32_t long2 = <span class="keyword">static_cast&lt;</span>uint32_t<span class="keyword">&gt;</span>(number &amp; 0x0000FFFF);</div>
-<div class="line"><span class="lineno">   25</span> </div>
-<div class="line"><span class="lineno">   26</span>    std::stringstream ss{};</div>
-<div class="line"><span class="lineno">   27</span>    ss &lt;&lt; std::setfill(<span class="charliteral">&#39;0&#39;</span>) &lt;&lt; std::setw(4) &lt;&lt; std::hex &lt;&lt; long1;</div>
-<div class="line"><span class="lineno">   28</span>    ss &lt;&lt; std::setfill(<span class="charliteral">&#39;0&#39;</span>) &lt;&lt; std::setw(4) &lt;&lt; std::hex &lt;&lt; long2;</div>
-<div class="line"><span class="lineno">   29</span>    <span class="keywordflow">return</span> ss.str();</div>
-<div class="line"><span class="lineno">   30</span>  }</div>
+<p class="definition">Definition at line <a class="el" href="card_8hpp_source.xhtml#l00022">22</a> of file <a class="el" href="card_8hpp_source.xhtml">card.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   23</span>  {</div>
+<div class="line"><span class="lineno">   24</span>    uint64_t number = <span class="keyword">static_cast&lt;</span>uint64_t<span class="keyword">&gt;</span>(uid);</div>
+<div class="line"><span class="lineno">   25</span>    uint32_t long1 = <span class="keyword">static_cast&lt;</span>uint32_t<span class="keyword">&gt;</span>(number &amp; 0xFFFF0000) &gt;&gt; 16;</div>
+<div class="line"><span class="lineno">   26</span>    uint32_t long2 = <span class="keyword">static_cast&lt;</span>uint32_t<span class="keyword">&gt;</span>(number &amp; 0x0000FFFF);</div>
+<div class="line"><span class="lineno">   27</span> </div>
+<div class="line"><span class="lineno">   28</span>    std::stringstream ss{};</div>
+<div class="line"><span class="lineno">   29</span>    ss &lt;&lt; std::setfill(<span class="charliteral">&#39;0&#39;</span>) &lt;&lt; std::setw(4) &lt;&lt; std::hex &lt;&lt; long1;</div>
+<div class="line"><span class="lineno">   30</span>    ss &lt;&lt; std::setfill(<span class="charliteral">&#39;0&#39;</span>) &lt;&lt; std::setw(4) &lt;&lt; std::hex &lt;&lt; long2;</div>
+<div class="line"><span class="lineno">   31</span>    <span class="keywordflow">return</span> ss.str();</div>
+<div class="line"><span class="lineno">   32</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00163">fabomatic::BoardLogic::authorize()</a>, <a class="el" href="_mock_m_q_t_t_broker_8cpp_source.xhtml#l00120">fabomatic::MockMQTTBroker::defaultReplies()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00073">fabomatic::BoardLogic::onNewCard()</a>, <a class="el" href="_m_q_t_ttypes_8cpp_source.xhtml#l00020">fabomatic::ServerMQTT::UserQuery::payload()</a>, <a class="el" href="_m_q_t_ttypes_8cpp_source.xhtml#l00053">fabomatic::ServerMQTT::StartUseQuery::payload()</a>, <a class="el" href="_m_q_t_ttypes_8cpp_source.xhtml#l00062">fabomatic::ServerMQTT::StopUseQuery::payload()</a>, <a class="el" href="_m_q_t_ttypes_8cpp_source.xhtml#l00072">fabomatic::ServerMQTT::InUseQuery::payload()</a>, <a class="el" href="_m_q_t_ttypes_8cpp_source.xhtml#l00082">fabomatic::ServerMQTT::RegisterMaintenanceQuery::payload()</a>, <a class="el" href="card_8hpp_source.xhtml#l00059">print()</a>, <a class="el" href="_auth_provider_8cpp_source.xhtml#l00054">fabomatic::AuthProvider::tryLogin()</a>, <a class="el" href="_auth_provider_8cpp_source.xhtml#l00131">fabomatic::AuthProvider::uidInWhitelist()</a>, and <a class="el" href="_board_logic_8cpp_source.xhtml#l00284">fabomatic::BoardLogic::updateLCD()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00163">fabomatic::BoardLogic::authorize()</a>, <a class="el" href="_mock_m_q_t_t_broker_8cpp_source.xhtml#l00120">fabomatic::MockMQTTBroker::defaultReplies()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00073">fabomatic::BoardLogic::onNewCard()</a>, <a class="el" href="_m_q_t_ttypes_8cpp_source.xhtml#l00020">fabomatic::ServerMQTT::UserQuery::payload()</a>, <a class="el" href="_m_q_t_ttypes_8cpp_source.xhtml#l00053">fabomatic::ServerMQTT::StartUseQuery::payload()</a>, <a class="el" href="_m_q_t_ttypes_8cpp_source.xhtml#l00062">fabomatic::ServerMQTT::StopUseQuery::payload()</a>, <a class="el" href="_m_q_t_ttypes_8cpp_source.xhtml#l00072">fabomatic::ServerMQTT::InUseQuery::payload()</a>, <a class="el" href="_m_q_t_ttypes_8cpp_source.xhtml#l00082">fabomatic::ServerMQTT::RegisterMaintenanceQuery::payload()</a>, <a class="el" href="card_8hpp_source.xhtml#l00063">print()</a>, <a class="el" href="_auth_provider_8cpp_source.xhtml#l00054">fabomatic::AuthProvider::tryLogin()</a>, <a class="el" href="_auth_provider_8cpp_source.xhtml#l00131">fabomatic::AuthProvider::uidInWhitelist()</a>, and <a class="el" href="_board_logic_8cpp_source.xhtml#l00284">fabomatic::BoardLogic::updateLCD()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -348,14 +348,14 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="card_8hpp_source.xhtml#l00015">15</a> of file <a class="el" href="card_8hpp_source.xhtml">card.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_cached_cards_8hpp_source.xhtml#l00039">fabomatic::CachedCards::find_uid()</a>, <a class="el" href="_saved_config_8cpp_source.xhtml#l00119">fabomatic::SavedConfig::fromJsonDocument()</a>, and <a class="el" href="_auth_provider_8cpp_source.xhtml#l00131">fabomatic::AuthProvider::uidInWhitelist()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_cached_cards_8hpp_source.xhtml#l00035">fabomatic::CachedCards::find_uid()</a>, <a class="el" href="_saved_config_8cpp_source.xhtml#l00119">fabomatic::SavedConfig::fromJsonDocument()</a>, and <a class="el" href="_auth_provider_8cpp_source.xhtml#l00131">fabomatic::AuthProvider::uidInWhitelist()</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jul 1 2024 20:53:05 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Tue Jul 2 2024 19:19:46 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

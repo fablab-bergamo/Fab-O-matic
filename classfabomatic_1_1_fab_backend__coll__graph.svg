@@ -57,7 +57,7 @@ var sectionId = 'dynsection-0';
 <!-- Node1 -->
 <g id="Node000001" class="node">
 <title>Node1</title>
-<g id="a_Node000001"><a xlink:title=" ">
+<g id="a_Node000001"><a xlink:title="This class is used to exchange messages with the MQTT broker and the backend.">
 <polygon fill="#999999" stroke="none" points="287,-409 175,-409 175,0 287,0 287,-409"/>
 <text text-anchor="start" x="180" y="-395.5" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::FabBackend</text>
 <text text-anchor="start" x="180.5" y="-380.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45;</text>
@@ -155,7 +155,7 @@ var sectionId = 'dynsection-0';
 <!-- Node6 -->
 <g id="Node000006" class="node">
 <title>Node6</title>
-<g id="a_Node000006"><a xlink:href="structfabomatic_1_1_buffered_msg.xhtml" target="_top" xlink:title=" ">
+<g id="a_Node000006"><a xlink:href="structfabomatic_1_1_buffered_msg.xhtml" target="_top" xlink:title="Message that can be saved in Flash for future replay.">
 <polygon fill="white" stroke="none" points="238,-952.5 126,-952.5 126,-858.5 238,-858.5 238,-952.5"/>
 <text text-anchor="start" x="131" y="-939" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::BufferedMsg</text>
 <text text-anchor="start" x="135.5" y="-924" font-family="Helvetica,sans-Serif" font-size="10.00">+</text>
@@ -213,7 +213,7 @@ var sectionId = 'dynsection-0';
 <!-- Node4 -->
 <g id="Node000004" class="node">
 <title>Node4</title>
-<g id="a_Node000004"><a xlink:href="classfabomatic_1_1_buffer.xhtml" target="_top" xlink:title=" ">
+<g id="a_Node000004"><a xlink:href="classfabomatic_1_1_buffer.xhtml" target="_top" xlink:title="Class containing the buffered messages for future replay.">
 <polygon fill="white" stroke="none" points="238.5,-640.25 139.5,-640.25 139.5,-456.25 238.5,-456.25 238.5,-640.25"/>
 <text text-anchor="start" x="152.62" y="-626.75" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::Buffer</text>
 <text text-anchor="start" x="143.5" y="-611.75" font-family="Helvetica,sans-Serif" font-size="10.00">+</text>

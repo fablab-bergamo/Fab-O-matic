@@ -11,7 +11,7 @@
 <!-- Node1 -->
 <g id="Node000001" class="node">
 <title>Node1</title>
-<g id="a_Node000001"><a xlink:title=" ">
+<g id="a_Node000001"><a xlink:title="Main class implementing the state changes.">
 <polygon fill="#999999" stroke="none" points="742,-319 627,-319 627,0 742,0 742,-319"/>
 <text text-anchor="start" x="636.12" y="-305.5" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::BoardLogic</text>
 <text text-anchor="start" x="632.5" y="-290.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45;</text>
@@ -63,7 +63,7 @@
 <!-- Node2 -->
 <g id="Node000002" class="node">
 <title>Node2</title>
-<g id="a_Node000002"><a xlink:href="classfabomatic_1_1_led.xhtml" target="_top" xlink:title=" ">
+<g id="a_Node000002"><a xlink:href="classfabomatic_1_1_led.xhtml" target="_top" xlink:title="RGB/LED/NeoPixel class.">
 <polygon fill="white" stroke="none" points="561,-962.25 488,-962.25 488,-793.25 561,-793.25 561,-962.25"/>
 <text text-anchor="start" x="492.62" y="-948.75" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::Led</text>
 <text text-anchor="start" x="493.5" y="-933.75" font-family="Helvetica,sans-Serif" font-size="10.00">&#45;</text>
@@ -290,7 +290,7 @@
 <!-- Node6 -->
 <g id="Node000006" class="node">
 <title>Node6</title>
-<g id="a_Node000006"><a xlink:href="classfabomatic_1_1_fab_backend.xhtml" target="_top" xlink:title=" ">
+<g id="a_Node000006"><a xlink:href="classfabomatic_1_1_fab_backend.xhtml" target="_top" xlink:title="This class is used to exchange messages with the MQTT broker and the backend.">
 <polygon fill="white" stroke="none" points="740.5,-775.25 628.5,-775.25 628.5,-366.25 740.5,-366.25 740.5,-775.25"/>
 <text text-anchor="start" x="633.5" y="-761.75" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::FabBackend</text>
 <text text-anchor="start" x="634" y="-746.75" font-family="Helvetica,sans-Serif" font-size="10.00">&#45;</text>
@@ -398,7 +398,7 @@
 <!-- Node11 -->
 <g id="Node000011" class="node">
 <title>Node11</title>
-<g id="a_Node000011"><a xlink:href="structfabomatic_1_1_buffered_msg.xhtml" target="_top" xlink:title=" ">
+<g id="a_Node000011"><a xlink:href="structfabomatic_1_1_buffered_msg.xhtml" target="_top" xlink:title="Message that can be saved in Flash for future replay.">
 <polygon fill="white" stroke="none" points="709.5,-1776.75 597.5,-1776.75 597.5,-1682.75 709.5,-1682.75 709.5,-1776.75"/>
 <text text-anchor="start" x="602.5" y="-1763.25" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::BufferedMsg</text>
 <text text-anchor="start" x="607" y="-1748.25" font-family="Helvetica,sans-Serif" font-size="10.00">+</text>
@@ -432,7 +432,7 @@
 <!-- Node13 -->
 <g id="Node000013" class="node">
 <title>Node13</title>
-<g id="a_Node000013"><a xlink:href="classfabomatic_1_1_machine.xhtml" target="_top" xlink:title=" ">
+<g id="a_Node000013"><a xlink:href="classfabomatic_1_1_machine.xhtml" target="_top" xlink:title="Represents the FabLab machine connected to the board.">
 <polygon fill="white" stroke="none" points="957.5,-1594.25 837.5,-1594.25 837.5,-1260.25 957.5,-1260.25 957.5,-1594.25"/>
 <text text-anchor="start" x="855.5" y="-1580.75" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::Machine</text>
 <text text-anchor="start" x="843" y="-1565.75" font-family="Helvetica,sans-Serif" font-size="10.00">&#45;</text>
@@ -496,7 +496,7 @@
 <!-- Node14 -->
 <g id="Node000014" class="node">
 <title>Node14</title>
-<g id="a_Node000014"><a xlink:href="structfabomatic_1_1_fab_user.xhtml" target="_top" xlink:title=" ">
+<g id="a_Node000014"><a xlink:href="structfabomatic_1_1_fab_user.xhtml" target="_top" xlink:title="Represents a user with access level, name, RFID tag, and auth result.">
 <polygon fill="white" stroke="none" points="861.5,-1806.75 767.5,-1806.75 767.5,-1652.75 861.5,-1652.75 861.5,-1806.75"/>
 <text text-anchor="start" x="772.12" y="-1793.25" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::FabUser</text>
 <text text-anchor="start" x="776" y="-1778.25" font-family="Helvetica,sans-Serif" font-size="10.00">+</text>
@@ -561,7 +561,7 @@
 <!-- Node9 -->
 <g id="Node000009" class="node">
 <title>Node9</title>
-<g id="a_Node000009"><a xlink:href="classfabomatic_1_1_buffer.xhtml" target="_top" xlink:title=" ">
+<g id="a_Node000009"><a xlink:href="classfabomatic_1_1_buffer.xhtml" target="_top" xlink:title="Class containing the buffered messages for future replay.">
 <polygon fill="white" stroke="none" points="706,-1164.25 607,-1164.25 607,-980.25 706,-980.25 706,-1164.25"/>
 <text text-anchor="start" x="620.12" y="-1150.75" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::Buffer</text>
 <text text-anchor="start" x="611" y="-1135.75" font-family="Helvetica,sans-Serif" font-size="10.00">+</text>
@@ -671,7 +671,7 @@
 <!-- Node15 -->
 <g id="Node000015" class="node">
 <title>Node15</title>
-<g id="a_Node000015"><a xlink:href="classfabomatic_1_1_auth_provider.xhtml" target="_top" xlink:title=" ">
+<g id="a_Node000015"><a xlink:href="classfabomatic_1_1_auth_provider.xhtml" target="_top" xlink:title="This class manages authentication of a RFID tag through cache, whitelist or network request.">
 <polygon fill="white" stroke="none" points="386,-662.75 273,-662.75 273,-478.75 386,-478.75 386,-662.75"/>
 <text text-anchor="start" x="277.75" y="-649.25" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::AuthProvider</text>
 <text text-anchor="start" x="286" y="-634.25" font-family="Helvetica,sans-Serif" font-size="10.00">&#45;</text>
@@ -726,7 +726,7 @@
 <!-- Node17 -->
 <g id="Node000017" class="node">
 <title>Node17</title>
-<g id="a_Node000017"><a xlink:href="structfabomatic_1_1_cached_cards.xhtml" target="_top" xlink:title=" ">
+<g id="a_Node000017"><a xlink:href="structfabomatic_1_1_cached_cards.xhtml" target="_top" xlink:title="This struct contains CACHE_LEN RFID tags with their authentication by the backend.">
 <polygon fill="white" stroke="none" points="230,-1126.75 115,-1126.75 115,-1017.75 230,-1017.75 230,-1126.75"/>
 <text text-anchor="start" x="119.62" y="-1113.25" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::CachedCards</text>
 <text text-anchor="start" x="171" y="-1098.25" font-family="Helvetica,sans-Serif" font-size="10.00"> </text>
@@ -779,7 +779,7 @@
 <!-- Node20 -->
 <g id="Node000020" class="node">
 <title>Node20</title>
-<g id="a_Node000020"><a xlink:href="classfabomatic_1_1_buzzer.xhtml" target="_top" xlink:title=" ">
+<g id="a_Node000020"><a xlink:href="classfabomatic_1_1_buzzer.xhtml" target="_top" xlink:title="Represents the buzzer for BoardLogic.">
 <polygon fill="white" stroke="none" points="891.5,-617.75 805.5,-617.75 805.5,-523.75 891.5,-523.75 891.5,-617.75"/>
 <text text-anchor="start" x="810.25" y="-604.25" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::Buzzer</text>
 <text text-anchor="start" x="811" y="-589.25" font-family="Helvetica,sans-Serif" font-size="10.00">&#45;</text>

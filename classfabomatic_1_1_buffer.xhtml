@@ -86,6 +86,9 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
+<p>Class containing the buffered messages for future replay.  
+ <a href="classfabomatic_1_1_buffer.xhtml#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="_buffered_msg_8hpp_source.xhtml">BufferedMsg.hpp</a>&gt;</code></p>
 <div class="dynheader">
 Collaboration diagram for fabomatic::Buffer:</div>
@@ -133,9 +136,9 @@ Static Private Attributes</h2></td></tr>
 <tr class="separator:a6d7297be20523ed7b81c7af5ece8c999"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Class containing the buffered messages for future replay </p>
+<div class="textblock"><p>Class containing the buffered messages for future replay. </p>
 
-<p class="definition">Definition at line <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00032">32</a> of file <a class="el" href="_buffered_msg_8hpp_source.xhtml">BufferedMsg.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00028">28</a> of file <a class="el" href="_buffered_msg_8hpp_source.xhtml">BufferedMsg.hpp</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a9ff239a0ddbaed54bcf0a72f2517d7a0" name="a9ff239a0ddbaed54bcf0a72f2517d7a0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9ff239a0ddbaed54bcf0a72f2517d7a0">&#9670;&#160;</a></span>count()</h2>
@@ -156,9 +159,9 @@ Static Private Attributes</h2></td></tr>
 <div class="fragment"><div class="line"><span class="lineno">   63</span>  {</div>
 <div class="line"><span class="lineno">   64</span>    <span class="keywordflow">return</span> <a class="code hl_variable" href="classfabomatic_1_1_buffer.xhtml#a24764f4964eca4b9c68b6e98e1d38349">msg_queue</a>.size();</div>
 <div class="line"><span class="lineno">   65</span>  }</div>
-<div class="ttc" id="aclassfabomatic_1_1_buffer_xhtml_a24764f4964eca4b9c68b6e98e1d38349"><div class="ttname"><a href="classfabomatic_1_1_buffer.xhtml#a24764f4964eca4b9c68b6e98e1d38349">fabomatic::Buffer::msg_queue</a></div><div class="ttdeci">std::deque&lt; BufferedMsg &gt; msg_queue</div><div class="ttdef"><b>Definition</b> <a href="_buffered_msg_8hpp_source.xhtml#l00035">BufferedMsg.hpp:35</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_buffer_xhtml_a24764f4964eca4b9c68b6e98e1d38349"><div class="ttname"><a href="classfabomatic_1_1_buffer.xhtml#a24764f4964eca4b9c68b6e98e1d38349">fabomatic::Buffer::msg_queue</a></div><div class="ttdeci">std::deque&lt; BufferedMsg &gt; msg_queue</div><div class="ttdef"><b>Definition</b> <a href="_buffered_msg_8hpp_source.xhtml#l00031">BufferedMsg.hpp:31</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00035">msg_queue</a>.</p>
+<p class="reference">References <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00031">msg_queue</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="_fab_backend_8cpp_source.xhtml#l00588">fabomatic::FabBackend::hasBufferedMsg()</a>, <a class="el" href="test__savedconfig_8cpp_source.xhtml#l00201">fabomatic::tests::test_buffered_msg()</a>, and <a class="el" href="test__savedconfig_8cpp_source.xhtml#l00173">fabomatic::tests::test_deserialization()</a>.</p>
 <div class="dynheader">
@@ -218,7 +221,7 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  104</span>    <span class="keywordflow">return</span> buff;</div>
 <div class="line"><span class="lineno">  105</span>  }</div>
 <div class="ttc" id="a_logging_8hpp_xhtml_a4ef5b5f197804a60836ab1e8907d8301"><div class="ttname"><a href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a></div><div class="ttdeci">static const char *const TAG</div><div class="ttdef"><b>Definition</b> <a href="_logging_8hpp_source.xhtml#l00006">Logging.hpp:6</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_buffer_xhtml_a6d7297be20523ed7b81c7af5ece8c999"><div class="ttname"><a href="classfabomatic_1_1_buffer.xhtml#a6d7297be20523ed7b81c7af5ece8c999">fabomatic::Buffer::MAGIC_NUMBER</a></div><div class="ttdeci">static constexpr auto MAGIC_NUMBER</div><div class="ttdef"><b>Definition</b> <a href="_buffered_msg_8hpp_source.xhtml#l00037">BufferedMsg.hpp:37</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_buffer_xhtml_a6d7297be20523ed7b81c7af5ece8c999"><div class="ttname"><a href="classfabomatic_1_1_buffer.xhtml#a6d7297be20523ed7b81c7af5ece8c999">fabomatic::Buffer::MAGIC_NUMBER</a></div><div class="ttdeci">static constexpr auto MAGIC_NUMBER</div><div class="ttdef"><b>Definition</b> <a href="_buffered_msg_8hpp_source.xhtml#l00033">BufferedMsg.hpp:33</a></div></div>
 </div><!-- fragment -->
 <p class="reference">References <a class="el" href="_buffered_msg_8cpp_source.xhtml#l00009">push_back()</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00006">TAG</a>.</p>
 
@@ -265,7 +268,7 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">   58</span> </div>
 <div class="line"><span class="lineno">   59</span>    <span class="keywordflow">return</span> elem;</div>
 <div class="line"><span class="lineno">   60</span>  }</div>
-<div class="ttc" id="aclassfabomatic_1_1_buffer_xhtml_a087b3f0759ac226c188e8cba5a89492d"><div class="ttname"><a href="classfabomatic_1_1_buffer.xhtml#a087b3f0759ac226c188e8cba5a89492d">fabomatic::Buffer::has_changed</a></div><div class="ttdeci">bool has_changed</div><div class="ttdef"><b>Definition</b> <a href="_buffered_msg_8hpp_source.xhtml#l00036">BufferedMsg.hpp:36</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_buffer_xhtml_a087b3f0759ac226c188e8cba5a89492d"><div class="ttname"><a href="classfabomatic_1_1_buffer.xhtml#a087b3f0759ac226c188e8cba5a89492d">fabomatic::Buffer::has_changed</a></div><div class="ttdeci">bool has_changed</div><div class="ttdef"><b>Definition</b> <a href="_buffered_msg_8hpp_source.xhtml#l00032">BufferedMsg.hpp:32</a></div></div>
 </div><!-- fragment -->
 <p class="reference">References <a class="el" href="_logging_8hpp_source.xhtml#l00006">TAG</a>.</p>
 
@@ -301,10 +304,10 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00045">45</a> of file <a class="el" href="_buffered_msg_8hpp_source.xhtml">BufferedMsg.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   45</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="classfabomatic_1_1_buffer.xhtml#a087b3f0759ac226c188e8cba5a89492d">has_changed</a>; };</div>
+<p class="definition">Definition at line <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00041">41</a> of file <a class="el" href="_buffered_msg_8hpp_source.xhtml">BufferedMsg.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   41</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="classfabomatic_1_1_buffer.xhtml#a087b3f0759ac226c188e8cba5a89492d">has_changed</a>; };</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00036">has_changed</a>.</p>
+<p class="reference">References <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00032">has_changed</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="test__savedconfig_8cpp_source.xhtml#l00201">fabomatic::tests::test_buffered_msg()</a>.</p>
 <div class="dynheader">
@@ -349,10 +352,10 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">   24</span>               <a class="code hl_variable" href="classfabomatic_1_1_buffer.xhtml#a24764f4964eca4b9c68b6e98e1d38349">msg_queue</a>.size());</div>
 <div class="line"><span class="lineno">   25</span>    }</div>
 <div class="line"><span class="lineno">   26</span>  }</div>
-<div class="ttc" id="aclassfabomatic_1_1_buffer_xhtml_a8cf1432737201bf30ae3008af6e44228"><div class="ttname"><a href="classfabomatic_1_1_buffer.xhtml#a8cf1432737201bf30ae3008af6e44228">fabomatic::Buffer::MAX_MESSAGES</a></div><div class="ttdeci">static constexpr auto MAX_MESSAGES</div><div class="ttdef"><b>Definition</b> <a href="_buffered_msg_8hpp_source.xhtml#l00049">BufferedMsg.hpp:49</a></div></div>
-<div class="ttc" id="anamespacefabomatic_1_1conf_1_1debug_xhtml_a5facfa139bf1642294264da0584f4691"><div class="ttname"><a href="namespacefabomatic_1_1conf_1_1debug.xhtml#a5facfa139bf1642294264da0584f4691">fabomatic::conf::debug::ENABLE_BUFFERING</a></div><div class="ttdeci">static constexpr bool ENABLE_BUFFERING</div><div class="ttdef"><b>Definition</b> <a href="conf_8hpp_source.xhtml#l00147">conf.hpp:147</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_buffer_xhtml_a8cf1432737201bf30ae3008af6e44228"><div class="ttname"><a href="classfabomatic_1_1_buffer.xhtml#a8cf1432737201bf30ae3008af6e44228">fabomatic::Buffer::MAX_MESSAGES</a></div><div class="ttdeci">static constexpr auto MAX_MESSAGES</div><div class="ttdef"><b>Definition</b> <a href="_buffered_msg_8hpp_source.xhtml#l00045">BufferedMsg.hpp:45</a></div></div>
+<div class="ttc" id="anamespacefabomatic_1_1conf_1_1debug_xhtml_a5facfa139bf1642294264da0584f4691"><div class="ttname"><a href="namespacefabomatic_1_1conf_1_1debug.xhtml#a5facfa139bf1642294264da0584f4691">fabomatic::conf::debug::ENABLE_BUFFERING</a></div><div class="ttdeci">static constexpr bool ENABLE_BUFFERING</div><div class="ttdoc">True if important MQTT messages should be saved when network is down and replayed.</div><div class="ttdef"><b>Definition</b> <a href="conf_8hpp_source.xhtml#l00092">conf.hpp:92</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="conf_8hpp_source.xhtml#l00147">fabomatic::conf::debug::ENABLE_BUFFERING</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00006">TAG</a>.</p>
+<p class="reference">References <a class="el" href="conf_8hpp_source.xhtml#l00092">fabomatic::conf::debug::ENABLE_BUFFERING</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00006">TAG</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="_buffered_msg_8cpp_source.xhtml#l00082">fromJsonElement()</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00402">fabomatic::FabBackend::processQuery()</a>, and <a class="el" href="test__savedconfig_8cpp_source.xhtml#l00201">fabomatic::tests::test_buffered_msg()</a>.</p>
 <div class="dynheader">
@@ -398,7 +401,7 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">   44</span>    }</div>
 <div class="line"><span class="lineno">   45</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="conf_8hpp_source.xhtml#l00147">fabomatic::conf::debug::ENABLE_BUFFERING</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00006">TAG</a>.</p>
+<p class="reference">References <a class="el" href="conf_8hpp_source.xhtml#l00092">fabomatic::conf::debug::ENABLE_BUFFERING</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00006">TAG</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="test__savedconfig_8cpp_source.xhtml#l00201">fabomatic::tests::test_buffered_msg()</a>.</p>
 <div class="dynheader">
@@ -433,10 +436,10 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00046">46</a> of file <a class="el" href="_buffered_msg_8hpp_source.xhtml">BufferedMsg.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   46</span>{ <a class="code hl_variable" href="classfabomatic_1_1_buffer.xhtml#a087b3f0759ac226c188e8cba5a89492d">has_changed</a> = new_value; };</div>
+<p class="definition">Definition at line <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00042">42</a> of file <a class="el" href="_buffered_msg_8hpp_source.xhtml">BufferedMsg.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   42</span>{ <a class="code hl_variable" href="classfabomatic_1_1_buffer.xhtml#a087b3f0759ac226c188e8cba5a89492d">has_changed</a> = new_value; };</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00036">has_changed</a>.</p>
+<p class="reference">References <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00032">has_changed</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="test__savedconfig_8cpp_source.xhtml#l00201">fabomatic::tests::test_buffered_msg()</a>.</p>
 <div class="dynheader">
@@ -518,10 +521,10 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00036">36</a> of file <a class="el" href="_buffered_msg_8hpp_source.xhtml">BufferedMsg.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   36</span>{<span class="keyword">true</span>};</div>
+<p class="definition">Definition at line <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00032">32</a> of file <a class="el" href="_buffered_msg_8hpp_source.xhtml">BufferedMsg.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   32</span>{<span class="keyword">true</span>};</div>
 </div><!-- fragment -->
-<p class="reference">Referenced by <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00045">hasChanged()</a>, and <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00046">setChanged()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00041">hasChanged()</a>, and <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00042">setChanged()</a>.</p>
 
 </div>
 </div>
@@ -545,7 +548,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00037">37</a> of file <a class="el" href="_buffered_msg_8hpp_source.xhtml">BufferedMsg.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00033">33</a> of file <a class="el" href="_buffered_msg_8hpp_source.xhtml">BufferedMsg.hpp</a>.</p>
 
 </div>
 </div>
@@ -569,7 +572,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00049">49</a> of file <a class="el" href="_buffered_msg_8hpp_source.xhtml">BufferedMsg.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00045">45</a> of file <a class="el" href="_buffered_msg_8hpp_source.xhtml">BufferedMsg.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="test__savedconfig_8cpp_source.xhtml#l00201">fabomatic::tests::test_buffered_msg()</a>.</p>
 
@@ -595,7 +598,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00035">35</a> of file <a class="el" href="_buffered_msg_8hpp_source.xhtml">BufferedMsg.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_buffered_msg_8hpp_source.xhtml#l00031">31</a> of file <a class="el" href="_buffered_msg_8hpp_source.xhtml">BufferedMsg.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="_buffered_msg_8cpp_source.xhtml#l00062">count()</a>.</p>
 
@@ -608,7 +611,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jul 1 2024 20:53:05 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Tue Jul 2 2024 19:19:45 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

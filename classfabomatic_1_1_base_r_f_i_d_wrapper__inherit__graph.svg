@@ -57,7 +57,7 @@ var sectionId = 'dynsection-0';
 <!-- Node1 -->
 <g id="Node000001" class="node">
 <title>Node1</title>
-<g id="a_Node000001"><a xlink:title=" ">
+<g id="a_Node000001"><a xlink:title="Base class for the real and mock implementation of RFID tag reader chip.">
 <polygon fill="#999999" stroke="none" points="138,-445 0,-445 0,-291 138,-291 138,-445"/>
 <text text-anchor="start" x="4.88" y="-431.5" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::BaseRFIDWrapper</text>
 <text text-anchor="start" x="67.5" y="-416.5" font-family="Helvetica,sans-Serif" font-size="10.00"> </text>
@@ -86,7 +86,7 @@ var sectionId = 'dynsection-0';
 <!-- Node2 -->
 <g id="Node000002" class="node">
 <title>Node2</title>
-<g id="a_Node000002"><a xlink:href="classfabomatic_1_1_r_f_i_d_wrapper.xhtml" target="_top" xlink:title=" ">
+<g id="a_Node000002"><a xlink:href="classfabomatic_1_1_r_f_i_d_wrapper.xhtml" target="_top" xlink:title="Driver class for the RFID reader chip.">
 <polygon fill="white" stroke="none" points="126.5,-255 11.5,-255 11.5,0 126.5,0 126.5,-255"/>
 <text text-anchor="start" x="16.12" y="-241.5" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::RFIDWrapper</text>
 <text text-anchor="start" x="48" y="-230.25" font-family="Helvetica,sans-Serif" font-size="10.00">&lt; Driver &gt;</text>

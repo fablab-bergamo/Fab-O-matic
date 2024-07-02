@@ -1,12 +1,12 @@
 <map id="fabomatic::FabBackend" name="fabomatic::FabBackend">
-<area shape="rect" id="Node000001" title=" " alt="" coords="239,1003,388,1548"/>
+<area shape="rect" id="Node000001" title="This class is used to exchange messages with the MQTT broker and the backend." alt="" coords="239,1003,388,1548"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="272,135,341,200"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="335,199,349,223,366,280,368,339,368,818,365,902,359,986,354,986,360,901,363,818,363,339,361,281,344,225,331,201"/>
-<area shape="rect" id="Node000006" href="$structfabomatic_1_1_buffered_msg.xhtml" title=" " alt="" coords="173,278,323,403"/>
+<area shape="rect" id="Node000006" href="$structfabomatic_1_1_buffered_msg.xhtml" title="Message that can be saved in Flash for future replay." alt="" coords="173,278,323,403"/>
 <area shape="poly" id="edge6_Node000006_Node000002" title=" " alt="" coords="274,196,261,209,252,225,244,262,238,260,247,223,257,206,270,192"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="249,5,364,85"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="309,100,309,135,304,135,304,100"/>
-<area shape="rect" id="Node000004" href="$classfabomatic_1_1_buffer.xhtml" title=" " alt="" coords="191,694,323,940"/>
+<area shape="rect" id="Node000004" href="$classfabomatic_1_1_buffer.xhtml" title="Class containing the buffered messages for future replay." alt="" coords="191,694,323,940"/>
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="275,939,281,986,275,986,270,940"/>
 <area shape="rect" id="Node000005" title=" " alt="" coords="177,509,317,589"/>
 <area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="251,589,254,677,249,678,246,589"/>

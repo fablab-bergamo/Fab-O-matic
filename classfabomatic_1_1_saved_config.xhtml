@@ -88,6 +88,9 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
+<p>Facility to load or save data from Flash.  
+ <a href="classfabomatic_1_1_saved_config.xhtml#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="_saved_config_8hpp_source.xhtml">SavedConfig.hpp</a>&gt;</code></p>
 <div class="dynheader">
 Collaboration diagram for fabomatic::SavedConfig:</div>
@@ -151,7 +154,7 @@ Public Attributes</h2></td></tr>
 <tr class="memdesc:a1c147278506b9cd2856798a7988d78ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">MQTT topic for mqtt switch (if available)  <br /></td></tr>
 <tr class="separator:a1c147278506b9cd2856798a7988d78ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa2312c6cebb6b73f66e9f8238cb1b17f" id="r_aa2312c6cebb6b73f66e9f8238cb1b17f"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_saved_config.xhtml#aa2312c6cebb6b73f66e9f8238cb1b17f">machine_id</a> {&quot;&quot;}</td></tr>
-<tr class="memdesc:aa2312c6cebb6b73f66e9f8238cb1b17f"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classfabomatic_1_1_machine.xhtml">Machine</a> ID connected to the board.  <br /></td></tr>
+<tr class="memdesc:aa2312c6cebb6b73f66e9f8238cb1b17f"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classfabomatic_1_1_machine.xhtml" title="Represents the FabLab machine connected to the board.">Machine</a> ID connected to the board.  <br /></td></tr>
 <tr class="separator:aa2312c6cebb6b73f66e9f8238cb1b17f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3c6fb5f59883891b0ea3240a8bb8aaee" id="r_a3c6fb5f59883891b0ea3240a8bb8aaee"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_saved_config.xhtml#a3c6fb5f59883891b0ea3240a8bb8aaee">bootCount</a> {0}</td></tr>
 <tr class="memdesc:a3c6fb5f59883891b0ea3240a8bb8aaee"><td class="mdescLeft">&#160;</td><td class="mdescRight">number of boot cycles  <br /></td></tr>
@@ -176,7 +179,7 @@ Private Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-static-methods" name="pri-static-methods"></a>
 Static Private Member Functions</h2></td></tr>
 <tr class="memitem:a1a3af8c6a917eeef7481ab1e5e242468" id="r_a1a3af8c6a917eeef7481ab1e5e242468"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_saved_config.xhtml#a1a3af8c6a917eeef7481ab1e5e242468">fromJsonDocument</a> (const std::string &amp;json_text) -&gt; std::optional&lt; <a class="el" href="classfabomatic_1_1_saved_config.xhtml">SavedConfig</a> &gt;</td></tr>
-<tr class="memdesc:a1a3af8c6a917eeef7481ab1e5e242468"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deserialize a JsonDocument into a <a class="el" href="classfabomatic_1_1_saved_config.xhtml">SavedConfig</a>.  <br /></td></tr>
+<tr class="memdesc:a1a3af8c6a917eeef7481ab1e5e242468"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deserialize a JsonDocument into a <a class="el" href="classfabomatic_1_1_saved_config.xhtml" title="Facility to load or save data from Flash.">SavedConfig</a>.  <br /></td></tr>
 <tr class="separator:a1a3af8c6a917eeef7481ab1e5e242468"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-static-attribs" name="pri-static-attribs"></a>
@@ -189,9 +192,9 @@ Static Private Attributes</h2></td></tr>
 <tr class="separator:a61d7db837cadfbba5b5036d77904e6c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Persisted settings and facilities to load/save settings from Flash </p>
+<div class="textblock"><p>Facility to load or save data from Flash. </p>
 
-<p class="definition">Definition at line <a class="el" href="_saved_config_8hpp_source.xhtml#l00022">22</a> of file <a class="el" href="_saved_config_8hpp_source.xhtml">SavedConfig.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_saved_config_8hpp_source.xhtml#l00020">20</a> of file <a class="el" href="_saved_config_8hpp_source.xhtml">SavedConfig.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a13b442195658b99513b46129ed0a425c" name="a13b442195658b99513b46129ed0a425c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a13b442195658b99513b46129ed0a425c">&#9670;&#160;</a></span>SavedConfig()</h2>
@@ -255,12 +258,12 @@ Static Private Attributes</h2></td></tr>
 <div class="line"><span class="lineno">   34</span>    config.password = <a class="code hl_variable" href="namespacefabomatic_1_1secrets_1_1credentials.xhtml#a9a84c8e5ac5f41925b9f2926023d3892">secrets::credentials::password</a>;</div>
 <div class="line"><span class="lineno">   35</span> </div>
 <div class="line"><span class="lineno">   36</span>    <span class="comment">// MQTT</span></div>
-<div class="line"><span class="lineno">   37</span>    config.mqtt_server = <a class="code hl_variable" href="namespacefabomatic_1_1conf_1_1default__config.xhtml#a10a9a7b7d46e9b26695c41963392c45d">conf::default_config::mqtt_server</a>;</div>
+<div class="line"><span class="lineno">   37</span>    config.mqtt_server = <a class="code hl_variable" href="namespacefabomatic_1_1conf_1_1mqtt.xhtml#a013c2e367c124dfcb56f76bd4a9ad1de">conf::mqtt::mqtt_server</a>;</div>
 <div class="line"><span class="lineno">   38</span>    config.mqtt_user = <a class="code hl_variable" href="namespacefabomatic_1_1secrets_1_1credentials.xhtml#a629695e752753107595e2c6a4639472d">secrets::credentials::mqtt_user</a>;</div>
 <div class="line"><span class="lineno">   39</span>    config.mqtt_password = <a class="code hl_variable" href="namespacefabomatic_1_1secrets_1_1credentials.xhtml#a891b6f3fe59b9c37adb9ec22372fcab3">secrets::credentials::mqtt_password</a>;</div>
 <div class="line"><span class="lineno">   40</span> </div>
 <div class="line"><span class="lineno">   41</span>    <span class="comment">// MQTT Switch</span></div>
-<div class="line"><span class="lineno">   42</span>    config.mqtt_switch_topic = <a class="code hl_variable" href="namespacefabomatic_1_1conf_1_1default__config.xhtml#a5c1b455d7208bb8f3487ae6b8b432de9">conf::default_config::mqtt_switch_topic</a>;</div>
+<div class="line"><span class="lineno">   42</span>    config.mqtt_switch_topic = <a class="code hl_variable" href="namespacefabomatic_1_1conf_1_1mqtt.xhtml#a27d3131c4e18f30225c9499cadb75ff4">conf::mqtt::mqtt_switch_topic</a>;</div>
 <div class="line"><span class="lineno">   43</span> </div>
 <div class="line"><span class="lineno">   44</span>    <span class="comment">// Machine</span></div>
 <div class="line"><span class="lineno">   45</span>    config.setMachineID(<a class="code hl_variable" href="namespacefabomatic_1_1conf_1_1default__config.xhtml#a6c7775af29f012f0623c8898f1998ea1">conf::default_config::machine_id</a>);</div>
@@ -269,19 +272,19 @@ Static Private Attributes</h2></td></tr>
 <div class="line"><span class="lineno">   48</span> </div>
 <div class="line"><span class="lineno">   49</span>    <span class="keywordflow">return</span> config;</div>
 <div class="line"><span class="lineno">   50</span>  }</div>
-<div class="ttc" id="aclassfabomatic_1_1_saved_config_xhtml_a07246e58a5381b0edc2147965a0a8f99"><div class="ttname"><a href="classfabomatic_1_1_saved_config.xhtml#a07246e58a5381b0edc2147965a0a8f99">fabomatic::SavedConfig::MAGIC_NUMBER</a></div><div class="ttdeci">static constexpr auto MAGIC_NUMBER</div><div class="ttdef"><b>Definition</b> <a href="_saved_config_8hpp_source.xhtml#l00040">SavedConfig.hpp:40</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_saved_config_xhtml_a07246e58a5381b0edc2147965a0a8f99"><div class="ttname"><a href="classfabomatic_1_1_saved_config.xhtml#a07246e58a5381b0edc2147965a0a8f99">fabomatic::SavedConfig::MAGIC_NUMBER</a></div><div class="ttdeci">static constexpr auto MAGIC_NUMBER</div><div class="ttdef"><b>Definition</b> <a href="_saved_config_8hpp_source.xhtml#l00038">SavedConfig.hpp:38</a></div></div>
 <div class="ttc" id="aclassfabomatic_1_1_saved_config_xhtml_a13b442195658b99513b46129ed0a425c"><div class="ttname"><a href="classfabomatic_1_1_saved_config.xhtml#a13b442195658b99513b46129ed0a425c">fabomatic::SavedConfig::SavedConfig</a></div><div class="ttdeci">SavedConfig()=default</div><div class="ttdoc">Allow compiler-time construction.</div></div>
-<div class="ttc" id="anamespacefabomatic_1_1conf_1_1default__config_xhtml_a10a9a7b7d46e9b26695c41963392c45d"><div class="ttname"><a href="namespacefabomatic_1_1conf_1_1default__config.xhtml#a10a9a7b7d46e9b26695c41963392c45d">fabomatic::conf::default_config::mqtt_server</a></div><div class="ttdeci">static constexpr std::string_view mqtt_server</div><div class="ttdef"><b>Definition</b> <a href="conf_8hpp_source.xhtml#l00019">conf.hpp:19</a></div></div>
-<div class="ttc" id="anamespacefabomatic_1_1conf_1_1default__config_xhtml_a5c1b455d7208bb8f3487ae6b8b432de9"><div class="ttname"><a href="namespacefabomatic_1_1conf_1_1default__config.xhtml#a5c1b455d7208bb8f3487ae6b8b432de9">fabomatic::conf::default_config::mqtt_switch_topic</a></div><div class="ttdeci">static constexpr std::string_view mqtt_switch_topic</div><div class="ttdef"><b>Definition</b> <a href="conf_8hpp_source.xhtml#l00024">conf.hpp:24</a></div></div>
-<div class="ttc" id="anamespacefabomatic_1_1conf_1_1default__config_xhtml_a6c7775af29f012f0623c8898f1998ea1"><div class="ttname"><a href="namespacefabomatic_1_1conf_1_1default__config.xhtml#a6c7775af29f012f0623c8898f1998ea1">fabomatic::conf::default_config::machine_id</a></div><div class="ttdeci">static constexpr MachineID machine_id</div><div class="ttdef"><b>Definition</b> <a href="conf_8hpp_source.xhtml#l00039">conf.hpp:39</a></div></div>
-<div class="ttc" id="anamespacefabomatic_1_1secrets_1_1credentials_xhtml_a0bde49c93ba98b9750a9e47c70ee028e"><div class="ttname"><a href="namespacefabomatic_1_1secrets_1_1credentials.xhtml#a0bde49c93ba98b9750a9e47c70ee028e">fabomatic::secrets::credentials::ssid</a></div><div class="ttdeci">static constexpr std::string_view ssid</div><div class="ttdef"><b>Definition</b> <a href="secrets_8hpp_source.xhtml#l00052">secrets.hpp:52</a></div></div>
-<div class="ttc" id="anamespacefabomatic_1_1secrets_1_1credentials_xhtml_a629695e752753107595e2c6a4639472d"><div class="ttname"><a href="namespacefabomatic_1_1secrets_1_1credentials.xhtml#a629695e752753107595e2c6a4639472d">fabomatic::secrets::credentials::mqtt_user</a></div><div class="ttdeci">static constexpr std::string_view mqtt_user</div><div class="ttdef"><b>Definition</b> <a href="secrets_8hpp_source.xhtml#l00059">secrets.hpp:59</a></div></div>
-<div class="ttc" id="anamespacefabomatic_1_1secrets_1_1credentials_xhtml_a891b6f3fe59b9c37adb9ec22372fcab3"><div class="ttname"><a href="namespacefabomatic_1_1secrets_1_1credentials.xhtml#a891b6f3fe59b9c37adb9ec22372fcab3">fabomatic::secrets::credentials::mqtt_password</a></div><div class="ttdeci">static constexpr std::string_view mqtt_password</div><div class="ttdef"><b>Definition</b> <a href="secrets_8hpp_source.xhtml#l00063">secrets.hpp:63</a></div></div>
-<div class="ttc" id="anamespacefabomatic_1_1secrets_1_1credentials_xhtml_a9a84c8e5ac5f41925b9f2926023d3892"><div class="ttname"><a href="namespacefabomatic_1_1secrets_1_1credentials.xhtml#a9a84c8e5ac5f41925b9f2926023d3892">fabomatic::secrets::credentials::password</a></div><div class="ttdeci">static constexpr std::string_view password</div><div class="ttdef"><b>Definition</b> <a href="secrets_8hpp_source.xhtml#l00053">secrets.hpp:53</a></div></div>
+<div class="ttc" id="anamespacefabomatic_1_1conf_1_1default__config_xhtml_a6c7775af29f012f0623c8898f1998ea1"><div class="ttname"><a href="namespacefabomatic_1_1conf_1_1default__config.xhtml#a6c7775af29f012f0623c8898f1998ea1">fabomatic::conf::default_config::machine_id</a></div><div class="ttdeci">static constexpr MachineID machine_id</div><div class="ttdoc">Default MachineID for backend. Can be overriden through WiFi Portal config.</div><div class="ttdef"><b>Definition</b> <a href="conf_8hpp_source.xhtml#l00017">conf.hpp:17</a></div></div>
+<div class="ttc" id="anamespacefabomatic_1_1conf_1_1mqtt_xhtml_a013c2e367c124dfcb56f76bd4a9ad1de"><div class="ttname"><a href="namespacefabomatic_1_1conf_1_1mqtt.xhtml#a013c2e367c124dfcb56f76bd4a9ad1de">fabomatic::conf::mqtt::mqtt_server</a></div><div class="ttdeci">static constexpr std::string_view mqtt_server</div><div class="ttdoc">Name of the default server for Backend. Will be resolved through mDNS.</div><div class="ttdef"><b>Definition</b> <a href="conf_8hpp_source.xhtml#l00152">conf.hpp:152</a></div></div>
+<div class="ttc" id="anamespacefabomatic_1_1conf_1_1mqtt_xhtml_a27d3131c4e18f30225c9499cadb75ff4"><div class="ttname"><a href="namespacefabomatic_1_1conf_1_1mqtt.xhtml#a27d3131c4e18f30225c9499cadb75ff4">fabomatic::conf::mqtt::mqtt_switch_topic</a></div><div class="ttdeci">static constexpr std::string_view mqtt_switch_topic</div><div class="ttdoc">In case Shelly is used, name of the topic on MQTT Broker.</div><div class="ttdef"><b>Definition</b> <a href="conf_8hpp_source.xhtml#l00155">conf.hpp:155</a></div></div>
+<div class="ttc" id="anamespacefabomatic_1_1secrets_1_1credentials_xhtml_a0bde49c93ba98b9750a9e47c70ee028e"><div class="ttname"><a href="namespacefabomatic_1_1secrets_1_1credentials.xhtml#a0bde49c93ba98b9750a9e47c70ee028e">fabomatic::secrets::credentials::ssid</a></div><div class="ttdeci">static constexpr std::string_view ssid</div><div class="ttdef"><b>Definition</b> <a href="secrets_8hpp_source.xhtml#l00044">secrets.hpp:44</a></div></div>
+<div class="ttc" id="anamespacefabomatic_1_1secrets_1_1credentials_xhtml_a629695e752753107595e2c6a4639472d"><div class="ttname"><a href="namespacefabomatic_1_1secrets_1_1credentials.xhtml#a629695e752753107595e2c6a4639472d">fabomatic::secrets::credentials::mqtt_user</a></div><div class="ttdeci">static constexpr std::string_view mqtt_user</div><div class="ttdoc">Username for MQTT broker auth.</div><div class="ttdef"><b>Definition</b> <a href="secrets_8hpp_source.xhtml#l00049">secrets.hpp:49</a></div></div>
+<div class="ttc" id="anamespacefabomatic_1_1secrets_1_1credentials_xhtml_a891b6f3fe59b9c37adb9ec22372fcab3"><div class="ttname"><a href="namespacefabomatic_1_1secrets_1_1credentials.xhtml#a891b6f3fe59b9c37adb9ec22372fcab3">fabomatic::secrets::credentials::mqtt_password</a></div><div class="ttdeci">static constexpr std::string_view mqtt_password</div><div class="ttdoc">Username for MQTT broker auth.</div><div class="ttdef"><b>Definition</b> <a href="secrets_8hpp_source.xhtml#l00052">secrets.hpp:52</a></div></div>
+<div class="ttc" id="anamespacefabomatic_1_1secrets_1_1credentials_xhtml_a9a84c8e5ac5f41925b9f2926023d3892"><div class="ttname"><a href="namespacefabomatic_1_1secrets_1_1credentials.xhtml#a9a84c8e5ac5f41925b9f2926023d3892">fabomatic::secrets::credentials::password</a></div><div class="ttdeci">static constexpr std::string_view password</div><div class="ttdef"><b>Definition</b> <a href="secrets_8hpp_source.xhtml#l00045">secrets.hpp:45</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_saved_config_8hpp_source.xhtml#l00074">disablePortal</a>, <a class="el" href="conf_8hpp_source.xhtml#l00039">fabomatic::conf::default_config::machine_id</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00043">magic_number</a>, <a class="el" href="secrets_8hpp_source.xhtml#l00063">fabomatic::secrets::credentials::mqtt_password</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00061">mqtt_password</a>, <a class="el" href="conf_8hpp_source.xhtml#l00019">fabomatic::conf::default_config::mqtt_server</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00055">mqtt_server</a>, <a class="el" href="conf_8hpp_source.xhtml#l00024">fabomatic::conf::default_config::mqtt_switch_topic</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00064">mqtt_switch_topic</a>, <a class="el" href="secrets_8hpp_source.xhtml#l00059">fabomatic::secrets::credentials::mqtt_user</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00058">mqtt_user</a>, <a class="el" href="secrets_8hpp_source.xhtml#l00053">fabomatic::secrets::credentials::password</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00052">password</a>, <a class="el" href="_saved_config_8cpp_source.xhtml#l00019">setMachineID()</a>, <a class="el" href="secrets_8hpp_source.xhtml#l00052">fabomatic::secrets::credentials::ssid</a>, and <a class="el" href="_saved_config_8hpp_source.xhtml#l00049">ssid</a>.</p>
+<p class="reference">References <a class="el" href="_saved_config_8hpp_source.xhtml#l00072">disablePortal</a>, <a class="el" href="conf_8hpp_source.xhtml#l00017">fabomatic::conf::default_config::machine_id</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00041">magic_number</a>, <a class="el" href="secrets_8hpp_source.xhtml#l00052">fabomatic::secrets::credentials::mqtt_password</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00059">mqtt_password</a>, <a class="el" href="conf_8hpp_source.xhtml#l00152">fabomatic::conf::mqtt::mqtt_server</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00053">mqtt_server</a>, <a class="el" href="conf_8hpp_source.xhtml#l00155">fabomatic::conf::mqtt::mqtt_switch_topic</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00062">mqtt_switch_topic</a>, <a class="el" href="secrets_8hpp_source.xhtml#l00049">fabomatic::secrets::credentials::mqtt_user</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00056">mqtt_user</a>, <a class="el" href="secrets_8hpp_source.xhtml#l00045">fabomatic::secrets::credentials::password</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00050">password</a>, <a class="el" href="_saved_config_8cpp_source.xhtml#l00019">setMachineID()</a>, <a class="el" href="secrets_8hpp_source.xhtml#l00044">fabomatic::secrets::credentials::ssid</a>, and <a class="el" href="_saved_config_8hpp_source.xhtml#l00047">ssid</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_o_t_a_8cpp_source.xhtml#l00033">fabomatic::getConfig()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00463">fabomatic::BoardLogic::reconfigure()</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00633">fabomatic::FabBackend::saveBuffer()</a>, <a class="el" href="_auth_provider_8cpp_source.xhtml#l00183">fabomatic::AuthProvider::saveCache()</a>, <a class="el" href="main_8cpp_source.xhtml#l00409">setup()</a>, <a class="el" href="test__logic_8cpp_source.xhtml#l00334">setUp()</a>, <a class="el" href="test__savedconfig_8cpp_source.xhtml#l00022">fabomatic::tests::test_defaults()</a>, <a class="el" href="test__mqtt_8cpp_source.xhtml#l00133">fabomatic::tests::test_fabserver_calls()</a>, and <a class="el" href="test__savedconfig_8cpp_source.xhtml#l00094">fabomatic::tests::test_rfid_cache()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_o_t_a_8cpp_source.xhtml#l00033">fabomatic::getConfig()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00463">fabomatic::BoardLogic::reconfigure()</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00633">fabomatic::FabBackend::saveBuffer()</a>, <a class="el" href="_auth_provider_8cpp_source.xhtml#l00183">fabomatic::AuthProvider::saveCache()</a>, <a class="el" href="main_8cpp_source.xhtml#l00411">setup()</a>, <a class="el" href="test__logic_8cpp_source.xhtml#l00334">setUp()</a>, <a class="el" href="test__savedconfig_8cpp_source.xhtml#l00022">fabomatic::tests::test_defaults()</a>, <a class="el" href="test__mqtt_8cpp_source.xhtml#l00133">fabomatic::tests::test_fabserver_calls()</a>, and <a class="el" href="test__savedconfig_8cpp_source.xhtml#l00094">fabomatic::tests::test_rfid_cache()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -319,14 +322,14 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>Deserialize a JsonDocument into a <a class="el" href="classfabomatic_1_1_saved_config.xhtml">SavedConfig</a>. </p>
+<p>Deserialize a JsonDocument into a <a class="el" href="classfabomatic_1_1_saved_config.xhtml" title="Facility to load or save data from Flash.">SavedConfig</a>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">json_text</td><td>json document as string to be deserialized </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>std::nullopt if the document is invalid, or a valid <a class="el" href="classfabomatic_1_1_saved_config.xhtml">SavedConfig</a> </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>std::nullopt if the document is invalid, or a valid <a class="el" href="classfabomatic_1_1_saved_config.xhtml" title="Facility to load or save data from Flash.">SavedConfig</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_saved_config_8cpp_source.xhtml#l00119">119</a> of file <a class="el" href="_saved_config_8cpp_source.xhtml">SavedConfig.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  120</span>  {</div>
@@ -383,11 +386,11 @@ Here is the caller graph for this function:</div>
 <div class="ttc" id="a_logging_8hpp_xhtml_a4ef5b5f197804a60836ab1e8907d8301"><div class="ttname"><a href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a></div><div class="ttdeci">static const char *const TAG</div><div class="ttdef"><b>Definition</b> <a href="_logging_8hpp_source.xhtml#l00006">Logging.hpp:6</a></div></div>
 <div class="ttc" id="aclassfabomatic_1_1_buffer_xhtml_ad6d946c6ad24dd1a0ab695bb8874b554"><div class="ttname"><a href="classfabomatic_1_1_buffer.xhtml#ad6d946c6ad24dd1a0ab695bb8874b554">fabomatic::Buffer::fromJsonElement</a></div><div class="ttdeci">static auto fromJsonElement(const JsonObject &amp;json_obj) -&gt; std::optional&lt; Buffer &gt;</div><div class="ttdef"><b>Definition</b> <a href="_buffered_msg_8cpp_source.xhtml#l00082">BufferedMsg.cpp:82</a></div></div>
 <div class="ttc" id="anamespacefabomatic_1_1card_xhtml_a9ef4a9f5f43c63cf872a2d52a7af11cf"><div class="ttname"><a href="namespacefabomatic_1_1card.xhtml#a9ef4a9f5f43c63cf872a2d52a7af11cf">fabomatic::card::INVALID</a></div><div class="ttdeci">static constexpr uid_t INVALID</div><div class="ttdef"><b>Definition</b> <a href="card_8hpp_source.xhtml#l00015">card.hpp:15</a></div></div>
-<div class="ttc" id="anamespacefabomatic_1_1conf_1_1rfid__tags_xhtml_a786cf57e36da88ed2d6c153e3b6fdc30"><div class="ttname"><a href="namespacefabomatic_1_1conf_1_1rfid__tags.xhtml#a786cf57e36da88ed2d6c153e3b6fdc30">fabomatic::conf::rfid_tags::CACHE_LEN</a></div><div class="ttdeci">static constexpr uint8_t CACHE_LEN</div><div class="ttdef"><b>Definition</b> <a href="conf_8hpp_source.xhtml#l00066">conf.hpp:66</a></div></div>
-<div class="ttc" id="astructfabomatic_1_1_fab_user_xhtml_a75deeb54124600e0387550735c7a0ca0"><div class="ttname"><a href="structfabomatic_1_1_fab_user.xhtml#a75deeb54124600e0387550735c7a0ca0">fabomatic::FabUser::UserLevel</a></div><div class="ttdeci">UserLevel</div><div class="ttdef"><b>Definition</b> <a href="_fab_user_8hpp_source.xhtml#l00019">FabUser.hpp:20</a></div></div>
+<div class="ttc" id="anamespacefabomatic_1_1conf_1_1rfid__tags_xhtml_a786cf57e36da88ed2d6c153e3b6fdc30"><div class="ttname"><a href="namespacefabomatic_1_1conf_1_1rfid__tags.xhtml#a786cf57e36da88ed2d6c153e3b6fdc30">fabomatic::conf::rfid_tags::CACHE_LEN</a></div><div class="ttdeci">static constexpr uint8_t CACHE_LEN</div><div class="ttdoc">Number of cached UID, persisted in flash.</div><div class="ttdef"><b>Definition</b> <a href="conf_8hpp_source.xhtml#l00036">conf.hpp:36</a></div></div>
+<div class="ttc" id="astructfabomatic_1_1_fab_user_xhtml_a75deeb54124600e0387550735c7a0ca0"><div class="ttname"><a href="structfabomatic_1_1_fab_user.xhtml#a75deeb54124600e0387550735c7a0ca0">fabomatic::FabUser::UserLevel</a></div><div class="ttdeci">UserLevel</div><div class="ttdef"><b>Definition</b> <a href="_fab_user_8hpp_source.xhtml#l00017">FabUser.hpp:18</a></div></div>
 <div class="ttc" id="astructfabomatic_1_1_fab_user_xhtml_a75deeb54124600e0387550735c7a0ca0a88183b946cc5f0e8c96b2e66e1c74a7e"><div class="ttname"><a href="structfabomatic_1_1_fab_user.xhtml#a75deeb54124600e0387550735c7a0ca0a88183b946cc5f0e8c96b2e66e1c74a7e">fabomatic::FabUser::UserLevel::Unknown</a></div><div class="ttdeci">@ Unknown</div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_saved_config_8hpp_source.xhtml#l00071">bootCount</a>, <a class="el" href="conf_8hpp_source.xhtml#l00066">fabomatic::conf::rfid_tags::CACHE_LEN</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00046">cachedRfid</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00074">disablePortal</a>, <a class="el" href="_buffered_msg_8cpp_source.xhtml#l00082">fabomatic::Buffer::fromJsonElement()</a>, <a class="el" href="card_8hpp_source.xhtml#l00015">fabomatic::card::INVALID</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00068">machine_id</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00043">magic_number</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00076">message_buffer</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00061">mqtt_password</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00055">mqtt_server</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00064">mqtt_switch_topic</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00058">mqtt_user</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00052">password</a>, <a class="el" href="_cached_cards_8hpp_source.xhtml#l00054">fabomatic::CachedCards::set_at()</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00049">ssid</a>, <a class="el" href="_logging_8hpp_source.xhtml#l00006">TAG</a>, and <a class="el" href="structfabomatic_1_1_fab_user.xhtml#a75deeb54124600e0387550735c7a0ca0a88183b946cc5f0e8c96b2e66e1c74a7e">fabomatic::FabUser::Unknown</a>.</p>
+<p class="reference">References <a class="el" href="_saved_config_8hpp_source.xhtml#l00069">bootCount</a>, <a class="el" href="conf_8hpp_source.xhtml#l00036">fabomatic::conf::rfid_tags::CACHE_LEN</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00044">cachedRfid</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00072">disablePortal</a>, <a class="el" href="_buffered_msg_8cpp_source.xhtml#l00082">fabomatic::Buffer::fromJsonElement()</a>, <a class="el" href="card_8hpp_source.xhtml#l00015">fabomatic::card::INVALID</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00066">machine_id</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00041">magic_number</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00074">message_buffer</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00059">mqtt_password</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00053">mqtt_server</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00062">mqtt_switch_topic</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00056">mqtt_user</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00050">password</a>, <a class="el" href="_cached_cards_8hpp_source.xhtml#l00050">fabomatic::CachedCards::set_at()</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00047">ssid</a>, <a class="el" href="_logging_8hpp_source.xhtml#l00006">TAG</a>, and <a class="el" href="structfabomatic_1_1_fab_user.xhtml#a75deeb54124600e0387550735c7a0ca0a88183b946cc5f0e8c96b2e66e1c74a7e">fabomatic::FabUser::Unknown</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -417,10 +420,10 @@ Here is the call graph for this function:</div>
 <div class="fragment"><div class="line"><span class="lineno">   24</span>  {</div>
 <div class="line"><span class="lineno">   25</span>    <span class="keywordflow">return</span> <a class="code hl_struct" href="struct_machine_i_d.xhtml">MachineID</a>(std::atoi(<a class="code hl_variable" href="classfabomatic_1_1_saved_config.xhtml#aa2312c6cebb6b73f66e9f8238cb1b17f">machine_id</a>.c_str()));</div>
 <div class="line"><span class="lineno">   26</span>  }</div>
-<div class="ttc" id="aclassfabomatic_1_1_saved_config_xhtml_aa2312c6cebb6b73f66e9f8238cb1b17f"><div class="ttname"><a href="classfabomatic_1_1_saved_config.xhtml#aa2312c6cebb6b73f66e9f8238cb1b17f">fabomatic::SavedConfig::machine_id</a></div><div class="ttdeci">std::string machine_id</div><div class="ttdoc">Machine ID connected to the board.</div><div class="ttdef"><b>Definition</b> <a href="_saved_config_8hpp_source.xhtml#l00068">SavedConfig.hpp:68</a></div></div>
-<div class="ttc" id="astruct_machine_i_d_xhtml"><div class="ttname"><a href="struct_machine_i_d.xhtml">MachineID</a></div><div class="ttdef"><b>Definition</b> <a href="_machine_i_d_8hpp_source.xhtml#l00019">MachineID.hpp:20</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_saved_config_xhtml_aa2312c6cebb6b73f66e9f8238cb1b17f"><div class="ttname"><a href="classfabomatic_1_1_saved_config.xhtml#aa2312c6cebb6b73f66e9f8238cb1b17f">fabomatic::SavedConfig::machine_id</a></div><div class="ttdeci">std::string machine_id</div><div class="ttdoc">Machine ID connected to the board.</div><div class="ttdef"><b>Definition</b> <a href="_saved_config_8hpp_source.xhtml#l00066">SavedConfig.hpp:66</a></div></div>
+<div class="ttc" id="astruct_machine_i_d_xhtml"><div class="ttname"><a href="struct_machine_i_d.xhtml">MachineID</a></div><div class="ttdoc">The unique machine identifier for the backend.</div><div class="ttdef"><b>Definition</b> <a href="_machine_i_d_8hpp_source.xhtml#l00019">MachineID.hpp:20</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_saved_config_8hpp_source.xhtml#l00068">machine_id</a>.</p>
+<p class="reference">References <a class="el" href="_saved_config_8hpp_source.xhtml#l00066">machine_id</a>.</p>
 
 </div>
 </div>
@@ -464,7 +467,7 @@ Here is the call graph for this function:</div>
 </div><!-- fragment -->
 <p class="reference">References <a class="el" href="_logging_8hpp_source.xhtml#l00006">TAG</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="main_8cpp_source.xhtml#l00409">setup()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="main_8cpp_source.xhtml#l00411">setup()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -497,7 +500,7 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Loads the configuration from EEPROM if available and matching revision number. </p>
-<dl class="section return"><dt>Returns</dt><dd>std::nullopt if not valid, <a class="el" href="classfabomatic_1_1_saved_config.xhtml">SavedConfig</a> otherwise </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>std::nullopt if not valid, <a class="el" href="classfabomatic_1_1_saved_config.xhtml" title="Facility to load or save data from Flash.">SavedConfig</a> otherwise </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_saved_config_8cpp_source.xhtml#l00052">52</a> of file <a class="el" href="_saved_config_8cpp_source.xhtml">SavedConfig.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   53</span>  {</div>
@@ -535,11 +538,11 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">   85</span>    <span class="keywordflow">return</span> reply.value();</div>
 <div class="line"><span class="lineno">   86</span>  }</div>
 <div class="ttc" id="aclassfabomatic_1_1_saved_config_xhtml_a1a3af8c6a917eeef7481ab1e5e242468"><div class="ttname"><a href="classfabomatic_1_1_saved_config.xhtml#a1a3af8c6a917eeef7481ab1e5e242468">fabomatic::SavedConfig::fromJsonDocument</a></div><div class="ttdeci">static auto fromJsonDocument(const std::string &amp;json_text) -&gt; std::optional&lt; SavedConfig &gt;</div><div class="ttdoc">Deserialize a JsonDocument into a SavedConfig.</div><div class="ttdef"><b>Definition</b> <a href="_saved_config_8cpp_source.xhtml#l00119">SavedConfig.cpp:119</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_saved_config_xhtml_a61d7db837cadfbba5b5036d77904e6c3"><div class="ttname"><a href="classfabomatic_1_1_saved_config.xhtml#a61d7db837cadfbba5b5036d77904e6c3">fabomatic::SavedConfig::buffer_mutex</a></div><div class="ttdeci">static std::mutex buffer_mutex</div><div class="ttdef"><b>Definition</b> <a href="_saved_config_8hpp_source.xhtml#l00028">SavedConfig.hpp:28</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_saved_config_xhtml_aaa3197d962aace1f5548a5586bcc97c4"><div class="ttname"><a href="classfabomatic_1_1_saved_config.xhtml#aaa3197d962aace1f5548a5586bcc97c4">fabomatic::SavedConfig::JSON_DOC_SIZE</a></div><div class="ttdeci">static constexpr auto JSON_DOC_SIZE</div><div class="ttdef"><b>Definition</b> <a href="_saved_config_8hpp_source.xhtml#l00025">SavedConfig.hpp:25</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_saved_config_xhtml_ad6d77281946b603617f828d2e4a1578d"><div class="ttname"><a href="classfabomatic_1_1_saved_config.xhtml#ad6d77281946b603617f828d2e4a1578d">fabomatic::SavedConfig::json_buffer</a></div><div class="ttdeci">static std::string json_buffer</div><div class="ttdef"><b>Definition</b> <a href="_saved_config_8hpp_source.xhtml#l00027">SavedConfig.hpp:27</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_saved_config_xhtml_a61d7db837cadfbba5b5036d77904e6c3"><div class="ttname"><a href="classfabomatic_1_1_saved_config.xhtml#a61d7db837cadfbba5b5036d77904e6c3">fabomatic::SavedConfig::buffer_mutex</a></div><div class="ttdeci">static std::mutex buffer_mutex</div><div class="ttdef"><b>Definition</b> <a href="_saved_config_8hpp_source.xhtml#l00026">SavedConfig.hpp:26</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_saved_config_xhtml_aaa3197d962aace1f5548a5586bcc97c4"><div class="ttname"><a href="classfabomatic_1_1_saved_config.xhtml#aaa3197d962aace1f5548a5586bcc97c4">fabomatic::SavedConfig::JSON_DOC_SIZE</a></div><div class="ttdeci">static constexpr auto JSON_DOC_SIZE</div><div class="ttdef"><b>Definition</b> <a href="_saved_config_8hpp_source.xhtml#l00023">SavedConfig.hpp:23</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_saved_config_xhtml_ad6d77281946b603617f828d2e4a1578d"><div class="ttname"><a href="classfabomatic_1_1_saved_config.xhtml#ad6d77281946b603617f828d2e4a1578d">fabomatic::SavedConfig::json_buffer</a></div><div class="ttdeci">static std::string json_buffer</div><div class="ttdef"><b>Definition</b> <a href="_saved_config_8hpp_source.xhtml#l00025">SavedConfig.hpp:25</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_saved_config_8hpp_source.xhtml#l00028">buffer_mutex</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00027">json_buffer</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00006">TAG</a>.</p>
+<p class="reference">References <a class="el" href="_saved_config_8hpp_source.xhtml#l00026">buffer_mutex</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00025">json_buffer</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00006">TAG</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="_o_t_a_8cpp_source.xhtml#l00033">fabomatic::getConfig()</a>, <a class="el" href="_auth_provider_8cpp_source.xhtml#l00163">fabomatic::AuthProvider::loadCache()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00463">fabomatic::BoardLogic::reconfigure()</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00633">fabomatic::FabBackend::saveBuffer()</a>, <a class="el" href="_auth_provider_8cpp_source.xhtml#l00183">fabomatic::AuthProvider::saveCache()</a>, <a class="el" href="test__logic_8cpp_source.xhtml#l00349">setup()</a>, <a class="el" href="test__logic_8cpp_source.xhtml#l00334">setUp()</a>, <a class="el" href="test__savedconfig_8cpp_source.xhtml#l00048">fabomatic::tests::test_changes()</a>, <a class="el" href="test__savedconfig_8cpp_source.xhtml#l00022">fabomatic::tests::test_defaults()</a>, <a class="el" href="test__mqtt_8cpp_source.xhtml#l00133">fabomatic::tests::test_fabserver_calls()</a>, <a class="el" href="test__savedconfig_8cpp_source.xhtml#l00152">fabomatic::tests::test_magic_number()</a>, <a class="el" href="test__logic_8cpp_source.xhtml#l00307">fabomatic::tests::test_messages_buffered()</a>, <a class="el" href="test__savedconfig_8cpp_source.xhtml#l00094">fabomatic::tests::test_rfid_cache()</a>, and <a class="el" href="test__mqtt_8cpp_source.xhtml#l00097">fabomatic::tests::test_start_broker()</a>.</p>
 <div class="dynheader">
@@ -608,7 +611,7 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  209</span>  }</div>
 <div class="ttc" id="aclassfabomatic_1_1_saved_config_xhtml_ae0af7670707ed5a51c69197eb6fadbe5"><div class="ttname"><a href="classfabomatic_1_1_saved_config.xhtml#ae0af7670707ed5a51c69197eb6fadbe5">fabomatic::SavedConfig::toJsonDocument</a></div><div class="ttdeci">auto toJsonDocument() const -&gt; JsonDocument</div><div class="ttdoc">Serialize the current configuration into a JsonDocument.</div><div class="ttdef"><b>Definition</b> <a href="_saved_config_8cpp_source.xhtml#l00088">SavedConfig.cpp:88</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_saved_config_8hpp_source.xhtml#l00028">buffer_mutex</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00027">json_buffer</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00025">JSON_DOC_SIZE</a>, <a class="el" href="_logging_8hpp_source.xhtml#l00006">TAG</a>, and <a class="el" href="_saved_config_8cpp_source.xhtml#l00088">toJsonDocument()</a>.</p>
+<p class="reference">References <a class="el" href="_saved_config_8hpp_source.xhtml#l00026">buffer_mutex</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00025">json_buffer</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00023">JSON_DOC_SIZE</a>, <a class="el" href="_logging_8hpp_source.xhtml#l00006">TAG</a>, and <a class="el" href="_saved_config_8cpp_source.xhtml#l00088">toJsonDocument()</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="_auth_provider_8cpp_source.xhtml#l00183">fabomatic::AuthProvider::saveCache()</a>, <a class="el" href="test__mqtt_8cpp_source.xhtml#l00357">setup()</a>, and <a class="el" href="test__savedconfig_8cpp_source.xhtml#l00048">fabomatic::tests::test_changes()</a>.</p>
 <div class="dynheader">
@@ -713,20 +716,20 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  116</span>    <span class="keywordflow">return</span> doc;</div>
 <div class="line"><span class="lineno">  117</span>  }</div>
 <div class="ttc" id="aclassfabomatic_1_1_buffer_xhtml_a72f029c82552ccea45eaf611f345c079"><div class="ttname"><a href="classfabomatic_1_1_buffer.xhtml#a72f029c82552ccea45eaf611f345c079">fabomatic::Buffer::toJson</a></div><div class="ttdeci">auto toJson(JsonDocument &amp;doc, const std::string &amp;element_name) const -&gt; void</div><div class="ttdef"><b>Definition</b> <a href="_buffered_msg_8cpp_source.xhtml#l00067">BufferedMsg.cpp:67</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_saved_config_xhtml_a1c147278506b9cd2856798a7988d78ff"><div class="ttname"><a href="classfabomatic_1_1_saved_config.xhtml#a1c147278506b9cd2856798a7988d78ff">fabomatic::SavedConfig::mqtt_switch_topic</a></div><div class="ttdeci">std::string mqtt_switch_topic</div><div class="ttdoc">MQTT topic for mqtt switch (if available)</div><div class="ttdef"><b>Definition</b> <a href="_saved_config_8hpp_source.xhtml#l00064">SavedConfig.hpp:64</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_saved_config_xhtml_a3c6fb5f59883891b0ea3240a8bb8aaee"><div class="ttname"><a href="classfabomatic_1_1_saved_config.xhtml#a3c6fb5f59883891b0ea3240a8bb8aaee">fabomatic::SavedConfig::bootCount</a></div><div class="ttdeci">size_t bootCount</div><div class="ttdoc">number of boot cycles</div><div class="ttdef"><b>Definition</b> <a href="_saved_config_8hpp_source.xhtml#l00071">SavedConfig.hpp:71</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_saved_config_xhtml_a48a97bdcbb24fe8f5e2f36a173839cdf"><div class="ttname"><a href="classfabomatic_1_1_saved_config.xhtml#a48a97bdcbb24fe8f5e2f36a173839cdf">fabomatic::SavedConfig::message_buffer</a></div><div class="ttdeci">Buffer message_buffer</div><div class="ttdef"><b>Definition</b> <a href="_saved_config_8hpp_source.xhtml#l00076">SavedConfig.hpp:76</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_saved_config_xhtml_a6510074227a78d4f5093b7aed88bdbef"><div class="ttname"><a href="classfabomatic_1_1_saved_config.xhtml#a6510074227a78d4f5093b7aed88bdbef">fabomatic::SavedConfig::disablePortal</a></div><div class="ttdeci">bool disablePortal</div><div class="ttdoc">if true, the FORCE_OPEN_PORTAL flag will be ignored</div><div class="ttdef"><b>Definition</b> <a href="_saved_config_8hpp_source.xhtml#l00074">SavedConfig.hpp:74</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_saved_config_xhtml_a68004c1190623a027b2a1f41607cd33f"><div class="ttname"><a href="classfabomatic_1_1_saved_config.xhtml#a68004c1190623a027b2a1f41607cd33f">fabomatic::SavedConfig::mqtt_password</a></div><div class="ttdeci">std::string mqtt_password</div><div class="ttdoc">MQTT password.</div><div class="ttdef"><b>Definition</b> <a href="_saved_config_8hpp_source.xhtml#l00061">SavedConfig.hpp:61</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_saved_config_xhtml_a87190e0ef86890f51d972f3d2f024aa0"><div class="ttname"><a href="classfabomatic_1_1_saved_config.xhtml#a87190e0ef86890f51d972f3d2f024aa0">fabomatic::SavedConfig::cachedRfid</a></div><div class="ttdeci">CachedCards cachedRfid</div><div class="ttdoc">list of cached RFID cards</div><div class="ttdef"><b>Definition</b> <a href="_saved_config_8hpp_source.xhtml#l00046">SavedConfig.hpp:46</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_saved_config_xhtml_a8cc620b09cef7aceaf7ec87e72dfcdc0"><div class="ttname"><a href="classfabomatic_1_1_saved_config.xhtml#a8cc620b09cef7aceaf7ec87e72dfcdc0">fabomatic::SavedConfig::mqtt_user</a></div><div class="ttdeci">std::string mqtt_user</div><div class="ttdoc">MQTT username.</div><div class="ttdef"><b>Definition</b> <a href="_saved_config_8hpp_source.xhtml#l00058">SavedConfig.hpp:58</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_saved_config_xhtml_a8de320beb3e706c35582c049d3681c42"><div class="ttname"><a href="classfabomatic_1_1_saved_config.xhtml#a8de320beb3e706c35582c049d3681c42">fabomatic::SavedConfig::mqtt_server</a></div><div class="ttdeci">std::string mqtt_server</div><div class="ttdoc">MQTT server.</div><div class="ttdef"><b>Definition</b> <a href="_saved_config_8hpp_source.xhtml#l00055">SavedConfig.hpp:55</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_saved_config_xhtml_a8f7b5fba524d14a66ed1eaeda08a7e0d"><div class="ttname"><a href="classfabomatic_1_1_saved_config.xhtml#a8f7b5fba524d14a66ed1eaeda08a7e0d">fabomatic::SavedConfig::password</a></div><div class="ttdeci">std::string password</div><div class="ttdoc">WiFi password.</div><div class="ttdef"><b>Definition</b> <a href="_saved_config_8hpp_source.xhtml#l00052">SavedConfig.hpp:52</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_saved_config_xhtml_a9429975f9694b85cf53cc364cd135ac5"><div class="ttname"><a href="classfabomatic_1_1_saved_config.xhtml#a9429975f9694b85cf53cc364cd135ac5">fabomatic::SavedConfig::magic_number</a></div><div class="ttdeci">uint8_t magic_number</div><div class="ttdef"><b>Definition</b> <a href="_saved_config_8hpp_source.xhtml#l00043">SavedConfig.hpp:43</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_saved_config_xhtml_abccca47e85f3214c2ce780230bfe7f49"><div class="ttname"><a href="classfabomatic_1_1_saved_config.xhtml#abccca47e85f3214c2ce780230bfe7f49">fabomatic::SavedConfig::ssid</a></div><div class="ttdeci">std::string ssid</div><div class="ttdoc">WiFi SSID.</div><div class="ttdef"><b>Definition</b> <a href="_saved_config_8hpp_source.xhtml#l00049">SavedConfig.hpp:49</a></div></div>
-<div class="ttc" id="astructfabomatic_1_1_cached_cards_xhtml_a128c3db6758b1e630855e673a44c585f"><div class="ttname"><a href="structfabomatic_1_1_cached_cards.xhtml#a128c3db6758b1e630855e673a44c585f">fabomatic::CachedCards::size</a></div><div class="ttdeci">constexpr auto size() const -&gt; size_t</div><div class="ttdef"><b>Definition</b> <a href="_cached_cards_8hpp_source.xhtml#l00060">CachedCards.hpp:60</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_saved_config_xhtml_a1c147278506b9cd2856798a7988d78ff"><div class="ttname"><a href="classfabomatic_1_1_saved_config.xhtml#a1c147278506b9cd2856798a7988d78ff">fabomatic::SavedConfig::mqtt_switch_topic</a></div><div class="ttdeci">std::string mqtt_switch_topic</div><div class="ttdoc">MQTT topic for mqtt switch (if available)</div><div class="ttdef"><b>Definition</b> <a href="_saved_config_8hpp_source.xhtml#l00062">SavedConfig.hpp:62</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_saved_config_xhtml_a3c6fb5f59883891b0ea3240a8bb8aaee"><div class="ttname"><a href="classfabomatic_1_1_saved_config.xhtml#a3c6fb5f59883891b0ea3240a8bb8aaee">fabomatic::SavedConfig::bootCount</a></div><div class="ttdeci">size_t bootCount</div><div class="ttdoc">number of boot cycles</div><div class="ttdef"><b>Definition</b> <a href="_saved_config_8hpp_source.xhtml#l00069">SavedConfig.hpp:69</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_saved_config_xhtml_a48a97bdcbb24fe8f5e2f36a173839cdf"><div class="ttname"><a href="classfabomatic_1_1_saved_config.xhtml#a48a97bdcbb24fe8f5e2f36a173839cdf">fabomatic::SavedConfig::message_buffer</a></div><div class="ttdeci">Buffer message_buffer</div><div class="ttdef"><b>Definition</b> <a href="_saved_config_8hpp_source.xhtml#l00074">SavedConfig.hpp:74</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_saved_config_xhtml_a6510074227a78d4f5093b7aed88bdbef"><div class="ttname"><a href="classfabomatic_1_1_saved_config.xhtml#a6510074227a78d4f5093b7aed88bdbef">fabomatic::SavedConfig::disablePortal</a></div><div class="ttdeci">bool disablePortal</div><div class="ttdoc">if true, the FORCE_OPEN_PORTAL flag will be ignored</div><div class="ttdef"><b>Definition</b> <a href="_saved_config_8hpp_source.xhtml#l00072">SavedConfig.hpp:72</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_saved_config_xhtml_a68004c1190623a027b2a1f41607cd33f"><div class="ttname"><a href="classfabomatic_1_1_saved_config.xhtml#a68004c1190623a027b2a1f41607cd33f">fabomatic::SavedConfig::mqtt_password</a></div><div class="ttdeci">std::string mqtt_password</div><div class="ttdoc">MQTT password.</div><div class="ttdef"><b>Definition</b> <a href="_saved_config_8hpp_source.xhtml#l00059">SavedConfig.hpp:59</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_saved_config_xhtml_a87190e0ef86890f51d972f3d2f024aa0"><div class="ttname"><a href="classfabomatic_1_1_saved_config.xhtml#a87190e0ef86890f51d972f3d2f024aa0">fabomatic::SavedConfig::cachedRfid</a></div><div class="ttdeci">CachedCards cachedRfid</div><div class="ttdoc">list of cached RFID cards</div><div class="ttdef"><b>Definition</b> <a href="_saved_config_8hpp_source.xhtml#l00044">SavedConfig.hpp:44</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_saved_config_xhtml_a8cc620b09cef7aceaf7ec87e72dfcdc0"><div class="ttname"><a href="classfabomatic_1_1_saved_config.xhtml#a8cc620b09cef7aceaf7ec87e72dfcdc0">fabomatic::SavedConfig::mqtt_user</a></div><div class="ttdeci">std::string mqtt_user</div><div class="ttdoc">MQTT username.</div><div class="ttdef"><b>Definition</b> <a href="_saved_config_8hpp_source.xhtml#l00056">SavedConfig.hpp:56</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_saved_config_xhtml_a8de320beb3e706c35582c049d3681c42"><div class="ttname"><a href="classfabomatic_1_1_saved_config.xhtml#a8de320beb3e706c35582c049d3681c42">fabomatic::SavedConfig::mqtt_server</a></div><div class="ttdeci">std::string mqtt_server</div><div class="ttdoc">MQTT server.</div><div class="ttdef"><b>Definition</b> <a href="_saved_config_8hpp_source.xhtml#l00053">SavedConfig.hpp:53</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_saved_config_xhtml_a8f7b5fba524d14a66ed1eaeda08a7e0d"><div class="ttname"><a href="classfabomatic_1_1_saved_config.xhtml#a8f7b5fba524d14a66ed1eaeda08a7e0d">fabomatic::SavedConfig::password</a></div><div class="ttdeci">std::string password</div><div class="ttdoc">WiFi password.</div><div class="ttdef"><b>Definition</b> <a href="_saved_config_8hpp_source.xhtml#l00050">SavedConfig.hpp:50</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_saved_config_xhtml_a9429975f9694b85cf53cc364cd135ac5"><div class="ttname"><a href="classfabomatic_1_1_saved_config.xhtml#a9429975f9694b85cf53cc364cd135ac5">fabomatic::SavedConfig::magic_number</a></div><div class="ttdeci">uint8_t magic_number</div><div class="ttdef"><b>Definition</b> <a href="_saved_config_8hpp_source.xhtml#l00041">SavedConfig.hpp:41</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_saved_config_xhtml_abccca47e85f3214c2ce780230bfe7f49"><div class="ttname"><a href="classfabomatic_1_1_saved_config.xhtml#abccca47e85f3214c2ce780230bfe7f49">fabomatic::SavedConfig::ssid</a></div><div class="ttdeci">std::string ssid</div><div class="ttdoc">WiFi SSID.</div><div class="ttdef"><b>Definition</b> <a href="_saved_config_8hpp_source.xhtml#l00047">SavedConfig.hpp:47</a></div></div>
+<div class="ttc" id="astructfabomatic_1_1_cached_cards_xhtml_a128c3db6758b1e630855e673a44c585f"><div class="ttname"><a href="structfabomatic_1_1_cached_cards.xhtml#a128c3db6758b1e630855e673a44c585f">fabomatic::CachedCards::size</a></div><div class="ttdeci">constexpr auto size() const -&gt; size_t</div><div class="ttdef"><b>Definition</b> <a href="_cached_cards_8hpp_source.xhtml#l00056">CachedCards.hpp:56</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_saved_config_8hpp_source.xhtml#l00071">bootCount</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00046">cachedRfid</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00074">disablePortal</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00068">machine_id</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00040">MAGIC_NUMBER</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00043">magic_number</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00076">message_buffer</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00061">mqtt_password</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00055">mqtt_server</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00064">mqtt_switch_topic</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00058">mqtt_user</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00052">password</a>, <a class="el" href="_cached_cards_8hpp_source.xhtml#l00060">fabomatic::CachedCards::size()</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00049">ssid</a>, and <a class="el" href="_buffered_msg_8cpp_source.xhtml#l00067">fabomatic::Buffer::toJson()</a>.</p>
+<p class="reference">References <a class="el" href="_saved_config_8hpp_source.xhtml#l00069">bootCount</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00044">cachedRfid</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00072">disablePortal</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00066">machine_id</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00038">MAGIC_NUMBER</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00041">magic_number</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00074">message_buffer</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00059">mqtt_password</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00053">mqtt_server</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00062">mqtt_switch_topic</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00056">mqtt_user</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00050">password</a>, <a class="el" href="_cached_cards_8hpp_source.xhtml#l00056">fabomatic::CachedCards::size()</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00047">ssid</a>, and <a class="el" href="_buffered_msg_8cpp_source.xhtml#l00067">fabomatic::Buffer::toJson()</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="_saved_config_8cpp_source.xhtml#l00172">SaveToEEPROM()</a>, and <a class="el" href="_saved_config_8cpp_source.xhtml#l00211">toString()</a>.</p>
 <div class="dynheader">
@@ -791,8 +794,8 @@ Here is the call graph for this function:</div>
 
 <p>number of boot cycles </p>
 
-<p class="definition">Definition at line <a class="el" href="_saved_config_8hpp_source.xhtml#l00071">71</a> of file <a class="el" href="_saved_config_8hpp_source.xhtml">SavedConfig.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   71</span>{0};</div>
+<p class="definition">Definition at line <a class="el" href="_saved_config_8hpp_source.xhtml#l00069">69</a> of file <a class="el" href="_saved_config_8hpp_source.xhtml">SavedConfig.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   69</span>{0};</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="_saved_config_8cpp_source.xhtml#l00119">fromJsonDocument()</a>, and <a class="el" href="_saved_config_8cpp_source.xhtml#l00088">toJsonDocument()</a>.</p>
 
@@ -818,7 +821,7 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_saved_config_8hpp_source.xhtml#l00028">28</a> of file <a class="el" href="_saved_config_8hpp_source.xhtml">SavedConfig.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_saved_config_8hpp_source.xhtml#l00026">26</a> of file <a class="el" href="_saved_config_8hpp_source.xhtml">SavedConfig.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="_saved_config_8cpp_source.xhtml#l00052">LoadFromEEPROM()</a>, and <a class="el" href="_saved_config_8cpp_source.xhtml#l00172">SaveToEEPROM()</a>.</p>
 
@@ -838,7 +841,7 @@ Here is the call graph for this function:</div>
 
 <p>list of cached RFID cards </p>
 
-<p class="definition">Definition at line <a class="el" href="_saved_config_8hpp_source.xhtml#l00046">46</a> of file <a class="el" href="_saved_config_8hpp_source.xhtml">SavedConfig.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_saved_config_8hpp_source.xhtml#l00044">44</a> of file <a class="el" href="_saved_config_8hpp_source.xhtml">SavedConfig.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="_saved_config_8cpp_source.xhtml#l00119">fromJsonDocument()</a>, <a class="el" href="_auth_provider_8cpp_source.xhtml#l00183">fabomatic::AuthProvider::saveCache()</a>, and <a class="el" href="_saved_config_8cpp_source.xhtml#l00088">toJsonDocument()</a>.</p>
 
@@ -858,8 +861,8 @@ Here is the call graph for this function:</div>
 
 <p>if true, the FORCE_OPEN_PORTAL flag will be ignored </p>
 
-<p class="definition">Definition at line <a class="el" href="_saved_config_8hpp_source.xhtml#l00074">74</a> of file <a class="el" href="_saved_config_8hpp_source.xhtml">SavedConfig.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   74</span>{<span class="keyword">false</span>};</div>
+<p class="definition">Definition at line <a class="el" href="_saved_config_8hpp_source.xhtml#l00072">72</a> of file <a class="el" href="_saved_config_8hpp_source.xhtml">SavedConfig.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   72</span>{<span class="keyword">false</span>};</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="_saved_config_8cpp_source.xhtml#l00028">DefaultConfig()</a>, <a class="el" href="_saved_config_8cpp_source.xhtml#l00119">fromJsonDocument()</a>, and <a class="el" href="_saved_config_8cpp_source.xhtml#l00088">toJsonDocument()</a>.</p>
 
@@ -885,7 +888,7 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_saved_config_8hpp_source.xhtml#l00027">27</a> of file <a class="el" href="_saved_config_8hpp_source.xhtml">SavedConfig.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_saved_config_8hpp_source.xhtml#l00025">25</a> of file <a class="el" href="_saved_config_8hpp_source.xhtml">SavedConfig.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="_saved_config_8cpp_source.xhtml#l00052">LoadFromEEPROM()</a>, and <a class="el" href="_saved_config_8cpp_source.xhtml#l00172">SaveToEEPROM()</a>.</p>
 
@@ -911,7 +914,7 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_saved_config_8hpp_source.xhtml#l00025">25</a> of file <a class="el" href="_saved_config_8hpp_source.xhtml">SavedConfig.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_saved_config_8hpp_source.xhtml#l00023">23</a> of file <a class="el" href="_saved_config_8hpp_source.xhtml">SavedConfig.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="_saved_config_8cpp_source.xhtml#l00172">SaveToEEPROM()</a>.</p>
 
@@ -929,11 +932,11 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p><a class="el" href="classfabomatic_1_1_machine.xhtml">Machine</a> ID connected to the board. </p>
+<p><a class="el" href="classfabomatic_1_1_machine.xhtml" title="Represents the FabLab machine connected to the board.">Machine</a> ID connected to the board. </p>
 <p>This is a string to allow for easier integration with WiFiManager parameter </p>
 
-<p class="definition">Definition at line <a class="el" href="_saved_config_8hpp_source.xhtml#l00068">68</a> of file <a class="el" href="_saved_config_8hpp_source.xhtml">SavedConfig.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   68</span>{<span class="stringliteral">&quot;&quot;</span>};</div>
+<p class="definition">Definition at line <a class="el" href="_saved_config_8hpp_source.xhtml#l00066">66</a> of file <a class="el" href="_saved_config_8hpp_source.xhtml">SavedConfig.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   66</span>{<span class="stringliteral">&quot;&quot;</span>};</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="_fab_backend_8cpp_source.xhtml#l00021">fabomatic::FabBackend::configure()</a>, <a class="el" href="_saved_config_8cpp_source.xhtml#l00119">fromJsonDocument()</a>, <a class="el" href="_saved_config_8cpp_source.xhtml#l00023">getMachineID()</a>, <a class="el" href="test__savedconfig_8cpp_source.xhtml#l00048">fabomatic::tests::test_changes()</a>, and <a class="el" href="_saved_config_8cpp_source.xhtml#l00088">toJsonDocument()</a>.</p>
 
@@ -959,7 +962,7 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_saved_config_8hpp_source.xhtml#l00040">40</a> of file <a class="el" href="_saved_config_8hpp_source.xhtml">SavedConfig.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_saved_config_8hpp_source.xhtml#l00038">38</a> of file <a class="el" href="_saved_config_8hpp_source.xhtml">SavedConfig.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="test__savedconfig_8cpp_source.xhtml#l00048">fabomatic::tests::test_changes()</a>, <a class="el" href="test__savedconfig_8cpp_source.xhtml#l00022">fabomatic::tests::test_defaults()</a>, <a class="el" href="test__savedconfig_8cpp_source.xhtml#l00152">fabomatic::tests::test_magic_number()</a>, and <a class="el" href="_saved_config_8cpp_source.xhtml#l00088">toJsonDocument()</a>.</p>
 
@@ -985,8 +988,8 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_saved_config_8hpp_source.xhtml#l00043">43</a> of file <a class="el" href="_saved_config_8hpp_source.xhtml">SavedConfig.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   43</span>{0};</div>
+<p class="definition">Definition at line <a class="el" href="_saved_config_8hpp_source.xhtml#l00041">41</a> of file <a class="el" href="_saved_config_8hpp_source.xhtml">SavedConfig.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   41</span>{0};</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="_saved_config_8cpp_source.xhtml#l00028">DefaultConfig()</a>, <a class="el" href="_saved_config_8cpp_source.xhtml#l00119">fromJsonDocument()</a>, and <a class="el" href="_saved_config_8cpp_source.xhtml#l00088">toJsonDocument()</a>.</p>
 
@@ -1004,7 +1007,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_saved_config_8hpp_source.xhtml#l00076">76</a> of file <a class="el" href="_saved_config_8hpp_source.xhtml">SavedConfig.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_saved_config_8hpp_source.xhtml#l00074">74</a> of file <a class="el" href="_saved_config_8hpp_source.xhtml">SavedConfig.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="_fab_backend_8cpp_source.xhtml#l00021">fabomatic::FabBackend::configure()</a>, <a class="el" href="_saved_config_8cpp_source.xhtml#l00119">fromJsonDocument()</a>, and <a class="el" href="_saved_config_8cpp_source.xhtml#l00088">toJsonDocument()</a>.</p>
 
@@ -1024,8 +1027,8 @@ Here is the call graph for this function:</div>
 
 <p>MQTT password. </p>
 
-<p class="definition">Definition at line <a class="el" href="_saved_config_8hpp_source.xhtml#l00061">61</a> of file <a class="el" href="_saved_config_8hpp_source.xhtml">SavedConfig.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   61</span>{<span class="stringliteral">&quot;&quot;</span>};</div>
+<p class="definition">Definition at line <a class="el" href="_saved_config_8hpp_source.xhtml#l00059">59</a> of file <a class="el" href="_saved_config_8hpp_source.xhtml">SavedConfig.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   59</span>{<span class="stringliteral">&quot;&quot;</span>};</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="_fab_backend_8cpp_source.xhtml#l00021">fabomatic::FabBackend::configure()</a>, <a class="el" href="_saved_config_8cpp_source.xhtml#l00028">DefaultConfig()</a>, <a class="el" href="_saved_config_8cpp_source.xhtml#l00119">fromJsonDocument()</a>, <a class="el" href="test__savedconfig_8cpp_source.xhtml#l00048">fabomatic::tests::test_changes()</a>, and <a class="el" href="_saved_config_8cpp_source.xhtml#l00088">toJsonDocument()</a>.</p>
 
@@ -1045,8 +1048,8 @@ Here is the call graph for this function:</div>
 
 <p>MQTT server. </p>
 
-<p class="definition">Definition at line <a class="el" href="_saved_config_8hpp_source.xhtml#l00055">55</a> of file <a class="el" href="_saved_config_8hpp_source.xhtml">SavedConfig.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   55</span>{<span class="stringliteral">&quot;&quot;</span>};</div>
+<p class="definition">Definition at line <a class="el" href="_saved_config_8hpp_source.xhtml#l00053">53</a> of file <a class="el" href="_saved_config_8hpp_source.xhtml">SavedConfig.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   53</span>{<span class="stringliteral">&quot;&quot;</span>};</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="_fab_backend_8cpp_source.xhtml#l00021">fabomatic::FabBackend::configure()</a>, <a class="el" href="_saved_config_8cpp_source.xhtml#l00028">DefaultConfig()</a>, <a class="el" href="_saved_config_8cpp_source.xhtml#l00119">fromJsonDocument()</a>, <a class="el" href="test__savedconfig_8cpp_source.xhtml#l00048">fabomatic::tests::test_changes()</a>, and <a class="el" href="_saved_config_8cpp_source.xhtml#l00088">toJsonDocument()</a>.</p>
 
@@ -1066,8 +1069,8 @@ Here is the call graph for this function:</div>
 
 <p>MQTT topic for mqtt switch (if available) </p>
 
-<p class="definition">Definition at line <a class="el" href="_saved_config_8hpp_source.xhtml#l00064">64</a> of file <a class="el" href="_saved_config_8hpp_source.xhtml">SavedConfig.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   64</span>{<span class="stringliteral">&quot;&quot;</span>};</div>
+<p class="definition">Definition at line <a class="el" href="_saved_config_8hpp_source.xhtml#l00062">62</a> of file <a class="el" href="_saved_config_8hpp_source.xhtml">SavedConfig.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   62</span>{<span class="stringliteral">&quot;&quot;</span>};</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="_saved_config_8cpp_source.xhtml#l00028">DefaultConfig()</a>, <a class="el" href="_saved_config_8cpp_source.xhtml#l00119">fromJsonDocument()</a>, <a class="el" href="test__savedconfig_8cpp_source.xhtml#l00048">fabomatic::tests::test_changes()</a>, and <a class="el" href="_saved_config_8cpp_source.xhtml#l00088">toJsonDocument()</a>.</p>
 
@@ -1087,8 +1090,8 @@ Here is the call graph for this function:</div>
 
 <p>MQTT username. </p>
 
-<p class="definition">Definition at line <a class="el" href="_saved_config_8hpp_source.xhtml#l00058">58</a> of file <a class="el" href="_saved_config_8hpp_source.xhtml">SavedConfig.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   58</span>{<span class="stringliteral">&quot;&quot;</span>};</div>
+<p class="definition">Definition at line <a class="el" href="_saved_config_8hpp_source.xhtml#l00056">56</a> of file <a class="el" href="_saved_config_8hpp_source.xhtml">SavedConfig.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   56</span>{<span class="stringliteral">&quot;&quot;</span>};</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="_fab_backend_8cpp_source.xhtml#l00021">fabomatic::FabBackend::configure()</a>, <a class="el" href="_saved_config_8cpp_source.xhtml#l00028">DefaultConfig()</a>, <a class="el" href="_saved_config_8cpp_source.xhtml#l00119">fromJsonDocument()</a>, <a class="el" href="test__savedconfig_8cpp_source.xhtml#l00048">fabomatic::tests::test_changes()</a>, and <a class="el" href="_saved_config_8cpp_source.xhtml#l00088">toJsonDocument()</a>.</p>
 
@@ -1108,8 +1111,8 @@ Here is the call graph for this function:</div>
 
 <p>WiFi password. </p>
 
-<p class="definition">Definition at line <a class="el" href="_saved_config_8hpp_source.xhtml#l00052">52</a> of file <a class="el" href="_saved_config_8hpp_source.xhtml">SavedConfig.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   52</span>{<span class="stringliteral">&quot;&quot;</span>};</div>
+<p class="definition">Definition at line <a class="el" href="_saved_config_8hpp_source.xhtml#l00050">50</a> of file <a class="el" href="_saved_config_8hpp_source.xhtml">SavedConfig.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   50</span>{<span class="stringliteral">&quot;&quot;</span>};</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="_fab_backend_8cpp_source.xhtml#l00021">fabomatic::FabBackend::configure()</a>, <a class="el" href="_saved_config_8cpp_source.xhtml#l00028">DefaultConfig()</a>, <a class="el" href="_saved_config_8cpp_source.xhtml#l00119">fromJsonDocument()</a>, <a class="el" href="test__savedconfig_8cpp_source.xhtml#l00048">fabomatic::tests::test_changes()</a>, and <a class="el" href="_saved_config_8cpp_source.xhtml#l00088">toJsonDocument()</a>.</p>
 
@@ -1129,8 +1132,8 @@ Here is the call graph for this function:</div>
 
 <p>WiFi SSID. </p>
 
-<p class="definition">Definition at line <a class="el" href="_saved_config_8hpp_source.xhtml#l00049">49</a> of file <a class="el" href="_saved_config_8hpp_source.xhtml">SavedConfig.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   49</span>{<span class="stringliteral">&quot;&quot;</span>};</div>
+<p class="definition">Definition at line <a class="el" href="_saved_config_8hpp_source.xhtml#l00047">47</a> of file <a class="el" href="_saved_config_8hpp_source.xhtml">SavedConfig.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   47</span>{<span class="stringliteral">&quot;&quot;</span>};</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="_fab_backend_8cpp_source.xhtml#l00021">fabomatic::FabBackend::configure()</a>, <a class="el" href="_saved_config_8cpp_source.xhtml#l00028">DefaultConfig()</a>, <a class="el" href="_saved_config_8cpp_source.xhtml#l00119">fromJsonDocument()</a>, <a class="el" href="test__savedconfig_8cpp_source.xhtml#l00048">fabomatic::tests::test_changes()</a>, and <a class="el" href="_saved_config_8cpp_source.xhtml#l00088">toJsonDocument()</a>.</p>
 
@@ -1143,7 +1146,7 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jul 1 2024 20:53:05 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Tue Jul 2 2024 19:19:46 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

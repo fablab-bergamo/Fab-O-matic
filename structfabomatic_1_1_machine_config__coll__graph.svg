@@ -21,7 +21,7 @@
 <!-- Node1 -->
 <g id="Node000001" class="node">
 <title>Node1</title>
-<g id="a_Node000001"><a xlink:title=" ">
+<g id="a_Node000001"><a xlink:title="Represents the configuration settings for the machine.">
 <polygon fill="#999999" stroke="none" points="194.5,-199 73.5,-199 73.5,0 194.5,0 194.5,-199"/>
 <text text-anchor="start" x="78.5" y="-185.5" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::MachineConfig</text>
 <text text-anchor="start" x="85.5" y="-170.5" font-family="Helvetica,sans-Serif" font-size="10.00">+</text>
@@ -58,7 +58,7 @@
 <!-- Node2 -->
 <g id="Node000002" class="node">
 <title>Node2</title>
-<g id="a_Node000002"><a xlink:href="struct_machine_i_d.xhtml" target="_top" xlink:title=" ">
+<g id="a_Node000002"><a xlink:href="struct_machine_i_d.xhtml" target="_top" xlink:title="The unique machine identifier for the backend.">
 <polygon fill="white" stroke="none" points="96,-336.5 0,-336.5 0,-257.5 96,-257.5 96,-336.5"/>
 <text text-anchor="start" x="24.75" y="-323" font-family="Helvetica,sans-Serif" font-size="10.00">MachineID</text>
 <text text-anchor="start" x="4" y="-308" font-family="Helvetica,sans-Serif" font-size="10.00">+</text>
@@ -138,7 +138,7 @@
 <!-- Node5 -->
 <g id="Node000005" class="node">
 <title>Node5</title>
-<g id="a_Node000005"><a xlink:href="structfabomatic_1_1pins__config_1_1relay__config.xhtml" target="_top" xlink:title=" ">
+<g id="a_Node000005"><a xlink:href="structfabomatic_1_1pins__config_1_1relay__config.xhtml" target="_top" xlink:title="Hardwired relay configuration.">
 <polygon fill="white" stroke="none" points="296,-334.5 190,-334.5 190,-259.5 296,-259.5 296,-334.5"/>
 <text text-anchor="start" x="195" y="-321" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::pins_config</text>
 <text text-anchor="start" x="215.25" y="-309.75" font-family="Helvetica,sans-Serif" font-size="10.00">::relay_config</text>

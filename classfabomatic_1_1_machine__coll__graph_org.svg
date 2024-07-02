@@ -11,7 +11,7 @@
 <!-- Node1 -->
 <g id="Node000001" class="node">
 <title>Node1</title>
-<g id="a_Node000001"><a xlink:title=" ">
+<g id="a_Node000001"><a xlink:title="Represents the FabLab machine connected to the board.">
 <polygon fill="#999999" stroke="none" points="120,-334 0,-334 0,0 120,0 120,-334"/>
 <text text-anchor="start" x="18" y="-320.5" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::Machine</text>
 <text text-anchor="start" x="5.5" y="-305.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45;</text>
@@ -65,7 +65,7 @@
 <!-- Node2 -->
 <g id="Node000002" class="node">
 <title>Node2</title>
-<g id="a_Node000002"><a xlink:href="structfabomatic_1_1_fab_user.xhtml" target="_top" xlink:title=" ">
+<g id="a_Node000002"><a xlink:href="structfabomatic_1_1_fab_user.xhtml" target="_top" xlink:title="Represents a user with access level, name, RFID tag, and auth result.">
 <polygon fill="white" stroke="none" points="233,-535.25 139,-535.25 139,-381.25 233,-381.25 233,-535.25"/>
 <text text-anchor="start" x="143.62" y="-521.75" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::FabUser</text>
 <text text-anchor="start" x="147.5" y="-506.75" font-family="Helvetica,sans-Serif" font-size="10.00">+</text>
