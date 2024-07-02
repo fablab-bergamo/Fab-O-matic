@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['name_0',['name',['../classfabomatic_1_1_server_m_q_t_t_1_1_machine_response.xhtml#acc0408c0b841077c553da574c4019d2b',1,'fabomatic::ServerMQTT::MachineResponse']]],
+  ['name_0',['name',['../classfabomatic_1_1_m_q_t_t_1_1_machine_response.xhtml#aef09263185951df118a890d7264f3697',1,'fabomatic::MQTT::MachineResponse']]],
   ['nb_5fbeeps_1',['NB_BEEPS',['../namespacefabomatic_1_1conf_1_1buzzer.xhtml#a666a5622c77b3d0662013cce03bab07a',1,'fabomatic::conf::buzzer']]],
   ['nb_5ftasks_2',['NB_TASKS',['../namespacefabomatic_1_1tests.xhtml#a08af7cf7959700ad4a46d76a4f31dbb7',1,'fabomatic::tests']]],
   ['needsupdate_3',['needsUpdate',['../classfabomatic_1_1_l_c_d_wrapper.xhtml#ab3133e603ed7b0d69c52486ff8ed97fa',1,'fabomatic::LCDWrapper']]],

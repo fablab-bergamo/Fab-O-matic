@@ -321,7 +321,7 @@
 <!-- Node29 -->
 <g id="Node000029" class="node">
 <title>Node29</title>
-<g id="a_Node000029"><a xlink:href="classfabomatic_1_1_fab_backend.xhtml#a4a2b36c40f955744965d385e8cad6fb7" target="_top" xlink:title="Registers a maintenance action.">
+<g id="a_Node000029"><a xlink:href="classfabomatic_1_1_fab_backend.xhtml#af7a551a8453d0cf00be4b64fb9e8e73d" target="_top" xlink:title="Registers a maintenance action.">
 <polygon fill="white" stroke="#666666" points="416.25,-1408.25 298.25,-1408.25 298.25,-1377.75 416.25,-1377.75 416.25,-1408.25"/>
 <text text-anchor="start" x="306.25" y="-1394.75" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::FabBackend</text>
 <text text-anchor="middle" x="357.25" y="-1383.5" font-family="Helvetica,sans-Serif" font-size="10.00">::registerMaintenance</text>
@@ -359,7 +359,7 @@
 <!-- Node31 -->
 <g id="Node000031" class="node">
 <title>Node31</title>
-<g id="a_Node000031"><a xlink:href="classfabomatic_1_1_fab_backend.xhtml#a2b45b2e58a6358c640c48e636e3cb5db" target="_top" xlink:title="Registers the start of machine usage.">
+<g id="a_Node000031"><a xlink:href="classfabomatic_1_1_fab_backend.xhtml#ac034ce07a7967f9ecb3443904e0808da" target="_top" xlink:title="Registers the start of machine usage.">
 <polygon fill="white" stroke="#666666" points="416.25,-1359.25 298.25,-1359.25 298.25,-1328.75 416.25,-1328.75 416.25,-1359.25"/>
 <text text-anchor="start" x="306.25" y="-1345.75" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::FabBackend</text>
 <text text-anchor="middle" x="357.25" y="-1334.5" font-family="Helvetica,sans-Serif" font-size="10.00">::startUse</text>
@@ -826,7 +826,7 @@
 <!-- Node33 -->
 <g id="Node000033" class="node">
 <title>Node33</title>
-<g id="a_Node000033"><a xlink:href="classfabomatic_1_1_fab_backend.xhtml#aec5c26ad6c62b7446ca18841910ef82d" target="_top" xlink:title="Checks if the card ID is known to the server.">
+<g id="a_Node000033"><a xlink:href="classfabomatic_1_1_fab_backend.xhtml#a3d119b46e2845f1c891e09e09d29ef67" target="_top" xlink:title="Checks if the card ID is known to the server.">
 <polygon fill="white" stroke="#666666" points="573.62,-1100.25 455.62,-1100.25 455.62,-1069.75 573.62,-1069.75 573.62,-1100.25"/>
 <text text-anchor="start" x="463.62" y="-1086.75" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::FabBackend</text>
 <text text-anchor="middle" x="514.62" y="-1075.5" font-family="Helvetica,sans-Serif" font-size="10.00">::checkCard</text>
@@ -984,7 +984,7 @@
 <!-- Node41 -->
 <g id="Node000041" class="node">
 <title>Node41</title>
-<g id="a_Node000041"><a xlink:href="classfabomatic_1_1_fab_backend.xhtml#aa312ecaa96c4ccd3fc4e822b5495c8fe" target="_top" xlink:title="Registers the end of machine usage.">
+<g id="a_Node000041"><a xlink:href="classfabomatic_1_1_fab_backend.xhtml#a1a9d380dab0f6118461669242e9c7c0f" target="_top" xlink:title="Registers the end of machine usage.">
 <polygon fill="white" stroke="#666666" points="416.25,-611.25 298.25,-611.25 298.25,-580.75 416.25,-580.75 416.25,-611.25"/>
 <text text-anchor="start" x="306.25" y="-597.75" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::FabBackend</text>
 <text text-anchor="middle" x="357.25" y="-586.5" font-family="Helvetica,sans-Serif" font-size="10.00">::finishUse</text>
@@ -1040,7 +1040,7 @@
 <!-- Node44 -->
 <g id="Node000044" class="node">
 <title>Node44</title>
-<g id="a_Node000044"><a xlink:href="classfabomatic_1_1_fab_backend.xhtml#a78f56442b255e95b0930f9800bd91ec4" target="_top" xlink:title="Checks the machine status on the server.">
+<g id="a_Node000044"><a xlink:href="classfabomatic_1_1_fab_backend.xhtml#a9b07e09fc8f9e46ec370f0927049d5a7" target="_top" xlink:title="Checks the machine status on the server.">
 <polygon fill="white" stroke="#666666" points="573.62,-292.25 455.62,-292.25 455.62,-261.75 573.62,-261.75 573.62,-292.25"/>
 <text text-anchor="start" x="463.62" y="-278.75" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::FabBackend</text>
 <text text-anchor="middle" x="514.62" y="-267.5" font-family="Helvetica,sans-Serif" font-size="10.00">::checkMachine</text>

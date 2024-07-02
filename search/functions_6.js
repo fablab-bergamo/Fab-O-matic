@@ -26,7 +26,7 @@ var searchData=
   ['getperiod_23',['getPeriod',['../classfabomatic_1_1_tasks_1_1_task.xhtml#a395c2db6ff8c3b4dbb34a6bae7be4655',1,'fabomatic::Tasks::Task']]],
   ['getpowerstate_24',['getPowerState',['../classfabomatic_1_1_machine.xhtml#a3c5304fd80e0cc1c2118a59c64222d6d',1,'fabomatic::Machine']]],
   ['getrebootrequest_25',['getRebootRequest',['../classfabomatic_1_1_board_logic.xhtml#a46fd65258102b559ca9599bd4d3c1fc1',1,'fabomatic::BoardLogic']]],
-  ['getresult_26',['getResult',['../classfabomatic_1_1_server_m_q_t_t_1_1_user_response.xhtml#a7182cd6e6db0a44ea9f13041de81b240',1,'fabomatic::ServerMQTT::UserResponse']]],
+  ['getresult_26',['getResult',['../classfabomatic_1_1_m_q_t_t_1_1_user_response.xhtml#aaa2a82900d5a221a273ce78744908c64',1,'fabomatic::MQTT::UserResponse']]],
   ['getrfid_27',['getRfid',['../classfabomatic_1_1_board_logic.xhtml#a7b151fca2de8263b021b8b6f26e5d0ab',1,'fabomatic::BoardLogic']]],
   ['getruncounter_28',['getRunCounter',['../classfabomatic_1_1_tasks_1_1_task.xhtml#a2b247d96f354eb1cfaa02c9cad06add2',1,'fabomatic::Tasks::Task']]],
   ['getserver_29',['getServer',['../classfabomatic_1_1_board_logic.xhtml#ac2feade03b2a74a1998dcec282a8eacb',1,'fabomatic::BoardLogic']]],

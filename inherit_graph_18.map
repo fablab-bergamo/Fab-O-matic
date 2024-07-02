@@ -1,3 +1,19 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$classfabomatic_1_1_mrfc522_driver.xhtml" title="The real Mrfc522Driver around the Arduino library." alt="" coords="5,5,171,31"/>
+<area shape="rect" id="Node000000" href="$classfabomatic_1_1_m_q_t_t_1_1_query.xhtml" title="base class for all MQTT request to the backend" alt="" coords="5,195,167,220"/>
+<area shape="rect" id="Node000001" href="$classfabomatic_1_1_buffered_query.xhtml" title="Query to be replayed." alt="" coords="230,5,396,31"/>
+<area shape="poly" id="edge2_Node000000_Node000001" title=" " alt="" coords="98,180,117,147,142,109,175,72,213,40,235,29,237,34,216,44,179,75,147,113,121,150,103,182"/>
+<area shape="rect" id="Node000002" href="$classfabomatic_1_1_m_q_t_t_1_1_alive_query.xhtml" title="board status notification" alt="" coords="218,55,408,80"/>
+<area shape="poly" id="edge3_Node000000_Node000002" title=" " alt="" coords="106,181,152,134,181,110,213,89,239,78,241,83,216,94,184,114,155,138,110,185"/>
+<area shape="rect" id="Node000003" href="$classfabomatic_1_1_m_q_t_t_1_1_in_use_query.xhtml" title="periodical message when the machine is in use" alt="" coords="215,104,411,130"/>
+<area shape="poly" id="edge4_Node000000_Node000003" title=" " alt="" coords="122,184,165,161,214,140,251,128,253,133,216,145,167,166,124,189"/>
+<area shape="rect" id="Node000004" href="$classfabomatic_1_1_m_q_t_t_1_1_machine_query.xhtml" title="machine status query" alt="" coords="225,154,401,195"/>
+<area shape="poly" id="edge5_Node000000_Node000004" title=" " alt="" coords="182,191,224,185,224,190,182,196"/>
+<area shape="rect" id="Node000005" href="$classfabomatic_1_1_m_q_t_t_1_1_register_maintenance_query.xhtml" title="Maintenance action record." alt="" coords="225,219,401,260"/>
+<area shape="poly" id="edge6_Node000000_Node000005" title=" " alt="" coords="183,218,225,224,224,230,182,224"/>
+<area shape="rect" id="Node000006" href="$classfabomatic_1_1_m_q_t_t_1_1_start_use_query.xhtml" title="start of machine use" alt="" coords="223,285,403,325"/>
+<area shape="poly" id="edge7_Node000000_Node000006" title=" " alt="" coords="126,225,216,269,248,281,246,286,214,274,123,230"/>
+<area shape="rect" id="Node000007" href="$classfabomatic_1_1_m_q_t_t_1_1_stop_use_query.xhtml" title="end of machine use" alt="" coords="224,350,402,391"/>
+<area shape="poly" id="edge8_Node000000_Node000007" title=" " alt="" coords="108,231,154,283,184,311,216,335,240,347,238,352,213,339,180,315,150,287,104,234"/>
+<area shape="rect" id="Node000008" href="$classfabomatic_1_1_m_q_t_t_1_1_user_query.xhtml" title="user authentication query" alt="" coords="218,415,408,440"/>
+<area shape="poly" id="edge9_Node000000_Node000008" title=" " alt="" coords="100,234,117,272,142,317,175,362,216,400,238,412,236,417,213,404,171,366,138,320,112,274,95,236"/>
 </map>

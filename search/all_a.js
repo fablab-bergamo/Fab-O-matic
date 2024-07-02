@@ -28,7 +28,7 @@ var searchData=
   ['logic_25',['logic',['../namespacefabomatic_1_1_board.xhtml#a5d4ea1d7cfe27d9d91f093a9b5b1a82a',1,'fabomatic::Board::logic'],['../test__logic_8cpp.xhtml#a07dd6eb8e9dc2dc50bf69ef6032c5055',1,'logic:&#160;test_logic.cpp'],['../namespacefabomatic_1_1tests.xhtml#ae67aa957d270478a0793908703b77446',1,'fabomatic::tests::logic']]],
   ['login_26',['login',['../classfabomatic_1_1_machine.xhtml#ac0591da2ff437cd6c7cc91bd09b4dff7',1,'fabomatic::Machine']]],
   ['logindenied_27',['LoginDenied',['../classfabomatic_1_1_board_logic.xhtml#a3885e1cd078bb49bbf54e3ddfe245ef0a317613b2a5acaaa53519c44526a11859',1,'fabomatic::BoardLogic']]],
-  ['logoff_28',['logoff',['../classfabomatic_1_1_server_m_q_t_t_1_1_machine_response.xhtml#acdaa80a060b43d35280e630aaea15f5d',1,'fabomatic::ServerMQTT::MachineResponse']]],
+  ['logoff_28',['logoff',['../classfabomatic_1_1_m_q_t_t_1_1_machine_response.xhtml#a47a52c7faa1ce4b443486817b8bfb4e6',1,'fabomatic::MQTT::MachineResponse']]],
   ['logoff_5ftimestamp_29',['logoff_timestamp',['../classfabomatic_1_1_machine.xhtml#a9973764a444fc39727def61c053c62c3',1,'fabomatic::Machine']]],
   ['logout_30',['logout',['../classfabomatic_1_1_machine.xhtml#a86cd6dfd9fefa7221a49cc07c78fc851',1,'fabomatic::Machine::logout()'],['../classfabomatic_1_1_board_logic.xhtml#a98a15cc323f97adc394c29e897afc12d',1,'fabomatic::BoardLogic::logout()']]],
   ['long_5ftap_5fduration_31',['LONG_TAP_DURATION',['../namespacefabomatic_1_1conf_1_1machine.xhtml#a02738ffd3c6433a682f080b0e6741627',1,'fabomatic::conf::machine']]],

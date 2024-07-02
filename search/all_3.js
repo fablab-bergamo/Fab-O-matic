@@ -11,12 +11,12 @@ var searchData=
   ['delay_8',['delay',['../classfabomatic_1_1_tasks_1_1_task.xhtml#afcd445681f5c92b55b601aff90f41f05',1,'fabomatic::Tasks::Task::delay'],['../namespacefabomatic_1_1_tasks.xhtml#a5c20f560f5934822d39ba116a16f3ab6',1,'fabomatic::Tasks::delay()']]],
   ['delay_5fbetween_5fbeeps_9',['DELAY_BETWEEN_BEEPS',['../namespacefabomatic_1_1conf_1_1machine.xhtml#ac26edc4054f82d62fbd295e185c77a0d',1,'fabomatic::conf::machine']]],
   ['delete_5ftasks_10',['delete_tasks',['../namespacefabomatic_1_1tests.xhtml#ae4bd9063425820acc6c488119d90d22a',1,'fabomatic::tests']]],
-  ['description_11',['description',['../classfabomatic_1_1_server_m_q_t_t_1_1_machine_response.xhtml#aa6cdd17683b6e1f8bce2ad44fe00ede3',1,'fabomatic::ServerMQTT::MachineResponse']]],
+  ['description_11',['description',['../classfabomatic_1_1_m_q_t_t_1_1_machine_response.xhtml#a680032ea465af1749753686d14f01221',1,'fabomatic::MQTT::MachineResponse']]],
   ['disable_12',['disable',['../classfabomatic_1_1_tasks_1_1_task.xhtml#a10175ec4fc2f54f444850b01426c95f7',1,'fabomatic::Tasks::Task']]],
   ['disableportal_13',['disablePortal',['../classfabomatic_1_1_saved_config.xhtml#a6510074227a78d4f5093b7aed88bdbef',1,'fabomatic::SavedConfig']]],
   ['disconnect_14',['disconnect',['../classfabomatic_1_1_fab_backend.xhtml#ad558116614ee45601f4665d395838727',1,'fabomatic::FabBackend']]],
   ['displaybuffer_15',['DisplayBuffer',['../classfabomatic_1_1_l_c_d_wrapper.xhtml#a33031e81d3859551ea8f69aa4e226ae8',1,'fabomatic::LCDWrapper']]],
   ['doc_16',['doc',['../classfabomatic_1_1_fab_backend.xhtml#a1218ae004e0146262801967ee50ec17a',1,'fabomatic::FabBackend']]],
   ['driver_17',['driver',['../classfabomatic_1_1_r_f_i_d_wrapper.xhtml#a414c071efd649a809be405eadf7022b8',1,'fabomatic::RFIDWrapper']]],
-  ['duration_5fs_18',['duration_s',['../classfabomatic_1_1_server_m_q_t_t_1_1_stop_use_query.xhtml#a8a6fd6be04bf9a2cfca116926508516b',1,'fabomatic::ServerMQTT::StopUseQuery::duration_s'],['../classfabomatic_1_1_server_m_q_t_t_1_1_in_use_query.xhtml#adbbea3cfe94c3b33051b0874024866be',1,'fabomatic::ServerMQTT::InUseQuery::duration_s']]]
+  ['duration_5fs_18',['duration_s',['../classfabomatic_1_1_m_q_t_t_1_1_stop_use_query.xhtml#a841b468dd1a9308a70745d17f9e84094',1,'fabomatic::MQTT::StopUseQuery::duration_s'],['../classfabomatic_1_1_m_q_t_t_1_1_in_use_query.xhtml#acec24af335f31632f8e0146fcdaebd72',1,'fabomatic::MQTT::InUseQuery::duration_s']]]
 ];

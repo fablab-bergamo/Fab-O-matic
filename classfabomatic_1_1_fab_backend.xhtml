@@ -86,7 +86,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>This class is used to exchange messages with the MQTT broker and the backend.  
+<p>This class is used to exchange messages with the <a class="el" href="namespacefabomatic_1_1_m_q_t_t.xhtml" title="Contains all the types for MQTT messages between board and backend.">MQTT</a> broker and the backend.  
  <a href="classfabomatic_1_1_fab_backend.xhtml#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_fab_backend_8hpp_source.xhtml">FabBackend.hpp</a>&gt;</code></p>
@@ -100,29 +100,29 @@ Collaboration diagram for fabomatic::FabBackend:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:aa343ded14ec2838927c2ed7dc5eda985" id="r_aa343ded14ec2838927c2ed7dc5eda985"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_fab_backend.xhtml#aa343ded14ec2838927c2ed7dc5eda985">FabBackend</a> ()=default</td></tr>
 <tr class="separator:aa343ded14ec2838927c2ed7dc5eda985"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aec5c26ad6c62b7446ca18841910ef82d" id="r_aec5c26ad6c62b7446ca18841910ef82d"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_fab_backend.xhtml#aec5c26ad6c62b7446ca18841910ef82d">checkCard</a> (const <a class="el" href="namespacefabomatic_1_1card.xhtml#aa36a4f716561b5c72d144ad55bc3e53b">card::uid_t</a> uid) -&gt; std::unique_ptr&lt; <a class="el" href="classfabomatic_1_1_server_m_q_t_t_1_1_user_response.xhtml">ServerMQTT::UserResponse</a> &gt;</td></tr>
-<tr class="memdesc:aec5c26ad6c62b7446ca18841910ef82d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the card ID is known to the server.  <br /></td></tr>
-<tr class="separator:aec5c26ad6c62b7446ca18841910ef82d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a78f56442b255e95b0930f9800bd91ec4" id="r_a78f56442b255e95b0930f9800bd91ec4"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_fab_backend.xhtml#a78f56442b255e95b0930f9800bd91ec4">checkMachine</a> () -&gt; std::unique_ptr&lt; <a class="el" href="classfabomatic_1_1_server_m_q_t_t_1_1_machine_response.xhtml">ServerMQTT::MachineResponse</a> &gt;</td></tr>
-<tr class="memdesc:a78f56442b255e95b0930f9800bd91ec4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks the machine status on the server.  <br /></td></tr>
-<tr class="separator:a78f56442b255e95b0930f9800bd91ec4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2b45b2e58a6358c640c48e636e3cb5db" id="r_a2b45b2e58a6358c640c48e636e3cb5db"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_fab_backend.xhtml#a2b45b2e58a6358c640c48e636e3cb5db">startUse</a> (const <a class="el" href="namespacefabomatic_1_1card.xhtml#aa36a4f716561b5c72d144ad55bc3e53b">card::uid_t</a> uid) -&gt; std::unique_ptr&lt; <a class="el" href="classfabomatic_1_1_server_m_q_t_t_1_1_simple_response.xhtml">ServerMQTT::SimpleResponse</a> &gt;</td></tr>
-<tr class="memdesc:a2b45b2e58a6358c640c48e636e3cb5db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers the start of machine usage.  <br /></td></tr>
-<tr class="separator:a2b45b2e58a6358c640c48e636e3cb5db"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac33b68d0146302e9db6a0adc7b8c3ac0" id="r_ac33b68d0146302e9db6a0adc7b8c3ac0"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_fab_backend.xhtml#ac33b68d0146302e9db6a0adc7b8c3ac0">inUse</a> (const <a class="el" href="namespacefabomatic_1_1card.xhtml#aa36a4f716561b5c72d144ad55bc3e53b">card::uid_t</a> uid, std::chrono::seconds duration) -&gt; std::unique_ptr&lt; <a class="el" href="classfabomatic_1_1_server_m_q_t_t_1_1_simple_response.xhtml">ServerMQTT::SimpleResponse</a> &gt;</td></tr>
-<tr class="memdesc:ac33b68d0146302e9db6a0adc7b8c3ac0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Informs the backend that the machine is in use.  <br /></td></tr>
-<tr class="separator:ac33b68d0146302e9db6a0adc7b8c3ac0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa312ecaa96c4ccd3fc4e822b5495c8fe" id="r_aa312ecaa96c4ccd3fc4e822b5495c8fe"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_fab_backend.xhtml#aa312ecaa96c4ccd3fc4e822b5495c8fe">finishUse</a> (const <a class="el" href="namespacefabomatic_1_1card.xhtml#aa36a4f716561b5c72d144ad55bc3e53b">card::uid_t</a> uid, std::chrono::seconds duration) -&gt; std::unique_ptr&lt; <a class="el" href="classfabomatic_1_1_server_m_q_t_t_1_1_simple_response.xhtml">ServerMQTT::SimpleResponse</a> &gt;</td></tr>
-<tr class="memdesc:aa312ecaa96c4ccd3fc4e822b5495c8fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers the end of machine usage.  <br /></td></tr>
-<tr class="separator:aa312ecaa96c4ccd3fc4e822b5495c8fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4a2b36c40f955744965d385e8cad6fb7" id="r_a4a2b36c40f955744965d385e8cad6fb7"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_fab_backend.xhtml#a4a2b36c40f955744965d385e8cad6fb7">registerMaintenance</a> (const <a class="el" href="namespacefabomatic_1_1card.xhtml#aa36a4f716561b5c72d144ad55bc3e53b">card::uid_t</a> maintainer) -&gt; std::unique_ptr&lt; <a class="el" href="classfabomatic_1_1_server_m_q_t_t_1_1_simple_response.xhtml">ServerMQTT::SimpleResponse</a> &gt;</td></tr>
-<tr class="memdesc:a4a2b36c40f955744965d385e8cad6fb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers a maintenance action.  <br /></td></tr>
-<tr class="separator:a4a2b36c40f955744965d385e8cad6fb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d119b46e2845f1c891e09e09d29ef67" id="r_a3d119b46e2845f1c891e09e09d29ef67"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_fab_backend.xhtml#a3d119b46e2845f1c891e09e09d29ef67">checkCard</a> (const <a class="el" href="namespacefabomatic_1_1card.xhtml#aa36a4f716561b5c72d144ad55bc3e53b">card::uid_t</a> uid) -&gt; std::unique_ptr&lt; <a class="el" href="classfabomatic_1_1_m_q_t_t_1_1_user_response.xhtml">MQTT::UserResponse</a> &gt;</td></tr>
+<tr class="memdesc:a3d119b46e2845f1c891e09e09d29ef67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the card ID is known to the server.  <br /></td></tr>
+<tr class="separator:a3d119b46e2845f1c891e09e09d29ef67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b07e09fc8f9e46ec370f0927049d5a7" id="r_a9b07e09fc8f9e46ec370f0927049d5a7"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_fab_backend.xhtml#a9b07e09fc8f9e46ec370f0927049d5a7">checkMachine</a> () -&gt; std::unique_ptr&lt; <a class="el" href="classfabomatic_1_1_m_q_t_t_1_1_machine_response.xhtml">MQTT::MachineResponse</a> &gt;</td></tr>
+<tr class="memdesc:a9b07e09fc8f9e46ec370f0927049d5a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks the machine status on the server.  <br /></td></tr>
+<tr class="separator:a9b07e09fc8f9e46ec370f0927049d5a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac034ce07a7967f9ecb3443904e0808da" id="r_ac034ce07a7967f9ecb3443904e0808da"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_fab_backend.xhtml#ac034ce07a7967f9ecb3443904e0808da">startUse</a> (const <a class="el" href="namespacefabomatic_1_1card.xhtml#aa36a4f716561b5c72d144ad55bc3e53b">card::uid_t</a> uid) -&gt; std::unique_ptr&lt; <a class="el" href="classfabomatic_1_1_m_q_t_t_1_1_simple_response.xhtml">MQTT::SimpleResponse</a> &gt;</td></tr>
+<tr class="memdesc:ac034ce07a7967f9ecb3443904e0808da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers the start of machine usage.  <br /></td></tr>
+<tr class="separator:ac034ce07a7967f9ecb3443904e0808da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6ebb7dbe860caef3524520eb69b8e2a" id="r_ad6ebb7dbe860caef3524520eb69b8e2a"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_fab_backend.xhtml#ad6ebb7dbe860caef3524520eb69b8e2a">inUse</a> (const <a class="el" href="namespacefabomatic_1_1card.xhtml#aa36a4f716561b5c72d144ad55bc3e53b">card::uid_t</a> uid, std::chrono::seconds duration) -&gt; std::unique_ptr&lt; <a class="el" href="classfabomatic_1_1_m_q_t_t_1_1_simple_response.xhtml">MQTT::SimpleResponse</a> &gt;</td></tr>
+<tr class="memdesc:ad6ebb7dbe860caef3524520eb69b8e2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Informs the backend that the machine is in use.  <br /></td></tr>
+<tr class="separator:ad6ebb7dbe860caef3524520eb69b8e2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a9d380dab0f6118461669242e9c7c0f" id="r_a1a9d380dab0f6118461669242e9c7c0f"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_fab_backend.xhtml#a1a9d380dab0f6118461669242e9c7c0f">finishUse</a> (const <a class="el" href="namespacefabomatic_1_1card.xhtml#aa36a4f716561b5c72d144ad55bc3e53b">card::uid_t</a> uid, std::chrono::seconds duration) -&gt; std::unique_ptr&lt; <a class="el" href="classfabomatic_1_1_m_q_t_t_1_1_simple_response.xhtml">MQTT::SimpleResponse</a> &gt;</td></tr>
+<tr class="memdesc:a1a9d380dab0f6118461669242e9c7c0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers the end of machine usage.  <br /></td></tr>
+<tr class="separator:a1a9d380dab0f6118461669242e9c7c0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7a551a8453d0cf00be4b64fb9e8e73d" id="r_af7a551a8453d0cf00be4b64fb9e8e73d"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_fab_backend.xhtml#af7a551a8453d0cf00be4b64fb9e8e73d">registerMaintenance</a> (const <a class="el" href="namespacefabomatic_1_1card.xhtml#aa36a4f716561b5c72d144ad55bc3e53b">card::uid_t</a> maintainer) -&gt; std::unique_ptr&lt; <a class="el" href="classfabomatic_1_1_m_q_t_t_1_1_simple_response.xhtml">MQTT::SimpleResponse</a> &gt;</td></tr>
+<tr class="memdesc:af7a551a8453d0cf00be4b64fb9e8e73d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers a maintenance action.  <br /></td></tr>
+<tr class="separator:af7a551a8453d0cf00be4b64fb9e8e73d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abb44b529c858ddc1006592e9bac8a815" id="r_abb44b529c858ddc1006592e9bac8a815"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_fab_backend.xhtml#abb44b529c858ddc1006592e9bac8a815">alive</a> () -&gt; bool</td></tr>
 <tr class="memdesc:abb44b529c858ddc1006592e9bac8a815"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a ping to the server.  <br /></td></tr>
 <tr class="separator:abb44b529c858ddc1006592e9bac8a815"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0510999bee5e4fe5d31d7ad5496f889c" id="r_a0510999bee5e4fe5d31d7ad5496f889c"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_fab_backend.xhtml#a0510999bee5e4fe5d31d7ad5496f889c">publish</a> (String <a class="el" href="classfabomatic_1_1_fab_backend.xhtml#a8790b1b9b5909541c62cd1ea7577e9d6">topic</a>, String payload, bool <a class="el" href="classfabomatic_1_1_fab_backend.xhtml#a04951b9823ac466be2285640171013e5">waitForAnswer</a>) -&gt; bool</td></tr>
-<tr class="memdesc:a0510999bee5e4fe5d31d7ad5496f889c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Publishes a message on the MQTT server.  <br /></td></tr>
+<tr class="memdesc:a0510999bee5e4fe5d31d7ad5496f889c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Publishes a message on the <a class="el" href="namespacefabomatic_1_1_m_q_t_t.xhtml" title="Contains all the types for MQTT messages between board and backend.">MQTT</a> server.  <br /></td></tr>
 <tr class="separator:a0510999bee5e4fe5d31d7ad5496f889c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aef092e0e1db0c3539d5474fad2456255" id="r_aef092e0e1db0c3539d5474fad2456255"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_fab_backend.xhtml#aef092e0e1db0c3539d5474fad2456255">isOnline</a> () const -&gt; bool</td></tr>
 <tr class="memdesc:aef092e0e1db0c3539d5474fad2456255"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the client is online.  <br /></td></tr>
@@ -134,19 +134,19 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a044a94e7220ee295bfab801b6ca32e32" id="r_a044a94e7220ee295bfab801b6ca32e32"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_fab_backend.xhtml#a044a94e7220ee295bfab801b6ca32e32">saveBuffer</a> () -&gt; bool</td></tr>
 <tr class="separator:a044a94e7220ee295bfab801b6ca32e32"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1a45f556aadcbc428d14b7c7577ed43d" id="r_a1a45f556aadcbc428d14b7c7577ed43d"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_fab_backend.xhtml#a1a45f556aadcbc428d14b7c7577ed43d">connect</a> () -&gt; bool</td></tr>
-<tr class="memdesc:a1a45f556aadcbc428d14b7c7577ed43d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Establishes a connection to the WiFi network and the MQTT server.  <br /></td></tr>
+<tr class="memdesc:a1a45f556aadcbc428d14b7c7577ed43d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Establishes a connection to the WiFi network and the <a class="el" href="namespacefabomatic_1_1_m_q_t_t.xhtml" title="Contains all the types for MQTT messages between board and backend.">MQTT</a> server.  <br /></td></tr>
 <tr class="separator:a1a45f556aadcbc428d14b7c7577ed43d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad928751b2f967feaac0f2cb708c0d6e9" id="r_ad928751b2f967feaac0f2cb708c0d6e9"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_fab_backend.xhtml#ad928751b2f967feaac0f2cb708c0d6e9">connectWiFi</a> () -&gt; bool</td></tr>
 <tr class="memdesc:ad928751b2f967feaac0f2cb708c0d6e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connects to the WiFi network.  <br /></td></tr>
 <tr class="separator:ad928751b2f967feaac0f2cb708c0d6e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaf05998bb9dec17ae98283969109bb2d" id="r_aaf05998bb9dec17ae98283969109bb2d"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_fab_backend.xhtml#aaf05998bb9dec17ae98283969109bb2d">loop</a> () -&gt; bool</td></tr>
-<tr class="memdesc:aaf05998bb9dec17ae98283969109bb2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Main loop for the MQTT client.  <br /></td></tr>
+<tr class="memdesc:aaf05998bb9dec17ae98283969109bb2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Main loop for the <a class="el" href="namespacefabomatic_1_1_m_q_t_t.xhtml" title="Contains all the types for MQTT messages between board and backend.">MQTT</a> client.  <br /></td></tr>
 <tr class="separator:aaf05998bb9dec17ae98283969109bb2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acf5644d920896038018f990568e710c3" id="r_acf5644d920896038018f990568e710c3"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_fab_backend.xhtml#acf5644d920896038018f990568e710c3">configure</a> (const <a class="el" href="classfabomatic_1_1_saved_config.xhtml">SavedConfig</a> &amp;config) -&gt; void</td></tr>
 <tr class="memdesc:acf5644d920896038018f990568e710c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the <a class="el" href="classfabomatic_1_1_fab_backend.xhtml" title="This class is used to exchange messages with the MQTT broker and the backend.">FabBackend</a> with the given configuration.  <br /></td></tr>
 <tr class="separator:acf5644d920896038018f990568e710c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad558116614ee45601f4665d395838727" id="r_ad558116614ee45601f4665d395838727"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_fab_backend.xhtml#ad558116614ee45601f4665d395838727">disconnect</a> () -&gt; void</td></tr>
-<tr class="memdesc:ad558116614ee45601f4665d395838727"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disconnects from the MQTT server.  <br /></td></tr>
+<tr class="memdesc:ad558116614ee45601f4665d395838727"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disconnects from the <a class="el" href="namespacefabomatic_1_1_m_q_t_t.xhtml" title="Contains all the types for MQTT messages between board and backend.">MQTT</a> server.  <br /></td></tr>
 <tr class="separator:ad558116614ee45601f4665d395838727"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a492c94ed0682ad834ccd7ddc7c20a55a" id="r_a492c94ed0682ad834ccd7ddc7c20a55a"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_fab_backend.xhtml#a492c94ed0682ad834ccd7ddc7c20a55a">setChannel</a> (int32_t <a class="el" href="classfabomatic_1_1_fab_backend.xhtml#a12a4f3f195db522c6b108deacf1219b9">channel</a>) -&gt; void</td></tr>
 <tr class="memdesc:a492c94ed0682ad834ccd7ddc7c20a55a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the WiFi channel to use.  <br /></td></tr>
@@ -179,18 +179,18 @@ Private Types</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
 <tr class="memitem:a3ab102598ee93269de90a0170e024619" id="r_a3ab102598ee93269de90a0170e024619"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_fab_backend.xhtml#a3ab102598ee93269de90a0170e024619">messageReceived</a> (String &amp;<a class="el" href="classfabomatic_1_1_fab_backend.xhtml#a8790b1b9b5909541c62cd1ea7577e9d6">topic</a>, String &amp;payload) -&gt; void</td></tr>
-<tr class="memdesc:a3ab102598ee93269de90a0170e024619"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function for received MQTT messages.  <br /></td></tr>
+<tr class="memdesc:a3ab102598ee93269de90a0170e024619"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function for received <a class="el" href="namespacefabomatic_1_1_m_q_t_t.xhtml" title="Contains all the types for MQTT messages between board and backend.">MQTT</a> messages.  <br /></td></tr>
 <tr class="separator:a3ab102598ee93269de90a0170e024619"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aee0cf549bea2daebc3e08742853d36c1" id="r_aee0cf549bea2daebc3e08742853d36c1"><td class="memTemplParams" colspan="2">template&lt;typename QueryT &gt; </td></tr>
 <tr class="memitem:aee0cf549bea2daebc3e08742853d36c1"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_fab_backend.xhtml#aee0cf549bea2daebc3e08742853d36c1">publish</a> (const QueryT &amp;payload) -&gt; <a class="el" href="classfabomatic_1_1_fab_backend.xhtml#af3e533d72406fdddc602359fdb9a5ae3">PublishResult</a></td></tr>
-<tr class="memdesc:aee0cf549bea2daebc3e08742853d36c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Publishes a query on the MQTT server.  <br /></td></tr>
+<tr class="memdesc:aee0cf549bea2daebc3e08742853d36c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Publishes a query on the <a class="el" href="namespacefabomatic_1_1_m_q_t_t.xhtml" title="Contains all the types for MQTT messages between board and backend.">MQTT</a> server.  <br /></td></tr>
 <tr class="separator:aee0cf549bea2daebc3e08742853d36c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a04951b9823ac466be2285640171013e5" id="r_a04951b9823ac466be2285640171013e5"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_fab_backend.xhtml#a04951b9823ac466be2285640171013e5">waitForAnswer</a> (std::chrono::milliseconds timeout) -&gt; bool</td></tr>
-<tr class="memdesc:a04951b9823ac466be2285640171013e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Waits for an answer from the MQTT server.  <br /></td></tr>
+<tr class="memdesc:a04951b9823ac466be2285640171013e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Waits for an answer from the <a class="el" href="namespacefabomatic_1_1_m_q_t_t.xhtml" title="Contains all the types for MQTT messages between board and backend.">MQTT</a> server.  <br /></td></tr>
 <tr class="separator:a04951b9823ac466be2285640171013e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f5341d851e1cd24dfaa64be0237dd5a" id="r_a8f5341d851e1cd24dfaa64be0237dd5a"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_fab_backend.xhtml#a8f5341d851e1cd24dfaa64be0237dd5a">publishWithReply</a> (const <a class="el" href="classfabomatic_1_1_server_m_q_t_t_1_1_query.xhtml">ServerMQTT::Query</a> &amp;payload) -&gt; <a class="el" href="classfabomatic_1_1_fab_backend.xhtml#af3e533d72406fdddc602359fdb9a5ae3">PublishResult</a></td></tr>
-<tr class="memdesc:a8f5341d851e1cd24dfaa64be0237dd5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Posts a query to the MQTT server and waits for a reply.  <br /></td></tr>
-<tr class="separator:a8f5341d851e1cd24dfaa64be0237dd5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a511bc605ba1388900ee9fd0e82733a95" id="r_a511bc605ba1388900ee9fd0e82733a95"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_fab_backend.xhtml#a511bc605ba1388900ee9fd0e82733a95">publishWithReply</a> (const <a class="el" href="classfabomatic_1_1_m_q_t_t_1_1_query.xhtml">MQTT::Query</a> &amp;payload) -&gt; <a class="el" href="classfabomatic_1_1_fab_backend.xhtml#af3e533d72406fdddc602359fdb9a5ae3">PublishResult</a></td></tr>
+<tr class="memdesc:a511bc605ba1388900ee9fd0e82733a95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Posts a query to the <a class="el" href="namespacefabomatic_1_1_m_q_t_t.xhtml" title="Contains all the types for MQTT messages between board and backend.">MQTT</a> server and waits for a reply.  <br /></td></tr>
+<tr class="separator:a511bc605ba1388900ee9fd0e82733a95"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaf87e6d61085a67255fac06e491fbf90" id="r_aaf87e6d61085a67255fac06e491fbf90"><td class="memTemplParams" colspan="2">template&lt;typename RespT , typename QueryT , typename... QueryArgs&gt; </td></tr>
 <tr class="memitem:aaf87e6d61085a67255fac06e491fbf90"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_fab_backend.xhtml#aaf87e6d61085a67255fac06e491fbf90">processQuery</a> (QueryArgs &amp;&amp;...) -&gt; std::unique_ptr&lt; RespT &gt;</td></tr>
 <tr class="separator:aaf87e6d61085a67255fac06e491fbf90"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -245,7 +245,7 @@ Static Private Attributes</h2></td></tr>
 <tr class="separator:a9367a14306331d326e5e7971a0728633"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This class is used to exchange messages with the MQTT broker and the backend. </p>
+<div class="textblock"><p>This class is used to exchange messages with the <a class="el" href="namespacefabomatic_1_1_m_q_t_t.xhtml" title="Contains all the types for MQTT messages between board and backend.">MQTT</a> broker and the backend. </p>
 
 <p class="definition">Definition at line <a class="el" href="_fab_backend_8hpp_source.xhtml#l00022">22</a> of file <a class="el" href="_fab_backend_8hpp_source.xhtml">FabBackend.hpp</a>.</p>
 </div><h2 class="groupheader">Member Enumeration Documentation</h2>
@@ -385,7 +385,7 @@ Static Private Attributes</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="_fab_backend_8cpp_source.xhtml#l00573">573</a> of file <a class="el" href="_fab_backend_8cpp_source.xhtml">FabBackend.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  574</span>  {</div>
-<div class="line"><span class="lineno">  575</span>    <span class="keywordflow">return</span> processQuery&lt;ServerMQTT::AliveQuery&gt;();</div>
+<div class="line"><span class="lineno">  575</span>    <span class="keywordflow">return</span> processQuery&lt;MQTT::AliveQuery&gt;();</div>
 <div class="line"><span class="lineno">  576</span>  }</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="main_8cpp_source.xhtml#l00184">fabomatic::taskIsAlive()</a>, <a class="el" href="test__mqtt_8cpp_source.xhtml#l00079">fabomatic::tests::test_check_transmission()</a>, and <a class="el" href="test__mqtt_8cpp_source.xhtml#l00133">fabomatic::tests::test_fabserver_calls()</a>.</p>
@@ -397,18 +397,18 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a id="aec5c26ad6c62b7446ca18841910ef82d" name="aec5c26ad6c62b7446ca18841910ef82d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aec5c26ad6c62b7446ca18841910ef82d">&#9670;&#160;</a></span>checkCard()</h2>
+<a id="a3d119b46e2845f1c891e09e09d29ef67" name="a3d119b46e2845f1c891e09e09d29ef67"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d119b46e2845f1c891e09e09d29ef67">&#9670;&#160;</a></span>checkCard()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::unique_ptr&lt; <a class="el" href="classfabomatic_1_1_server_m_q_t_t_1_1_user_response.xhtml">ServerMQTT::UserResponse</a> &gt; fabomatic::FabBackend::checkCard </td>
+          <td class="memname">std::unique_ptr&lt; <a class="el" href="classfabomatic_1_1_m_q_t_t_1_1_user_response.xhtml">MQTT::UserResponse</a> &gt; fabomatic::FabBackend::checkCard </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="namespacefabomatic_1_1card.xhtml#aa36a4f716561b5c72d144ad55bc3e53b">card::uid_t</a>&#160;</td>
           <td class="paramname"><em>uid</em></td><td>)</td>
-          <td> -&gt; std::unique_ptr&lt;<a class="el" href="classfabomatic_1_1_server_m_q_t_t_1_1_user_response.xhtml">ServerMQTT::UserResponse</a>&gt;</td>
+          <td> -&gt; std::unique_ptr&lt;<a class="el" href="classfabomatic_1_1_m_q_t_t_1_1_user_response.xhtml">MQTT::UserResponse</a>&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -424,29 +424,29 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="_fab_backend_8cpp_source.xhtml#l00507">507</a> of file <a class="el" href="_fab_backend_8cpp_source.xhtml">FabBackend.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  508</span>  {</div>
-<div class="line"><span class="lineno">  509</span>    <span class="keywordflow">return</span> processQuery&lt;ServerMQTT::UserResponse, ServerMQTT::UserQuery&gt;(uid);</div>
+<div class="line"><span class="lineno">  509</span>    <span class="keywordflow">return</span> processQuery&lt;MQTT::UserResponse, MQTT::UserQuery&gt;(uid);</div>
 <div class="line"><span class="lineno">  510</span>  }</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="test__mqtt_8cpp_source.xhtml#l00133">fabomatic::tests::test_fabserver_calls()</a>, and <a class="el" href="_auth_provider_8cpp_source.xhtml#l00054">fabomatic::AuthProvider::tryLogin()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classfabomatic_1_1_fab_backend_aec5c26ad6c62b7446ca18841910ef82d_icgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
+<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classfabomatic_1_1_fab_backend_a3d119b46e2845f1c891e09e09d29ef67_icgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
 </div>
 
 </div>
 </div>
-<a id="a78f56442b255e95b0930f9800bd91ec4" name="a78f56442b255e95b0930f9800bd91ec4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a78f56442b255e95b0930f9800bd91ec4">&#9670;&#160;</a></span>checkMachine()</h2>
+<a id="a9b07e09fc8f9e46ec370f0927049d5a7" name="a9b07e09fc8f9e46ec370f0927049d5a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b07e09fc8f9e46ec370f0927049d5a7">&#9670;&#160;</a></span>checkMachine()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::unique_ptr&lt; <a class="el" href="classfabomatic_1_1_server_m_q_t_t_1_1_machine_response.xhtml">ServerMQTT::MachineResponse</a> &gt; fabomatic::FabBackend::checkMachine </td>
+          <td class="memname">std::unique_ptr&lt; <a class="el" href="classfabomatic_1_1_m_q_t_t_1_1_machine_response.xhtml">MQTT::MachineResponse</a> &gt; fabomatic::FabBackend::checkMachine </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td> -&gt; std::unique_ptr&lt;<a class="el" href="classfabomatic_1_1_server_m_q_t_t_1_1_machine_response.xhtml">ServerMQTT::MachineResponse</a>&gt;</td>
+          <td> -&gt; std::unique_ptr&lt;<a class="el" href="classfabomatic_1_1_m_q_t_t_1_1_machine_response.xhtml">MQTT::MachineResponse</a>&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -456,14 +456,14 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="_fab_backend_8cpp_source.xhtml#l00517">517</a> of file <a class="el" href="_fab_backend_8cpp_source.xhtml">FabBackend.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  518</span>  {</div>
-<div class="line"><span class="lineno">  519</span>    <span class="keywordflow">return</span> processQuery&lt;ServerMQTT::MachineResponse, ServerMQTT::MachineQuery&gt;();</div>
+<div class="line"><span class="lineno">  519</span>    <span class="keywordflow">return</span> processQuery&lt;MQTT::MachineResponse, MQTT::MachineQuery&gt;();</div>
 <div class="line"><span class="lineno">  520</span>  }</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00041">fabomatic::BoardLogic::refreshFromServer()</a>, and <a class="el" href="test__mqtt_8cpp_source.xhtml#l00133">fabomatic::tests::test_fabserver_calls()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classfabomatic_1_1_fab_backend_a78f56442b255e95b0930f9800bd91ec4_icgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
+<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classfabomatic_1_1_fab_backend_a9b07e09fc8f9e46ec370f0927049d5a7_icgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
 </div>
 
 </div>
@@ -538,9 +538,9 @@ Here is the caller graph for this function:</div>
 <div class="ttc" id="aclassfabomatic_1_1_fab_backend_xhtml_a893e412def82572f4281bdcd92bfcb36"><div class="ttname"><a href="classfabomatic_1_1_fab_backend.xhtml#a893e412def82572f4281bdcd92bfcb36">fabomatic::FabBackend::wifi_ssid</a></div><div class="ttdeci">std::string wifi_ssid</div><div class="ttdef"><b>Definition</b> <a href="_fab_backend_8hpp_source.xhtml#l00036">FabBackend.hpp:36</a></div></div>
 <div class="ttc" id="aclassfabomatic_1_1_fab_backend_xhtml_ac4de362845adea42309283248654cf46"><div class="ttname"><a href="classfabomatic_1_1_fab_backend.xhtml#ac4de362845adea42309283248654cf46">fabomatic::FabBackend::mqtt_password</a></div><div class="ttdeci">std::string mqtt_password</div><div class="ttdef"><b>Definition</b> <a href="_fab_backend_8hpp_source.xhtml#l00040">FabBackend.hpp:40</a></div></div>
 <div class="ttc" id="aclassfabomatic_1_1_fab_backend_xhtml_ac77de5d35fe86ccf4b23c97548187256"><div class="ttname"><a href="classfabomatic_1_1_fab_backend.xhtml#ac77de5d35fe86ccf4b23c97548187256">fabomatic::FabBackend::mqtt_client_name</a></div><div class="ttdeci">std::string mqtt_client_name</div><div class="ttdef"><b>Definition</b> <a href="_fab_backend_8hpp_source.xhtml#l00041">FabBackend.hpp:41</a></div></div>
-<div class="ttc" id="anamespacefabomatic_1_1conf_1_1mqtt_xhtml_a6828edf0ca1e3124b91c14d7f4f04045"><div class="ttname"><a href="namespacefabomatic_1_1conf_1_1mqtt.xhtml#a6828edf0ca1e3124b91c14d7f4f04045">fabomatic::conf::mqtt::topic</a></div><div class="ttdeci">static constexpr std::string_view topic</div><div class="ttdoc">Initial part of the topic, machine ID will be added.</div><div class="ttdef"><b>Definition</b> <a href="conf_8hpp_source.xhtml#l00137">conf.hpp:137</a></div></div>
+<div class="ttc" id="anamespacefabomatic_1_1conf_1_1mqtt_xhtml_a6828edf0ca1e3124b91c14d7f4f04045"><div class="ttname"><a href="namespacefabomatic_1_1conf_1_1mqtt.xhtml#a6828edf0ca1e3124b91c14d7f4f04045">fabomatic::conf::mqtt::topic</a></div><div class="ttdeci">static constexpr std::string_view topic</div><div class="ttdoc">Initial part of the topic, machine ID will be added.</div><div class="ttdef"><b>Definition</b> <a href="conf_8hpp_source.xhtml#l00139">conf.hpp:139</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_fab_backend_8hpp_source.xhtml#l00038">broker_hostname</a>, <a class="el" href="_fab_backend_8hpp_source.xhtml#l00053">channel</a>, <a class="el" href="_fab_backend_8hpp_source.xhtml#l00033">client</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00654">loadBuffer()</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00066">fabomatic::SavedConfig::machine_id</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00074">fabomatic::SavedConfig::message_buffer</a>, <a class="el" href="_fab_backend_8hpp_source.xhtml#l00041">mqtt_client_name</a>, <a class="el" href="_fab_backend_8hpp_source.xhtml#l00040">mqtt_password</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00059">fabomatic::SavedConfig::mqtt_password</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00053">fabomatic::SavedConfig::mqtt_server</a>, <a class="el" href="_fab_backend_8hpp_source.xhtml#l00039">mqtt_user</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00056">fabomatic::SavedConfig::mqtt_user</a>, <a class="el" href="_fab_backend_8hpp_source.xhtml#l00051">online</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00050">fabomatic::SavedConfig::password</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00047">fabomatic::SavedConfig::ssid</a>, <a class="el" href="_logging_8hpp_source.xhtml#l00006">TAG</a>, <a class="el" href="conf_8hpp_source.xhtml#l00137">fabomatic::conf::mqtt::topic</a>, <a class="el" href="_fab_backend_8hpp_source.xhtml#l00046">topic</a>, <a class="el" href="_fab_backend_8hpp_source.xhtml#l00044">wifi_client</a>, <a class="el" href="_fab_backend_8hpp_source.xhtml#l00037">wifi_password</a>, and <a class="el" href="_fab_backend_8hpp_source.xhtml#l00036">wifi_ssid</a>.</p>
+<p class="reference">References <a class="el" href="_fab_backend_8hpp_source.xhtml#l00038">broker_hostname</a>, <a class="el" href="_fab_backend_8hpp_source.xhtml#l00053">channel</a>, <a class="el" href="_fab_backend_8hpp_source.xhtml#l00033">client</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00654">loadBuffer()</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00066">fabomatic::SavedConfig::machine_id</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00074">fabomatic::SavedConfig::message_buffer</a>, <a class="el" href="_fab_backend_8hpp_source.xhtml#l00041">mqtt_client_name</a>, <a class="el" href="_fab_backend_8hpp_source.xhtml#l00040">mqtt_password</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00059">fabomatic::SavedConfig::mqtt_password</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00053">fabomatic::SavedConfig::mqtt_server</a>, <a class="el" href="_fab_backend_8hpp_source.xhtml#l00039">mqtt_user</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00056">fabomatic::SavedConfig::mqtt_user</a>, <a class="el" href="_fab_backend_8hpp_source.xhtml#l00051">online</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00050">fabomatic::SavedConfig::password</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00047">fabomatic::SavedConfig::ssid</a>, <a class="el" href="_logging_8hpp_source.xhtml#l00006">TAG</a>, <a class="el" href="conf_8hpp_source.xhtml#l00139">fabomatic::conf::mqtt::topic</a>, <a class="el" href="_fab_backend_8hpp_source.xhtml#l00046">topic</a>, <a class="el" href="_fab_backend_8hpp_source.xhtml#l00044">wifi_client</a>, <a class="el" href="_fab_backend_8hpp_source.xhtml#l00037">wifi_password</a>, and <a class="el" href="_fab_backend_8hpp_source.xhtml#l00036">wifi_ssid</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00463">fabomatic::BoardLogic::reconfigure()</a>, <a class="el" href="test__mqtt_8cpp_source.xhtml#l00133">fabomatic::tests::test_fabserver_calls()</a>, <a class="el" href="test__savedconfig_8cpp_source.xhtml#l00094">fabomatic::tests::test_rfid_cache()</a>, and <a class="el" href="test__mqtt_8cpp_source.xhtml#l00097">fabomatic::tests::test_start_broker()</a>.</p>
 <div class="dynheader">
@@ -571,7 +571,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Establishes a connection to the WiFi network and the MQTT server. </p>
+<p>Establishes a connection to the WiFi network and the <a class="el" href="namespacefabomatic_1_1_m_q_t_t.xhtml" title="Contains all the types for MQTT messages between board and backend.">MQTT</a> server. </p>
 <dl class="section return"><dt>Returns</dt><dd>true if both operations succeeded, false otherwise. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_fab_backend_8cpp_source.xhtml#l00291">291</a> of file <a class="el" href="_fab_backend_8cpp_source.xhtml">FabBackend.cpp</a>.</p>
@@ -643,7 +643,7 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  357</span>          <a class="code hl_variable" href="classfabomatic_1_1_fab_backend.xhtml#a3a66b317f253de31ec0147c4e28aba6b">online</a> = <span class="keyword">true</span>;</div>
 <div class="line"><span class="lineno">  358</span>        }</div>
 <div class="line"><span class="lineno">  359</span>        <span class="comment">// Announce the board to the server</span></div>
-<div class="line"><span class="lineno">  360</span>        <span class="keywordflow">if</span> (<span class="keyword">auto</span> query = ServerMQTT::AliveQuery{}; <a class="code hl_function" href="classfabomatic_1_1_fab_backend.xhtml#aee0cf549bea2daebc3e08742853d36c1">publish</a>(query) == <a class="code hl_enumvalue" href="classfabomatic_1_1_fab_backend.xhtml#af3e533d72406fdddc602359fdb9a5ae3a4586da37f65c0965ce6973ceb7f65c40">PublishResult::PublishedWithoutAnswer</a>)</div>
+<div class="line"><span class="lineno">  360</span>        <span class="keywordflow">if</span> (<span class="keyword">auto</span> query = MQTT::AliveQuery{}; <a class="code hl_function" href="classfabomatic_1_1_fab_backend.xhtml#aee0cf549bea2daebc3e08742853d36c1">publish</a>(query) == <a class="code hl_enumvalue" href="classfabomatic_1_1_fab_backend.xhtml#af3e533d72406fdddc602359fdb9a5ae3a4586da37f65c0965ce6973ceb7f65c40">PublishResult::PublishedWithoutAnswer</a>)</div>
 <div class="line"><span class="lineno">  361</span>        {</div>
 <div class="line"><span class="lineno">  362</span>          ESP_LOGI(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <span class="stringliteral">&quot;MQTT Client: board announced to server&quot;</span>);</div>
 <div class="line"><span class="lineno">  363</span>        }</div>
@@ -671,10 +671,10 @@ Here is the caller graph for this function:</div>
 <div class="ttc" id="aclassfabomatic_1_1_fab_backend_xhtml_ad928751b2f967feaac0f2cb708c0d6e9"><div class="ttname"><a href="classfabomatic_1_1_fab_backend.xhtml#ad928751b2f967feaac0f2cb708c0d6e9">fabomatic::FabBackend::connectWiFi</a></div><div class="ttdeci">auto connectWiFi() -&gt; bool</div><div class="ttdoc">Connects to the WiFi network.</div><div class="ttdef"><b>Definition</b> <a href="_fab_backend_8cpp_source.xhtml#l00259">FabBackend.cpp:259</a></div></div>
 <div class="ttc" id="aclassfabomatic_1_1_fab_backend_xhtml_aee0cf549bea2daebc3e08742853d36c1"><div class="ttname"><a href="classfabomatic_1_1_fab_backend.xhtml#aee0cf549bea2daebc3e08742853d36c1">fabomatic::FabBackend::publish</a></div><div class="ttdeci">auto publish(const QueryT &amp;payload) -&gt; PublishResult</div><div class="ttdoc">Publishes a query on the MQTT server.</div><div class="ttdef"><b>Definition</b> <a href="_fab_backend_8cpp_source.xhtml#l00141">FabBackend.cpp:141</a></div></div>
 <div class="ttc" id="anamespacefabomatic_1_1_tasks_xhtml_a5c20f560f5934822d39ba116a16f3ab6"><div class="ttname"><a href="namespacefabomatic_1_1_tasks.xhtml#a5c20f560f5934822d39ba116a16f3ab6">fabomatic::Tasks::delay</a></div><div class="ttdeci">auto delay(const milliseconds duration) -&gt; void</div><div class="ttdoc">Wait for a delay, allowing OTA updates.</div><div class="ttdef"><b>Definition</b> <a href="_tasks_8cpp_source.xhtml#l00250">Tasks.cpp:250</a></div></div>
-<div class="ttc" id="anamespacefabomatic_1_1conf_1_1mqtt_xhtml_a606e6b5c7c411ba632b27c92882edb32"><div class="ttname"><a href="namespacefabomatic_1_1conf_1_1mqtt.xhtml#a606e6b5c7c411ba632b27c92882edb32">fabomatic::conf::mqtt::response_topic</a></div><div class="ttdeci">static constexpr std::string_view response_topic</div><div class="ttdoc">Backend reply (sub-topic of the full machine topic)</div><div class="ttdef"><b>Definition</b> <a href="conf_8hpp_source.xhtml#l00140">conf.hpp:140</a></div></div>
-<div class="ttc" id="anamespacefabomatic_1_1conf_1_1mqtt_xhtml_ac26a2c6d2866b19ee035b735bdfaff54"><div class="ttname"><a href="namespacefabomatic_1_1conf_1_1mqtt.xhtml#ac26a2c6d2866b19ee035b735bdfaff54">fabomatic::conf::mqtt::PORT_NUMBER</a></div><div class="ttdeci">static constexpr auto PORT_NUMBER</div><div class="ttdoc">MQTT port for broker.</div><div class="ttdef"><b>Definition</b> <a href="conf_8hpp_source.xhtml#l00149">conf.hpp:149</a></div></div>
+<div class="ttc" id="anamespacefabomatic_1_1conf_1_1mqtt_xhtml_a606e6b5c7c411ba632b27c92882edb32"><div class="ttname"><a href="namespacefabomatic_1_1conf_1_1mqtt.xhtml#a606e6b5c7c411ba632b27c92882edb32">fabomatic::conf::mqtt::response_topic</a></div><div class="ttdeci">static constexpr std::string_view response_topic</div><div class="ttdoc">Backend reply (sub-topic of the full machine topic)</div><div class="ttdef"><b>Definition</b> <a href="conf_8hpp_source.xhtml#l00142">conf.hpp:142</a></div></div>
+<div class="ttc" id="anamespacefabomatic_1_1conf_1_1mqtt_xhtml_ac26a2c6d2866b19ee035b735bdfaff54"><div class="ttname"><a href="namespacefabomatic_1_1conf_1_1mqtt.xhtml#ac26a2c6d2866b19ee035b735bdfaff54">fabomatic::conf::mqtt::PORT_NUMBER</a></div><div class="ttdeci">static constexpr auto PORT_NUMBER</div><div class="ttdoc">MQTT port for broker.</div><div class="ttdef"><b>Definition</b> <a href="conf_8hpp_source.xhtml#l00151">conf.hpp:151</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_fab_backend_8hpp_source.xhtml#l00038">broker_hostname</a>, <a class="el" href="_fab_backend_8hpp_source.xhtml#l00043">callback</a>, <a class="el" href="_fab_backend_8hpp_source.xhtml#l00033">client</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00259">connectWiFi()</a>, <a class="el" href="_tasks_8cpp_source.xhtml#l00250">fabomatic::Tasks::delay()</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00246">messageReceived()</a>, <a class="el" href="_fab_backend_8hpp_source.xhtml#l00041">mqtt_client_name</a>, <a class="el" href="_fab_backend_8hpp_source.xhtml#l00040">mqtt_password</a>, <a class="el" href="_fab_backend_8hpp_source.xhtml#l00039">mqtt_user</a>, <a class="el" href="_fab_backend_8hpp_source.xhtml#l00051">online</a>, <a class="el" href="conf_8hpp_source.xhtml#l00149">fabomatic::conf::mqtt::PORT_NUMBER</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00141">publish()</a>, <a class="el" href="classfabomatic_1_1_fab_backend.xhtml#af3e533d72406fdddc602359fdb9a5ae3a4586da37f65c0965ce6973ceb7f65c40">PublishedWithoutAnswer</a>, <a class="el" href="conf_8hpp_source.xhtml#l00140">fabomatic::conf::mqtt::response_topic</a>, <a class="el" href="_fab_backend_8hpp_source.xhtml#l00047">response_topic</a>, <a class="el" href="_logging_8hpp_source.xhtml#l00006">TAG</a>, <a class="el" href="_fab_backend_8hpp_source.xhtml#l00046">topic</a>, and <a class="el" href="_fab_backend_8hpp_source.xhtml#l00044">wifi_client</a>.</p>
+<p class="reference">References <a class="el" href="_fab_backend_8hpp_source.xhtml#l00038">broker_hostname</a>, <a class="el" href="_fab_backend_8hpp_source.xhtml#l00043">callback</a>, <a class="el" href="_fab_backend_8hpp_source.xhtml#l00033">client</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00259">connectWiFi()</a>, <a class="el" href="_tasks_8cpp_source.xhtml#l00250">fabomatic::Tasks::delay()</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00246">messageReceived()</a>, <a class="el" href="_fab_backend_8hpp_source.xhtml#l00041">mqtt_client_name</a>, <a class="el" href="_fab_backend_8hpp_source.xhtml#l00040">mqtt_password</a>, <a class="el" href="_fab_backend_8hpp_source.xhtml#l00039">mqtt_user</a>, <a class="el" href="_fab_backend_8hpp_source.xhtml#l00051">online</a>, <a class="el" href="conf_8hpp_source.xhtml#l00151">fabomatic::conf::mqtt::PORT_NUMBER</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00141">publish()</a>, <a class="el" href="classfabomatic_1_1_fab_backend.xhtml#af3e533d72406fdddc602359fdb9a5ae3a4586da37f65c0965ce6973ceb7f65c40">PublishedWithoutAnswer</a>, <a class="el" href="conf_8hpp_source.xhtml#l00142">fabomatic::conf::mqtt::response_topic</a>, <a class="el" href="_fab_backend_8hpp_source.xhtml#l00047">response_topic</a>, <a class="el" href="_logging_8hpp_source.xhtml#l00006">TAG</a>, <a class="el" href="_fab_backend_8hpp_source.xhtml#l00046">topic</a>, and <a class="el" href="_fab_backend_8hpp_source.xhtml#l00044">wifi_client</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="_fab_backend_8cpp_source.xhtml#l00402">processQuery()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00041">fabomatic::BoardLogic::refreshFromServer()</a>, <a class="el" href="main_8cpp_source.xhtml#l00042">fabomatic::taskConnect()</a>, <a class="el" href="test__mqtt_8cpp_source.xhtml#l00079">fabomatic::tests::test_check_transmission()</a>, <a class="el" href="test__mqtt_8cpp_source.xhtml#l00133">fabomatic::tests::test_fabserver_calls()</a>, <a class="el" href="test__mqtt_8cpp_source.xhtml#l00097">fabomatic::tests::test_start_broker()</a>, <a class="el" href="test__mqtt_8cpp_source.xhtml#l00222">fabomatic::tests::test_taskConnect()</a>, <a class="el" href="_auth_provider_8cpp_source.xhtml#l00054">fabomatic::AuthProvider::tryLogin()</a>, and <a class="el" href="_fab_backend_8cpp_source.xhtml#l00204">waitForAnswer()</a>.</p>
 <div class="dynheader">
@@ -766,7 +766,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Disconnects from the MQTT server. </p>
+<p>Disconnects from the <a class="el" href="namespacefabomatic_1_1_m_q_t_t.xhtml" title="Contains all the types for MQTT messages between board and backend.">MQTT</a> server. </p>
 
 <p class="definition">Definition at line <a class="el" href="_fab_backend_8cpp_source.xhtml#l00386">386</a> of file <a class="el" href="_fab_backend_8cpp_source.xhtml">FabBackend.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  387</span>  {</div>
@@ -791,14 +791,14 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a id="aa312ecaa96c4ccd3fc4e822b5495c8fe" name="aa312ecaa96c4ccd3fc4e822b5495c8fe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa312ecaa96c4ccd3fc4e822b5495c8fe">&#9670;&#160;</a></span>finishUse()</h2>
+<a id="a1a9d380dab0f6118461669242e9c7c0f" name="a1a9d380dab0f6118461669242e9c7c0f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1a9d380dab0f6118461669242e9c7c0f">&#9670;&#160;</a></span>finishUse()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::unique_ptr&lt; <a class="el" href="classfabomatic_1_1_server_m_q_t_t_1_1_simple_response.xhtml">ServerMQTT::SimpleResponse</a> &gt; fabomatic::FabBackend::finishUse </td>
+          <td class="memname">std::unique_ptr&lt; <a class="el" href="classfabomatic_1_1_m_q_t_t_1_1_simple_response.xhtml">MQTT::SimpleResponse</a> &gt; fabomatic::FabBackend::finishUse </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="namespacefabomatic_1_1card.xhtml#aa36a4f716561b5c72d144ad55bc3e53b">card::uid_t</a>&#160;</td>
           <td class="paramname"><em>uid</em>, </td>
@@ -812,7 +812,7 @@ Here is the caller graph for this function:</div>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td> -&gt; std::unique_ptr&lt;<a class="el" href="classfabomatic_1_1_server_m_q_t_t_1_1_simple_response.xhtml">ServerMQTT::SimpleResponse</a>&gt;</td>
+          <td></td><td> -&gt; std::unique_ptr&lt;<a class="el" href="classfabomatic_1_1_m_q_t_t_1_1_simple_response.xhtml">MQTT::SimpleResponse</a>&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -829,14 +829,14 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="_fab_backend_8cpp_source.xhtml#l00540">540</a> of file <a class="el" href="_fab_backend_8cpp_source.xhtml">FabBackend.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  541</span>  {</div>
-<div class="line"><span class="lineno">  542</span>    <span class="keywordflow">return</span> processQuery&lt;ServerMQTT::SimpleResponse, ServerMQTT::StopUseQuery&gt;(uid, duration_s);</div>
+<div class="line"><span class="lineno">  542</span>    <span class="keywordflow">return</span> processQuery&lt;MQTT::SimpleResponse, MQTT::StopUseQuery&gt;(uid, duration_s);</div>
 <div class="line"><span class="lineno">  543</span>  }</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00111">fabomatic::BoardLogic::logout()</a>, <a class="el" href="test__mqtt_8cpp_source.xhtml#l00050">fabomatic::tests::test_create_buffered_messages()</a>, and <a class="el" href="test__mqtt_8cpp_source.xhtml#l00133">fabomatic::tests::test_fabserver_calls()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classfabomatic_1_1_fab_backend_aa312ecaa96c4ccd3fc4e822b5495c8fe_icgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
+<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classfabomatic_1_1_fab_backend_a1a9d380dab0f6118461669242e9c7c0f_icgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
 </div>
 
 </div>
@@ -879,14 +879,14 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a id="ac33b68d0146302e9db6a0adc7b8c3ac0" name="ac33b68d0146302e9db6a0adc7b8c3ac0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac33b68d0146302e9db6a0adc7b8c3ac0">&#9670;&#160;</a></span>inUse()</h2>
+<a id="ad6ebb7dbe860caef3524520eb69b8e2a" name="ad6ebb7dbe860caef3524520eb69b8e2a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad6ebb7dbe860caef3524520eb69b8e2a">&#9670;&#160;</a></span>inUse()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::unique_ptr&lt; <a class="el" href="classfabomatic_1_1_server_m_q_t_t_1_1_simple_response.xhtml">ServerMQTT::SimpleResponse</a> &gt; fabomatic::FabBackend::inUse </td>
+          <td class="memname">std::unique_ptr&lt; <a class="el" href="classfabomatic_1_1_m_q_t_t_1_1_simple_response.xhtml">MQTT::SimpleResponse</a> &gt; fabomatic::FabBackend::inUse </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="namespacefabomatic_1_1card.xhtml#aa36a4f716561b5c72d144ad55bc3e53b">card::uid_t</a>&#160;</td>
           <td class="paramname"><em>uid</em>, </td>
@@ -900,7 +900,7 @@ Here is the caller graph for this function:</div>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td> -&gt; std::unique_ptr&lt;<a class="el" href="classfabomatic_1_1_server_m_q_t_t_1_1_simple_response.xhtml">ServerMQTT::SimpleResponse</a>&gt;</td>
+          <td></td><td> -&gt; std::unique_ptr&lt;<a class="el" href="classfabomatic_1_1_m_q_t_t_1_1_simple_response.xhtml">MQTT::SimpleResponse</a>&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -917,14 +917,14 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="_fab_backend_8cpp_source.xhtml#l00552">552</a> of file <a class="el" href="_fab_backend_8cpp_source.xhtml">FabBackend.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  553</span>  {</div>
-<div class="line"><span class="lineno">  554</span>    <span class="keywordflow">return</span> processQuery&lt;ServerMQTT::SimpleResponse, ServerMQTT::InUseQuery&gt;(uid, duration_s);</div>
+<div class="line"><span class="lineno">  554</span>    <span class="keywordflow">return</span> processQuery&lt;MQTT::SimpleResponse, MQTT::InUseQuery&gt;(uid, duration_s);</div>
 <div class="line"><span class="lineno">  555</span>  }</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="test__mqtt_8cpp_source.xhtml#l00050">fabomatic::tests::test_create_buffered_messages()</a>, and <a class="el" href="test__mqtt_8cpp_source.xhtml#l00133">fabomatic::tests::test_fabserver_calls()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classfabomatic_1_1_fab_backend_ac33b68d0146302e9db6a0adc7b8c3ac0_icgraph.svg" width="502" height="118"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classfabomatic_1_1_fab_backend_ad6ebb7dbe860caef3524520eb69b8e2a_icgraph.svg" width="502" height="118"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -1021,7 +1021,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Main loop for the MQTT client. </p>
+<p>Main loop for the <a class="el" href="namespacefabomatic_1_1_m_q_t_t.xhtml" title="Contains all the types for MQTT messages between board and backend.">MQTT</a> client. </p>
 <dl class="section return"><dt>Returns</dt><dd>true if the client is running successfully, false otherwise. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_fab_backend_8cpp_source.xhtml#l00184">184</a> of file <a class="el" href="_fab_backend_8cpp_source.xhtml">FabBackend.cpp</a>.</p>
@@ -1083,7 +1083,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>Callback function for received MQTT messages. </p>
+<p>Callback function for received <a class="el" href="namespacefabomatic_1_1_m_q_t_t.xhtml" title="Contains all the types for MQTT messages between board and backend.">MQTT</a> messages. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">s_topic</td><td>The topic the message was received on. </td></tr>
@@ -1224,8 +1224,8 @@ template&lt;typename RespT , typename QueryT , typename... QueryArgs&gt; </div>
 
 <p class="definition">Definition at line <a class="el" href="_fab_backend_8cpp_source.xhtml#l00402">402</a> of file <a class="el" href="_fab_backend_8cpp_source.xhtml">FabBackend.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  403</span>  {</div>
-<div class="line"><span class="lineno">  404</span>    <span class="keyword">static_assert</span>(std::is_base_of&lt;ServerMQTT::Query, QueryT&gt;::value, <span class="stringliteral">&quot;QueryT must inherit from Query&quot;</span>);</div>
-<div class="line"><span class="lineno">  405</span>    <span class="keyword">static_assert</span>(std::is_base_of&lt;ServerMQTT::Response, RespT&gt;::value, <span class="stringliteral">&quot;RespT must inherit from Response&quot;</span>);</div>
+<div class="line"><span class="lineno">  404</span>    <span class="keyword">static_assert</span>(std::is_base_of&lt;MQTT::Query, QueryT&gt;::value, <span class="stringliteral">&quot;QueryT must inherit from Query&quot;</span>);</div>
+<div class="line"><span class="lineno">  405</span>    <span class="keyword">static_assert</span>(std::is_base_of&lt;MQTT::Response, RespT&gt;::value, <span class="stringliteral">&quot;RespT must inherit from Response&quot;</span>);</div>
 <div class="line"><span class="lineno">  406</span>    QueryT query{args...};</div>
 <div class="line"><span class="lineno">  407</span> </div>
 <div class="line"><span class="lineno">  408</span>    <span class="keyword">auto</span> nb_tries = 0;</div>
@@ -1245,7 +1245,7 @@ template&lt;typename RespT , typename QueryT , typename... QueryArgs&gt; </div>
 <div class="line"><span class="lineno">  422</span> </div>
 <div class="line"><span class="lineno">  423</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="classfabomatic_1_1_fab_backend.xhtml#aef092e0e1db0c3539d5474fad2456255">isOnline</a>() &amp;&amp; !<a class="code hl_function" href="classfabomatic_1_1_fab_backend.xhtml#ac80b4835d858bea27da461b18df5f570">hasBufferedMsg</a>())</div>
 <div class="line"><span class="lineno">  424</span>    {</div>
-<div class="line"><span class="lineno">  425</span>      <span class="keywordflow">if</span> (<a class="code hl_function" href="classfabomatic_1_1_fab_backend.xhtml#a8f5341d851e1cd24dfaa64be0237dd5a">publishWithReply</a>(query) == <a class="code hl_enumvalue" href="classfabomatic_1_1_fab_backend.xhtml#af3e533d72406fdddc602359fdb9a5ae3af6278bbfdfc6fff58dae91a03d739c93">PublishResult::PublishedWithAnswer</a>)</div>
+<div class="line"><span class="lineno">  425</span>      <span class="keywordflow">if</span> (<a class="code hl_function" href="classfabomatic_1_1_fab_backend.xhtml#a511bc605ba1388900ee9fd0e82733a95">publishWithReply</a>(query) == <a class="code hl_enumvalue" href="classfabomatic_1_1_fab_backend.xhtml#af3e533d72406fdddc602359fdb9a5ae3af6278bbfdfc6fff58dae91a03d739c93">PublishResult::PublishedWithAnswer</a>)</div>
 <div class="line"><span class="lineno">  426</span>      {</div>
 <div class="line"><span class="lineno">  427</span>        <span class="comment">// Deserialize the JSON document</span></div>
 <div class="line"><span class="lineno">  428</span>        <span class="keyword">const</span> <span class="keyword">auto</span> payload = <a class="code hl_variable" href="classfabomatic_1_1_fab_backend.xhtml#a0308ae992bc86c1b41bdd78f9536f553">last_reply</a>.c_str();</div>
@@ -1275,7 +1275,7 @@ template&lt;typename RespT , typename QueryT , typename... QueryArgs&gt; </div>
 <div class="ttc" id="aclassfabomatic_1_1_fab_backend_xhtml_a1218ae004e0146262801967ee50ec17a"><div class="ttname"><a href="classfabomatic_1_1_fab_backend.xhtml#a1218ae004e0146262801967ee50ec17a">fabomatic::FabBackend::doc</a></div><div class="ttdeci">JsonDocument doc</div><div class="ttdef"><b>Definition</b> <a href="_fab_backend_8hpp_source.xhtml#l00034">FabBackend.hpp:34</a></div></div>
 <div class="ttc" id="aclassfabomatic_1_1_fab_backend_xhtml_a1a45f556aadcbc428d14b7c7577ed43d"><div class="ttname"><a href="classfabomatic_1_1_fab_backend.xhtml#a1a45f556aadcbc428d14b7c7577ed43d">fabomatic::FabBackend::connect</a></div><div class="ttdeci">auto connect() -&gt; bool</div><div class="ttdoc">Establishes a connection to the WiFi network and the MQTT server.</div><div class="ttdef"><b>Definition</b> <a href="_fab_backend_8cpp_source.xhtml#l00291">FabBackend.cpp:291</a></div></div>
 <div class="ttc" id="aclassfabomatic_1_1_fab_backend_xhtml_a4d0b8d49942ff06c02abbcbfe7a4784a"><div class="ttname"><a href="classfabomatic_1_1_fab_backend.xhtml#a4d0b8d49942ff06c02abbcbfe7a4784a">fabomatic::FabBackend::transmitBuffer</a></div><div class="ttdeci">auto transmitBuffer() -&gt; bool</div><div class="ttdef"><b>Definition</b> <a href="_fab_backend_8cpp_source.xhtml#l00593">FabBackend.cpp:593</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_fab_backend_xhtml_a8f5341d851e1cd24dfaa64be0237dd5a"><div class="ttname"><a href="classfabomatic_1_1_fab_backend.xhtml#a8f5341d851e1cd24dfaa64be0237dd5a">fabomatic::FabBackend::publishWithReply</a></div><div class="ttdeci">auto publishWithReply(const ServerMQTT::Query &amp;payload) -&gt; PublishResult</div><div class="ttdoc">Posts a query to the MQTT server and waits for a reply.</div><div class="ttdef"><b>Definition</b> <a href="_fab_backend_8cpp_source.xhtml#l00061">FabBackend.cpp:61</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_fab_backend_xhtml_a511bc605ba1388900ee9fd0e82733a95"><div class="ttname"><a href="classfabomatic_1_1_fab_backend.xhtml#a511bc605ba1388900ee9fd0e82733a95">fabomatic::FabBackend::publishWithReply</a></div><div class="ttdeci">auto publishWithReply(const MQTT::Query &amp;payload) -&gt; PublishResult</div><div class="ttdoc">Posts a query to the MQTT server and waits for a reply.</div><div class="ttdef"><b>Definition</b> <a href="_fab_backend_8cpp_source.xhtml#l00061">FabBackend.cpp:61</a></div></div>
 <div class="ttc" id="aclassfabomatic_1_1_fab_backend_xhtml_ac80b4835d858bea27da461b18df5f570"><div class="ttname"><a href="classfabomatic_1_1_fab_backend.xhtml#ac80b4835d858bea27da461b18df5f570">fabomatic::FabBackend::hasBufferedMsg</a></div><div class="ttdeci">auto hasBufferedMsg() const -&gt; bool</div><div class="ttdef"><b>Definition</b> <a href="_fab_backend_8cpp_source.xhtml#l00588">FabBackend.cpp:588</a></div></div>
 <div class="ttc" id="aclassfabomatic_1_1_fab_backend_xhtml_ad558116614ee45601f4665d395838727"><div class="ttname"><a href="classfabomatic_1_1_fab_backend.xhtml#ad558116614ee45601f4665d395838727">fabomatic::FabBackend::disconnect</a></div><div class="ttdeci">auto disconnect() -&gt; void</div><div class="ttdoc">Disconnects from the MQTT server.</div><div class="ttdef"><b>Definition</b> <a href="_fab_backend_8cpp_source.xhtml#l00386">FabBackend.cpp:386</a></div></div>
 <div class="ttc" id="aclassfabomatic_1_1_fab_backend_xhtml_aef092e0e1db0c3539d5474fad2456255"><div class="ttname"><a href="classfabomatic_1_1_fab_backend.xhtml#aef092e0e1db0c3539d5474fad2456255">fabomatic::FabBackend::isOnline</a></div><div class="ttdeci">auto isOnline() const -&gt; bool</div><div class="ttdoc">Checks if the client is online.</div><div class="ttdef"><b>Definition</b> <a href="_fab_backend_8cpp_source.xhtml#l00235">FabBackend.cpp:235</a></div></div>
@@ -1319,7 +1319,7 @@ template&lt;typename QueryT , typename... QueryArgs&gt; </div>
 
 <p class="definition">Definition at line <a class="el" href="_fab_backend_8cpp_source.xhtml#l00460">460</a> of file <a class="el" href="_fab_backend_8cpp_source.xhtml">FabBackend.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  461</span>  {</div>
-<div class="line"><span class="lineno">  462</span>    <span class="keyword">static_assert</span>(std::is_base_of&lt;ServerMQTT::Query, QueryT&gt;::value, <span class="stringliteral">&quot;QueryT must inherit from Query&quot;</span>);</div>
+<div class="line"><span class="lineno">  462</span>    <span class="keyword">static_assert</span>(std::is_base_of&lt;MQTT::Query, QueryT&gt;::value, <span class="stringliteral">&quot;QueryT must inherit from Query&quot;</span>);</div>
 <div class="line"><span class="lineno">  463</span>    QueryT query{args...};</div>
 <div class="line"><span class="lineno">  464</span> </div>
 <div class="line"><span class="lineno">  465</span>    <span class="keyword">auto</span> nb_tries = 0;</div>
@@ -1421,7 +1421,7 @@ template&lt;typename QueryT &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Publishes a query on the MQTT server. </p>
+<p>Publishes a query on the <a class="el" href="namespacefabomatic_1_1_m_q_t_t.xhtml" title="Contains all the types for MQTT messages between board and backend.">MQTT</a> server. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">query</td><td>The query to be published. </td></tr>
@@ -1513,7 +1513,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Publishes a message on the MQTT server. </p>
+<p>Publishes a message on the <a class="el" href="namespacefabomatic_1_1_m_q_t_t.xhtml" title="Contains all the types for MQTT messages between board and backend.">MQTT</a> server. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">mqtt_topic</td><td>The topic to publish to. </td></tr>
@@ -1550,8 +1550,8 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
-<a id="a8f5341d851e1cd24dfaa64be0237dd5a" name="a8f5341d851e1cd24dfaa64be0237dd5a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8f5341d851e1cd24dfaa64be0237dd5a">&#9670;&#160;</a></span>publishWithReply()</h2>
+<a id="a511bc605ba1388900ee9fd0e82733a95" name="a511bc605ba1388900ee9fd0e82733a95"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a511bc605ba1388900ee9fd0e82733a95">&#9670;&#160;</a></span>publishWithReply()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1562,7 +1562,7 @@ Here is the call graph for this function:</div>
         <tr>
           <td class="memname">auto fabomatic::FabBackend::publishWithReply </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classfabomatic_1_1_server_m_q_t_t_1_1_query.xhtml">ServerMQTT::Query</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classfabomatic_1_1_m_q_t_t_1_1_query.xhtml">MQTT::Query</a> &amp;&#160;</td>
           <td class="paramname"><em>query</em></td><td>)</td>
           <td> -&gt; <a class="el" href="classfabomatic_1_1_fab_backend.xhtml#af3e533d72406fdddc602359fdb9a5ae3">PublishResult</a></td>
         </tr>
@@ -1574,7 +1574,7 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>Posts a query to the MQTT server and waits for a reply. </p>
+<p>Posts a query to the <a class="el" href="namespacefabomatic_1_1_m_q_t_t.xhtml" title="Contains all the types for MQTT messages between board and backend.">MQTT</a> server and waits for a reply. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">query</td><td>The query to be posted. </td></tr>
@@ -1631,37 +1631,37 @@ Here is the call graph for this function:</div>
 <div class="line"><span class="lineno">  106</span> </div>
 <div class="line"><span class="lineno">  107</span>    <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="classfabomatic_1_1_fab_backend.xhtml#af3e533d72406fdddc602359fdb9a5ae3ae8c9e67c4a17670c41289fcc8c3a38c5">PublishResult::ErrorNotPublished</a>;</div>
 <div class="line"><span class="lineno">  108</span>  }</div>
-<div class="ttc" id="anamespacefabomatic_1_1conf_1_1mqtt_xhtml_a8418761ec7353545c7130692339b9cc6"><div class="ttname"><a href="namespacefabomatic_1_1conf_1_1mqtt.xhtml#a8418761ec7353545c7130692339b9cc6">fabomatic::conf::mqtt::TIMEOUT_REPLY_SERVER</a></div><div class="ttdeci">static constexpr auto TIMEOUT_REPLY_SERVER</div><div class="ttdoc">Timeout for a single backend reply request.</div><div class="ttdef"><b>Definition</b> <a href="conf_8hpp_source.xhtml#l00146">conf.hpp:146</a></div></div>
-<div class="ttc" id="anamespacefabomatic_1_1conf_1_1mqtt_xhtml_a9385c322eb16f7f09992855dec71df20"><div class="ttname"><a href="namespacefabomatic_1_1conf_1_1mqtt.xhtml#a9385c322eb16f7f09992855dec71df20">fabomatic::conf::mqtt::MAX_TRIES</a></div><div class="ttdeci">static constexpr auto MAX_TRIES</div><div class="ttdoc">Number of tries to get a reply from the backend.</div><div class="ttdef"><b>Definition</b> <a href="conf_8hpp_source.xhtml#l00143">conf.hpp:143</a></div></div>
+<div class="ttc" id="anamespacefabomatic_1_1conf_1_1mqtt_xhtml_a8418761ec7353545c7130692339b9cc6"><div class="ttname"><a href="namespacefabomatic_1_1conf_1_1mqtt.xhtml#a8418761ec7353545c7130692339b9cc6">fabomatic::conf::mqtt::TIMEOUT_REPLY_SERVER</a></div><div class="ttdeci">static constexpr auto TIMEOUT_REPLY_SERVER</div><div class="ttdoc">Timeout for a single backend reply request.</div><div class="ttdef"><b>Definition</b> <a href="conf_8hpp_source.xhtml#l00148">conf.hpp:148</a></div></div>
+<div class="ttc" id="anamespacefabomatic_1_1conf_1_1mqtt_xhtml_a9385c322eb16f7f09992855dec71df20"><div class="ttname"><a href="namespacefabomatic_1_1conf_1_1mqtt.xhtml#a9385c322eb16f7f09992855dec71df20">fabomatic::conf::mqtt::MAX_TRIES</a></div><div class="ttdeci">static constexpr auto MAX_TRIES</div><div class="ttdoc">Number of tries to get a reply from the backend.</div><div class="ttdef"><b>Definition</b> <a href="conf_8hpp_source.xhtml#l00145">conf.hpp:145</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_tasks_8cpp_source.xhtml#l00250">fabomatic::Tasks::delay()</a>, <a class="el" href="conf_8hpp_source.xhtml#l00143">fabomatic::conf::mqtt::MAX_TRIES</a>, <a class="el" href="_logging_8hpp_source.xhtml#l00006">TAG</a>, and <a class="el" href="conf_8hpp_source.xhtml#l00146">fabomatic::conf::mqtt::TIMEOUT_REPLY_SERVER</a>.</p>
+<p class="reference">References <a class="el" href="_tasks_8cpp_source.xhtml#l00250">fabomatic::Tasks::delay()</a>, <a class="el" href="conf_8hpp_source.xhtml#l00145">fabomatic::conf::mqtt::MAX_TRIES</a>, <a class="el" href="_logging_8hpp_source.xhtml#l00006">TAG</a>, and <a class="el" href="conf_8hpp_source.xhtml#l00148">fabomatic::conf::mqtt::TIMEOUT_REPLY_SERVER</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="_fab_backend_8cpp_source.xhtml#l00402">processQuery()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classfabomatic_1_1_fab_backend_a8f5341d851e1cd24dfaa64be0237dd5a_cgraph.svg" width="372" height="68"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classfabomatic_1_1_fab_backend_a511bc605ba1388900ee9fd0e82733a95_cgraph.svg" width="372" height="68"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classfabomatic_1_1_fab_backend_a8f5341d851e1cd24dfaa64be0237dd5a_icgraph.svg" width="374" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classfabomatic_1_1_fab_backend_a511bc605ba1388900ee9fd0e82733a95_icgraph.svg" width="374" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
 </div>
-<a id="a4a2b36c40f955744965d385e8cad6fb7" name="a4a2b36c40f955744965d385e8cad6fb7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4a2b36c40f955744965d385e8cad6fb7">&#9670;&#160;</a></span>registerMaintenance()</h2>
+<a id="af7a551a8453d0cf00be4b64fb9e8e73d" name="af7a551a8453d0cf00be4b64fb9e8e73d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af7a551a8453d0cf00be4b64fb9e8e73d">&#9670;&#160;</a></span>registerMaintenance()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::unique_ptr&lt; <a class="el" href="classfabomatic_1_1_server_m_q_t_t_1_1_simple_response.xhtml">ServerMQTT::SimpleResponse</a> &gt; fabomatic::FabBackend::registerMaintenance </td>
+          <td class="memname">std::unique_ptr&lt; <a class="el" href="classfabomatic_1_1_m_q_t_t_1_1_simple_response.xhtml">MQTT::SimpleResponse</a> &gt; fabomatic::FabBackend::registerMaintenance </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="namespacefabomatic_1_1card.xhtml#aa36a4f716561b5c72d144ad55bc3e53b">card::uid_t</a>&#160;</td>
           <td class="paramname"><em>maintainer</em></td><td>)</td>
-          <td> -&gt; std::unique_ptr&lt;<a class="el" href="classfabomatic_1_1_server_m_q_t_t_1_1_simple_response.xhtml">ServerMQTT::SimpleResponse</a>&gt;</td>
+          <td> -&gt; std::unique_ptr&lt;<a class="el" href="classfabomatic_1_1_m_q_t_t_1_1_simple_response.xhtml">MQTT::SimpleResponse</a>&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1677,14 +1677,14 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="_fab_backend_8cpp_source.xhtml#l00563">563</a> of file <a class="el" href="_fab_backend_8cpp_source.xhtml">FabBackend.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  564</span>  {</div>
-<div class="line"><span class="lineno">  565</span>    <span class="keywordflow">return</span> processQuery&lt;ServerMQTT::SimpleResponse, ServerMQTT::RegisterMaintenanceQuery&gt;(maintainer);</div>
+<div class="line"><span class="lineno">  565</span>    <span class="keywordflow">return</span> processQuery&lt;MQTT::SimpleResponse, MQTT::RegisterMaintenanceQuery&gt;(maintainer);</div>
 <div class="line"><span class="lineno">  566</span>  }</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00163">fabomatic::BoardLogic::authorize()</a>, <a class="el" href="test__mqtt_8cpp_source.xhtml#l00050">fabomatic::tests::test_create_buffered_messages()</a>, and <a class="el" href="test__mqtt_8cpp_source.xhtml#l00133">fabomatic::tests::test_fabserver_calls()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classfabomatic_1_1_fab_backend_a4a2b36c40f955744965d385e8cad6fb7_icgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
+<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classfabomatic_1_1_fab_backend_af7a551a8453d0cf00be4b64fb9e8e73d_icgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
 </div>
 
 </div>
@@ -1784,18 +1784,18 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a id="a2b45b2e58a6358c640c48e636e3cb5db" name="a2b45b2e58a6358c640c48e636e3cb5db"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2b45b2e58a6358c640c48e636e3cb5db">&#9670;&#160;</a></span>startUse()</h2>
+<a id="ac034ce07a7967f9ecb3443904e0808da" name="ac034ce07a7967f9ecb3443904e0808da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac034ce07a7967f9ecb3443904e0808da">&#9670;&#160;</a></span>startUse()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::unique_ptr&lt; <a class="el" href="classfabomatic_1_1_server_m_q_t_t_1_1_simple_response.xhtml">ServerMQTT::SimpleResponse</a> &gt; fabomatic::FabBackend::startUse </td>
+          <td class="memname">std::unique_ptr&lt; <a class="el" href="classfabomatic_1_1_m_q_t_t_1_1_simple_response.xhtml">MQTT::SimpleResponse</a> &gt; fabomatic::FabBackend::startUse </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="namespacefabomatic_1_1card.xhtml#aa36a4f716561b5c72d144ad55bc3e53b">card::uid_t</a>&#160;</td>
           <td class="paramname"><em>uid</em></td><td>)</td>
-          <td> -&gt; std::unique_ptr&lt;<a class="el" href="classfabomatic_1_1_server_m_q_t_t_1_1_simple_response.xhtml">ServerMQTT::SimpleResponse</a>&gt;</td>
+          <td> -&gt; std::unique_ptr&lt;<a class="el" href="classfabomatic_1_1_m_q_t_t_1_1_simple_response.xhtml">MQTT::SimpleResponse</a>&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1811,14 +1811,14 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="_fab_backend_8cpp_source.xhtml#l00528">528</a> of file <a class="el" href="_fab_backend_8cpp_source.xhtml">FabBackend.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  529</span>  {</div>
-<div class="line"><span class="lineno">  530</span>    <span class="keywordflow">return</span> processQuery&lt;ServerMQTT::SimpleResponse, ServerMQTT::StartUseQuery&gt;(uid);</div>
+<div class="line"><span class="lineno">  530</span>    <span class="keywordflow">return</span> processQuery&lt;MQTT::SimpleResponse, MQTT::StartUseQuery&gt;(uid);</div>
 <div class="line"><span class="lineno">  531</span>  }</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00163">fabomatic::BoardLogic::authorize()</a>, <a class="el" href="test__mqtt_8cpp_source.xhtml#l00050">fabomatic::tests::test_create_buffered_messages()</a>, and <a class="el" href="test__mqtt_8cpp_source.xhtml#l00133">fabomatic::tests::test_fabserver_calls()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classfabomatic_1_1_fab_backend_a2b45b2e58a6358c640c48e636e3cb5db_icgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
+<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classfabomatic_1_1_fab_backend_ac034ce07a7967f9ecb3443904e0808da_icgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
 </div>
 
 </div>
@@ -1847,7 +1847,7 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  599</span>      <span class="keyword">const</span> BufferedQuery bq{msg.mqtt_message, msg.mqtt_topic, msg.wait_for_answer};</div>
 <div class="line"><span class="lineno">  600</span>      <span class="keywordflow">if</span> (bq.waitForReply())</div>
 <div class="line"><span class="lineno">  601</span>      {</div>
-<div class="line"><span class="lineno">  602</span>        <span class="keywordflow">if</span> (<span class="keyword">auto</span> result = <a class="code hl_function" href="classfabomatic_1_1_fab_backend.xhtml#a8f5341d851e1cd24dfaa64be0237dd5a">publishWithReply</a>(bq); result != <a class="code hl_enumvalue" href="classfabomatic_1_1_fab_backend.xhtml#af3e533d72406fdddc602359fdb9a5ae3af6278bbfdfc6fff58dae91a03d739c93">PublishResult::PublishedWithAnswer</a>)</div>
+<div class="line"><span class="lineno">  602</span>        <span class="keywordflow">if</span> (<span class="keyword">auto</span> result = <a class="code hl_function" href="classfabomatic_1_1_fab_backend.xhtml#a511bc605ba1388900ee9fd0e82733a95">publishWithReply</a>(bq); result != <a class="code hl_enumvalue" href="classfabomatic_1_1_fab_backend.xhtml#af3e533d72406fdddc602359fdb9a5ae3af6278bbfdfc6fff58dae91a03d739c93">PublishResult::PublishedWithAnswer</a>)</div>
 <div class="line"><span class="lineno">  603</span>        {</div>
 <div class="line"><span class="lineno">  604</span>          ESP_LOGW(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <span class="stringliteral">&quot;Retransmitting buffered message failed!&quot;</span>);</div>
 <div class="line"><span class="lineno">  605</span> </div>
@@ -1915,7 +1915,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>Waits for an answer from the MQTT server. </p>
+<p>Waits for an answer from the <a class="el" href="namespacefabomatic_1_1_m_q_t_t.xhtml" title="Contains all the types for MQTT messages between board and backend.">MQTT</a> server. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">max_duration</td><td>The maximum duration to wait. </td></tr>
@@ -2482,7 +2482,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Jul 2 2024 19:19:45 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Tue Jul 2 2024 19:30:05 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

@@ -1,6 +1,6 @@
 <map id="fabomatic::AuthProvider::tryLogin" name="fabomatic::AuthProvider::tryLogin">
 <area shape="rect" id="Node000001" title="Verifies the card ID against the server (if available) or the whitelist." alt="" coords="5,156,165,197"/>
-<area shape="rect" id="Node000002" href="$classfabomatic_1_1_fab_backend.xhtml#aec5c26ad6c62b7446ca18841910ef82d" title="Checks if the card ID is known to the server." alt="" coords="213,25,370,66"/>
+<area shape="rect" id="Node000002" href="$classfabomatic_1_1_fab_backend.xhtml#a3d119b46e2845f1c891e09e09d29ef67" title="Checks if the card ID is known to the server." alt="" coords="213,25,370,66"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="108,153,154,116,211,77,222,71,225,75,214,81,158,120,111,157"/>
 <area shape="rect" id="Node000003" href="$classfabomatic_1_1_fab_backend.xhtml#a1a45f556aadcbc428d14b7c7577ed43d" title="Establishes a connection to the WiFi network and the MQTT server." alt="" coords="213,91,370,131"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="151,153,209,134,211,139,152,158"/>

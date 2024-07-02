@@ -80,6 +80,9 @@ $(function() {
   <div class="headertitle"><div class="title">fabomatic::conf::debug Namespace Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Debug settings.  
+<a href="namespacefabomatic_1_1conf_1_1debug.xhtml#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -99,10 +102,12 @@ Variables</h2></td></tr>
 <tr class="memdesc:abff6613a08fc3c26c7151e576965bf22"><td class="mdescLeft">&#160;</td><td class="mdescRight">True to force EEPROM settings to defaults, regardless of actual values.  <br /></td></tr>
 <tr class="separator:abff6613a08fc3c26c7151e576965bf22"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5facfa139bf1642294264da0584f4691" id="r_a5facfa139bf1642294264da0584f4691"><td class="memItemLeft" align="right" valign="top">static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefabomatic_1_1conf_1_1debug.xhtml#a5facfa139bf1642294264da0584f4691">ENABLE_BUFFERING</a> {true}</td></tr>
-<tr class="memdesc:a5facfa139bf1642294264da0584f4691"><td class="mdescLeft">&#160;</td><td class="mdescRight">True if important MQTT messages should be saved when network is down and replayed.  <br /></td></tr>
+<tr class="memdesc:a5facfa139bf1642294264da0584f4691"><td class="mdescLeft">&#160;</td><td class="mdescRight">True if important <a class="el" href="namespacefabomatic_1_1_m_q_t_t.xhtml" title="Contains all the types for MQTT messages between board and backend.">MQTT</a> messages should be saved when network is down and replayed.  <br /></td></tr>
 <tr class="separator:a5facfa139bf1642294264da0584f4691"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Variable Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Debug settings. </p>
+</div><h2 class="groupheader">Variable Documentation</h2>
 <a id="a5facfa139bf1642294264da0584f4691" name="a5facfa139bf1642294264da0584f4691"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5facfa139bf1642294264da0584f4691">&#9670;&#160;</a></span>ENABLE_BUFFERING</h2>
 
@@ -123,10 +128,10 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>True if important MQTT messages should be saved when network is down and replayed. </p>
+<p>True if important <a class="el" href="namespacefabomatic_1_1_m_q_t_t.xhtml" title="Contains all the types for MQTT messages between board and backend.">MQTT</a> messages should be saved when network is down and replayed. </p>
 
-<p class="definition">Definition at line <a class="el" href="conf_8hpp_source.xhtml#l00092">92</a> of file <a class="el" href="conf_8hpp_source.xhtml">conf.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   92</span>{<span class="keyword">true</span>};</div>
+<p class="definition">Definition at line <a class="el" href="conf_8hpp_source.xhtml#l00094">94</a> of file <a class="el" href="conf_8hpp_source.xhtml">conf.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   94</span>{<span class="keyword">true</span>};</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="_buffered_msg_8cpp_source.xhtml#l00009">fabomatic::Buffer::push_back()</a>, <a class="el" href="_buffered_msg_8cpp_source.xhtml#l00028">fabomatic::Buffer::push_front()</a>, and <a class="el" href="test__savedconfig_8cpp_source.xhtml#l00201">fabomatic::tests::test_buffered_msg()</a>.</p>
 
@@ -154,8 +159,8 @@ Variables</h2></td></tr>
 
 <p>True to add logs to serial output. </p>
 
-<p class="definition">Definition at line <a class="el" href="conf_8hpp_source.xhtml#l00077">77</a> of file <a class="el" href="conf_8hpp_source.xhtml">conf.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   77</span>{<span class="keyword">true</span>};</div>
+<p class="definition">Definition at line <a class="el" href="conf_8hpp_source.xhtml#l00079">79</a> of file <a class="el" href="conf_8hpp_source.xhtml">conf.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   79</span>{<span class="keyword">true</span>};</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="main_8cpp_source.xhtml#l00411">setup()</a>, <a class="el" href="main_8cpp_source.xhtml#l00184">fabomatic::taskIsAlive()</a>, and <a class="el" href="main_8cpp_source.xhtml#l00100">fabomatic::taskPoweroffWarning()</a>.</p>
 
@@ -183,8 +188,8 @@ Variables</h2></td></tr>
 
 <p>True to add many logs regarding tasks scheduling and statistics. </p>
 
-<p class="definition">Definition at line <a class="el" href="conf_8hpp_source.xhtml#l00080">80</a> of file <a class="el" href="conf_8hpp_source.xhtml">conf.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   80</span>{<span class="keyword">false</span>};</div>
+<p class="definition">Definition at line <a class="el" href="conf_8hpp_source.xhtml#l00082">82</a> of file <a class="el" href="conf_8hpp_source.xhtml">conf.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   82</span>{<span class="keyword">false</span>};</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="_tasks_8cpp_source.xhtml#l00081">fabomatic::Tasks::Scheduler::execute()</a>, and <a class="el" href="_tasks_8cpp_source.xhtml#l00137">fabomatic::Tasks::Task::run()</a>.</p>
 
@@ -212,8 +217,8 @@ Variables</h2></td></tr>
 
 <p>True to force portal startup. May be useful to override saved configuration. </p>
 
-<p class="definition">Definition at line <a class="el" href="conf_8hpp_source.xhtml#l00086">86</a> of file <a class="el" href="conf_8hpp_source.xhtml">conf.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   86</span>{<span class="keyword">false</span>};</div>
+<p class="definition">Definition at line <a class="el" href="conf_8hpp_source.xhtml#l00088">88</a> of file <a class="el" href="conf_8hpp_source.xhtml">conf.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   88</span>{<span class="keyword">false</span>};</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="main_8cpp_source.xhtml#l00411">setup()</a>.</p>
 
@@ -241,8 +246,8 @@ Variables</h2></td></tr>
 
 <p>True to force EEPROM settings to defaults, regardless of actual values. </p>
 
-<p class="definition">Definition at line <a class="el" href="conf_8hpp_source.xhtml#l00089">89</a> of file <a class="el" href="conf_8hpp_source.xhtml">conf.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   89</span>{<span class="keyword">false</span>};</div>
+<p class="definition">Definition at line <a class="el" href="conf_8hpp_source.xhtml#l00091">91</a> of file <a class="el" href="conf_8hpp_source.xhtml">conf.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   91</span>{<span class="keyword">false</span>};</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="main_8cpp_source.xhtml#l00411">setup()</a>.</p>
 
@@ -270,8 +275,8 @@ Variables</h2></td></tr>
 
 <p>Serial speed in bauds. </p>
 
-<p class="definition">Definition at line <a class="el" href="conf_8hpp_source.xhtml#l00083">83</a> of file <a class="el" href="conf_8hpp_source.xhtml">conf.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   83</span>{115200};</div>
+<p class="definition">Definition at line <a class="el" href="conf_8hpp_source.xhtml#l00085">85</a> of file <a class="el" href="conf_8hpp_source.xhtml">conf.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   85</span>{115200};</div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="main_8cpp_source.xhtml#l00411">setup()</a>.</p>
 
@@ -280,7 +285,7 @@ Variables</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Jul 2 2024 19:19:46 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Tue Jul 2 2024 19:30:06 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>
