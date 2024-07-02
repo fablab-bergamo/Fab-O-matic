@@ -5,9 +5,7 @@
 
 namespace fabomatic
 {
-  /**
-   * Represents the buzzer for BoardLogic
-   */
+  /// @brief Represents the buzzer for BoardLogic
   class Buzzer
   {
   private:

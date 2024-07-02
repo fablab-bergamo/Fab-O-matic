@@ -18,6 +18,7 @@ namespace fabomatic
   /// @param disable_portal true to skip portal opening (used at boot time)
   auto openConfigPortal(bool force_reset, bool disable_portal) -> void;
 
+  /// @brief Initialization of the Arduino OTA library with settings for fabomatic
   auto setupOTA() -> void;
 
 } // namespace fabomatic

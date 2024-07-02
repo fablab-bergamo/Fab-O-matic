@@ -15,15 +15,11 @@
 
 namespace fabomatic
 {
-  /**
-   * Main class implementing the state changes
-   */
+  /// @brief Main class implementing the state changes
   class BoardLogic
   {
   public:
-    /**
-     * Main states of the board
-     */
+    /// @brief Main states of the board
     enum class Status : uint8_t
     {
       Clear,

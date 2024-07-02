@@ -3,6 +3,8 @@
 
 #include <cstdint>
 
+/// @brief Classification of the machine
+/// @note No logic depend on it at the moment
 enum class MachineType : uint8_t
 {
   Invalid = 0,
@@ -13,9 +15,7 @@ enum class MachineType : uint8_t
   Other = 5
 };
 
-/**
- * The unique machine identifier for the backend
- */
+/// @brief The unique machine identifier for the backend
 struct MachineID
 {
   uint16_t id;

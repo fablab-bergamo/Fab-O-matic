@@ -6,9 +6,7 @@
 
 namespace fabomatic
 {
-  /**
-   * Base class for the real and mock implementation of RFID tag reader chip.
-   */
+  /// @brief Base class for the real and mock implementation of RFID tag reader chip.
   class BaseRFIDWrapper
   {
   public:

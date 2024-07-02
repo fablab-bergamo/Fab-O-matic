@@ -34,12 +34,12 @@ namespace fabomatic
     config.password = secrets::credentials::password;
 
     // MQTT
-    config.mqtt_server = conf::default_config::mqtt_server;
+    config.mqtt_server = conf::mqtt::mqtt_server;
     config.mqtt_user = secrets::credentials::mqtt_user;
     config.mqtt_password = secrets::credentials::mqtt_password;
 
     // MQTT Switch
-    config.mqtt_switch_topic = conf::default_config::mqtt_switch_topic;
+    config.mqtt_switch_topic = conf::mqtt::mqtt_switch_topic;
 
     // Machine
     config.setMachineID(conf::default_config::machine_id);

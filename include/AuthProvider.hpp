@@ -13,9 +13,7 @@
 
 namespace fabomatic
 {
-  /**
-   * This class manages authentication of a RFID tag through cache, whitelist or network request.
-   */
+  /// @brief This class manages authentication of a RFID tag through cache, whitelist or network request.
   class AuthProvider
   {
   private:

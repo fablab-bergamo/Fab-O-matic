@@ -18,9 +18,7 @@
 
 namespace fabomatic
 {
-  /**
-   * This class is used to exchange messages with the MQTT broker and the backend
-   */
+  /// @brief This class is used to exchange messages with the MQTT broker and the backend
   class FabBackend
   {
   private:

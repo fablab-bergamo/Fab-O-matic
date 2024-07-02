@@ -11,9 +11,7 @@
 
 namespace fabomatic
 {
-  /**
-   * Represents a user with access level, name, RFID tag, and auth result.
-   */
+  /// @brief Represents a user with access level, name, RFID tag, and auth result.
   struct FabUser
   {
     enum class UserLevel : uint8_t

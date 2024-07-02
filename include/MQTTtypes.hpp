@@ -11,6 +11,7 @@
 
 namespace fabomatic::ServerMQTT
 {
+  /// @brief base class for all MQTT request to the backend
   class Query
   {
   public:
