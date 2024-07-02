@@ -21,7 +21,7 @@
 <!-- Node2 -->
 <g id="Node000002" class="node">
 <title>Node2</title>
-<g id="a_Node000002"><a xlink:href="classfabomatic_1_1_fab_backend.xhtml#a1a9d380dab0f6118461669242e9c7c0f" target="_top" xlink:title="Registers the end of machine usage.">
+<g id="a_Node000002"><a xlink:href="classfabomatic_1_1_fab_backend.xhtml#ad74678b61ebbdfe50857e91dad3eb866" target="_top" xlink:title="Registers the end of machine usage.">
 <polygon fill="white" stroke="#666666" points="292.25,-324.5 174.25,-324.5 174.25,-294 292.25,-294 292.25,-324.5"/>
 <text text-anchor="start" x="182.25" y="-311" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::FabBackend</text>
 <text text-anchor="middle" x="233.25" y="-299.75" font-family="Helvetica,sans-Serif" font-size="10.00">::finishUse</text>
@@ -78,7 +78,7 @@
 <!-- Node6 -->
 <g id="Node000006" class="node">
 <title>Node6</title>
-<g id="a_Node000006"><a xlink:href="classfabomatic_1_1_fab_backend.xhtml#ad6ebb7dbe860caef3524520eb69b8e2a" target="_top" xlink:title="Informs the backend that the machine is in use.">
+<g id="a_Node000006"><a xlink:href="classfabomatic_1_1_fab_backend.xhtml#ac3065c3c86669065f8ecdd62dfe02772" target="_top" xlink:title="Informs the backend that the machine is in use.">
 <polygon fill="white" stroke="#666666" points="292.25,-177.5 174.25,-177.5 174.25,-147 292.25,-147 292.25,-177.5"/>
 <text text-anchor="start" x="182.25" y="-164" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::FabBackend</text>
 <text text-anchor="middle" x="233.25" y="-152.75" font-family="Helvetica,sans-Serif" font-size="10.00">::inUse</text>
@@ -97,7 +97,7 @@
 <!-- Node7 -->
 <g id="Node000007" class="node">
 <title>Node7</title>
-<g id="a_Node000007"><a xlink:href="classfabomatic_1_1_fab_backend.xhtml#af7a551a8453d0cf00be4b64fb9e8e73d" target="_top" xlink:title="Registers a maintenance action.">
+<g id="a_Node000007"><a xlink:href="classfabomatic_1_1_fab_backend.xhtml#a1d2a3a95b98c66db4c9d4fc9c1d401ef" target="_top" xlink:title="Registers a maintenance action.">
 <polygon fill="white" stroke="#666666" points="292.25,-128.5 174.25,-128.5 174.25,-98 292.25,-98 292.25,-128.5"/>
 <text text-anchor="start" x="182.25" y="-115" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::FabBackend</text>
 <text text-anchor="middle" x="233.25" y="-103.75" font-family="Helvetica,sans-Serif" font-size="10.00">::registerMaintenance</text>
@@ -135,7 +135,7 @@
 <!-- Node12 -->
 <g id="Node000012" class="node">
 <title>Node12</title>
-<g id="a_Node000012"><a xlink:href="classfabomatic_1_1_fab_backend.xhtml#ac034ce07a7967f9ecb3443904e0808da" target="_top" xlink:title="Registers the start of machine usage.">
+<g id="a_Node000012"><a xlink:href="classfabomatic_1_1_fab_backend.xhtml#a96279ac5e1540441111f7ecb04ba7ce6" target="_top" xlink:title="Registers the start of machine usage.">
 <polygon fill="white" stroke="#666666" points="292.25,-30.5 174.25,-30.5 174.25,0 292.25,0 292.25,-30.5"/>
 <text text-anchor="start" x="182.25" y="-17" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::FabBackend</text>
 <text text-anchor="middle" x="233.25" y="-5.75" font-family="Helvetica,sans-Serif" font-size="10.00">::startUse</text>

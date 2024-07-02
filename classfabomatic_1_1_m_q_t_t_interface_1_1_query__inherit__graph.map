@@ -1,0 +1,19 @@
+<map id="fabomatic::MQTTInterface::Query" name="fabomatic::MQTTInterface::Query">
+<area shape="rect" id="Node000001" title="base class for all MQTT request to the backend" alt="" coords="663,5,827,145"/>
+<area shape="rect" id="Node000002" href="$classfabomatic_1_1_buffered_query.xhtml" title="Query to be replayed." alt="" coords="5,193,163,399"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="649,81,546,89,424,108,360,123,296,142,234,166,176,196,164,203,161,199,173,191,232,161,294,137,359,118,423,103,545,84,648,76"/>
+<area shape="rect" id="Node000003" href="$classfabomatic_1_1_m_q_t_t_interface_1_1_alive_query.xhtml" title="board status notification" alt="" coords="187,226,351,366"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="649,94,583,109,509,130,434,159,364,196,325,228,321,224,361,191,432,154,508,125,582,104,648,89"/>
+<area shape="rect" id="Node000004" href="$classfabomatic_1_1_m_q_t_t_interface_1_1_in_use_query.xhtml" title="periodical message when the machine is in use" alt="" coords="375,206,539,386"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="652,128,601,160,552,195,537,208,534,204,549,191,598,155,649,124"/>
+<area shape="rect" id="Node000005" href="$classfabomatic_1_1_m_q_t_t_interface_1_1_machine_query.xhtml" title="machine status query" alt="" coords="563,226,727,366"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="710,160,679,227,674,225,705,158"/>
+<area shape="rect" id="Node000006" href="$classfabomatic_1_1_m_q_t_t_interface_1_1_register_maintenance_query.xhtml" title="Maintenance action record." alt="" coords="751,216,939,376"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="785,157,812,215,807,217,780,160"/>
+<area shape="rect" id="Node000007" href="$classfabomatic_1_1_m_q_t_t_interface_1_1_start_use_query.xhtml" title="start of machine use" alt="" coords="963,216,1127,376"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="842,120,898,153,954,191,980,214,976,218,950,195,896,157,839,125"/>
+<area shape="rect" id="Node000008" href="$classfabomatic_1_1_m_q_t_t_interface_1_1_stop_use_query.xhtml" title="end of machine use" alt="" coords="1151,206,1315,386"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="843,88,912,102,989,123,1067,153,1141,191,1159,204,1156,208,1139,196,1065,158,987,129,910,107,841,93"/>
+<area shape="rect" id="Node000009" href="$classfabomatic_1_1_m_q_t_t_interface_1_1_user_query.xhtml" title="user authentication query" alt="" coords="1339,216,1503,376"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="842,75,948,83,1073,103,1139,117,1205,137,1269,161,1329,191,1361,214,1358,218,1327,196,1267,166,1203,142,1137,123,1072,108,947,89,842,81"/>
+</map>

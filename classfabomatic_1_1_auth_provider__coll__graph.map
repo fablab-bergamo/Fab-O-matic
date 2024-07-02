@@ -1,17 +1,15 @@
 <map id="fabomatic::AuthProvider" name="fabomatic::AuthProvider">
-<area shape="rect" id="Node000001" title="This class manages authentication of a RFID tag through cache, whitelist or network request." alt="" coords="36,708,187,953"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,396,169,476"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="92,475,106,691,100,691,87,475"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="200,134,295,199"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="187,181,147,197,129,209,114,225,93,266,83,311,81,356,84,396,78,396,76,356,78,311,88,264,110,221,126,205,144,192,185,176"/>
-<area shape="rect" id="Node000006" title=" " alt="" coords="185,277,309,372"/>
-<area shape="poly" id="edge6_Node000006_Node000003" title=" " alt="" coords="250,214,250,277,245,277,245,214"/>
-<area shape="rect" id="Node000007" title=" " alt="" coords="345,277,485,372"/>
-<area shape="poly" id="edge8_Node000007_Node000003" title=" " alt="" coords="310,173,359,189,382,203,401,221,415,248,420,277,415,278,410,250,397,225,379,207,357,194,309,178"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="237,5,258,71"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="250,70,250,116,245,116,245,70"/>
-<area shape="rect" id="Node000005" href="$structfabomatic_1_1_cached_cards.xhtml" title="This struct contains CACHE_LEN RFID tags with their authentication by the backend." alt="" coords="171,500,324,645"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="212,646,186,694,182,692,207,644"/>
-<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="250,371,250,483,245,483,245,371"/>
-<area shape="poly" id="edge7_Node000005_Node000007" title=" " alt="" coords="386,373,308,488,303,485,382,370"/>
+<area shape="rect" id="Node000001" title="This class manages authentication of a RFID tag through cache, whitelist or network request." alt="" coords="35,580,185,825"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,267,169,347"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="92,347,105,563,99,563,87,347"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="199,5,293,71"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="185,52,145,69,128,81,113,96,101,116,92,137,82,183,80,228,83,267,78,268,75,228,77,182,87,136,96,113,109,93,124,77,143,64,183,47"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="184,149,308,243"/>
+<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="249,86,249,149,243,149,243,86"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="344,149,484,243"/>
+<area shape="poly" id="edge7_Node000006_Node000003" title=" " alt="" coords="309,44,358,61,381,75,400,93,414,119,419,148,414,149,409,121,396,96,377,79,355,66,307,49"/>
+<area shape="rect" id="Node000004" href="$structfabomatic_1_1_cached_cards.xhtml" title="This struct contains CACHE_LEN RFID tags with their authentication by the backend." alt="" coords="169,371,323,517"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="210,518,185,566,180,563,206,515"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="249,243,249,355,243,355,243,243"/>
+<area shape="poly" id="edge6_Node000004_Node000006" title=" " alt="" coords="385,244,306,359,302,356,381,241"/>
 </map>

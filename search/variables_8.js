@@ -7,6 +7,6 @@ var searchData=
   ['is_5fneopixel_4',['is_neopixel',['../structfabomatic_1_1pins__config_1_1led__config.xhtml#a39f3d50f092e000bde262c85ba0944fc',1,'fabomatic::pins_config::led_config']]],
   ['is_5frgb_5',['is_rgb',['../structfabomatic_1_1pins__config_1_1led__config.xhtml#abdb2f44be336d8c219be23a7ff4911fb',1,'fabomatic::pins_config::led_config']]],
   ['is_5frunning_6',['is_running',['../classfabomatic_1_1_mock_m_q_t_t_broker.xhtml#aaee749f4bebf96f67e62da34998ab900',1,'fabomatic::MockMQTTBroker']]],
-  ['is_5fvalid_7',['is_valid',['../classfabomatic_1_1_m_q_t_t_1_1_machine_response.xhtml#a902e7ba652ac5fac16680b4451dffa04',1,'fabomatic::MQTT::MachineResponse']]],
+  ['is_5fvalid_7',['is_valid',['../classfabomatic_1_1_m_q_t_t_interface_1_1_machine_response.xhtml#afddcddc5ae8299f3d17e626c2ecbf999',1,'fabomatic::MQTTInterface::MachineResponse']]],
   ['ison_8',['isOn',['../classfabomatic_1_1_led.xhtml#ae0fa7a3a4a21758a82b1bd42decaa990',1,'fabomatic::Led']]]
 ];

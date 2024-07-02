@@ -26,7 +26,7 @@ var searchData=
   ['getperiod_23',['getPeriod',['../classfabomatic_1_1_tasks_1_1_task.xhtml#a395c2db6ff8c3b4dbb34a6bae7be4655',1,'fabomatic::Tasks::Task']]],
   ['getpowerstate_24',['getPowerState',['../classfabomatic_1_1_machine.xhtml#a3c5304fd80e0cc1c2118a59c64222d6d',1,'fabomatic::Machine']]],
   ['getrebootrequest_25',['getRebootRequest',['../classfabomatic_1_1_board_logic.xhtml#a46fd65258102b559ca9599bd4d3c1fc1',1,'fabomatic::BoardLogic']]],
-  ['getresult_26',['getResult',['../classfabomatic_1_1_m_q_t_t_1_1_user_response.xhtml#aaa2a82900d5a221a273ce78744908c64',1,'fabomatic::MQTT::UserResponse']]],
+  ['getresult_26',['getResult',['../classfabomatic_1_1_m_q_t_t_interface_1_1_user_response.xhtml#a626f19fd7933fc309c99536470ca5703',1,'fabomatic::MQTTInterface::UserResponse']]],
   ['getrfid_27',['getRfid',['../classfabomatic_1_1_board_logic.xhtml#a7b151fca2de8263b021b8b6f26e5d0ab',1,'fabomatic::BoardLogic']]],
   ['getruncounter_28',['getRunCounter',['../classfabomatic_1_1_tasks_1_1_task.xhtml#a2b247d96f354eb1cfaa02c9cad06add2',1,'fabomatic::Tasks::Task']]],
   ['getserver_29',['getServer',['../classfabomatic_1_1_board_logic.xhtml#ac2feade03b2a74a1998dcec282a8eacb',1,'fabomatic::BoardLogic']]],
@@ -38,7 +38,7 @@ var searchData=
   ['getusageduration_35',['getUsageDuration',['../classfabomatic_1_1_machine.xhtml#a9c845a163660550fa779516a8be8681a',1,'fabomatic::Machine']]],
   ['git_5fversion_36',['git_version',['../_board_logic_8cpp.xhtml#aef0b5124fcadf80db529fcb6df42808a',1,'GIT_VERSION:&#160;BoardLogic.cpp'],['../_m_q_t_ttypes_8cpp.xhtml#aef0b5124fcadf80db529fcb6df42808a',1,'GIT_VERSION:&#160;MQTTtypes.cpp']]],
   ['globals_2ehpp_37',['globals.hpp',['../globals_8hpp.xhtml',1,'']]],
-  ['grace_38',['grace',['../classfabomatic_1_1_m_q_t_t_1_1_machine_response.xhtml#aa2b0db7f6e11d107d967d7760d9f7c36',1,'fabomatic::MQTT::MachineResponse']]],
+  ['grace_38',['grace',['../classfabomatic_1_1_m_q_t_t_interface_1_1_machine_response.xhtml#a71d7c0a9849e0e7bfd7d825ad8ac000d',1,'fabomatic::MQTTInterface::MachineResponse']]],
   ['grace_5fperiod_39',['grace_period',['../structfabomatic_1_1_machine_config.xhtml#ad5f5618953abe4aa7d2d3352647bf584',1,'fabomatic::MachineConfig']]],
   ['green_5fpin_40',['green_pin',['../structfabomatic_1_1pins__config_1_1led__config.xhtml#a75763c073c851328dd89841ef6a9c089',1,'fabomatic::pins_config::led_config']]]
 ];
