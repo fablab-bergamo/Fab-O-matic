@@ -62,7 +62,7 @@ namespace fabomatic::tests
     TEST_ASSERT_TRUE_MESSAGE(result, "Machine toString() failed");
 
     TEST_ASSERT_TRUE_MESSAGE(config.hasRelay() || fabomatic::pins.relay.ch1_pin == fabomatic::NO_PIN, "Machine relay not configured");
-    TEST_ASSERT_TRUE_MESSAGE(config.hasMqttSwitch() || fabomatic::conf::default_config::mqtt_switch_topic.empty(), "Machine MQTT switch not configured");
+    TEST_ASSERT_TRUE_MESSAGE(config.hasMqttSwitch() || fabomatic::conf::mqtt::mqtt_switch_topic.empty(), "Machine MQTT switch not configured");
 
     TEST_ASSERT_TRUE_MESSAGE(config.machine_id.id == fabomatic::conf::default_config::machine_id.id, "Machine ID not configured");
   }

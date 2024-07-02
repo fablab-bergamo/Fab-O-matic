@@ -323,8 +323,6 @@ namespace fabomatic
     std::cout << "Compile-time settings (may be overriden)" << '\n';
     // namespace conf::default_config
     std::cout << "Machine defaults:" << '\n';
-    std::cout << "\tmqtt_server: " << default_config::mqtt_server << '\n';
-    std::cout << "\tmqtt_switch_topic: " << default_config::mqtt_switch_topic << '\n';
     std::cout << "\tmachine_id: " << default_config::machine_id.id << '\n';
     std::cout << "\tmachine_name: " << default_config::machine_name << '\n';
     std::cout << "\tmachine_type: " << static_cast<int>(default_config::machine_type) << '\n';
@@ -374,6 +372,10 @@ namespace fabomatic
     std::cout << "\tMQTT_ALIVE_PERIOD: " << std::chrono::seconds(tasks::MQTT_ALIVE_PERIOD).count() << "s" << '\n';
     // namespace conf::mqtt
     std::cout << "MQTT settings:" << '\n';
+    std::cout << "\tmqtt_server: " << mqtt::mqtt_server << '\n';
+    std::cout << "\tmqtt_switch_topic: " << mqtt::mqtt_switch_topic << '\n';
+    std::cout << "\tmqtt_switch_on_message: " << mqtt::mqtt_switch_on_message << '\n';
+    std::cout << "\tmqtt_switch_off_message: " << mqtt::mqtt_switch_off_message << '\n';
     std::cout << "\ttopic: " << mqtt::topic << '\n';
     std::cout << "\tresponse_topic: " << mqtt::response_topic << '\n';
     std::cout << "\tMAX_TRIES: " << mqtt::MAX_TRIES << '\n';

@@ -173,7 +173,7 @@ namespace fabomatic
     const auto &sw_topic = config.value().mqtt_switch_topic;
 
     String topic{sw_topic.data()};
-    String payload = value ? conf::default_config::mqtt_switch_on_message.data() : conf::default_config::mqtt_switch_on_message.data();
+    String payload = value ? conf::mqtt::mqtt_switch_on_message.data() : conf::mqtt::mqtt_switch_on_message.data();
 
     auto retries = 0;
     while (!mqtt_server.publish(topic, payload, false))

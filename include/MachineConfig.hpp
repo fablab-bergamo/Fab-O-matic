@@ -11,10 +11,8 @@
 
 namespace fabomatic
 {
-  /**
-   * Represents the configuration settings for the machine.
-   * It is a mix of saved settings on Flash and backend settings.
-   */
+  /// @brief Represents the configuration settings for the machine.
+  /// @note It is a mix of saved settings on Flash and backend settings.
   struct MachineConfig
   {
     MachineID machine_id{0};

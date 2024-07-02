@@ -6,38 +6,50 @@
 
 namespace fabomatic
 {
+  /// @brief Constant used to indicate the pin is not used
   static constexpr uint8_t NO_PIN = -1;
 
   struct pins_config
   {
+    /// @brief SPI RFID chip pins definition
     struct mfrc522_config
-    { /* SPI RFID chip pins definition */
+    {
       uint8_t sda_pin;
       uint8_t mosi_pin;
       uint8_t miso_pin;
       uint8_t sck_pin;
       uint8_t reset_pin;
     };
-    struct lcd_config /* LCD parallel interface pins definition */
+
+    /// @brief LCD parallel interface pins definition
+    struct lcd_config
     {
-      uint8_t rs_pin; /* Reset */
-      uint8_t en_pin; /* Enable */
+      /// @brief reset pin
+      uint8_t rs_pin;
+      /// @brief enable pin
+      uint8_t en_pin;
       uint8_t d0_pin;
       uint8_t d1_pin;
       uint8_t d2_pin;
       uint8_t d3_pin;
-      uint8_t bl_pin;  /* Backlight pin */
-      bool active_low; /* Backlight active low*/
-    };
-    struct relay_config
-    {
-      uint8_t ch1_pin; /* Control pin for Machine 1 */
+      /// @brief Backlight pin
+      uint8_t bl_pin;
+      /// @brief Backlight active low
       bool active_low;
     };
+    /// @brief Hardwired relay configuration
+    struct relay_config
+    {
+      /// @brief Control pin for Machine 1
+      uint8_t ch1_pin;
+      bool active_low;
+    };
+    /// @brief Configuration of the buzzer
     struct buzzer_config
     {
       uint8_t pin;
     };
+    /// @brief Configuration of the LED/NeoPixel/RGB led
     struct led_config
     {
       uint8_t pin;
@@ -47,11 +59,12 @@ namespace fabomatic
       uint8_t green_pin;
       uint8_t blue_pin;
     };
+    /// @brief Physical buttons wired to the ESP32
     struct buttons_config
     {
       uint8_t factory_defaults_pin;
     };
-    // Struct members
+
     mfrc522_config mfrc522;
     lcd_config lcd;
     relay_config relay;
@@ -60,7 +73,7 @@ namespace fabomatic
     buttons_config buttons;
   };
 
-  // Check at compile time that there are no duplicate pin definitions
+  /// @brief Check at compile time that there are no duplicate pin definitions
   constexpr bool no_duplicates(pins_config pins)
   {
     std::array pin_nums{

@@ -4,9 +4,7 @@
 #include <chrono>
 #include <string_view>
 
-/**
- * Contains all espressif32 features not masked by Arduino IDE
- */
+/// @brief Contains all espressif32 features not masked by Arduino IDE
 namespace fabomatic::esp32
 {
   [[nodiscard]] auto setupWatchdog(std::chrono::milliseconds timeout) -> bool;

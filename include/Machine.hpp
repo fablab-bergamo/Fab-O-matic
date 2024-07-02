@@ -12,9 +12,7 @@ namespace fabomatic
 {
   class FabBackend;
 
-  /**
-   * Represents the FabLab machine connected to the board
-   */
+  /// @brief Represents the FabLab machine connected to the board
   class Machine
   {
   public:

@@ -19,9 +19,7 @@ namespace fabomatic::Tasks
 
   class Scheduler;
 
-  /**
-   * A task class which represents a function to be called at requested intervals
-   */
+  /// @brief A task class which represents a function to be called at requested intervals
   class Task
   {
   public:
@@ -112,9 +110,7 @@ namespace fabomatic::Tasks
     unsigned long run_counter;
   };
 
-  /**
-   * The schedule is in charge of running tasks in the right order based on their requested intervals.
-   */
+  /// @brief The schedule is in charge of running tasks in the right order based on their requested intervals.
   class Scheduler
   {
   public:
