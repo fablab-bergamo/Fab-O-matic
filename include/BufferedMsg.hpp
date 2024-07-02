@@ -46,7 +46,7 @@ namespace fabomatic
   };
 
   /// @brief Query to be replayed
-  class BufferedQuery final : public ServerMQTT::Query
+  class BufferedQuery final : public MQTTInterface::Query
   {
   private:
     std::string_view mqtt_value;

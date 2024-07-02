@@ -15,7 +15,7 @@
 #define GIT_VERSION "unknown"
 #endif
 
-namespace fabomatic::ServerMQTT
+namespace fabomatic::MQTTInterface
 {
   auto UserQuery::payload() const -> const std::string
   {
@@ -148,4 +148,4 @@ namespace fabomatic::ServerMQTT
     auto response = std::make_unique<SimpleResponse>(doc["request_ok"].as<bool>());
     return response;
   }
-} // namespace fabomatic::ServerMQTT
+} // namespace fabomatic::MQTT

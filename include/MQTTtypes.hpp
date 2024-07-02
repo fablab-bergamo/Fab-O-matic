@@ -9,7 +9,8 @@
 #include <memory>
 #include <string_view>
 
-namespace fabomatic::ServerMQTT
+/// @brief Contains all the types for MQTT messages between board and backend
+namespace fabomatic::MQTTInterface
 {
   /// @brief base class for all MQTT request to the backend
   class Query
@@ -21,6 +22,7 @@ namespace fabomatic::ServerMQTT
     virtual ~Query() = default;
   };
 
+  /// @brief user authentication query
   class UserQuery final : public Query
   {
   public:
@@ -34,6 +36,7 @@ namespace fabomatic::ServerMQTT
     [[nodiscard]] auto buffered() const -> bool override { return false; };
   };
 
+  /// @brief machine status query
   class MachineQuery final : public Query
   {
   public:
@@ -43,6 +46,7 @@ namespace fabomatic::ServerMQTT
     [[nodiscard]] auto buffered() const -> bool override { return false; };
   };
 
+  /// @brief board status notification
   class AliveQuery final : public Query
   {
   public:
@@ -52,6 +56,7 @@ namespace fabomatic::ServerMQTT
     [[nodiscard]] auto buffered() const -> bool override { return false; };
   };
 
+  /// @brief start of machine use
   class StartUseQuery final : public Query
   {
   public:
@@ -65,6 +70,7 @@ namespace fabomatic::ServerMQTT
     [[nodiscard]] auto buffered() const -> bool override { return true; };
   };
 
+  /// @brief end of machine use
   class StopUseQuery final : public Query
   {
   public:
@@ -83,6 +89,7 @@ namespace fabomatic::ServerMQTT
     [[nodiscard]] auto buffered() const -> bool override { return true; };
   };
 
+  /// @brief periodical message when the machine is in use
   class InUseQuery final : public Query
   {
   public:
@@ -101,6 +108,7 @@ namespace fabomatic::ServerMQTT
     [[nodiscard]] auto buffered() const -> bool override { return false; };
   };
 
+  /// @brief Maintenance action record
   class RegisterMaintenanceQuery final : public Query
   {
   public:
@@ -114,6 +122,7 @@ namespace fabomatic::ServerMQTT
     [[nodiscard]] auto buffered() const -> bool override { return true; };
   };
 
+  /// @brief Base class for server replies
   class Response
   {
   public:
@@ -123,6 +132,7 @@ namespace fabomatic::ServerMQTT
     constexpr Response(bool result) : request_ok(result){};
   };
 
+  /// @brief Result code for user authentication result
   enum class UserResult : uint8_t
   {
     Invalid = 0,
@@ -131,6 +141,7 @@ namespace fabomatic::ServerMQTT
     MaintenanceUnauthorized = 3,
   };
 
+  /// @brief Backend response for a user authentication query
   class UserResponse final : public Response
   {
   public:
@@ -150,6 +161,7 @@ namespace fabomatic::ServerMQTT
     [[nodiscard]] auto toString() const -> const std::string;
   };
 
+  /// @brief Backend response for machine status query
   class MachineResponse final : public Response
   {
   public:
@@ -167,6 +179,7 @@ namespace fabomatic::ServerMQTT
     [[nodiscard]] static auto fromJson(JsonDocument &doc) -> std::unique_ptr<MachineResponse>;
   };
 
+  /// @brief Default response for all other messages
   class SimpleResponse final : public Response
   {
   public:
@@ -176,5 +189,5 @@ namespace fabomatic::ServerMQTT
     [[nodiscard]] static auto fromJson(JsonDocument &doc) -> std::unique_ptr<SimpleResponse>;
   };
 
-} // namespace fabomatic::ServerMQTT
+} // namespace fabomatic::MQTTInterface
 #endif // MQTTTYPES_HPP_
