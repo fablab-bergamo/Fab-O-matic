@@ -6,6 +6,7 @@
 #include "card.hpp"
 #include "conf.hpp"
 #include "pins.hpp"
+#include "Tasks.hpp"
 
 namespace fabomatic
 {
@@ -47,7 +48,7 @@ namespace fabomatic
   template <typename Driver>
   auto RFIDWrapper<Driver>::cardStillThere(const card::uid_t original, std::chrono::milliseconds max_delay) const -> bool
   {
-    const auto start = std::chrono::system_clock::now();
+    const auto start = fabomatic::Tasks::arduinoNow();
     do
     {
       // Detect Tag without looking for collisions
@@ -60,7 +61,7 @@ namespace fabomatic
           return true;
       }
       delay(20);
-    } while (std::chrono::system_clock::now() - start < max_delay);
+    } while (fabomatic::Tasks::arduinoNow() - start < max_delay);
 
     return false;
   }

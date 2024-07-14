@@ -44,10 +44,13 @@ jobs:
         run: cp conf/secrets.hpp.example conf/secrets.hpp
       - name: Build PlatformIO Project ${{ matrix.variant }}
         run: pio run --environment ${{ matrix.variant }}  
+      - name: Set sha_short variable
+        id: vars
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT        
       - name: Upload firmware image for ${{ matrix.variant }}
         uses: actions/upload-artifact@v4
         with:
-          name: Firmware files for ${{ matrix.variant }}
+          name: FW-${{ matrix.variant }}-${{ steps.vars.outputs.sha_short }}
           path: |
                 .pio/build/${{ matrix.variant }}/firmware.bin
                 .pio/build/${{ matrix.variant }}/firmware_metrics.txt

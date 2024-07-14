@@ -1,0 +1,102 @@
+name: Compare firmware sizes (tag)
+
+on: 
+  workflow_dispatch:
+  push:
+    tags:
+      - '*'  # Trigger on all tags
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+    
+jobs:
+  size_report:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        variant:
+          - hardware-rev0-it_IT
+          - esp32-devboard
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 50
+
+      - name: Install PlatformIO Core
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --upgrade platformio
+
+      - name: Use secrets.hpp.example as base for the build
+        run: cp conf/secrets.hpp.example conf/secrets.hpp
+
+      - name: Build PlatformIO Project (current version)
+        run: pio run --environment ${{ matrix.variant }}
+
+      - name: Copy latest MAP file
+        run: cp .pio/build/${{ matrix.variant }}/firmware.map ../firmware.map.latest 
+
+      - name: Find previous tag
+        id: prev_tag
+        run: |
+          tags=$(git tag --sort=-creatordate)
+          for tag in $tags; do
+            if [ "$tag" != "${GITHUB_REF#refs/tags/}" ]; then
+              echo "previous_tag=$tag" >> $GITHUB_ENV
+              break
+            fi
+          done
+
+      - name: Check out previous tag
+        run: git checkout ${{ env.previous_tag }}
+
+      - name: Use secrets.hpp.example as base for the build
+        run: cp conf/secrets.hpp.example conf/secrets.hpp
+
+      - name: Build PlatformIO Project (previous version)
+        run: pio run --environment ${{ matrix.variant }}
+
+      - name: Copy previous MAP file
+        run: cp .pio/build/${{ matrix.variant }}/firmware.map ../firmware.map.previous
+
+      - name: Compare MAP files
+        run: python -m esp_idf_size --format=text --diff=../firmware.map.previous ../firmware.map.latest -o size_report.txt
+
+      - name: Detailed report
+        run: python -m esp_idf_size --archives --format=text --diff=../firmware.map.previous ../firmware.map.latest -o size_report_details.txt
+
+      - name: Upload size report
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.variant }}_size_report
+          path: |
+            size_report.txt
+            size_report_details.txt
+          retention-days: 90
+
+      - name: Comment size changes on release/tag page
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const report = fs.readFileSync('size_report.txt', 'utf8');
+            const previousTag = process.env.previous_tag;
+            if (report) {
+              const release = await github.rest.repos.getReleaseByTag({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                tag: context.ref.substring(10)
+              });
+              const truncatedReport = report.length > 63*1024 ? report.substring(0, 63*1024) + '... (truncated)' : report;
+              await github.rest.repos.updateRelease({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                release_id: release.data.id,
+                body: release.data.body + '\n\n## Firmware size changes for ${{ matrix.variant }}\n\nCommit CURRENT ' + context.sha + ' vs REFERENCE ' + previousTag + '\n```\n' + truncatedReport + '\n```'
+              });
+            }

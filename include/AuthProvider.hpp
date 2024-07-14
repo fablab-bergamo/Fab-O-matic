@@ -5,6 +5,7 @@
 #include <string>
 #include <string_view>
 #include <tuple>
+#include <optional>
 
 #include "FabUser.hpp"
 #include "secrets.hpp"
@@ -20,10 +21,10 @@ namespace fabomatic
     WhiteList whitelist;
     mutable CachedCards cache;
     mutable size_t cache_idx{0};
-    [[nodiscard]] auto uidInWhitelist(card::uid_t uid) const -> std::optional<WhiteListEntry>;
-    [[nodiscard]] auto uidInCache(card::uid_t uid) const -> std::optional<CachedCard>;
-    [[nodiscard]] auto searchCache(card::uid_t candidate_uid) const -> std::optional<CachedCard>;
-    auto updateCache(card::uid_t candidate_uid, FabUser::UserLevel level) const -> void;
+    [[nodiscard]] constexpr auto uidInWhitelist(card::uid_t uid) const -> std::optional<WhiteListEntry>;
+    [[nodiscard]] constexpr auto uidInCache(card::uid_t uid) const -> std::optional<CachedCard>;
+    [[nodiscard]] constexpr auto searchCache(card::uid_t candidate_uid) const -> std::optional<CachedCard>;
+    constexpr auto updateCache(card::uid_t candidate_uid, FabUser::UserLevel level) const -> void;
 
   public:
     AuthProvider() = delete;

@@ -113,9 +113,9 @@ namespace fabomatic::tests
     exit_request = false;
     pthread_create(&thread_mqtt_broker, &attr_mqtt_broker, threadMQTTServer, NULL);
 
-    auto start = std::chrono::system_clock::now();
+    auto start = fabomatic::Tasks::arduinoNow();
     constexpr auto timeout = 5s;
-    while (!broker.isRunning() && std::chrono::system_clock::now() - start < timeout)
+    while (!broker.isRunning() && fabomatic::Tasks::arduinoNow() - start < timeout)
     {
       delay(100);
     }
@@ -284,10 +284,7 @@ namespace fabomatic::tests
       }
       if (initialized)
       {
-        if (!esp32::signalWatchdog())
-        {
-          ESP_LOGE(TAG, "Failure to signal watchdog");
-        }
+        TEST_ASSERT_TRUE_MESSAGE(esp32::signalWatchdog(), "Watchdog signalling failed");
       }
     }
   }
@@ -328,17 +325,17 @@ namespace fabomatic::tests
   {
     test_scheduler.updateSchedules();
     TEST_ASSERT_EQUAL_UINT32_MESSAGE(6, test_scheduler.taskCount(), "Scheduler does not contain all tasks");
-    auto start = std::chrono::system_clock::now();
-    while (std::chrono::system_clock::now() - start <= 1min)
+    auto start = fabomatic::Tasks::arduinoNow();
+    while (fabomatic::Tasks::arduinoNow() - start <= 1min)
     {
       test_scheduler.execute();
       delay(25);
     }
     // Check that all tasks ran at least once
-    for (const auto &tw : test_scheduler.getTasks())
+    for (const auto tp : test_scheduler.getTasks())
     {
-      auto &t = tw.get();
-      ESP_LOGD(TAG3, "Task %s: %lu runs, %lu ms total runtime, %lu ms avg tardiness", t.getId().c_str(), t.getRunCounter(), t.getTotalRuntime().count(), t.getAvgTardiness().count());
+      const auto t = *tp;
+      ESP_LOGD(TAG3, "Task %s: %lu runs, %llu ms total runtime, %llu ms avg tardiness", t.getId().c_str(), t.getRunCounter(), t.getTotalRuntime().count(), t.getAvgTardiness().count());
       TEST_ASSERT_GREATER_OR_EQUAL_MESSAGE(1, t.getRunCounter(), "Task did not run");
     }
     // Remove the HW Watchdog
@@ -357,6 +354,8 @@ void setUp(void)
 void setup()
 {
   delay(1000);
+  esp_log_level_set(TAG, LOG_LOCAL_LEVEL);
+
   // Save original config
   auto original = fabomatic::SavedConfig::LoadFromEEPROM();
 

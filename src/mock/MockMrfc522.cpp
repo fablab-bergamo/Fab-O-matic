@@ -1,4 +1,5 @@
 #include "mock/MockMrfc522.hpp"
+#include "Tasks.hpp"
 
 #include <algorithm>
 
@@ -45,7 +46,7 @@ namespace fabomatic
     this->uid = uid;
     if (max_delay.has_value())
     {
-      stop_uid_simulate_time = std::chrono::system_clock::now() + max_delay.value();
+      stop_uid_simulate_time = fabomatic::Tasks::arduinoNow() + max_delay.value();
     }
     else
     {
@@ -61,7 +62,7 @@ namespace fabomatic
 
   auto MockMrfc522::getSimulatedUid() const -> std::optional<card::uid_t>
   {
-    if (stop_uid_simulate_time.has_value() && std::chrono::system_clock::now() > stop_uid_simulate_time.value())
+    if (stop_uid_simulate_time.has_value() && fabomatic::Tasks::arduinoNow() > stop_uid_simulate_time.value())
     {
       return std::nullopt;
     }

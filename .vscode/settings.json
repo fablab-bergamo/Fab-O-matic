@@ -67,7 +67,14 @@
     "set": "cpp",
     "future": "cpp",
     "variant": "cpp",
-    "any": "cpp"
+    "any": "cpp",
+    "bit": "cpp",
+    "compare": "cpp",
+    "concepts": "cpp",
+    "netfwd": "cpp",
+    "numbers": "cpp",
+    "semaphore": "cpp",
+    "stop_token": "cpp"
   },
   "cmake.sourceDirectory": "D:/GitHub/rfid-arduino/.pio/libdeps/desktop/ArduinoJson",
   "cmake.configureOnOpen": false,

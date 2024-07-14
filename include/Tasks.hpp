@@ -3,13 +3,19 @@
 
 #include <chrono>
 #include <functional>
+#include "Arduino.h"
+#include <list>
 
 /// @brief This namespace contains the classes that implement a cooperative task scheduler
 namespace fabomatic::Tasks
 {
   using milliseconds = std::chrono::milliseconds;
-  using time_point_sc = std::chrono::time_point<std::chrono::system_clock>;
   using namespace std::chrono_literals;
+
+  [[nodiscard]] inline auto arduinoNow() -> const std::chrono::steady_clock::time_point
+  {
+    return std::chrono::steady_clock::now();
+  }
 
   class Scheduler;
 
@@ -63,7 +69,7 @@ namespace fabomatic::Tasks
     [[nodiscard]] auto isActive() const -> bool;
 
     /// @brief Current period of the task
-    [[nodiscard]] auto getPeriod() const -> milliseconds;
+    [[nodiscard]] auto getPeriod() const -> const milliseconds;
 
     /// @brief Function to be called when task is run
     /// @return Callback function
@@ -74,28 +80,30 @@ namespace fabomatic::Tasks
 
     /// @brief Get the initial delay before the task is run at given period
     /// @return Delay in milliseconds
-    [[nodiscard]] auto getDelay() const -> milliseconds;
+    [[nodiscard]] auto getDelay() const -> const milliseconds;
 
     /// @brief Get the average tardiness, i.e. the average period between scheduled start and actual start of execution.
-    [[nodiscard]] auto getAvgTardiness() const -> milliseconds;
+    [[nodiscard]] auto getAvgTardiness() const -> const milliseconds;
 
     /// @brief Gets the number of times the task has been run.
     [[nodiscard]] auto getRunCounter() const -> unsigned long;
 
     /// @brief Gets the total execution time of the task. Useful to spot slowest tasks
-    [[nodiscard]] auto getTotalRuntime() const -> milliseconds;
+    [[nodiscard]] auto getTotalRuntime() const -> const milliseconds;
 
     /// @brief When shall the task be run again
     /// @return time_point of the next run or time_point::max() if the task will not run.
-    [[nodiscard]] auto getNextRun() const -> time_point_sc;
+    [[nodiscard]] auto getNextRun() const -> const std::chrono::steady_clock::time_point;
+
+    [[nodiscard]] auto toString() const -> const std::string;
 
   private:
     bool active;
     const std::string id;
     milliseconds period;
     milliseconds delay;
-    time_point_sc last_run;
-    time_point_sc next_run;
+    std::chrono::steady_clock::time_point last_run;
+    std::chrono::steady_clock::time_point next_run;
     milliseconds average_tardiness;
     milliseconds total_runtime;
     std::function<void()> callback;
@@ -106,12 +114,13 @@ namespace fabomatic::Tasks
   class Scheduler
   {
   public:
-    auto addTask(Task &task) -> void;
-    auto removeTask(const Task &task) -> void;
+    constexpr Scheduler(){};
+    auto addTask(Task *task) -> void;
+    auto removeTask(const Task *task) -> void;
 
     /// @brief Execute all tasks that are ready to run
     /// @details Tasks will be ordered by next_run time ascending, then run sequentially
-    auto execute() const -> void;
+    auto execute() -> void;
 
     /// @brief Recompute all the next run times for all the tasks
     auto updateSchedules() const -> void;
@@ -119,11 +128,11 @@ namespace fabomatic::Tasks
     /// @brief Gets the number of tasks in the scheduler
     [[nodiscard]] auto taskCount() const -> size_t;
 
-    /// @brief Get a vector of references to the tasks
-    [[nodiscard]] auto getTasks() const -> const std::vector<std::reference_wrapper<Task>>;
+    /// @brief Get a copy vector of task pointers
+    [[nodiscard]] auto getTasks() const -> const std::vector<Task *>;
 
   private:
-    std::vector<std::reference_wrapper<Task>> tasks; // Vector containing references to the tasks, not the tasks themselves
+    std::vector<Task *> tasks;
 
     auto printStats() const -> void;
   };
