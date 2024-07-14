@@ -3,6 +3,8 @@
 
 #include "FabUser.hpp"
 #include "MachineConfig.hpp"
+#include "Tasks.hpp"
+
 #include <array>
 #include <chrono>
 #include <cstdint>
@@ -107,8 +109,8 @@ namespace fabomatic
     bool active{false};
     FabUser current_user{};
 
-    std::optional<std::chrono::steady_clock::time_point> usage_start_timestamp{std::nullopt}; // When did the machine start?
-    std::optional<std::chrono::steady_clock::time_point> logoff_timestamp{std::nullopt};      // When did the last user log off?
+    std::optional<Tasks::time_point> usage_start_timestamp{std::nullopt}; // When did the machine start?
+    std::optional<Tasks::time_point> logoff_timestamp{std::nullopt};      // When did the last user log off?
     PowerState power_state{PowerState::PoweredOff};
 
     /// @brief If true, machine needs maintenance

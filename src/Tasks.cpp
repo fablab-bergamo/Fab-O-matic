@@ -139,13 +139,12 @@ namespace fabomatic::Tasks
   {
     std::stringstream ss;
     ss << "Task " << getId() << ", active=" << active
-       << ",Period=" << period << ", Delay=" << delay
+       << ",Period(ms)=" << period << ", Delay(ms)=" << delay
        << ",Last run=" << last_run.time_since_epoch()
        << ",Next_run=" << next_run.time_since_epoch()
-       << ",Avg tardiness=" << average_tardiness
-       << ",total_runtime " << total_runtime
-       << ",run_counter=" << run_counter
-       << ",clock=" << millis();
+       << ",Avg tardiness (ms)=" << average_tardiness
+       << ",total_runtime (ms)= " << total_runtime
+       << ",run_counter=" << run_counter;
     return ss.str();
   }
 
@@ -256,7 +255,7 @@ namespace fabomatic::Tasks
     return total_runtime;
   }
 
-  auto Task::getNextRun() const -> const std::chrono::steady_clock::time_point
+  auto Task::getNextRun() const -> const Tasks::time_point &
   {
     return next_run;
   }
