@@ -46,9 +46,9 @@
   </g>
 </defs>
 <script type="application/ecmascript">
-var viewWidth = 614;
+var viewWidth = 645;
 var viewHeight = 137;
-var sectionId = 'dynsection-49';
+var sectionId = 'dynsection-50';
 </script>
 <script type="application/ecmascript" xlink:href="svg.min.js"/>
 <svg id="graph" class="graph">
@@ -102,20 +102,20 @@ var sectionId = 'dynsection-49';
 </a>
 </g>
 </g>
-<!-- Node6 -->
-<g id="Node000006" class="node">
-<title>Node6</title>
-<g id="a_Node000006"><a xlink:href="classfabomatic_1_1_tasks_1_1_scheduler.xhtml#a203784237087f7f1b0b77c15bcdb85f9" target="_top" xlink:title="Gets the number of tasks in the scheduler.">
+<!-- Node7 -->
+<g id="Node000007" class="node">
+<title>Node7</title>
+<g id="a_Node000007"><a xlink:href="classfabomatic_1_1_tasks_1_1_scheduler.xhtml#a203784237087f7f1b0b77c15bcdb85f9" target="_top" xlink:title="Gets the number of tasks in the scheduler.">
 <polygon fill="white" stroke="#666666" points="280.25,-30.5 142,-30.5 142,0 280.25,0 280.25,-30.5"/>
 <text text-anchor="start" x="150" y="-17" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::Tasks::Scheduler</text>
 <text text-anchor="middle" x="211.12" y="-5.75" font-family="Helvetica,sans-Serif" font-size="10.00">::taskCount</text>
 </a>
 </g>
 </g>
-<!-- Node1&#45;&gt;Node6 -->
-<g id="edge5_Node000001_Node000006" class="edge">
-<title>Node1&#45;&gt;Node6</title>
-<g id="a_edge5_Node000001_Node000006"><a xlink:title=" ">
+<!-- Node1&#45;&gt;Node7 -->
+<g id="edge6_Node000001_Node000007" class="edge">
+<title>Node1&#45;&gt;Node7</title>
+<g id="a_edge6_Node000001_Node000007"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M103.83,-48.61C118.26,-44.08 134.18,-39.08 149.21,-34.37"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="150.03,-37.78 158.52,-31.45 147.93,-31.1 150.03,-37.78"/>
 </a>
@@ -125,9 +125,9 @@ var sectionId = 'dynsection-49';
 <g id="Node000003" class="node">
 <title>Node3</title>
 <g id="a_Node000003"><a xlink:href="namespacefabomatic_1_1tests.xhtml#ae4bd9063425820acc6c488119d90d22a" target="_top" xlink:title=" ">
-<polygon fill="white" stroke="#666666" points="432,-128.5 316.25,-128.5 316.25,-98 432,-98 432,-128.5"/>
-<text text-anchor="start" x="324.25" y="-115" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::tests::delete</text>
-<text text-anchor="middle" x="374.12" y="-103.75" font-family="Helvetica,sans-Serif" font-size="10.00">_tasks</text>
+<polygon fill="white" stroke="#666666" points="447.38,-128.5 331.62,-128.5 331.62,-98 447.38,-98 447.38,-128.5"/>
+<text text-anchor="start" x="339.62" y="-115" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::tests::delete</text>
+<text text-anchor="middle" x="389.5" y="-103.75" font-family="Helvetica,sans-Serif" font-size="10.00">_tasks</text>
 </a>
 </g>
 </g>
@@ -135,18 +135,18 @@ var sectionId = 'dynsection-49';
 <g id="edge2_Node000002_Node000003" class="edge">
 <title>Node2&#45;&gt;Node3</title>
 <g id="a_edge2_Node000002_Node000003"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M269.79,-113.25C281.03,-113.25 292.91,-113.25 304.46,-113.25"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="304.34,-116.75 314.34,-113.25 304.34,-109.75 304.34,-116.75"/>
+<path fill="none" stroke="#63b8ff" d="M269.39,-113.25C285.49,-113.25 303.16,-113.25 319.85,-113.25"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="319.71,-116.75 329.71,-113.25 319.71,-109.75 319.71,-116.75"/>
 </a>
 </g>
 </g>
 <!-- Node4 -->
 <g id="Node000004" class="node">
 <title>Node4</title>
-<g id="a_Node000004"><a xlink:href="classfabomatic_1_1_tasks_1_1_scheduler.xhtml#afd558ef77dc2922dca6f3e332fd147c4" target="_top" xlink:title=" ">
-<polygon fill="white" stroke="#666666" points="606.25,-128.5 468,-128.5 468,-98 606.25,-98 606.25,-128.5"/>
-<text text-anchor="start" x="476" y="-115" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::Tasks::Scheduler</text>
-<text text-anchor="middle" x="537.12" y="-103.75" font-family="Helvetica,sans-Serif" font-size="10.00">::removeTask</text>
+<g id="a_Node000004"><a xlink:href="classfabomatic_1_1_tasks_1_1_scheduler.xhtml#ae1280eccd0bc57ff7fbc92ab54b54769" target="_top" xlink:title=" ">
+<polygon fill="white" stroke="#666666" points="637,-128.5 498.75,-128.5 498.75,-98 637,-98 637,-128.5"/>
+<text text-anchor="start" x="506.75" y="-115" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::Tasks::Scheduler</text>
+<text text-anchor="middle" x="567.88" y="-103.75" font-family="Helvetica,sans-Serif" font-size="10.00">::removeTask</text>
 </a>
 </g>
 </g>
@@ -154,8 +154,26 @@ var sectionId = 'dynsection-49';
 <g id="edge3_Node000003_Node000004" class="edge">
 <title>Node3&#45;&gt;Node4</title>
 <g id="a_edge3_Node000003_Node000004"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M432.34,-113.25C440.08,-113.25 448.14,-113.25 456.18,-113.25"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="456.01,-116.75 466.01,-113.25 456.01,-109.75 456.01,-116.75"/>
+<path fill="none" stroke="#63b8ff" d="M447.76,-113.25C460.42,-113.25 474.04,-113.25 487.4,-113.25"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="487.01,-116.75 497.01,-113.25 487.01,-109.75 487.01,-116.75"/>
+</a>
+</g>
+</g>
+<!-- Node6 -->
+<g id="Node000006" class="node">
+<title>Node6</title>
+<g id="a_Node000006"><a xlink:href="namespacefabomatic_1_1_tasks.xhtml#aad4a932b189725b84a436888d9da5dc8" target="_top" xlink:title=" ">
+<polygon fill="white" stroke="#666666" points="462.75,-73.88 316.25,-73.88 316.25,-54.62 462.75,-54.62 462.75,-73.88"/>
+<text text-anchor="middle" x="389.5" y="-60.38" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::Tasks::arduinoNow</text>
+</a>
+</g>
+</g>
+<!-- Node5&#45;&gt;Node6 -->
+<g id="edge5_Node000005_Node000006" class="edge">
+<title>Node5&#45;&gt;Node6</title>
+<g id="a_edge5_Node000005_Node000006"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M262.67,-64.25C275.76,-64.25 290.21,-64.25 304.52,-64.25"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="304.42,-67.75 314.42,-64.25 304.42,-60.75 304.42,-67.75"/>
 </a>
 </g>
 </g>

@@ -211,10 +211,10 @@ Private Attributes</h2></td></tr>
 <tr class="separator:a7b30e014bf3166b1f6692d3e64d18827"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa39977d690373313aa7c24f52679cc5b" id="r_aa39977d690373313aa7c24f52679cc5b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structfabomatic_1_1_fab_user.xhtml">FabUser</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_machine.xhtml#aa39977d690373313aa7c24f52679cc5b">current_user</a> {}</td></tr>
 <tr class="separator:aa39977d690373313aa7c24f52679cc5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a215bab25e0b9555c733d1ffcb6330a06" id="r_a215bab25e0b9555c733d1ffcb6330a06"><td class="memItemLeft" align="right" valign="top">std::optional&lt; std::chrono::time_point&lt; std::chrono::system_clock &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_machine.xhtml#a215bab25e0b9555c733d1ffcb6330a06">usage_start_timestamp</a> {std::nullopt}</td></tr>
-<tr class="separator:a215bab25e0b9555c733d1ffcb6330a06"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9973764a444fc39727def61c053c62c3" id="r_a9973764a444fc39727def61c053c62c3"><td class="memItemLeft" align="right" valign="top">std::optional&lt; std::chrono::time_point&lt; std::chrono::system_clock &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_machine.xhtml#a9973764a444fc39727def61c053c62c3">logoff_timestamp</a> {std::nullopt}</td></tr>
-<tr class="separator:a9973764a444fc39727def61c053c62c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a797653c883d897ef964cd3a862a6465d" id="r_a797653c883d897ef964cd3a862a6465d"><td class="memItemLeft" align="right" valign="top">std::optional&lt; std::chrono::steady_clock::time_point &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_machine.xhtml#a797653c883d897ef964cd3a862a6465d">usage_start_timestamp</a> {std::nullopt}</td></tr>
+<tr class="separator:a797653c883d897ef964cd3a862a6465d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f1c52164376bb949436e0da5020baf6" id="r_a9f1c52164376bb949436e0da5020baf6"><td class="memItemLeft" align="right" valign="top">std::optional&lt; std::chrono::steady_clock::time_point &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_machine.xhtml#a9f1c52164376bb949436e0da5020baf6">logoff_timestamp</a> {std::nullopt}</td></tr>
+<tr class="separator:a9f1c52164376bb949436e0da5020baf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2bc2b55d0e25444c6c169a94c44ba571" id="r_a2bc2b55d0e25444c6c169a94c44ba571"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfabomatic_1_1_machine.xhtml#a409acc0089d7cfe849b2e775840e5838">PowerState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_machine.xhtml#a2bc2b55d0e25444c6c169a94c44ba571">power_state</a> {<a class="el" href="classfabomatic_1_1_machine.xhtml#a409acc0089d7cfe849b2e775840e5838ab161cc0f80e1c236e1f0816a42c4a00c">PowerState::PoweredOff</a>}</td></tr>
 <tr class="separator:a2bc2b55d0e25444c6c169a94c44ba571"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af6e53363524fca589cea90c51f953b7d" id="r_af6e53363524fca589cea90c51f953b7d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_machine.xhtml#af6e53363524fca589cea90c51f953b7d">maintenanceNeeded</a> {false}</td></tr>
@@ -229,7 +229,7 @@ Private Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents the FabLab machine connected to the board. </p>
 
-<p class="definition">Definition at line <a class="el" href="_machine_8hpp_source.xhtml#l00015">15</a> of file <a class="el" href="_machine_8hpp_source.xhtml">Machine.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_machine_8hpp_source.xhtml#l00016">16</a> of file <a class="el" href="_machine_8hpp_source.xhtml">Machine.hpp</a>.</p>
 </div><h2 class="groupheader">Member Enumeration Documentation</h2>
 <a id="a409acc0089d7cfe849b2e775840e5838" name="a409acc0089d7cfe849b2e775840e5838"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a409acc0089d7cfe849b2e775840e5838">&#9670;&#160;</a></span>PowerState</h2>
@@ -257,13 +257,13 @@ Private Attributes</h2></td></tr>
 <tr><td class="fieldname"><a id="a409acc0089d7cfe849b2e775840e5838ab161cc0f80e1c236e1f0816a42c4a00c" name="a409acc0089d7cfe849b2e775840e5838ab161cc0f80e1c236e1f0816a42c4a00c"></a>PoweredOff&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="_machine_8hpp_source.xhtml#l00018">18</a> of file <a class="el" href="_machine_8hpp_source.xhtml">Machine.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   19</span>    {</div>
-<div class="line"><span class="lineno">   20</span>      <a class="code hl_enumvalue" href="classfabomatic_1_1_machine.xhtml#a409acc0089d7cfe849b2e775840e5838a88183b946cc5f0e8c96b2e66e1c74a7e">Unknown</a>,</div>
-<div class="line"><span class="lineno">   21</span>      <a class="code hl_enumvalue" href="classfabomatic_1_1_machine.xhtml#a409acc0089d7cfe849b2e775840e5838a5fb98f2976a3f8c8980354a730398a87">PoweredOn</a>,</div>
-<div class="line"><span class="lineno">   22</span>      <a class="code hl_enumvalue" href="classfabomatic_1_1_machine.xhtml#a409acc0089d7cfe849b2e775840e5838a878a40722160ead08a1f3cdef3e70a14">WaitingPowerOff</a>,</div>
-<div class="line"><span class="lineno">   23</span>      <a class="code hl_enumvalue" href="classfabomatic_1_1_machine.xhtml#a409acc0089d7cfe849b2e775840e5838ab161cc0f80e1c236e1f0816a42c4a00c">PoweredOff</a>,</div>
-<div class="line"><span class="lineno">   24</span>    };</div>
+<p class="definition">Definition at line <a class="el" href="_machine_8hpp_source.xhtml#l00019">19</a> of file <a class="el" href="_machine_8hpp_source.xhtml">Machine.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   20</span>    {</div>
+<div class="line"><span class="lineno">   21</span>      <a class="code hl_enumvalue" href="classfabomatic_1_1_machine.xhtml#a409acc0089d7cfe849b2e775840e5838a88183b946cc5f0e8c96b2e66e1c74a7e">Unknown</a>,</div>
+<div class="line"><span class="lineno">   22</span>      <a class="code hl_enumvalue" href="classfabomatic_1_1_machine.xhtml#a409acc0089d7cfe849b2e775840e5838a5fb98f2976a3f8c8980354a730398a87">PoweredOn</a>,</div>
+<div class="line"><span class="lineno">   23</span>      <a class="code hl_enumvalue" href="classfabomatic_1_1_machine.xhtml#a409acc0089d7cfe849b2e775840e5838a878a40722160ead08a1f3cdef3e70a14">WaitingPowerOff</a>,</div>
+<div class="line"><span class="lineno">   24</span>      <a class="code hl_enumvalue" href="classfabomatic_1_1_machine.xhtml#a409acc0089d7cfe849b2e775840e5838ab161cc0f80e1c236e1f0816a42c4a00c">PoweredOff</a>,</div>
+<div class="line"><span class="lineno">   25</span>    };</div>
 <div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_a409acc0089d7cfe849b2e775840e5838a5fb98f2976a3f8c8980354a730398a87"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#a409acc0089d7cfe849b2e775840e5838a5fb98f2976a3f8c8980354a730398a87">fabomatic::Machine::PowerState::PoweredOn</a></div><div class="ttdeci">@ PoweredOn</div></div>
 <div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_a409acc0089d7cfe849b2e775840e5838a878a40722160ead08a1f3cdef3e70a14"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#a409acc0089d7cfe849b2e775840e5838a878a40722160ead08a1f3cdef3e70a14">fabomatic::Machine::PowerState::WaitingPowerOff</a></div><div class="ttdeci">@ WaitingPowerOff</div></div>
 <div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_a409acc0089d7cfe849b2e775840e5838a88183b946cc5f0e8c96b2e66e1c74a7e"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#a409acc0089d7cfe849b2e775840e5838a88183b946cc5f0e8c96b2e66e1c74a7e">fabomatic::Machine::PowerState::Unknown</a></div><div class="ttdeci">@ Unknown</div></div>
@@ -394,24 +394,30 @@ Private Attributes</h2></td></tr>
 <p>indicates if the machine can be powered off</p>
 <dl class="section return"><dt>Returns</dt><dd>true if the grace period has expired </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00110">110</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  111</span>  {</div>
-<div class="line"><span class="lineno">  112</span>    <span class="keywordflow">if</span> (!<a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a9973764a444fc39727def61c053c62c3">logoff_timestamp</a>.has_value())</div>
-<div class="line"><span class="lineno">  113</span>      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><span class="lineno">  114</span> </div>
-<div class="line"><span class="lineno">  115</span>    <a class="code hl_define" href="_machine_8cpp.xhtml#a22d2ecd6e476d01bda4d7f7f4af2b787">CHECK_CONFIGURED</a>(<span class="keywordtype">bool</span>);</div>
-<div class="line"><span class="lineno">  116</span> </div>
-<div class="line"><span class="lineno">  117</span>    <span class="keywordflow">return</span> (<a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a2bc2b55d0e25444c6c169a94c44ba571">power_state</a> == <a class="code hl_enumvalue" href="classfabomatic_1_1_machine.xhtml#a409acc0089d7cfe849b2e775840e5838a878a40722160ead08a1f3cdef3e70a14">PowerState::WaitingPowerOff</a> &amp;&amp;</div>
-<div class="line"><span class="lineno">  118</span>            std::chrono::system_clock::now() - <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a9973764a444fc39727def61c053c62c3">logoff_timestamp</a>.value() &gt; <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().grace_period);</div>
-<div class="line"><span class="lineno">  119</span>  }</div>
-<div class="ttc" id="a_machine_8cpp_xhtml_a22d2ecd6e476d01bda4d7f7f4af2b787"><div class="ttname"><a href="_machine_8cpp.xhtml#a22d2ecd6e476d01bda4d7f7f4af2b787">CHECK_CONFIGURED</a></div><div class="ttdeci">#define CHECK_CONFIGURED(ret_type)</div><div class="ttdef"><b>Definition</b> <a href="_machine_8cpp_source.xhtml#l00018">Machine.cpp:18</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_a2bc2b55d0e25444c6c169a94c44ba571"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#a2bc2b55d0e25444c6c169a94c44ba571">fabomatic::Machine::power_state</a></div><div class="ttdeci">PowerState power_state</div><div class="ttdef"><b>Definition</b> <a href="_machine_8hpp_source.xhtml#l00111">Machine.hpp:111</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_a8545b7a1a969dddc47d35d921091ed5b"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">fabomatic::Machine::config</a></div><div class="ttdeci">std::optional&lt; MachineConfig &gt; config</div><div class="ttdef"><b>Definition</b> <a href="_machine_8hpp_source.xhtml#l00103">Machine.hpp:103</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_a9973764a444fc39727def61c053c62c3"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#a9973764a444fc39727def61c053c62c3">fabomatic::Machine::logoff_timestamp</a></div><div class="ttdeci">std::optional&lt; std::chrono::time_point&lt; std::chrono::system_clock &gt; &gt; logoff_timestamp</div><div class="ttdef"><b>Definition</b> <a href="_machine_8hpp_source.xhtml#l00110">Machine.hpp:110</a></div></div>
+<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00111">111</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  112</span>  {</div>
+<div class="line"><span class="lineno">  113</span>    <span class="keywordflow">if</span> (!<a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a9f1c52164376bb949436e0da5020baf6">logoff_timestamp</a>.has_value())</div>
+<div class="line"><span class="lineno">  114</span>      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  115</span> </div>
+<div class="line"><span class="lineno">  116</span>    <a class="code hl_define" href="_machine_8cpp.xhtml#a22d2ecd6e476d01bda4d7f7f4af2b787">CHECK_CONFIGURED</a>(<span class="keywordtype">bool</span>);</div>
+<div class="line"><span class="lineno">  117</span> </div>
+<div class="line"><span class="lineno">  118</span>    <span class="keywordflow">return</span> (<a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a2bc2b55d0e25444c6c169a94c44ba571">power_state</a> == <a class="code hl_enumvalue" href="classfabomatic_1_1_machine.xhtml#a409acc0089d7cfe849b2e775840e5838a878a40722160ead08a1f3cdef3e70a14">PowerState::WaitingPowerOff</a> &amp;&amp;</div>
+<div class="line"><span class="lineno">  119</span>            <a class="code hl_function" href="namespacefabomatic_1_1_tasks.xhtml#aad4a932b189725b84a436888d9da5dc8">fabomatic::Tasks::arduinoNow</a>() - <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a9f1c52164376bb949436e0da5020baf6">logoff_timestamp</a>.value() &gt; <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().grace_period);</div>
+<div class="line"><span class="lineno">  120</span>  }</div>
+<div class="ttc" id="a_machine_8cpp_xhtml_a22d2ecd6e476d01bda4d7f7f4af2b787"><div class="ttname"><a href="_machine_8cpp.xhtml#a22d2ecd6e476d01bda4d7f7f4af2b787">CHECK_CONFIGURED</a></div><div class="ttdeci">#define CHECK_CONFIGURED(ret_type)</div><div class="ttdef"><b>Definition</b> <a href="_machine_8cpp_source.xhtml#l00019">Machine.cpp:19</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_a2bc2b55d0e25444c6c169a94c44ba571"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#a2bc2b55d0e25444c6c169a94c44ba571">fabomatic::Machine::power_state</a></div><div class="ttdeci">PowerState power_state</div><div class="ttdef"><b>Definition</b> <a href="_machine_8hpp_source.xhtml#l00112">Machine.hpp:112</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_a8545b7a1a969dddc47d35d921091ed5b"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">fabomatic::Machine::config</a></div><div class="ttdeci">std::optional&lt; MachineConfig &gt; config</div><div class="ttdef"><b>Definition</b> <a href="_machine_8hpp_source.xhtml#l00104">Machine.hpp:104</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_a9f1c52164376bb949436e0da5020baf6"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#a9f1c52164376bb949436e0da5020baf6">fabomatic::Machine::logoff_timestamp</a></div><div class="ttdeci">std::optional&lt; std::chrono::steady_clock::time_point &gt; logoff_timestamp</div><div class="ttdef"><b>Definition</b> <a href="_machine_8hpp_source.xhtml#l00111">Machine.hpp:111</a></div></div>
+<div class="ttc" id="anamespacefabomatic_1_1_tasks_xhtml_aad4a932b189725b84a436888d9da5dc8"><div class="ttname"><a href="namespacefabomatic_1_1_tasks.xhtml#aad4a932b189725b84a436888d9da5dc8">fabomatic::Tasks::arduinoNow</a></div><div class="ttdeci">auto arduinoNow() -&gt; const std::chrono::steady_clock::time_point</div><div class="ttdef"><b>Definition</b> <a href="_tasks_8hpp_source.xhtml#l00015">Tasks.hpp:15</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_machine_8cpp_source.xhtml#l00018">CHECK_CONFIGURED</a>, <a class="el" href="_machine_8hpp_source.xhtml#l00103">config</a>, <a class="el" href="_machine_8hpp_source.xhtml#l00110">logoff_timestamp</a>, <a class="el" href="_machine_8hpp_source.xhtml#l00111">power_state</a>, and <a class="el" href="classfabomatic_1_1_machine.xhtml#a409acc0089d7cfe849b2e775840e5838a878a40722160ead08a1f3cdef3e70a14">WaitingPowerOff</a>.</p>
+<p class="reference">References <a class="el" href="_tasks_8hpp_source.xhtml#l00015">fabomatic::Tasks::arduinoNow()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00019">CHECK_CONFIGURED</a>, <a class="el" href="_machine_8hpp_source.xhtml#l00104">config</a>, <a class="el" href="_machine_8hpp_source.xhtml#l00111">logoff_timestamp</a>, <a class="el" href="_machine_8hpp_source.xhtml#l00112">power_state</a>, and <a class="el" href="classfabomatic_1_1_machine.xhtml#a409acc0089d7cfe849b2e775840e5838a878a40722160ead08a1f3cdef3e70a14">WaitingPowerOff</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00576">fabomatic::BoardLogic::checkPowerOff()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00577">fabomatic::BoardLogic::checkPowerOff()</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classfabomatic_1_1_machine_a1161d52e85bff96812852f50f53335c9_cgraph.svg" width="388" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -448,33 +454,33 @@ Here is the caller graph for this function:</div>
 
 <p>Configure the machine, it must be called before most methods. </p>
 
-<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00025">25</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   26</span>  {</div>
-<div class="line"><span class="lineno">   27</span>    <span class="comment">// https://stackoverflow.com/questions/67596731/why-is-stdoptionaltoperator-deleted-when-t-contains-a-const-data-memb</span></div>
-<div class="line"><span class="lineno">   28</span>    <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.emplace(new_config);</div>
-<div class="line"><span class="lineno">   29</span> </div>
-<div class="line"><span class="lineno">   30</span>    <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#adb98818468832f2327b4a25a199cdb0e">server</a> = std::reference_wrapper&lt;FabBackend&gt;(serv);</div>
-<div class="line"><span class="lineno">   31</span> </div>
-<div class="line"><span class="lineno">   32</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().hasRelay())</div>
-<div class="line"><span class="lineno">   33</span>    {</div>
-<div class="line"><span class="lineno">   34</span>      <span class="keyword">const</span> <span class="keyword">auto</span> pin = <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().relay_config.ch1_pin;</div>
-<div class="line"><span class="lineno">   35</span>      digitalWrite(pin,</div>
-<div class="line"><span class="lineno">   36</span>                   <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().relay_config.active_low ? HIGH : LOW);</div>
-<div class="line"><span class="lineno">   37</span>      pinMode(pin, OUTPUT);</div>
-<div class="line"><span class="lineno">   38</span> </div>
-<div class="line"><span class="lineno">   39</span>      <span class="comment">// Relay coil requires some juice</span></div>
-<div class="line"><span class="lineno">   40</span>      gpio_set_drive_capability(<span class="keyword">static_cast&lt;</span>gpio_num_t<span class="keyword">&gt;</span>(pin), GPIO_DRIVE_CAP_3);</div>
-<div class="line"><span class="lineno">   41</span>    }</div>
-<div class="line"><span class="lineno">   42</span> </div>
-<div class="line"><span class="lineno">   43</span>    ESP_LOGD(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <span class="stringliteral">&quot;Machine configured : %s&quot;</span>, <a class="code hl_function" href="classfabomatic_1_1_machine.xhtml#a39fbf9cad912d735cf84b75c0674646f">toString</a>().c_str());</div>
-<div class="line"><span class="lineno">   44</span>  }</div>
-<div class="ttc" id="a_logging_8hpp_xhtml_a4ef5b5f197804a60836ab1e8907d8301"><div class="ttname"><a href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a></div><div class="ttdeci">static const char *const TAG</div><div class="ttdef"><b>Definition</b> <a href="_logging_8hpp_source.xhtml#l00006">Logging.hpp:6</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_a39fbf9cad912d735cf84b75c0674646f"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#a39fbf9cad912d735cf84b75c0674646f">fabomatic::Machine::toString</a></div><div class="ttdeci">auto toString() const -&gt; const std::string</div><div class="ttdef"><b>Definition</b> <a href="_machine_8cpp_source.xhtml#l00241">Machine.cpp:241</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_adb98818468832f2327b4a25a199cdb0e"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#adb98818468832f2327b4a25a199cdb0e">fabomatic::Machine::server</a></div><div class="ttdeci">std::optional&lt; std::reference_wrapper&lt; FabBackend &gt; &gt; server</div><div class="ttdef"><b>Definition</b> <a href="_machine_8hpp_source.xhtml#l00104">Machine.hpp:104</a></div></div>
+<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00026">26</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   27</span>  {</div>
+<div class="line"><span class="lineno">   28</span>    <span class="comment">// https://stackoverflow.com/questions/67596731/why-is-stdoptionaltoperator-deleted-when-t-contains-a-const-data-memb</span></div>
+<div class="line"><span class="lineno">   29</span>    <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.emplace(new_config);</div>
+<div class="line"><span class="lineno">   30</span> </div>
+<div class="line"><span class="lineno">   31</span>    <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#adb98818468832f2327b4a25a199cdb0e">server</a> = std::reference_wrapper&lt;FabBackend&gt;(serv);</div>
+<div class="line"><span class="lineno">   32</span> </div>
+<div class="line"><span class="lineno">   33</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().hasRelay())</div>
+<div class="line"><span class="lineno">   34</span>    {</div>
+<div class="line"><span class="lineno">   35</span>      <span class="keyword">const</span> <span class="keyword">auto</span> pin = <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().relay_config.ch1_pin;</div>
+<div class="line"><span class="lineno">   36</span>      digitalWrite(pin,</div>
+<div class="line"><span class="lineno">   37</span>                   <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().relay_config.active_low ? HIGH : LOW);</div>
+<div class="line"><span class="lineno">   38</span>      pinMode(pin, OUTPUT);</div>
+<div class="line"><span class="lineno">   39</span> </div>
+<div class="line"><span class="lineno">   40</span>      <span class="comment">// Relay coil requires some juice</span></div>
+<div class="line"><span class="lineno">   41</span>      gpio_set_drive_capability(<span class="keyword">static_cast&lt;</span>gpio_num_t<span class="keyword">&gt;</span>(pin), GPIO_DRIVE_CAP_3);</div>
+<div class="line"><span class="lineno">   42</span>    }</div>
+<div class="line"><span class="lineno">   43</span> </div>
+<div class="line"><span class="lineno">   44</span>    ESP_LOGD(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <span class="stringliteral">&quot;Machine configured : %s&quot;</span>, <a class="code hl_function" href="classfabomatic_1_1_machine.xhtml#a39fbf9cad912d735cf84b75c0674646f">toString</a>().c_str());</div>
+<div class="line"><span class="lineno">   45</span>  }</div>
+<div class="ttc" id="a_logging_8hpp_xhtml_a4ef5b5f197804a60836ab1e8907d8301"><div class="ttname"><a href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a></div><div class="ttdeci">static const char *const TAG</div><div class="ttdef"><b>Definition</b> <a href="_logging_8hpp_source.xhtml#l00009">Logging.hpp:9</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_a39fbf9cad912d735cf84b75c0674646f"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#a39fbf9cad912d735cf84b75c0674646f">fabomatic::Machine::toString</a></div><div class="ttdeci">auto toString() const -&gt; const std::string</div><div class="ttdef"><b>Definition</b> <a href="_machine_8cpp_source.xhtml#l00242">Machine.cpp:242</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_adb98818468832f2327b4a25a199cdb0e"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#adb98818468832f2327b4a25a199cdb0e">fabomatic::Machine::server</a></div><div class="ttdeci">std::optional&lt; std::reference_wrapper&lt; FabBackend &gt; &gt; server</div><div class="ttdef"><b>Definition</b> <a href="_machine_8hpp_source.xhtml#l00105">Machine.hpp:105</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_logging_8hpp_source.xhtml#l00006">TAG</a>.</p>
+<p class="reference">References <a class="el" href="_logging_8hpp_source.xhtml#l00009">TAG</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00463">fabomatic::BoardLogic::reconfigure()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00464">fabomatic::BoardLogic::reconfigure()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -498,15 +504,15 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00219">219</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  220</span>  {</div>
-<div class="line"><span class="lineno">  221</span>    <span class="keywordflow">return</span> <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#aa39977d690373313aa7c24f52679cc5b">current_user</a>;</div>
-<div class="line"><span class="lineno">  222</span>  }</div>
-<div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_aa39977d690373313aa7c24f52679cc5b"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#aa39977d690373313aa7c24f52679cc5b">fabomatic::Machine::current_user</a></div><div class="ttdeci">FabUser current_user</div><div class="ttdef"><b>Definition</b> <a href="_machine_8hpp_source.xhtml#l00107">Machine.hpp:107</a></div></div>
+<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00220">220</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  221</span>  {</div>
+<div class="line"><span class="lineno">  222</span>    <span class="keywordflow">return</span> <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#aa39977d690373313aa7c24f52679cc5b">current_user</a>;</div>
+<div class="line"><span class="lineno">  223</span>  }</div>
+<div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_aa39977d690373313aa7c24f52679cc5b"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#aa39977d690373313aa7c24f52679cc5b">fabomatic::Machine::current_user</a></div><div class="ttdeci">FabUser current_user</div><div class="ttdef"><b>Definition</b> <a href="_machine_8hpp_source.xhtml#l00108">Machine.hpp:108</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_machine_8hpp_source.xhtml#l00107">current_user</a>.</p>
+<p class="reference">References <a class="el" href="_machine_8hpp_source.xhtml#l00108">current_user</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00163">fabomatic::BoardLogic::authorize()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00111">fabomatic::BoardLogic::logout()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00073">fabomatic::BoardLogic::onNewCard()</a>, and <a class="el" href="_board_logic_8cpp_source.xhtml#l00284">fabomatic::BoardLogic::updateLCD()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00164">fabomatic::BoardLogic::authorize()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00112">fabomatic::BoardLogic::logout()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00074">fabomatic::BoardLogic::onNewCard()</a>, and <a class="el" href="_board_logic_8cpp_source.xhtml#l00285">fabomatic::BoardLogic::updateLCD()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -530,15 +536,15 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00269">269</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  270</span>  {</div>
-<div class="line"><span class="lineno">  271</span>    <a class="code hl_define" href="_machine_8cpp.xhtml#a22d2ecd6e476d01bda4d7f7f4af2b787">CHECK_CONFIGURED</a>(std::chrono::seconds);</div>
-<div class="line"><span class="lineno">  272</span>    <span class="keywordflow">return</span> <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().autologoff;</div>
-<div class="line"><span class="lineno">  273</span>  }</div>
+<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00273">273</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  274</span>  {</div>
+<div class="line"><span class="lineno">  275</span>    <a class="code hl_define" href="_machine_8cpp.xhtml#a22d2ecd6e476d01bda4d7f7f4af2b787">CHECK_CONFIGURED</a>(std::chrono::seconds);</div>
+<div class="line"><span class="lineno">  276</span>    <span class="keywordflow">return</span> <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().autologoff;</div>
+<div class="line"><span class="lineno">  277</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_machine_8cpp_source.xhtml#l00018">CHECK_CONFIGURED</a>, and <a class="el" href="_machine_8hpp_source.xhtml#l00103">config</a>.</p>
+<p class="reference">References <a class="el" href="_machine_8cpp_source.xhtml#l00019">CHECK_CONFIGURED</a>, and <a class="el" href="_machine_8hpp_source.xhtml#l00104">config</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_machine_8cpp_source.xhtml#l00288">isAutologoffExpired()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_machine_8cpp_source.xhtml#l00292">isAutologoffExpired()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -564,12 +570,12 @@ Here is the caller graph for this function:</div>
 
 <p>Returns the current configuration of the machine, used for testing. </p>
 
-<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00321">321</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  322</span>  {</div>
-<div class="line"><span class="lineno">  323</span>    <span class="keywordflow">return</span> <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>;</div>
-<div class="line"><span class="lineno">  324</span>  }</div>
+<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00325">325</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  326</span>  {</div>
+<div class="line"><span class="lineno">  327</span>    <span class="keywordflow">return</span> <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>;</div>
+<div class="line"><span class="lineno">  328</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_machine_8hpp_source.xhtml#l00103">config</a>.</p>
+<p class="reference">References <a class="el" href="_machine_8hpp_source.xhtml#l00104">config</a>.</p>
 
 </div>
 </div>
@@ -588,15 +594,15 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00346">346</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  347</span>  {</div>
-<div class="line"><span class="lineno">  348</span>    <a class="code hl_define" href="_machine_8cpp.xhtml#a22d2ecd6e476d01bda4d7f7f4af2b787">CHECK_CONFIGURED</a>(std::chrono::seconds);</div>
-<div class="line"><span class="lineno">  349</span>    <span class="keywordflow">return</span> <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().grace_period;</div>
-<div class="line"><span class="lineno">  350</span>  }</div>
+<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00350">350</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  351</span>  {</div>
+<div class="line"><span class="lineno">  352</span>    <a class="code hl_define" href="_machine_8cpp.xhtml#a22d2ecd6e476d01bda4d7f7f4af2b787">CHECK_CONFIGURED</a>(std::chrono::seconds);</div>
+<div class="line"><span class="lineno">  353</span>    <span class="keywordflow">return</span> <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().grace_period;</div>
+<div class="line"><span class="lineno">  354</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_machine_8cpp_source.xhtml#l00018">CHECK_CONFIGURED</a>, and <a class="el" href="_machine_8hpp_source.xhtml#l00103">config</a>.</p>
+<p class="reference">References <a class="el" href="_machine_8cpp_source.xhtml#l00019">CHECK_CONFIGURED</a>, and <a class="el" href="_machine_8hpp_source.xhtml#l00104">config</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_machine_8cpp_source.xhtml#l00241">toString()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_machine_8cpp_source.xhtml#l00242">toString()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -623,16 +629,16 @@ Here is the caller graph for this function:</div>
 <p>Returns the machine identifier. </p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classfabomatic_1_1_machine.xhtml" title="Represents the FabLab machine connected to the board.">Machine</a> identifier </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00048">48</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   49</span>  {</div>
-<div class="line"><span class="lineno">   50</span>    <a class="code hl_define" href="_machine_8cpp.xhtml#a22d2ecd6e476d01bda4d7f7f4af2b787">CHECK_CONFIGURED</a>(<a class="code hl_struct" href="struct_machine_i_d.xhtml">MachineID</a>);</div>
-<div class="line"><span class="lineno">   51</span>    <span class="keywordflow">return</span> <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().machine_id;</div>
-<div class="line"><span class="lineno">   52</span>  }</div>
+<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00049">49</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   50</span>  {</div>
+<div class="line"><span class="lineno">   51</span>    <a class="code hl_define" href="_machine_8cpp.xhtml#a22d2ecd6e476d01bda4d7f7f4af2b787">CHECK_CONFIGURED</a>(<a class="code hl_struct" href="struct_machine_i_d.xhtml">MachineID</a>);</div>
+<div class="line"><span class="lineno">   52</span>    <span class="keywordflow">return</span> <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().machine_id;</div>
+<div class="line"><span class="lineno">   53</span>  }</div>
 <div class="ttc" id="astruct_machine_i_d_xhtml"><div class="ttname"><a href="struct_machine_i_d.xhtml">MachineID</a></div><div class="ttdoc">The unique machine identifier for the backend.</div><div class="ttdef"><b>Definition</b> <a href="_machine_i_d_8hpp_source.xhtml#l00019">MachineID.hpp:20</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_machine_8cpp_source.xhtml#l00018">CHECK_CONFIGURED</a>, and <a class="el" href="_machine_8hpp_source.xhtml#l00103">config</a>.</p>
+<p class="reference">References <a class="el" href="_machine_8cpp_source.xhtml#l00019">CHECK_CONFIGURED</a>, and <a class="el" href="_machine_8hpp_source.xhtml#l00104">config</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00041">fabomatic::BoardLogic::refreshFromServer()</a>, and <a class="el" href="_machine_8cpp_source.xhtml#l00241">toString()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00042">fabomatic::BoardLogic::refreshFromServer()</a>, and <a class="el" href="_machine_8cpp_source.xhtml#l00242">toString()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -656,15 +662,15 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00235">235</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  236</span>  {</div>
-<div class="line"><span class="lineno">  237</span>    <a class="code hl_define" href="_machine_8cpp.xhtml#a22d2ecd6e476d01bda4d7f7f4af2b787">CHECK_CONFIGURED</a>(std::string);</div>
-<div class="line"><span class="lineno">  238</span>    <span class="keywordflow">return</span> std::string{<a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().machine_name.data()};</div>
-<div class="line"><span class="lineno">  239</span>  }</div>
+<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00236">236</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  237</span>  {</div>
+<div class="line"><span class="lineno">  238</span>    <a class="code hl_define" href="_machine_8cpp.xhtml#a22d2ecd6e476d01bda4d7f7f4af2b787">CHECK_CONFIGURED</a>(std::string);</div>
+<div class="line"><span class="lineno">  239</span>    <span class="keywordflow">return</span> std::string{<a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().machine_name.data()};</div>
+<div class="line"><span class="lineno">  240</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_machine_8cpp_source.xhtml#l00018">CHECK_CONFIGURED</a>, and <a class="el" href="_machine_8hpp_source.xhtml#l00103">config</a>.</p>
+<p class="reference">References <a class="el" href="_machine_8cpp_source.xhtml#l00019">CHECK_CONFIGURED</a>, and <a class="el" href="_machine_8hpp_source.xhtml#l00104">config</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_machine_8cpp_source.xhtml#l00241">toString()</a>, and <a class="el" href="_board_logic_8cpp_source.xhtml#l00284">fabomatic::BoardLogic::updateLCD()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_machine_8cpp_source.xhtml#l00242">toString()</a>, and <a class="el" href="_board_logic_8cpp_source.xhtml#l00285">fabomatic::BoardLogic::updateLCD()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -688,15 +694,15 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00365">365</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  366</span>  {</div>
-<div class="line"><span class="lineno">  367</span>    <span class="keywordflow">return</span> <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a77c8d3c024aa9bc8822ab8038e9cdd4d">maintenanceInfo</a>;</div>
-<div class="line"><span class="lineno">  368</span>  }</div>
-<div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_a77c8d3c024aa9bc8822ab8038e9cdd4d"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#a77c8d3c024aa9bc8822ab8038e9cdd4d">fabomatic::Machine::maintenanceInfo</a></div><div class="ttdeci">std::string maintenanceInfo</div><div class="ttdef"><b>Definition</b> <a href="_machine_8hpp_source.xhtml#l00118">Machine.hpp:118</a></div></div>
+<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00369">369</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  370</span>  {</div>
+<div class="line"><span class="lineno">  371</span>    <span class="keywordflow">return</span> <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a77c8d3c024aa9bc8822ab8038e9cdd4d">maintenanceInfo</a>;</div>
+<div class="line"><span class="lineno">  372</span>  }</div>
+<div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_a77c8d3c024aa9bc8822ab8038e9cdd4d"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#a77c8d3c024aa9bc8822ab8038e9cdd4d">fabomatic::Machine::maintenanceInfo</a></div><div class="ttdeci">std::string maintenanceInfo</div><div class="ttdef"><b>Definition</b> <a href="_machine_8hpp_source.xhtml#l00119">Machine.hpp:119</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_machine_8hpp_source.xhtml#l00118">maintenanceInfo</a>.</p>
+<p class="reference">References <a class="el" href="_machine_8hpp_source.xhtml#l00119">maintenanceInfo</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00284">fabomatic::BoardLogic::updateLCD()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00285">fabomatic::BoardLogic::updateLCD()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -723,14 +729,14 @@ Here is the caller graph for this function:</div>
 <p>Returns the current power state of the machine. </p>
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00080">80</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   81</span>  {</div>
-<div class="line"><span class="lineno">   82</span>    <span class="keywordflow">return</span> <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a2bc2b55d0e25444c6c169a94c44ba571">power_state</a>;</div>
-<div class="line"><span class="lineno">   83</span>  }</div>
+<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00081">81</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   82</span>  {</div>
+<div class="line"><span class="lineno">   83</span>    <span class="keywordflow">return</span> <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a2bc2b55d0e25444c6c169a94c44ba571">power_state</a>;</div>
+<div class="line"><span class="lineno">   84</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_machine_8hpp_source.xhtml#l00111">power_state</a>.</p>
+<p class="reference">References <a class="el" href="_machine_8hpp_source.xhtml#l00112">power_state</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00126">fabomatic::BoardLogic::longTap()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00241">toString()</a>, and <a class="el" href="_board_logic_8cpp_source.xhtml#l00284">fabomatic::BoardLogic::updateLCD()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00127">fabomatic::BoardLogic::longTap()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00242">toString()</a>, and <a class="el" href="_board_logic_8cpp_source.xhtml#l00285">fabomatic::BoardLogic::updateLCD()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -758,19 +764,24 @@ Here is the caller graph for this function:</div>
 <p>Gets the duration the machine has been used.</p>
 <dl class="section return"><dt>Returns</dt><dd>milliseconds since the machine has been started </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00226">226</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  227</span>  {</div>
-<div class="line"><span class="lineno">  228</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a215bab25e0b9555c733d1ffcb6330a06">usage_start_timestamp</a>.has_value())</div>
-<div class="line"><span class="lineno">  229</span>    {</div>
-<div class="line"><span class="lineno">  230</span>      <span class="keywordflow">return</span> std::chrono::duration_cast&lt;std::chrono::seconds&gt;(std::chrono::system_clock::now() - <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a215bab25e0b9555c733d1ffcb6330a06">usage_start_timestamp</a>.value());</div>
-<div class="line"><span class="lineno">  231</span>    }</div>
-<div class="line"><span class="lineno">  232</span>    <span class="keywordflow">return</span> 0s;</div>
-<div class="line"><span class="lineno">  233</span>  }</div>
-<div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_a215bab25e0b9555c733d1ffcb6330a06"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#a215bab25e0b9555c733d1ffcb6330a06">fabomatic::Machine::usage_start_timestamp</a></div><div class="ttdeci">std::optional&lt; std::chrono::time_point&lt; std::chrono::system_clock &gt; &gt; usage_start_timestamp</div><div class="ttdef"><b>Definition</b> <a href="_machine_8hpp_source.xhtml#l00109">Machine.hpp:109</a></div></div>
+<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00227">227</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  228</span>  {</div>
+<div class="line"><span class="lineno">  229</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a797653c883d897ef964cd3a862a6465d">usage_start_timestamp</a>.has_value())</div>
+<div class="line"><span class="lineno">  230</span>    {</div>
+<div class="line"><span class="lineno">  231</span>      <span class="keywordflow">return</span> std::chrono::duration_cast&lt;std::chrono::seconds&gt;(<a class="code hl_function" href="namespacefabomatic_1_1_tasks.xhtml#aad4a932b189725b84a436888d9da5dc8">fabomatic::Tasks::arduinoNow</a>() - <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a797653c883d897ef964cd3a862a6465d">usage_start_timestamp</a>.value());</div>
+<div class="line"><span class="lineno">  232</span>    }</div>
+<div class="line"><span class="lineno">  233</span>    <span class="keywordflow">return</span> 0s;</div>
+<div class="line"><span class="lineno">  234</span>  }</div>
+<div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_a797653c883d897ef964cd3a862a6465d"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#a797653c883d897ef964cd3a862a6465d">fabomatic::Machine::usage_start_timestamp</a></div><div class="ttdeci">std::optional&lt; std::chrono::steady_clock::time_point &gt; usage_start_timestamp</div><div class="ttdef"><b>Definition</b> <a href="_machine_8hpp_source.xhtml#l00110">Machine.hpp:110</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_machine_8hpp_source.xhtml#l00109">usage_start_timestamp</a>.</p>
+<p class="reference">References <a class="el" href="_tasks_8hpp_source.xhtml#l00015">fabomatic::Tasks::arduinoNow()</a>, and <a class="el" href="_machine_8hpp_source.xhtml#l00110">usage_start_timestamp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_machine_8cpp_source.xhtml#l00288">isAutologoffExpired()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00111">fabomatic::BoardLogic::logout()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00241">toString()</a>, and <a class="el" href="_board_logic_8cpp_source.xhtml#l00284">fabomatic::BoardLogic::updateLCD()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_machine_8cpp_source.xhtml#l00292">isAutologoffExpired()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00112">fabomatic::BoardLogic::logout()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00242">toString()</a>, and <a class="el" href="_board_logic_8cpp_source.xhtml#l00285">fabomatic::BoardLogic::updateLCD()</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classfabomatic_1_1_machine_a9c845a163660550fa779516a8be8681a_cgraph.svg" width="388" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -794,15 +805,15 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00326">326</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  327</span>  {</div>
-<div class="line"><span class="lineno">  328</span>    <span class="keywordflow">return</span> <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a503004fad0cb04f4e525b60f8e7e9e0c">allowed</a>;</div>
-<div class="line"><span class="lineno">  329</span>  }</div>
-<div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_a503004fad0cb04f4e525b60f8e7e9e0c"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#a503004fad0cb04f4e525b60f8e7e9e0c">fabomatic::Machine::allowed</a></div><div class="ttdeci">bool allowed</div><div class="ttdoc">If true, machine is allowed to be used by anybody.</div><div class="ttdef"><b>Definition</b> <a href="_machine_8hpp_source.xhtml#l00116">Machine.hpp:116</a></div></div>
+<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00330">330</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  331</span>  {</div>
+<div class="line"><span class="lineno">  332</span>    <span class="keywordflow">return</span> <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a503004fad0cb04f4e525b60f8e7e9e0c">allowed</a>;</div>
+<div class="line"><span class="lineno">  333</span>  }</div>
+<div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_a503004fad0cb04f4e525b60f8e7e9e0c"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#a503004fad0cb04f4e525b60f8e7e9e0c">fabomatic::Machine::allowed</a></div><div class="ttdeci">bool allowed</div><div class="ttdoc">If true, machine is allowed to be used by anybody.</div><div class="ttdef"><b>Definition</b> <a href="_machine_8hpp_source.xhtml#l00117">Machine.hpp:117</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_machine_8hpp_source.xhtml#l00116">allowed</a>.</p>
+<p class="reference">References <a class="el" href="_machine_8hpp_source.xhtml#l00117">allowed</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00163">fabomatic::BoardLogic::authorize()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00498">fabomatic::BoardLogic::blinkLed()</a>, and <a class="el" href="_board_logic_8cpp_source.xhtml#l00284">fabomatic::BoardLogic::updateLCD()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00164">fabomatic::BoardLogic::authorize()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00499">fabomatic::BoardLogic::blinkLed()</a>, and <a class="el" href="_board_logic_8cpp_source.xhtml#l00285">fabomatic::BoardLogic::updateLCD()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -828,19 +839,19 @@ Here is the caller graph for this function:</div>
 
 <p>Indicates ff the user shall be logged off automatically. </p>
 
-<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00288">288</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  289</span>  {</div>
-<div class="line"><span class="lineno">  290</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="classfabomatic_1_1_machine.xhtml#a725099e117c8abf8182631d9334c4286">getAutologoffDelay</a>() &gt; 0min &amp;&amp;</div>
-<div class="line"><span class="lineno">  291</span>           <a class="code hl_function" href="classfabomatic_1_1_machine.xhtml#a9c845a163660550fa779516a8be8681a">getUsageDuration</a>() &gt; <a class="code hl_function" href="classfabomatic_1_1_machine.xhtml#a725099e117c8abf8182631d9334c4286">getAutologoffDelay</a>();</div>
-<div class="line"><span class="lineno">  292</span>  }</div>
-<div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_a725099e117c8abf8182631d9334c4286"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#a725099e117c8abf8182631d9334c4286">fabomatic::Machine::getAutologoffDelay</a></div><div class="ttdeci">auto getAutologoffDelay() const -&gt; std::chrono::seconds</div><div class="ttdef"><b>Definition</b> <a href="_machine_8cpp_source.xhtml#l00269">Machine.cpp:269</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_a9c845a163660550fa779516a8be8681a"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#a9c845a163660550fa779516a8be8681a">fabomatic::Machine::getUsageDuration</a></div><div class="ttdeci">auto getUsageDuration() const -&gt; std::chrono::seconds</div><div class="ttdoc">Duration of the current usage, or 0s.</div><div class="ttdef"><b>Definition</b> <a href="_machine_8cpp_source.xhtml#l00226">Machine.cpp:226</a></div></div>
+<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00292">292</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  293</span>  {</div>
+<div class="line"><span class="lineno">  294</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="classfabomatic_1_1_machine.xhtml#a725099e117c8abf8182631d9334c4286">getAutologoffDelay</a>() &gt; 0min &amp;&amp;</div>
+<div class="line"><span class="lineno">  295</span>           <a class="code hl_function" href="classfabomatic_1_1_machine.xhtml#a9c845a163660550fa779516a8be8681a">getUsageDuration</a>() &gt; <a class="code hl_function" href="classfabomatic_1_1_machine.xhtml#a725099e117c8abf8182631d9334c4286">getAutologoffDelay</a>();</div>
+<div class="line"><span class="lineno">  296</span>  }</div>
+<div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_a725099e117c8abf8182631d9334c4286"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#a725099e117c8abf8182631d9334c4286">fabomatic::Machine::getAutologoffDelay</a></div><div class="ttdeci">auto getAutologoffDelay() const -&gt; std::chrono::seconds</div><div class="ttdef"><b>Definition</b> <a href="_machine_8cpp_source.xhtml#l00273">Machine.cpp:273</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_a9c845a163660550fa779516a8be8681a"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#a9c845a163660550fa779516a8be8681a">fabomatic::Machine::getUsageDuration</a></div><div class="ttdeci">auto getUsageDuration() const -&gt; std::chrono::seconds</div><div class="ttdoc">Duration of the current usage, or 0s.</div><div class="ttdef"><b>Definition</b> <a href="_machine_8cpp_source.xhtml#l00227">Machine.cpp:227</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_machine_8cpp_source.xhtml#l00269">getAutologoffDelay()</a>, and <a class="el" href="_machine_8cpp_source.xhtml#l00226">getUsageDuration()</a>.</p>
+<p class="reference">References <a class="el" href="_machine_8cpp_source.xhtml#l00273">getAutologoffDelay()</a>, and <a class="el" href="_machine_8cpp_source.xhtml#l00227">getUsageDuration()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classfabomatic_1_1_machine_a08685d0fb2bec894f77756f79c020bf9_cgraph.svg" width="332" height="118"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classfabomatic_1_1_machine_a08685d0fb2bec894f77756f79c020bf9_cgraph.svg" width="575" height="118"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -862,14 +873,14 @@ Here is the call graph for this function:</div>
 
 <p>Indicates if the machine has been configured. </p>
 
-<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00316">316</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  317</span>  {</div>
-<div class="line"><span class="lineno">  318</span>    <span class="keywordflow">return</span> <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.has_value() &amp;&amp; <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#adb98818468832f2327b4a25a199cdb0e">server</a>.has_value();</div>
-<div class="line"><span class="lineno">  319</span>  }</div>
+<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00320">320</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  321</span>  {</div>
+<div class="line"><span class="lineno">  322</span>    <span class="keywordflow">return</span> <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.has_value() &amp;&amp; <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#adb98818468832f2327b4a25a199cdb0e">server</a>.has_value();</div>
+<div class="line"><span class="lineno">  323</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_machine_8hpp_source.xhtml#l00103">config</a>, and <a class="el" href="_machine_8hpp_source.xhtml#l00104">server</a>.</p>
+<p class="reference">References <a class="el" href="_machine_8hpp_source.xhtml#l00104">config</a>, and <a class="el" href="_machine_8hpp_source.xhtml#l00105">server</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00284">fabomatic::BoardLogic::updateLCD()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00285">fabomatic::BoardLogic::updateLCD()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -897,15 +908,15 @@ Here is the caller graph for this function:</div>
 <p>Indicates whether the machine is used by somebody.</p>
 <dl class="section return"><dt>Returns</dt><dd>boolean </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00056">56</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   57</span>  {</div>
-<div class="line"><span class="lineno">   58</span>    <span class="keywordflow">return</span> !<a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a7b30e014bf3166b1f6692d3e64d18827">active</a>;</div>
-<div class="line"><span class="lineno">   59</span>  }</div>
-<div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_a7b30e014bf3166b1f6692d3e64d18827"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#a7b30e014bf3166b1f6692d3e64d18827">fabomatic::Machine::active</a></div><div class="ttdeci">bool active</div><div class="ttdef"><b>Definition</b> <a href="_machine_8hpp_source.xhtml#l00106">Machine.hpp:106</a></div></div>
+<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00057">57</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   58</span>  {</div>
+<div class="line"><span class="lineno">   59</span>    <span class="keywordflow">return</span> !<a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a7b30e014bf3166b1f6692d3e64d18827">active</a>;</div>
+<div class="line"><span class="lineno">   60</span>  }</div>
+<div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_a7b30e014bf3166b1f6692d3e64d18827"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#a7b30e014bf3166b1f6692d3e64d18827">fabomatic::Machine::active</a></div><div class="ttdeci">bool active</div><div class="ttdef"><b>Definition</b> <a href="_machine_8hpp_source.xhtml#l00107">Machine.hpp:107</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_machine_8hpp_source.xhtml#l00106">active</a>.</p>
+<p class="reference">References <a class="el" href="_machine_8hpp_source.xhtml#l00107">active</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00498">fabomatic::BoardLogic::blinkLed()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00548">fabomatic::BoardLogic::checkRfid()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00073">fabomatic::BoardLogic::onNewCard()</a>, and <a class="el" href="_machine_8cpp_source.xhtml#l00241">toString()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00499">fabomatic::BoardLogic::blinkLed()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00549">fabomatic::BoardLogic::checkRfid()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00074">fabomatic::BoardLogic::onNewCard()</a>, and <a class="el" href="_machine_8cpp_source.xhtml#l00242">toString()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -929,15 +940,15 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00336">336</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  337</span>  {</div>
-<div class="line"><span class="lineno">  338</span>    <span class="keywordflow">return</span> <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#af6e53363524fca589cea90c51f953b7d">maintenanceNeeded</a>;</div>
-<div class="line"><span class="lineno">  339</span>  }</div>
-<div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_af6e53363524fca589cea90c51f953b7d"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#af6e53363524fca589cea90c51f953b7d">fabomatic::Machine::maintenanceNeeded</a></div><div class="ttdeci">bool maintenanceNeeded</div><div class="ttdoc">If true, machine needs maintenance.</div><div class="ttdef"><b>Definition</b> <a href="_machine_8hpp_source.xhtml#l00114">Machine.hpp:114</a></div></div>
+<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00340">340</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  341</span>  {</div>
+<div class="line"><span class="lineno">  342</span>    <span class="keywordflow">return</span> <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#af6e53363524fca589cea90c51f953b7d">maintenanceNeeded</a>;</div>
+<div class="line"><span class="lineno">  343</span>  }</div>
+<div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_af6e53363524fca589cea90c51f953b7d"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#af6e53363524fca589cea90c51f953b7d">fabomatic::Machine::maintenanceNeeded</a></div><div class="ttdeci">bool maintenanceNeeded</div><div class="ttdoc">If true, machine needs maintenance.</div><div class="ttdef"><b>Definition</b> <a href="_machine_8hpp_source.xhtml#l00115">Machine.hpp:115</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_machine_8hpp_source.xhtml#l00114">maintenanceNeeded</a>.</p>
+<p class="reference">References <a class="el" href="_machine_8hpp_source.xhtml#l00115">maintenanceNeeded</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00163">fabomatic::BoardLogic::authorize()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00498">fabomatic::BoardLogic::blinkLed()</a>, and <a class="el" href="_board_logic_8cpp_source.xhtml#l00284">fabomatic::BoardLogic::updateLCD()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00164">fabomatic::BoardLogic::authorize()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00499">fabomatic::BoardLogic::blinkLed()</a>, and <a class="el" href="_board_logic_8cpp_source.xhtml#l00285">fabomatic::BoardLogic::updateLCD()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -965,20 +976,25 @@ Here is the caller graph for this function:</div>
 <p>indicates if the machine is about to shudown and board should beep</p>
 <dl class="section return"><dt>Returns</dt><dd>true if shutdown is imminent (within grace_period after last logoff) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00123">123</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  124</span>  {</div>
-<div class="line"><span class="lineno">  125</span>    <span class="keywordflow">if</span> (!<a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a9973764a444fc39727def61c053c62c3">logoff_timestamp</a>.has_value())</div>
-<div class="line"><span class="lineno">  126</span>      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><span class="lineno">  127</span> </div>
-<div class="line"><span class="lineno">  128</span>    <a class="code hl_define" href="_machine_8cpp.xhtml#a22d2ecd6e476d01bda4d7f7f4af2b787">CHECK_CONFIGURED</a>(<span class="keywordtype">bool</span>);</div>
-<div class="line"><span class="lineno">  129</span> </div>
-<div class="line"><span class="lineno">  130</span>    <span class="keywordflow">return</span> (<a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a2bc2b55d0e25444c6c169a94c44ba571">power_state</a> == <a class="code hl_enumvalue" href="classfabomatic_1_1_machine.xhtml#a409acc0089d7cfe849b2e775840e5838a878a40722160ead08a1f3cdef3e70a14">PowerState::WaitingPowerOff</a> &amp;&amp;</div>
-<div class="line"><span class="lineno">  131</span>            std::chrono::system_clock::now() - <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a9973764a444fc39727def61c053c62c3">logoff_timestamp</a>.value() &lt;= <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().grace_period);</div>
-<div class="line"><span class="lineno">  132</span>  }</div>
+<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00124">124</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  125</span>  {</div>
+<div class="line"><span class="lineno">  126</span>    <span class="keywordflow">if</span> (!<a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a9f1c52164376bb949436e0da5020baf6">logoff_timestamp</a>.has_value())</div>
+<div class="line"><span class="lineno">  127</span>      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  128</span> </div>
+<div class="line"><span class="lineno">  129</span>    <a class="code hl_define" href="_machine_8cpp.xhtml#a22d2ecd6e476d01bda4d7f7f4af2b787">CHECK_CONFIGURED</a>(<span class="keywordtype">bool</span>);</div>
+<div class="line"><span class="lineno">  130</span> </div>
+<div class="line"><span class="lineno">  131</span>    <span class="keywordflow">return</span> (<a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a2bc2b55d0e25444c6c169a94c44ba571">power_state</a> == <a class="code hl_enumvalue" href="classfabomatic_1_1_machine.xhtml#a409acc0089d7cfe849b2e775840e5838a878a40722160ead08a1f3cdef3e70a14">PowerState::WaitingPowerOff</a> &amp;&amp;</div>
+<div class="line"><span class="lineno">  132</span>            <a class="code hl_function" href="namespacefabomatic_1_1_tasks.xhtml#aad4a932b189725b84a436888d9da5dc8">fabomatic::Tasks::arduinoNow</a>() - <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a9f1c52164376bb949436e0da5020baf6">logoff_timestamp</a>.value() &lt;= <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().grace_period);</div>
+<div class="line"><span class="lineno">  133</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_machine_8cpp_source.xhtml#l00018">CHECK_CONFIGURED</a>, <a class="el" href="_machine_8hpp_source.xhtml#l00103">config</a>, <a class="el" href="_machine_8hpp_source.xhtml#l00110">logoff_timestamp</a>, <a class="el" href="_machine_8hpp_source.xhtml#l00111">power_state</a>, and <a class="el" href="classfabomatic_1_1_machine.xhtml#a409acc0089d7cfe849b2e775840e5838a878a40722160ead08a1f3cdef3e70a14">WaitingPowerOff</a>.</p>
+<p class="reference">References <a class="el" href="_tasks_8hpp_source.xhtml#l00015">fabomatic::Tasks::arduinoNow()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00019">CHECK_CONFIGURED</a>, <a class="el" href="_machine_8hpp_source.xhtml#l00104">config</a>, <a class="el" href="_machine_8hpp_source.xhtml#l00111">logoff_timestamp</a>, <a class="el" href="_machine_8hpp_source.xhtml#l00112">power_state</a>, and <a class="el" href="classfabomatic_1_1_machine.xhtml#a409acc0089d7cfe849b2e775840e5838a878a40722160ead08a1f3cdef3e70a14">WaitingPowerOff</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00498">fabomatic::BoardLogic::blinkLed()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00126">fabomatic::BoardLogic::longTap()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00241">toString()</a>, and <a class="el" href="_board_logic_8cpp_source.xhtml#l00284">fabomatic::BoardLogic::updateLCD()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00499">fabomatic::BoardLogic::blinkLed()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00127">fabomatic::BoardLogic::longTap()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00242">toString()</a>, and <a class="el" href="_board_logic_8cpp_source.xhtml#l00285">fabomatic::BoardLogic::updateLCD()</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classfabomatic_1_1_machine_a871958cc57845c8651cf1058ed9b30e4_cgraph.svg" width="404" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -1013,25 +1029,30 @@ Here is the caller graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true of the user has been successfully logged in </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00064">64</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   65</span>  {</div>
-<div class="line"><span class="lineno">   66</span>    <a class="code hl_define" href="_machine_8cpp.xhtml#a22d2ecd6e476d01bda4d7f7f4af2b787">CHECK_CONFIGURED</a>(<span class="keywordtype">bool</span>);</div>
-<div class="line"><span class="lineno">   67</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="classfabomatic_1_1_machine.xhtml#a74aa0b2cd34205ba57710affc56f5c3c">isFree</a>() &amp;&amp; <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a503004fad0cb04f4e525b60f8e7e9e0c">allowed</a>)</div>
-<div class="line"><span class="lineno">   68</span>    {</div>
-<div class="line"><span class="lineno">   69</span>      <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a7b30e014bf3166b1f6692d3e64d18827">active</a> = <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">   70</span>      <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#aa39977d690373313aa7c24f52679cc5b">current_user</a> = user;</div>
-<div class="line"><span class="lineno">   71</span>      <a class="code hl_function" href="classfabomatic_1_1_machine.xhtml#a0aa6c35ee214314d87297013cc29a8aa">power</a>(<span class="keyword">true</span>);</div>
-<div class="line"><span class="lineno">   72</span>      <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a215bab25e0b9555c733d1ffcb6330a06">usage_start_timestamp</a> = std::chrono::system_clock::now();</div>
-<div class="line"><span class="lineno">   73</span>      <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">   74</span>    }</div>
-<div class="line"><span class="lineno">   75</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><span class="lineno">   76</span>  }</div>
-<div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_a0aa6c35ee214314d87297013cc29a8aa"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#a0aa6c35ee214314d87297013cc29a8aa">fabomatic::Machine::power</a></div><div class="ttdeci">auto power(bool on_or_off) -&gt; void</div><div class="ttdoc">Powers the machine on or off using relay/MQTT/both.</div><div class="ttdef"><b>Definition</b> <a href="_machine_8cpp_source.xhtml#l00203">Machine.cpp:203</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_a74aa0b2cd34205ba57710affc56f5c3c"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#a74aa0b2cd34205ba57710affc56f5c3c">fabomatic::Machine::isFree</a></div><div class="ttdeci">auto isFree() const -&gt; bool</div><div class="ttdoc">Indicates is the machine is not used by anybody.</div><div class="ttdef"><b>Definition</b> <a href="_machine_8cpp_source.xhtml#l00056">Machine.cpp:56</a></div></div>
+<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00065">65</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   66</span>  {</div>
+<div class="line"><span class="lineno">   67</span>    <a class="code hl_define" href="_machine_8cpp.xhtml#a22d2ecd6e476d01bda4d7f7f4af2b787">CHECK_CONFIGURED</a>(<span class="keywordtype">bool</span>);</div>
+<div class="line"><span class="lineno">   68</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="classfabomatic_1_1_machine.xhtml#a74aa0b2cd34205ba57710affc56f5c3c">isFree</a>() &amp;&amp; <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a503004fad0cb04f4e525b60f8e7e9e0c">allowed</a>)</div>
+<div class="line"><span class="lineno">   69</span>    {</div>
+<div class="line"><span class="lineno">   70</span>      <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a7b30e014bf3166b1f6692d3e64d18827">active</a> = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">   71</span>      <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#aa39977d690373313aa7c24f52679cc5b">current_user</a> = user;</div>
+<div class="line"><span class="lineno">   72</span>      <a class="code hl_function" href="classfabomatic_1_1_machine.xhtml#a0aa6c35ee214314d87297013cc29a8aa">power</a>(<span class="keyword">true</span>);</div>
+<div class="line"><span class="lineno">   73</span>      <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a797653c883d897ef964cd3a862a6465d">usage_start_timestamp</a> = <a class="code hl_function" href="namespacefabomatic_1_1_tasks.xhtml#aad4a932b189725b84a436888d9da5dc8">fabomatic::Tasks::arduinoNow</a>();</div>
+<div class="line"><span class="lineno">   74</span>      <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">   75</span>    }</div>
+<div class="line"><span class="lineno">   76</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">   77</span>  }</div>
+<div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_a0aa6c35ee214314d87297013cc29a8aa"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#a0aa6c35ee214314d87297013cc29a8aa">fabomatic::Machine::power</a></div><div class="ttdeci">auto power(bool on_or_off) -&gt; void</div><div class="ttdoc">Powers the machine on or off using relay/MQTT/both.</div><div class="ttdef"><b>Definition</b> <a href="_machine_8cpp_source.xhtml#l00204">Machine.cpp:204</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_a74aa0b2cd34205ba57710affc56f5c3c"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#a74aa0b2cd34205ba57710affc56f5c3c">fabomatic::Machine::isFree</a></div><div class="ttdeci">auto isFree() const -&gt; bool</div><div class="ttdoc">Indicates is the machine is not used by anybody.</div><div class="ttdef"><b>Definition</b> <a href="_machine_8cpp_source.xhtml#l00057">Machine.cpp:57</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_machine_8cpp_source.xhtml#l00018">CHECK_CONFIGURED</a>.</p>
+<p class="reference">References <a class="el" href="_tasks_8hpp_source.xhtml#l00015">fabomatic::Tasks::arduinoNow()</a>, and <a class="el" href="_machine_8cpp_source.xhtml#l00019">CHECK_CONFIGURED</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00163">fabomatic::BoardLogic::authorize()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00164">fabomatic::BoardLogic::authorize()</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classfabomatic_1_1_machine_ac0591da2ff437cd6c7cc91bd09b4dff7_cgraph.svg" width="388" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -1058,31 +1079,36 @@ Here is the caller graph for this function:</div>
 <p>Logoff the user and stop the usage timer. </p>
 <p>Removes the user from the machine, and powers off the machine (respecting POWEROFF_DELAY_MINUTES setting) </p>
 
-<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00086">86</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   87</span>  {</div>
-<div class="line"><span class="lineno">   88</span>    <a class="code hl_define" href="_machine_8cpp.xhtml#a22d2ecd6e476d01bda4d7f7f4af2b787">CHECK_CONFIGURED</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><span class="lineno">   89</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a7b30e014bf3166b1f6692d3e64d18827">active</a>)</div>
-<div class="line"><span class="lineno">   90</span>    {</div>
-<div class="line"><span class="lineno">   91</span>      <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a7b30e014bf3166b1f6692d3e64d18827">active</a> = <span class="keyword">false</span>;</div>
-<div class="line"><span class="lineno">   92</span>      <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a2bc2b55d0e25444c6c169a94c44ba571">power_state</a> = <a class="code hl_enumvalue" href="classfabomatic_1_1_machine.xhtml#a409acc0089d7cfe849b2e775840e5838a878a40722160ead08a1f3cdef3e70a14">PowerState::WaitingPowerOff</a>;</div>
-<div class="line"><span class="lineno">   93</span>      <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a215bab25e0b9555c733d1ffcb6330a06">usage_start_timestamp</a> = std::nullopt;</div>
-<div class="line"><span class="lineno">   94</span> </div>
-<div class="line"><span class="lineno">   95</span>      <span class="comment">// Sets the countdown to power off</span></div>
-<div class="line"><span class="lineno">   96</span>      <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a9973764a444fc39727def61c053c62c3">logoff_timestamp</a> = std::chrono::system_clock::now();</div>
-<div class="line"><span class="lineno">   97</span> </div>
-<div class="line"><span class="lineno">   98</span>      <span class="keywordflow">if</span> (<a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().grace_period == 0s)</div>
-<div class="line"><span class="lineno">   99</span>      {</div>
-<div class="line"><span class="lineno">  100</span>        <a class="code hl_function" href="classfabomatic_1_1_machine.xhtml#a0aa6c35ee214314d87297013cc29a8aa">power</a>(<span class="keyword">false</span>);</div>
-<div class="line"><span class="lineno">  101</span>      }</div>
-<div class="line"><span class="lineno">  102</span> </div>
-<div class="line"><span class="lineno">  103</span>      ESP_LOGI(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <span class="stringliteral">&quot;Machine will be shutdown in %lld s&quot;</span>,</div>
-<div class="line"><span class="lineno">  104</span>               <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().grace_period.count());</div>
-<div class="line"><span class="lineno">  105</span>    }</div>
-<div class="line"><span class="lineno">  106</span>  }</div>
+<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00087">87</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   88</span>  {</div>
+<div class="line"><span class="lineno">   89</span>    <a class="code hl_define" href="_machine_8cpp.xhtml#a22d2ecd6e476d01bda4d7f7f4af2b787">CHECK_CONFIGURED</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><span class="lineno">   90</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a7b30e014bf3166b1f6692d3e64d18827">active</a>)</div>
+<div class="line"><span class="lineno">   91</span>    {</div>
+<div class="line"><span class="lineno">   92</span>      <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a7b30e014bf3166b1f6692d3e64d18827">active</a> = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">   93</span>      <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a2bc2b55d0e25444c6c169a94c44ba571">power_state</a> = <a class="code hl_enumvalue" href="classfabomatic_1_1_machine.xhtml#a409acc0089d7cfe849b2e775840e5838a878a40722160ead08a1f3cdef3e70a14">PowerState::WaitingPowerOff</a>;</div>
+<div class="line"><span class="lineno">   94</span>      <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a797653c883d897ef964cd3a862a6465d">usage_start_timestamp</a> = std::nullopt;</div>
+<div class="line"><span class="lineno">   95</span> </div>
+<div class="line"><span class="lineno">   96</span>      <span class="comment">// Sets the countdown to power off</span></div>
+<div class="line"><span class="lineno">   97</span>      <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a9f1c52164376bb949436e0da5020baf6">logoff_timestamp</a> = <a class="code hl_function" href="namespacefabomatic_1_1_tasks.xhtml#aad4a932b189725b84a436888d9da5dc8">fabomatic::Tasks::arduinoNow</a>();</div>
+<div class="line"><span class="lineno">   98</span> </div>
+<div class="line"><span class="lineno">   99</span>      <span class="keywordflow">if</span> (<a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().grace_period == 0s)</div>
+<div class="line"><span class="lineno">  100</span>      {</div>
+<div class="line"><span class="lineno">  101</span>        <a class="code hl_function" href="classfabomatic_1_1_machine.xhtml#a0aa6c35ee214314d87297013cc29a8aa">power</a>(<span class="keyword">false</span>);</div>
+<div class="line"><span class="lineno">  102</span>      }</div>
+<div class="line"><span class="lineno">  103</span> </div>
+<div class="line"><span class="lineno">  104</span>      ESP_LOGI(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <span class="stringliteral">&quot;Machine will be shutdown in %lld s&quot;</span>,</div>
+<div class="line"><span class="lineno">  105</span>               <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().grace_period.count());</div>
+<div class="line"><span class="lineno">  106</span>    }</div>
+<div class="line"><span class="lineno">  107</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_machine_8cpp_source.xhtml#l00018">CHECK_CONFIGURED</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00006">TAG</a>.</p>
+<p class="reference">References <a class="el" href="_tasks_8hpp_source.xhtml#l00015">fabomatic::Tasks::arduinoNow()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00019">CHECK_CONFIGURED</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00009">TAG</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00111">fabomatic::BoardLogic::logout()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00112">fabomatic::BoardLogic::logout()</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classfabomatic_1_1_machine_a86cd6dfd9fefa7221a49cc07c78fc851_cgraph.svg" width="388" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -1167,27 +1193,27 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00203">203</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  204</span>  {</div>
-<div class="line"><span class="lineno">  205</span>    <a class="code hl_define" href="_machine_8cpp.xhtml#a22d2ecd6e476d01bda4d7f7f4af2b787">CHECK_CONFIGURED</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><span class="lineno">  206</span> </div>
-<div class="line"><span class="lineno">  207</span>    ESP_LOGI(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <span class="stringliteral">&quot;Machine::power : power set to %d&quot;</span>, on_or_off);</div>
-<div class="line"><span class="lineno">  208</span> </div>
-<div class="line"><span class="lineno">  209</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().hasRelay())</div>
-<div class="line"><span class="lineno">  210</span>    {</div>
-<div class="line"><span class="lineno">  211</span>      <a class="code hl_function" href="classfabomatic_1_1_machine.xhtml#af80723250a85368e53055b5f91c14840">power_relay</a>(on_or_off);</div>
-<div class="line"><span class="lineno">  212</span>    }</div>
-<div class="line"><span class="lineno">  213</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().hasMqttSwitch())</div>
-<div class="line"><span class="lineno">  214</span>    {</div>
-<div class="line"><span class="lineno">  215</span>      <a class="code hl_function" href="classfabomatic_1_1_machine.xhtml#a116376ca892e59b8f754696161657631">power_mqtt</a>(on_or_off);</div>
-<div class="line"><span class="lineno">  216</span>    }</div>
-<div class="line"><span class="lineno">  217</span>  }</div>
-<div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_a116376ca892e59b8f754696161657631"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#a116376ca892e59b8f754696161657631">fabomatic::Machine::power_mqtt</a></div><div class="ttdeci">auto power_mqtt(bool on_or_off) -&gt; void</div><div class="ttdoc">sets the machine power to on (true) or off (false)</div><div class="ttdef"><b>Definition</b> <a href="_machine_8cpp_source.xhtml#l00165">Machine.cpp:165</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_af80723250a85368e53055b5f91c14840"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#af80723250a85368e53055b5f91c14840">fabomatic::Machine::power_relay</a></div><div class="ttdeci">auto power_relay(bool on_or_off) -&gt; void</div><div class="ttdoc">sets the machine power to on (true) or off (false)</div><div class="ttdef"><b>Definition</b> <a href="_machine_8cpp_source.xhtml#l00136">Machine.cpp:136</a></div></div>
+<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00204">204</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  205</span>  {</div>
+<div class="line"><span class="lineno">  206</span>    <a class="code hl_define" href="_machine_8cpp.xhtml#a22d2ecd6e476d01bda4d7f7f4af2b787">CHECK_CONFIGURED</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><span class="lineno">  207</span> </div>
+<div class="line"><span class="lineno">  208</span>    ESP_LOGI(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <span class="stringliteral">&quot;Machine::power : power set to %d&quot;</span>, on_or_off);</div>
+<div class="line"><span class="lineno">  209</span> </div>
+<div class="line"><span class="lineno">  210</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().hasRelay())</div>
+<div class="line"><span class="lineno">  211</span>    {</div>
+<div class="line"><span class="lineno">  212</span>      <a class="code hl_function" href="classfabomatic_1_1_machine.xhtml#af80723250a85368e53055b5f91c14840">power_relay</a>(on_or_off);</div>
+<div class="line"><span class="lineno">  213</span>    }</div>
+<div class="line"><span class="lineno">  214</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().hasMqttSwitch())</div>
+<div class="line"><span class="lineno">  215</span>    {</div>
+<div class="line"><span class="lineno">  216</span>      <a class="code hl_function" href="classfabomatic_1_1_machine.xhtml#a116376ca892e59b8f754696161657631">power_mqtt</a>(on_or_off);</div>
+<div class="line"><span class="lineno">  217</span>    }</div>
+<div class="line"><span class="lineno">  218</span>  }</div>
+<div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_a116376ca892e59b8f754696161657631"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#a116376ca892e59b8f754696161657631">fabomatic::Machine::power_mqtt</a></div><div class="ttdeci">auto power_mqtt(bool on_or_off) -&gt; void</div><div class="ttdoc">sets the machine power to on (true) or off (false)</div><div class="ttdef"><b>Definition</b> <a href="_machine_8cpp_source.xhtml#l00166">Machine.cpp:166</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_af80723250a85368e53055b5f91c14840"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#af80723250a85368e53055b5f91c14840">fabomatic::Machine::power_relay</a></div><div class="ttdeci">auto power_relay(bool on_or_off) -&gt; void</div><div class="ttdoc">sets the machine power to on (true) or off (false)</div><div class="ttdef"><b>Definition</b> <a href="_machine_8cpp_source.xhtml#l00137">Machine.cpp:137</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_machine_8cpp_source.xhtml#l00018">CHECK_CONFIGURED</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00006">TAG</a>.</p>
+<p class="reference">References <a class="el" href="_machine_8cpp_source.xhtml#l00019">CHECK_CONFIGURED</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00009">TAG</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00576">fabomatic::BoardLogic::checkPowerOff()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00577">fabomatic::BoardLogic::checkPowerOff()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -1228,53 +1254,53 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00165">165</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  166</span>  {</div>
-<div class="line"><span class="lineno">  167</span>    <a class="code hl_define" href="_machine_8cpp.xhtml#a22d2ecd6e476d01bda4d7f7f4af2b787">CHECK_CONFIGURED</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><span class="lineno">  168</span> </div>
-<div class="line"><span class="lineno">  169</span>    ESP_LOGI(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <span class="stringliteral">&quot;Machine::power_mqtt : power set to %d&quot;</span>, value);</div>
-<div class="line"><span class="lineno">  170</span> </div>
-<div class="line"><span class="lineno">  171</span>    <span class="keyword">auto</span> &amp;mqtt_server = <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#adb98818468832f2327b4a25a199cdb0e">server</a>.value().get();</div>
-<div class="line"><span class="lineno">  172</span>    <span class="keyword">const</span> <span class="keyword">auto</span> &amp;sw_topic = <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().mqtt_switch_topic;</div>
-<div class="line"><span class="lineno">  173</span> </div>
-<div class="line"><span class="lineno">  174</span>    String topic{sw_topic.data()};</div>
-<div class="line"><span class="lineno">  175</span>    String payload = value ? <a class="code hl_variable" href="namespacefabomatic_1_1conf_1_1mqtt.xhtml#af01bd772b77a7090372a617d96aad5fd">conf::mqtt::mqtt_switch_on_message</a>.data() : <a class="code hl_variable" href="namespacefabomatic_1_1conf_1_1mqtt.xhtml#af01bd772b77a7090372a617d96aad5fd">conf::mqtt::mqtt_switch_on_message</a>.data();</div>
-<div class="line"><span class="lineno">  176</span> </div>
-<div class="line"><span class="lineno">  177</span>    <span class="keyword">auto</span> retries = 0;</div>
-<div class="line"><span class="lineno">  178</span>    <span class="keywordflow">while</span> (!mqtt_server.publish(topic, payload, <span class="keyword">false</span>))</div>
-<div class="line"><span class="lineno">  179</span>    {</div>
-<div class="line"><span class="lineno">  180</span>      ESP_LOGE(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <span class="stringliteral">&quot;Error while publishing %s to %s&quot;</span>, payload.c_str(), topic.c_str());</div>
-<div class="line"><span class="lineno">  181</span> </div>
-<div class="line"><span class="lineno">  182</span>      mqtt_server.connect();</div>
-<div class="line"><span class="lineno">  183</span>      <a class="code hl_function" href="namespacefabomatic_1_1_tasks.xhtml#a5c20f560f5934822d39ba116a16f3ab6">Tasks::delay</a>(<a class="code hl_variable" href="namespacefabomatic_1_1conf_1_1mqtt.xhtml#a8418761ec7353545c7130692339b9cc6">conf::mqtt::TIMEOUT_REPLY_SERVER</a>);</div>
-<div class="line"><span class="lineno">  184</span>      retries++;</div>
-<div class="line"><span class="lineno">  185</span>      <span class="keywordflow">if</span> (retries &gt; <a class="code hl_variable" href="namespacefabomatic_1_1conf_1_1mqtt.xhtml#a9385c322eb16f7f09992855dec71df20">conf::mqtt::MAX_TRIES</a>)</div>
-<div class="line"><span class="lineno">  186</span>      {</div>
-<div class="line"><span class="lineno">  187</span>        ESP_LOGW(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <span class="stringliteral">&quot;Unable to publish to MQTT (%d/%d)&quot;</span>, retries, <a class="code hl_variable" href="namespacefabomatic_1_1conf_1_1mqtt.xhtml#a9385c322eb16f7f09992855dec71df20">conf::mqtt::MAX_TRIES</a>);</div>
-<div class="line"><span class="lineno">  188</span>        <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">  189</span>      }</div>
-<div class="line"><span class="lineno">  190</span>    }</div>
-<div class="line"><span class="lineno">  191</span> </div>
-<div class="line"><span class="lineno">  192</span>    <span class="keywordflow">if</span> (value)</div>
-<div class="line"><span class="lineno">  193</span>    {</div>
-<div class="line"><span class="lineno">  194</span>      <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a9973764a444fc39727def61c053c62c3">logoff_timestamp</a> = std::nullopt;</div>
-<div class="line"><span class="lineno">  195</span>      <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a2bc2b55d0e25444c6c169a94c44ba571">power_state</a> = <a class="code hl_enumvalue" href="classfabomatic_1_1_machine.xhtml#a409acc0089d7cfe849b2e775840e5838a5fb98f2976a3f8c8980354a730398a87">PowerState::PoweredOn</a>;</div>
-<div class="line"><span class="lineno">  196</span>    }</div>
-<div class="line"><span class="lineno">  197</span>    <span class="keywordflow">else</span></div>
-<div class="line"><span class="lineno">  198</span>    {</div>
-<div class="line"><span class="lineno">  199</span>      <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a2bc2b55d0e25444c6c169a94c44ba571">power_state</a> = <a class="code hl_enumvalue" href="classfabomatic_1_1_machine.xhtml#a409acc0089d7cfe849b2e775840e5838ab161cc0f80e1c236e1f0816a42c4a00c">PowerState::PoweredOff</a>;</div>
-<div class="line"><span class="lineno">  200</span>    }</div>
-<div class="line"><span class="lineno">  201</span>  }</div>
-<div class="ttc" id="anamespacefabomatic_1_1_tasks_xhtml_a5c20f560f5934822d39ba116a16f3ab6"><div class="ttname"><a href="namespacefabomatic_1_1_tasks.xhtml#a5c20f560f5934822d39ba116a16f3ab6">fabomatic::Tasks::delay</a></div><div class="ttdeci">auto delay(const milliseconds duration) -&gt; void</div><div class="ttdoc">Wait for a delay, allowing OTA updates.</div><div class="ttdef"><b>Definition</b> <a href="_tasks_8cpp_source.xhtml#l00250">Tasks.cpp:250</a></div></div>
+<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00166">166</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  167</span>  {</div>
+<div class="line"><span class="lineno">  168</span>    <a class="code hl_define" href="_machine_8cpp.xhtml#a22d2ecd6e476d01bda4d7f7f4af2b787">CHECK_CONFIGURED</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><span class="lineno">  169</span> </div>
+<div class="line"><span class="lineno">  170</span>    ESP_LOGI(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <span class="stringliteral">&quot;Machine::power_mqtt : power set to %d&quot;</span>, value);</div>
+<div class="line"><span class="lineno">  171</span> </div>
+<div class="line"><span class="lineno">  172</span>    <span class="keyword">auto</span> &amp;mqtt_server = <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#adb98818468832f2327b4a25a199cdb0e">server</a>.value().get();</div>
+<div class="line"><span class="lineno">  173</span>    <span class="keyword">const</span> <span class="keyword">auto</span> &amp;sw_topic = <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().mqtt_switch_topic;</div>
+<div class="line"><span class="lineno">  174</span> </div>
+<div class="line"><span class="lineno">  175</span>    String topic{sw_topic.data()};</div>
+<div class="line"><span class="lineno">  176</span>    String payload = value ? <a class="code hl_variable" href="namespacefabomatic_1_1conf_1_1mqtt.xhtml#af01bd772b77a7090372a617d96aad5fd">conf::mqtt::mqtt_switch_on_message</a>.data() : <a class="code hl_variable" href="namespacefabomatic_1_1conf_1_1mqtt.xhtml#af01bd772b77a7090372a617d96aad5fd">conf::mqtt::mqtt_switch_on_message</a>.data();</div>
+<div class="line"><span class="lineno">  177</span> </div>
+<div class="line"><span class="lineno">  178</span>    <span class="keyword">auto</span> retries = 0;</div>
+<div class="line"><span class="lineno">  179</span>    <span class="keywordflow">while</span> (!mqtt_server.publish(topic, payload, <span class="keyword">false</span>))</div>
+<div class="line"><span class="lineno">  180</span>    {</div>
+<div class="line"><span class="lineno">  181</span>      ESP_LOGE(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <span class="stringliteral">&quot;Error while publishing %s to %s&quot;</span>, payload.c_str(), topic.c_str());</div>
+<div class="line"><span class="lineno">  182</span> </div>
+<div class="line"><span class="lineno">  183</span>      mqtt_server.connect();</div>
+<div class="line"><span class="lineno">  184</span>      <a class="code hl_function" href="namespacefabomatic_1_1_tasks.xhtml#a5c20f560f5934822d39ba116a16f3ab6">Tasks::delay</a>(<a class="code hl_variable" href="namespacefabomatic_1_1conf_1_1mqtt.xhtml#a8418761ec7353545c7130692339b9cc6">conf::mqtt::TIMEOUT_REPLY_SERVER</a>);</div>
+<div class="line"><span class="lineno">  185</span>      retries++;</div>
+<div class="line"><span class="lineno">  186</span>      <span class="keywordflow">if</span> (retries &gt; <a class="code hl_variable" href="namespacefabomatic_1_1conf_1_1mqtt.xhtml#a9385c322eb16f7f09992855dec71df20">conf::mqtt::MAX_TRIES</a>)</div>
+<div class="line"><span class="lineno">  187</span>      {</div>
+<div class="line"><span class="lineno">  188</span>        ESP_LOGW(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <span class="stringliteral">&quot;Unable to publish to MQTT (%d/%d)&quot;</span>, retries, <a class="code hl_variable" href="namespacefabomatic_1_1conf_1_1mqtt.xhtml#a9385c322eb16f7f09992855dec71df20">conf::mqtt::MAX_TRIES</a>);</div>
+<div class="line"><span class="lineno">  189</span>        <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  190</span>      }</div>
+<div class="line"><span class="lineno">  191</span>    }</div>
+<div class="line"><span class="lineno">  192</span> </div>
+<div class="line"><span class="lineno">  193</span>    <span class="keywordflow">if</span> (value)</div>
+<div class="line"><span class="lineno">  194</span>    {</div>
+<div class="line"><span class="lineno">  195</span>      <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a9f1c52164376bb949436e0da5020baf6">logoff_timestamp</a> = std::nullopt;</div>
+<div class="line"><span class="lineno">  196</span>      <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a2bc2b55d0e25444c6c169a94c44ba571">power_state</a> = <a class="code hl_enumvalue" href="classfabomatic_1_1_machine.xhtml#a409acc0089d7cfe849b2e775840e5838a5fb98f2976a3f8c8980354a730398a87">PowerState::PoweredOn</a>;</div>
+<div class="line"><span class="lineno">  197</span>    }</div>
+<div class="line"><span class="lineno">  198</span>    <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  199</span>    {</div>
+<div class="line"><span class="lineno">  200</span>      <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a2bc2b55d0e25444c6c169a94c44ba571">power_state</a> = <a class="code hl_enumvalue" href="classfabomatic_1_1_machine.xhtml#a409acc0089d7cfe849b2e775840e5838ab161cc0f80e1c236e1f0816a42c4a00c">PowerState::PoweredOff</a>;</div>
+<div class="line"><span class="lineno">  201</span>    }</div>
+<div class="line"><span class="lineno">  202</span>  }</div>
+<div class="ttc" id="anamespacefabomatic_1_1_tasks_xhtml_a5c20f560f5934822d39ba116a16f3ab6"><div class="ttname"><a href="namespacefabomatic_1_1_tasks.xhtml#a5c20f560f5934822d39ba116a16f3ab6">fabomatic::Tasks::delay</a></div><div class="ttdeci">auto delay(const milliseconds duration) -&gt; void</div><div class="ttdoc">Wait for a delay, allowing OTA updates.</div><div class="ttdef"><b>Definition</b> <a href="_tasks_8cpp_source.xhtml#l00266">Tasks.cpp:266</a></div></div>
 <div class="ttc" id="anamespacefabomatic_1_1conf_1_1mqtt_xhtml_a8418761ec7353545c7130692339b9cc6"><div class="ttname"><a href="namespacefabomatic_1_1conf_1_1mqtt.xhtml#a8418761ec7353545c7130692339b9cc6">fabomatic::conf::mqtt::TIMEOUT_REPLY_SERVER</a></div><div class="ttdeci">static constexpr auto TIMEOUT_REPLY_SERVER</div><div class="ttdoc">Timeout for a single backend reply request.</div><div class="ttdef"><b>Definition</b> <a href="conf_8hpp_source.xhtml#l00148">conf.hpp:148</a></div></div>
 <div class="ttc" id="anamespacefabomatic_1_1conf_1_1mqtt_xhtml_a9385c322eb16f7f09992855dec71df20"><div class="ttname"><a href="namespacefabomatic_1_1conf_1_1mqtt.xhtml#a9385c322eb16f7f09992855dec71df20">fabomatic::conf::mqtt::MAX_TRIES</a></div><div class="ttdeci">static constexpr auto MAX_TRIES</div><div class="ttdoc">Number of tries to get a reply from the backend.</div><div class="ttdef"><b>Definition</b> <a href="conf_8hpp_source.xhtml#l00145">conf.hpp:145</a></div></div>
 <div class="ttc" id="anamespacefabomatic_1_1conf_1_1mqtt_xhtml_af01bd772b77a7090372a617d96aad5fd"><div class="ttname"><a href="namespacefabomatic_1_1conf_1_1mqtt.xhtml#af01bd772b77a7090372a617d96aad5fd">fabomatic::conf::mqtt::mqtt_switch_on_message</a></div><div class="ttdeci">static constexpr std::string_view mqtt_switch_on_message</div><div class="ttdoc">What value shall be written on the topic to switch on the Shelly device.</div><div class="ttdef"><b>Definition</b> <a href="conf_8hpp_source.xhtml#l00160">conf.hpp:160</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_machine_8cpp_source.xhtml#l00018">CHECK_CONFIGURED</a>, <a class="el" href="_tasks_8cpp_source.xhtml#l00250">fabomatic::Tasks::delay()</a>, <a class="el" href="conf_8hpp_source.xhtml#l00145">fabomatic::conf::mqtt::MAX_TRIES</a>, <a class="el" href="conf_8hpp_source.xhtml#l00160">fabomatic::conf::mqtt::mqtt_switch_on_message</a>, <a class="el" href="_logging_8hpp_source.xhtml#l00006">TAG</a>, and <a class="el" href="conf_8hpp_source.xhtml#l00148">fabomatic::conf::mqtt::TIMEOUT_REPLY_SERVER</a>.</p>
+<p class="reference">References <a class="el" href="_machine_8cpp_source.xhtml#l00019">CHECK_CONFIGURED</a>, <a class="el" href="_tasks_8cpp_source.xhtml#l00266">fabomatic::Tasks::delay()</a>, <a class="el" href="conf_8hpp_source.xhtml#l00145">fabomatic::conf::mqtt::MAX_TRIES</a>, <a class="el" href="conf_8hpp_source.xhtml#l00160">fabomatic::conf::mqtt::mqtt_switch_on_message</a>, <a class="el" href="_logging_8hpp_source.xhtml#l00009">TAG</a>, and <a class="el" href="conf_8hpp_source.xhtml#l00148">fabomatic::conf::mqtt::TIMEOUT_REPLY_SERVER</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classfabomatic_1_1_machine_a116376ca892e59b8f754696161657631_cgraph.svg" width="348" height="68"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classfabomatic_1_1_machine_a116376ca892e59b8f754696161657631_cgraph.svg" width="592" height="68"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -1311,34 +1337,34 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00136">136</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  137</span>  {</div>
-<div class="line"><span class="lineno">  138</span>    <a class="code hl_define" href="_machine_8cpp.xhtml#a22d2ecd6e476d01bda4d7f7f4af2b787">CHECK_CONFIGURED</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><span class="lineno">  139</span>    ESP_LOGI(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <span class="stringliteral">&quot;Machine::power_relay : power set to %d&quot;</span>, value);</div>
-<div class="line"><span class="lineno">  140</span> </div>
-<div class="line"><span class="lineno">  141</span>    <span class="keyword">const</span> <span class="keyword">auto</span> pin = <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().relay_config.ch1_pin;</div>
-<div class="line"><span class="lineno">  142</span> </div>
-<div class="line"><span class="lineno">  143</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().relay_config.active_low)</div>
-<div class="line"><span class="lineno">  144</span>    {</div>
-<div class="line"><span class="lineno">  145</span>      digitalWrite(pin, value ? LOW : HIGH);</div>
-<div class="line"><span class="lineno">  146</span>    }</div>
-<div class="line"><span class="lineno">  147</span>    <span class="keywordflow">else</span></div>
-<div class="line"><span class="lineno">  148</span>    {</div>
-<div class="line"><span class="lineno">  149</span>      digitalWrite(pin, value ? HIGH : LOW);</div>
-<div class="line"><span class="lineno">  150</span>    }</div>
-<div class="line"><span class="lineno">  151</span> </div>
-<div class="line"><span class="lineno">  152</span>    <span class="keywordflow">if</span> (value)</div>
-<div class="line"><span class="lineno">  153</span>    {</div>
-<div class="line"><span class="lineno">  154</span>      <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a9973764a444fc39727def61c053c62c3">logoff_timestamp</a> = std::nullopt;</div>
-<div class="line"><span class="lineno">  155</span>      <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a2bc2b55d0e25444c6c169a94c44ba571">power_state</a> = <a class="code hl_enumvalue" href="classfabomatic_1_1_machine.xhtml#a409acc0089d7cfe849b2e775840e5838a5fb98f2976a3f8c8980354a730398a87">PowerState::PoweredOn</a>;</div>
-<div class="line"><span class="lineno">  156</span>    }</div>
-<div class="line"><span class="lineno">  157</span>    <span class="keywordflow">else</span></div>
-<div class="line"><span class="lineno">  158</span>    {</div>
-<div class="line"><span class="lineno">  159</span>      <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a2bc2b55d0e25444c6c169a94c44ba571">power_state</a> = <a class="code hl_enumvalue" href="classfabomatic_1_1_machine.xhtml#a409acc0089d7cfe849b2e775840e5838ab161cc0f80e1c236e1f0816a42c4a00c">PowerState::PoweredOff</a>;</div>
-<div class="line"><span class="lineno">  160</span>    }</div>
-<div class="line"><span class="lineno">  161</span>  }</div>
+<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00137">137</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  138</span>  {</div>
+<div class="line"><span class="lineno">  139</span>    <a class="code hl_define" href="_machine_8cpp.xhtml#a22d2ecd6e476d01bda4d7f7f4af2b787">CHECK_CONFIGURED</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><span class="lineno">  140</span>    ESP_LOGI(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <span class="stringliteral">&quot;Machine::power_relay : power set to %d&quot;</span>, value);</div>
+<div class="line"><span class="lineno">  141</span> </div>
+<div class="line"><span class="lineno">  142</span>    <span class="keyword">const</span> <span class="keyword">auto</span> pin = <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().relay_config.ch1_pin;</div>
+<div class="line"><span class="lineno">  143</span> </div>
+<div class="line"><span class="lineno">  144</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().relay_config.active_low)</div>
+<div class="line"><span class="lineno">  145</span>    {</div>
+<div class="line"><span class="lineno">  146</span>      digitalWrite(pin, value ? LOW : HIGH);</div>
+<div class="line"><span class="lineno">  147</span>    }</div>
+<div class="line"><span class="lineno">  148</span>    <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  149</span>    {</div>
+<div class="line"><span class="lineno">  150</span>      digitalWrite(pin, value ? HIGH : LOW);</div>
+<div class="line"><span class="lineno">  151</span>    }</div>
+<div class="line"><span class="lineno">  152</span> </div>
+<div class="line"><span class="lineno">  153</span>    <span class="keywordflow">if</span> (value)</div>
+<div class="line"><span class="lineno">  154</span>    {</div>
+<div class="line"><span class="lineno">  155</span>      <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a9f1c52164376bb949436e0da5020baf6">logoff_timestamp</a> = std::nullopt;</div>
+<div class="line"><span class="lineno">  156</span>      <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a2bc2b55d0e25444c6c169a94c44ba571">power_state</a> = <a class="code hl_enumvalue" href="classfabomatic_1_1_machine.xhtml#a409acc0089d7cfe849b2e775840e5838a5fb98f2976a3f8c8980354a730398a87">PowerState::PoweredOn</a>;</div>
+<div class="line"><span class="lineno">  157</span>    }</div>
+<div class="line"><span class="lineno">  158</span>    <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  159</span>    {</div>
+<div class="line"><span class="lineno">  160</span>      <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a2bc2b55d0e25444c6c169a94c44ba571">power_state</a> = <a class="code hl_enumvalue" href="classfabomatic_1_1_machine.xhtml#a409acc0089d7cfe849b2e775840e5838ab161cc0f80e1c236e1f0816a42c4a00c">PowerState::PoweredOff</a>;</div>
+<div class="line"><span class="lineno">  161</span>    }</div>
+<div class="line"><span class="lineno">  162</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_machine_8cpp_source.xhtml#l00018">CHECK_CONFIGURED</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00006">TAG</a>.</p>
+<p class="reference">References <a class="el" href="_machine_8cpp_source.xhtml#l00019">CHECK_CONFIGURED</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00009">TAG</a>.</p>
 
 </div>
 </div>
@@ -1358,12 +1384,12 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00331">331</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  332</span>  {</div>
-<div class="line"><span class="lineno">  333</span>    <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a503004fad0cb04f4e525b60f8e7e9e0c">allowed</a> = new_allowed;</div>
-<div class="line"><span class="lineno">  334</span>  }</div>
+<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00335">335</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  336</span>  {</div>
+<div class="line"><span class="lineno">  337</span>    <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a503004fad0cb04f4e525b60f8e7e9e0c">allowed</a> = new_allowed;</div>
+<div class="line"><span class="lineno">  338</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00041">fabomatic::BoardLogic::refreshFromServer()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00042">fabomatic::BoardLogic::refreshFromServer()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -1390,22 +1416,22 @@ Here is the caller graph for this function:</div>
 
 <p>Sets the delay after which the user will be logged off automatically. </p>
 
-<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00275">275</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  276</span>  {</div>
-<div class="line"><span class="lineno">  277</span>    <a class="code hl_define" href="_machine_8cpp.xhtml#a22d2ecd6e476d01bda4d7f7f4af2b787">CHECK_CONFIGURED</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><span class="lineno">  278</span> </div>
-<div class="line"><span class="lineno">  279</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().autologoff != new_delay)</div>
-<div class="line"><span class="lineno">  280</span>    {</div>
-<div class="line"><span class="lineno">  281</span>      ESP_LOGD(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <span class="stringliteral">&quot;Changing autologoff delay to %lld min&quot;</span>,</div>
-<div class="line"><span class="lineno">  282</span>               std::chrono::duration_cast&lt;std::chrono::minutes&gt;(<a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().autologoff).count());</div>
-<div class="line"><span class="lineno">  283</span>    }</div>
-<div class="line"><span class="lineno">  284</span> </div>
-<div class="line"><span class="lineno">  285</span>    <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().autologoff = new_delay;</div>
-<div class="line"><span class="lineno">  286</span>  }</div>
+<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00279">279</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  280</span>  {</div>
+<div class="line"><span class="lineno">  281</span>    <a class="code hl_define" href="_machine_8cpp.xhtml#a22d2ecd6e476d01bda4d7f7f4af2b787">CHECK_CONFIGURED</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><span class="lineno">  282</span> </div>
+<div class="line"><span class="lineno">  283</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().autologoff != new_delay)</div>
+<div class="line"><span class="lineno">  284</span>    {</div>
+<div class="line"><span class="lineno">  285</span>      ESP_LOGD(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <span class="stringliteral">&quot;Changing autologoff delay to %lld min&quot;</span>,</div>
+<div class="line"><span class="lineno">  286</span>               std::chrono::duration_cast&lt;std::chrono::minutes&gt;(<a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().autologoff).count());</div>
+<div class="line"><span class="lineno">  287</span>    }</div>
+<div class="line"><span class="lineno">  288</span> </div>
+<div class="line"><span class="lineno">  289</span>    <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().autologoff = new_delay;</div>
+<div class="line"><span class="lineno">  290</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_machine_8cpp_source.xhtml#l00018">CHECK_CONFIGURED</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00006">TAG</a>.</p>
+<p class="reference">References <a class="el" href="_machine_8cpp_source.xhtml#l00019">CHECK_CONFIGURED</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00009">TAG</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00041">fabomatic::BoardLogic::refreshFromServer()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00042">fabomatic::BoardLogic::refreshFromServer()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -1432,22 +1458,22 @@ Here is the caller graph for this function:</div>
 
 <p>Sets the idle period after which the machine will power off automatically. </p>
 
-<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00352">352</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  353</span>  {</div>
-<div class="line"><span class="lineno">  354</span>    <a class="code hl_define" href="_machine_8cpp.xhtml#a22d2ecd6e476d01bda4d7f7f4af2b787">CHECK_CONFIGURED</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><span class="lineno">  355</span> </div>
-<div class="line"><span class="lineno">  356</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().grace_period != new_delay)</div>
-<div class="line"><span class="lineno">  357</span>    {</div>
-<div class="line"><span class="lineno">  358</span>      ESP_LOGD(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <span class="stringliteral">&quot;Changing grace period to %lld seconds&quot;</span>,</div>
-<div class="line"><span class="lineno">  359</span>               new_delay.count());</div>
-<div class="line"><span class="lineno">  360</span>    }</div>
-<div class="line"><span class="lineno">  361</span> </div>
-<div class="line"><span class="lineno">  362</span>    <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().grace_period = new_delay;</div>
-<div class="line"><span class="lineno">  363</span>  }</div>
+<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00356">356</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  357</span>  {</div>
+<div class="line"><span class="lineno">  358</span>    <a class="code hl_define" href="_machine_8cpp.xhtml#a22d2ecd6e476d01bda4d7f7f4af2b787">CHECK_CONFIGURED</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><span class="lineno">  359</span> </div>
+<div class="line"><span class="lineno">  360</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().grace_period != new_delay)</div>
+<div class="line"><span class="lineno">  361</span>    {</div>
+<div class="line"><span class="lineno">  362</span>      ESP_LOGD(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <span class="stringliteral">&quot;Changing grace period to %lld seconds&quot;</span>,</div>
+<div class="line"><span class="lineno">  363</span>               new_delay.count());</div>
+<div class="line"><span class="lineno">  364</span>    }</div>
+<div class="line"><span class="lineno">  365</span> </div>
+<div class="line"><span class="lineno">  366</span>    <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().grace_period = new_delay;</div>
+<div class="line"><span class="lineno">  367</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_machine_8cpp_source.xhtml#l00018">CHECK_CONFIGURED</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00006">TAG</a>.</p>
+<p class="reference">References <a class="el" href="_machine_8cpp_source.xhtml#l00019">CHECK_CONFIGURED</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00009">TAG</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00041">fabomatic::BoardLogic::refreshFromServer()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00042">fabomatic::BoardLogic::refreshFromServer()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -1480,21 +1506,21 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00294">294</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  295</span>  {</div>
-<div class="line"><span class="lineno">  296</span>    <a class="code hl_define" href="_machine_8cpp.xhtml#a22d2ecd6e476d01bda4d7f7f4af2b787">CHECK_CONFIGURED</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><span class="lineno">  297</span> </div>
-<div class="line"><span class="lineno">  298</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().machine_name != new_name)</div>
-<div class="line"><span class="lineno">  299</span>    {</div>
-<div class="line"><span class="lineno">  300</span>      ESP_LOGD(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <span class="stringliteral">&quot;Changing machine name to %s&quot;</span>, new_name.data());</div>
-<div class="line"><span class="lineno">  301</span>    }</div>
-<div class="line"><span class="lineno">  302</span> </div>
-<div class="line"><span class="lineno">  303</span>    <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().machine_name = new_name;</div>
-<div class="line"><span class="lineno">  304</span>  }</div>
+<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00298">298</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  299</span>  {</div>
+<div class="line"><span class="lineno">  300</span>    <a class="code hl_define" href="_machine_8cpp.xhtml#a22d2ecd6e476d01bda4d7f7f4af2b787">CHECK_CONFIGURED</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><span class="lineno">  301</span> </div>
+<div class="line"><span class="lineno">  302</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().machine_name != new_name)</div>
+<div class="line"><span class="lineno">  303</span>    {</div>
+<div class="line"><span class="lineno">  304</span>      ESP_LOGD(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <span class="stringliteral">&quot;Changing machine name to %s&quot;</span>, new_name.data());</div>
+<div class="line"><span class="lineno">  305</span>    }</div>
+<div class="line"><span class="lineno">  306</span> </div>
+<div class="line"><span class="lineno">  307</span>    <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().machine_name = new_name;</div>
+<div class="line"><span class="lineno">  308</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_machine_8cpp_source.xhtml#l00018">CHECK_CONFIGURED</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00006">TAG</a>.</p>
+<p class="reference">References <a class="el" href="_machine_8cpp_source.xhtml#l00019">CHECK_CONFIGURED</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00009">TAG</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00041">fabomatic::BoardLogic::refreshFromServer()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00042">fabomatic::BoardLogic::refreshFromServer()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -1521,19 +1547,19 @@ Here is the caller graph for this function:</div>
 
 <p>Sets the machine type as per backend configuration. </p>
 
-<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00306">306</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  307</span>  {</div>
-<div class="line"><span class="lineno">  308</span>    <a class="code hl_define" href="_machine_8cpp.xhtml#a22d2ecd6e476d01bda4d7f7f4af2b787">CHECK_CONFIGURED</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><span class="lineno">  309</span> </div>
-<div class="line"><span class="lineno">  310</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().machine_type != new_type)</div>
-<div class="line"><span class="lineno">  311</span>      ESP_LOGD(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <span class="stringliteral">&quot;Changing machine type to %d&quot;</span>, <span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(new_type));</div>
-<div class="line"><span class="lineno">  312</span> </div>
-<div class="line"><span class="lineno">  313</span>    <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().machine_type = new_type;</div>
-<div class="line"><span class="lineno">  314</span>  }</div>
+<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00310">310</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  311</span>  {</div>
+<div class="line"><span class="lineno">  312</span>    <a class="code hl_define" href="_machine_8cpp.xhtml#a22d2ecd6e476d01bda4d7f7f4af2b787">CHECK_CONFIGURED</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><span class="lineno">  313</span> </div>
+<div class="line"><span class="lineno">  314</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().machine_type != new_type)</div>
+<div class="line"><span class="lineno">  315</span>      ESP_LOGD(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <span class="stringliteral">&quot;Changing machine type to %d&quot;</span>, <span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(new_type));</div>
+<div class="line"><span class="lineno">  316</span> </div>
+<div class="line"><span class="lineno">  317</span>    <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().machine_type = new_type;</div>
+<div class="line"><span class="lineno">  318</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_machine_8cpp_source.xhtml#l00018">CHECK_CONFIGURED</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00006">TAG</a>.</p>
+<p class="reference">References <a class="el" href="_machine_8cpp_source.xhtml#l00019">CHECK_CONFIGURED</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00009">TAG</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00041">fabomatic::BoardLogic::refreshFromServer()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00042">fabomatic::BoardLogic::refreshFromServer()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -1558,12 +1584,12 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00370">370</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  371</span>  {</div>
-<div class="line"><span class="lineno">  372</span>    <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a77c8d3c024aa9bc8822ab8038e9cdd4d">maintenanceInfo</a> = new_description;</div>
-<div class="line"><span class="lineno">  373</span>  }</div>
+<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00374">374</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  375</span>  {</div>
+<div class="line"><span class="lineno">  376</span>    <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a77c8d3c024aa9bc8822ab8038e9cdd4d">maintenanceInfo</a> = new_description;</div>
+<div class="line"><span class="lineno">  377</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00041">fabomatic::BoardLogic::refreshFromServer()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00042">fabomatic::BoardLogic::refreshFromServer()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -1588,12 +1614,12 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00341">341</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  342</span>  {</div>
-<div class="line"><span class="lineno">  343</span>    <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#af6e53363524fca589cea90c51f953b7d">maintenanceNeeded</a> = new_maintenance_needed;</div>
-<div class="line"><span class="lineno">  344</span>  }</div>
+<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00345">345</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  346</span>  {</div>
+<div class="line"><span class="lineno">  347</span>    <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#af6e53363524fca589cea90c51f953b7d">maintenanceNeeded</a> = new_maintenance_needed;</div>
+<div class="line"><span class="lineno">  348</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00163">fabomatic::BoardLogic::authorize()</a>, and <a class="el" href="_board_logic_8cpp_source.xhtml#l00041">fabomatic::BoardLogic::refreshFromServer()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00164">fabomatic::BoardLogic::authorize()</a>, and <a class="el" href="_board_logic_8cpp_source.xhtml#l00042">fabomatic::BoardLogic::refreshFromServer()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -1617,47 +1643,50 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00241">241</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  242</span>  {</div>
-<div class="line"><span class="lineno">  243</span>    std::stringstream sstream{};</div>
-<div class="line"><span class="lineno">  244</span> </div>
-<div class="line"><span class="lineno">  245</span>    <span class="keywordflow">if</span> (!<a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.has_value() || !<a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#adb98818468832f2327b4a25a199cdb0e">server</a>.has_value())</div>
-<div class="line"><span class="lineno">  246</span>    {</div>
-<div class="line"><span class="lineno">  247</span>      sstream &lt;&lt; <span class="stringliteral">&quot;Machine (not configured)&quot;</span>;</div>
-<div class="line"><span class="lineno">  248</span>      <span class="keywordflow">return</span> sstream.str();</div>
-<div class="line"><span class="lineno">  249</span>    }</div>
-<div class="line"><span class="lineno">  250</span> </div>
-<div class="line"><span class="lineno">  251</span>    sstream &lt;&lt; <span class="stringliteral">&quot;Machine (ID:&quot;</span> &lt;&lt; <a class="code hl_function" href="classfabomatic_1_1_machine.xhtml#a8bde1bdf40d146c521b623d54e2df1cf">getMachineId</a>().id;</div>
-<div class="line"><span class="lineno">  252</span>    sstream &lt;&lt; <span class="stringliteral">&quot;, Name:&quot;</span> &lt;&lt; <a class="code hl_function" href="classfabomatic_1_1_machine.xhtml#a1637e99f2d70262d2ab26f69ed4f0e47">getMachineName</a>();</div>
-<div class="line"><span class="lineno">  253</span>    sstream &lt;&lt; <span class="stringliteral">&quot;, IsFree: &quot;</span> &lt;&lt; <a class="code hl_function" href="classfabomatic_1_1_machine.xhtml#a74aa0b2cd34205ba57710affc56f5c3c">isFree</a>();</div>
-<div class="line"><span class="lineno">  254</span>    sstream &lt;&lt; <span class="stringliteral">&quot;, IsAllowed:&quot;</span> &lt;&lt; <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a503004fad0cb04f4e525b60f8e7e9e0c">allowed</a>;</div>
-<div class="line"><span class="lineno">  255</span>    sstream &lt;&lt; <span class="stringliteral">&quot;, PowerState:&quot;</span> &lt;&lt; <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(<a class="code hl_function" href="classfabomatic_1_1_machine.xhtml#a3c5304fd80e0cc1c2118a59c64222d6d">getPowerState</a>());</div>
-<div class="line"><span class="lineno">  256</span>    sstream &lt;&lt; <span class="stringliteral">&quot;, &quot;</span> &lt;&lt; <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#aa39977d690373313aa7c24f52679cc5b">current_user</a>.<a class="code hl_function" href="structfabomatic_1_1_fab_user.xhtml#ab4b54f1830f1536824583e973d670582">toString</a>();</div>
-<div class="line"><span class="lineno">  257</span>    sstream &lt;&lt; <span class="stringliteral">&quot;, UsageDuration (s):&quot;</span> &lt;&lt; <a class="code hl_function" href="classfabomatic_1_1_machine.xhtml#a9c845a163660550fa779516a8be8681a">getUsageDuration</a>().count();</div>
-<div class="line"><span class="lineno">  258</span>    sstream &lt;&lt; <span class="stringliteral">&quot;, ShutdownImminent:&quot;</span> &lt;&lt; <a class="code hl_function" href="classfabomatic_1_1_machine.xhtml#a871958cc57845c8651cf1058ed9b30e4">isShutdownImminent</a>();</div>
-<div class="line"><span class="lineno">  259</span>    sstream &lt;&lt; <span class="stringliteral">&quot;, MaintenanceNeeded:&quot;</span> &lt;&lt; <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#af6e53363524fca589cea90c51f953b7d">maintenanceNeeded</a>;</div>
-<div class="line"><span class="lineno">  260</span>    sstream &lt;&lt; <span class="stringliteral">&quot;, &quot;</span> &lt;&lt; <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().toString();</div>
-<div class="line"><span class="lineno">  261</span>    sstream &lt;&lt; <span class="stringliteral">&quot;, Active:&quot;</span> &lt;&lt; <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a7b30e014bf3166b1f6692d3e64d18827">active</a>;</div>
-<div class="line"><span class="lineno">  262</span>    sstream &lt;&lt; <span class="stringliteral">&quot;, Last logoff:&quot;</span> &lt;&lt; (<a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a9973764a444fc39727def61c053c62c3">logoff_timestamp</a>.has_value() ? <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a9973764a444fc39727def61c053c62c3">logoff_timestamp</a>.value().time_since_epoch().count() : 0);</div>
-<div class="line"><span class="lineno">  263</span>    sstream &lt;&lt; <span class="stringliteral">&quot;, GracePeriod (s):&quot;</span> &lt;&lt; <a class="code hl_function" href="classfabomatic_1_1_machine.xhtml#aeee64b0919798272dfe45d40eb2e96be">getGracePeriod</a>().count();</div>
-<div class="line"><span class="lineno">  264</span>    sstream &lt;&lt; <span class="stringliteral">&quot;)&quot;</span>;</div>
-<div class="line"><span class="lineno">  265</span> </div>
-<div class="line"><span class="lineno">  266</span>    <span class="keywordflow">return</span> sstream.str();</div>
-<div class="line"><span class="lineno">  267</span>  }</div>
-<div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_a1637e99f2d70262d2ab26f69ed4f0e47"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#a1637e99f2d70262d2ab26f69ed4f0e47">fabomatic::Machine::getMachineName</a></div><div class="ttdeci">auto getMachineName() const -&gt; const std::string</div><div class="ttdef"><b>Definition</b> <a href="_machine_8cpp_source.xhtml#l00235">Machine.cpp:235</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_a3c5304fd80e0cc1c2118a59c64222d6d"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#a3c5304fd80e0cc1c2118a59c64222d6d">fabomatic::Machine::getPowerState</a></div><div class="ttdeci">auto getPowerState() const -&gt; PowerState</div><div class="ttdoc">Returns the current power state of the machine.</div><div class="ttdef"><b>Definition</b> <a href="_machine_8cpp_source.xhtml#l00080">Machine.cpp:80</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_a871958cc57845c8651cf1058ed9b30e4"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#a871958cc57845c8651cf1058ed9b30e4">fabomatic::Machine::isShutdownImminent</a></div><div class="ttdeci">auto isShutdownImminent() const -&gt; bool</div><div class="ttdoc">Indicates if the machine will power down in less than BEEP_REMAINING_MINUTES.</div><div class="ttdef"><b>Definition</b> <a href="_machine_8cpp_source.xhtml#l00123">Machine.cpp:123</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_a8bde1bdf40d146c521b623d54e2df1cf"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#a8bde1bdf40d146c521b623d54e2df1cf">fabomatic::Machine::getMachineId</a></div><div class="ttdeci">auto getMachineId() const -&gt; MachineID</div><div class="ttdoc">Returns the machine identifier.</div><div class="ttdef"><b>Definition</b> <a href="_machine_8cpp_source.xhtml#l00048">Machine.cpp:48</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_aeee64b0919798272dfe45d40eb2e96be"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#aeee64b0919798272dfe45d40eb2e96be">fabomatic::Machine::getGracePeriod</a></div><div class="ttdeci">auto getGracePeriod() const -&gt; std::chrono::seconds</div><div class="ttdef"><b>Definition</b> <a href="_machine_8cpp_source.xhtml#l00346">Machine.cpp:346</a></div></div>
+<p class="definition">Definition at line <a class="el" href="_machine_8cpp_source.xhtml#l00242">242</a> of file <a class="el" href="_machine_8cpp_source.xhtml">Machine.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  243</span>  {</div>
+<div class="line"><span class="lineno">  244</span>    std::stringstream sstream{};</div>
+<div class="line"><span class="lineno">  245</span> </div>
+<div class="line"><span class="lineno">  246</span>    <span class="keywordflow">if</span> (!<a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.has_value() || !<a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#adb98818468832f2327b4a25a199cdb0e">server</a>.has_value())</div>
+<div class="line"><span class="lineno">  247</span>    {</div>
+<div class="line"><span class="lineno">  248</span>      sstream &lt;&lt; <span class="stringliteral">&quot;Machine (not configured)&quot;</span>;</div>
+<div class="line"><span class="lineno">  249</span>      <span class="keywordflow">return</span> sstream.str();</div>
+<div class="line"><span class="lineno">  250</span>    }</div>
+<div class="line"><span class="lineno">  251</span> </div>
+<div class="line"><span class="lineno">  252</span>    sstream &lt;&lt; <span class="stringliteral">&quot;Machine (ID:&quot;</span> &lt;&lt; <a class="code hl_function" href="classfabomatic_1_1_machine.xhtml#a8bde1bdf40d146c521b623d54e2df1cf">getMachineId</a>().id;</div>
+<div class="line"><span class="lineno">  253</span>    sstream &lt;&lt; <span class="stringliteral">&quot;, Name:&quot;</span> &lt;&lt; <a class="code hl_function" href="classfabomatic_1_1_machine.xhtml#a1637e99f2d70262d2ab26f69ed4f0e47">getMachineName</a>();</div>
+<div class="line"><span class="lineno">  254</span>    sstream &lt;&lt; <span class="stringliteral">&quot;, IsFree: &quot;</span> &lt;&lt; <a class="code hl_function" href="classfabomatic_1_1_machine.xhtml#a74aa0b2cd34205ba57710affc56f5c3c">isFree</a>();</div>
+<div class="line"><span class="lineno">  255</span>    sstream &lt;&lt; <span class="stringliteral">&quot;, IsAllowed:&quot;</span> &lt;&lt; <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a503004fad0cb04f4e525b60f8e7e9e0c">allowed</a>;</div>
+<div class="line"><span class="lineno">  256</span>    sstream &lt;&lt; <span class="stringliteral">&quot;, PowerState:&quot;</span> &lt;&lt; <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(<a class="code hl_function" href="classfabomatic_1_1_machine.xhtml#a3c5304fd80e0cc1c2118a59c64222d6d">getPowerState</a>());</div>
+<div class="line"><span class="lineno">  257</span>    sstream &lt;&lt; <span class="stringliteral">&quot;, &quot;</span> &lt;&lt; <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#aa39977d690373313aa7c24f52679cc5b">current_user</a>.<a class="code hl_function" href="structfabomatic_1_1_fab_user.xhtml#ab4b54f1830f1536824583e973d670582">toString</a>();</div>
+<div class="line"><span class="lineno">  258</span>    sstream &lt;&lt; <span class="stringliteral">&quot;, UsageDuration (s):&quot;</span> &lt;&lt; <a class="code hl_function" href="classfabomatic_1_1_machine.xhtml#a9c845a163660550fa779516a8be8681a">getUsageDuration</a>().count();</div>
+<div class="line"><span class="lineno">  259</span>    sstream &lt;&lt; <span class="stringliteral">&quot;, ShutdownImminent:&quot;</span> &lt;&lt; <a class="code hl_function" href="classfabomatic_1_1_machine.xhtml#a871958cc57845c8651cf1058ed9b30e4">isShutdownImminent</a>();</div>
+<div class="line"><span class="lineno">  260</span>    sstream &lt;&lt; <span class="stringliteral">&quot;, MaintenanceNeeded:&quot;</span> &lt;&lt; <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#af6e53363524fca589cea90c51f953b7d">maintenanceNeeded</a>;</div>
+<div class="line"><span class="lineno">  261</span>    sstream &lt;&lt; <span class="stringliteral">&quot;, &quot;</span> &lt;&lt; <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a8545b7a1a969dddc47d35d921091ed5b">config</a>.value().toString();</div>
+<div class="line"><span class="lineno">  262</span>    sstream &lt;&lt; <span class="stringliteral">&quot;, Active:&quot;</span> &lt;&lt; <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a7b30e014bf3166b1f6692d3e64d18827">active</a>;</div>
+<div class="line"><span class="lineno">  263</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a9f1c52164376bb949436e0da5020baf6">logoff_timestamp</a>)</div>
+<div class="line"><span class="lineno">  264</span>    {</div>
+<div class="line"><span class="lineno">  265</span>      sstream &lt;&lt; <span class="stringliteral">&quot;, Last logoff:&quot;</span> &lt;&lt; <a class="code hl_variable" href="classfabomatic_1_1_machine.xhtml#a9f1c52164376bb949436e0da5020baf6">logoff_timestamp</a>.value().time_since_epoch();</div>
+<div class="line"><span class="lineno">  266</span>    }</div>
+<div class="line"><span class="lineno">  267</span>    sstream &lt;&lt; <span class="stringliteral">&quot;, GracePeriod (s):&quot;</span> &lt;&lt; <a class="code hl_function" href="classfabomatic_1_1_machine.xhtml#aeee64b0919798272dfe45d40eb2e96be">getGracePeriod</a>().count();</div>
+<div class="line"><span class="lineno">  268</span>    sstream &lt;&lt; <span class="stringliteral">&quot;)&quot;</span>;</div>
+<div class="line"><span class="lineno">  269</span> </div>
+<div class="line"><span class="lineno">  270</span>    <span class="keywordflow">return</span> sstream.str();</div>
+<div class="line"><span class="lineno">  271</span>  }</div>
+<div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_a1637e99f2d70262d2ab26f69ed4f0e47"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#a1637e99f2d70262d2ab26f69ed4f0e47">fabomatic::Machine::getMachineName</a></div><div class="ttdeci">auto getMachineName() const -&gt; const std::string</div><div class="ttdef"><b>Definition</b> <a href="_machine_8cpp_source.xhtml#l00236">Machine.cpp:236</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_a3c5304fd80e0cc1c2118a59c64222d6d"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#a3c5304fd80e0cc1c2118a59c64222d6d">fabomatic::Machine::getPowerState</a></div><div class="ttdeci">auto getPowerState() const -&gt; PowerState</div><div class="ttdoc">Returns the current power state of the machine.</div><div class="ttdef"><b>Definition</b> <a href="_machine_8cpp_source.xhtml#l00081">Machine.cpp:81</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_a871958cc57845c8651cf1058ed9b30e4"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#a871958cc57845c8651cf1058ed9b30e4">fabomatic::Machine::isShutdownImminent</a></div><div class="ttdeci">auto isShutdownImminent() const -&gt; bool</div><div class="ttdoc">Indicates if the machine will power down in less than BEEP_REMAINING_MINUTES.</div><div class="ttdef"><b>Definition</b> <a href="_machine_8cpp_source.xhtml#l00124">Machine.cpp:124</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_a8bde1bdf40d146c521b623d54e2df1cf"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#a8bde1bdf40d146c521b623d54e2df1cf">fabomatic::Machine::getMachineId</a></div><div class="ttdeci">auto getMachineId() const -&gt; MachineID</div><div class="ttdoc">Returns the machine identifier.</div><div class="ttdef"><b>Definition</b> <a href="_machine_8cpp_source.xhtml#l00049">Machine.cpp:49</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_aeee64b0919798272dfe45d40eb2e96be"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#aeee64b0919798272dfe45d40eb2e96be">fabomatic::Machine::getGracePeriod</a></div><div class="ttdeci">auto getGracePeriod() const -&gt; std::chrono::seconds</div><div class="ttdef"><b>Definition</b> <a href="_machine_8cpp_source.xhtml#l00350">Machine.cpp:350</a></div></div>
 <div class="ttc" id="astructfabomatic_1_1_fab_user_xhtml_ab4b54f1830f1536824583e973d670582"><div class="ttname"><a href="structfabomatic_1_1_fab_user.xhtml#ab4b54f1830f1536824583e973d670582">fabomatic::FabUser::toString</a></div><div class="ttdeci">auto toString() const -&gt; const std::string</div><div class="ttdef"><b>Definition</b> <a href="_fab_user_8hpp_source.xhtml#l00054">FabUser.hpp:54</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_machine_8hpp_source.xhtml#l00106">active</a>, <a class="el" href="_machine_8hpp_source.xhtml#l00116">allowed</a>, <a class="el" href="_machine_8hpp_source.xhtml#l00103">config</a>, <a class="el" href="_machine_8hpp_source.xhtml#l00107">current_user</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00346">getGracePeriod()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00048">getMachineId()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00235">getMachineName()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00080">getPowerState()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00226">getUsageDuration()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00056">isFree()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00123">isShutdownImminent()</a>, <a class="el" href="_machine_8hpp_source.xhtml#l00110">logoff_timestamp</a>, <a class="el" href="_machine_8hpp_source.xhtml#l00114">maintenanceNeeded</a>, <a class="el" href="_machine_8hpp_source.xhtml#l00104">server</a>, and <a class="el" href="_fab_user_8hpp_source.xhtml#l00054">fabomatic::FabUser::toString()</a>.</p>
+<p class="reference">References <a class="el" href="_machine_8hpp_source.xhtml#l00107">active</a>, <a class="el" href="_machine_8hpp_source.xhtml#l00117">allowed</a>, <a class="el" href="_machine_8hpp_source.xhtml#l00104">config</a>, <a class="el" href="_machine_8hpp_source.xhtml#l00108">current_user</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00350">getGracePeriod()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00049">getMachineId()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00236">getMachineName()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00081">getPowerState()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00227">getUsageDuration()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00057">isFree()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00124">isShutdownImminent()</a>, <a class="el" href="_machine_8hpp_source.xhtml#l00111">logoff_timestamp</a>, <a class="el" href="_machine_8hpp_source.xhtml#l00115">maintenanceNeeded</a>, <a class="el" href="_machine_8hpp_source.xhtml#l00105">server</a>, and <a class="el" href="_fab_user_8hpp_source.xhtml#l00054">fabomatic::FabUser::toString()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00041">fabomatic::BoardLogic::refreshFromServer()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00042">fabomatic::BoardLogic::refreshFromServer()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classfabomatic_1_1_machine_a39fbf9cad912d735cf84b75c0674646f_cgraph.svg" width="342" height="510"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classfabomatic_1_1_machine_a39fbf9cad912d735cf84b75c0674646f_cgraph.svg" width="586" height="510"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
@@ -1688,10 +1717,10 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_machine_8hpp_source.xhtml#l00106">106</a> of file <a class="el" href="_machine_8hpp_source.xhtml">Machine.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  106</span>{<span class="keyword">false</span>};</div>
+<p class="definition">Definition at line <a class="el" href="_machine_8hpp_source.xhtml#l00107">107</a> of file <a class="el" href="_machine_8hpp_source.xhtml">Machine.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  107</span>{<span class="keyword">false</span>};</div>
 </div><!-- fragment -->
-<p class="reference">Referenced by <a class="el" href="_machine_8cpp_source.xhtml#l00056">isFree()</a>, and <a class="el" href="_machine_8cpp_source.xhtml#l00241">toString()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_machine_8cpp_source.xhtml#l00057">isFree()</a>, and <a class="el" href="_machine_8cpp_source.xhtml#l00242">toString()</a>.</p>
 
 </div>
 </div>
@@ -1717,10 +1746,10 @@ Here is the caller graph for this function:</div>
 
 <p>If true, machine is allowed to be used by anybody. </p>
 
-<p class="definition">Definition at line <a class="el" href="_machine_8hpp_source.xhtml#l00116">116</a> of file <a class="el" href="_machine_8hpp_source.xhtml">Machine.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  116</span>{<span class="keyword">true</span>};</div>
+<p class="definition">Definition at line <a class="el" href="_machine_8hpp_source.xhtml#l00117">117</a> of file <a class="el" href="_machine_8hpp_source.xhtml">Machine.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  117</span>{<span class="keyword">true</span>};</div>
 </div><!-- fragment -->
-<p class="reference">Referenced by <a class="el" href="_machine_8cpp_source.xhtml#l00326">isAllowed()</a>, and <a class="el" href="_machine_8cpp_source.xhtml#l00241">toString()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_machine_8cpp_source.xhtml#l00330">isAllowed()</a>, and <a class="el" href="_machine_8cpp_source.xhtml#l00242">toString()</a>.</p>
 
 </div>
 </div>
@@ -1744,10 +1773,10 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_machine_8hpp_source.xhtml#l00103">103</a> of file <a class="el" href="_machine_8hpp_source.xhtml">Machine.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  103</span>{std::nullopt};</div>
+<p class="definition">Definition at line <a class="el" href="_machine_8hpp_source.xhtml#l00104">104</a> of file <a class="el" href="_machine_8hpp_source.xhtml">Machine.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  104</span>{std::nullopt};</div>
 </div><!-- fragment -->
-<p class="reference">Referenced by <a class="el" href="_machine_8cpp_source.xhtml#l00110">canPowerOff()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00269">getAutologoffDelay()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00321">getConfig()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00346">getGracePeriod()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00048">getMachineId()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00235">getMachineName()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00316">isConfigured()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00123">isShutdownImminent()</a>, and <a class="el" href="_machine_8cpp_source.xhtml#l00241">toString()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_machine_8cpp_source.xhtml#l00111">canPowerOff()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00273">getAutologoffDelay()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00325">getConfig()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00350">getGracePeriod()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00049">getMachineId()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00236">getMachineName()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00320">isConfigured()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00124">isShutdownImminent()</a>, and <a class="el" href="_machine_8cpp_source.xhtml#l00242">toString()</a>.</p>
 
 </div>
 </div>
@@ -1771,15 +1800,15 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_machine_8hpp_source.xhtml#l00107">107</a> of file <a class="el" href="_machine_8hpp_source.xhtml">Machine.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  107</span>{};</div>
+<p class="definition">Definition at line <a class="el" href="_machine_8hpp_source.xhtml#l00108">108</a> of file <a class="el" href="_machine_8hpp_source.xhtml">Machine.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  108</span>{};</div>
 </div><!-- fragment -->
-<p class="reference">Referenced by <a class="el" href="_machine_8cpp_source.xhtml#l00219">getActiveUser()</a>, and <a class="el" href="_machine_8cpp_source.xhtml#l00241">toString()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_machine_8cpp_source.xhtml#l00220">getActiveUser()</a>, and <a class="el" href="_machine_8cpp_source.xhtml#l00242">toString()</a>.</p>
 
 </div>
 </div>
-<a id="a9973764a444fc39727def61c053c62c3" name="a9973764a444fc39727def61c053c62c3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9973764a444fc39727def61c053c62c3">&#9670;&#160;</a></span>logoff_timestamp</h2>
+<a id="a9f1c52164376bb949436e0da5020baf6" name="a9f1c52164376bb949436e0da5020baf6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f1c52164376bb949436e0da5020baf6">&#9670;&#160;</a></span>logoff_timestamp</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1788,7 +1817,7 @@ Here is the caller graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::optional&lt;std::chrono::time_point&lt;std::chrono::system_clock&gt; &gt; fabomatic::Machine::logoff_timestamp {std::nullopt}</td>
+          <td class="memname">std::optional&lt;std::chrono::steady_clock::time_point&gt; fabomatic::Machine::logoff_timestamp {std::nullopt}</td>
         </tr>
       </table>
   </td>
@@ -1798,10 +1827,10 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_machine_8hpp_source.xhtml#l00110">110</a> of file <a class="el" href="_machine_8hpp_source.xhtml">Machine.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  110</span>{std::nullopt};      <span class="comment">// When did the last user log off?</span></div>
+<p class="definition">Definition at line <a class="el" href="_machine_8hpp_source.xhtml#l00111">111</a> of file <a class="el" href="_machine_8hpp_source.xhtml">Machine.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  111</span>{std::nullopt};      <span class="comment">// When did the last user log off?</span></div>
 </div><!-- fragment -->
-<p class="reference">Referenced by <a class="el" href="_machine_8cpp_source.xhtml#l00110">canPowerOff()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00123">isShutdownImminent()</a>, and <a class="el" href="_machine_8cpp_source.xhtml#l00241">toString()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_machine_8cpp_source.xhtml#l00111">canPowerOff()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00124">isShutdownImminent()</a>, and <a class="el" href="_machine_8cpp_source.xhtml#l00242">toString()</a>.</p>
 
 </div>
 </div>
@@ -1825,10 +1854,10 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_machine_8hpp_source.xhtml#l00118">118</a> of file <a class="el" href="_machine_8hpp_source.xhtml">Machine.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  118</span>{<span class="stringliteral">&quot;&quot;</span>};</div>
+<p class="definition">Definition at line <a class="el" href="_machine_8hpp_source.xhtml#l00119">119</a> of file <a class="el" href="_machine_8hpp_source.xhtml">Machine.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  119</span>{<span class="stringliteral">&quot;&quot;</span>};</div>
 </div><!-- fragment -->
-<p class="reference">Referenced by <a class="el" href="_machine_8cpp_source.xhtml#l00365">getMaintenanceInfo()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_machine_8cpp_source.xhtml#l00369">getMaintenanceInfo()</a>.</p>
 
 </div>
 </div>
@@ -1854,10 +1883,10 @@ Here is the caller graph for this function:</div>
 
 <p>If true, machine needs maintenance. </p>
 
-<p class="definition">Definition at line <a class="el" href="_machine_8hpp_source.xhtml#l00114">114</a> of file <a class="el" href="_machine_8hpp_source.xhtml">Machine.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  114</span>{<span class="keyword">false</span>};</div>
+<p class="definition">Definition at line <a class="el" href="_machine_8hpp_source.xhtml#l00115">115</a> of file <a class="el" href="_machine_8hpp_source.xhtml">Machine.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  115</span>{<span class="keyword">false</span>};</div>
 </div><!-- fragment -->
-<p class="reference">Referenced by <a class="el" href="_machine_8cpp_source.xhtml#l00336">isMaintenanceNeeded()</a>, and <a class="el" href="_machine_8cpp_source.xhtml#l00241">toString()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_machine_8cpp_source.xhtml#l00340">isMaintenanceNeeded()</a>, and <a class="el" href="_machine_8cpp_source.xhtml#l00242">toString()</a>.</p>
 
 </div>
 </div>
@@ -1881,10 +1910,10 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_machine_8hpp_source.xhtml#l00111">111</a> of file <a class="el" href="_machine_8hpp_source.xhtml">Machine.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  111</span>{<a class="code hl_enumvalue" href="classfabomatic_1_1_machine.xhtml#a409acc0089d7cfe849b2e775840e5838ab161cc0f80e1c236e1f0816a42c4a00c">PowerState::PoweredOff</a>};</div>
+<p class="definition">Definition at line <a class="el" href="_machine_8hpp_source.xhtml#l00112">112</a> of file <a class="el" href="_machine_8hpp_source.xhtml">Machine.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  112</span>{<a class="code hl_enumvalue" href="classfabomatic_1_1_machine.xhtml#a409acc0089d7cfe849b2e775840e5838ab161cc0f80e1c236e1f0816a42c4a00c">PowerState::PoweredOff</a>};</div>
 </div><!-- fragment -->
-<p class="reference">Referenced by <a class="el" href="_machine_8cpp_source.xhtml#l00110">canPowerOff()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00080">getPowerState()</a>, and <a class="el" href="_machine_8cpp_source.xhtml#l00123">isShutdownImminent()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_machine_8cpp_source.xhtml#l00111">canPowerOff()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00081">getPowerState()</a>, and <a class="el" href="_machine_8cpp_source.xhtml#l00124">isShutdownImminent()</a>.</p>
 
 </div>
 </div>
@@ -1908,15 +1937,15 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_machine_8hpp_source.xhtml#l00104">104</a> of file <a class="el" href="_machine_8hpp_source.xhtml">Machine.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  104</span>{std::nullopt};</div>
+<p class="definition">Definition at line <a class="el" href="_machine_8hpp_source.xhtml#l00105">105</a> of file <a class="el" href="_machine_8hpp_source.xhtml">Machine.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  105</span>{std::nullopt};</div>
 </div><!-- fragment -->
-<p class="reference">Referenced by <a class="el" href="_machine_8cpp_source.xhtml#l00316">isConfigured()</a>, and <a class="el" href="_machine_8cpp_source.xhtml#l00241">toString()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_machine_8cpp_source.xhtml#l00320">isConfigured()</a>, and <a class="el" href="_machine_8cpp_source.xhtml#l00242">toString()</a>.</p>
 
 </div>
 </div>
-<a id="a215bab25e0b9555c733d1ffcb6330a06" name="a215bab25e0b9555c733d1ffcb6330a06"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a215bab25e0b9555c733d1ffcb6330a06">&#9670;&#160;</a></span>usage_start_timestamp</h2>
+<a id="a797653c883d897ef964cd3a862a6465d" name="a797653c883d897ef964cd3a862a6465d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a797653c883d897ef964cd3a862a6465d">&#9670;&#160;</a></span>usage_start_timestamp</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1925,7 +1954,7 @@ Here is the caller graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::optional&lt;std::chrono::time_point&lt;std::chrono::system_clock&gt; &gt; fabomatic::Machine::usage_start_timestamp {std::nullopt}</td>
+          <td class="memname">std::optional&lt;std::chrono::steady_clock::time_point&gt; fabomatic::Machine::usage_start_timestamp {std::nullopt}</td>
         </tr>
       </table>
   </td>
@@ -1935,10 +1964,10 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_machine_8hpp_source.xhtml#l00109">109</a> of file <a class="el" href="_machine_8hpp_source.xhtml">Machine.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  109</span>{std::nullopt}; <span class="comment">// When did the machine start?</span></div>
+<p class="definition">Definition at line <a class="el" href="_machine_8hpp_source.xhtml#l00110">110</a> of file <a class="el" href="_machine_8hpp_source.xhtml">Machine.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  110</span>{std::nullopt}; <span class="comment">// When did the machine start?</span></div>
 </div><!-- fragment -->
-<p class="reference">Referenced by <a class="el" href="_machine_8cpp_source.xhtml#l00226">getUsageDuration()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_machine_8cpp_source.xhtml#l00227">getUsageDuration()</a>.</p>
 
 </div>
 </div>
@@ -1949,7 +1978,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Jul 2 2024 19:39:03 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jul 14 2024 13:49:34 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

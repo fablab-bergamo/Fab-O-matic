@@ -48,7 +48,7 @@
 <script type="application/ecmascript">
 var viewWidth = 1710;
 var viewHeight = 1240;
-var sectionId = 'dynsection-1';
+var sectionId = 'dynsection-2';
 </script>
 <script type="application/ecmascript" xlink:href="svg.min.js"/>
 <svg id="graph" class="graph">
@@ -301,7 +301,7 @@ var sectionId = 'dynsection-1';
 <!-- Node42 -->
 <g id="Node000042" class="node">
 <title>Node42</title>
-<g id="a_Node000042"><a xlink:href="classfabomatic_1_1_tasks_1_1_scheduler.xhtml#a83cf39f760eb3248ceb7a4d805af198d" target="_top" xlink:title="Execute all tasks that are ready to run.">
+<g id="a_Node000042"><a xlink:href="classfabomatic_1_1_tasks_1_1_scheduler.xhtml#aff9b0c44cc0bef222932a681ace0d406" target="_top" xlink:title="Execute all tasks that are ready to run.">
 <polygon fill="white" stroke="#666666" points="1548.25,-499.5 1410,-499.5 1410,-469 1548.25,-469 1548.25,-499.5"/>
 <text text-anchor="start" x="1418" y="-486" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::Tasks::Scheduler</text>
 <text text-anchor="middle" x="1479.12" y="-474.75" font-family="Helvetica,sans-Serif" font-size="10.00">::execute</text>
@@ -1455,7 +1455,7 @@ var sectionId = 'dynsection-1';
 <g id="Node000061" class="node">
 <title>Node61</title>
 <g id="a_Node000061"><a xlink:href="classfabomatic_1_1_tasks_1_1_scheduler.xhtml#a2acce29901dbfd56a0f49beb277e3e76" target="_top" xlink:title="Recompute all the next run times for all the tasks.">
-<polygon fill="white" stroke="#666666" points="1374,-548.5 1235.75,-548.5 1235.75,-518 1374,-518 1374,-548.5"/>
+<polygon fill="#fff0f0" stroke="red" points="1374,-548.5 1235.75,-548.5 1235.75,-518 1374,-518 1374,-548.5"/>
 <text text-anchor="start" x="1243.75" y="-535" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::Tasks::Scheduler</text>
 <text text-anchor="middle" x="1304.88" y="-523.75" font-family="Helvetica,sans-Serif" font-size="10.00">::updateSchedules</text>
 </a>

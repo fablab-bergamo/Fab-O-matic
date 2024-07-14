@@ -304,7 +304,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_board_logic_8cpp_source.xhtml#l00026">26</a> of file <a class="el" href="_board_logic_8cpp_source.xhtml">BoardLogic.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_board_logic_8cpp_source.xhtml#l00027">27</a> of file <a class="el" href="_board_logic_8cpp_source.xhtml">BoardLogic.cpp</a>.</p>
 
 </div>
 </div>
@@ -412,9 +412,9 @@ Variables</h2></td></tr>
 <div class="line"><span class="lineno">   29</span>    ESP_LOGD(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <span class="stringliteral">&quot;%s&quot;</span>, myWiFiManager-&gt;getConfigPortalSSID().c_str());</div>
 <div class="line"><span class="lineno">   30</span>    Board::logic.changeStatus(Status::PortalStarting);</div>
 <div class="line"><span class="lineno">   31</span>  }</div>
-<div class="ttc" id="a_logging_8hpp_xhtml_a4ef5b5f197804a60836ab1e8907d8301"><div class="ttname"><a href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a></div><div class="ttdeci">static const char *const TAG</div><div class="ttdef"><b>Definition</b> <a href="_logging_8hpp_source.xhtml#l00006">Logging.hpp:6</a></div></div>
+<div class="ttc" id="a_logging_8hpp_xhtml_a4ef5b5f197804a60836ab1e8907d8301"><div class="ttname"><a href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a></div><div class="ttdeci">static const char *const TAG</div><div class="ttdef"><b>Definition</b> <a href="_logging_8hpp_source.xhtml#l00009">Logging.hpp:9</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_board_logic_8cpp_source.xhtml#l00272">fabomatic::BoardLogic::changeStatus()</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00006">TAG</a>.</p>
+<p class="reference">References <a class="el" href="_board_logic_8cpp_source.xhtml#l00273">fabomatic::BoardLogic::changeStatus()</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00009">TAG</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="_o_t_a_8cpp_source.xhtml#l00047">openConfigPortal()</a>.</p>
 <div class="dynheader">
@@ -1144,10 +1144,10 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  128</span>      Board::logic.setRebootRequest(<span class="keyword">true</span>);</div>
 <div class="line"><span class="lineno">  129</span>    }</div>
 <div class="line"><span class="lineno">  130</span>  }</div>
-<div class="ttc" id="anamespacefabomatic_1_1_tasks_xhtml_a5c20f560f5934822d39ba116a16f3ab6"><div class="ttname"><a href="namespacefabomatic_1_1_tasks.xhtml#a5c20f560f5934822d39ba116a16f3ab6">fabomatic::Tasks::delay</a></div><div class="ttdeci">auto delay(const milliseconds duration) -&gt; void</div><div class="ttdoc">Wait for a delay, allowing OTA updates.</div><div class="ttdef"><b>Definition</b> <a href="_tasks_8cpp_source.xhtml#l00250">Tasks.cpp:250</a></div></div>
+<div class="ttc" id="anamespacefabomatic_1_1_tasks_xhtml_a5c20f560f5934822d39ba116a16f3ab6"><div class="ttname"><a href="namespacefabomatic_1_1_tasks.xhtml#a5c20f560f5934822d39ba116a16f3ab6">fabomatic::Tasks::delay</a></div><div class="ttdeci">auto delay(const milliseconds duration) -&gt; void</div><div class="ttdoc">Wait for a delay, allowing OTA updates.</div><div class="ttdef"><b>Definition</b> <a href="_tasks_8cpp_source.xhtml#l00266">Tasks.cpp:266</a></div></div>
 <div class="ttc" id="anamespacefabomatic_xhtml_a412fca06536dbae1da1e3018a4fd03c6"><div class="ttname"><a href="namespacefabomatic.xhtml#a412fca06536dbae1da1e3018a4fd03c6">fabomatic::getConfig</a></div><div class="ttdeci">auto getConfig(bool force_reset) -&gt; SavedConfig</div><div class="ttdef"><b>Definition</b> <a href="_o_t_a_8cpp_source.xhtml#l00033">OTA.cpp:33</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_board_logic_8cpp_source.xhtml#l00272">fabomatic::BoardLogic::changeStatus()</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00025">configModeCallback()</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00033">getConfig()</a>, <a class="el" href="conf_8hpp_source.xhtml#l00173">fabomatic::conf::common::INT_MAX_LENGTH</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>, <a class="el" href="conf_8hpp_source.xhtml#l00128">fabomatic::conf::tasks::PORTAL_CONFIG_TIMEOUT</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00019">saveConfigCallback()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00638">fabomatic::BoardLogic::setRebootRequest()</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00011">shouldSaveConfig</a>, <a class="el" href="conf_8hpp_source.xhtml#l00170">fabomatic::conf::common::STR_MAX_LENGTH</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00006">TAG</a>.</p>
+<p class="reference">References <a class="el" href="_board_logic_8cpp_source.xhtml#l00273">fabomatic::BoardLogic::changeStatus()</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00025">configModeCallback()</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00033">getConfig()</a>, <a class="el" href="conf_8hpp_source.xhtml#l00173">fabomatic::conf::common::INT_MAX_LENGTH</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>, <a class="el" href="conf_8hpp_source.xhtml#l00128">fabomatic::conf::tasks::PORTAL_CONFIG_TIMEOUT</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00019">saveConfigCallback()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00639">fabomatic::BoardLogic::setRebootRequest()</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00011">shouldSaveConfig</a>, <a class="el" href="conf_8hpp_source.xhtml#l00170">fabomatic::conf::common::STR_MAX_LENGTH</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00009">TAG</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="main_8cpp_source.xhtml#l00411">setup()</a>, and <a class="el" href="main_8cpp_source.xhtml#l00213">taskFactoryReset()</a>.</p>
 <div class="dynheader">
@@ -1184,7 +1184,7 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  135</span>    Board::logic.setRebootRequest(<span class="keyword">true</span>);</div>
 <div class="line"><span class="lineno">  136</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00638">fabomatic::BoardLogic::setRebootRequest()</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00006">TAG</a>.</p>
+<p class="reference">References <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00639">fabomatic::BoardLogic::setRebootRequest()</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00009">TAG</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="_o_t_a_8cpp_source.xhtml#l00138">setupOTA()</a>.</p>
 <div class="dynheader">
@@ -1378,7 +1378,7 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  149</span>    ArduinoOTA.begin();</div>
 <div class="line"><span class="lineno">  150</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_board_logic_8cpp_source.xhtml#l00272">fabomatic::BoardLogic::changeStatus()</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>, and <a class="el" href="_o_t_a_8cpp_source.xhtml#l00132">OTAComplete()</a>.</p>
+<p class="reference">References <a class="el" href="_board_logic_8cpp_source.xhtml#l00273">fabomatic::BoardLogic::changeStatus()</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>, and <a class="el" href="_o_t_a_8cpp_source.xhtml#l00132">OTAComplete()</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="main_8cpp_source.xhtml#l00411">setup()</a>.</p>
 <div class="dynheader">
@@ -1416,11 +1416,11 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">   90</span>    Board::logic.blinkLed();</div>
 <div class="line"><span class="lineno">   91</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_board_logic_8cpp_source.xhtml#l00498">fabomatic::BoardLogic::blinkLed()</a>, and <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>.</p>
+<p class="reference">References <a class="el" href="_board_logic_8cpp_source.xhtml#l00499">fabomatic::BoardLogic::blinkLed()</a>, and <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="namespacefabomatic_a9bb86caf0357ce1dd9ffe2945dcfc6e4_cgraph.svg" width="556" height="462"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="namespacefabomatic_a9bb86caf0357ce1dd9ffe2945dcfc6e4_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
 </div>
 
 </div>
@@ -1447,7 +1447,7 @@ Here is the call graph for this function:</div>
 <div class="line"><span class="lineno">   84</span>    Board::logic.checkRfid();</div>
 <div class="line"><span class="lineno">   85</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_board_logic_8cpp_source.xhtml#l00548">fabomatic::BoardLogic::checkRfid()</a>, and <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>.</p>
+<p class="reference">References <a class="el" href="_board_logic_8cpp_source.xhtml#l00549">fabomatic::BoardLogic::checkRfid()</a>, and <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1516,7 +1516,7 @@ Here is the call graph for this function:</div>
 <div class="ttc" id="aclassfabomatic_1_1_fab_backend_xhtml_aef092e0e1db0c3539d5474fad2456255"><div class="ttname"><a href="classfabomatic_1_1_fab_backend.xhtml#aef092e0e1db0c3539d5474fad2456255">fabomatic::FabBackend::isOnline</a></div><div class="ttdeci">auto isOnline() const -&gt; bool</div><div class="ttdoc">Checks if the client is online.</div><div class="ttdef"><b>Definition</b> <a href="_fab_backend_8cpp_source.xhtml#l00235">FabBackend.cpp:235</a></div></div>
 <div class="ttc" id="anamespacefabomatic_1_1_board_xhtml_a57517d1e4e586f81a847e56fc92678bc"><div class="ttname"><a href="namespacefabomatic_1_1_board.xhtml#a57517d1e4e586f81a847e56fc92678bc">fabomatic::Board::server</a></div><div class="ttdeci">FabBackend server</div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_board_logic_8cpp_source.xhtml#l00272">fabomatic::BoardLogic::changeStatus()</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00291">fabomatic::FabBackend::connect()</a>, <a class="el" href="_tasks_8cpp_source.xhtml#l00250">fabomatic::Tasks::delay()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00633">fabomatic::BoardLogic::getServer()</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00235">fabomatic::FabBackend::isOnline()</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00041">fabomatic::BoardLogic::refreshFromServer()</a>, <a class="el" href="conf_8hpp_source.xhtml#l00051">fabomatic::conf::lcd::SHORT_MESSAGE_DELAY</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00006">TAG</a>.</p>
+<p class="reference">References <a class="el" href="_board_logic_8cpp_source.xhtml#l00273">fabomatic::BoardLogic::changeStatus()</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00291">fabomatic::FabBackend::connect()</a>, <a class="el" href="_tasks_8cpp_source.xhtml#l00266">fabomatic::Tasks::delay()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00634">fabomatic::BoardLogic::getServer()</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00235">fabomatic::FabBackend::isOnline()</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00042">fabomatic::BoardLogic::refreshFromServer()</a>, <a class="el" href="conf_8hpp_source.xhtml#l00051">fabomatic::conf::lcd::SHORT_MESSAGE_DELAY</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00009">TAG</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="main_8cpp_source.xhtml#l00411">setup()</a>.</p>
 <div class="dynheader">
@@ -1569,7 +1569,7 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  152</span>    }</div>
 <div class="line"><span class="lineno">  153</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_espressif_8cpp_source.xhtml#l00032">fabomatic::esp32::setupWatchdog()</a>, <a class="el" href="_espressif_8cpp_source.xhtml#l00056">fabomatic::esp32::signalWatchdog()</a>, <a class="el" href="_logging_8hpp_source.xhtml#l00006">TAG</a>, and <a class="el" href="conf_8hpp_source.xhtml#l00122">fabomatic::conf::tasks::WATCHDOG_TIMEOUT</a>.</p>
+<p class="reference">References <a class="el" href="_espressif_8cpp_source.xhtml#l00032">fabomatic::esp32::setupWatchdog()</a>, <a class="el" href="_espressif_8cpp_source.xhtml#l00056">fabomatic::esp32::signalWatchdog()</a>, <a class="el" href="_logging_8hpp_source.xhtml#l00009">TAG</a>, and <a class="el" href="conf_8hpp_source.xhtml#l00122">fabomatic::conf::tasks::WATCHDOG_TIMEOUT</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1625,7 +1625,7 @@ Here is the call graph for this function:</div>
 <div class="line"><span class="lineno">  242</span>  }</div>
 <div class="ttc" id="anamespacefabomatic_xhtml_a8374c0d1cef777c26dc13b4abc9c52b6"><div class="ttname"><a href="namespacefabomatic.xhtml#a8374c0d1cef777c26dc13b4abc9c52b6">fabomatic::openConfigPortal</a></div><div class="ttdeci">void openConfigPortal(bool force_reset, bool disable_portal)</div><div class="ttdoc">Open the ArduinoOTA configuration portal.</div><div class="ttdef"><b>Definition</b> <a href="_o_t_a_8cpp_source.xhtml#l00047">OTA.cpp:47</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_board_logic_8cpp_source.xhtml#l00498">fabomatic::BoardLogic::blinkLed()</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00073">fabomatic::pins_config::buttons</a>, <a class="el" href="_espressif_8cpp_source.xhtml#l00067">fabomatic::esp32::esp_serial()</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00065">fabomatic::pins_config::buttons_config::factory_defaults_pin</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00010">NO_PIN</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00047">openConfigPortal()</a>, <a class="el" href="pins_8hpp_source.xhtml#l00246">pins</a>, <a class="el" href="_espressif_8cpp_source.xhtml#l00061">fabomatic::esp32::removeWatchdog()</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00006">TAG</a>.</p>
+<p class="reference">References <a class="el" href="_board_logic_8cpp_source.xhtml#l00499">fabomatic::BoardLogic::blinkLed()</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00073">fabomatic::pins_config::buttons</a>, <a class="el" href="_espressif_8cpp_source.xhtml#l00067">fabomatic::esp32::esp_serial()</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00065">fabomatic::pins_config::buttons_config::factory_defaults_pin</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00010">NO_PIN</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00047">openConfigPortal()</a>, <a class="el" href="pins_8hpp_source.xhtml#l00246">pins</a>, <a class="el" href="_espressif_8cpp_source.xhtml#l00061">fabomatic::esp32::removeWatchdog()</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00009">TAG</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1681,7 +1681,7 @@ Here is the call graph for this function:</div>
 <div class="ttc" id="aclassfabomatic_1_1_fab_backend_xhtml_abb44b529c858ddc1006592e9bac8a815"><div class="ttname"><a href="classfabomatic_1_1_fab_backend.xhtml#abb44b529c858ddc1006592e9bac8a815">fabomatic::FabBackend::alive</a></div><div class="ttdeci">auto alive() -&gt; bool</div><div class="ttdoc">Sends a ping to the server.</div><div class="ttdef"><b>Definition</b> <a href="_fab_backend_8cpp_source.xhtml#l00573">FabBackend.cpp:573</a></div></div>
 <div class="ttc" id="anamespacefabomatic_1_1esp32_xhtml_a5f5bb4a72418870dbcddd266b5bb0fcd"><div class="ttname"><a href="namespacefabomatic_1_1esp32.xhtml#a5f5bb4a72418870dbcddd266b5bb0fcd">fabomatic::esp32::showHeapStats</a></div><div class="ttdeci">void showHeapStats()</div><div class="ttdef"><b>Definition</b> <a href="_espressif_8cpp_source.xhtml#l00015">Espressif.cpp:15</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_fab_backend_8cpp_source.xhtml#l00573">fabomatic::FabBackend::alive()</a>, <a class="el" href="conf_8hpp_source.xhtml#l00079">fabomatic::conf::debug::ENABLE_LOGS</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00633">fabomatic::BoardLogic::getServer()</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00235">fabomatic::FabBackend::isOnline()</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00633">fabomatic::FabBackend::saveBuffer()</a>, <a class="el" href="_espressif_8cpp_source.xhtml#l00015">fabomatic::esp32::showHeapStats()</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00006">TAG</a>.</p>
+<p class="reference">References <a class="el" href="_fab_backend_8cpp_source.xhtml#l00573">fabomatic::FabBackend::alive()</a>, <a class="el" href="conf_8hpp_source.xhtml#l00079">fabomatic::conf::debug::ENABLE_LOGS</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00634">fabomatic::BoardLogic::getServer()</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00235">fabomatic::FabBackend::isOnline()</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00633">fabomatic::FabBackend::saveBuffer()</a>, <a class="el" href="_espressif_8cpp_source.xhtml#l00015">fabomatic::esp32::showHeapStats()</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00009">TAG</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1719,7 +1719,7 @@ Here is the call graph for this function:</div>
 <div class="line"><span class="lineno">  130</span>    }</div>
 <div class="line"><span class="lineno">  131</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_board_logic_8cpp_source.xhtml#l00449">fabomatic::BoardLogic::beepFail()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00600">fabomatic::BoardLogic::getMachine()</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00111">fabomatic::BoardLogic::logout()</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00006">TAG</a>.</p>
+<p class="reference">References <a class="el" href="_board_logic_8cpp_source.xhtml#l00450">fabomatic::BoardLogic::beepFail()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00601">fabomatic::BoardLogic::getMachine()</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00112">fabomatic::BoardLogic::logout()</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00009">TAG</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1755,7 +1755,7 @@ Here is the call graph for this function:</div>
 <div class="line"><span class="lineno">  182</span>  }</div>
 <div class="ttc" id="aclassfabomatic_1_1_fab_backend_xhtml_aaf05998bb9dec17ae98283969109bb2d"><div class="ttname"><a href="classfabomatic_1_1_fab_backend.xhtml#aaf05998bb9dec17ae98283969109bb2d">fabomatic::FabBackend::loop</a></div><div class="ttdeci">auto loop() -&gt; bool</div><div class="ttdoc">Main loop for the MQTT client.</div><div class="ttdef"><b>Definition</b> <a href="_fab_backend_8cpp_source.xhtml#l00184">FabBackend.cpp:184</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_board_logic_8cpp_source.xhtml#l00633">fabomatic::BoardLogic::getServer()</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00235">fabomatic::FabBackend::isOnline()</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>, and <a class="el" href="_fab_backend_8cpp_source.xhtml#l00184">fabomatic::FabBackend::loop()</a>.</p>
+<p class="reference">References <a class="el" href="_board_logic_8cpp_source.xhtml#l00634">fabomatic::BoardLogic::getServer()</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00235">fabomatic::FabBackend::isOnline()</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>, and <a class="el" href="_fab_backend_8cpp_source.xhtml#l00184">fabomatic::FabBackend::loop()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1786,11 +1786,11 @@ Here is the call graph for this function:</div>
 <div class="line"><span class="lineno">   96</span>    Board::logic.checkPowerOff();</div>
 <div class="line"><span class="lineno">   97</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_board_logic_8cpp_source.xhtml#l00576">fabomatic::BoardLogic::checkPowerOff()</a>, and <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>.</p>
+<p class="reference">References <a class="el" href="_board_logic_8cpp_source.xhtml#l00577">fabomatic::BoardLogic::checkPowerOff()</a>, and <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="namespacefabomatic_aa56f9324b5710d12bea42757af0289f2_cgraph.svg" width="588" height="118"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="namespacefabomatic_aa56f9324b5710d12bea42757af0289f2_cgraph.svg" width="100%" height="388"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
 </div>
 
 </div>
@@ -1832,7 +1832,7 @@ Here is the call graph for this function:</div>
 <div class="line"><span class="lineno">  117</span>    }</div>
 <div class="line"><span class="lineno">  118</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_board_logic_8cpp_source.xhtml#l00449">fabomatic::BoardLogic::beepFail()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00272">fabomatic::BoardLogic::changeStatus()</a>, <a class="el" href="conf_8hpp_source.xhtml#l00079">fabomatic::conf::debug::ENABLE_LOGS</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>, <a class="el" href="classfabomatic_1_1_machine.xhtml#a409acc0089d7cfe849b2e775840e5838ab161cc0f80e1c236e1f0816a42c4a00c">fabomatic::Machine::PoweredOff</a>, <a class="el" href="_espressif_8cpp_source.xhtml#l00093">fabomatic::esp32::restart()</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00006">TAG</a>.</p>
+<p class="reference">References <a class="el" href="_board_logic_8cpp_source.xhtml#l00450">fabomatic::BoardLogic::beepFail()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00273">fabomatic::BoardLogic::changeStatus()</a>, <a class="el" href="conf_8hpp_source.xhtml#l00079">fabomatic::conf::debug::ENABLE_LOGS</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>, <a class="el" href="classfabomatic_1_1_machine.xhtml#a409acc0089d7cfe849b2e775840e5838ab161cc0f80e1c236e1f0816a42c4a00c">fabomatic::Machine::PoweredOff</a>, <a class="el" href="_espressif_8cpp_source.xhtml#l00093">fabomatic::esp32::restart()</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00009">TAG</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1876,7 +1876,7 @@ Here is the call graph for this function:</div>
 <div class="line"><span class="lineno">  171</span>    }</div>
 <div class="line"><span class="lineno">  172</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_board_logic_8cpp_source.xhtml#l00272">fabomatic::BoardLogic::changeStatus()</a>, <a class="el" href="_tasks_8cpp_source.xhtml#l00250">fabomatic::Tasks::delay()</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>, <a class="el" href="globals_8hpp_source.xhtml#l00033">fabomatic::Board::rfid</a>, <a class="el" href="conf_8hpp_source.xhtml#l00113">fabomatic::conf::tasks::RFID_CHECK_PERIOD</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00006">TAG</a>.</p>
+<p class="reference">References <a class="el" href="_board_logic_8cpp_source.xhtml#l00273">fabomatic::BoardLogic::changeStatus()</a>, <a class="el" href="_tasks_8cpp_source.xhtml#l00266">fabomatic::Tasks::delay()</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>, <a class="el" href="globals_8hpp_source.xhtml#l00033">fabomatic::Board::rfid</a>, <a class="el" href="conf_8hpp_source.xhtml#l00113">fabomatic::conf::tasks::RFID_CHECK_PERIOD</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00009">TAG</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1910,7 +1910,7 @@ Here is the call graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="_pins_config_8hpp_source.xhtml#l00010">10</a> of file <a class="el" href="_pins_config_8hpp_source.xhtml">PinsConfig.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_buzzer_8cpp_source.xhtml#l00027">fabomatic::Buzzer::beepFail()</a>, <a class="el" href="_buzzer_8cpp_source.xhtml#l00016">fabomatic::Buzzer::beepOk()</a>, <a class="el" href="_buzzer_8cpp_source.xhtml#l00009">fabomatic::Buzzer::configure()</a>, <a class="el" href="pins_8hpp_source.xhtml#l00012">configure_pins_esp32()</a>, <a class="el" href="pins_8hpp_source.xhtml#l00098">configure_pins_esp32s3()</a>, <a class="el" href="pins_8hpp_source.xhtml#l00141">configure_pins_hwrev0()</a>, <a class="el" href="pins_8hpp_source.xhtml#l00055">configure_pins_wokwi()</a>, <a class="el" href="pins_8hpp_source.xhtml#l00184">configure_pins_wrover()</a>, <a class="el" href="_machine_config_8cpp_source.xhtml#l00023">fabomatic::MachineConfig::hasRelay()</a>, <a class="el" href="_led_8cpp_source.xhtml#l00006">fabomatic::Led::init()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00251">fabomatic::BoardLogic::initBoard()</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00077">no_duplicates()</a>, <a class="el" href="main_8cpp_source.xhtml#l00213">taskFactoryReset()</a>, and <a class="el" href="test__logic_8cpp_source.xhtml#l00041">fabomatic::tests::test_machine_defaults()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_buzzer_8cpp_source.xhtml#l00027">fabomatic::Buzzer::beepFail()</a>, <a class="el" href="_buzzer_8cpp_source.xhtml#l00016">fabomatic::Buzzer::beepOk()</a>, <a class="el" href="_buzzer_8cpp_source.xhtml#l00009">fabomatic::Buzzer::configure()</a>, <a class="el" href="pins_8hpp_source.xhtml#l00012">configure_pins_esp32()</a>, <a class="el" href="pins_8hpp_source.xhtml#l00098">configure_pins_esp32s3()</a>, <a class="el" href="pins_8hpp_source.xhtml#l00141">configure_pins_hwrev0()</a>, <a class="el" href="pins_8hpp_source.xhtml#l00055">configure_pins_wokwi()</a>, <a class="el" href="pins_8hpp_source.xhtml#l00184">configure_pins_wrover()</a>, <a class="el" href="_machine_config_8cpp_source.xhtml#l00023">fabomatic::MachineConfig::hasRelay()</a>, <a class="el" href="_led_8cpp_source.xhtml#l00006">fabomatic::Led::init()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00252">fabomatic::BoardLogic::initBoard()</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00077">no_duplicates()</a>, <a class="el" href="main_8cpp_source.xhtml#l00213">taskFactoryReset()</a>, and <a class="el" href="test__logic_8cpp_source.xhtml#l00041">fabomatic::tests::test_machine_defaults()</a>.</p>
 
 </div>
 </div>
@@ -1936,7 +1936,7 @@ Here is the call graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="pins_8hpp_source.xhtml#l00246">246</a> of file <a class="el" href="pins_8hpp_source.xhtml">pins.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_buzzer_8cpp_source.xhtml#l00027">fabomatic::Buzzer::beepFail()</a>, <a class="el" href="_buzzer_8cpp_source.xhtml#l00016">fabomatic::Buzzer::beepOk()</a>, <a class="el" href="_buzzer_8cpp_source.xhtml#l00009">fabomatic::Buzzer::configure()</a>, <a class="el" href="_mrfc522_driver_8cpp_source.xhtml#l00026">fabomatic::Mrfc522Driver::hardReset()</a>, <a class="el" href="_led_8cpp_source.xhtml#l00006">fabomatic::Led::init()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00251">fabomatic::BoardLogic::initBoard()</a>, <a class="el" href="_mrfc522_driver_8cpp_source.xhtml#l00013">fabomatic::Mrfc522Driver::Mrfc522Driver()</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00077">no_duplicates()</a>, <a class="el" href="_led_8cpp_source.xhtml#l00044">fabomatic::Led::outputColor()</a>, <a class="el" href="main_8cpp_source.xhtml#l00320">printCompileSettings()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00463">fabomatic::BoardLogic::reconfigure()</a>, <a class="el" href="main_8cpp_source.xhtml#l00213">taskFactoryReset()</a>, and <a class="el" href="test__logic_8cpp_source.xhtml#l00041">fabomatic::tests::test_machine_defaults()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_buzzer_8cpp_source.xhtml#l00027">fabomatic::Buzzer::beepFail()</a>, <a class="el" href="_buzzer_8cpp_source.xhtml#l00016">fabomatic::Buzzer::beepOk()</a>, <a class="el" href="_buzzer_8cpp_source.xhtml#l00009">fabomatic::Buzzer::configure()</a>, <a class="el" href="_mrfc522_driver_8cpp_source.xhtml#l00026">fabomatic::Mrfc522Driver::hardReset()</a>, <a class="el" href="_led_8cpp_source.xhtml#l00006">fabomatic::Led::init()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00252">fabomatic::BoardLogic::initBoard()</a>, <a class="el" href="_mrfc522_driver_8cpp_source.xhtml#l00013">fabomatic::Mrfc522Driver::Mrfc522Driver()</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00077">no_duplicates()</a>, <a class="el" href="_led_8cpp_source.xhtml#l00044">fabomatic::Led::outputColor()</a>, <a class="el" href="main_8cpp_source.xhtml#l00320">printCompileSettings()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00464">fabomatic::BoardLogic::reconfigure()</a>, <a class="el" href="main_8cpp_source.xhtml#l00213">taskFactoryReset()</a>, and <a class="el" href="test__logic_8cpp_source.xhtml#l00041">fabomatic::tests::test_machine_defaults()</a>.</p>
 
 </div>
 </div>
@@ -2482,7 +2482,7 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Jul 2 2024 19:39:03 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jul 14 2024 13:49:34 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

@@ -203,7 +203,7 @@ Public Member Functions</h2></td></tr>
 <div class="line"><span class="lineno">   43</span> </div>
 <div class="line"><span class="lineno">   44</span>    ss &lt;&lt; <span class="stringliteral">&quot;{\&quot;action\&quot;:\&quot;alive\&quot;,&quot;</span></div>
 <div class="line"><span class="lineno">   45</span>       &lt;&lt; <span class="stringliteral">&quot;\&quot;version\&quot;:\&quot;&quot;</span> &lt;&lt; FABOMATIC_BUILD &lt;&lt; <span class="stringliteral">&quot;,&quot;</span> &lt;&lt; <a class="code hl_define" href="_board_logic_8cpp.xhtml#aef0b5124fcadf80db529fcb6df42808a">GIT_VERSION</a> &lt;&lt; <span class="stringliteral">&quot;\&quot;,&quot;</span></div>
-<div class="line"><span class="lineno">   46</span>       &lt;&lt; <span class="stringliteral">&quot;\&quot;ip\&quot;:\&quot;&quot;</span> &lt;&lt; WiFi.localIP().toString() &lt;&lt; <span class="stringliteral">&quot;\&quot;,&quot;</span></div>
+<div class="line"><span class="lineno">   46</span>       &lt;&lt; <span class="stringliteral">&quot;\&quot;ip\&quot;:\&quot;&quot;</span> &lt;&lt; WiFi.localIP().toString().c_str() &lt;&lt; <span class="stringliteral">&quot;\&quot;,&quot;</span></div>
 <div class="line"><span class="lineno">   47</span>       &lt;&lt; <span class="stringliteral">&quot;\&quot;serial\&quot;:\&quot;&quot;</span> &lt;&lt; serial &lt;&lt; <span class="stringliteral">&quot;\&quot;,&quot;</span></div>
 <div class="line"><span class="lineno">   48</span>       &lt;&lt; <span class="stringliteral">&quot;\&quot;heap\&quot;:\&quot;&quot;</span> &lt;&lt; <a class="code hl_function" href="namespacefabomatic_1_1esp32.xhtml#a07750a641e5cfe3207bbdf72813af628">esp32::getFreeHeap</a>() &lt;&lt; <span class="stringliteral">&quot;\&quot;&quot;</span></div>
 <div class="line"><span class="lineno">   49</span>       &lt;&lt; <span class="stringliteral">&quot;}&quot;</span>;</div>
@@ -259,7 +259,7 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Jul 2 2024 19:39:03 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jul 14 2024 13:49:34 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

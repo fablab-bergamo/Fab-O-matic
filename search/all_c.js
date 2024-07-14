@@ -5,7 +5,7 @@ var searchData=
   ['nb_5ftasks_2',['NB_TASKS',['../namespacefabomatic_1_1tests.xhtml#a08af7cf7959700ad4a46d76a4f31dbb7',1,'fabomatic::tests']]],
   ['needsupdate_3',['needsUpdate',['../classfabomatic_1_1_l_c_d_wrapper.xhtml#ab3133e603ed7b0d69c52486ff8ed97fa',1,'fabomatic::LCDWrapper']]],
   ['neopixel_5fconfig_4',['neopixel_config',['../structfabomatic_1_1pins__config_1_1led__config.xhtml#abcb9f08ec0d07153bdafb39845164672',1,'fabomatic::pins_config::led_config']]],
-  ['next_5frun_5',['next_run',['../classfabomatic_1_1_tasks_1_1_task.xhtml#a7016ab8ad769034f28f927be739b9bf6',1,'fabomatic::Tasks::Task']]],
+  ['next_5frun_5',['next_run',['../classfabomatic_1_1_tasks_1_1_task.xhtml#a5d0719a73c835b75b37d0fc77559c7cc',1,'fabomatic::Tasks::Task']]],
   ['no_5fduplicates_6',['no_duplicates',['../namespacefabomatic.xhtml#a68e38df690986ec6eff2bea6054fc8cb',1,'fabomatic']]],
   ['no_5fpin_7',['NO_PIN',['../namespacefabomatic.xhtml#a01a9e2e5f9e92f6f3fa9204ba3d946b9',1,'fabomatic']]],
   ['noconnection_5fchar_8',['noconnection_char',['../classfabomatic_1_1_l_c_d_wrapper.xhtml#af5370c9b87cdda8746ad8e520d5058ec',1,'fabomatic::LCDWrapper']]],

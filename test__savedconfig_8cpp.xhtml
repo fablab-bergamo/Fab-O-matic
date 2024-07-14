@@ -154,9 +154,9 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__savedconfig_8cpp_source.xhtml#l00338">338</a> of file <a class="el" href="test__savedconfig_8cpp_source.xhtml">test_savedconfig.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  339</span>{</div>
-<div class="line"><span class="lineno">  340</span>}</div>
+<p class="definition">Definition at line <a class="el" href="test__savedconfig_8cpp_source.xhtml#l00340">340</a> of file <a class="el" href="test__savedconfig_8cpp_source.xhtml">test_savedconfig.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  341</span>{</div>
+<div class="line"><span class="lineno">  342</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -178,25 +178,29 @@ Variables</h2></td></tr>
 <p class="definition">Definition at line <a class="el" href="test__savedconfig_8cpp_source.xhtml#l00318">318</a> of file <a class="el" href="test__savedconfig_8cpp_source.xhtml">test_savedconfig.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  319</span>{</div>
 <div class="line"><span class="lineno">  320</span>  <a class="code hl_function" href="namespacefabomatic_1_1_tasks.xhtml#a5c20f560f5934822d39ba116a16f3ab6">delay</a>(1000);</div>
-<div class="line"><span class="lineno">  321</span>  <span class="keyword">auto</span> <a class="code hl_variable" href="namespacefabomatic_1_1tests.xhtml#a159f700a4f413190a0fd5eaa878b2cdd">original</a> = <a class="code hl_function" href="classfabomatic_1_1_saved_config.xhtml#aca3fe97dfa74c005d47ffef700392d99">fabomatic::SavedConfig::LoadFromEEPROM</a>();</div>
-<div class="line"><span class="lineno">  322</span> </div>
-<div class="line"><span class="lineno">  323</span>  UNITY_BEGIN();</div>
-<div class="line"><span class="lineno">  324</span>  RUN_TEST(<a class="code hl_function" href="namespacefabomatic_1_1tests.xhtml#a6af06470faa8c9455927dad653cba48a">fabomatic::tests::test_defaults</a>);</div>
-<div class="line"><span class="lineno">  325</span>  RUN_TEST(<a class="code hl_function" href="namespacefabomatic_1_1tests.xhtml#a0bbb6cee5561bf8ac1c4a9117d9d01b8">fabomatic::tests::test_changes</a>);</div>
-<div class="line"><span class="lineno">  326</span>  RUN_TEST(<a class="code hl_function" href="namespacefabomatic_1_1tests.xhtml#a77b8df849708615c63f34444d640d001">fabomatic::tests::test_magic_number</a>);</div>
-<div class="line"><span class="lineno">  327</span>  RUN_TEST(<a class="code hl_function" href="namespacefabomatic_1_1tests.xhtml#aeb3e51f6d2841cd2869df4c0629f694d">fabomatic::tests::test_rfid_cache</a>);</div>
-<div class="line"><span class="lineno">  328</span>  RUN_TEST(<a class="code hl_function" href="namespacefabomatic_1_1tests.xhtml#a4fbc6366f69847719d0f0cb626572493">fabomatic::tests::test_buffered_msg</a>);</div>
-<div class="line"><span class="lineno">  329</span> </div>
-<div class="line"><span class="lineno">  330</span>  <span class="keywordflow">if</span> (<a class="code hl_variable" href="namespacefabomatic_1_1tests.xhtml#a159f700a4f413190a0fd5eaa878b2cdd">original</a>.has_value())</div>
-<div class="line"><span class="lineno">  331</span>  {</div>
-<div class="line"><span class="lineno">  332</span>    <a class="code hl_variable" href="namespacefabomatic_1_1tests.xhtml#a159f700a4f413190a0fd5eaa878b2cdd">original</a>.value().<a class="code hl_function" href="classfabomatic_1_1_saved_config.xhtml#a312c74363068192ae80df24140f82874">SaveToEEPROM</a>();</div>
-<div class="line"><span class="lineno">  333</span>  }</div>
-<div class="line"><span class="lineno">  334</span> </div>
-<div class="line"><span class="lineno">  335</span>  UNITY_END(); <span class="comment">// stop unit testing</span></div>
-<div class="line"><span class="lineno">  336</span>}</div>
+<div class="line"><span class="lineno">  321</span>  esp_log_level_set(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <a class="code hl_define" href="_logging_8hpp.xhtml#a5155a7b7465dd9b5e6167122827d0158">LOG_LOCAL_LEVEL</a>);</div>
+<div class="line"><span class="lineno">  322</span>  </div>
+<div class="line"><span class="lineno">  323</span>  <span class="keyword">auto</span> <a class="code hl_variable" href="namespacefabomatic_1_1tests.xhtml#a159f700a4f413190a0fd5eaa878b2cdd">original</a> = <a class="code hl_function" href="classfabomatic_1_1_saved_config.xhtml#aca3fe97dfa74c005d47ffef700392d99">fabomatic::SavedConfig::LoadFromEEPROM</a>();</div>
+<div class="line"><span class="lineno">  324</span> </div>
+<div class="line"><span class="lineno">  325</span>  UNITY_BEGIN();</div>
+<div class="line"><span class="lineno">  326</span>  RUN_TEST(<a class="code hl_function" href="namespacefabomatic_1_1tests.xhtml#a6af06470faa8c9455927dad653cba48a">fabomatic::tests::test_defaults</a>);</div>
+<div class="line"><span class="lineno">  327</span>  RUN_TEST(<a class="code hl_function" href="namespacefabomatic_1_1tests.xhtml#a0bbb6cee5561bf8ac1c4a9117d9d01b8">fabomatic::tests::test_changes</a>);</div>
+<div class="line"><span class="lineno">  328</span>  RUN_TEST(<a class="code hl_function" href="namespacefabomatic_1_1tests.xhtml#a77b8df849708615c63f34444d640d001">fabomatic::tests::test_magic_number</a>);</div>
+<div class="line"><span class="lineno">  329</span>  RUN_TEST(<a class="code hl_function" href="namespacefabomatic_1_1tests.xhtml#aeb3e51f6d2841cd2869df4c0629f694d">fabomatic::tests::test_rfid_cache</a>);</div>
+<div class="line"><span class="lineno">  330</span>  RUN_TEST(<a class="code hl_function" href="namespacefabomatic_1_1tests.xhtml#a4fbc6366f69847719d0f0cb626572493">fabomatic::tests::test_buffered_msg</a>);</div>
+<div class="line"><span class="lineno">  331</span> </div>
+<div class="line"><span class="lineno">  332</span>  <span class="keywordflow">if</span> (<a class="code hl_variable" href="namespacefabomatic_1_1tests.xhtml#a159f700a4f413190a0fd5eaa878b2cdd">original</a>.has_value())</div>
+<div class="line"><span class="lineno">  333</span>  {</div>
+<div class="line"><span class="lineno">  334</span>    <a class="code hl_variable" href="namespacefabomatic_1_1tests.xhtml#a159f700a4f413190a0fd5eaa878b2cdd">original</a>.value().<a class="code hl_function" href="classfabomatic_1_1_saved_config.xhtml#a312c74363068192ae80df24140f82874">SaveToEEPROM</a>();</div>
+<div class="line"><span class="lineno">  335</span>  }</div>
+<div class="line"><span class="lineno">  336</span> </div>
+<div class="line"><span class="lineno">  337</span>  UNITY_END(); <span class="comment">// stop unit testing</span></div>
+<div class="line"><span class="lineno">  338</span>}</div>
+<div class="ttc" id="a_logging_8hpp_xhtml_a4ef5b5f197804a60836ab1e8907d8301"><div class="ttname"><a href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a></div><div class="ttdeci">static const char *const TAG</div><div class="ttdef"><b>Definition</b> <a href="_logging_8hpp_source.xhtml#l00009">Logging.hpp:9</a></div></div>
+<div class="ttc" id="a_logging_8hpp_xhtml_a5155a7b7465dd9b5e6167122827d0158"><div class="ttname"><a href="_logging_8hpp.xhtml#a5155a7b7465dd9b5e6167122827d0158">LOG_LOCAL_LEVEL</a></div><div class="ttdeci">#define LOG_LOCAL_LEVEL</div><div class="ttdef"><b>Definition</b> <a href="_logging_8hpp_source.xhtml#l00005">Logging.hpp:5</a></div></div>
 <div class="ttc" id="aclassfabomatic_1_1_saved_config_xhtml_a312c74363068192ae80df24140f82874"><div class="ttname"><a href="classfabomatic_1_1_saved_config.xhtml#a312c74363068192ae80df24140f82874">fabomatic::SavedConfig::SaveToEEPROM</a></div><div class="ttdeci">auto SaveToEEPROM() const -&gt; bool</div><div class="ttdoc">Saves the configuration to EEPROM.</div><div class="ttdef"><b>Definition</b> <a href="_saved_config_8cpp_source.xhtml#l00172">SavedConfig.cpp:172</a></div></div>
 <div class="ttc" id="aclassfabomatic_1_1_saved_config_xhtml_aca3fe97dfa74c005d47ffef700392d99"><div class="ttname"><a href="classfabomatic_1_1_saved_config.xhtml#aca3fe97dfa74c005d47ffef700392d99">fabomatic::SavedConfig::LoadFromEEPROM</a></div><div class="ttdeci">static auto LoadFromEEPROM() -&gt; std::optional&lt; SavedConfig &gt;</div><div class="ttdoc">Loads the configuration from EEPROM if available and matching revision number.</div><div class="ttdef"><b>Definition</b> <a href="_saved_config_8cpp_source.xhtml#l00052">SavedConfig.cpp:52</a></div></div>
-<div class="ttc" id="anamespacefabomatic_1_1_tasks_xhtml_a5c20f560f5934822d39ba116a16f3ab6"><div class="ttname"><a href="namespacefabomatic_1_1_tasks.xhtml#a5c20f560f5934822d39ba116a16f3ab6">fabomatic::Tasks::delay</a></div><div class="ttdeci">auto delay(const milliseconds duration) -&gt; void</div><div class="ttdoc">Wait for a delay, allowing OTA updates.</div><div class="ttdef"><b>Definition</b> <a href="_tasks_8cpp_source.xhtml#l00250">Tasks.cpp:250</a></div></div>
+<div class="ttc" id="anamespacefabomatic_1_1_tasks_xhtml_a5c20f560f5934822d39ba116a16f3ab6"><div class="ttname"><a href="namespacefabomatic_1_1_tasks.xhtml#a5c20f560f5934822d39ba116a16f3ab6">fabomatic::Tasks::delay</a></div><div class="ttdeci">auto delay(const milliseconds duration) -&gt; void</div><div class="ttdoc">Wait for a delay, allowing OTA updates.</div><div class="ttdef"><b>Definition</b> <a href="_tasks_8cpp_source.xhtml#l00266">Tasks.cpp:266</a></div></div>
 <div class="ttc" id="anamespacefabomatic_1_1tests_xhtml_a0bbb6cee5561bf8ac1c4a9117d9d01b8"><div class="ttname"><a href="namespacefabomatic_1_1tests.xhtml#a0bbb6cee5561bf8ac1c4a9117d9d01b8">fabomatic::tests::test_changes</a></div><div class="ttdeci">void test_changes(void)</div><div class="ttdef"><b>Definition</b> <a href="test__savedconfig_8cpp_source.xhtml#l00048">test_savedconfig.cpp:48</a></div></div>
 <div class="ttc" id="anamespacefabomatic_1_1tests_xhtml_a159f700a4f413190a0fd5eaa878b2cdd"><div class="ttname"><a href="namespacefabomatic_1_1tests.xhtml#a159f700a4f413190a0fd5eaa878b2cdd">fabomatic::tests::original</a></div><div class="ttdeci">SavedConfig original</div><div class="ttdef"><b>Definition</b> <a href="test__savedconfig_8cpp_source.xhtml#l00020">test_savedconfig.cpp:20</a></div></div>
 <div class="ttc" id="anamespacefabomatic_1_1tests_xhtml_a4fbc6366f69847719d0f0cb626572493"><div class="ttname"><a href="namespacefabomatic_1_1tests.xhtml#a4fbc6366f69847719d0f0cb626572493">fabomatic::tests::test_buffered_msg</a></div><div class="ttdeci">void test_buffered_msg()</div><div class="ttdef"><b>Definition</b> <a href="test__savedconfig_8cpp_source.xhtml#l00201">test_savedconfig.cpp:201</a></div></div>
@@ -204,7 +208,7 @@ Variables</h2></td></tr>
 <div class="ttc" id="anamespacefabomatic_1_1tests_xhtml_a77b8df849708615c63f34444d640d001"><div class="ttname"><a href="namespacefabomatic_1_1tests.xhtml#a77b8df849708615c63f34444d640d001">fabomatic::tests::test_magic_number</a></div><div class="ttdeci">void test_magic_number()</div><div class="ttdef"><b>Definition</b> <a href="test__savedconfig_8cpp_source.xhtml#l00152">test_savedconfig.cpp:152</a></div></div>
 <div class="ttc" id="anamespacefabomatic_1_1tests_xhtml_aeb3e51f6d2841cd2869df4c0629f694d"><div class="ttname"><a href="namespacefabomatic_1_1tests.xhtml#aeb3e51f6d2841cd2869df4c0629f694d">fabomatic::tests::test_rfid_cache</a></div><div class="ttdeci">void test_rfid_cache()</div><div class="ttdef"><b>Definition</b> <a href="test__savedconfig_8cpp_source.xhtml#l00094">test_savedconfig.cpp:94</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_saved_config_8cpp_source.xhtml#l00052">fabomatic::SavedConfig::LoadFromEEPROM()</a>, <a class="el" href="_saved_config_8cpp_source.xhtml#l00172">fabomatic::SavedConfig::SaveToEEPROM()</a>, <a class="el" href="test__savedconfig_8cpp_source.xhtml#l00201">fabomatic::tests::test_buffered_msg()</a>, <a class="el" href="test__savedconfig_8cpp_source.xhtml#l00048">fabomatic::tests::test_changes()</a>, <a class="el" href="test__savedconfig_8cpp_source.xhtml#l00022">fabomatic::tests::test_defaults()</a>, <a class="el" href="test__savedconfig_8cpp_source.xhtml#l00152">fabomatic::tests::test_magic_number()</a>, and <a class="el" href="test__savedconfig_8cpp_source.xhtml#l00094">fabomatic::tests::test_rfid_cache()</a>.</p>
+<p class="reference">References <a class="el" href="_saved_config_8cpp_source.xhtml#l00052">fabomatic::SavedConfig::LoadFromEEPROM()</a>, <a class="el" href="_logging_8hpp_source.xhtml#l00005">LOG_LOCAL_LEVEL</a>, <a class="el" href="_saved_config_8cpp_source.xhtml#l00172">fabomatic::SavedConfig::SaveToEEPROM()</a>, <a class="el" href="_logging_8hpp_source.xhtml#l00009">TAG</a>, <a class="el" href="test__savedconfig_8cpp_source.xhtml#l00201">fabomatic::tests::test_buffered_msg()</a>, <a class="el" href="test__savedconfig_8cpp_source.xhtml#l00048">fabomatic::tests::test_changes()</a>, <a class="el" href="test__savedconfig_8cpp_source.xhtml#l00022">fabomatic::tests::test_defaults()</a>, <a class="el" href="test__savedconfig_8cpp_source.xhtml#l00152">fabomatic::tests::test_magic_number()</a>, and <a class="el" href="test__savedconfig_8cpp_source.xhtml#l00094">fabomatic::tests::test_rfid_cache()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -287,7 +291,7 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Jul 2 2024 19:39:03 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sun Jul 14 2024 13:49:34 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

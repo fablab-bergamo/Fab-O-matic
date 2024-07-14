@@ -1,13 +1,24 @@
 <map id="fabomatic::tests::test_execute_runs_all_tasks" name="fabomatic::tests::test_execute_runs_all_tasks">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,71,170,111"/>
-<area shape="rect" id="Node000002" href="$namespacefabomatic_1_1tests.xhtml#a9bbef7cf45ab43901130143647b0f495" title=" " alt="" coords="232,5,388,46"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="158,68,223,48,224,54,160,73"/>
-<area shape="rect" id="Node000005" href="$namespacefabomatic_1_1tests.xhtml#a437b3023f617a6c0c675e6484f85ba50" title=" " alt="" coords="241,71,379,111"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="170,88,226,88,226,94,170,94"/>
-<area shape="rect" id="Node000006" href="$classfabomatic_1_1_tasks_1_1_scheduler.xhtml#a203784237087f7f1b0b77c15bcdb85f9" title="Gets the number of tasks in the scheduler." alt="" coords="218,136,402,177"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="160,109,224,128,223,134,158,114"/>
-<area shape="rect" id="Node000003" href="$namespacefabomatic_1_1tests.xhtml#ae4bd9063425820acc6c488119d90d22a" title=" " alt="" coords="450,5,604,46"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="388,23,434,23,434,28,388,28"/>
-<area shape="rect" id="Node000004" href="$classfabomatic_1_1_tasks_1_1_scheduler.xhtml#afd558ef77dc2922dca6f3e332fd147c4" title=" " alt="" coords="652,5,837,46"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="605,23,637,23,637,28,605,28"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,96,170,137"/>
+<area shape="rect" id="Node000002" href="$namespacefabomatic_1_1tests.xhtml#a9bbef7cf45ab43901130143647b0f495" title=" " alt="" coords="232,7,388,47"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="139,93,242,51,244,56,141,98"/>
+<area shape="rect" id="Node000005" href="$namespacefabomatic_1_1tests.xhtml#a437b3023f617a6c0c675e6484f85ba50" title=" " alt="" coords="459,71,596,111"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="170,109,443,93,443,98,170,114"/>
+<area shape="rect" id="Node000007" href="$classfabomatic_1_1_tasks_1_1_scheduler.xhtml#a203784237087f7f1b0b77c15bcdb85f9" title="Gets the number of tasks in the scheduler." alt="" coords="218,124,402,165"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="170,124,202,128,202,133,170,129"/>
+<area shape="rect" id="Node000008" href="$classfabomatic_1_1_tasks_1_1_scheduler.xhtml#a2acce29901dbfd56a0f49beb277e3e76" title="Recompute all the next run times for all the tasks." alt="" coords="218,189,402,230"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="132,135,219,174,236,181,234,186,217,179,130,140"/>
+<area shape="rect" id="Node000003" href="$namespacefabomatic_1_1tests.xhtml#ae4bd9063425820acc6c488119d90d22a" title=" " alt="" coords="451,5,605,46"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="388,24,435,24,435,29,388,29"/>
+<area shape="rect" id="Node000004" href="$classfabomatic_1_1_tasks_1_1_scheduler.xhtml#ae1280eccd0bc57ff7fbc92ab54b54769" title=" " alt="" coords="653,5,838,46"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="605,23,638,23,638,28,605,28"/>
+<area shape="rect" id="Node000006" href="$namespacefabomatic_1_1_tasks.xhtml#aad4a932b189725b84a436888d9da5dc8" title=" " alt="" coords="886,129,1081,155"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="597,95,838,120,871,124,870,130,837,126,596,100"/>
+<area shape="rect" id="Node000009" href="$classfabomatic_1_1_tasks_1_1_task.xhtml#a1488d6b3730de3f77a52ce6bee56fdd8" title="recompute the next run time (now + delay) and allows the task to run again" alt="" coords="450,189,605,230"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="402,207,434,207,434,212,402,212"/>
+<area shape="poly" id="edge9_Node000009_Node000006" title=" " alt="" coords="579,186,653,164,764,148,870,141,870,146,765,153,654,170,581,191"/>
+<area shape="rect" id="Node000010" href="$namespacefabomatic_1_1_tasks.xhtml#a5c20f560f5934822d39ba116a16f3ab6" title="Wait for a delay, allowing OTA updates." alt="" coords="667,204,824,229"/>
+<area shape="poly" id="edge10_Node000009_Node000010" title=" " alt="" coords="606,209,652,211,652,216,605,215"/>
+<area shape="poly" id="edge11_Node000010_Node000006" title=" " alt="" coords="788,200,925,157,926,162,790,206"/>
+<area shape="poly" id="edge12_Node000010_Node000010" title=" " alt="" coords="709,205,702,195,706,185,721,179,746,177,772,180,786,186,783,191,771,185,745,182,722,184,710,189,707,194,714,201"/>
 </map>

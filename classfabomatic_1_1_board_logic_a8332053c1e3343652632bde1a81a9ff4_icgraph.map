@@ -1,24 +1,27 @@
 <map id="fabomatic::BoardLogic::getMachineForTesting" name="fabomatic::BoardLogic::getMachineForTesting">
-<area shape="rect" id="Node000001" title="returns a modificable machine for testing only" alt="" coords="553,107,710,147"/>
-<area shape="rect" id="Node000002" href="$namespacefabomatic_1_1tests.xhtml#a6a7645a865dc822746f972ea6f43224d" title="Resets machine to initial state, clearing flags." alt="" coords="313,140,505,165"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="538,140,506,144,505,139,537,135"/>
+<area shape="rect" id="Node000001" title="returns a modificable machine for testing only" alt="" coords="553,136,710,177"/>
+<area shape="rect" id="Node000002" href="$namespacefabomatic_1_1tests.xhtml#a6a7645a865dc822746f972ea6f43224d" title="Resets machine to initial state, clearing flags." alt="" coords="313,144,505,169"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="538,159,506,159,506,154,538,154"/>
 <area shape="rect" id="Node000003" href="$namespacefabomatic_1_1tests.xhtml#a558e2287db01a4622581246a19dac397" title=" " alt="" coords="115,5,257,46"/>
-<area shape="poly" id="edge12_Node000001_Node000003" title=" " alt="" coords="546,104,505,94,373,64,257,41,258,36,374,59,506,88,547,99"/>
+<area shape="poly" id="edge12_Node000001_Node000003" title=" " alt="" coords="574,131,504,103,374,66,257,41,258,35,375,61,506,98,576,127"/>
 <area shape="rect" id="Node000005" href="$namespacefabomatic_1_1tests.xhtml#a9a34631c2dc01cbdbbce146895c94e12" title=" " alt="" coords="107,71,265,111"/>
-<area shape="poly" id="edge13_Node000001_Node000005" title=" " alt="" coords="538,122,265,100,266,95,538,117"/>
+<area shape="poly" id="edge13_Node000001_Node000005" title=" " alt="" coords="538,139,505,134,265,102,266,97,506,128,539,134"/>
 <area shape="rect" id="Node000007" href="$namespacefabomatic_1_1tests.xhtml#afa92fef9250d918ee02c79dbf2de2546" title=" " alt="" coords="115,267,257,307"/>
-<area shape="poly" id="edge14_Node000001_Node000007" title=" " alt="" coords="568,156,506,180,252,269,251,264,504,175,566,151"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="376,132,324,97,264,61,238,49,240,44,266,57,327,93,379,128"/>
-<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="344,137,262,114,263,109,346,132"/>
-<area shape="rect" id="Node000006" href="$namespacefabomatic_1_1tests.xhtml#a6f3dff17fd964aba76c35c514957a0a5" title=" " alt="" coords="113,201,259,242"/>
-<area shape="poly" id="edge6_Node000002_Node000006" title=" " alt="" coords="352,173,255,203,253,198,350,168"/>
-<area shape="poly" id="edge8_Node000002_Node000007" title=" " alt="" coords="381,177,329,216,266,256,241,268,239,264,264,251,326,212,378,173"/>
-<area shape="rect" id="Node000008" href="$namespacefabomatic_1_1tests.xhtml#aab0f4e1439b281ffef8be51db9a81f9d" title=" " alt="" coords="111,136,261,177"/>
-<area shape="poly" id="edge10_Node000002_Node000008" title=" " alt="" coords="298,157,262,158,262,152,298,152"/>
-<area shape="rect" id="Node000004" href="$test__logic_8cpp.xhtml#a4fc01d736fe50cf5b977f755b675f11d" title=" " alt="" coords="5,144,59,169"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="115,57,108,61,87,81,69,104,43,144,38,141,64,101,83,77,105,57,111,52"/>
-<area shape="poly" id="edge5_Node000005_Node000004" title=" " alt="" coords="122,120,108,127,60,147,58,143,106,122,120,116"/>
-<area shape="poly" id="edge7_Node000006_Node000004" title=" " alt="" coords="120,197,106,191,58,170,60,165,108,186,122,192"/>
-<area shape="poly" id="edge9_Node000007_Node000004" title=" " alt="" coords="111,260,105,256,83,235,64,212,38,171,43,168,69,209,87,232,108,252,115,256"/>
-<area shape="poly" id="edge11_Node000008_Node000004" title=" " alt="" coords="95,159,59,159,59,154,95,154"/>
+<area shape="poly" id="edge16_Node000001_Node000007" title=" " alt="" coords="545,184,258,269,256,264,544,179"/>
+<area shape="rect" id="Node000009" href="$namespacefabomatic_1_1tests.xhtml#aec03a7ee459718d314b930fdd75d3cee" title=" " alt="" coords="339,304,480,345"/>
+<area shape="poly" id="edge14_Node000001_Node000009" title=" " alt="" coords="593,188,439,306,436,301,589,184"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="377,136,325,99,264,61,239,49,241,44,266,57,328,95,380,132"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="347,141,257,115,259,109,349,136"/>
+<area shape="rect" id="Node000006" href="$namespacefabomatic_1_1tests.xhtml#a6f3dff17fd964aba76c35c514957a0a5" title=" " alt="" coords="113,136,259,177"/>
+<area shape="poly" id="edge6_Node000002_Node000006" title=" " alt="" coords="298,159,259,159,259,154,298,154"/>
+<area shape="poly" id="edge8_Node000002_Node000007" title=" " alt="" coords="367,179,315,210,291,233,267,256,244,268,242,264,263,252,287,229,311,206,364,174"/>
+<area shape="rect" id="Node000008" href="$namespacefabomatic_1_1tests.xhtml#aab0f4e1439b281ffef8be51db9a81f9d" title=" " alt="" coords="111,201,261,242"/>
+<area shape="poly" id="edge10_Node000002_Node000008" title=" " alt="" coords="349,177,259,203,257,198,347,171"/>
+<area shape="rect" id="Node000004" href="$test__logic_8cpp.xhtml#a4fc01d736fe50cf5b977f755b675f11d" title=" " alt="" coords="5,177,59,203"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="113,57,109,61,83,89,64,122,40,177,35,175,59,119,79,86,105,57,110,53"/>
+<area shape="poly" id="edge5_Node000005_Node000004" title=" " alt="" coords="117,121,108,127,74,153,48,178,44,174,71,149,105,122,115,117"/>
+<area shape="poly" id="edge7_Node000006_Node000004" title=" " alt="" coords="99,178,60,187,59,181,97,173"/>
+<area shape="poly" id="edge9_Node000007_Node000004" title=" " alt="" coords="115,262,105,256,71,230,44,205,48,201,74,226,108,251,117,257"/>
+<area shape="poly" id="edge11_Node000008_Node000004" title=" " alt="" coords="95,205,59,198,60,193,96,200"/>
+<area shape="poly" id="edge15_Node000009_Node000004" title=" " alt="" coords="323,347,272,353,215,353,158,343,131,334,105,321,76,296,55,263,41,230,34,204,39,202,47,228,60,260,80,292,108,317,133,329,160,338,215,347,271,347,323,342"/>
 </map>

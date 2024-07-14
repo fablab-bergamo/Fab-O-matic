@@ -1,33 +1,44 @@
 <map id="setup" name="setup">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,295,59,320"/>
-<area shape="rect" id="Node000002" href="$namespacefabomatic_1_1tests.xhtml#af8fcb20d2ec63b73e90dff80564bca07" title=" " alt="" coords="118,129,260,169"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="44,293,155,179,159,182,48,296"/>
-<area shape="rect" id="Node000008" href="$namespacefabomatic_1_1tests.xhtml#a4bfe59139821e4fd59963629dc052483" title=" " alt="" coords="107,353,271,393"/>
-<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="60,316,108,337,123,344,121,349,106,342,58,321"/>
-<area shape="rect" id="Node000014" href="$namespacefabomatic_1_1tests.xhtml#ac1005faec6496778a7981b3695005b4e" title=" " alt="" coords="118,287,260,328"/>
-<area shape="poly" id="edge14_Node000001_Node000014" title=" " alt="" coords="59,305,103,305,103,310,59,310"/>
-<area shape="rect" id="Node000003" href="$namespacefabomatic_1_1esp32.xhtml#ac8d867c42c073a3e44e6292db72e1f94" title="Returns the ESP32 serial number as a string." alt="" coords="354,222,500,263"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="232,167,320,206,340,214,339,219,318,211,230,172"/>
-<area shape="rect" id="Node000004" href="$namespacefabomatic_1_1esp32.xhtml#a07750a641e5cfe3207bbdf72813af628" title=" " alt="" coords="327,5,527,31"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="210,126,258,86,318,48,352,34,354,39,320,53,261,91,214,130"/>
-<area shape="rect" id="Node000005" href="$namespacefabomatic_1_1esp32.xhtml#ae78a1408710128cb446f2cde991017dd" title=" " alt="" coords="582,74,751,115"/>
-<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="227,125,270,106,318,92,382,82,447,78,567,81,567,86,448,84,383,87,320,97,272,111,229,130"/>
-<area shape="rect" id="Node000006" href="$namespacefabomatic_1_1esp32.xhtml#a8bec49abfae47da0cadccb6e486f69bb" title=" " alt="" coords="319,107,534,132"/>
-<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="260,137,303,132,304,137,260,143"/>
-<area shape="rect" id="Node000007" href="$namespacefabomatic_1_1esp32.xhtml#a5f5bb4a72418870dbcddd266b5bb0fcd" title=" " alt="" coords="333,157,520,197"/>
-<area shape="poly" id="edge7_Node000002_Node000007" title=" " alt="" coords="260,155,318,161,317,167,260,160"/>
-<area shape="poly" id="edge6_Node000006_Node000005" title=" " alt="" coords="535,105,566,102,567,107,535,111"/>
-<area shape="rect" id="Node000009" href="$namespacefabomatic_1_1tests.xhtml#a9bbef7cf45ab43901130143647b0f495" title=" " alt="" coords="349,287,504,328"/>
-<area shape="poly" id="edge9_Node000008_Node000009" title=" " alt="" coords="265,349,335,330,336,335,266,355"/>
-<area shape="rect" id="Node000012" href="$namespacefabomatic_1_1tests.xhtml#a437b3023f617a6c0c675e6484f85ba50" title=" " alt="" coords="358,353,495,393"/>
-<area shape="poly" id="edge12_Node000008_Node000012" title=" " alt="" coords="271,370,343,370,343,376,271,376"/>
-<area shape="rect" id="Node000013" href="$classfabomatic_1_1_tasks_1_1_scheduler.xhtml#a203784237087f7f1b0b77c15bcdb85f9" title="Gets the number of tasks in the scheduler." alt="" coords="335,418,519,459"/>
-<area shape="poly" id="edge13_Node000008_Node000013" title=" " alt="" coords="266,391,336,411,335,416,265,396"/>
-<area shape="rect" id="Node000010" href="$namespacefabomatic_1_1tests.xhtml#ae4bd9063425820acc6c488119d90d22a" title=" " alt="" coords="589,287,744,328"/>
-<area shape="poly" id="edge10_Node000009_Node000010" title=" " alt="" coords="504,305,574,305,574,310,504,310"/>
-<area shape="rect" id="Node000011" href="$classfabomatic_1_1_tasks_1_1_scheduler.xhtml#afd558ef77dc2922dca6f3e332fd147c4" title=" " alt="" coords="799,287,983,328"/>
-<area shape="poly" id="edge11_Node000010_Node000011" title=" " alt="" coords="744,305,783,305,783,310,744,310"/>
-<area shape="poly" id="edge15_Node000014_Node000009" title=" " alt="" coords="260,305,333,305,333,310,260,310"/>
-<area shape="poly" id="edge16_Node000014_Node000012" title=" " alt="" coords="261,324,344,347,342,353,259,329"/>
-<area shape="poly" id="edge17_Node000014_Node000013" title=" " alt="" coords="253,326,273,339,288,356,297,372,305,388,321,403,329,408,326,413,317,407,301,391,292,375,284,359,269,343,250,331"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,312,59,337"/>
+<area shape="rect" id="Node000002" href="$namespacefabomatic_1_1tests.xhtml#af8fcb20d2ec63b73e90dff80564bca07" title=" " alt="" coords="118,136,260,177"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="43,309,156,187,160,190,47,313"/>
+<area shape="rect" id="Node000008" href="$namespacefabomatic_1_1tests.xhtml#a4bfe59139821e4fd59963629dc052483" title=" " alt="" coords="107,369,271,410"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="60,333,108,354,123,361,121,365,106,359,58,338"/>
+<area shape="rect" id="Node000018" href="$namespacefabomatic_1_1tests.xhtml#ac1005faec6496778a7981b3695005b4e" title=" " alt="" coords="118,304,260,345"/>
+<area shape="poly" id="edge21_Node000001_Node000018" title=" " alt="" coords="59,322,103,322,103,327,59,327"/>
+<area shape="rect" id="Node000003" href="$namespacefabomatic_1_1esp32.xhtml#ac8d867c42c073a3e44e6292db72e1f94" title="Returns the ESP32 serial number as a string." alt="" coords="354,107,500,147"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="260,145,338,135,339,141,260,150"/>
+<area shape="rect" id="Node000004" href="$namespacefabomatic_1_1esp32.xhtml#a07750a641e5cfe3207bbdf72813af628" title=" " alt="" coords="327,172,527,197"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="260,162,311,168,311,173,260,167"/>
+<area shape="rect" id="Node000005" href="$namespacefabomatic_1_1esp32.xhtml#ae78a1408710128cb446f2cde991017dd" title=" " alt="" coords="582,95,751,135"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="201,134,221,108,247,78,280,49,318,27,377,8,426,3,475,11,535,27,588,52,633,83,630,87,586,56,533,32,474,16,425,9,378,13,320,32,283,53,251,81,225,111,205,137"/>
+<area shape="rect" id="Node000006" href="$namespacefabomatic_1_1esp32.xhtml#a8bec49abfae47da0cadccb6e486f69bb" title=" " alt="" coords="319,221,534,247"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="236,175,320,207,344,214,342,219,318,212,234,180"/>
+<area shape="rect" id="Node000007" href="$namespacefabomatic_1_1esp32.xhtml#a5f5bb4a72418870dbcddd266b5bb0fcd" title=" " alt="" coords="333,41,520,82"/>
+<area shape="poly" id="edge7_Node000002_Node000007" title=" " alt="" coords="229,133,318,93,339,85,340,90,320,98,231,138"/>
+<area shape="poly" id="edge6_Node000006_Node000005" title=" " alt="" coords="504,218,533,207,585,177,629,144,633,148,588,182,535,212,506,223"/>
+<area shape="rect" id="Node000009" href="$namespacefabomatic_1_1tests.xhtml#a9bbef7cf45ab43901130143647b0f495" title=" " alt="" coords="349,271,504,311"/>
+<area shape="poly" id="edge9_Node000008_Node000009" title=" " alt="" coords="244,366,270,354,293,338,318,322,334,315,336,320,320,327,296,342,272,359,246,371"/>
+<area shape="rect" id="Node000012" href="$namespacefabomatic_1_1tests.xhtml#a437b3023f617a6c0c675e6484f85ba50" title=" " alt="" coords="358,336,495,377"/>
+<area shape="poly" id="edge12_Node000008_Node000012" title=" " alt="" coords="271,376,342,365,343,371,271,381"/>
+<area shape="rect" id="Node000014" href="$classfabomatic_1_1_tasks_1_1_scheduler.xhtml#a203784237087f7f1b0b77c15bcdb85f9" title="Gets the number of tasks in the scheduler." alt="" coords="335,401,519,442"/>
+<area shape="poly" id="edge14_Node000008_Node000014" title=" " alt="" coords="271,398,320,405,319,410,271,403"/>
+<area shape="rect" id="Node000015" href="$classfabomatic_1_1_tasks_1_1_scheduler.xhtml#a2acce29901dbfd56a0f49beb277e3e76" title="Recompute all the next run times for all the tasks." alt="" coords="335,467,519,507"/>
+<area shape="poly" id="edge15_Node000008_Node000015" title=" " alt="" coords="229,408,320,451,340,459,338,464,318,456,227,413"/>
+<area shape="rect" id="Node000010" href="$namespacefabomatic_1_1tests.xhtml#ae4bd9063425820acc6c488119d90d22a" title=" " alt="" coords="589,271,744,311"/>
+<area shape="poly" id="edge10_Node000009_Node000010" title=" " alt="" coords="504,288,574,288,574,294,504,294"/>
+<area shape="rect" id="Node000011" href="$classfabomatic_1_1_tasks_1_1_scheduler.xhtml#ae1280eccd0bc57ff7fbc92ab54b54769" title=" " alt="" coords="799,271,983,311"/>
+<area shape="poly" id="edge11_Node000010_Node000011" title=" " alt="" coords="744,288,783,288,783,294,744,294"/>
+<area shape="rect" id="Node000013" href="$namespacefabomatic_1_1_tasks.xhtml#aad4a932b189725b84a436888d9da5dc8" title=" " alt="" coords="1031,422,1226,448"/>
+<area shape="poly" id="edge13_Node000012_Node000013" title=" " alt="" coords="496,351,592,351,714,354,849,364,984,383,1036,397,1083,414,1081,419,1034,402,982,388,848,369,714,359,592,356,496,357"/>
+<area shape="rect" id="Node000016" href="$classfabomatic_1_1_tasks_1_1_task.xhtml#a1488d6b3730de3f77a52ce6bee56fdd8" title="recompute the next run time (now + delay) and allows the task to run again" alt="" coords="589,465,744,506"/>
+<area shape="poly" id="edge16_Node000015_Node000016" title=" " alt="" coords="519,484,573,484,573,489,519,489"/>
+<area shape="poly" id="edge17_Node000016_Node000013" title=" " alt="" coords="744,479,857,471,983,458,1043,449,1044,454,983,463,858,476,745,484"/>
+<area shape="rect" id="Node000017" href="$namespacefabomatic_1_1_tasks.xhtml#a5c20f560f5934822d39ba116a16f3ab6" title="Wait for a delay, allowing OTA updates." alt="" coords="813,422,969,448"/>
+<area shape="poly" id="edge18_Node000016_Node000017" title=" " alt="" coords="744,466,815,449,817,454,745,471"/>
+<area shape="poly" id="edge19_Node000017_Node000013" title=" " alt="" coords="969,432,1015,432,1015,438,969,438"/>
+<area shape="poly" id="edge20_Node000017_Node000017" title=" " alt="" coords="854,423,846,414,851,404,866,398,891,396,918,398,932,405,930,410,917,403,891,401,867,403,854,408,852,413,858,420"/>
+<area shape="poly" id="edge22_Node000018_Node000009" title=" " alt="" coords="260,312,333,301,334,307,260,317"/>
+<area shape="poly" id="edge23_Node000018_Node000012" title=" " alt="" coords="260,331,343,342,342,348,260,337"/>
+<area shape="poly" id="edge24_Node000018_Node000014" title=" " alt="" coords="246,343,272,355,296,371,320,386,337,393,335,398,318,391,293,376,270,360,244,348"/>
 </map>
