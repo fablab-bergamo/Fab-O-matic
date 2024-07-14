@@ -11,6 +11,7 @@
 #include "MFRC522DriverPinSimple.h"
 #include "MFRC522DriverSPI.h"
 #include "MFRC522v2.h"
+#include "Tasks.hpp"
 
 namespace fabomatic
 {
@@ -19,7 +20,7 @@ namespace fabomatic
   {
   private:
     std::optional<card::uid_t> uid{std::nullopt};
-    std::optional<std::chrono::steady_clock::time_point> stop_uid_simulate_time{std::nullopt};
+    std::optional<Tasks::time_point> stop_uid_simulate_time{std::nullopt};
     std::optional<card::uid_t> getSimulatedUid() const;
 
   public:

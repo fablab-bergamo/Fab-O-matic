@@ -12,7 +12,9 @@ namespace fabomatic::Tasks
   using milliseconds = std::chrono::milliseconds;
   using namespace std::chrono_literals;
 
-  [[nodiscard]] inline auto arduinoNow() -> const std::chrono::steady_clock::time_point
+  typedef std::chrono::steady_clock::time_point time_point;
+
+  [[nodiscard]] inline auto arduinoNow() -> const time_point
   {
     return std::chrono::steady_clock::now();
   }
@@ -93,7 +95,7 @@ namespace fabomatic::Tasks
 
     /// @brief When shall the task be run again
     /// @return time_point of the next run or time_point::max() if the task will not run.
-    [[nodiscard]] auto getNextRun() const -> const std::chrono::steady_clock::time_point;
+    [[nodiscard]] auto getNextRun() const -> const Tasks::time_point &;
 
     [[nodiscard]] auto toString() const -> const std::string;
 
@@ -102,8 +104,8 @@ namespace fabomatic::Tasks
     const std::string id;
     milliseconds period;
     milliseconds delay;
-    std::chrono::steady_clock::time_point last_run;
-    std::chrono::steady_clock::time_point next_run;
+    Tasks::time_point last_run;
+    Tasks::time_point next_run;
     milliseconds average_tardiness;
     milliseconds total_runtime;
     std::function<void()> callback;
