@@ -100,6 +100,11 @@ namespace fabomatic::tests
       TEST_ASSERT_EQUAL_UINT8_MESSAGE(status, logic.getStatus(), "Status mismatch");
     }
 
+    logic.getMachineForTesting().setMaintenanceInfo("Lente laser");
+    logic.getMachineForTesting().setMaintenanceNeeded(true);
+    logic.changeStatus(BoardLogic::Status::MachineFree);
+    sleep(2);
+
     for (auto i = 0; i < 3; ++i)
     {
       logic.checkPowerOff();
