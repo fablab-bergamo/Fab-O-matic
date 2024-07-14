@@ -140,8 +140,8 @@ namespace fabomatic::Tasks
     std::stringstream ss;
     ss << "Task " << getId() << ", active=" << active
        << ",Period=" << period << ", Delay=" << delay
-       << ",Last run=" << last_run.count()
-       << ",Next_run=" << next_run.count()
+       << ",Last run=" << last_run.time_since_epoch()
+       << ",Next_run=" << next_run.time_since_epoch()
        << ",Avg tardiness=" << average_tardiness
        << ",total_runtime " << total_runtime
        << ",run_counter=" << run_counter
@@ -155,8 +155,8 @@ namespace fabomatic::Tasks
     if (isActive() && time_to_run)
     {
       run_counter++;
-      auto last_period = arduinoNow() - last_run;
-      average_tardiness = (average_tardiness * (run_counter - 1) + last_period) / run_counter;
+      auto last_duration = std::chrono::duration_cast<milliseconds>(arduinoNow() - last_run);
+      average_tardiness = (average_tardiness * (run_counter - 1) + last_duration) / run_counter;
       last_run = arduinoNow();
 
       callback();
@@ -212,7 +212,7 @@ namespace fabomatic::Tasks
     return active;
   }
 
-  auto Task::getPeriod() const -> milliseconds
+  auto Task::getPeriod() const -> const milliseconds
   {
     return period;
   }
@@ -227,7 +227,7 @@ namespace fabomatic::Tasks
     return id;
   }
 
-  auto Task::getAvgTardiness() const -> milliseconds
+  auto Task::getAvgTardiness() const -> const milliseconds
   {
     if (average_tardiness > period)
     {
@@ -241,7 +241,7 @@ namespace fabomatic::Tasks
     return run_counter;
   }
 
-  auto Task::getDelay() const -> milliseconds
+  auto Task::getDelay() const -> const milliseconds
   {
     return delay;
   }
@@ -251,12 +251,12 @@ namespace fabomatic::Tasks
     delay = new_delay;
   }
 
-  auto Task::getTotalRuntime() const -> milliseconds
+  auto Task::getTotalRuntime() const -> const milliseconds
   {
     return total_runtime;
   }
 
-  auto Task::getNextRun() const -> milliseconds
+  auto Task::getNextRun() const -> const std::chrono::steady_clock::time_point
   {
     return next_run;
   }

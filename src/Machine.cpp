@@ -260,7 +260,10 @@ namespace fabomatic
     sstream << ", MaintenanceNeeded:" << maintenanceNeeded;
     sstream << ", " << config.value().toString();
     sstream << ", Active:" << active;
-    sstream << ", Last logoff:" << (logoff_timestamp.has_value() ? logoff_timestamp.value().count() : 0);
+    if (logoff_timestamp)
+    {
+      sstream << ", Last logoff:" << logoff_timestamp.value().time_since_epoch();
+    }
     sstream << ", GracePeriod (s):" << getGracePeriod().count();
     sstream << ")";
 

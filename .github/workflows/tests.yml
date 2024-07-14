@@ -26,6 +26,7 @@ jobs:
           - test_logic
           - test_savedconfig
           - test_tasks
+          - test_chrono
     steps:
       - uses: actions/checkout@v4
         with:
