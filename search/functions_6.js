@@ -22,7 +22,7 @@ var searchData=
   ['getmachinename_19',['getMachineName',['../classfabomatic_1_1_machine.xhtml#a1637e99f2d70262d2ab26f69ed4f0e47',1,'fabomatic::Machine']]],
   ['getmaintenanceinfo_20',['getMaintenanceInfo',['../classfabomatic_1_1_machine.xhtml#ad511c567c7cb7487d19019550c9a4e32',1,'fabomatic::Machine']]],
   ['getmessage_21',['getMessage',['../classfabomatic_1_1_buffer.xhtml#a6301e1ea47622d36474ee031a17b9bb4',1,'fabomatic::Buffer']]],
-  ['getnextrun_22',['getNextRun',['../classfabomatic_1_1_tasks_1_1_task.xhtml#aa1341e5c2cb7516c9a41c84b64fd95ac',1,'fabomatic::Tasks::Task']]],
+  ['getnextrun_22',['getNextRun',['../classfabomatic_1_1_tasks_1_1_task.xhtml#a95403f949e31acae62e0c5d693b41a16',1,'fabomatic::Tasks::Task']]],
   ['getperiod_23',['getPeriod',['../classfabomatic_1_1_tasks_1_1_task.xhtml#ad535eb5b2caf1ef2569b17ccc6bd96f2',1,'fabomatic::Tasks::Task']]],
   ['getpowerstate_24',['getPowerState',['../classfabomatic_1_1_machine.xhtml#a3c5304fd80e0cc1c2118a59c64222d6d',1,'fabomatic::Machine']]],
   ['getrebootrequest_25',['getRebootRequest',['../classfabomatic_1_1_board_logic.xhtml#a46fd65258102b559ca9599bd4d3c1fc1',1,'fabomatic::BoardLogic']]],

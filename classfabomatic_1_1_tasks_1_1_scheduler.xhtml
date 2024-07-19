@@ -128,7 +128,7 @@ Private Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The schedule is in charge of running tasks in the right order based on their requested intervals. </p>
 
-<p class="definition">Definition at line <a class="el" href="_tasks_8hpp_source.xhtml#l00114">114</a> of file <a class="el" href="_tasks_8hpp_source.xhtml">Tasks.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_tasks_8hpp_source.xhtml#l00116">116</a> of file <a class="el" href="_tasks_8hpp_source.xhtml">Tasks.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a3d64034d0f6fb8adad5be789b9069af0" name="a3d64034d0f6fb8adad5be789b9069af0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3d64034d0f6fb8adad5be789b9069af0">&#9670;&#160;</a></span>Scheduler()</h2>
@@ -153,8 +153,8 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_tasks_8hpp_source.xhtml#l00117">117</a> of file <a class="el" href="_tasks_8hpp_source.xhtml">Tasks.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  117</span>{};</div>
+<p class="definition">Definition at line <a class="el" href="_tasks_8hpp_source.xhtml#l00119">119</a> of file <a class="el" href="_tasks_8hpp_source.xhtml">Tasks.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  119</span>{};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -180,7 +180,7 @@ Private Attributes</h2></td></tr>
 <div class="line"><span class="lineno">   20</span>    <span class="keywordflow">if</span> (task != <span class="keyword">nullptr</span>)</div>
 <div class="line"><span class="lineno">   21</span>      <a class="code hl_variable" href="classfabomatic_1_1_tasks_1_1_scheduler.xhtml#ac20ffce827e83acedd4181876e99b569">tasks</a>.push_back(task);</div>
 <div class="line"><span class="lineno">   22</span>  }</div>
-<div class="ttc" id="aclassfabomatic_1_1_tasks_1_1_scheduler_xhtml_ac20ffce827e83acedd4181876e99b569"><div class="ttname"><a href="classfabomatic_1_1_tasks_1_1_scheduler.xhtml#ac20ffce827e83acedd4181876e99b569">fabomatic::Tasks::Scheduler::tasks</a></div><div class="ttdeci">std::vector&lt; Task * &gt; tasks</div><div class="ttdef"><b>Definition</b> <a href="_tasks_8hpp_source.xhtml#l00135">Tasks.hpp:135</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_tasks_1_1_scheduler_xhtml_ac20ffce827e83acedd4181876e99b569"><div class="ttname"><a href="classfabomatic_1_1_tasks_1_1_scheduler.xhtml#ac20ffce827e83acedd4181876e99b569">fabomatic::Tasks::Scheduler::tasks</a></div><div class="ttdeci">std::vector&lt; Task * &gt; tasks</div><div class="ttdef"><b>Definition</b> <a href="_tasks_8hpp_source.xhtml#l00137">Tasks.hpp:137</a></div></div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="_tasks_8cpp_source.xhtml#l00122">fabomatic::Tasks::Task::Task()</a>.</p>
 <div class="dynheader">
@@ -231,10 +231,10 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  102</span><span class="preprocessor">#endif</span></div>
 <div class="line"><span class="lineno">  103</span>  }</div>
 <div class="ttc" id="aclassfabomatic_1_1_tasks_1_1_scheduler_xhtml_a0619cf06b6427ba332296ffcceffcb8c"><div class="ttname"><a href="classfabomatic_1_1_tasks_1_1_scheduler.xhtml#a0619cf06b6427ba332296ffcceffcb8c">fabomatic::Tasks::Scheduler::printStats</a></div><div class="ttdeci">auto printStats() const -&gt; void</div><div class="ttdef"><b>Definition</b> <a href="_tasks_8cpp_source.xhtml#l00040">Tasks.cpp:40</a></div></div>
-<div class="ttc" id="anamespacefabomatic_1_1_tasks_xhtml_a5c20f560f5934822d39ba116a16f3ab6"><div class="ttname"><a href="namespacefabomatic_1_1_tasks.xhtml#a5c20f560f5934822d39ba116a16f3ab6">fabomatic::Tasks::delay</a></div><div class="ttdeci">auto delay(const milliseconds duration) -&gt; void</div><div class="ttdoc">Wait for a delay, allowing OTA updates.</div><div class="ttdef"><b>Definition</b> <a href="_tasks_8cpp_source.xhtml#l00266">Tasks.cpp:266</a></div></div>
+<div class="ttc" id="anamespacefabomatic_1_1_tasks_xhtml_a5c20f560f5934822d39ba116a16f3ab6"><div class="ttname"><a href="namespacefabomatic_1_1_tasks.xhtml#a5c20f560f5934822d39ba116a16f3ab6">fabomatic::Tasks::delay</a></div><div class="ttdeci">auto delay(const milliseconds duration) -&gt; void</div><div class="ttdoc">Wait for a delay, allowing OTA updates.</div><div class="ttdef"><b>Definition</b> <a href="_tasks_8cpp_source.xhtml#l00265">Tasks.cpp:265</a></div></div>
 <div class="ttc" id="anamespacefabomatic_1_1conf_1_1debug_xhtml_a8308799abba9b76406a8653548369967"><div class="ttname"><a href="namespacefabomatic_1_1conf_1_1debug.xhtml#a8308799abba9b76406a8653548369967">fabomatic::conf::debug::ENABLE_TASK_LOGS</a></div><div class="ttdeci">static constexpr bool ENABLE_TASK_LOGS</div><div class="ttdoc">True to add many logs regarding tasks scheduling and statistics.</div><div class="ttdef"><b>Definition</b> <a href="conf_8hpp_source.xhtml#l00082">conf.hpp:82</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_tasks_8cpp_source.xhtml#l00266">fabomatic::Tasks::delay()</a>, and <a class="el" href="conf_8hpp_source.xhtml#l00082">fabomatic::conf::debug::ENABLE_TASK_LOGS</a>.</p>
+<p class="reference">References <a class="el" href="_tasks_8cpp_source.xhtml#l00265">fabomatic::Tasks::delay()</a>, and <a class="el" href="conf_8hpp_source.xhtml#l00082">fabomatic::conf::debug::ENABLE_TASK_LOGS</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="main_8cpp_source.xhtml#l00499">loop()</a>, and <a class="el" href="test__mqtt_8cpp_source.xhtml#l00324">fabomatic::tests::test_normal_use()</a>.</p>
 <div class="dynheader">
@@ -272,7 +272,7 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  112</span>    <span class="keywordflow">return</span> {<a class="code hl_variable" href="classfabomatic_1_1_tasks_1_1_scheduler.xhtml#ac20ffce827e83acedd4181876e99b569">tasks</a>};</div>
 <div class="line"><span class="lineno">  113</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_tasks_8hpp_source.xhtml#l00135">tasks</a>.</p>
+<p class="reference">References <a class="el" href="_tasks_8hpp_source.xhtml#l00137">tasks</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="test__mqtt_8cpp_source.xhtml#l00324">fabomatic::tests::test_normal_use()</a>.</p>
 <div class="dynheader">
@@ -351,7 +351,7 @@ Here is the caller graph for this function:</div>
 <div class="ttc" id="a_logging_8hpp_xhtml_a4ef5b5f197804a60836ab1e8907d8301"><div class="ttname"><a href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a></div><div class="ttdeci">static const char *const TAG</div><div class="ttdef"><b>Definition</b> <a href="_logging_8hpp_source.xhtml#l00009">Logging.hpp:9</a></div></div>
 <div class="ttc" id="anamespacefabomatic_1_1_tasks_xhtml_adce365a8c09b42bfd5381ecf6eef8cad"><div class="ttname"><a href="namespacefabomatic_1_1_tasks.xhtml#adce365a8c09b42bfd5381ecf6eef8cad">fabomatic::Tasks::milliseconds</a></div><div class="ttdeci">std::chrono::milliseconds milliseconds</div><div class="ttdef"><b>Definition</b> <a href="_tasks_8cpp_source.xhtml#l00014">Tasks.cpp:14</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_logging_8hpp_source.xhtml#l00009">TAG</a>, and <a class="el" href="_tasks_8hpp_source.xhtml#l00135">tasks</a>.</p>
+<p class="reference">References <a class="el" href="_logging_8hpp_source.xhtml#l00009">TAG</a>, and <a class="el" href="_tasks_8hpp_source.xhtml#l00137">tasks</a>.</p>
 
 </div>
 </div>
@@ -410,7 +410,7 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  107</span>    <span class="keywordflow">return</span> <a class="code hl_variable" href="classfabomatic_1_1_tasks_1_1_scheduler.xhtml#ac20ffce827e83acedd4181876e99b569">tasks</a>.size();</div>
 <div class="line"><span class="lineno">  108</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_tasks_8hpp_source.xhtml#l00135">tasks</a>.</p>
+<p class="reference">References <a class="el" href="_tasks_8hpp_source.xhtml#l00137">tasks</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="test__tasks_8cpp_source.xhtml#l00084">fabomatic::tests::test_execute_runs_all_tasks()</a>, <a class="el" href="test__mqtt_8cpp_source.xhtml#l00324">fabomatic::tests::test_normal_use()</a>, and <a class="el" href="test__tasks_8cpp_source.xhtml#l00101">fabomatic::tests::test_stop_start_tasks()</a>.</p>
 <div class="dynheader">
@@ -446,7 +446,7 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">   37</span>    }</div>
 <div class="line"><span class="lineno">   38</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_tasks_8hpp_source.xhtml#l00135">tasks</a>, and <a class="el" href="_tasks_8cpp_source.xhtml#l00194">fabomatic::Tasks::Task::updateSchedule()</a>.</p>
+<p class="reference">References <a class="el" href="_tasks_8hpp_source.xhtml#l00137">tasks</a>, and <a class="el" href="_tasks_8cpp_source.xhtml#l00193">fabomatic::Tasks::Task::updateSchedule()</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="main_8cpp_source.xhtml#l00411">setup()</a>, <a class="el" href="test__tasks_8cpp_source.xhtml#l00084">fabomatic::tests::test_execute_runs_all_tasks()</a>, and <a class="el" href="test__mqtt_8cpp_source.xhtml#l00324">fabomatic::tests::test_normal_use()</a>.</p>
 <div class="dynheader">
@@ -483,7 +483,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_tasks_8hpp_source.xhtml#l00135">135</a> of file <a class="el" href="_tasks_8hpp_source.xhtml">Tasks.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_tasks_8hpp_source.xhtml#l00137">137</a> of file <a class="el" href="_tasks_8hpp_source.xhtml">Tasks.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="_tasks_8cpp_source.xhtml#l00110">getTasks()</a>, <a class="el" href="_tasks_8cpp_source.xhtml#l00040">printStats()</a>, <a class="el" href="_tasks_8cpp_source.xhtml#l00105">taskCount()</a>, and <a class="el" href="_tasks_8cpp_source.xhtml#l00032">updateSchedules()</a>.</p>
 
@@ -496,7 +496,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jul 14 2024 13:49:34 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Fri Jul 19 2024 19:24:18 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

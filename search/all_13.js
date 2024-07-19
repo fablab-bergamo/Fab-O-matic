@@ -18,7 +18,7 @@ var searchData=
   ['updatelcd_15',['updateLCD',['../classfabomatic_1_1_board_logic.xhtml#a47b4d515c0d3488eceb49769036bce8b',1,'fabomatic::BoardLogic']]],
   ['updateschedule_16',['updateSchedule',['../classfabomatic_1_1_tasks_1_1_task.xhtml#a1488d6b3730de3f77a52ce6bee56fdd8',1,'fabomatic::Tasks::Task']]],
   ['updateschedules_17',['updateSchedules',['../classfabomatic_1_1_tasks_1_1_scheduler.xhtml#a2acce29901dbfd56a0f49beb277e3e76',1,'fabomatic::Tasks::Scheduler']]],
-  ['usage_5fstart_5ftimestamp_18',['usage_start_timestamp',['../classfabomatic_1_1_machine.xhtml#a797653c883d897ef964cd3a862a6465d',1,'fabomatic::Machine']]],
+  ['usage_5fstart_5ftimestamp_18',['usage_start_timestamp',['../classfabomatic_1_1_machine.xhtml#afadccc5bcd8d4602d357603f513a93be',1,'fabomatic::Machine']]],
   ['user_5flevel_19',['user_level',['../classfabomatic_1_1_m_q_t_t_interface_1_1_user_response.xhtml#ac7fc0b37212d7367185e36b1211cf451',1,'fabomatic::MQTTInterface::UserResponse::user_level'],['../structfabomatic_1_1_fab_user.xhtml#a034aaf8deb3e6efa7d9ed6c3f6f1df9e',1,'fabomatic::FabUser::user_level']]],
   ['userlevel_20',['UserLevel',['../structfabomatic_1_1_fab_user.xhtml#a75deeb54124600e0387550735c7a0ca0',1,'fabomatic::FabUser']]],
   ['userquery_21',['userquery',['../classfabomatic_1_1_m_q_t_t_interface_1_1_user_query.xhtml#a45f6de38960563dcd6b15223269348f2',1,'fabomatic::MQTTInterface::UserQuery::UserQuery(card::uid_t card_uid)'],['../classfabomatic_1_1_m_q_t_t_interface_1_1_user_query.xhtml#aace97aa3991f515ed0ac9ef1dd928ab7',1,'fabomatic::MQTTInterface::UserQuery::UserQuery()=delete'],['../classfabomatic_1_1_m_q_t_t_interface_1_1_user_query.xhtml',1,'fabomatic::MQTTInterface::UserQuery']]],

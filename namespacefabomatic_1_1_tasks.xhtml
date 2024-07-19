@@ -99,14 +99,16 @@ Classes</h2></td></tr>
 Typedefs</h2></td></tr>
 <tr class="memitem:adce365a8c09b42bfd5381ecf6eef8cad" id="r_adce365a8c09b42bfd5381ecf6eef8cad"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefabomatic_1_1_tasks.xhtml#adce365a8c09b42bfd5381ecf6eef8cad">milliseconds</a> = std::chrono::milliseconds</td></tr>
 <tr class="separator:adce365a8c09b42bfd5381ecf6eef8cad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d9dcfdb65c00f111ebd0466763955b1" id="r_a1d9dcfdb65c00f111ebd0466763955b1"><td class="memItemLeft" align="right" valign="top">typedef std::chrono::steady_clock::time_point&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefabomatic_1_1_tasks.xhtml#a1d9dcfdb65c00f111ebd0466763955b1">time_point</a></td></tr>
+<tr class="separator:a1d9dcfdb65c00f111ebd0466763955b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a5c20f560f5934822d39ba116a16f3ab6" id="r_a5c20f560f5934822d39ba116a16f3ab6"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefabomatic_1_1_tasks.xhtml#a5c20f560f5934822d39ba116a16f3ab6">delay</a> (const <a class="el" href="namespacefabomatic_1_1_tasks.xhtml#adce365a8c09b42bfd5381ecf6eef8cad">milliseconds</a> duration) -&gt; void</td></tr>
 <tr class="memdesc:a5c20f560f5934822d39ba116a16f3ab6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for a delay, allowing OTA updates.  <br /></td></tr>
 <tr class="separator:a5c20f560f5934822d39ba116a16f3ab6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aad4a932b189725b84a436888d9da5dc8" id="r_aad4a932b189725b84a436888d9da5dc8"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefabomatic_1_1_tasks.xhtml#aad4a932b189725b84a436888d9da5dc8">arduinoNow</a> () -&gt; const std::chrono::steady_clock::time_point</td></tr>
-<tr class="separator:aad4a932b189725b84a436888d9da5dc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc67d1313c6695d813feb935eafdaf60" id="r_adc67d1313c6695d813feb935eafdaf60"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefabomatic_1_1_tasks.xhtml#adc67d1313c6695d813feb935eafdaf60">arduinoNow</a> () -&gt; const <a class="el" href="namespacefabomatic_1_1_tasks.xhtml#a1d9dcfdb65c00f111ebd0466763955b1">time_point</a></td></tr>
+<tr class="separator:adc67d1313c6695d813feb935eafdaf60"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This namespace contains the classes that implement a cooperative task scheduler. </p>
@@ -127,9 +129,25 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a1d9dcfdb65c00f111ebd0466763955b1" name="a1d9dcfdb65c00f111ebd0466763955b1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d9dcfdb65c00f111ebd0466763955b1">&#9670;&#160;</a></span>time_point</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef std::chrono::steady_clock::time_point <a class="el" href="namespacefabomatic_1_1_tasks.xhtml#a1d9dcfdb65c00f111ebd0466763955b1">fabomatic::Tasks::time_point</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_tasks_8hpp_source.xhtml#l00015">15</a> of file <a class="el" href="_tasks_8hpp_source.xhtml">Tasks.hpp</a>.</p>
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="aad4a932b189725b84a436888d9da5dc8" name="aad4a932b189725b84a436888d9da5dc8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aad4a932b189725b84a436888d9da5dc8">&#9670;&#160;</a></span>arduinoNow()</h2>
+<a id="adc67d1313c6695d813feb935eafdaf60" name="adc67d1313c6695d813feb935eafdaf60"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc67d1313c6695d813feb935eafdaf60">&#9670;&#160;</a></span>arduinoNow()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -141,7 +159,7 @@ Functions</h2></td></tr>
           <td class="memname">auto fabomatic::Tasks::arduinoNow </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td> -&gt; const std::chrono::steady_clock::time_point
+          <td> -&gt; const <a class="el" href="namespacefabomatic_1_1_tasks.xhtml#a1d9dcfdb65c00f111ebd0466763955b1">time_point</a>
   </td>
         </tr>
       </table>
@@ -152,16 +170,16 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_tasks_8hpp_source.xhtml#l00015">15</a> of file <a class="el" href="_tasks_8hpp_source.xhtml">Tasks.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   16</span>  {</div>
-<div class="line"><span class="lineno">   17</span>    <span class="keywordflow">return</span> std::chrono::steady_clock::now();</div>
-<div class="line"><span class="lineno">   18</span>  }</div>
+<p class="definition">Definition at line <a class="el" href="_tasks_8hpp_source.xhtml#l00017">17</a> of file <a class="el" href="_tasks_8hpp_source.xhtml">Tasks.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   18</span>  {</div>
+<div class="line"><span class="lineno">   19</span>    <span class="keywordflow">return</span> std::chrono::steady_clock::now();</div>
+<div class="line"><span class="lineno">   20</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">Referenced by <a class="el" href="_machine_8cpp_source.xhtml#l00111">fabomatic::Machine::canPowerOff()</a>, <a class="el" href="_tasks_8cpp_source.xhtml#l00266">delay()</a>, <a class="el" href="_mock_mrfc522_8cpp_source.xhtml#l00063">fabomatic::MockMrfc522::getSimulatedUid()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00227">fabomatic::Machine::getUsageDuration()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00124">fabomatic::Machine::isShutdownImminent()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00065">fabomatic::Machine::login()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00087">fabomatic::Machine::logout()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00127">fabomatic::BoardLogic::longTap()</a>, <a class="el" href="_tasks_8cpp_source.xhtml#l00152">fabomatic::Tasks::Task::run()</a>, <a class="el" href="test__tasks_8cpp_source.xhtml#l00070">fabomatic::tests::run_for_duration()</a>, <a class="el" href="_mock_mrfc522_8cpp_source.xhtml#l00044">fabomatic::MockMrfc522::setUid()</a>, <a class="el" href="test__common_8cpp_source.xhtml#l00020">fabomatic::tests::simulate_rfid_card()</a>, <a class="el" href="_tasks_8cpp_source.xhtml#l00122">fabomatic::Tasks::Task::Task()</a>, <a class="el" href="test__mqtt_8cpp_source.xhtml#l00324">fabomatic::tests::test_normal_use()</a>, <a class="el" href="test__mqtt_8cpp_source.xhtml#l00097">fabomatic::tests::test_start_broker()</a>, <a class="el" href="_tasks_8cpp_source.xhtml#l00194">fabomatic::Tasks::Task::updateSchedule()</a>, and <a class="el" href="_fab_backend_8cpp_source.xhtml#l00204">fabomatic::FabBackend::waitForAnswer()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_machine_8cpp_source.xhtml#l00111">fabomatic::Machine::canPowerOff()</a>, <a class="el" href="_tasks_8cpp_source.xhtml#l00265">delay()</a>, <a class="el" href="_mock_mrfc522_8cpp_source.xhtml#l00063">fabomatic::MockMrfc522::getSimulatedUid()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00227">fabomatic::Machine::getUsageDuration()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00124">fabomatic::Machine::isShutdownImminent()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00065">fabomatic::Machine::login()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00087">fabomatic::Machine::logout()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00127">fabomatic::BoardLogic::longTap()</a>, <a class="el" href="_tasks_8cpp_source.xhtml#l00151">fabomatic::Tasks::Task::run()</a>, <a class="el" href="test__tasks_8cpp_source.xhtml#l00070">fabomatic::tests::run_for_duration()</a>, <a class="el" href="_mock_mrfc522_8cpp_source.xhtml#l00044">fabomatic::MockMrfc522::setUid()</a>, <a class="el" href="test__common_8cpp_source.xhtml#l00020">fabomatic::tests::simulate_rfid_card()</a>, <a class="el" href="_tasks_8cpp_source.xhtml#l00122">fabomatic::Tasks::Task::Task()</a>, <a class="el" href="test__mqtt_8cpp_source.xhtml#l00324">fabomatic::tests::test_normal_use()</a>, <a class="el" href="test__mqtt_8cpp_source.xhtml#l00097">fabomatic::tests::test_start_broker()</a>, <a class="el" href="_tasks_8cpp_source.xhtml#l00193">fabomatic::Tasks::Task::updateSchedule()</a>, and <a class="el" href="_fab_backend_8cpp_source.xhtml#l00204">fabomatic::FabBackend::waitForAnswer()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="namespacefabomatic_1_1_tasks_aad4a932b189725b84a436888d9da5dc8_icgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
+<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="namespacefabomatic_1_1_tasks_adc67d1313c6695d813feb935eafdaf60_icgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
 </div>
 
 </div>
@@ -190,27 +208,27 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_tasks_8cpp_source.xhtml#l00266">266</a> of file <a class="el" href="_tasks_8cpp_source.xhtml">Tasks.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  267</span>  {</div>
-<div class="line"><span class="lineno">  268</span>    ArduinoOTA.handle();</div>
-<div class="line"><span class="lineno">  269</span> </div>
-<div class="line"><span class="lineno">  270</span>    <span class="keywordflow">if</span> (duration &lt; 50ms)</div>
-<div class="line"><span class="lineno">  271</span>    {</div>
-<div class="line"><span class="lineno">  272</span>      ::delay(duration.count());</div>
-<div class="line"><span class="lineno">  273</span>      <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">  274</span>    }</div>
-<div class="line"><span class="lineno">  275</span> </div>
-<div class="line"><span class="lineno">  276</span>    <span class="keyword">const</span> <span class="keyword">auto</span> &amp;start = arduinoNow();</div>
-<div class="line"><span class="lineno">  277</span>    <span class="keywordflow">do</span></div>
-<div class="line"><span class="lineno">  278</span>    {</div>
-<div class="line"><span class="lineno">  279</span>      ::delay(50);</div>
-<div class="line"><span class="lineno">  280</span>      ArduinoOTA.handle();</div>
-<div class="line"><span class="lineno">  281</span>    } <span class="keywordflow">while</span> (arduinoNow() - start &lt; duration);</div>
-<div class="line"><span class="lineno">  282</span>  }</div>
+<p class="definition">Definition at line <a class="el" href="_tasks_8cpp_source.xhtml#l00265">265</a> of file <a class="el" href="_tasks_8cpp_source.xhtml">Tasks.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  266</span>  {</div>
+<div class="line"><span class="lineno">  267</span>    ArduinoOTA.handle();</div>
+<div class="line"><span class="lineno">  268</span> </div>
+<div class="line"><span class="lineno">  269</span>    <span class="keywordflow">if</span> (duration &lt; 50ms)</div>
+<div class="line"><span class="lineno">  270</span>    {</div>
+<div class="line"><span class="lineno">  271</span>      ::delay(duration.count());</div>
+<div class="line"><span class="lineno">  272</span>      <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  273</span>    }</div>
+<div class="line"><span class="lineno">  274</span> </div>
+<div class="line"><span class="lineno">  275</span>    <span class="keyword">const</span> <span class="keyword">auto</span> &amp;start = arduinoNow();</div>
+<div class="line"><span class="lineno">  276</span>    <span class="keywordflow">do</span></div>
+<div class="line"><span class="lineno">  277</span>    {</div>
+<div class="line"><span class="lineno">  278</span>      ::delay(50);</div>
+<div class="line"><span class="lineno">  279</span>      ArduinoOTA.handle();</div>
+<div class="line"><span class="lineno">  280</span>    } <span class="keywordflow">while</span> (arduinoNow() - start &lt; duration);</div>
+<div class="line"><span class="lineno">  281</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_tasks_8hpp_source.xhtml#l00015">arduinoNow()</a>, and <a class="el" href="_tasks_8cpp_source.xhtml#l00266">delay()</a>.</p>
+<p class="reference">References <a class="el" href="_tasks_8hpp_source.xhtml#l00017">arduinoNow()</a>, and <a class="el" href="_tasks_8cpp_source.xhtml#l00265">delay()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00164">fabomatic::BoardLogic::authorize()</a>, <a class="el" href="_buzzer_8cpp_source.xhtml#l00027">fabomatic::Buzzer::beepFail()</a>, <a class="el" href="_buzzer_8cpp_source.xhtml#l00016">fabomatic::Buzzer::beepOk()</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00291">fabomatic::FabBackend::connect()</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00259">fabomatic::FabBackend::connectWiFi()</a>, <a class="el" href="_tasks_8cpp_source.xhtml#l00266">delay()</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00386">fabomatic::FabBackend::disconnect()</a>, <a class="el" href="_tasks_8cpp_source.xhtml#l00083">fabomatic::Tasks::Scheduler::execute()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00606">fabomatic::BoardLogic::getLcd()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00029">fabomatic::BoardLogic::getRfid()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00112">fabomatic::BoardLogic::logout()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00127">fabomatic::BoardLogic::longTap()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00074">fabomatic::BoardLogic::onNewCard()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00166">fabomatic::Machine::power_mqtt()</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00402">fabomatic::FabBackend::processQuery()</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00061">fabomatic::FabBackend::publishWithReply()</a>, <a class="el" href="_tasks_8cpp_source.xhtml#l00249">fabomatic::Tasks::Task::setDelay()</a>, <a class="el" href="main_8cpp_source.xhtml#l00411">setup()</a>, <a class="el" href="main_8cpp_source.xhtml#l00042">fabomatic::taskConnect()</a>, <a class="el" href="main_8cpp_source.xhtml#l00156">fabomatic::taskRfidWatchdog()</a>, <a class="el" href="_tasks_8cpp_source.xhtml#l00194">fabomatic::Tasks::Task::updateSchedule()</a>, and <a class="el" href="_fab_backend_8cpp_source.xhtml#l00204">fabomatic::FabBackend::waitForAnswer()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00164">fabomatic::BoardLogic::authorize()</a>, <a class="el" href="_buzzer_8cpp_source.xhtml#l00027">fabomatic::Buzzer::beepFail()</a>, <a class="el" href="_buzzer_8cpp_source.xhtml#l00016">fabomatic::Buzzer::beepOk()</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00291">fabomatic::FabBackend::connect()</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00259">fabomatic::FabBackend::connectWiFi()</a>, <a class="el" href="_tasks_8cpp_source.xhtml#l00265">delay()</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00386">fabomatic::FabBackend::disconnect()</a>, <a class="el" href="_tasks_8cpp_source.xhtml#l00083">fabomatic::Tasks::Scheduler::execute()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00606">fabomatic::BoardLogic::getLcd()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00029">fabomatic::BoardLogic::getRfid()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00112">fabomatic::BoardLogic::logout()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00127">fabomatic::BoardLogic::longTap()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00074">fabomatic::BoardLogic::onNewCard()</a>, <a class="el" href="_machine_8cpp_source.xhtml#l00166">fabomatic::Machine::power_mqtt()</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00402">fabomatic::FabBackend::processQuery()</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00061">fabomatic::FabBackend::publishWithReply()</a>, <a class="el" href="_tasks_8cpp_source.xhtml#l00248">fabomatic::Tasks::Task::setDelay()</a>, <a class="el" href="main_8cpp_source.xhtml#l00411">setup()</a>, <a class="el" href="main_8cpp_source.xhtml#l00042">fabomatic::taskConnect()</a>, <a class="el" href="main_8cpp_source.xhtml#l00156">fabomatic::taskRfidWatchdog()</a>, <a class="el" href="_tasks_8cpp_source.xhtml#l00193">fabomatic::Tasks::Task::updateSchedule()</a>, and <a class="el" href="_fab_backend_8cpp_source.xhtml#l00204">fabomatic::FabBackend::waitForAnswer()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -227,7 +245,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jul 14 2024 13:49:34 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Fri Jul 19 2024 19:24:18 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>
