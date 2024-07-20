@@ -1,6 +1,9 @@
-# PCB information
+# HARDWARE information (PCB, Enclosures)
 
-* This folder contains Gerber file, BOM, schematics.
+This folder contains info about PCB (Gerber file, BOM, schematics) and enclosures.
+
+## PCB versions
+
 * Project has been sponsored by EasyEDA in the OpenHWLab [Project homepage](https://oshwlab.com/pascal.brunot/rfid-arduino-fablab-bg-v2_2024-04-01_14-22-11)
 * For more information, a series of articles regarding the HW & PCB design have been published on our FabLab website (Italian language 🇮🇹)
 
@@ -14,7 +17,7 @@
 >
 > [PCB-A and costs](https://www.fablabbergamo.it/2024/06/30/fabomatic5/)
 
-## Revision 1.2
+### Revision 1.2
 
 Changes from rev 1.1:
 
@@ -28,7 +31,7 @@ Changes from rev 1.1:
 
 * None known
 
-## Revision 1.1
+### Revision 1.1
 
 Changes from rev 1.0:
 
@@ -42,7 +45,7 @@ Changes from rev 1.0:
 * The color PCB front panel is missing a soldermask expansion to let the NeoPixel light filter through the white silkscreen. A small spot of silkscreen can easily be removed with a Dremel as fix.
 * Reverse/under voltage protection circuit is wrong.
 
-## Revision 1.0
+### Revision 1.0
 
 This version is easy to order as pre-assembled on JLCPCB. For 10 boards, total cost (as per April 2024) is below 200 EUR total (not considering modules and boxes). Soldering map is available is you want to assemble yourself : <code>rev 1.0/soldering_map.html</code>
 
@@ -74,7 +77,7 @@ Changes from rev 0.4:
 * More compact board design
 * Added a color printer PCB front panel design + layout adjustments to accomodate front panel design
 
-## Revision 0.4
+### Revision 0.4
 
 This version has no known errata.
 
@@ -84,7 +87,7 @@ Changes:
 * Removed 220u CAP after testing, it is not required.
 * Moved the design to EASYEDA Pro (free) for future versions
 
-## Assembly instructions
+### Assembly instructions
 
 An interactive PCB map is available under <code>rev 0.4/soldering_map.html</code>
 
@@ -116,7 +119,7 @@ Test procedure
 14. Connect USB
 15. Open Monitor and check for errors.
 
-## Revision 0.3
+### Revision 0.3
 
 ⚠ Errata in this revision ⚠
 
@@ -134,7 +137,7 @@ Changes:
 
 Link to project: <https://oshwlab.com/pascal.brunot/rfid-arduino-fablab-bg_copy>
 
-## Revision 0.2
+### Revision 0.2
 
 Fully working with some issues requiring rework.
 
@@ -166,3 +169,19 @@ Changes during assembly:
 * C2 and C3 were not mounted because their pads were damaged during ESP32 soldering.
 * Zener protection diode D7 and F1 not mounted (overvoltage protection)
 * D4 replaced with a wire (reverse polarity protection) because voltage drop was too high (need 0.3V)
+
+## 3D enclosures
+
+## For hardware revision 1.x
+
+A freecad project is provided. The finished 3D printed enclosure result is shown below:
+
+![image](https://github.com/user-attachments/assets/585c665e-8121-46ac-8221-3780e7a2e960)
+
+Enclosure design:
+
+![image](https://github.com/fablab-bergamo/Fab-O-matic/blob/9da7fcd7bbf06134bde1f7d0fefd6b3dcc43f814/hardware/enclosure%20for%20rev%201.x/case-fobomatic_animato.gif)
+
+* How to print
+
+* How to assemble
