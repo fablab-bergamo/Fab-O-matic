@@ -174,14 +174,22 @@ Changes during assembly:
 
 ## For hardware revision 1.x
 
-A freecad project is provided. The finished 3D printed enclosure result is shown below:
+* A Freecad project is provided in "enclosure for rev 1.x" folder. The finished 3D printed enclosure result is shown below:
 
 ![image](https://github.com/user-attachments/assets/585c665e-8121-46ac-8221-3780e7a2e960)
 
-Enclosure design:
+![image](https://github.com/user-attachments/assets/a0bb4b6a-652f-4ed7-9baf-f68f5aa4ecbe)
+
+* Enclosure concept
 
 ![image](https://github.com/fablab-bergamo/Fab-O-matic/blob/9da7fcd7bbf06134bde1f7d0fefd6b3dcc43f814/hardware/enclosure%20for%20rev%201.x/case-fobomatic_animato.gif)
 
-* How to print
+* How to print ?
 
-* How to assemble
+2 STL files are provided (CASE and TAPPO) to import in your preferred slicer.
+
+* How to assemble ?
+
+4 screws, washer and bolts are required to fix the PCB to the case.
+
+Assembly photos see https://github.com/fablab-bergamo/Fab-O-matic/tree/b52aab18b81a9b51205c8e2c9dcc90458335382c/hardware/enclosure%20for%20rev%201.x/photos
