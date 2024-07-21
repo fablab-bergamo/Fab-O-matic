@@ -441,7 +441,7 @@ void setup()
   auto hw_init = logic.configure(rfid, lcd);
   hw_init &= logic.initBoard();
 
-  const auto count = fabomatic::SavedConfig::IncrementBootCount();
+  [[maybe_unused]] const auto count = fabomatic::SavedConfig::IncrementBootCount();
   ESP_LOGI(TAG, "Boot count: %d, reset reason: %d", count, esp_reset_reason());
 
   logic.changeStatus(Status::Booting);

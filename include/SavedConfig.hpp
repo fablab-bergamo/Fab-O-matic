@@ -97,7 +97,7 @@ namespace fabomatic
     [[nodiscard]] static auto DefaultConfig() -> SavedConfig;
 
     /// @brief Increments the boot count and saves it to EEPROM
-    static auto IncrementBootCount() -> size_t;
+    [[maybe_unused]] static auto IncrementBootCount() -> size_t;
   };
 
 } // namespace fabomatic

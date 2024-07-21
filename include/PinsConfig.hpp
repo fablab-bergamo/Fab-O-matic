@@ -96,20 +96,28 @@ namespace fabomatic
         pins.led.blue_pin,
         pins.buttons.factory_defaults_pin};
 
-    // No constexpr std::sort available
-    for (auto i = 0; i < pin_nums.size(); ++i)
-    {
-      if (pin_nums[i] == NO_PIN)
-        continue;
+    // C++20 provides constexpr sorting
+    std::sort(pin_nums.begin(), pin_nums.end());
 
-      for (auto j = i + 1; j < pin_nums.size(); ++j)
+    uint8_t previous = NO_PIN;
+    for (const auto pin : pin_nums)
+    {
+      if (pin == NO_PIN)
       {
-        if (pin_nums[i] == pin_nums[j])
-          return false;
+        continue;
       }
+
+      if (pin == previous)
+      {
+        return false;
+      }
+
+      previous = pin;
+
       // Check pins numbers are convertible to gpio_num_t
-      static_cast<gpio_num_t>(pin_nums[i]);
+      [[maybe_unused]] auto test = static_cast<gpio_num_t>(pin);
     }
+
     return true;
   }
 
