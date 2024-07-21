@@ -50,7 +50,7 @@ namespace fabomatic
     case NewClient_sMQTTEventType:
     {
       // Handle new client connection event
-      auto *e = static_cast<sMQTTNewClientEvent *>(event);
+      [[maybe_unused]] auto *e = static_cast<sMQTTNewClientEvent *>(event);
       ESP_LOGD(TAG2, "MQTT BROKER: client connected, id:%s", e->Client()->getClientId().c_str());
     }
     break;
@@ -69,7 +69,7 @@ namespace fabomatic
     case RemoveClient_sMQTTEventType:
     {
       // Handle client removal event
-      auto *e = static_cast<sMQTTRemoveClientEvent *>(event);
+      [[maybe_unused]] auto *e = static_cast<sMQTTRemoveClientEvent *>(event);
       ESP_LOGD(TAG2, "MQTT BROKER: removed client id: %s", e->Client()->getClientId().c_str());
     }
     break;
@@ -83,14 +83,14 @@ namespace fabomatic
     case Subscribe_sMQTTEventType:
     {
       // Handle subscription event
-      auto *e = static_cast<sMQTTSubUnSubClientEvent *>(event);
+      [[maybe_unused]] auto *e = static_cast<sMQTTSubUnSubClientEvent *>(event);
       ESP_LOGD(TAG2, "MQTT BROKER: client %s subscribed to %s", e->Client()->getClientId().c_str(), e->Topic().c_str());
     }
     break;
     case UnSubscribe_sMQTTEventType:
     {
       // Handle unsubscription event
-      auto *e = static_cast<sMQTTSubUnSubClientEvent *>(event);
+      [[maybe_unused]] auto *e = static_cast<sMQTTSubUnSubClientEvent *>(event);
       ESP_LOGD(TAG2, "MQTT BROKER: got unsubscribe from %s", e->Topic().c_str());
     }
     break;
