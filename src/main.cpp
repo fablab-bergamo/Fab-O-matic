@@ -466,6 +466,14 @@ void setup()
   fabomatic::startMQTTBrocker();
 #endif
 
+  if (!WiFi.isConnected())
+  {
+    if (!logic.getServer().connectWiFi())
+    {
+      ESP_LOGI(TAG, "WiFi connection failed.");
+    }
+  }
+
   fabomatic::setupOTA();
 
   if (!hw_init)
@@ -480,7 +488,7 @@ void setup()
       logic.blinkLed(64, 0, 0);
       logic.changeStatus(fabomatic::BoardLogic::Status::ErrorHardware);
       fabomatic::Tasks::delay(1s);
-      ESP_LOGE(TAG, "Hardware failed, waiting for OTA");
+      ESP_LOGE(TAG, "Hardware failed, waiting for OTA on IP %s", WiFi.localIP().toString().c_str());
     }
   }
 

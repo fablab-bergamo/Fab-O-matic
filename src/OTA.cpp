@@ -25,8 +25,8 @@ namespace fabomatic
   void configModeCallback(WiFiManager *myWiFiManager)
   {
     ESP_LOGI(TAG, "Entering portal config mode");
-    ESP_LOGD(TAG, "%s", WiFi.softAPIP().toString().c_str());
-    ESP_LOGD(TAG, "%s", myWiFiManager->getConfigPortalSSID().c_str());
+    ESP_LOGD(TAG, "IP: %s", WiFi.softAPIP().toString().c_str());
+    ESP_LOGD(TAG, "SSID: %s", myWiFiManager->getConfigPortalSSID().c_str());
     Board::logic.changeStatus(Status::PortalStarting);
   }
 
