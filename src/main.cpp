@@ -18,6 +18,10 @@
 #include "language/lang.hpp"
 #include "OTA.hpp"
 
+#ifndef GIT_VERSION
+#define GIT_VERSION "unknown"
+#endif
+
 using namespace std::chrono_literals;
 
 namespace fabomatic
@@ -334,6 +338,7 @@ namespace fabomatic
     std::cout << "\tCORE_DEBUG_LEVEL: " << CORE_DEBUG_LEVEL << '\n';
     std::cout << "\tLANGUAGE: " << fabomatic::strings::S_LANG_ID << '\n';
     std::cout << "\tBUILD: " << FABOMATIC_BUILD << '\n';
+    std::cout << "\tGIT VERION: " << GIT_VERSION << '\n';
 
     // namespace conf::rfid_tags
     std::cout << "RFID tags:" << '\n';
