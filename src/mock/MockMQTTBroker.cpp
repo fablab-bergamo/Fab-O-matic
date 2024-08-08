@@ -1,3 +1,5 @@
+#if (MQTT_SIMULATION)
+
 #include "mock/MockMQTTBroker.hpp"
 #include "Logging.hpp"
 #include "conf.hpp"
@@ -250,3 +252,5 @@ namespace fabomatic
     }
   }
 } // namespace fabomatic
+
+#endif // #if (MQTT_SIMULATION)
