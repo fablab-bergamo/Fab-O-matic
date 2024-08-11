@@ -21,7 +21,11 @@ namespace fabomatic::tests
                                         std::optional<std::chrono::milliseconds> duration_tap)
   {
     constexpr auto DEFAULT_CYCLES = 3;
+
+    // Ignore DELAY_BETWEEN_SWEEPS delay between cards events
+    rfid.setDisabledUntil(std::nullopt);
     MockMrfc522 &driver = rfid.getDriver();
+
     driver.resetUid();
     for (auto i = 0; i < DEFAULT_CYCLES; i++)
     {
@@ -38,7 +42,6 @@ namespace fabomatic::tests
         logic.checkRfid();
         delay(50);
       } while (duration_tap.has_value() && fabomatic::Tasks::arduinoNow() - start < duration_tap);
-
     }
     else if (duration_tap)
     {

@@ -23,7 +23,7 @@ namespace fabomatic
     virtual auto selfTest() const -> bool = 0;
     virtual auto reset() const -> void = 0;
 
-    virtual auto setDisabledUntil(fabomatic::Tasks::time_point t) -> void = 0;
+    virtual auto setDisabledUntil(std::optional<Tasks::time_point> t) -> void = 0;
   };
 } // namespace fabomatic
 #endif // BASERFIDWRAPPER_HPP_

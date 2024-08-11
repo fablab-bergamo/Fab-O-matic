@@ -47,7 +47,7 @@ namespace fabomatic
 
     [[nodiscard]] auto getUid() const -> card::uid_t override;
 
-    [[nodiscard]] auto setDisabledUntil(fabomatic::Tasks::time_point delay) -> void override;
+    [[nodiscard]] auto setDisabledUntil(std::optional<Tasks::time_point> delay) -> void override;
 
     /// @brief Returns the driver object for testing/simulation
     Driver &getDriver();
