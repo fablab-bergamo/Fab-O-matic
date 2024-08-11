@@ -141,6 +141,8 @@ namespace fabomatic::tests
     const auto card_uid = get_test_uid(1);
 
     simulate_rfid_card(rfid, logic, card_uid, std::nullopt);
+
+    Tasks::delay(fabomatic::conf::machine::DELAY_BETWEEN_SWEEPS);
     TEST_ASSERT_TRUE_MESSAGE(rfid.isNewCardPresent(), "New card not present");
     TEST_ASSERT_TRUE_MESSAGE(rfid.readCardSerial().has_value(), "Card serial not read");
     TEST_ASSERT_TRUE_MESSAGE(rfid.readCardSerial().value() == card_uid, "Card serial not equal");
@@ -271,8 +273,8 @@ namespace fabomatic::tests
     TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::MaintenanceNeeded, logic.getStatus(), "Status not MaintenanceNeeded");
 
     simulate_rfid_card(rfid, logic, std::nullopt);
-    simulate_rfid_card(rfid, logic, card_admin, conf::machine::LONG_TAP_DURATION + 10s); // Log in + Conferma manutenzione perché non ritorna prima della conclusione
-    simulate_rfid_card(rfid, logic, std::nullopt);                                       // Card away
+    simulate_rfid_card(rfid, logic, card_admin, conf::machine::LONG_TAP_DURATION + 3s); // Log in + Conferma manutenzione perché non ritorna prima della conclusione
+    simulate_rfid_card(rfid, logic, std::nullopt);                                      // Card away
     TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::MachineInUse, logic.getStatus(), "Status not MachineInUse by admin");
     TEST_ASSERT_FALSE_MESSAGE(logic.getMachine().isMaintenanceNeeded(), "Maintenance not cleared by admin");
 
@@ -355,7 +357,7 @@ void setup()
 {
   delay(1000);
   esp_log_level_set(TAG, LOG_LOCAL_LEVEL);
-  
+
   auto config = fabomatic::SavedConfig::LoadFromEEPROM();
   UNITY_BEGIN();
   RUN_TEST(fabomatic::tests::test_machine_defaults);

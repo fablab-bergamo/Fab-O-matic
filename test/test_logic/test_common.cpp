@@ -22,24 +22,26 @@ namespace fabomatic::tests
   {
     constexpr auto DEFAULT_CYCLES = 3;
 
-    // Ignore DELAY_BETWEEN_SWEEPS delay between cards events
-    rfid.setDisabledUntil(std::nullopt);
     MockMrfc522 &driver = rfid.getDriver();
 
     driver.resetUid();
+    rfid.setDisabledUntil(std::nullopt);
+
     for (auto i = 0; i < DEFAULT_CYCLES; i++)
     {
       logic.checkRfid();
+      rfid.setDisabledUntil(std::nullopt);
     }
+
     if (uid.has_value())
     {
       driver.setUid(uid.value(), duration_tap);
       TEST_ASSERT_TRUE_MESSAGE(uid == rfid.getUid(), "Card UID not equal");
       auto start = fabomatic::Tasks::arduinoNow();
-
       do
       {
         logic.checkRfid();
+        rfid.setDisabledUntil(std::nullopt);
         delay(50);
       } while (duration_tap.has_value() && fabomatic::Tasks::arduinoNow() - start < duration_tap);
     }
