@@ -75,12 +75,6 @@ namespace fabomatic
   {
     ESP_LOGD(TAG, "New card present");
 
-    if (!ready_for_a_new_card)
-    {
-      return;
-    }
-    ready_for_a_new_card = false;
-
     if (machine.isFree())
     {
       // machine is free
@@ -556,13 +550,13 @@ namespace fabomatic
       const auto &result = rfid.readCardSerial();
       if (result)
       {
+        // This function may block for several seconds if a long tap is required
         onNewCard(result.value());
+        rfid.setDisabledUntil(Tasks::arduinoNow() + conf::machine::DELAY_BETWEEN_SWEEPS);
       }
       return;
     }
 
-    // No new card present
-    ready_for_a_new_card = true;
     if (machine.isFree())
     {
       changeStatus(Status::MachineFree);

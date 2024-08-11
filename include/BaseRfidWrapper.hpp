@@ -3,6 +3,7 @@
 #include <optional>
 
 #include "card.hpp"
+#include "Tasks.hpp"
 
 namespace fabomatic
 {
@@ -21,6 +22,8 @@ namespace fabomatic
     virtual auto readCardSerial() const -> std::optional<card::uid_t> = 0;
     virtual auto selfTest() const -> bool = 0;
     virtual auto reset() const -> void = 0;
+
+    virtual auto setDisabledUntil(fabomatic::Tasks::time_point t) -> void = 0;
   };
 } // namespace fabomatic
 #endif // BASERFIDWRAPPER_HPP_

@@ -12,7 +12,7 @@ namespace fabomatic
 {
   /// @brief Constructor
   template <typename Driver>
-  RFIDWrapper<Driver>::RFIDWrapper() : driver{std::make_unique<Driver>()} {};
+  RFIDWrapper<Driver>::RFIDWrapper() : driver{std::make_unique<Driver>()}, disabledUntil{std::nullopt} {};
 
   /// @brief indicates if a new card is present in the RFID chip antenna area
   /// @return true if a new card is present
@@ -24,7 +24,19 @@ namespace fabomatic
     if (conf::debug::ENABLE_LOGS && result)
       ESP_LOGD(TAG, "isNewCardPresent=%d", result);
 
+    if (disabledUntil && disabledUntil > fabomatic::Tasks::arduinoNow())
+    {
+      ESP_LOGD(TAG, "isNewCardPresent is disabled");
+      return false;
+    }
+
     return result;
+  }
+
+  template <typename Driver>
+  [[nodiscard]] auto RFIDWrapper<Driver>::setDisabledUntil(fabomatic::Tasks::time_point delay) -> void
+  {
+    this->disabledUntil = delay;
   }
 
   /// @brief tries to read the card serial number
@@ -33,6 +45,13 @@ namespace fabomatic
   auto RFIDWrapper<Driver>::readCardSerial() const -> std::optional<card::uid_t>
   {
     const auto &result = driver->PICC_ReadCardSerial();
+
+    if (disabledUntil && disabledUntil > fabomatic::Tasks::arduinoNow())
+    {
+      ESP_LOGD(TAG, "readCardSerial is disabled");
+      return std::nullopt;
+    }
+
     if (result)
     {
       return getUid();

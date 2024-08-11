@@ -95,7 +95,6 @@ namespace fabomatic
     FabBackend server;
     std::optional<std::reference_wrapper<BaseRFIDWrapper>> rfid{std::nullopt}; // Configured at runtime
     std::optional<std::reference_wrapper<LCDWrapper>> lcd{std::nullopt};       // Configured at runtime
-    bool ready_for_a_new_card{true};
     bool led_status{false};
 
     Machine machine;

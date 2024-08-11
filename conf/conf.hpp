@@ -70,6 +70,9 @@ namespace fabomatic
     /// @brief Minimum time to confirm by long tap maintenance
     static constexpr auto LONG_TAP_DURATION{10s};
 
+    /// @brief Disabled RFID reading after a successfull read for X seconds.
+    static constexpr auto DELAY_BETWEEN_SWEEPS{2s};
+
   } // namespace conf::machine
 
   /// @brief Debug settings
