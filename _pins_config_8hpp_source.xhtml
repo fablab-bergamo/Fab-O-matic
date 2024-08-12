@@ -183,26 +183,34 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>        <a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#a5d85a2cde0f38b6fa413d40fb871c01f">led</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1led__config.xhtml#a6f9e13764567a00b91ca452070ac5d8e">blue_pin</a>,</div>
 <div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        <a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#ad95db725b088bb4db1c202d0d8a9660b">buttons</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1buttons__config.xhtml#a2b6b4bff992be0fb804412d51eed5484">factory_defaults_pin</a>};</div>
 <div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> </div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>    <span class="comment">// No constexpr std::sort available</span></div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> i = 0; i &lt; pin_nums.size(); ++i)</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>    {</div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>      <span class="keywordflow">if</span> (pin_nums[i] == <a class="code hl_variable" href="namespacefabomatic.xhtml#a01a9e2e5f9e92f6f3fa9204ba3d946b9">NO_PIN</a>)</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        <span class="keywordflow">continue</span>;</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span> </div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>      <span class="keywordflow">for</span> (<span class="keyword">auto</span> j = i + 1; j &lt; pin_nums.size(); ++j)</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>    <span class="comment">// C++20 provides constexpr sorting</span></div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>    std::sort(pin_nums.begin(), pin_nums.end());</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> </div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    uint8_t previous = <a class="code hl_variable" href="namespacefabomatic.xhtml#a01a9e2e5f9e92f6f3fa9204ba3d946b9">NO_PIN</a>;</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> pin : pin_nums)</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    {</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>      <span class="keywordflow">if</span> (pin == <a class="code hl_variable" href="namespacefabomatic.xhtml#a01a9e2e5f9e92f6f3fa9204ba3d946b9">NO_PIN</a>)</div>
 <div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>      {</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>        <span class="keywordflow">if</span> (pin_nums[i] == pin_nums[j])</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>          <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>      }</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>      <span class="comment">// Check pins numbers are convertible to gpio_num_t</span></div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>      <span class="keyword">static_cast&lt;</span>gpio_num_t<span class="keyword">&gt;</span>(pin_nums[i]);</div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>    }</div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>  }</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>        <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>      }</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> </div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>      <span class="keywordflow">if</span> (pin == previous)</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>      {</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>      }</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>      previous = pin;</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span> </div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>      <span class="comment">// Check pins numbers are convertible to gpio_num_t</span></div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>      [[maybe_unused]] <span class="keyword">auto</span> test = <span class="keyword">static_cast&lt;</span>gpio_num_t<span class="keyword">&gt;</span>(pin);</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>    }</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span> </div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>  }</div>
 </div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span> </div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>} <span class="comment">// namespace fabomatic</span></div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span><span class="preprocessor">#endif </span><span class="comment">// PINSCONFIG_HPP_</span></div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span> </div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>} <span class="comment">// namespace fabomatic</span></div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span><span class="preprocessor">#endif </span><span class="comment">// PINSCONFIG_HPP_</span></div>
 <div class="ttc" id="anamespacefabomatic_xhtml"><div class="ttname"><a href="namespacefabomatic.xhtml">fabomatic</a></div><div class="ttdef"><b>Definition</b> <a href="_auth_provider_8cpp_source.xhtml#l00010">AuthProvider.cpp:11</a></div></div>
 <div class="ttc" id="anamespacefabomatic_xhtml_a01a9e2e5f9e92f6f3fa9204ba3d946b9"><div class="ttname"><a href="namespacefabomatic.xhtml#a01a9e2e5f9e92f6f3fa9204ba3d946b9">fabomatic::NO_PIN</a></div><div class="ttdeci">static constexpr uint8_t NO_PIN</div><div class="ttdoc">Constant used to indicate the pin is not used.</div><div class="ttdef"><b>Definition</b> <a href="_pins_config_8hpp_source.xhtml#l00010">PinsConfig.hpp:10</a></div></div>
 <div class="ttc" id="anamespacefabomatic_xhtml_a68e38df690986ec6eff2bea6054fc8cb"><div class="ttname"><a href="namespacefabomatic.xhtml#a68e38df690986ec6eff2bea6054fc8cb">fabomatic::no_duplicates</a></div><div class="ttdeci">constexpr bool no_duplicates(pins_config pins)</div><div class="ttdoc">Check at compile time that there are no duplicate pin definitions.</div><div class="ttdef"><b>Definition</b> <a href="_pins_config_8hpp_source.xhtml#l00077">PinsConfig.hpp:77</a></div></div>
@@ -246,7 +254,7 @@ $(document).ready(function() { init_codefold(0); });
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Jul 19 2024 19:24:17 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Mon Aug 12 2024 08:05:20 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

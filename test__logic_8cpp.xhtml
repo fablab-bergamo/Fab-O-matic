@@ -212,7 +212,7 @@ Variables</h2></td></tr>
 </div><!-- fragment -->
 <p class="reference">References <a class="el" href="test__common_8h_source.xhtml#l00015">fabomatic::tests::test_whitelist</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="test__logic_8cpp_source.xhtml#l00290">fabomatic::tests::test_machine_allowed()</a>, <a class="el" href="test__logic_8cpp_source.xhtml#l00260">fabomatic::tests::test_machine_maintenance()</a>, <a class="el" href="test__logic_8cpp_source.xhtml#l00312">fabomatic::tests::test_messages_buffered()</a>, <a class="el" href="test__logic_8cpp_source.xhtml#l00163">fabomatic::tests::test_one_user_at_a_time()</a>, <a class="el" href="test__logic_8cpp_source.xhtml#l00209">fabomatic::tests::test_user_autologoff()</a>, and <a class="el" href="test__logic_8cpp_source.xhtml#l00117">fabomatic::tests::test_whitelist_no_network()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="test__logic_8cpp_source.xhtml#l00292">fabomatic::tests::test_machine_allowed()</a>, <a class="el" href="test__logic_8cpp_source.xhtml#l00262">fabomatic::tests::test_machine_maintenance()</a>, <a class="el" href="test__logic_8cpp_source.xhtml#l00314">fabomatic::tests::test_messages_buffered()</a>, <a class="el" href="test__logic_8cpp_source.xhtml#l00165">fabomatic::tests::test_one_user_at_a_time()</a>, <a class="el" href="test__logic_8cpp_source.xhtml#l00211">fabomatic::tests::test_user_autologoff()</a>, and <a class="el" href="test__logic_8cpp_source.xhtml#l00117">fabomatic::tests::test_whitelist_no_network()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -236,9 +236,9 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__logic_8cpp_source.xhtml#l00376">376</a> of file <a class="el" href="test__logic_8cpp_source.xhtml">test_logic.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  377</span>{</div>
-<div class="line"><span class="lineno">  378</span>}</div>
+<p class="definition">Definition at line <a class="el" href="test__logic_8cpp_source.xhtml#l00378">378</a> of file <a class="el" href="test__logic_8cpp_source.xhtml">test_logic.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  379</span>{</div>
+<div class="line"><span class="lineno">  380</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -257,41 +257,41 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__logic_8cpp_source.xhtml#l00354">354</a> of file <a class="el" href="test__logic_8cpp_source.xhtml">test_logic.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  355</span>{</div>
-<div class="line"><span class="lineno">  356</span>  <a class="code hl_function" href="namespacefabomatic_1_1_tasks.xhtml#a5c20f560f5934822d39ba116a16f3ab6">delay</a>(1000);</div>
-<div class="line"><span class="lineno">  357</span>  esp_log_level_set(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <a class="code hl_define" href="_logging_8hpp.xhtml#a5155a7b7465dd9b5e6167122827d0158">LOG_LOCAL_LEVEL</a>);</div>
-<div class="line"><span class="lineno">  358</span>  </div>
-<div class="line"><span class="lineno">  359</span>  <span class="keyword">auto</span> config = <a class="code hl_function" href="classfabomatic_1_1_saved_config.xhtml#aca3fe97dfa74c005d47ffef700392d99">fabomatic::SavedConfig::LoadFromEEPROM</a>();</div>
-<div class="line"><span class="lineno">  360</span>  UNITY_BEGIN();</div>
-<div class="line"><span class="lineno">  361</span>  RUN_TEST(<a class="code hl_function" href="namespacefabomatic_1_1tests.xhtml#a574e0054ef8ba573fc2efd53600b0ec4">fabomatic::tests::test_machine_defaults</a>);</div>
-<div class="line"><span class="lineno">  362</span>  RUN_TEST(<a class="code hl_function" href="namespacefabomatic_1_1tests.xhtml#aec03a7ee459718d314b930fdd75d3cee">fabomatic::tests::test_simple_methods</a>);</div>
-<div class="line"><span class="lineno">  363</span>  RUN_TEST(<a class="code hl_function" href="namespacefabomatic_1_1tests.xhtml#a558e2287db01a4622581246a19dac397">fabomatic::tests::test_machine_allowed</a>);</div>
-<div class="line"><span class="lineno">  364</span>  RUN_TEST(<a class="code hl_function" href="namespacefabomatic_1_1tests.xhtml#a9a34631c2dc01cbdbbce146895c94e12">fabomatic::tests::test_machine_maintenance</a>);</div>
-<div class="line"><span class="lineno">  365</span>  RUN_TEST(<a class="code hl_function" href="namespacefabomatic_1_1tests.xhtml#aab0f4e1439b281ffef8be51db9a81f9d">fabomatic::tests::test_whitelist_no_network</a>);</div>
-<div class="line"><span class="lineno">  366</span>  RUN_TEST(<a class="code hl_function" href="namespacefabomatic_1_1tests.xhtml#a6f3dff17fd964aba76c35c514957a0a5">fabomatic::tests::test_one_user_at_a_time</a>);</div>
-<div class="line"><span class="lineno">  367</span>  RUN_TEST(<a class="code hl_function" href="namespacefabomatic_1_1tests.xhtml#afa92fef9250d918ee02c79dbf2de2546">fabomatic::tests::test_user_autologoff</a>);</div>
-<div class="line"><span class="lineno">  368</span>  RUN_TEST(<a class="code hl_function" href="namespacefabomatic_1_1tests.xhtml#af8fa7ace86309b5f699540d8898660c7">fabomatic::tests::test_messages_buffered</a>);</div>
-<div class="line"><span class="lineno">  369</span>  UNITY_END(); <span class="comment">// stop unit testing</span></div>
-<div class="line"><span class="lineno">  370</span>  <span class="keywordflow">if</span> (config.has_value())</div>
-<div class="line"><span class="lineno">  371</span>  {</div>
-<div class="line"><span class="lineno">  372</span>    config.value().SaveToEEPROM();</div>
-<div class="line"><span class="lineno">  373</span>  }</div>
-<div class="line"><span class="lineno">  374</span>};</div>
+<p class="definition">Definition at line <a class="el" href="test__logic_8cpp_source.xhtml#l00356">356</a> of file <a class="el" href="test__logic_8cpp_source.xhtml">test_logic.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  357</span>{</div>
+<div class="line"><span class="lineno">  358</span>  <a class="code hl_function" href="namespacefabomatic_1_1_tasks.xhtml#a5c20f560f5934822d39ba116a16f3ab6">delay</a>(1000);</div>
+<div class="line"><span class="lineno">  359</span>  esp_log_level_set(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <a class="code hl_define" href="_logging_8hpp.xhtml#a5155a7b7465dd9b5e6167122827d0158">LOG_LOCAL_LEVEL</a>);</div>
+<div class="line"><span class="lineno">  360</span> </div>
+<div class="line"><span class="lineno">  361</span>  <span class="keyword">auto</span> config = <a class="code hl_function" href="classfabomatic_1_1_saved_config.xhtml#aca3fe97dfa74c005d47ffef700392d99">fabomatic::SavedConfig::LoadFromEEPROM</a>();</div>
+<div class="line"><span class="lineno">  362</span>  UNITY_BEGIN();</div>
+<div class="line"><span class="lineno">  363</span>  RUN_TEST(<a class="code hl_function" href="namespacefabomatic_1_1tests.xhtml#a574e0054ef8ba573fc2efd53600b0ec4">fabomatic::tests::test_machine_defaults</a>);</div>
+<div class="line"><span class="lineno">  364</span>  RUN_TEST(<a class="code hl_function" href="namespacefabomatic_1_1tests.xhtml#aec03a7ee459718d314b930fdd75d3cee">fabomatic::tests::test_simple_methods</a>);</div>
+<div class="line"><span class="lineno">  365</span>  RUN_TEST(<a class="code hl_function" href="namespacefabomatic_1_1tests.xhtml#a558e2287db01a4622581246a19dac397">fabomatic::tests::test_machine_allowed</a>);</div>
+<div class="line"><span class="lineno">  366</span>  RUN_TEST(<a class="code hl_function" href="namespacefabomatic_1_1tests.xhtml#a9a34631c2dc01cbdbbce146895c94e12">fabomatic::tests::test_machine_maintenance</a>);</div>
+<div class="line"><span class="lineno">  367</span>  RUN_TEST(<a class="code hl_function" href="namespacefabomatic_1_1tests.xhtml#aab0f4e1439b281ffef8be51db9a81f9d">fabomatic::tests::test_whitelist_no_network</a>);</div>
+<div class="line"><span class="lineno">  368</span>  RUN_TEST(<a class="code hl_function" href="namespacefabomatic_1_1tests.xhtml#a6f3dff17fd964aba76c35c514957a0a5">fabomatic::tests::test_one_user_at_a_time</a>);</div>
+<div class="line"><span class="lineno">  369</span>  RUN_TEST(<a class="code hl_function" href="namespacefabomatic_1_1tests.xhtml#afa92fef9250d918ee02c79dbf2de2546">fabomatic::tests::test_user_autologoff</a>);</div>
+<div class="line"><span class="lineno">  370</span>  RUN_TEST(<a class="code hl_function" href="namespacefabomatic_1_1tests.xhtml#af8fa7ace86309b5f699540d8898660c7">fabomatic::tests::test_messages_buffered</a>);</div>
+<div class="line"><span class="lineno">  371</span>  UNITY_END(); <span class="comment">// stop unit testing</span></div>
+<div class="line"><span class="lineno">  372</span>  <span class="keywordflow">if</span> (config.has_value())</div>
+<div class="line"><span class="lineno">  373</span>  {</div>
+<div class="line"><span class="lineno">  374</span>    config.value().SaveToEEPROM();</div>
+<div class="line"><span class="lineno">  375</span>  }</div>
+<div class="line"><span class="lineno">  376</span>};</div>
 <div class="ttc" id="a_logging_8hpp_xhtml_a4ef5b5f197804a60836ab1e8907d8301"><div class="ttname"><a href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a></div><div class="ttdeci">static const char *const TAG</div><div class="ttdef"><b>Definition</b> <a href="_logging_8hpp_source.xhtml#l00009">Logging.hpp:9</a></div></div>
 <div class="ttc" id="a_logging_8hpp_xhtml_a5155a7b7465dd9b5e6167122827d0158"><div class="ttname"><a href="_logging_8hpp.xhtml#a5155a7b7465dd9b5e6167122827d0158">LOG_LOCAL_LEVEL</a></div><div class="ttdeci">#define LOG_LOCAL_LEVEL</div><div class="ttdef"><b>Definition</b> <a href="_logging_8hpp_source.xhtml#l00005">Logging.hpp:5</a></div></div>
 <div class="ttc" id="aclassfabomatic_1_1_saved_config_xhtml_aca3fe97dfa74c005d47ffef700392d99"><div class="ttname"><a href="classfabomatic_1_1_saved_config.xhtml#aca3fe97dfa74c005d47ffef700392d99">fabomatic::SavedConfig::LoadFromEEPROM</a></div><div class="ttdeci">static auto LoadFromEEPROM() -&gt; std::optional&lt; SavedConfig &gt;</div><div class="ttdoc">Loads the configuration from EEPROM if available and matching revision number.</div><div class="ttdef"><b>Definition</b> <a href="_saved_config_8cpp_source.xhtml#l00052">SavedConfig.cpp:52</a></div></div>
 <div class="ttc" id="anamespacefabomatic_1_1_tasks_xhtml_a5c20f560f5934822d39ba116a16f3ab6"><div class="ttname"><a href="namespacefabomatic_1_1_tasks.xhtml#a5c20f560f5934822d39ba116a16f3ab6">fabomatic::Tasks::delay</a></div><div class="ttdeci">auto delay(const milliseconds duration) -&gt; void</div><div class="ttdoc">Wait for a delay, allowing OTA updates.</div><div class="ttdef"><b>Definition</b> <a href="_tasks_8cpp_source.xhtml#l00265">Tasks.cpp:265</a></div></div>
-<div class="ttc" id="anamespacefabomatic_1_1tests_xhtml_a558e2287db01a4622581246a19dac397"><div class="ttname"><a href="namespacefabomatic_1_1tests.xhtml#a558e2287db01a4622581246a19dac397">fabomatic::tests::test_machine_allowed</a></div><div class="ttdeci">void test_machine_allowed()</div><div class="ttdef"><b>Definition</b> <a href="test__logic_8cpp_source.xhtml#l00290">test_logic.cpp:290</a></div></div>
+<div class="ttc" id="anamespacefabomatic_1_1tests_xhtml_a558e2287db01a4622581246a19dac397"><div class="ttname"><a href="namespacefabomatic_1_1tests.xhtml#a558e2287db01a4622581246a19dac397">fabomatic::tests::test_machine_allowed</a></div><div class="ttdeci">void test_machine_allowed()</div><div class="ttdef"><b>Definition</b> <a href="test__logic_8cpp_source.xhtml#l00292">test_logic.cpp:292</a></div></div>
 <div class="ttc" id="anamespacefabomatic_1_1tests_xhtml_a574e0054ef8ba573fc2efd53600b0ec4"><div class="ttname"><a href="namespacefabomatic_1_1tests.xhtml#a574e0054ef8ba573fc2efd53600b0ec4">fabomatic::tests::test_machine_defaults</a></div><div class="ttdeci">void test_machine_defaults()</div><div class="ttdef"><b>Definition</b> <a href="test__logic_8cpp_source.xhtml#l00041">test_logic.cpp:41</a></div></div>
-<div class="ttc" id="anamespacefabomatic_1_1tests_xhtml_a6f3dff17fd964aba76c35c514957a0a5"><div class="ttname"><a href="namespacefabomatic_1_1tests.xhtml#a6f3dff17fd964aba76c35c514957a0a5">fabomatic::tests::test_one_user_at_a_time</a></div><div class="ttdeci">void test_one_user_at_a_time()</div><div class="ttdef"><b>Definition</b> <a href="test__logic_8cpp_source.xhtml#l00163">test_logic.cpp:163</a></div></div>
-<div class="ttc" id="anamespacefabomatic_1_1tests_xhtml_a9a34631c2dc01cbdbbce146895c94e12"><div class="ttname"><a href="namespacefabomatic_1_1tests.xhtml#a9a34631c2dc01cbdbbce146895c94e12">fabomatic::tests::test_machine_maintenance</a></div><div class="ttdeci">void test_machine_maintenance()</div><div class="ttdef"><b>Definition</b> <a href="test__logic_8cpp_source.xhtml#l00260">test_logic.cpp:260</a></div></div>
+<div class="ttc" id="anamespacefabomatic_1_1tests_xhtml_a6f3dff17fd964aba76c35c514957a0a5"><div class="ttname"><a href="namespacefabomatic_1_1tests.xhtml#a6f3dff17fd964aba76c35c514957a0a5">fabomatic::tests::test_one_user_at_a_time</a></div><div class="ttdeci">void test_one_user_at_a_time()</div><div class="ttdef"><b>Definition</b> <a href="test__logic_8cpp_source.xhtml#l00165">test_logic.cpp:165</a></div></div>
+<div class="ttc" id="anamespacefabomatic_1_1tests_xhtml_a9a34631c2dc01cbdbbce146895c94e12"><div class="ttname"><a href="namespacefabomatic_1_1tests.xhtml#a9a34631c2dc01cbdbbce146895c94e12">fabomatic::tests::test_machine_maintenance</a></div><div class="ttdeci">void test_machine_maintenance()</div><div class="ttdef"><b>Definition</b> <a href="test__logic_8cpp_source.xhtml#l00262">test_logic.cpp:262</a></div></div>
 <div class="ttc" id="anamespacefabomatic_1_1tests_xhtml_aab0f4e1439b281ffef8be51db9a81f9d"><div class="ttname"><a href="namespacefabomatic_1_1tests.xhtml#aab0f4e1439b281ffef8be51db9a81f9d">fabomatic::tests::test_whitelist_no_network</a></div><div class="ttdeci">void test_whitelist_no_network()</div><div class="ttdef"><b>Definition</b> <a href="test__logic_8cpp_source.xhtml#l00117">test_logic.cpp:117</a></div></div>
 <div class="ttc" id="anamespacefabomatic_1_1tests_xhtml_aec03a7ee459718d314b930fdd75d3cee"><div class="ttname"><a href="namespacefabomatic_1_1tests.xhtml#aec03a7ee459718d314b930fdd75d3cee">fabomatic::tests::test_simple_methods</a></div><div class="ttdeci">void test_simple_methods()</div><div class="ttdef"><b>Definition</b> <a href="test__logic_8cpp_source.xhtml#l00070">test_logic.cpp:70</a></div></div>
-<div class="ttc" id="anamespacefabomatic_1_1tests_xhtml_af8fa7ace86309b5f699540d8898660c7"><div class="ttname"><a href="namespacefabomatic_1_1tests.xhtml#af8fa7ace86309b5f699540d8898660c7">fabomatic::tests::test_messages_buffered</a></div><div class="ttdeci">void test_messages_buffered()</div><div class="ttdef"><b>Definition</b> <a href="test__logic_8cpp_source.xhtml#l00312">test_logic.cpp:312</a></div></div>
-<div class="ttc" id="anamespacefabomatic_1_1tests_xhtml_afa92fef9250d918ee02c79dbf2de2546"><div class="ttname"><a href="namespacefabomatic_1_1tests.xhtml#afa92fef9250d918ee02c79dbf2de2546">fabomatic::tests::test_user_autologoff</a></div><div class="ttdeci">void test_user_autologoff()</div><div class="ttdef"><b>Definition</b> <a href="test__logic_8cpp_source.xhtml#l00209">test_logic.cpp:209</a></div></div>
+<div class="ttc" id="anamespacefabomatic_1_1tests_xhtml_af8fa7ace86309b5f699540d8898660c7"><div class="ttname"><a href="namespacefabomatic_1_1tests.xhtml#af8fa7ace86309b5f699540d8898660c7">fabomatic::tests::test_messages_buffered</a></div><div class="ttdeci">void test_messages_buffered()</div><div class="ttdef"><b>Definition</b> <a href="test__logic_8cpp_source.xhtml#l00314">test_logic.cpp:314</a></div></div>
+<div class="ttc" id="anamespacefabomatic_1_1tests_xhtml_afa92fef9250d918ee02c79dbf2de2546"><div class="ttname"><a href="namespacefabomatic_1_1tests.xhtml#afa92fef9250d918ee02c79dbf2de2546">fabomatic::tests::test_user_autologoff</a></div><div class="ttdeci">void test_user_autologoff()</div><div class="ttdef"><b>Definition</b> <a href="test__logic_8cpp_source.xhtml#l00211">test_logic.cpp:211</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_saved_config_8cpp_source.xhtml#l00052">fabomatic::SavedConfig::LoadFromEEPROM()</a>, <a class="el" href="_logging_8hpp_source.xhtml#l00005">LOG_LOCAL_LEVEL</a>, <a class="el" href="_logging_8hpp_source.xhtml#l00009">TAG</a>, <a class="el" href="test__logic_8cpp_source.xhtml#l00290">fabomatic::tests::test_machine_allowed()</a>, <a class="el" href="test__logic_8cpp_source.xhtml#l00041">fabomatic::tests::test_machine_defaults()</a>, <a class="el" href="test__logic_8cpp_source.xhtml#l00260">fabomatic::tests::test_machine_maintenance()</a>, <a class="el" href="test__logic_8cpp_source.xhtml#l00312">fabomatic::tests::test_messages_buffered()</a>, <a class="el" href="test__logic_8cpp_source.xhtml#l00163">fabomatic::tests::test_one_user_at_a_time()</a>, <a class="el" href="test__logic_8cpp_source.xhtml#l00070">fabomatic::tests::test_simple_methods()</a>, <a class="el" href="test__logic_8cpp_source.xhtml#l00209">fabomatic::tests::test_user_autologoff()</a>, and <a class="el" href="test__logic_8cpp_source.xhtml#l00117">fabomatic::tests::test_whitelist_no_network()</a>.</p>
+<p class="reference">References <a class="el" href="_saved_config_8cpp_source.xhtml#l00052">fabomatic::SavedConfig::LoadFromEEPROM()</a>, <a class="el" href="_logging_8hpp_source.xhtml#l00005">LOG_LOCAL_LEVEL</a>, <a class="el" href="_logging_8hpp_source.xhtml#l00009">TAG</a>, <a class="el" href="test__logic_8cpp_source.xhtml#l00292">fabomatic::tests::test_machine_allowed()</a>, <a class="el" href="test__logic_8cpp_source.xhtml#l00041">fabomatic::tests::test_machine_defaults()</a>, <a class="el" href="test__logic_8cpp_source.xhtml#l00262">fabomatic::tests::test_machine_maintenance()</a>, <a class="el" href="test__logic_8cpp_source.xhtml#l00314">fabomatic::tests::test_messages_buffered()</a>, <a class="el" href="test__logic_8cpp_source.xhtml#l00165">fabomatic::tests::test_one_user_at_a_time()</a>, <a class="el" href="test__logic_8cpp_source.xhtml#l00070">fabomatic::tests::test_simple_methods()</a>, <a class="el" href="test__logic_8cpp_source.xhtml#l00211">fabomatic::tests::test_user_autologoff()</a>, and <a class="el" href="test__logic_8cpp_source.xhtml#l00117">fabomatic::tests::test_whitelist_no_network()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -316,30 +316,30 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__logic_8cpp_source.xhtml#l00339">339</a> of file <a class="el" href="test__logic_8cpp_source.xhtml">test_logic.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  340</span>{</div>
-<div class="line"><span class="lineno">  341</span>  TEST_ASSERT_TRUE_MESSAGE(<a class="code hl_function" href="classfabomatic_1_1_saved_config.xhtml#a3a6f62510c34ed7a4491022e4e43b9c2">fabomatic::SavedConfig::DefaultConfig</a>().SaveToEEPROM(), <span class="stringliteral">&quot;Default config save failed&quot;</span>);</div>
-<div class="line"><span class="lineno">  342</span>  TEST_ASSERT_TRUE_MESSAGE(<a class="code hl_variable" href="test__logic_8cpp.xhtml#a07dd6eb8e9dc2dc50bf69ef6032c5055">logic</a>.<a class="code hl_function" href="classfabomatic_1_1_board_logic.xhtml#adc1f2896666e6e9cfa789c22baa6a603">configure</a>(<a class="code hl_variable" href="test__logic_8cpp.xhtml#af6931c3ecf1cb64d3ff6cb0eab2e590c">rfid</a>, <a class="code hl_variable" href="test__logic_8cpp.xhtml#afaf1857dab1bf829c9be096238cf2de5">lcd</a>), <span class="stringliteral">&quot;BoardLogic configure failed&quot;</span>);</div>
-<div class="line"><span class="lineno">  343</span>  TEST_ASSERT_TRUE_MESSAGE(<a class="code hl_variable" href="test__logic_8cpp.xhtml#a07dd6eb8e9dc2dc50bf69ef6032c5055">logic</a>.<a class="code hl_function" href="classfabomatic_1_1_board_logic.xhtml#a3e9fedd51e4895834a9ebea17cba4331">initBoard</a>(), <span class="stringliteral">&quot;BoardLogic init failed&quot;</span>);</div>
-<div class="line"><span class="lineno">  344</span>  <a class="code hl_variable" href="test__logic_8cpp.xhtml#a07dd6eb8e9dc2dc50bf69ef6032c5055">logic</a>.<a class="code hl_function" href="classfabomatic_1_1_board_logic.xhtml#a9a548ef4e0beba3b67d85d7d80dbaf18">setWhitelist</a>(<a class="code hl_variable" href="namespacefabomatic_1_1tests.xhtml#af9a30e2db3fbfa479b6512cfd428aab1">fabomatic::tests::test_whitelist</a>);</div>
-<div class="line"><span class="lineno">  345</span>  <span class="comment">// Disable MQTT for tests</span></div>
-<div class="line"><span class="lineno">  346</span>  <span class="keywordflow">if</span> (<span class="keyword">auto</span> server_config = <a class="code hl_function" href="classfabomatic_1_1_saved_config.xhtml#aca3fe97dfa74c005d47ffef700392d99">fabomatic::SavedConfig::LoadFromEEPROM</a>(); server_config.has_value())</div>
-<div class="line"><span class="lineno">  347</span>  {</div>
-<div class="line"><span class="lineno">  348</span>    <span class="keyword">auto</span> conf = server_config.value();</div>
-<div class="line"><span class="lineno">  349</span>    conf.mqtt_server.assign(<span class="stringliteral">&quot;INVALID_SERVER&quot;</span>);</div>
-<div class="line"><span class="lineno">  350</span>    <a class="code hl_variable" href="test__logic_8cpp.xhtml#a07dd6eb8e9dc2dc50bf69ef6032c5055">logic</a>.<a class="code hl_function" href="classfabomatic_1_1_board_logic.xhtml#ac2feade03b2a74a1998dcec282a8eacb">getServer</a>().configure(conf);</div>
-<div class="line"><span class="lineno">  351</span>  }</div>
-<div class="line"><span class="lineno">  352</span>};</div>
-<div class="ttc" id="aclassfabomatic_1_1_board_logic_xhtml_a3e9fedd51e4895834a9ebea17cba4331"><div class="ttname"><a href="classfabomatic_1_1_board_logic.xhtml#a3e9fedd51e4895834a9ebea17cba4331">fabomatic::BoardLogic::initBoard</a></div><div class="ttdeci">auto initBoard() -&gt; bool</div><div class="ttdoc">Initializes LCD and RFID classes.</div><div class="ttdef"><b>Definition</b> <a href="_board_logic_8cpp_source.xhtml#l00252">BoardLogic.cpp:252</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_board_logic_xhtml_a9a548ef4e0beba3b67d85d7d80dbaf18"><div class="ttname"><a href="classfabomatic_1_1_board_logic.xhtml#a9a548ef4e0beba3b67d85d7d80dbaf18">fabomatic::BoardLogic::setWhitelist</a></div><div class="ttdeci">auto setWhitelist(WhiteList whitelist) -&gt; void</div><div class="ttdef"><b>Definition</b> <a href="_board_logic_8cpp_source.xhtml#l00629">BoardLogic.cpp:629</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_board_logic_xhtml_ac2feade03b2a74a1998dcec282a8eacb"><div class="ttname"><a href="classfabomatic_1_1_board_logic.xhtml#ac2feade03b2a74a1998dcec282a8eacb">fabomatic::BoardLogic::getServer</a></div><div class="ttdeci">auto getServer() -&gt; FabBackend &amp;</div><div class="ttdef"><b>Definition</b> <a href="_board_logic_8cpp_source.xhtml#l00634">BoardLogic.cpp:634</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_board_logic_xhtml_adc1f2896666e6e9cfa789c22baa6a603"><div class="ttname"><a href="classfabomatic_1_1_board_logic.xhtml#adc1f2896666e6e9cfa789c22baa6a603">fabomatic::BoardLogic::configure</a></div><div class="ttdeci">auto configure(BaseRFIDWrapper &amp;rfid, LCDWrapper &amp;lcd) -&gt; bool</div><div class="ttdoc">Configures the board with the given references.</div><div class="ttdef"><b>Definition</b> <a href="_board_logic_8cpp_source.xhtml#l00456">BoardLogic.cpp:456</a></div></div>
+<p class="definition">Definition at line <a class="el" href="test__logic_8cpp_source.xhtml#l00341">341</a> of file <a class="el" href="test__logic_8cpp_source.xhtml">test_logic.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  342</span>{</div>
+<div class="line"><span class="lineno">  343</span>  TEST_ASSERT_TRUE_MESSAGE(<a class="code hl_function" href="classfabomatic_1_1_saved_config.xhtml#a3a6f62510c34ed7a4491022e4e43b9c2">fabomatic::SavedConfig::DefaultConfig</a>().SaveToEEPROM(), <span class="stringliteral">&quot;Default config save failed&quot;</span>);</div>
+<div class="line"><span class="lineno">  344</span>  TEST_ASSERT_TRUE_MESSAGE(<a class="code hl_variable" href="test__logic_8cpp.xhtml#a07dd6eb8e9dc2dc50bf69ef6032c5055">logic</a>.<a class="code hl_function" href="classfabomatic_1_1_board_logic.xhtml#adc1f2896666e6e9cfa789c22baa6a603">configure</a>(<a class="code hl_variable" href="test__logic_8cpp.xhtml#af6931c3ecf1cb64d3ff6cb0eab2e590c">rfid</a>, <a class="code hl_variable" href="test__logic_8cpp.xhtml#afaf1857dab1bf829c9be096238cf2de5">lcd</a>), <span class="stringliteral">&quot;BoardLogic configure failed&quot;</span>);</div>
+<div class="line"><span class="lineno">  345</span>  TEST_ASSERT_TRUE_MESSAGE(<a class="code hl_variable" href="test__logic_8cpp.xhtml#a07dd6eb8e9dc2dc50bf69ef6032c5055">logic</a>.<a class="code hl_function" href="classfabomatic_1_1_board_logic.xhtml#a3e9fedd51e4895834a9ebea17cba4331">initBoard</a>(), <span class="stringliteral">&quot;BoardLogic init failed&quot;</span>);</div>
+<div class="line"><span class="lineno">  346</span>  <a class="code hl_variable" href="test__logic_8cpp.xhtml#a07dd6eb8e9dc2dc50bf69ef6032c5055">logic</a>.<a class="code hl_function" href="classfabomatic_1_1_board_logic.xhtml#a9a548ef4e0beba3b67d85d7d80dbaf18">setWhitelist</a>(<a class="code hl_variable" href="namespacefabomatic_1_1tests.xhtml#af9a30e2db3fbfa479b6512cfd428aab1">fabomatic::tests::test_whitelist</a>);</div>
+<div class="line"><span class="lineno">  347</span>  <span class="comment">// Disable MQTT for tests</span></div>
+<div class="line"><span class="lineno">  348</span>  <span class="keywordflow">if</span> (<span class="keyword">auto</span> server_config = <a class="code hl_function" href="classfabomatic_1_1_saved_config.xhtml#aca3fe97dfa74c005d47ffef700392d99">fabomatic::SavedConfig::LoadFromEEPROM</a>(); server_config.has_value())</div>
+<div class="line"><span class="lineno">  349</span>  {</div>
+<div class="line"><span class="lineno">  350</span>    <span class="keyword">auto</span> conf = server_config.value();</div>
+<div class="line"><span class="lineno">  351</span>    conf.mqtt_server.assign(<span class="stringliteral">&quot;INVALID_SERVER&quot;</span>);</div>
+<div class="line"><span class="lineno">  352</span>    <a class="code hl_variable" href="test__logic_8cpp.xhtml#a07dd6eb8e9dc2dc50bf69ef6032c5055">logic</a>.<a class="code hl_function" href="classfabomatic_1_1_board_logic.xhtml#ac2feade03b2a74a1998dcec282a8eacb">getServer</a>().configure(conf);</div>
+<div class="line"><span class="lineno">  353</span>  }</div>
+<div class="line"><span class="lineno">  354</span>};</div>
+<div class="ttc" id="aclassfabomatic_1_1_board_logic_xhtml_a3e9fedd51e4895834a9ebea17cba4331"><div class="ttname"><a href="classfabomatic_1_1_board_logic.xhtml#a3e9fedd51e4895834a9ebea17cba4331">fabomatic::BoardLogic::initBoard</a></div><div class="ttdeci">auto initBoard() -&gt; bool</div><div class="ttdoc">Initializes LCD and RFID classes.</div><div class="ttdef"><b>Definition</b> <a href="_board_logic_8cpp_source.xhtml#l00246">BoardLogic.cpp:246</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_board_logic_xhtml_a9a548ef4e0beba3b67d85d7d80dbaf18"><div class="ttname"><a href="classfabomatic_1_1_board_logic.xhtml#a9a548ef4e0beba3b67d85d7d80dbaf18">fabomatic::BoardLogic::setWhitelist</a></div><div class="ttdeci">auto setWhitelist(WhiteList whitelist) -&gt; void</div><div class="ttdef"><b>Definition</b> <a href="_board_logic_8cpp_source.xhtml#l00623">BoardLogic.cpp:623</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_board_logic_xhtml_ac2feade03b2a74a1998dcec282a8eacb"><div class="ttname"><a href="classfabomatic_1_1_board_logic.xhtml#ac2feade03b2a74a1998dcec282a8eacb">fabomatic::BoardLogic::getServer</a></div><div class="ttdeci">auto getServer() -&gt; FabBackend &amp;</div><div class="ttdef"><b>Definition</b> <a href="_board_logic_8cpp_source.xhtml#l00628">BoardLogic.cpp:628</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_board_logic_xhtml_adc1f2896666e6e9cfa789c22baa6a603"><div class="ttname"><a href="classfabomatic_1_1_board_logic.xhtml#adc1f2896666e6e9cfa789c22baa6a603">fabomatic::BoardLogic::configure</a></div><div class="ttdeci">auto configure(BaseRFIDWrapper &amp;rfid, LCDWrapper &amp;lcd) -&gt; bool</div><div class="ttdoc">Configures the board with the given references.</div><div class="ttdef"><b>Definition</b> <a href="_board_logic_8cpp_source.xhtml#l00450">BoardLogic.cpp:450</a></div></div>
 <div class="ttc" id="aclassfabomatic_1_1_saved_config_xhtml_a3a6f62510c34ed7a4491022e4e43b9c2"><div class="ttname"><a href="classfabomatic_1_1_saved_config.xhtml#a3a6f62510c34ed7a4491022e4e43b9c2">fabomatic::SavedConfig::DefaultConfig</a></div><div class="ttdeci">static auto DefaultConfig() -&gt; SavedConfig</div><div class="ttdoc">Returns the default configuration built from conf.hpp and secrets.hpp.</div><div class="ttdef"><b>Definition</b> <a href="_saved_config_8cpp_source.xhtml#l00028">SavedConfig.cpp:28</a></div></div>
 <div class="ttc" id="atest__logic_8cpp_xhtml_a07dd6eb8e9dc2dc50bf69ef6032c5055"><div class="ttname"><a href="test__logic_8cpp.xhtml#a07dd6eb8e9dc2dc50bf69ef6032c5055">logic</a></div><div class="ttdeci">fabomatic::BoardLogic logic</div><div class="ttdef"><b>Definition</b> <a href="test__logic_8cpp_source.xhtml#l00029">test_logic.cpp:29</a></div></div>
 <div class="ttc" id="atest__logic_8cpp_xhtml_af6931c3ecf1cb64d3ff6cb0eab2e590c"><div class="ttname"><a href="test__logic_8cpp.xhtml#af6931c3ecf1cb64d3ff6cb0eab2e590c">rfid</a></div><div class="ttdeci">fabomatic::RFIDWrapper&lt; fabomatic::MockMrfc522 &gt; rfid</div><div class="ttdef"><b>Definition</b> <a href="test__logic_8cpp_source.xhtml#l00027">test_logic.cpp:27</a></div></div>
 <div class="ttc" id="atest__logic_8cpp_xhtml_afaf1857dab1bf829c9be096238cf2de5"><div class="ttname"><a href="test__logic_8cpp.xhtml#afaf1857dab1bf829c9be096238cf2de5">lcd</a></div><div class="ttdeci">fabomatic::LCDWrapper lcd</div><div class="ttdef"><b>Definition</b> <a href="test__logic_8cpp_source.xhtml#l00028">test_logic.cpp:28</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_board_logic_8cpp_source.xhtml#l00456">fabomatic::BoardLogic::configure()</a>, <a class="el" href="_saved_config_8cpp_source.xhtml#l00028">fabomatic::SavedConfig::DefaultConfig()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00634">fabomatic::BoardLogic::getServer()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00252">fabomatic::BoardLogic::initBoard()</a>, <a class="el" href="test__logic_8cpp_source.xhtml#l00028">lcd</a>, <a class="el" href="_saved_config_8cpp_source.xhtml#l00052">fabomatic::SavedConfig::LoadFromEEPROM()</a>, <a class="el" href="test__logic_8cpp_source.xhtml#l00029">logic</a>, <a class="el" href="test__logic_8cpp_source.xhtml#l00027">rfid</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00629">fabomatic::BoardLogic::setWhitelist()</a>, and <a class="el" href="test__common_8h_source.xhtml#l00015">fabomatic::tests::test_whitelist</a>.</p>
+<p class="reference">References <a class="el" href="_board_logic_8cpp_source.xhtml#l00450">fabomatic::BoardLogic::configure()</a>, <a class="el" href="_saved_config_8cpp_source.xhtml#l00028">fabomatic::SavedConfig::DefaultConfig()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00628">fabomatic::BoardLogic::getServer()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00246">fabomatic::BoardLogic::initBoard()</a>, <a class="el" href="test__logic_8cpp_source.xhtml#l00028">lcd</a>, <a class="el" href="_saved_config_8cpp_source.xhtml#l00052">fabomatic::SavedConfig::LoadFromEEPROM()</a>, <a class="el" href="test__logic_8cpp_source.xhtml#l00029">logic</a>, <a class="el" href="test__logic_8cpp_source.xhtml#l00027">rfid</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00623">fabomatic::BoardLogic::setWhitelist()</a>, and <a class="el" href="test__common_8h_source.xhtml#l00015">fabomatic::tests::test_whitelist</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -364,8 +364,8 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__logic_8cpp_source.xhtml#l00337">337</a> of file <a class="el" href="test__logic_8cpp_source.xhtml">test_logic.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  337</span>{};</div>
+<p class="definition">Definition at line <a class="el" href="test__logic_8cpp_source.xhtml#l00339">339</a> of file <a class="el" href="test__logic_8cpp_source.xhtml">test_logic.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  339</span>{};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -387,7 +387,7 @@ Here is the call graph for this function:</div>
 <div class="ttc" id="anamespacefabomatic_xhtml_a90e4180ab5a1ffd3393b4f0d6b01f2b3"><div class="ttname"><a href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">fabomatic::pins</a></div><div class="ttdeci">static constexpr pins_config pins</div><div class="ttdef"><b>Definition</b> <a href="pins_8hpp_source.xhtml#l00246">pins.hpp:246</a></div></div>
 <div class="ttc" id="astructfabomatic_1_1pins__config_xhtml_abd0d35daf6efede38501593182b6d574"><div class="ttname"><a href="structfabomatic_1_1pins__config.xhtml#abd0d35daf6efede38501593182b6d574">fabomatic::pins_config::lcd</a></div><div class="ttdeci">lcd_config lcd</div><div class="ttdef"><b>Definition</b> <a href="_pins_config_8hpp_source.xhtml#l00069">PinsConfig.hpp:69</a></div></div>
 </div><!-- fragment -->
-<p class="reference">Referenced by <a class="el" href="_l_c_d_wrapper_8cpp_source.xhtml#l00035">fabomatic::LCDWrapper::begin()</a>, <a class="el" href="main_8cpp_source.xhtml#l00411">setup()</a>, <a class="el" href="test__logic_8cpp_source.xhtml#l00339">setUp()</a>, and <a class="el" href="_l_c_d_wrapper_8cpp_source.xhtml#l00066">fabomatic::LCDWrapper::update()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_l_c_d_wrapper_8cpp_source.xhtml#l00035">fabomatic::LCDWrapper::begin()</a>, <a class="el" href="main_8cpp_source.xhtml#l00416">setup()</a>, <a class="el" href="test__logic_8cpp_source.xhtml#l00341">setUp()</a>, and <a class="el" href="_l_c_d_wrapper_8cpp_source.xhtml#l00066">fabomatic::LCDWrapper::update()</a>.</p>
 
 </div>
 </div>
@@ -405,7 +405,7 @@ Here is the call graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="test__logic_8cpp_source.xhtml#l00029">29</a> of file <a class="el" href="test__logic_8cpp_source.xhtml">test_logic.cpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="main_8cpp_source.xhtml#l00411">setup()</a>, and <a class="el" href="test__logic_8cpp_source.xhtml#l00339">setUp()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="main_8cpp_source.xhtml#l00416">setup()</a>, and <a class="el" href="test__logic_8cpp_source.xhtml#l00341">setUp()</a>.</p>
 
 </div>
 </div>
@@ -423,7 +423,7 @@ Here is the call graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="test__logic_8cpp_source.xhtml#l00027">27</a> of file <a class="el" href="test__logic_8cpp_source.xhtml">test_logic.cpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="main_8cpp_source.xhtml#l00411">setup()</a>, and <a class="el" href="test__logic_8cpp_source.xhtml#l00339">setUp()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="main_8cpp_source.xhtml#l00416">setup()</a>, and <a class="el" href="test__logic_8cpp_source.xhtml#l00341">setUp()</a>.</p>
 
 </div>
 </div>
@@ -456,7 +456,7 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Jul 19 2024 19:24:17 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Mon Aug 12 2024 08:05:20 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

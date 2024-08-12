@@ -101,6 +101,9 @@ Variables</h2></td></tr>
 <tr class="memitem:a02738ffd3c6433a682f080b0e6741627" id="r_a02738ffd3c6433a682f080b0e6741627"><td class="memItemLeft" align="right" valign="top">static constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefabomatic_1_1conf_1_1machine.xhtml#a02738ffd3c6433a682f080b0e6741627">LONG_TAP_DURATION</a> {10s}</td></tr>
 <tr class="memdesc:a02738ffd3c6433a682f080b0e6741627"><td class="mdescLeft">&#160;</td><td class="mdescRight">Minimum time to confirm by long tap maintenance.  <br /></td></tr>
 <tr class="separator:a02738ffd3c6433a682f080b0e6741627"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a631ccc042adb96b1102806b117093a32" id="r_a631ccc042adb96b1102806b117093a32"><td class="memItemLeft" align="right" valign="top">static constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefabomatic_1_1conf_1_1machine.xhtml#a631ccc042adb96b1102806b117093a32">DELAY_BETWEEN_SWEEPS</a> {2s}</td></tr>
+<tr class="memdesc:a631ccc042adb96b1102806b117093a32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disabled RFID reading after a successfull read for X seconds.  <br /></td></tr>
+<tr class="separator:a631ccc042adb96b1102806b117093a32"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Configuration for connected machine. </p>
@@ -130,7 +133,7 @@ Variables</h2></td></tr>
 <p class="definition">Definition at line <a class="el" href="conf_8hpp_source.xhtml#l00059">59</a> of file <a class="el" href="conf_8hpp_source.xhtml">conf.hpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   59</span>{12h};</div>
 </div><!-- fragment -->
-<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00464">fabomatic::BoardLogic::reconfigure()</a>, <a class="el" href="test__logic_8cpp_source.xhtml#l00041">fabomatic::tests::test_machine_defaults()</a>, and <a class="el" href="test__logic_8cpp_source.xhtml#l00209">fabomatic::tests::test_user_autologoff()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00458">fabomatic::BoardLogic::reconfigure()</a>, <a class="el" href="test__logic_8cpp_source.xhtml#l00041">fabomatic::tests::test_machine_defaults()</a>, and <a class="el" href="test__logic_8cpp_source.xhtml#l00211">fabomatic::tests::test_user_autologoff()</a>.</p>
 
 </div>
 </div>
@@ -159,7 +162,7 @@ Variables</h2></td></tr>
 <p class="definition">Definition at line <a class="el" href="conf_8hpp_source.xhtml#l00062">62</a> of file <a class="el" href="conf_8hpp_source.xhtml">conf.hpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   62</span>{90s};</div>
 </div><!-- fragment -->
-<p class="reference">Referenced by <a class="el" href="_m_q_t_ttypes_8cpp_source.xhtml#l00117">fabomatic::MQTTInterface::MachineResponse::fromJson()</a>, and <a class="el" href="_board_logic_8cpp_source.xhtml#l00464">fabomatic::BoardLogic::reconfigure()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_m_q_t_ttypes_8cpp_source.xhtml#l00117">fabomatic::MQTTInterface::MachineResponse::fromJson()</a>, and <a class="el" href="_board_logic_8cpp_source.xhtml#l00458">fabomatic::BoardLogic::reconfigure()</a>.</p>
 
 </div>
 </div>
@@ -190,6 +193,35 @@ Variables</h2></td></tr>
 </div><!-- fragment -->
 </div>
 </div>
+<a id="a631ccc042adb96b1102806b117093a32" name="a631ccc042adb96b1102806b117093a32"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a631ccc042adb96b1102806b117093a32">&#9670;&#160;</a></span>DELAY_BETWEEN_SWEEPS</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr auto fabomatic::conf::machine::DELAY_BETWEEN_SWEEPS {2s}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Disabled RFID reading after a successfull read for X seconds. </p>
+
+<p class="definition">Definition at line <a class="el" href="conf_8hpp_source.xhtml#l00074">74</a> of file <a class="el" href="conf_8hpp_source.xhtml">conf.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   74</span>{2s};</div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00543">fabomatic::BoardLogic::checkRfid()</a>, and <a class="el" href="test__logic_8cpp_source.xhtml#l00117">fabomatic::tests::test_whitelist_no_network()</a>.</p>
+
+</div>
+</div>
 <a id="a02738ffd3c6433a682f080b0e6741627" name="a02738ffd3c6433a682f080b0e6741627"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a02738ffd3c6433a682f080b0e6741627">&#9670;&#160;</a></span>LONG_TAP_DURATION</h2>
 
@@ -215,7 +247,7 @@ Variables</h2></td></tr>
 <p class="definition">Definition at line <a class="el" href="conf_8hpp_source.xhtml#l00071">71</a> of file <a class="el" href="conf_8hpp_source.xhtml">conf.hpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   71</span>{10s};</div>
 </div><!-- fragment -->
-<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00127">fabomatic::BoardLogic::longTap()</a>, and <a class="el" href="test__logic_8cpp_source.xhtml#l00260">fabomatic::tests::test_machine_maintenance()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00121">fabomatic::BoardLogic::longTap()</a>, and <a class="el" href="test__logic_8cpp_source.xhtml#l00262">fabomatic::tests::test_machine_maintenance()</a>.</p>
 
 </div>
 </div>
@@ -244,14 +276,14 @@ Variables</h2></td></tr>
 <p class="definition">Definition at line <a class="el" href="conf_8hpp_source.xhtml#l00068">68</a> of file <a class="el" href="conf_8hpp_source.xhtml">conf.hpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   68</span>{<span class="keyword">true</span>};</div>
 </div><!-- fragment -->
-<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00164">fabomatic::BoardLogic::authorize()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00158">fabomatic::BoardLogic::authorize()</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Jul 19 2024 19:24:18 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Mon Aug 12 2024 08:05:20 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

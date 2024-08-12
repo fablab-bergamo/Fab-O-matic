@@ -94,25 +94,108 @@ Functions</h2></td></tr>
 <tr class="separator:ac7eca0f98345aa2c296103d6dc9fff01"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae78a1408710128cb446f2cde991017dd" id="r_ae78a1408710128cb446f2cde991017dd"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefabomatic_1_1esp32.xhtml#ae78a1408710128cb446f2cde991017dd">removeWatchdog</a> () -&gt; void</td></tr>
 <tr class="separator:ae78a1408710128cb446f2cde991017dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac8d867c42c073a3e44e6292db72e1f94" id="r_ac8d867c42c073a3e44e6292db72e1f94"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefabomatic_1_1esp32.xhtml#ac8d867c42c073a3e44e6292db72e1f94">esp_serial</a> () -&gt; const std::string_view</td></tr>
-<tr class="memdesc:ac8d867c42c073a3e44e6292db72e1f94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the ESP32 serial number as a string.  <br /></td></tr>
-<tr class="separator:ac8d867c42c073a3e44e6292db72e1f94"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96fcda8288dc79527ee9def9af138c95" id="r_a96fcda8288dc79527ee9def9af138c95"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefabomatic_1_1esp32.xhtml#a96fcda8288dc79527ee9def9af138c95">esp_serial_str</a> () -&gt; const std::string_view</td></tr>
+<tr class="memdesc:a96fcda8288dc79527ee9def9af138c95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the ESP32 serial number as a string.  <br /></td></tr>
+<tr class="separator:a96fcda8288dc79527ee9def9af138c95"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a07750a641e5cfe3207bbdf72813af628" id="r_a07750a641e5cfe3207bbdf72813af628"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefabomatic_1_1esp32.xhtml#a07750a641e5cfe3207bbdf72813af628">getFreeHeap</a> () -&gt; uint32_t</td></tr>
 <tr class="separator:a07750a641e5cfe3207bbdf72813af628"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6afa9ef478bc8a9ca73049f33b8fb8af" id="r_a6afa9ef478bc8a9ca73049f33b8fb8af"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefabomatic_1_1esp32.xhtml#a6afa9ef478bc8a9ca73049f33b8fb8af">restart</a> () -&gt; void</td></tr>
 <tr class="separator:a6afa9ef478bc8a9ca73049f33b8fb8af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9bc1704643a7bc60baf970bbf09115e" id="r_af9bc1704643a7bc60baf970bbf09115e"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefabomatic_1_1esp32.xhtml#af9bc1704643a7bc60baf970bbf09115e">esp_reset_reason_str</a> () -&gt; const std::string_view</td></tr>
+<tr class="separator:af9bc1704643a7bc60baf970bbf09115e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Contains all espressif32 features not masked by Arduino IDE. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="ac8d867c42c073a3e44e6292db72e1f94" name="ac8d867c42c073a3e44e6292db72e1f94"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac8d867c42c073a3e44e6292db72e1f94">&#9670;&#160;</a></span>esp_serial()</h2>
+<a id="af9bc1704643a7bc60baf970bbf09115e" name="af9bc1704643a7bc60baf970bbf09115e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af9bc1704643a7bc60baf970bbf09115e">&#9670;&#160;</a></span>esp_reset_reason_str()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">auto fabomatic::esp32::esp_serial </td>
+          <td class="memname">auto fabomatic::esp32::esp_reset_reason_str </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> -&gt;  const std::string_view</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>&lt; Reset reason can not be determined</p>
+<p>&lt; Reset due to power-on event</p>
+<p>&lt; Reset by external pin (not applicable for ESP32)</p>
+<p>&lt; Software reset via esp_restart</p>
+<p>&lt; Software reset due to exception/panic</p>
+<p>&lt; Reset (software or hardware) due to interrupt watchdog</p>
+<p>&lt; Reset due to task watchdog</p>
+<p>&lt; Reset due to other watchdogs</p>
+<p>&lt; Reset after exiting deep sleep mode</p>
+<p>&lt; Brownout reset (software or hardware)</p>
+<p>&lt; Reset over SDIO</p>
+<p>&lt; Reset by USB peripheral</p>
+<p>&lt; Reset by JTAG</p>
+<p>&lt; Reset due to efuse error</p>
+<p>&lt; Reset due to power glitch detected</p>
+<p>&lt; Reset due to CPU lock up</p>
+
+<p class="definition">Definition at line <a class="el" href="_espressif_8cpp_source.xhtml#l00098">98</a> of file <a class="el" href="_espressif_8cpp_source.xhtml">Espressif.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   99</span>  {</div>
+<div class="line"><span class="lineno">  100</span>    <span class="keywordflow">switch</span> (esp_reset_reason())</div>
+<div class="line"><span class="lineno">  101</span>    {</div>
+<div class="line"><span class="lineno">  102</span>    <span class="keywordflow">case</span> ESP_RST_UNKNOWN: </div>
+<div class="line"><span class="lineno">  103</span>      <span class="keywordflow">return</span> <span class="stringliteral">&quot;Unknown&quot;</span>;</div>
+<div class="line"><span class="lineno">  104</span>    <span class="keywordflow">case</span> ESP_RST_POWERON: </div>
+<div class="line"><span class="lineno">  105</span>      <span class="keywordflow">return</span> <span class="stringliteral">&quot;Power-on reset&quot;</span>;</div>
+<div class="line"><span class="lineno">  106</span>    <span class="keywordflow">case</span> ESP_RST_EXT: </div>
+<div class="line"><span class="lineno">  107</span>      <span class="keywordflow">return</span> <span class="stringliteral">&quot;External pin reset&quot;</span>;</div>
+<div class="line"><span class="lineno">  108</span>    <span class="keywordflow">case</span> ESP_RST_SW: </div>
+<div class="line"><span class="lineno">  109</span>      <span class="keywordflow">return</span> <span class="stringliteral">&quot;Software reset&quot;</span>;</div>
+<div class="line"><span class="lineno">  110</span>    <span class="keywordflow">case</span> ESP_RST_PANIC: </div>
+<div class="line"><span class="lineno">  111</span>      <span class="keywordflow">return</span> <span class="stringliteral">&quot;Panic&quot;</span>;</div>
+<div class="line"><span class="lineno">  112</span>    <span class="keywordflow">case</span> ESP_RST_INT_WDT: </div>
+<div class="line"><span class="lineno">  113</span>      <span class="keywordflow">return</span> <span class="stringliteral">&quot;Interrupt watchdog reset&quot;</span>;</div>
+<div class="line"><span class="lineno">  114</span>    <span class="keywordflow">case</span> ESP_RST_TASK_WDT: </div>
+<div class="line"><span class="lineno">  115</span>      <span class="keywordflow">return</span> <span class="stringliteral">&quot;Task watchdog reset&quot;</span>;</div>
+<div class="line"><span class="lineno">  116</span>    <span class="keywordflow">case</span> ESP_RST_WDT: </div>
+<div class="line"><span class="lineno">  117</span>      <span class="keywordflow">return</span> <span class="stringliteral">&quot;Watchdog reset&quot;</span>;</div>
+<div class="line"><span class="lineno">  118</span>    <span class="keywordflow">case</span> ESP_RST_DEEPSLEEP: </div>
+<div class="line"><span class="lineno">  119</span>      <span class="keywordflow">return</span> <span class="stringliteral">&quot;Deepsleep exit&quot;</span>;</div>
+<div class="line"><span class="lineno">  120</span>    <span class="keywordflow">case</span> ESP_RST_BROWNOUT: </div>
+<div class="line"><span class="lineno">  121</span>      <span class="keywordflow">return</span> <span class="stringliteral">&quot;Brownout&quot;</span>;</div>
+<div class="line"><span class="lineno">  122</span>    <span class="keywordflow">case</span> ESP_RST_SDIO: </div>
+<div class="line"><span class="lineno">  123</span>      <span class="keywordflow">return</span> <span class="stringliteral">&quot;SDIO reset&quot;</span>;</div>
+<div class="line"><span class="lineno">  124</span>    <span class="keywordflow">case</span> ESP_RST_USB: </div>
+<div class="line"><span class="lineno">  125</span>      <span class="keywordflow">return</span> <span class="stringliteral">&quot;USB reset&quot;</span>;</div>
+<div class="line"><span class="lineno">  126</span>    <span class="keywordflow">case</span> ESP_RST_JTAG: </div>
+<div class="line"><span class="lineno">  127</span>      <span class="keywordflow">return</span> <span class="stringliteral">&quot;JTAG reset&quot;</span>;</div>
+<div class="line"><span class="lineno">  128</span>    <span class="keywordflow">case</span> ESP_RST_EFUSE: </div>
+<div class="line"><span class="lineno">  129</span>      <span class="keywordflow">return</span> <span class="stringliteral">&quot;EFUSE error&quot;</span>;</div>
+<div class="line"><span class="lineno">  130</span>    <span class="keywordflow">case</span> ESP_RST_PWR_GLITCH: </div>
+<div class="line"><span class="lineno">  131</span>      <span class="keywordflow">return</span> <span class="stringliteral">&quot;Power glitch&quot;</span>;</div>
+<div class="line"><span class="lineno">  132</span>    <span class="keywordflow">case</span> ESP_RST_CPU_LOCKUP: </div>
+<div class="line"><span class="lineno">  133</span>      <span class="keywordflow">return</span> <span class="stringliteral">&quot;CPU lock up&quot;</span>;</div>
+<div class="line"><span class="lineno">  134</span>    <span class="keywordflow">default</span>:</div>
+<div class="line"><span class="lineno">  135</span>      <span class="keywordflow">return</span> <span class="stringliteral">&quot;UNKNOWN&quot;</span>;</div>
+<div class="line"><span class="lineno">  136</span>    }</div>
+<div class="line"><span class="lineno">  137</span>  }</div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="main_8cpp_source.xhtml#l00416">setup()</a>.</p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="namespacefabomatic_1_1esp32_af9bc1704643a7bc60baf970bbf09115e_icgraph.svg" width="259" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="a96fcda8288dc79527ee9def9af138c95" name="a96fcda8288dc79527ee9def9af138c95"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a96fcda8288dc79527ee9def9af138c95">&#9670;&#160;</a></span>esp_serial_str()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto fabomatic::esp32::esp_serial_str </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> -&gt;  const std::string_view</td>
@@ -143,11 +226,11 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">   85</span>    <span class="keywordflow">return</span> {result.data()};</div>
 <div class="line"><span class="lineno">   86</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">Referenced by <a class="el" href="_m_q_t_ttypes_8cpp_source.xhtml#l00037">fabomatic::MQTTInterface::AliveQuery::payload()</a>, <a class="el" href="main_8cpp_source.xhtml#l00213">fabomatic::taskFactoryReset()</a>, and <a class="el" href="test__tasks_8cpp_source.xhtml#l00133">fabomatic::tests::test_esp32()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_m_q_t_ttypes_8cpp_source.xhtml#l00037">fabomatic::MQTTInterface::AliveQuery::payload()</a>, and <a class="el" href="main_8cpp_source.xhtml#l00217">fabomatic::taskFactoryReset()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="namespacefabomatic_1_1esp32_ac8d867c42c073a3e44e6292db72e1f94_icgraph.svg" width="494" height="167"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="namespacefabomatic_1_1esp32_a96fcda8288dc79527ee9def9af138c95_icgraph.svg" width="392" height="102"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -201,7 +284,7 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">   63</span>    esp_task_wdt_deinit();</div>
 <div class="line"><span class="lineno">   64</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">Referenced by <a class="el" href="_espressif_8cpp_source.xhtml#l00032">setupWatchdog()</a>, <a class="el" href="main_8cpp_source.xhtml#l00213">fabomatic::taskFactoryReset()</a>, <a class="el" href="test__tasks_8cpp_source.xhtml#l00133">fabomatic::tests::test_esp32()</a>, and <a class="el" href="test__mqtt_8cpp_source.xhtml#l00324">fabomatic::tests::test_normal_use()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_espressif_8cpp_source.xhtml#l00032">setupWatchdog()</a>, <a class="el" href="main_8cpp_source.xhtml#l00217">fabomatic::taskFactoryReset()</a>, <a class="el" href="test__tasks_8cpp_source.xhtml#l00133">fabomatic::tests::test_esp32()</a>, and <a class="el" href="test__mqtt_8cpp_source.xhtml#l00324">fabomatic::tests::test_normal_use()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -230,7 +313,7 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">   95</span>    esp_restart();</div>
 <div class="line"><span class="lineno">   96</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">Referenced by <a class="el" href="main_8cpp_source.xhtml#l00100">fabomatic::taskPoweroffWarning()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="main_8cpp_source.xhtml#l00104">fabomatic::taskPoweroffWarning()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -283,7 +366,7 @@ Here is the caller graph for this function:</div>
 </div><!-- fragment -->
 <p class="reference">References <a class="el" href="_espressif_8cpp_source.xhtml#l00061">removeWatchdog()</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00009">TAG</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="main_8cpp_source.xhtml#l00411">setup()</a>, <a class="el" href="main_8cpp_source.xhtml#l00135">fabomatic::taskEspWatchdog()</a>, <a class="el" href="test__tasks_8cpp_source.xhtml#l00133">fabomatic::tests::test_esp32()</a>, and <a class="el" href="test__mqtt_8cpp_source.xhtml#l00274">fabomatic::tests::test_taskEspWatchdog()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="main_8cpp_source.xhtml#l00416">setup()</a>, <a class="el" href="main_8cpp_source.xhtml#l00139">fabomatic::taskEspWatchdog()</a>, <a class="el" href="test__tasks_8cpp_source.xhtml#l00133">fabomatic::tests::test_esp32()</a>, and <a class="el" href="test__mqtt_8cpp_source.xhtml#l00274">fabomatic::tests::test_taskEspWatchdog()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -329,7 +412,7 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">   29</span>    ESP_LOGI(<span class="stringliteral">&quot;Heap Stats&quot;</span>, <span class="stringliteral">&quot;Allocated Blocks: %zu&quot;</span>, heap_info.allocated_blocks);</div>
 <div class="line"><span class="lineno">   30</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">Referenced by <a class="el" href="main_8cpp_source.xhtml#l00184">fabomatic::taskIsAlive()</a>, and <a class="el" href="test__tasks_8cpp_source.xhtml#l00133">fabomatic::tests::test_esp32()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="main_8cpp_source.xhtml#l00188">fabomatic::taskIsAlive()</a>, and <a class="el" href="test__tasks_8cpp_source.xhtml#l00133">fabomatic::tests::test_esp32()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -358,7 +441,7 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">   58</span>    <span class="keywordflow">return</span> esp_task_wdt_reset() == ESP_OK;</div>
 <div class="line"><span class="lineno">   59</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">Referenced by <a class="el" href="main_8cpp_source.xhtml#l00135">fabomatic::taskEspWatchdog()</a>, and <a class="el" href="test__mqtt_8cpp_source.xhtml#l00274">fabomatic::tests::test_taskEspWatchdog()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="main_8cpp_source.xhtml#l00139">fabomatic::taskEspWatchdog()</a>, and <a class="el" href="test__mqtt_8cpp_source.xhtml#l00274">fabomatic::tests::test_taskEspWatchdog()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -370,7 +453,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Jul 19 2024 19:24:18 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Mon Aug 12 2024 08:05:20 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

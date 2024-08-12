@@ -9,9 +9,10 @@ var searchData=
   ['error_6',['Error',['../classfabomatic_1_1_board_logic.xhtml#a3885e1cd078bb49bbf54e3ddfe245ef0a902b0d55fddef6f8d651fe1035b7d4bd',1,'fabomatic::BoardLogic']]],
   ['errorhardware_7',['ErrorHardware',['../classfabomatic_1_1_board_logic.xhtml#a3885e1cd078bb49bbf54e3ddfe245ef0a1e50b02a42cd210ea7dc0ed55e79f9d6',1,'fabomatic::BoardLogic']]],
   ['errornotpublished_8',['ErrorNotPublished',['../classfabomatic_1_1_fab_backend.xhtml#af3e533d72406fdddc602359fdb9a5ae3ae8c9e67c4a17670c41289fcc8c3a38c5',1,'fabomatic::FabBackend']]],
-  ['esp_5fserial_9',['esp_serial',['../namespacefabomatic_1_1esp32.xhtml#ac8d867c42c073a3e44e6292db72e1f94',1,'fabomatic::esp32']]],
-  ['espressif_2ecpp_10',['Espressif.cpp',['../_espressif_8cpp.xhtml',1,'']]],
-  ['espressif_2ehpp_11',['Espressif.hpp',['../_espressif_8hpp.xhtml',1,'']]],
-  ['execute_12',['execute',['../classfabomatic_1_1_tasks_1_1_scheduler.xhtml#aff9b0c44cc0bef222932a681ace0d406',1,'fabomatic::Tasks::Scheduler::execute()'],['../namespacefabomatic_1_1tests.xhtml#af731a8053ea2031b72a146436546214c',1,'fabomatic::tests::execute']]],
-  ['exit_5frequest_13',['exit_request',['../namespacefabomatic_1_1tests.xhtml#acaf37fbb67ed375298e6a277500632ae',1,'fabomatic::tests']]]
+  ['esp_5freset_5freason_5fstr_9',['esp_reset_reason_str',['../namespacefabomatic_1_1esp32.xhtml#af9bc1704643a7bc60baf970bbf09115e',1,'fabomatic::esp32']]],
+  ['esp_5fserial_5fstr_10',['esp_serial_str',['../namespacefabomatic_1_1esp32.xhtml#a96fcda8288dc79527ee9def9af138c95',1,'fabomatic::esp32']]],
+  ['espressif_2ecpp_11',['Espressif.cpp',['../_espressif_8cpp.xhtml',1,'']]],
+  ['espressif_2ehpp_12',['Espressif.hpp',['../_espressif_8hpp.xhtml',1,'']]],
+  ['execute_13',['execute',['../classfabomatic_1_1_tasks_1_1_scheduler.xhtml#aff9b0c44cc0bef222932a681ace0d406',1,'fabomatic::Tasks::Scheduler::execute()'],['../namespacefabomatic_1_1tests.xhtml#af731a8053ea2031b72a146436546214c',1,'fabomatic::tests::execute']]],
+  ['exit_5frequest_14',['exit_request',['../namespacefabomatic_1_1tests.xhtml#acaf37fbb67ed375298e6a277500632ae',1,'fabomatic::tests']]]
 ];

@@ -199,7 +199,7 @@ Public Member Functions</h2></td></tr>
 <div class="line"><span class="lineno">   39</span>    std::stringstream ss{};</div>
 <div class="line"><span class="lineno">   40</span> </div>
 <div class="line"><span class="lineno">   41</span>    <span class="comment">// Get MAC address</span></div>
-<div class="line"><span class="lineno">   42</span>    <span class="keyword">const</span> <span class="keyword">auto</span> serial = <a class="code hl_function" href="namespacefabomatic_1_1esp32.xhtml#ac8d867c42c073a3e44e6292db72e1f94">esp32::esp_serial</a>();</div>
+<div class="line"><span class="lineno">   42</span>    <span class="keyword">const</span> <span class="keyword">auto</span> serial = <a class="code hl_function" href="namespacefabomatic_1_1esp32.xhtml#a96fcda8288dc79527ee9def9af138c95">esp32::esp_serial_str</a>();</div>
 <div class="line"><span class="lineno">   43</span> </div>
 <div class="line"><span class="lineno">   44</span>    ss &lt;&lt; <span class="stringliteral">&quot;{\&quot;action\&quot;:\&quot;alive\&quot;,&quot;</span></div>
 <div class="line"><span class="lineno">   45</span>       &lt;&lt; <span class="stringliteral">&quot;\&quot;version\&quot;:\&quot;&quot;</span> &lt;&lt; FABOMATIC_BUILD &lt;&lt; <span class="stringliteral">&quot;,&quot;</span> &lt;&lt; <a class="code hl_define" href="_board_logic_8cpp.xhtml#aef0b5124fcadf80db529fcb6df42808a">GIT_VERSION</a> &lt;&lt; <span class="stringliteral">&quot;\&quot;,&quot;</span></div>
@@ -211,9 +211,9 @@ Public Member Functions</h2></td></tr>
 <div class="line"><span class="lineno">   51</span>  }</div>
 <div class="ttc" id="a_board_logic_8cpp_xhtml_aef0b5124fcadf80db529fcb6df42808a"><div class="ttname"><a href="_board_logic_8cpp.xhtml#aef0b5124fcadf80db529fcb6df42808a">GIT_VERSION</a></div><div class="ttdeci">#define GIT_VERSION</div><div class="ttdef"><b>Definition</b> <a href="_board_logic_8cpp_source.xhtml#l00021">BoardLogic.cpp:21</a></div></div>
 <div class="ttc" id="anamespacefabomatic_1_1esp32_xhtml_a07750a641e5cfe3207bbdf72813af628"><div class="ttname"><a href="namespacefabomatic_1_1esp32.xhtml#a07750a641e5cfe3207bbdf72813af628">fabomatic::esp32::getFreeHeap</a></div><div class="ttdeci">auto getFreeHeap() -&gt; uint32_t</div><div class="ttdef"><b>Definition</b> <a href="_espressif_8cpp_source.xhtml#l00088">Espressif.cpp:88</a></div></div>
-<div class="ttc" id="anamespacefabomatic_1_1esp32_xhtml_ac8d867c42c073a3e44e6292db72e1f94"><div class="ttname"><a href="namespacefabomatic_1_1esp32.xhtml#ac8d867c42c073a3e44e6292db72e1f94">fabomatic::esp32::esp_serial</a></div><div class="ttdeci">auto esp_serial() -&gt; const std::string_view</div><div class="ttdoc">Returns the ESP32 serial number as a string.</div><div class="ttdef"><b>Definition</b> <a href="_espressif_8cpp_source.xhtml#l00067">Espressif.cpp:67</a></div></div>
+<div class="ttc" id="anamespacefabomatic_1_1esp32_xhtml_a96fcda8288dc79527ee9def9af138c95"><div class="ttname"><a href="namespacefabomatic_1_1esp32.xhtml#a96fcda8288dc79527ee9def9af138c95">fabomatic::esp32::esp_serial_str</a></div><div class="ttdeci">auto esp_serial_str() -&gt; const std::string_view</div><div class="ttdoc">Returns the ESP32 serial number as a string.</div><div class="ttdef"><b>Definition</b> <a href="_espressif_8cpp_source.xhtml#l00067">Espressif.cpp:67</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_espressif_8cpp_source.xhtml#l00067">fabomatic::esp32::esp_serial()</a>, <a class="el" href="_espressif_8cpp_source.xhtml#l00088">fabomatic::esp32::getFreeHeap()</a>, and <a class="el" href="_board_logic_8cpp_source.xhtml#l00021">GIT_VERSION</a>.</p>
+<p class="reference">References <a class="el" href="_espressif_8cpp_source.xhtml#l00067">fabomatic::esp32::esp_serial_str()</a>, <a class="el" href="_espressif_8cpp_source.xhtml#l00088">fabomatic::esp32::getFreeHeap()</a>, and <a class="el" href="_board_logic_8cpp_source.xhtml#l00021">GIT_VERSION</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -259,7 +259,7 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Jul 19 2024 19:24:18 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Mon Aug 12 2024 08:05:20 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

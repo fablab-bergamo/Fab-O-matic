@@ -120,6 +120,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a4adf987c7615930e126ce08c23c7938a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a435a84ac528feedf91cc75ada2a1b4c0" id="r_a435a84ac528feedf91cc75ada2a1b4c0"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_r_f_i_d_wrapper.xhtml#a435a84ac528feedf91cc75ada2a1b4c0">getUid</a> () const -&gt; <a class="el" href="namespacefabomatic_1_1card.xhtml#aa36a4f716561b5c72d144ad55bc3e53b">card::uid_t</a> override</td></tr>
 <tr class="separator:a435a84ac528feedf91cc75ada2a1b4c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adfcc1950a0cae6eb2d1b06d898b8538c" id="r_adfcc1950a0cae6eb2d1b06d898b8538c"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_r_f_i_d_wrapper.xhtml#adfcc1950a0cae6eb2d1b06d898b8538c">setDisabledUntil</a> (const std::optional&lt; <a class="el" href="namespacefabomatic_1_1_tasks.xhtml#a1d9dcfdb65c00f111ebd0466763955b1">Tasks::time_point</a> &gt; &amp;delay) -&gt; void override</td></tr>
+<tr class="separator:adfcc1950a0cae6eb2d1b06d898b8538c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3389d5dad60b15b298798c8606243677" id="r_a3389d5dad60b15b298798c8606243677"><td class="memItemLeft" align="right" valign="top">Driver &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_r_f_i_d_wrapper.xhtml#a3389d5dad60b15b298798c8606243677">getDriver</a> ()</td></tr>
 <tr class="memdesc:a3389d5dad60b15b298798c8606243677"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the driver object for testing/simulation.  <br /></td></tr>
 <tr class="separator:a3389d5dad60b15b298798c8606243677"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -138,6 +140,8 @@ Public Member Functions</h2></td></tr>
 Private Attributes</h2></td></tr>
 <tr class="memitem:a414c071efd649a809be405eadf7022b8" id="r_a414c071efd649a809be405eadf7022b8"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; Driver &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_r_f_i_d_wrapper.xhtml#a414c071efd649a809be405eadf7022b8">driver</a></td></tr>
 <tr class="separator:a414c071efd649a809be405eadf7022b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2523df6cac98f046cc0705c717155889" id="r_a2523df6cac98f046cc0705c717155889"><td class="memItemLeft" align="right" valign="top">std::optional&lt; <a class="el" href="namespacefabomatic_1_1_tasks.xhtml#a1d9dcfdb65c00f111ebd0466763955b1">fabomatic::Tasks::time_point</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_r_f_i_d_wrapper.xhtml#a2523df6cac98f046cc0705c717155889">disabledUntil</a></td></tr>
+<tr class="separator:a2523df6cac98f046cc0705c717155889"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename Driver&gt;<br />
@@ -251,8 +255,8 @@ template&lt;typename Driver &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_r_f_i_d_wrapper_8hpp_source.xhtml#l00056">56</a> of file <a class="el" href="_r_f_i_d_wrapper_8hpp_source.xhtml">RFIDWrapper.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   56</span>{};                             <span class="comment">// Default destructor</span></div>
+<p class="definition">Definition at line <a class="el" href="_r_f_i_d_wrapper_8hpp_source.xhtml#l00059">59</a> of file <a class="el" href="_r_f_i_d_wrapper_8hpp_source.xhtml">RFIDWrapper.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   59</span>{};                            <span class="comment">// Default destructor</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -565,7 +569,63 @@ template&lt;typename Driver &gt; </div>
 
 </div>
 </div>
+<a id="adfcc1950a0cae6eb2d1b06d898b8538c" name="adfcc1950a0cae6eb2d1b06d898b8538c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adfcc1950a0cae6eb2d1b06d898b8538c">&#9670;&#160;</a></span>setDisabledUntil()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Driver &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto <a class="el" href="classfabomatic_1_1_r_f_i_d_wrapper.xhtml">fabomatic::RFIDWrapper</a>&lt; Driver &gt;::setDisabledUntil </td>
+          <td>(</td>
+          <td class="paramtype">const std::optional&lt; <a class="el" href="namespacefabomatic_1_1_tasks.xhtml#a1d9dcfdb65c00f111ebd0466763955b1">Tasks::time_point</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>delay</em></td><td>)</td>
+          <td> -&gt;  void</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implements <a class="el" href="classfabomatic_1_1_base_r_f_i_d_wrapper.xhtml#a10ce3df33381c74b77dd124272483575">fabomatic::BaseRFIDWrapper</a>.</p>
+
+</div>
+</div>
 <h2 class="groupheader">Member Data Documentation</h2>
+<a id="a2523df6cac98f046cc0705c717155889" name="a2523df6cac98f046cc0705c717155889"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2523df6cac98f046cc0705c717155889">&#9670;&#160;</a></span>disabledUntil</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Driver &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt;<a class="el" href="namespacefabomatic_1_1_tasks.xhtml#a1d9dcfdb65c00f111ebd0466763955b1">fabomatic::Tasks::time_point</a>&gt; <a class="el" href="classfabomatic_1_1_r_f_i_d_wrapper.xhtml">fabomatic::RFIDWrapper</a>&lt; Driver &gt;::disabledUntil</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_r_f_i_d_wrapper_8hpp_source.xhtml#l00022">22</a> of file <a class="el" href="_r_f_i_d_wrapper_8hpp_source.xhtml">RFIDWrapper.hpp</a>.</p>
+
+</div>
+</div>
 <a id="a414c071efd649a809be405eadf7022b8" name="a414c071efd649a809be405eadf7022b8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a414c071efd649a809be405eadf7022b8">&#9670;&#160;</a></span>driver</h2>
 
@@ -598,7 +658,7 @@ template&lt;typename Driver &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Jul 19 2024 19:24:18 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Mon Aug 12 2024 08:05:20 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

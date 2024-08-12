@@ -18,7 +18,7 @@ var searchData=
   ['getlcd_15',['getLcd',['../classfabomatic_1_1_board_logic.xhtml#a462b4b6149ca7bf33b699eb3181c969f',1,'fabomatic::BoardLogic']]],
   ['getmachine_16',['getMachine',['../classfabomatic_1_1_board_logic.xhtml#a164e40105242d0b7c56c6b4f21155101',1,'fabomatic::BoardLogic']]],
   ['getmachinefortesting_17',['getMachineForTesting',['../classfabomatic_1_1_board_logic.xhtml#a8332053c1e3343652632bde1a81a9ff4',1,'fabomatic::BoardLogic']]],
-  ['getmachineid_18',['getmachineid',['../classfabomatic_1_1_saved_config.xhtml#aacdd24d958b88dfa41d81fb9e2db959b',1,'fabomatic::SavedConfig::getMachineID()'],['../classfabomatic_1_1_machine.xhtml#a8bde1bdf40d146c521b623d54e2df1cf',1,'fabomatic::Machine::getMachineId() const -&gt; MachineID']]],
+  ['getmachineid_18',['getmachineid',['../classfabomatic_1_1_machine.xhtml#a8bde1bdf40d146c521b623d54e2df1cf',1,'fabomatic::Machine::getMachineId()'],['../classfabomatic_1_1_saved_config.xhtml#aacdd24d958b88dfa41d81fb9e2db959b',1,'fabomatic::SavedConfig::getMachineID()']]],
   ['getmachinename_19',['getMachineName',['../classfabomatic_1_1_machine.xhtml#a1637e99f2d70262d2ab26f69ed4f0e47',1,'fabomatic::Machine']]],
   ['getmaintenanceinfo_20',['getMaintenanceInfo',['../classfabomatic_1_1_machine.xhtml#ad511c567c7cb7487d19019550c9a4e32',1,'fabomatic::Machine']]],
   ['getmessage_21',['getMessage',['../classfabomatic_1_1_buffer.xhtml#a6301e1ea47622d36474ee031a17b9bb4',1,'fabomatic::Buffer']]],
