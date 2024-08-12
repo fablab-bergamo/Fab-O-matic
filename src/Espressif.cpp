@@ -64,7 +64,7 @@ namespace fabomatic::esp32
   }
 
   /// @brief Returns the ESP32 serial number as a string
-  [[nodiscard]] auto esp_serial() -> const std::string_view
+  [[nodiscard]] auto esp_serial_str() -> const std::string_view
   {
     static std::array<char, 13> result; // +1 for null termination
 
@@ -95,4 +95,44 @@ namespace fabomatic::esp32
     esp_restart();
   }
 
+  auto esp_reset_reason_str() -> const std::string_view
+  {
+    switch (esp_reset_reason())
+    {
+    case ESP_RST_UNKNOWN: //!< Reset reason can not be determined
+      return "Unknown";
+    case ESP_RST_POWERON: //!< Reset due to power-on event
+      return "Power-on reset";
+    case ESP_RST_EXT: //!< Reset by external pin (not applicable for ESP32)
+      return "External pin reset";
+    case ESP_RST_SW: //!< Software reset via esp_restart
+      return "Software reset";
+    case ESP_RST_PANIC: //!< Software reset due to exception/panic
+      return "Panic";
+    case ESP_RST_INT_WDT: //!< Reset (software or hardware) due to interrupt watchdog
+      return "Interrupt watchdog reset";
+    case ESP_RST_TASK_WDT: //!< Reset due to task watchdog
+      return "Task watchdog reset";
+    case ESP_RST_WDT: //!< Reset due to other watchdogs
+      return "Watchdog reset";
+    case ESP_RST_DEEPSLEEP: //!< Reset after exiting deep sleep mode
+      return "Deepsleep exit";
+    case ESP_RST_BROWNOUT: //!< Brownout reset (software or hardware)
+      return "Brownout";
+    case ESP_RST_SDIO: //!< Reset over SDIO
+      return "SDIO reset";
+    case ESP_RST_USB: //!< Reset by USB peripheral
+      return "USB reset";
+    case ESP_RST_JTAG: //!< Reset by JTAG
+      return "JTAG reset";
+    case ESP_RST_EFUSE: //!< Reset due to efuse error
+      return "EFUSE error";
+    case ESP_RST_PWR_GLITCH: //!< Reset due to power glitch detected
+      return "Power glitch";
+    case ESP_RST_CPU_LOCKUP: //!< Reset due to CPU lock up
+      return "CPU lock up";
+    default:
+      return "UNKNOWN";
+    }
+  }
 }

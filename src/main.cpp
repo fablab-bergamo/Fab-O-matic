@@ -222,7 +222,7 @@ namespace fabomatic
     }
 
     // Skip factory reset for this specific board because Factory Reset is soldered under the MCU with the reset pin.
-    if (const auto &serial = esp32::esp_serial(); serial == "dcda0c419794")
+    if (const auto &serial = esp32::esp_serial_str(); serial == "dcda0c419794")
     {
       pinMode(pins.buttons.factory_defaults_pin, INPUT); // Disable pull-up/pull-downs
       return;
@@ -447,7 +447,7 @@ void setup()
   hw_init &= logic.initBoard();
 
   [[maybe_unused]] const auto count = fabomatic::SavedConfig::IncrementBootCount();
-  ESP_LOGI(TAG, "Boot count: %d, reset reason: %d", count, esp_reset_reason());
+  ESP_LOGI(TAG, "Boot count: %d, reset reason: %s", count, fabomatic::esp32::esp_reset_reason_str().data());
 
   logic.changeStatus(Status::Booting);
 

@@ -11,9 +11,10 @@ namespace fabomatic::esp32
   auto signalWatchdog() -> bool;
   auto showHeapStats() -> void;
   auto removeWatchdog() -> void;
-  [[nodiscard]] auto esp_serial() -> const std::string_view;
+  [[nodiscard]] auto esp_serial_str() -> const std::string_view;
   auto getFreeHeap() -> uint32_t;
+  [[nodiscard]] auto esp_reset_reason_str() -> const std::string_view;
   [[noreturn]] auto restart() -> void;
-}
+} // namespace fabomatic::esp32
 
 #endif // ESPRESSIF_HPP
