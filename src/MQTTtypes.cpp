@@ -39,7 +39,7 @@ namespace fabomatic::MQTTInterface
     std::stringstream ss{};
 
     // Get MAC address
-    const auto serial = esp32::esp_serial();
+    const auto serial = esp32::esp_serial_str();
 
     ss << "{\"action\":\"alive\","
        << "\"version\":\"" << FABOMATIC_BUILD << "," << GIT_VERSION << "\","
@@ -148,4 +148,4 @@ namespace fabomatic::MQTTInterface
     auto response = std::make_unique<SimpleResponse>(doc["request_ok"].as<bool>());
     return response;
   }
-} // namespace fabomatic::MQTT
+} // namespace fabomatic::MQTTInterface

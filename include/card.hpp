@@ -8,7 +8,6 @@
 #include "conf.hpp"
 
 #include "Logging.hpp"
-#include <esp_mac.h>
 
 namespace fabomatic::card
 {

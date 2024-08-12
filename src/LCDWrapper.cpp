@@ -155,7 +155,7 @@ namespace fabomatic
   void LCDWrapper::prettyPrint(const DisplayBuffer &buf,
                                const BoardInfo &bi) const
   {
-    std::stringstream ss;
+    std::stringstream ss{};
     ss << "/" << std::string(conf::lcd::COLS, '-') << "\\\r\n"; // LCD top
 
     for (const auto &row : buf)

@@ -34,7 +34,7 @@ namespace fabomatic
   }
 
   template <typename Driver>
-  [[nodiscard]] auto RFIDWrapper<Driver>::setDisabledUntil(std::optional<Tasks::time_point> delay) -> void
+  [[nodiscard]] auto RFIDWrapper<Driver>::setDisabledUntil(const std::optional<Tasks::time_point> &delay) -> void
   {
     this->disabledUntil = delay;
   }

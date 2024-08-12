@@ -15,9 +15,9 @@ namespace fabomatic
   /// @brief Message that can be saved in Flash for future replay
   struct BufferedMsg
   {
-    std::string mqtt_message;
-    std::string mqtt_topic;
-    bool wait_for_answer;
+    std::string mqtt_message{};
+    std::string mqtt_topic{};
+    bool wait_for_answer = false;
     BufferedMsg() = default;
     BufferedMsg(const std::string &message, const std::string &topic, bool wait) : mqtt_message(message), mqtt_topic(topic), wait_for_answer{wait} {};
     BufferedMsg(const BufferedMsg &source) = default;

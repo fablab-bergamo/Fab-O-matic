@@ -137,7 +137,7 @@ namespace fabomatic::Tasks
 
   auto Task::toString() const -> const std::string
   {
-    std::stringstream ss;
+    std::stringstream ss{};
     ss << "Task " << getId() << ", active=" << active
        << ",Period(ms)=" << period << ", Delay(ms)=" << delay
        << ",Last run=" << last_run.time_since_epoch()

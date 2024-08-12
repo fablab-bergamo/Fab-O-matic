@@ -483,11 +483,9 @@ namespace fabomatic
       {
         return true;
       }
-      else
-      {
-        ESP_LOGW(TAG, "Failed to publish query %s", query.payload().data());
-        this->disconnect();
-      }
+
+      ESP_LOGW(TAG, "Failed to publish query %s", query.payload().data());
+      this->disconnect();
     }
 
     if (query.buffered())
@@ -580,7 +578,7 @@ namespace fabomatic
    *
    * @param channel The channel number.
    */
-  void FabBackend::setChannel(int32_t channel)
+  void FabBackend::setChannel(int16_t channel)
   {
     this->channel = channel;
   }

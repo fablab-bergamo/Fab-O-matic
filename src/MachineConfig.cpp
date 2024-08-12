@@ -5,7 +5,7 @@ namespace fabomatic
 {
   auto MachineConfig::toString() const -> const std::string
   {
-    std::stringstream sstream;
+    std::stringstream sstream{};
 
     sstream << "MachineConfig (ID:" << machine_id.id;
     sstream << ", Name:" << machine_name;

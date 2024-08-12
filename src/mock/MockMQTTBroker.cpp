@@ -161,7 +161,7 @@ namespace fabomatic
                                        });
         if (elem != secrets::cards::whitelist.end())
         {
-          std::stringstream ss;
+          std::stringstream ss{};
           const auto &[id, level, name] = *elem;
           ss << "{\"request_ok\":true,\"is_valid\":" << (level != FabUser::UserLevel::Unknown ? "true" : "false")
              << ",\"level\":" << +static_cast<uint8_t>(level)
@@ -170,7 +170,7 @@ namespace fabomatic
         }
 
         // Still return a valid user
-        std::stringstream ss;
+        std::stringstream ss{};
         ss << "{\"request_ok\":true,\"is_valid\":true,\"level\":" << +2
            << ",\"name\":\"User" << uid_str << "\"}";
         return ss.str();

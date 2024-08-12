@@ -92,7 +92,7 @@ namespace fabomatic
 
     auto configure(const SavedConfig &config) -> void; // Must be called before using the server
     auto disconnect() -> void;
-    auto setChannel(int32_t channel) -> void;
+    auto setChannel(int16_t channel) -> void;
 
     // Rule of 5 https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rc-five
     FabBackend(const FabBackend &) = delete;            // copy constructor
