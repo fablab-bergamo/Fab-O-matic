@@ -132,13 +132,16 @@ namespace fabomatic::tests
 
   void test_esp32()
   {
-    auto result = fabomatic::esp32::esp_serial();
+    auto result = fabomatic::esp32::esp_serial_str();
     TEST_ASSERT_GREATER_OR_EQUAL_UINT32_MESSAGE(0, result.length(), "ESP32 serial must be non empty");
     auto mem_free = fabomatic::esp32::getFreeHeap();
     TEST_ASSERT_GREATER_OR_EQUAL_UINT32_MESSAGE(0, mem_free, "ESP32 mem free must be > 0");
     fabomatic::esp32::showHeapStats();
     TEST_ASSERT_TRUE_MESSAGE(fabomatic::esp32::setupWatchdog(30s), "Watchdog setup");
+    TEST_ASSERT_TRUE_MESSAGE(fabomatic::esp32::signalWatchdog(), "Watchdog signalling");
     fabomatic::esp32::removeWatchdog();
+    auto reset = fabomatic::esp32::esp_reset_reason_str();
+    TEST_ASSERT_TRUE_MESSAGE(reset.length() > 0, "Valid reset code");
   }
 } // namespace fabomatic::tests
 
