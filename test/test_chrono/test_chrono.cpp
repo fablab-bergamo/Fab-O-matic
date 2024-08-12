@@ -8,6 +8,8 @@
 #include "Tasks.hpp"
 #include "Logging.hpp"
 #include "Espressif.hpp"
+#include "card.hpp"
+#include "secrets.hpp"
 
 [[maybe_unused]] static const char *TAG4 = "test_chrono";
 
@@ -25,6 +27,20 @@ namespace fabomatic::tests
   void setUp(void)
   {
     // set stuff up here
+  }
+
+  void test_card(void)
+  {
+    for (const auto &[uid, level, name] : secrets::cards::whitelist)
+    {
+      auto str_val = card::uid_str(uid);
+      auto uid2 = card::str_uid(str_val);
+      auto arr1 = card::to_array(uid);
+      auto uid3 = card::from_array(arr1);
+
+      TEST_ASSERT_TRUE_MESSAGE(uid2 == uid, "Card UID: string conversion data loss");
+      TEST_ASSERT_TRUE_MESSAGE(uid3 == uid, "Card UID: array conversion data loss");
+    }
   }
 
   void test_steady_clock(void)
@@ -58,6 +74,7 @@ void setup()
   esp_log_level_set(TAG4, LOG_LOCAL_LEVEL);
   UNITY_BEGIN();
   RUN_TEST(fabomatic::tests::test_steady_clock);
+  RUN_TEST(fabomatic::tests::test_card);
   UNITY_END(); // stop unit testing
 }
 

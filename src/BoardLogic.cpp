@@ -652,4 +652,26 @@ namespace fabomatic
            std::to_string(conf::default_config::machine_id.id);
   }
 
+  auto BoardLogic::processBackendRequests() -> void
+  {
+    auto &backend = getServer();
+    if (auto result = backend.checkBackendRequest(); result.has_value())
+    {
+      auto req = result->get();
+      FabUser fu{req->requester, "BACKEND", true, FabUser::UserLevel::FabAdmin};
+
+      if (req->request_type == "start")
+      {
+        logout();
+        if (!authorize(fu.card_uid))
+        {
+          ESP_LOGE(TAG, "Failure to execute start request from backend");
+        }
+      }
+      if (req->request_type == "stop")
+      {
+        logout();
+      }
+    }
+  }
 } // namespace fabomatic

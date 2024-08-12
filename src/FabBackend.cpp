@@ -245,10 +245,22 @@ namespace fabomatic
    */
   void FabBackend::messageReceived(String &s_topic, String &s_payload)
   {
-    ESP_LOGI(TAG, "MQTT Client: Received on %s -> %s", s_topic.c_str(), s_payload.c_str());
+    ESP_LOGI(TAG, "MQTT Client: Reply received on %s -> %s", s_topic.c_str(), s_payload.c_str());
 
     last_reply.assign(s_payload.c_str());
     answer_pending = false;
+  }
+
+  /**
+   * @brief Callback function for received MQTT request.
+   *
+   * @param s_topic The topic the message was received on.
+   * @param s_payload The payload of the message.
+   */
+  void FabBackend::requestReceived(String &s_topic, String &s_payload)
+  {
+    ESP_LOGI(TAG, "MQTT Client: Request received on %s -> %s", s_topic.c_str(), s_payload.c_str());
+    last_request.assign(s_payload.c_str());
   }
 
   /**
@@ -327,10 +339,13 @@ namespace fabomatic
 
       client.begin(ip, conf::mqtt::PORT_NUMBER, wifi_client);
 
-      callback = [&](String &a, String &b)
+      callback_resp = [&](String &a, String &b)
       { return messageReceived(a, b); };
 
-      client.onMessage(callback);
+      callback_req = [&](String &a, String &b)
+      { return requestReceived(a, b); };
+
+      client.onMessage(callback_resp);
 
       if (!client.connect(mqtt_client_name.c_str(),
                           mqtt_user.c_str(),
@@ -343,7 +358,7 @@ namespace fabomatic
       // Setup subscriptions
       if (client.connected())
       {
-        std::stringstream tmp_topic;
+        std::stringstream tmp_topic{};
         tmp_topic << topic << conf::mqtt::response_topic;
         response_topic.assign(tmp_topic.str());
 
@@ -356,6 +371,21 @@ namespace fabomatic
           ESP_LOGD(TAG, "MQTT Client: subscribed to reply topic %s", response_topic.c_str());
           online = true;
         }
+
+        tmp_topic.clear();
+        tmp_topic << topic << conf::mqtt::request_topic;
+        request_topic.assign(tmp_topic.str());
+
+        if (!client.subscribe(request_topic.c_str()))
+        {
+          ESP_LOGE(TAG, "MQTT Client: failure to subscribe to requests topic %s", request_topic.c_str());
+        }
+        else
+        {
+          ESP_LOGD(TAG, "MQTT Client: subscribed to requests topic %s", request_topic.c_str());
+          online = true;
+        }
+
         // Announce the board to the server
         if (auto query = MQTTInterface::AliveQuery{}; publish(query) == PublishResult::PublishedWithoutAnswer)
         {
@@ -622,7 +652,7 @@ namespace fabomatic
         }
       }
     }
-    last_reply = "";
+    last_reply.clear();
 
     ESP_LOGW(TAG, "Retransmittion completed, remaining messages=%d", buffer.count());
     return !hasBufferedMsg();
@@ -655,4 +685,25 @@ namespace fabomatic
     buffer.setChanged(false);
     ESP_LOGI(TAG, "Loaded buffer with %d messages", buffer.count());
   }
+
+  auto FabBackend::checkBackendRequest() -> std::optional<std::unique_ptr<MQTTInterface::BackendRequest>>
+  {
+    if (!this->last_request.empty())
+    {
+      const auto payload = last_request.c_str();
+      if (DeserializationError error = deserializeJson(doc, payload))
+      {
+        ESP_LOGE(TAG, "Failed to parse json: %s (%s)", payload, error.c_str());
+        last_request.clear();
+        return std::nullopt;
+      }
+
+      last_request.clear();
+
+      auto resp = MQTTInterface::BackendRequest::fromJson(doc);
+      return resp;
+    }
+    return std::nullopt;
+  }
+
 } // namespace fabomatic

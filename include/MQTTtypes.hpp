@@ -29,7 +29,7 @@ namespace fabomatic::MQTTInterface
     const card::uid_t uid;
 
     UserQuery() = delete;
-    constexpr UserQuery(card::uid_t card_uid) : uid(card_uid){};
+    constexpr UserQuery(card::uid_t card_uid) : uid(card_uid) {};
 
     [[nodiscard]] auto waitForReply() const -> bool override { return true; };
     [[nodiscard]] auto payload() const -> const std::string override;
@@ -63,7 +63,7 @@ namespace fabomatic::MQTTInterface
     const card::uid_t uid;
 
     StartUseQuery() = delete;
-    constexpr StartUseQuery(card::uid_t card_uid) : uid(card_uid){};
+    constexpr StartUseQuery(card::uid_t card_uid) : uid(card_uid) {};
 
     [[nodiscard]] auto payload() const -> const std::string override;
     [[nodiscard]] auto waitForReply() const -> bool override { return true; };
@@ -83,7 +83,7 @@ namespace fabomatic::MQTTInterface
     /// @param card_uid machine user card id
     /// @param mid machine id
     /// @param duration duration of usage, in seconds
-    constexpr StopUseQuery(card::uid_t card_uid, std::chrono::seconds duration) : uid(card_uid), duration_s(duration){};
+    constexpr StopUseQuery(card::uid_t card_uid, std::chrono::seconds duration) : uid(card_uid), duration_s(duration) {};
     [[nodiscard]] auto payload() const -> const std::string override;
     [[nodiscard]] auto waitForReply() const -> bool override { return true; };
     [[nodiscard]] auto buffered() const -> bool override { return true; };
@@ -102,7 +102,7 @@ namespace fabomatic::MQTTInterface
     /// @param card_uid machine user card id
     /// @param mid machine id
     /// @param duration duration of usage, in seconds
-    constexpr InUseQuery(card::uid_t card_uid, std::chrono::seconds duration) : uid(card_uid), duration_s(duration){};
+    constexpr InUseQuery(card::uid_t card_uid, std::chrono::seconds duration) : uid(card_uid), duration_s(duration) {};
     [[nodiscard]] auto payload() const -> const std::string override;
     [[nodiscard]] auto waitForReply() const -> bool override { return true; };
     [[nodiscard]] auto buffered() const -> bool override { return false; };
@@ -115,7 +115,7 @@ namespace fabomatic::MQTTInterface
     const card::uid_t uid;
 
     RegisterMaintenanceQuery() = delete;
-    constexpr RegisterMaintenanceQuery(card::uid_t card_uid) : uid(card_uid){};
+    constexpr RegisterMaintenanceQuery(card::uid_t card_uid) : uid(card_uid) {};
 
     [[nodiscard]] auto payload() const -> const std::string override;
     [[nodiscard]] auto waitForReply() const -> bool override { return true; };
@@ -129,7 +129,7 @@ namespace fabomatic::MQTTInterface
     const bool request_ok{false}; /* True if the request was processed by the server */
 
     Response() = delete;
-    constexpr Response(bool result) : request_ok(result){};
+    constexpr Response(bool result) : request_ok(result) {};
   };
 
   /// @brief Result code for user authentication result
@@ -150,10 +150,10 @@ namespace fabomatic::MQTTInterface
     FabUser::UserLevel user_level{FabUser::UserLevel::Unknown}; /* User priviledges */
 
     UserResponse() = delete;
-    UserResponse(bool rok) : Response(rok){};
+    UserResponse(bool rok) : Response(rok) {};
 
     UserResponse(bool rok, UserResult res) : Response(rok),
-                                             result(static_cast<uint8_t>(res)){};
+                                             result(static_cast<uint8_t>(res)) {};
 
     [[nodiscard]] static auto fromJson(JsonDocument &doc) -> std::unique_ptr<UserResponse>;
 
@@ -174,7 +174,7 @@ namespace fabomatic::MQTTInterface
     uint16_t grace{0};           /* Grace period in minutes */
     std::string description{""}; /* Description of the expired maintenance */
     MachineResponse() = delete;
-    MachineResponse(bool rok) : Response(rok){};
+    MachineResponse(bool rok) : Response(rok) {};
 
     [[nodiscard]] static auto fromJson(JsonDocument &doc) -> std::unique_ptr<MachineResponse>;
   };
@@ -184,10 +184,19 @@ namespace fabomatic::MQTTInterface
   {
   public:
     SimpleResponse() = delete;
-    constexpr SimpleResponse(bool rok) : Response(rok){};
+    constexpr SimpleResponse(bool rok) : Response(rok) {};
 
     [[nodiscard]] static auto fromJson(JsonDocument &doc) -> std::unique_ptr<SimpleResponse>;
   };
 
+  /// @brief Class for server request
+  class BackendRequest
+  {
+  public:
+    card::uid_t requester;
+    std::string request_type;
+    BackendRequest(const card::uid_t &uid, const std::string &request) : requester{uid}, request_type(request) {};
+    [[nodiscard]] static auto fromJson(const JsonDocument &doc) -> std::optional<std::unique_ptr<BackendRequest>>;
+  };
 } // namespace fabomatic::MQTTInterface
 #endif // MQTTTYPES_HPP_

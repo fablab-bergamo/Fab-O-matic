@@ -79,6 +79,7 @@ namespace fabomatic
     [[nodiscard]] auto getMachine() const -> const Machine &;
     [[nodiscard]] auto authorize(const card::uid_t uid) -> bool;
     [[nodiscard]] auto getHostname() const -> const std::string;
+    auto processBackendRequests() -> void;
 
     // copy reference
     BoardLogic &operator=(const BoardLogic &board) = delete;

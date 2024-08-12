@@ -144,6 +144,9 @@ namespace fabomatic
     /// @brief Backend reply (sub-topic of the full machine topic)
     static constexpr std::string_view response_topic{"/reply"};
 
+    /// @brief Backend requests (sub-topic of the full machine topic)
+    static constexpr std::string_view request_topic{"/request"};
+
     /// @brief Number of tries to get a reply from the backend
     static constexpr auto MAX_TRIES{2};
 
