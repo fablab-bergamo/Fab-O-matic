@@ -21,14 +21,14 @@ namespace fabomatic
   {
     const auto result = driver->PICC_IsNewCardPresent();
 
-    if (conf::debug::ENABLE_LOGS && result)
-      ESP_LOGD(TAG, "isNewCardPresent=%d", result);
-
-    if (disabledUntil && disabledUntil > fabomatic::Tasks::arduinoNow())
+    if (disabledUntil.has_value() && disabledUntil > fabomatic::Tasks::arduinoNow())
     {
       ESP_LOGD(TAG, "isNewCardPresent is disabled");
       return false;
     }
+
+    if (conf::debug::ENABLE_LOGS && result)
+      ESP_LOGD(TAG, "isNewCardPresent=%d", result);
 
     return result;
   }

@@ -40,8 +40,7 @@ namespace fabomatic
     std::string mqtt_password{""};
     std::string mqtt_client_name{""};
 
-    MQTTClientCallbackSimpleFunction callback_resp;
-    MQTTClientCallbackSimpleFunction callback_req;
+    MQTTClientCallbackSimpleFunction callback;
     WiFiClient wifi_client;
 
     std::string topic{""};

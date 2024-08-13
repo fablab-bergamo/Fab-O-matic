@@ -30,12 +30,6 @@ fabomatic::BoardLogic logic;
 
 using BoardLogic = fabomatic::BoardLogic;
 
-constexpr fabomatic::card::uid_t get_test_uid(size_t idx)
-{
-  auto [card_uid, level, name] = fabomatic::tests::test_whitelist[idx];
-  return card_uid;
-}
-
 namespace fabomatic::tests
 {
   void test_machine_defaults()

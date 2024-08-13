@@ -245,22 +245,23 @@ namespace fabomatic
    */
   void FabBackend::messageReceived(String &s_topic, String &s_payload)
   {
-    ESP_LOGI(TAG, "MQTT Client: Reply received on %s -> %s", s_topic.c_str(), s_payload.c_str());
+    ESP_LOGI(TAG, "MQTT Client: message received on %s -> %s", s_topic.c_str(), s_payload.c_str());
 
-    last_reply.assign(s_payload.c_str());
-    answer_pending = false;
-  }
-
-  /**
-   * @brief Callback function for received MQTT request.
-   *
-   * @param s_topic The topic the message was received on.
-   * @param s_payload The payload of the message.
-   */
-  void FabBackend::requestReceived(String &s_topic, String &s_payload)
-  {
-    ESP_LOGI(TAG, "MQTT Client: Request received on %s -> %s", s_topic.c_str(), s_payload.c_str());
-    last_request.assign(s_payload.c_str());
+    // Needed for equality test below
+    std::string_view view_topic{s_topic.c_str()};
+    if (view_topic == this->response_topic)
+    {
+      last_reply.assign(s_payload.c_str());
+      answer_pending = false;
+    }
+    else if (view_topic == this->request_topic)
+    {
+      last_request.assign(s_payload.c_str());
+    }
+    else if (view_topic != this->topic)
+    {
+      ESP_LOGW(TAG, "MQTT Client: unrecognized topic %s", s_topic.c_str());
+    }
   }
 
   /**
@@ -339,13 +340,10 @@ namespace fabomatic
 
       client.begin(ip, conf::mqtt::PORT_NUMBER, wifi_client);
 
-      callback_resp = [&](String &a, String &b)
+      callback = [&](String &a, String &b)
       { return messageReceived(a, b); };
 
-      callback_req = [&](String &a, String &b)
-      { return requestReceived(a, b); };
-
-      client.onMessage(callback_resp);
+      client.onMessage(callback);
 
       if (!client.connect(mqtt_client_name.c_str(),
                           mqtt_user.c_str(),
@@ -358,9 +356,9 @@ namespace fabomatic
       // Setup subscriptions
       if (client.connected())
       {
-        std::stringstream tmp_topic{};
-        tmp_topic << topic << conf::mqtt::response_topic;
-        response_topic.assign(tmp_topic.str());
+        std::stringstream ss_resp{};
+        ss_resp << topic << conf::mqtt::response_topic;
+        response_topic.assign(ss_resp.str());
 
         if (!client.subscribe(response_topic.c_str()))
         {
@@ -372,9 +370,9 @@ namespace fabomatic
           online = true;
         }
 
-        tmp_topic.clear();
-        tmp_topic << topic << conf::mqtt::request_topic;
-        request_topic.assign(tmp_topic.str());
+        std::stringstream ss_req{};
+        ss_req << topic << conf::mqtt::request_topic;
+        request_topic.assign(ss_req.str());
 
         if (!client.subscribe(request_topic.c_str()))
         {
@@ -700,8 +698,7 @@ namespace fabomatic
 
       last_request.clear();
 
-      auto resp = MQTTInterface::BackendRequest::fromJson(doc);
-      return resp;
+      return MQTTInterface::BackendRequest::fromJson(doc);
     }
     return std::nullopt;
   }
