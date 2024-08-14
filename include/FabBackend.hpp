@@ -45,8 +45,10 @@ namespace fabomatic
 
     std::string topic{""};
     std::string response_topic{""};
+    std::string request_topic{""};
     std::string last_query{""};
     std::string last_reply{""};
+    std::string last_request{""};
 
     bool online{false};
     bool answer_pending{false};
@@ -55,6 +57,7 @@ namespace fabomatic
     Buffer buffer;
 
     auto messageReceived(String &topic, String &payload) -> void;
+    auto requestReceived(String &topic, String &payload) -> void;
 
     template <typename QueryT>
     [[nodiscard]] auto publish(const QueryT &payload) -> PublishResult;
@@ -85,6 +88,8 @@ namespace fabomatic
     [[nodiscard]] auto hasBufferedMsg() const -> bool;
     [[nodiscard]] auto transmitBuffer() -> bool;
     [[nodiscard]] auto saveBuffer() -> bool;
+
+    [[nodiscard]] auto checkBackendRequest() -> std::optional<std::unique_ptr<MQTTInterface::BackendRequest>>;
 
     auto connect() -> bool;
     auto connectWiFi() -> bool;

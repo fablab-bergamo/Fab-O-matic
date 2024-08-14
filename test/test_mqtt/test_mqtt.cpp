@@ -18,6 +18,7 @@
 #include <Arduino.h>
 #include <unity.h>
 #include "LiquidCrystal.h"
+#include "../test_logic/test_common.h"
 
 using namespace std::chrono_literals;
 
@@ -35,6 +36,57 @@ namespace fabomatic::tests
   fabomatic::Tasks::Scheduler test_scheduler;
 
   std::atomic<bool> exit_request{false};
+
+  void busyWait(std::chrono::seconds d = 5s)
+  {
+    auto start = fabomatic::Tasks::arduinoNow();
+    while (fabomatic::Tasks::arduinoNow() - start <= d)
+    {
+      test_scheduler.execute();
+      delay(25);
+    }
+  }
+
+  /// @brief  Simulates RFID card tap
+  /// @param rfid RFID wrapper for simulation
+  /// @param logic Board logic, the checkRfid() method will be called repeatedly
+  /// @param uid card UID to tap
+  /// @param duration_tap duration of the tap. pass milliseconds::max() to keep the card in the field
+  /// @return
+  BoardLogic::Status simulate_rfid_card(RFIDWrapper<MockMrfc522> &rfid, BoardLogic &logic, std::optional<card::uid_t> uid,
+                                        std::optional<std::chrono::milliseconds> duration_tap)
+  {
+    constexpr auto DEFAULT_CYCLES = 3;
+
+    MockMrfc522 &driver = rfid.getDriver();
+
+    driver.resetUid();
+    rfid.setDisabledUntil(std::nullopt);
+
+    for (auto i = 0; i < DEFAULT_CYCLES; i++)
+    {
+      logic.checkRfid();
+      rfid.setDisabledUntil(std::nullopt);
+    }
+
+    if (uid.has_value())
+    {
+      driver.setUid(uid.value(), duration_tap);
+      TEST_ASSERT_TRUE_MESSAGE(uid == rfid.getUid(), "Card UID not equal");
+      auto start = fabomatic::Tasks::arduinoNow();
+      do
+      {
+        logic.checkRfid();
+        rfid.setDisabledUntil(std::nullopt);
+        delay(50);
+      } while (duration_tap.has_value() && fabomatic::Tasks::arduinoNow() - start < duration_tap);
+    }
+    else if (duration_tap)
+    {
+      delay(duration_tap.value().count());
+    }
+    return logic.getStatus();
+  }
 
   void *threadMQTTServer(void *arg)
   {
@@ -245,6 +297,7 @@ namespace fabomatic::tests
   void test_taskCheckRfid()
   {
     logic.checkRfid();
+    logic.processBackendRequests();
   }
 
   /// @brief blink led
@@ -341,6 +394,57 @@ namespace fabomatic::tests
     // Remove the HW Watchdog
     esp32::removeWatchdog();
   }
+
+  void test_backend_commands()
+  {
+    constexpr auto millis_delay = std::chrono::duration_cast<std::chrono::milliseconds>(conf::machine::DELAY_BETWEEN_SWEEPS).count();
+    delay(millis_delay);
+    auto card1 = get_test_uid(2);
+    auto card2 = get_test_uid(1);
+
+    TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::MachineFree, logic.getStatus(), "Status not MachineFree (0)");
+
+    simulate_rfid_card(rfid, logic, card1);
+    TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::LoggedIn, logic.getStatus(), "Status not LoggedIn (0)");
+    // Card away
+    simulate_rfid_card(rfid, logic, std::nullopt);
+
+    std::stringstream ss{}, ss2{}, ss3{};
+    ss3 << conf::mqtt::topic << "/" << logic.getMachine().getMachineId().id << conf::mqtt::request_topic;
+    std::string topic = ss3.str();
+
+    ss << "{\"request_type\":\"stop\","
+       << "\"uid\":\"" << card::uid_str(card2) << "\""
+       << "}";
+    std::string payload_stop = ss.str();
+    broker.publish(topic, payload_stop);
+
+    busyWait(5s);
+
+    // Stop request has been processed
+    TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::MachineFree, logic.getStatus(), "Status not MachineFree (1)");
+    TEST_ASSERT_TRUE_MESSAGE(logic.getMachine().isFree(), "Machine should be available");
+
+    ss2 << "{\"request_type\":\"start\","
+        << "\"uid\":\"" << card::uid_str(card2) << "\""
+        << "}";
+    std::string payload_start = ss2.str();
+    broker.publish(topic, payload_start);
+
+    busyWait(5s);
+
+    // Start request has been processed
+    TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::MachineInUse, logic.getStatus(), "Status not MachineInUse (2)");
+    TEST_ASSERT_TRUE_MESSAGE(!logic.getMachine().isFree(), "Machine should not be available");
+    TEST_ASSERT_TRUE_MESSAGE(logic.getMachine().getActiveUser().card_uid == card2, "Wrong active user");
+
+    broker.publish(topic, payload_stop);
+
+    busyWait(5s);
+
+    // Stop request has been processed
+    TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::MachineFree, logic.getStatus(), "Status not MachineFree (2)");
+  }
 } // namespace fabomatic::Tests
 
 void tearDown(void) {};
@@ -365,6 +469,7 @@ void setup()
   RUN_TEST(fabomatic::tests::test_check_transmission);
   RUN_TEST(fabomatic::tests::test_fabserver_calls);
   RUN_TEST(fabomatic::tests::test_normal_use);
+  RUN_TEST(fabomatic::tests::test_backend_commands);
   RUN_TEST(fabomatic::tests::test_stop_broker);
 
   UNITY_END(); // stop unit testing

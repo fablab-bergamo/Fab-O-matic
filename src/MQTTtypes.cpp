@@ -148,4 +148,16 @@ namespace fabomatic::MQTTInterface
     auto response = std::make_unique<SimpleResponse>(doc["request_ok"].as<bool>());
     return response;
   }
+
+  auto BackendRequest::fromJson(const JsonDocument &doc) -> std::optional<std::unique_ptr<BackendRequest>>
+  {
+    if (doc.containsKey("request_type") && doc.containsKey("uid"))
+    {
+      const auto request = doc["request_type"].as<std::string>();
+      const auto struid = doc["uid"].as<std::string>();
+      return std::make_unique<BackendRequest>(card::str_uid(struid), request);
+    }
+    ESP_LOGW(TAG, "Cannot decode backend request from JsonDocument");
+    return std::nullopt;
+  }
 } // namespace fabomatic::MQTTInterface

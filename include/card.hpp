@@ -32,6 +32,22 @@ namespace fabomatic::card
   }
 
   /**
+   * @brief Returns an UID from its string representation
+   * @param str hex string to convert
+   * @return uid value
+   */
+  [[nodiscard]] inline auto str_uid(const std::string &str) -> card::uid_t
+  {
+    uint64_t ll_value;
+
+    std::stringstream ss{};
+    ss << std::hex << str;
+    ss >> ll_value;
+
+    return ll_value;
+  }
+
+  /**
    * @brief Converts a UID from an array of bytes to a number
    * @param uid array of bytes
    * @return the UID as a number

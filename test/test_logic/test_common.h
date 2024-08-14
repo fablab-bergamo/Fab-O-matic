@@ -34,6 +34,12 @@ namespace fabomatic::tests
                                         std::optional<std::chrono::milliseconds> duration_tap = std::nullopt);
 
   void machine_init(BoardLogic &logic, RFIDWrapper<MockMrfc522> &rfid);
+
+  constexpr fabomatic::card::uid_t get_test_uid(size_t idx)
+  {
+    auto [card_uid, level, name] = fabomatic::tests::test_whitelist[idx];
+    return card_uid;
+  }
 }
 
 #endif // TEST_COMMON_H_

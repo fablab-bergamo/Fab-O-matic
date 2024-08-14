@@ -12,7 +12,7 @@ on:
     - 'platformio.ini'
     - '.github/workflows/tests.yml'
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.head_ref || github.ref_name }} 
   cancel-in-progress: true
 
 jobs:

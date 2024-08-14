@@ -86,6 +86,7 @@ namespace fabomatic
   void taskCheckRfid()
   {
     Board::logic.checkRfid();
+    Board::logic.processBackendRequests();
   }
 
   /// @brief blink led
