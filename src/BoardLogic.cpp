@@ -659,13 +659,15 @@ namespace fabomatic
     if (auto result = backend.checkBackendRequest(); result.has_value())
     {
       const auto &req = result->get();
-      ESP_LOGI(TAG, "Processing backend request : %s", req->request_type.c_str());
-      FabUser fu{req->requester, "BACKEND", true, FabUser::UserLevel::FabAdmin};
+      ESP_LOGI(TAG, "Processing backend request : %s from %s", req->request_type.c_str(), card::uid_str(req->requester).c_str());
 
       if (req->request_type == "start")
       {
-        logout();
-        if (!authorize(fu.card_uid))
+        if (!machine.isFree())
+        {
+          logout();
+        }
+        if (!authorize(req->requester))
         {
           ESP_LOGE(TAG, "Failure to execute start request from backend");
         }
