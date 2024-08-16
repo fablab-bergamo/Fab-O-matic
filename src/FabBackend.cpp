@@ -225,7 +225,7 @@ namespace fabomatic
       }
     } while (Tasks::arduinoNow() < (start_time + max_duration));
 
-    ESP_LOGE(TAG, "Failure, no answer from MQTT server (timeout:%lld ms)", max_duration.count());
+    ESP_LOGE(TAG, "Failure, no answer from MQTT server (timeout:%" PRId64 " ms)", max_duration.count());
 
     return false;
   }

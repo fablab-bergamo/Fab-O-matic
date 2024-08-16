@@ -101,7 +101,7 @@ namespace fabomatic
         power(false);
       }
 
-      ESP_LOGI(TAG, "Machine will be shutdown in %lld s",
+      ESP_LOGI(TAG, "Machine will be shutdown in %" PRId64 " s",
                config.value().grace_period.count());
     }
   }
@@ -282,7 +282,7 @@ namespace fabomatic
 
     if (config.value().autologoff != new_delay)
     {
-      ESP_LOGD(TAG, "Changing autologoff delay to %lld min",
+      ESP_LOGD(TAG, "Changing autologoff delay to %" PRId64 " min",
                std::chrono::duration_cast<std::chrono::minutes>(config.value().autologoff).count());
     }
 
@@ -359,7 +359,7 @@ namespace fabomatic
 
     if (config.value().grace_period != new_delay)
     {
-      ESP_LOGD(TAG, "Changing grace period to %lld seconds",
+      ESP_LOGD(TAG, "Changing grace period to %" PRId64 " seconds",
                new_delay.count());
     }
 
