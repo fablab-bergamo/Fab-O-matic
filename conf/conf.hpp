@@ -148,10 +148,13 @@ namespace fabomatic
     static constexpr std::string_view request_topic{"/request"};
 
     /// @brief Number of tries to get a reply from the backend
-    static constexpr auto MAX_TRIES{2};
+    static constexpr auto MAX_TRIES{1};
 
     /// @brief Timeout for a single backend reply request.
     static constexpr auto TIMEOUT_REPLY_SERVER{2s};
+
+    /// @brief Once backend is unresponsive, wait at least this period before to try again
+    static constexpr auto FAIL_FAST_PERIOD {45s};
 
     /// @brief MQTT port for broker
     static constexpr auto PORT_NUMBER{1883};

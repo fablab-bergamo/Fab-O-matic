@@ -60,7 +60,12 @@ namespace fabomatic
     ESP_LOGD(TAG, "tryLogin called for %s", uid_str.c_str());
 
     if (!server.isOnline())
-      server.connect();
+    {
+      if (!server.shouldFailFast())
+      {
+        server.connect();
+      }
+    }
 
     if (server.isOnline())
     {

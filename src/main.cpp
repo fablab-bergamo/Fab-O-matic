@@ -53,7 +53,11 @@ namespace fabomatic
       Board::logic.changeStatus(Status::Connecting);
 
       // Try to connect
-      server.connect();
+      if (!server.shouldFailFast())
+      {
+        server.connect();
+      }
+
       // Refresh after connection
       Board::logic.changeStatus(server.isOnline() ? Status::Connected : Status::Offline);
 

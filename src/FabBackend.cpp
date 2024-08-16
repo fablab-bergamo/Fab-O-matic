@@ -32,7 +32,7 @@ namespace fabomatic
 #else
     channel = -1;
 #endif
-    online = false;
+    mqtt_connected = false;
 
     std::stringstream ss_topic_name, ss_client_name;
     ss_topic_name << conf::mqtt::topic << "/" << config.machine_id;
@@ -83,6 +83,7 @@ namespace fabomatic
       if (waitForAnswer(conf::mqtt::TIMEOUT_REPLY_SERVER))
       {
         ESP_LOGD(TAG, "MQTT Client: received answer: %s", last_reply.data());
+        last_unresponsive = std::nullopt;
         return PublishResult::PublishedWithAnswer;
       }
 
@@ -101,6 +102,7 @@ namespace fabomatic
 
     if (published)
     {
+      last_unresponsive = Tasks::arduinoNow();
       return PublishResult::PublishedWithoutAnswer;
     }
 
@@ -112,10 +114,10 @@ namespace fabomatic
    *
    * @param mqtt_topic The topic to publish to.
    * @param mqtt_payload The payload to publish.
-   * @param waitForAnswer Whether to wait for an answer.
+   * @param answerNeeded Whether to wait for an answer.
    * @return true if the message was published successfully, false otherwise.
    */
-  bool FabBackend::publish(String mqtt_topic, String mqtt_payload, bool waitForAnswer)
+  bool FabBackend::publish(String mqtt_topic, String mqtt_payload, bool answerNeeded)
   {
     if (mqtt_payload.length() + mqtt_topic.length() > FabBackend::MAX_MSG_SIZE - 8)
     {
@@ -123,7 +125,7 @@ namespace fabomatic
       return false;
     }
 
-    answer_pending = waitForAnswer;
+    answer_pending = answerNeeded;
     last_query.assign(mqtt_payload.c_str());
 
     ESP_LOGI(TAG, "MQTT Client: sending message %s on topic %s", mqtt_payload.c_str(), mqtt_topic.c_str());
@@ -185,11 +187,11 @@ namespace fabomatic
   {
     if (!client.loop())
     {
-      if (online)
+      if (mqtt_connected)
       {
         ESP_LOGI(TAG, "MQTT Client: connection lost");
       }
-      online = false;
+      mqtt_connected = false;
       return false;
     }
     return true;
@@ -223,18 +225,29 @@ namespace fabomatic
       }
     } while (Tasks::arduinoNow() < (start_time + max_duration));
 
-    ESP_LOGE(TAG, "Failure, no answer from MQTT server (timeout:%lld ms)", max_duration.count());
+    ESP_LOGE(TAG, "Failure, no answer from MQTT server (timeout:%" PRId64 " ms)", max_duration.count());
+
     return false;
   }
 
   /**
-   * @brief Checks if the client is online.
+   * @brief Indicates if the MQTT client is connected to the broker and backend is responsive.
    *
    * @return true if the client is online, false otherwise.
    */
   bool FabBackend::isOnline() const
   {
-    return online;
+    return mqtt_connected && isResponsive();
+  }
+
+  /**
+   * @brief Indicates if backend answers are received
+   *
+   * @return true if the backend is responding, false otherwise.
+   */
+  bool FabBackend::isResponsive() const
+  {
+    return !last_unresponsive;
   }
 
   /**
@@ -310,7 +323,7 @@ namespace fabomatic
     // Check if WiFi network is available, and if not, try to connect
     if (status != WL_CONNECTED)
     {
-      online = false;
+      mqtt_connected = false;
 
       if (client.connected())
       {
@@ -367,7 +380,7 @@ namespace fabomatic
         else
         {
           ESP_LOGD(TAG, "MQTT Client: subscribed to reply topic %s", response_topic.c_str());
-          online = true;
+          mqtt_connected = true;
         }
 
         std::stringstream ss_req{};
@@ -381,7 +394,7 @@ namespace fabomatic
         else
         {
           ESP_LOGD(TAG, "MQTT Client: subscribed to requests topic %s", request_topic.c_str());
-          online = true;
+          mqtt_connected = true;
         }
 
         // Announce the board to the server
@@ -402,10 +415,15 @@ namespace fabomatic
 
     if (!client.connected())
     {
-      online = false;
+      mqtt_connected = false;
+      last_unresponsive = Tasks::arduinoNow();
+    }
+    else
+    {
+      last_unresponsive = std::nullopt;
     }
 
-    return online;
+    return mqtt_connected;
   }
 
   /**
@@ -439,12 +457,17 @@ namespace fabomatic
       // To preserve chronological order, we cannot send new messages until the old ones have been sent.
       ESP_LOGW(TAG, "Online with pending messages that could not be transmitted, retrying...");
 
-      Tasks::delay(250ms);
-
-      if (!isOnline())
+      if (!shouldFailFast())
       {
         connect();
       }
+      else
+      {
+        ESP_LOGW(TAG, "processQuery: failing fast due to unresponsive backend.");
+        break;
+      }
+
+      Tasks::delay(250ms);
       nb_tries++;
     }
 
@@ -496,12 +519,20 @@ namespace fabomatic
       // To preserve chronological order, we cannot send new messages until the old ones have been sent.
       ESP_LOGW(TAG, "Online with pending messages that could not be transmitted, retrying...");
 
-      Tasks::delay(250ms);
-
       if (!isOnline())
       {
-        connect();
+        if (!shouldFailFast())
+        {
+          connect();
+        }
+        else
+        {
+          ESP_LOGW(TAG, "processQuery: failing fast due to unresponsive backend.");
+          break;
+        }
       }
+
+      Tasks::delay(250ms);
       nb_tries++;
     }
 
@@ -701,6 +732,16 @@ namespace fabomatic
       return MQTTInterface::BackendRequest::fromJson(doc);
     }
     return std::nullopt;
+  }
+
+  /**
+   * @brief when server is unresponsive, wait for a configurable time before to try again
+   */
+  auto FabBackend::shouldFailFast() const -> bool
+  {
+    return this->mqtt_connected &&
+           this->last_unresponsive.has_value() &&
+           (Tasks::arduinoNow() - this->last_unresponsive.value()) <= conf::mqtt::FAIL_FAST_PERIOD;
   }
 
 } // namespace fabomatic

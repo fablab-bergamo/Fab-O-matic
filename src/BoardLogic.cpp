@@ -122,7 +122,7 @@ namespace fabomatic
   {
     constexpr auto STEPS_COUNT = 6;
     constexpr milliseconds delay_per_step = std::chrono::duration_cast<std::chrono::milliseconds>(conf::machine::LONG_TAP_DURATION) / STEPS_COUNT;
-    const BoardInfo bi = {server.isOnline(), machine.getPowerState(), machine.isShutdownImminent()};
+    const BoardInfo bi = {server.isOnline(), machine.getPowerState(), machine.isShutdownImminent(), !server.isResponsive()};
 
     for (auto step = 0; step < STEPS_COUNT; step++)
     {
@@ -425,7 +425,7 @@ namespace fabomatic
       lcd.setRow(1, buffer.str());
       break;
     }
-    BoardInfo bi = {server.isOnline(), machine.getPowerState(), machine.isShutdownImminent()};
+    BoardInfo bi = {server.isOnline(), machine.getPowerState(), machine.isShutdownImminent(), !server.isResponsive()};
     lcd.update(bi, false);
   }
 
