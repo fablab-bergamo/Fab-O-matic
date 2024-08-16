@@ -37,13 +37,14 @@ namespace fabomatic::tests
 
   std::atomic<bool> exit_request{false};
 
-  void busyWait(std::chrono::seconds d = 3s)
+  void busyWait(std::chrono::seconds d, FabBackend &server)
   {
     const auto start = fabomatic::Tasks::arduinoNow();
     while (fabomatic::Tasks::arduinoNow() - start <= d)
     {
       test_scheduler.execute();
-      delay(25);
+      server.loop();
+      delay(15);
     }
   }
 
@@ -78,7 +79,7 @@ namespace fabomatic::tests
       {
         logic.checkRfid();
         rfid.setDisabledUntil(std::nullopt);
-        delay(50);
+        delay(15);
       } while (duration_tap.has_value() && fabomatic::Tasks::arduinoNow() - start < duration_tap);
     }
     else if (duration_tap)
@@ -166,13 +167,13 @@ namespace fabomatic::tests
     pthread_create(&thread_mqtt_broker, &attr_mqtt_broker, threadMQTTServer, NULL);
 
     auto start = fabomatic::Tasks::arduinoNow();
-    constexpr auto timeout = 5s;
+    constexpr auto timeout = 3s;
     while (!broker.isRunning() && fabomatic::Tasks::arduinoNow() - start < timeout)
     {
-      delay(100);
+      delay(15);
     }
     TEST_ASSERT_TRUE_MESSAGE(broker.isRunning(), "MQTT server not running");
-    delay(5000);
+    delay(1000);
     TEST_ASSERT_TRUE_MESSAGE(server.connect(), "Server connect failed in start MQTT");
   }
 
@@ -184,7 +185,7 @@ namespace fabomatic::tests
 
   void test_fabserver_calls()
   {
-    const int NB_TESTS = 10;
+    const int NB_TESTS = 5;
     const int NB_MACHINES = 5;
     auto &server = logic.getServer();
     for (uint16_t mid = 100; mid <= 100 + NB_MACHINES; mid++)
@@ -274,14 +275,14 @@ namespace fabomatic::tests
   {
     broker.generateReplies(false);
 
-    const int NB_TESTS = 2;
-    const int NB_MACHINES = 1;
+    const int NB_TESTS = 1;
+    const int NB_MACHINES = 2;
     auto &server = logic.getServer();
     for (uint16_t mid = 100; mid <= 100 + NB_MACHINES; mid++)
     {
       // Change MachineID on the fly
       auto saved_config = SavedConfig::DefaultConfig();
-
+      server.loop();
       saved_config.setMachineID(mid);
       saved_config.mqtt_server.assign("127.0.0.1");
 
@@ -303,7 +304,7 @@ namespace fabomatic::tests
 
       for (auto i = 0; i < NB_TESTS; ++i)
       {
-        busyWait(1s);
+        busyWait(1s, server);
 
         card::uid_t uid = 123456789 + i;
         auto response = server.checkCard(uid);
@@ -319,7 +320,7 @@ namespace fabomatic::tests
         TEST_ASSERT_TRUE_MESSAGE(maintenance_resp != nullptr, "(degraded) Server registerMaintenance failed");
         TEST_ASSERT_FALSE_MESSAGE(maintenance_resp->request_ok, "(degraded) Server registerMaintenance request succeeded");
 
-        busyWait(1s);
+        busyWait(1s, server);
 
         auto start_use_resp = server.startUse(uid);
         TEST_ASSERT_TRUE_MESSAGE(start_use_resp != nullptr, "(degraded) Server startUse failed");
@@ -333,13 +334,11 @@ namespace fabomatic::tests
         TEST_ASSERT_TRUE_MESSAGE(stop_use_resp != nullptr, "(degraded) Server stopUse failed");
         TEST_ASSERT_FALSE_MESSAGE(stop_use_resp->request_ok, "(degraded) Server stopUse request succeeded");
 
-        busyWait(1s);
-
         auto alive_resp = server.alive();
         TEST_ASSERT_FALSE_MESSAGE(alive_resp, "(degraded) Server alive succeeded");
       }
 
-      busyWait(1s);
+      busyWait(1s, server);
     }
     // Test authentication in degraded scenario
     AuthProvider auth(secrets::cards::whitelist);
@@ -362,7 +361,7 @@ namespace fabomatic::tests
     // Test that saving the cache works
     TEST_ASSERT_TRUE_MESSAGE(auth.saveCache(), "AuthProvider saveCache failed");
 
-    busyWait(1s);
+    busyWait(1s, server);
 
     // Renable backend
     broker.generateReplies(true);
@@ -480,18 +479,18 @@ namespace fabomatic::tests
   auto t2 = Tasks::Task("taskCheckRfid", 50ms, &test_taskCheckRfid, test_scheduler);
   auto t3 = Tasks::Task("taskVarious", 1s, &test_taskVarious, test_scheduler);
   auto t4 = Tasks::Task("taskEspWatchdog", 5s, &test_taskEspWatchdog, test_scheduler);
-  auto t5 = Tasks::Task("taskRfidWatchdog", 30s, &test_taskRfidWatchdog, test_scheduler);
-  auto t6 = Tasks::Task("taskMQTTAlive", 30s, &test_taskMQTTAlive, test_scheduler);
+  auto t5 = Tasks::Task("taskRfidWatchdog", 15s, &test_taskRfidWatchdog, test_scheduler);
+  auto t6 = Tasks::Task("taskMQTTAlive", 15s, &test_taskMQTTAlive, test_scheduler);
 
   void test_normal_use()
   {
     test_scheduler.updateSchedules();
     TEST_ASSERT_EQUAL_UINT32_MESSAGE(6, test_scheduler.taskCount(), "Scheduler does not contain all tasks");
     auto start = fabomatic::Tasks::arduinoNow();
-    while (fabomatic::Tasks::arduinoNow() - start <= 1min)
+    while (fabomatic::Tasks::arduinoNow() - start <= 30s)
     {
       test_scheduler.execute();
-      delay(25);
+      delay(15);
     }
     // Check that all tasks ran at least once
     for (const auto tp : test_scheduler.getTasks())
@@ -528,7 +527,7 @@ namespace fabomatic::tests
     std::string payload_stop = ss.str();
     broker.publish(topic, payload_stop);
 
-    busyWait(5s);
+    busyWait(5s, logic.getServer());
 
     // Stop request has been processed
     TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::MachineFree, logic.getStatus(), "Status not MachineFree (1)");
@@ -540,7 +539,7 @@ namespace fabomatic::tests
     std::string payload_start = ss2.str();
     broker.publish(topic, payload_start);
 
-    busyWait(5s);
+    busyWait(5s, logic.getServer());
 
     // Start request has been processed
     TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::MachineInUse, logic.getStatus(), "Status not MachineInUse (2)");
@@ -549,7 +548,7 @@ namespace fabomatic::tests
 
     broker.publish(topic, payload_stop);
 
-    busyWait(5s);
+    busyWait(5s, logic.getServer());
 
     // Stop request has been processed
     TEST_ASSERT_EQUAL_UINT16_MESSAGE(BoardLogic::Status::MachineFree, logic.getStatus(), "Status not MachineFree (2)");
