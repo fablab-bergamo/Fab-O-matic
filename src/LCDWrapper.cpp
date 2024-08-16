@@ -85,7 +85,18 @@ namespace fabomatic
     {
       lcd.setCursor(conf::lcd::COLS - 2, 0);
       lcd.write(CHAR_ANTENNA);
-      lcd.write(info.server_connected ? CHAR_CONNECTION : CHAR_NO_CONNECTION);
+      if (info.mqtt_connected)
+      {
+        lcd.write(CHAR_CONNECTION);
+      }
+      else if (info.unresponsive)
+      {
+        lcd.write('?');
+      }
+      else
+      {
+        lcd.write(CHAR_NO_CONNECTION);
+      }
     }
 
     if (show_power_status)
@@ -183,7 +194,18 @@ namespace fabomatic
     // Add symbols
     constexpr auto symbols_per_line = conf::lcd::COLS + 3;
 
-    str[symbols_per_line * 2 - 2] = bi.server_connected ? 'Y' : 'x';
+    if (bi.mqtt_connected)
+    {
+      str[symbols_per_line * 2 - 2] = 'Y';
+    }
+    else if (bi.unresponsive)
+    {
+      str[symbols_per_line * 2 - 2] = '?';
+    }
+    else
+    {
+      str[symbols_per_line * 2 - 2] = 'x';
+    }
 
     if (bi.power_state == Machine::PowerState::PoweredOn)
       str[symbols_per_line * 3 - 1] = 'Y';

@@ -50,14 +50,14 @@ namespace fabomatic
     std::string last_reply{""};
     std::string last_request{""};
 
-    bool online{false};
+    bool mqtt_connected{false};
     bool answer_pending{false};
     int16_t channel{-1};
 
     Buffer buffer;
+    std::optional<Tasks::time_point> last_unresponsive{std::nullopt};
 
     auto messageReceived(String &topic, String &payload) -> void;
-    auto requestReceived(String &topic, String &payload) -> void;
 
     template <typename QueryT>
     [[nodiscard]] auto publish(const QueryT &payload) -> PublishResult;
@@ -85,6 +85,7 @@ namespace fabomatic
     [[nodiscard]] auto alive() -> bool;
     [[nodiscard]] auto publish(String topic, String payload, bool waitForAnswer) -> bool;
     [[nodiscard]] auto isOnline() const -> bool;
+    [[nodiscard]] auto isResponsive() const -> bool;
     [[nodiscard]] auto hasBufferedMsg() const -> bool;
     [[nodiscard]] auto transmitBuffer() -> bool;
     [[nodiscard]] auto saveBuffer() -> bool;

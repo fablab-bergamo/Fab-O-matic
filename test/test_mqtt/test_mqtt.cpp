@@ -364,6 +364,7 @@ namespace fabomatic::tests
     if (server.isOnline())
     {
       TEST_ASSERT_TRUE_MESSAGE(server.loop(), "test_taskMQTTAlive: Server loop failed");
+      TEST_ASSERT_TRUE_MESSAGE(server.isResponsive(), "Server is not returning answers!");
     }
   }
 
