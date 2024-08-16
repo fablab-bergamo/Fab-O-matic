@@ -457,12 +457,17 @@ namespace fabomatic
       // To preserve chronological order, we cannot send new messages until the old ones have been sent.
       ESP_LOGW(TAG, "Online with pending messages that could not be transmitted, retrying...");
 
-      Tasks::delay(250ms);
-
-      if (!isOnline())
+      if (!shouldFailFast())
       {
         connect();
       }
+      else
+      {
+        ESP_LOGW(TAG, "processQuery: failing fast due to unresponsive backend.");
+        break;
+      }
+
+      Tasks::delay(250ms);
       nb_tries++;
     }
 
@@ -514,12 +519,20 @@ namespace fabomatic
       // To preserve chronological order, we cannot send new messages until the old ones have been sent.
       ESP_LOGW(TAG, "Online with pending messages that could not be transmitted, retrying...");
 
-      Tasks::delay(250ms);
-
       if (!isOnline())
       {
-        connect();
+        if (!shouldFailFast())
+        {
+          connect();
+        }
+        else
+        {
+          ESP_LOGW(TAG, "processQuery: failing fast due to unresponsive backend.");
+          break;
+        }
       }
+
+      Tasks::delay(250ms);
       nb_tries++;
     }
 
@@ -719,6 +732,16 @@ namespace fabomatic
       return MQTTInterface::BackendRequest::fromJson(doc);
     }
     return std::nullopt;
+  }
+
+  /**
+   * @brief when server is unresponsive, wait for a configurable time before to try again
+   */
+  auto FabBackend::shouldFailFast() const -> bool
+  {
+    return this->mqtt_connected &&
+           this->last_unresponsive.has_value() &&
+           (Tasks::arduinoNow() - this->last_unresponsive.value()) <= conf::mqtt::FAIL_FAST_PERIOD;
   }
 
 } // namespace fabomatic

@@ -39,7 +39,7 @@ namespace fabomatic::tests
 
   void busyWait(std::chrono::seconds d = 3s)
   {
-    auto start = fabomatic::Tasks::arduinoNow();
+    const auto start = fabomatic::Tasks::arduinoNow();
     while (fabomatic::Tasks::arduinoNow() - start <= d)
     {
       test_scheduler.execute();
@@ -366,6 +366,8 @@ namespace fabomatic::tests
 
     // Renable backend
     broker.generateReplies(true);
+
+    TEST_ASSERT_TRUE_MESSAGE(server.connect(), "(degraded) force reconnection");
 
     auto alive_resp = server.alive();
     TEST_ASSERT_TRUE_MESSAGE(alive_resp, "(degraded) Server alive failed");

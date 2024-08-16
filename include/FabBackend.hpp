@@ -89,6 +89,7 @@ namespace fabomatic
     [[nodiscard]] auto hasBufferedMsg() const -> bool;
     [[nodiscard]] auto transmitBuffer() -> bool;
     [[nodiscard]] auto saveBuffer() -> bool;
+    [[nodiscard]] auto shouldFailFast() const -> bool;
 
     [[nodiscard]] auto checkBackendRequest() -> std::optional<std::unique_ptr<MQTTInterface::BackendRequest>>;
 
