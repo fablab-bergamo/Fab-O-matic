@@ -21,7 +21,7 @@ This folder contains info about PCB (Gerber file, BOM, schematics) and enclosure
 
 Changes from rev 1.1:
 
-* Added D7 and D8 for reverse voltage protection on 5V and POW+ external pins.
+* Added D7 and D8 for reverse voltage protection on 5V and POW+ external pins, also they prevent incorrect power flow to machine and host.
 * Removed (wrong) over-voltage protection Zener diodes.
 * Terminal block pin 8 is now left unconnected (previously, it was an output 3V3).
 * Added R13/R14/R15 to tolerate 5V input if R16 is removed.
@@ -29,7 +29,7 @@ Changes from rev 1.1:
 
 ⚠ Errata in this revision ⚠
 
-* None known
+* PCB design is problably not MAINS AC safe (see NC/NO/COM tracks: width, spacing and area copper plane & signal tracks).
 
 ### Revision 1.1
 
@@ -42,6 +42,9 @@ Changes from rev 1.0:
 
 ⚠ Errata in this revision ⚠
 
+* PCB design is problably not MAINS AC safe (NC/NO/COM tracks to the relay).
+* Power can flow from the machine to the host through the USB port. A diode needs to be added.
+* Power can flow from the host to the machine through the USB port. A diode needs to be added.
 * The color PCB front panel is missing a soldermask expansion to let the NeoPixel light filter through the white silkscreen. A small spot of silkscreen can easily be removed with a Dremel as fix.
 * Reverse/under voltage protection circuit is wrong.
 
@@ -65,7 +68,10 @@ This can be fixed by rotating R11 by 90° counter-clockwise and solder it to R9.
 ![image](https://github.com/fablab-bergamo/fab-o-matic/assets/6236243/046bd7b5-0c89-4604-947c-9c6126ae2a86)
 
 * The color PCB front panel is missing a soldermask expansion to let the NeoPixel light filter through the white silkscreen. A spot of silkscreen can easily be removed with a Dremel.
+* Power can flow from the machine to the host through the USB port. A diode needs to be added.
+* Power can flow from the host to the machine through the USB port. A diode needs to be added.
 * Reverse/under voltage protection circuit is wrong.
+* PCB design is problably not MAINS AC safe (NC/NO/COM tracks to the relay).
 
 Changes from rev 0.4:
 
@@ -79,13 +85,17 @@ Changes from rev 0.4:
 
 ### Revision 0.4
 
-This version has no known errata.
-
 Changes:
 
 * Fixed errata of revision 0.3
 * Removed 220u CAP after testing, it is not required.
 * Moved the design to EASYEDA Pro (free) for future versions
+
+⚠ Errata in this revision ⚠
+
+* PCB design is problably not MAINS AC safe (NC/NO/COM tracks to the relay).
+* Power can flow from the machine 5V to the host through the USB port. A diode needs to be added.
+* Power can flow from the host to the machine 5V through the USB port. A diode needs to be added.
 
 ### Assembly instructions
 
@@ -123,6 +133,7 @@ Test procedure
 
 ⚠ Errata in this revision ⚠
 
+* PCB design is problably not MAINS AC safe (NC/NO/COM tracks to the relay).
 * Q1 base shall be pulled up by a 5-10kohm resistor to 3V3 to avoid relay flickering at boot (while ESP32 has not pulled up the pin yet).
 
 Changes:
@@ -192,4 +203,4 @@ Changes during assembly:
 
 4 screws, washer and bolts are required to fix the PCB to the case.
 
-Assembly photos see https://github.com/fablab-bergamo/Fab-O-matic/tree/b52aab18b81a9b51205c8e2c9dcc90458335382c/hardware/enclosure%20for%20rev%201.x/photos
+Assembly photos see <https://github.com/fablab-bergamo/Fab-O-matic/tree/b52aab18b81a9b51205c8e2c9dcc90458335382c/hardware/enclosure%20for%20rev%201.x/photos>
