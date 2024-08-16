@@ -37,7 +37,7 @@ namespace fabomatic::tests
 
   std::atomic<bool> exit_request{false};
 
-  void busyWait(std::chrono::seconds d = 5s)
+  void busyWait(std::chrono::seconds d = 3s)
   {
     auto start = fabomatic::Tasks::arduinoNow();
     while (fabomatic::Tasks::arduinoNow() - start <= d)
@@ -270,6 +270,108 @@ namespace fabomatic::tests
     }
   }
 
+  void test_degraded_use()
+  {
+    broker.generateReplies(false);
+
+    const int NB_TESTS = 2;
+    const int NB_MACHINES = 1;
+    auto &server = logic.getServer();
+    for (uint16_t mid = 100; mid <= 100 + NB_MACHINES; mid++)
+    {
+      // Change MachineID on the fly
+      auto saved_config = SavedConfig::DefaultConfig();
+
+      saved_config.setMachineID(mid);
+      saved_config.mqtt_server.assign("127.0.0.1");
+
+      ESP_LOGI(TAG3, "Testing machine %d", mid);
+      server.configure(saved_config);
+
+      auto connected = false;
+      for (auto i = 0; i < 3; i++)
+      {
+        server.disconnect(); // Force disconnect
+        if (connected |= server.connect())
+        {
+          break;
+        }
+      }
+
+      TEST_ASSERT_TRUE_MESSAGE(connected, "(degraded) Server connect failed");
+      TEST_ASSERT_TRUE_MESSAGE(server.isOnline(), "(degraded) Server is not online");
+
+      for (auto i = 0; i < NB_TESTS; ++i)
+      {
+        busyWait(1s);
+
+        card::uid_t uid = 123456789 + i;
+        auto response = server.checkCard(uid);
+        TEST_ASSERT_TRUE_MESSAGE(response != nullptr, "(degraded) Server checkCard failed");
+        ESP_LOGD(TAG3, "(degraded) Server checkCard response: %s", response->toString().c_str());
+        TEST_ASSERT_FALSE_MESSAGE(response->request_ok, "(degraded) Server checkCard request succeeded with response disabled");
+
+        auto machine_resp = server.checkMachine(); // Machine ID is in the topic already
+        TEST_ASSERT_TRUE_MESSAGE(machine_resp != nullptr, "(degraded) Server checkMachine failed");
+        TEST_ASSERT_FALSE_MESSAGE(machine_resp->request_ok, "(degraded) Server checkMachine request succeeded");
+
+        auto maintenance_resp = server.registerMaintenance(uid);
+        TEST_ASSERT_TRUE_MESSAGE(maintenance_resp != nullptr, "(degraded) Server registerMaintenance failed");
+        TEST_ASSERT_FALSE_MESSAGE(maintenance_resp->request_ok, "(degraded) Server registerMaintenance request succeeded");
+
+        busyWait(1s);
+
+        auto start_use_resp = server.startUse(uid);
+        TEST_ASSERT_TRUE_MESSAGE(start_use_resp != nullptr, "(degraded) Server startUse failed");
+        TEST_ASSERT_FALSE_MESSAGE(start_use_resp->request_ok, "(degraded) Server startUse request failed");
+
+        auto in_use_resp = server.inUse(uid, 5s);
+        TEST_ASSERT_TRUE_MESSAGE(in_use_resp != nullptr, "(degraded) Server inUse failed");
+        TEST_ASSERT_FALSE_MESSAGE(in_use_resp->request_ok, "(degraded) Server inUse request succeeded");
+
+        auto stop_use_resp = server.finishUse(uid, 10s);
+        TEST_ASSERT_TRUE_MESSAGE(stop_use_resp != nullptr, "(degraded) Server stopUse failed");
+        TEST_ASSERT_FALSE_MESSAGE(stop_use_resp->request_ok, "(degraded) Server stopUse request succeeded");
+
+        busyWait(1s);
+
+        auto alive_resp = server.alive();
+        TEST_ASSERT_FALSE_MESSAGE(alive_resp, "(degraded) Server alive succeeded");
+      }
+
+      busyWait(1s);
+    }
+    // Test authentication in degraded scenario
+    AuthProvider auth(secrets::cards::whitelist);
+    TEST_ASSERT_TRUE_MESSAGE(server.connect(), "Server is online");
+    for (const auto &[uid, level, name] : secrets::cards::whitelist)
+    {
+      server.loop();
+      auto response = auth.tryLogin(uid, server);
+      TEST_ASSERT_TRUE_MESSAGE(response.has_value(), "Server checkCard failed");
+      if (level == FabUser::UserLevel::Unknown)
+      {
+        TEST_ASSERT_FALSE_MESSAGE(response.value().authenticated, "Server returned authenticated user for invalid one");
+      }
+      else
+      {
+        TEST_ASSERT_TRUE_MESSAGE(response.value().authenticated, "Server returned unauthenticated user for a valid one");
+        TEST_ASSERT_TRUE_MESSAGE(response.value().user_level == level, "Server returned wrong user level");
+      }
+    }
+    // Test that saving the cache works
+    TEST_ASSERT_TRUE_MESSAGE(auth.saveCache(), "AuthProvider saveCache failed");
+
+    busyWait(1s);
+
+    // Renable backend
+    broker.generateReplies(true);
+
+    auto alive_resp = server.alive();
+    TEST_ASSERT_TRUE_MESSAGE(alive_resp, "(degraded) Server alive failed");
+    TEST_ASSERT_FALSE_MESSAGE(server.hasBufferedMsg(), "(degraded) Buffered messages not sent");
+  }
+
   /// @brief Opens WiFi and server connection and updates board state accordingly
   void test_taskConnect()
   {
@@ -471,6 +573,7 @@ void setup()
   RUN_TEST(fabomatic::tests::test_fabserver_calls);
   RUN_TEST(fabomatic::tests::test_normal_use);
   RUN_TEST(fabomatic::tests::test_backend_commands);
+  RUN_TEST(fabomatic::tests::test_degraded_use);
   RUN_TEST(fabomatic::tests::test_stop_broker);
 
   UNITY_END(); // stop unit testing

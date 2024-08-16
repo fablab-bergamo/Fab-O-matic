@@ -223,7 +223,7 @@ namespace fabomatic
       queries.pop();
       response = callback(topic, query);
 
-      if (!response.empty())
+      if (!response.empty() && generate_replies)
       {
         ESP_LOGI(TAG2, "MQTT BROKER: Sending %s -> %s", reply_topic.c_str(), response.c_str());
         publish(reply_topic, response);
@@ -250,6 +250,15 @@ namespace fabomatic
       update();
       processQueries();
     }
+  }
+
+  /**
+   * @brief Enable or disable reply generation by mockup
+   */
+  auto MockMQTTBroker::generateReplies(bool enabled) -> void
+  {
+    std::lock_guard<std::mutex> lock(mutex);
+    generate_replies = enabled;
   }
 } // namespace fabomatic
 

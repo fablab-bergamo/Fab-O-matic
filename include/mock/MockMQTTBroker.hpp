@@ -29,6 +29,7 @@ namespace fabomatic
     auto processQueries() -> size_t;
 
     auto mainLoop() -> void;
+    auto generateReplies(bool enabled) -> void;
 
   private:
     std::mutex mutex;
@@ -46,6 +47,7 @@ namespace fabomatic
     { return defaultReplies(query); };
 
     bool is_running{false};
+    bool generate_replies{true};
   };
 } // namespace fabomatic
 #endif // MOCK_MOCKMQTTBROKER_HPP_
