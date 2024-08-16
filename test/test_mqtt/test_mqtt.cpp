@@ -384,7 +384,11 @@ namespace fabomatic::tests
       logic.changeStatus(BoardLogic::Status::Connecting);
 
       // Try to connect
-      server.connect();
+      if (!server.shouldFailFast())
+      {
+        server.connect();
+      }
+
       // Refresh after connection
       logic.changeStatus(server.isOnline() ? BoardLogic::Status::Connected : BoardLogic::Status::Offline);
     }
