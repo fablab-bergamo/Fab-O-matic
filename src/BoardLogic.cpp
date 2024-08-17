@@ -20,7 +20,6 @@
 #ifndef GIT_VERSION
 #define GIT_VERSION "??????"
 #endif
-#include <driver/gpio.h>
 
 namespace fabomatic
 {

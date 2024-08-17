@@ -343,7 +343,7 @@ namespace fabomatic
     std::cout << "\tCORE_DEBUG_LEVEL: " << CORE_DEBUG_LEVEL << '\n';
     std::cout << "\tLANGUAGE: " << fabomatic::strings::S_LANG_ID << '\n';
     std::cout << "\tBUILD: " << FABOMATIC_BUILD << '\n';
-    std::cout << "\tGIT VERION: " << GIT_VERSION << '\n';
+    std::cout << "\tGIT VERSION: " << GIT_VERSION << '\n';
 
     // namespace conf::rfid_tags
     std::cout << "RFID tags:" << '\n';
@@ -413,6 +413,8 @@ namespace fabomatic
     std::cout << "\t\tPin:" << +pins.buzzer.pin << '\n';
     std::cout << "\tButtons:" << '\n';
     std::cout << "\t\tFactory defaults pin:" << +pins.buttons.factory_defaults_pin << '\n';
+    std::cout << "---\n";
+    std::cout << "ESP32 serial: " << esp32::esp_serial_str() << '\n';
     std::cout << std::endl;
   }
 } // namespace fabomatic

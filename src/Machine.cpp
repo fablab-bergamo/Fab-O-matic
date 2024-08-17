@@ -9,7 +9,6 @@
 #include <cstdint>
 #include <sstream>
 #include <type_traits>
-#include <driver/gpio.h>
 
 namespace fabomatic
 {
@@ -33,12 +32,9 @@ namespace fabomatic
     if (config.value().hasRelay())
     {
       const auto pin = config.value().relay_config.ch1_pin;
-      digitalWrite(pin,
-                   config.value().relay_config.active_low ? HIGH : LOW);
-      pinMode(pin, OUTPUT);
 
-      // Relay coil requires some juice
-      gpio_set_drive_capability(static_cast<gpio_num_t>(pin), GPIO_DRIVE_CAP_3);
+      pinMode(pin, OUTPUT);
+      power_relay(false);
     }
 
     ESP_LOGD(TAG, "Machine configured : %s", toString().c_str());
