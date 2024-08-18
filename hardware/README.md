@@ -17,6 +17,19 @@ This folder contains info about PCB (Gerber file, BOM, schematics) and enclosure
 >
 > [PCB-A and costs](https://www.fablabbergamo.it/2024/06/30/fabomatic5/)
 
+### Revision 1.3
+
+Changes from rev 1.2:
+
+* Added D9 to protect USB from incorrect power flow to machine and host.
+* 2 independent terminal blocks for machine control and board power
+* Design is now robust for Mains voltage on PCB for machine control
+* Layout and routing changed, but ESP32/RFID/LCD/factory default button/Neopixel have not been moved.
+
+⚠ Errata in this revision ⚠
+
+* None known.
+
 ### Revision 1.2
 
 Changes from rev 1.1:
@@ -29,7 +42,7 @@ Changes from rev 1.1:
 
 ⚠ Errata in this revision ⚠
 
-* PCB design is problably not MAINS AC safe (see NC/NO/COM tracks: width, spacing and area copper plane & signal tracks).
+* PCB design is not MAINS AC safe (see NC/NO/COM tracks: width, spacing and area copper plane & signal tracks).
 
 ### Revision 1.1
 
@@ -42,7 +55,7 @@ Changes from rev 1.0:
 
 ⚠ Errata in this revision ⚠
 
-* PCB design is problably not MAINS AC safe (NC/NO/COM tracks to the relay).
+* PCB design is not MAINS AC safe (NC/NO/COM tracks to the relay).
 * Power can flow from the machine to the host through the USB port. A diode needs to be added.
 * Power can flow from the host to the machine through the USB port. A diode needs to be added.
 * The color PCB front panel is missing a soldermask expansion to let the NeoPixel light filter through the white silkscreen. A small spot of silkscreen can easily be removed with a Dremel as fix.
