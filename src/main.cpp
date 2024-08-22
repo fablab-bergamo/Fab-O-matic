@@ -245,6 +245,16 @@ namespace fabomatic
     if (digitalRead(pins.buttons.factory_defaults_pin) == LOW)
     {
       ESP_LOGI(TAG, "Factory reset button pressed");
+      if (!SavedConfig::DefaultConfig().SaveToEEPROM())
+      {
+        ESP_LOGE(TAG, "Cannot restore default factory settings!");
+      }
+      else
+      {
+        ESP_LOGI(TAG, "Default settings restored.");
+        Board::logic.blinkLed(0, 0, 255);
+      }
+
       esp32::removeWatchdog();
       openConfigPortal(true, false); // Network configuration setup
     }
