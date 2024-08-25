@@ -247,7 +247,7 @@ namespace fabomatic
    */
   bool FabBackend::isResponsive() const
   {
-    return !last_unresponsive;
+    return !last_unresponsive.has_value();
   }
 
   /**
