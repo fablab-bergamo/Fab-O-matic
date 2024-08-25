@@ -21,9 +21,9 @@ This folder contains info about PCB (Gerber file, BOM, schematics) and enclosure
 
 Changes from rev 1.2:
 
+* Design is now robust for Mains voltage on PCB for machine control (large PCB copper tracks, isolation gaps > 4 mm, PCB cutout)
 * Added D9 to protect USB from incorrect power flow to machine and host.
 * 2 independent terminal blocks for machine control and board power
-* Design is now robust for Mains voltage on PCB for machine control
 * Layout and routing changed, but ESP32/RFID/LCD/factory default button/Neopixel have not been moved.
 
 ⚠ Errata in this revision ⚠
@@ -43,6 +43,7 @@ Changes from rev 1.1:
 ⚠ Errata in this revision ⚠
 
 * PCB design is not MAINS AC safe (see NC/NO/COM tracks: width, spacing and area copper plane & signal tracks).
+* Any high current will BURN the COM/NO PCB tracks on the PCB from the terminal blocks to the relay. As a workaround, solder wires between terminal blocks and relay pins on the PCB !
 
 ### Revision 1.1
 
@@ -56,6 +57,7 @@ Changes from rev 1.0:
 ⚠ Errata in this revision ⚠
 
 * PCB design is not MAINS AC safe (NC/NO/COM tracks to the relay).
+* Any high current will BURN the COM/NO PCB tracks on the PCB from the terminal blocks to the relay. As a workaround, solder wires between terminal blocks and relay pins on the PCB !
 * Power can flow from the machine to the host through the USB port. A diode needs to be added.
 * Power can flow from the host to the machine through the USB port. A diode needs to be added.
 * The color PCB front panel is missing a soldermask expansion to let the NeoPixel light filter through the white silkscreen. A small spot of silkscreen can easily be removed with a Dremel as fix.
@@ -66,6 +68,9 @@ Changes from rev 1.0:
 This version is easy to order as pre-assembled on JLCPCB. For 10 boards, total cost (as per April 2024) is below 200 EUR total (not considering modules and boxes). Soldering map is available is you want to assemble yourself : <code>rev 1.0/soldering_map.html</code>
 
 ⚠ Errata in this revision ⚠
+
+* PCB design is not MAINS AC safe (NC/NO/COM tracks to the relay).
+* Any high current will BURN the COM/NO PCB tracks on the PCB from the terminal blocks to the relay. As a workaround, solder wires between terminal blocks and relay pins on the PCB !
 
 * Q1 had wrong footprint, B and E pins are swapped. As a result, relay is not operative.
 
@@ -84,7 +89,6 @@ This can be fixed by rotating R11 by 90° counter-clockwise and solder it to R9.
 * Power can flow from the machine to the host through the USB port. A diode needs to be added.
 * Power can flow from the host to the machine through the USB port. A diode needs to be added.
 * Reverse/under voltage protection circuit is wrong.
-* PCB design is problably not MAINS AC safe (NC/NO/COM tracks to the relay).
 
 Changes from rev 0.4:
 
