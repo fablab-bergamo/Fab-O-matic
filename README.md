@@ -12,7 +12,8 @@ Documentation : [![Build docs with Doxygen](https://github.com/fablab-bergamo/Fa
 
 | Assembly | PCB |
 | --- | --- |
-| ![Assembly](https://github.com/user-attachments/assets/bec2e688-589e-4d60-b692-012b7372b293) | ![3D_PCB REV1 0_2024-05-05](https://github.com/fablab-bergamo/rfid-arduino/assets/6236243/dac93cda-b271-4663-a376-2b97a6c22956) |
+| ![Assembly](https://github.com/user-attachments/assets/bec2e688-589e-4d60-b692-012b7372b293) | ![3D PCB MODEL](https://github.com/user-attachments/assets/bebd410f-8188-43e4-85d8-8e1f6207c640)
+ |
 
 * Another repository [fablab-bergamo/rfid-backend](https://github.com/fablab-bergamo/rfid-backend) contains the backend server. This server can run on a Raspberry Pi Zero, managing user RFID authentication, track machine usage / maintenance needs.
 * Communication between boards and backend uses MQTT.
