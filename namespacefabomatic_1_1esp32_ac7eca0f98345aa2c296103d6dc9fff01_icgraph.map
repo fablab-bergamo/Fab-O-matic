@@ -1,7 +1,11 @@
 <map id="fabomatic::esp32::signalWatchdog" name="fabomatic::esp32::signalWatchdog">
-<area shape="rect" id="Node000001" title=" " alt="" coords="243,27,402,68"/>
-<area shape="rect" id="Node000002" href="$namespacefabomatic.xhtml#a1348a9b7dbfe8fb026357347795ee7a1" title="Keep the ESP32 HW watchdog alive. If code gets stuck this will cause an automatic reset." alt="" coords="5,5,195,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="227,38,195,33,196,28,228,32"/>
-<area shape="rect" id="Node000003" href="$namespacefabomatic_1_1tests.xhtml#a046c348aaf1a15bf80358065553e748b" title="Keep the ESP32 HW watchdog alive. If code gets stuck this will cause an automatic reset." alt="" coords="29,55,171,96"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="228,62,171,69,171,64,227,57"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="344,55,503,96"/>
+<area shape="rect" id="Node000002" href="$namespacefabomatic.xhtml#a1348a9b7dbfe8fb026357347795ee7a1" title="Keep the ESP32 HW watchdog alive. If code gets stuck this will cause an automatic reset." alt="" coords="107,5,296,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="328,54,253,34,255,29,330,49"/>
+<area shape="rect" id="Node000003" href="$namespacefabomatic_1_1tests.xhtml#af8fcb20d2ec63b73e90dff80564bca07" title=" " alt="" coords="131,55,272,96"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="329,78,272,78,272,73,329,73"/>
+<area shape="rect" id="Node000005" href="$namespacefabomatic_1_1tests.xhtml#a046c348aaf1a15bf80358065553e748b" title="Keep the ESP32 HW watchdog alive. If code gets stuck this will cause an automatic reset." alt="" coords="131,121,272,161"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="338,103,273,123,272,118,337,98"/>
+<area shape="rect" id="Node000004" href="$test__tasks_8cpp.xhtml#a4fc01d736fe50cf5b977f755b675f11d" title=" " alt="" coords="5,63,59,88"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="115,78,59,78,59,73,115,73"/>
 </map>

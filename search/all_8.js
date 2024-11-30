@@ -7,8 +7,8 @@ var searchData=
   ['initialized_4',['initialized',['../classfabomatic_1_1_led.xhtml#a5e4d1fad8c3ca0336b19283efb0fe5b1',1,'fabomatic::Led']]],
   ['int_5fmax_5flength_5',['INT_MAX_LENGTH',['../namespacefabomatic_1_1conf_1_1common.xhtml#a326784a4cb14a25063d7f1daa65a7c33',1,'fabomatic::conf::common']]],
   ['inuse_6',['inUse',['../classfabomatic_1_1_fab_backend.xhtml#ac3065c3c86669065f8ecdd62dfe02772',1,'fabomatic::FabBackend']]],
-  ['inusequery_7',['inusequery',['../classfabomatic_1_1_m_q_t_t_interface_1_1_in_use_query.xhtml#a0df20365d5d5b27a9690c3c56be47748',1,'fabomatic::MQTTInterface::InUseQuery::InUseQuery()'],['../classfabomatic_1_1_m_q_t_t_interface_1_1_in_use_query.xhtml',1,'fabomatic::MQTTInterface::InUseQuery'],['../classfabomatic_1_1_m_q_t_t_interface_1_1_in_use_query.xhtml#af0c4aba10ebeabacb310f030d4ffa5dc',1,'fabomatic::MQTTInterface::InUseQuery::InUseQuery()']]],
-  ['invalid_8',['invalid',['../namespacefabomatic_1_1_m_q_t_t_interface.xhtml#aae6b9bbbb914df1bded5c53773eb17faa4bbb8f967da6d1a610596d7257179c2b',1,'fabomatic::MQTTInterface::Invalid'],['../_machine_i_d_8hpp.xhtml#a35cc1c75e4e55a13e5075b9331a37dc5a4bbb8f967da6d1a610596d7257179c2b',1,'Invalid:&#160;MachineID.hpp'],['../namespacefabomatic_1_1card.xhtml#a9ef4a9f5f43c63cf872a2d52a7af11cf',1,'fabomatic::card::INVALID']]],
+  ['inusequery_7',['inusequery',['../classfabomatic_1_1_m_q_t_t_interface_1_1_in_use_query.xhtml#af0c4aba10ebeabacb310f030d4ffa5dc',1,'fabomatic::MQTTInterface::InUseQuery::InUseQuery()'],['../classfabomatic_1_1_m_q_t_t_interface_1_1_in_use_query.xhtml',1,'fabomatic::MQTTInterface::InUseQuery'],['../classfabomatic_1_1_m_q_t_t_interface_1_1_in_use_query.xhtml#a0df20365d5d5b27a9690c3c56be47748',1,'fabomatic::MQTTInterface::InUseQuery::InUseQuery()']]],
+  ['invalid_8',['invalid',['../_machine_i_d_8hpp.xhtml#a35cc1c75e4e55a13e5075b9331a37dc5a4bbb8f967da6d1a610596d7257179c2b',1,'Invalid:&#160;MachineID.hpp'],['../namespacefabomatic_1_1card.xhtml#a9ef4a9f5f43c63cf872a2d52a7af11cf',1,'fabomatic::card::INVALID'],['../namespacefabomatic_1_1_m_q_t_t_interface.xhtml#aae6b9bbbb914df1bded5c53773eb17faa4bbb8f967da6d1a610596d7257179c2b',1,'fabomatic::MQTTInterface::Invalid']]],
   ['is_5fneopixel_9',['is_neopixel',['../structfabomatic_1_1pins__config_1_1led__config.xhtml#a39f3d50f092e000bde262c85ba0944fc',1,'fabomatic::pins_config::led_config']]],
   ['is_5frgb_10',['is_rgb',['../structfabomatic_1_1pins__config_1_1led__config.xhtml#abdb2f44be336d8c219be23a7ff4911fb',1,'fabomatic::pins_config::led_config']]],
   ['is_5frunning_11',['is_running',['../classfabomatic_1_1_mock_m_q_t_t_broker.xhtml#aaee749f4bebf96f67e62da34998ab900',1,'fabomatic::MockMQTTBroker']]],
@@ -22,7 +22,8 @@ var searchData=
   ['isnewcardpresent_19',['isnewcardpresent',['../classfabomatic_1_1_base_r_f_i_d_wrapper.xhtml#a3742fa985037cb9794a39f293849bea3',1,'fabomatic::BaseRFIDWrapper::isNewCardPresent()'],['../classfabomatic_1_1_r_f_i_d_wrapper.xhtml#ada9684dd15933a28d3e44c7a76a75595',1,'fabomatic::RFIDWrapper::isNewCardPresent()']]],
   ['ison_20',['isOn',['../classfabomatic_1_1_led.xhtml#ae0fa7a3a4a21758a82b1bd42decaa990',1,'fabomatic::Led']]],
   ['isonline_21',['isOnline',['../classfabomatic_1_1_fab_backend.xhtml#aef092e0e1db0c3539d5474fad2456255',1,'fabomatic::FabBackend']]],
-  ['isrunning_22',['isRunning',['../classfabomatic_1_1_mock_m_q_t_t_broker.xhtml#a78a57e64b156c6d6d93104fec142740d',1,'fabomatic::MockMQTTBroker']]],
-  ['isshutdownimminent_23',['isShutdownImminent',['../classfabomatic_1_1_machine.xhtml#a871958cc57845c8651cf1058ed9b30e4',1,'fabomatic::Machine']]],
-  ['it_2dit_2ehpp_24',['it-IT.hpp',['../it-_i_t_8hpp.xhtml',1,'']]]
+  ['isresponsive_22',['isResponsive',['../classfabomatic_1_1_fab_backend.xhtml#aacd5dfac21bd4b6ed71912198a038529',1,'fabomatic::FabBackend']]],
+  ['isrunning_23',['isRunning',['../classfabomatic_1_1_mock_m_q_t_t_broker.xhtml#a78a57e64b156c6d6d93104fec142740d',1,'fabomatic::MockMQTTBroker']]],
+  ['isshutdownimminent_24',['isShutdownImminent',['../classfabomatic_1_1_machine.xhtml#a871958cc57845c8651cf1058ed9b30e4',1,'fabomatic::Machine']]],
+  ['it_2dit_2ehpp_25',['it-IT.hpp',['../it-_i_t_8hpp.xhtml',1,'']]]
 ];

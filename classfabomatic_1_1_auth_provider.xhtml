@@ -207,24 +207,24 @@ Private Attributes</h2></td></tr>
 
 <p>Loads the cache from EEPROM. </p>
 
-<p class="definition">Definition at line <a class="el" href="_auth_provider_8cpp_source.xhtml#l00163">163</a> of file <a class="el" href="_auth_provider_8cpp_source.xhtml">AuthProvider.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  164</span>  {</div>
-<div class="line"><span class="lineno">  165</span>    <span class="keyword">const</span> <span class="keyword">auto</span> &amp;config = <a class="code hl_function" href="classfabomatic_1_1_saved_config.xhtml#aca3fe97dfa74c005d47ffef700392d99">SavedConfig::LoadFromEEPROM</a>();</div>
-<div class="line"><span class="lineno">  166</span>    <span class="keywordflow">if</span> (!config.has_value())</div>
-<div class="line"><span class="lineno">  167</span>      <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">  168</span> </div>
-<div class="line"><span class="lineno">  169</span>    <span class="keyword">const</span> <span class="keyword">auto</span> &amp;loaded = config.value().cachedRfid;</div>
-<div class="line"><span class="lineno">  170</span> </div>
-<div class="line"><span class="lineno">  171</span>    std::copy(loaded.cards.cbegin(), loaded.cards.cend(), <a class="code hl_variable" href="classfabomatic_1_1_auth_provider.xhtml#a0db2e829ff5db93ecddf4279ce61fe31">cache</a>.<a class="code hl_variable" href="structfabomatic_1_1_cached_cards.xhtml#a1d33c066725fe6ef09e8bee7743e14dd">cards</a>.begin());</div>
-<div class="line"><span class="lineno">  172</span>    std::copy(loaded.levels.cbegin(), loaded.levels.cend(), <a class="code hl_variable" href="classfabomatic_1_1_auth_provider.xhtml#a0db2e829ff5db93ecddf4279ce61fe31">cache</a>.<a class="code hl_variable" href="structfabomatic_1_1_cached_cards.xhtml#a3fdcaa4338d567cde40f9631bb11bc44">levels</a>.begin());</div>
-<div class="line"><span class="lineno">  173</span>  }</div>
+<p class="definition">Definition at line <a class="el" href="_auth_provider_8cpp_source.xhtml#l00168">168</a> of file <a class="el" href="_auth_provider_8cpp_source.xhtml">AuthProvider.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  169</span>  {</div>
+<div class="line"><span class="lineno">  170</span>    <span class="keyword">const</span> <span class="keyword">auto</span> &amp;config = <a class="code hl_function" href="classfabomatic_1_1_saved_config.xhtml#aca3fe97dfa74c005d47ffef700392d99">SavedConfig::LoadFromEEPROM</a>();</div>
+<div class="line"><span class="lineno">  171</span>    <span class="keywordflow">if</span> (!config.has_value())</div>
+<div class="line"><span class="lineno">  172</span>      <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  173</span> </div>
+<div class="line"><span class="lineno">  174</span>    <span class="keyword">const</span> <span class="keyword">auto</span> &amp;loaded = config.value().cachedRfid;</div>
+<div class="line"><span class="lineno">  175</span> </div>
+<div class="line"><span class="lineno">  176</span>    std::copy(loaded.cards.cbegin(), loaded.cards.cend(), <a class="code hl_variable" href="classfabomatic_1_1_auth_provider.xhtml#a0db2e829ff5db93ecddf4279ce61fe31">cache</a>.<a class="code hl_variable" href="structfabomatic_1_1_cached_cards.xhtml#a1d33c066725fe6ef09e8bee7743e14dd">cards</a>.begin());</div>
+<div class="line"><span class="lineno">  177</span>    std::copy(loaded.levels.cbegin(), loaded.levels.cend(), <a class="code hl_variable" href="classfabomatic_1_1_auth_provider.xhtml#a0db2e829ff5db93ecddf4279ce61fe31">cache</a>.<a class="code hl_variable" href="structfabomatic_1_1_cached_cards.xhtml#a3fdcaa4338d567cde40f9631bb11bc44">levels</a>.begin());</div>
+<div class="line"><span class="lineno">  178</span>  }</div>
 <div class="ttc" id="aclassfabomatic_1_1_saved_config_xhtml_aca3fe97dfa74c005d47ffef700392d99"><div class="ttname"><a href="classfabomatic_1_1_saved_config.xhtml#aca3fe97dfa74c005d47ffef700392d99">fabomatic::SavedConfig::LoadFromEEPROM</a></div><div class="ttdeci">static auto LoadFromEEPROM() -&gt; std::optional&lt; SavedConfig &gt;</div><div class="ttdoc">Loads the configuration from EEPROM if available and matching revision number.</div><div class="ttdef"><b>Definition</b> <a href="_saved_config_8cpp_source.xhtml#l00052">SavedConfig.cpp:52</a></div></div>
 <div class="ttc" id="astructfabomatic_1_1_cached_cards_xhtml_a1d33c066725fe6ef09e8bee7743e14dd"><div class="ttname"><a href="structfabomatic_1_1_cached_cards.xhtml#a1d33c066725fe6ef09e8bee7743e14dd">fabomatic::CachedCards::cards</a></div><div class="ttdeci">std::array&lt; card::uid_t, conf::rfid_tags::CACHE_LEN &gt; cards</div><div class="ttdef"><b>Definition</b> <a href="_cached_cards_8hpp_source.xhtml#l00026">CachedCards.hpp:26</a></div></div>
 <div class="ttc" id="astructfabomatic_1_1_cached_cards_xhtml_a3fdcaa4338d567cde40f9631bb11bc44"><div class="ttname"><a href="structfabomatic_1_1_cached_cards.xhtml#a3fdcaa4338d567cde40f9631bb11bc44">fabomatic::CachedCards::levels</a></div><div class="ttdeci">std::array&lt; FabUser::UserLevel, conf::rfid_tags::CACHE_LEN &gt; levels</div><div class="ttdef"><b>Definition</b> <a href="_cached_cards_8hpp_source.xhtml#l00027">CachedCards.hpp:27</a></div></div>
 </div><!-- fragment -->
 <p class="reference">References <a class="el" href="_saved_config_8cpp_source.xhtml#l00052">fabomatic::SavedConfig::LoadFromEEPROM()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00458">fabomatic::BoardLogic::reconfigure()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00457">fabomatic::BoardLogic::reconfigure()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -255,28 +255,28 @@ Here is the caller graph for this function:</div>
 
 <p>Saves the cache of RFID to EEPROM. </p>
 
-<p class="definition">Definition at line <a class="el" href="_auth_provider_8cpp_source.xhtml#l00183">183</a> of file <a class="el" href="_auth_provider_8cpp_source.xhtml">AuthProvider.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  184</span>  {</div>
-<div class="line"><span class="lineno">  185</span>    SavedConfig config = <a class="code hl_function" href="classfabomatic_1_1_saved_config.xhtml#aca3fe97dfa74c005d47ffef700392d99">SavedConfig::LoadFromEEPROM</a>().value_or(<a class="code hl_function" href="classfabomatic_1_1_saved_config.xhtml#a3a6f62510c34ed7a4491022e4e43b9c2">SavedConfig::DefaultConfig</a>());</div>
-<div class="line"><span class="lineno">  186</span> </div>
-<div class="line"><span class="lineno">  187</span>    <span class="keywordflow">if</span> (std::equal(config.cachedRfid.cards.cbegin(), config.cachedRfid.cards.cend(), <a class="code hl_variable" href="classfabomatic_1_1_auth_provider.xhtml#a0db2e829ff5db93ecddf4279ce61fe31">cache</a>.<a class="code hl_variable" href="structfabomatic_1_1_cached_cards.xhtml#a1d33c066725fe6ef09e8bee7743e14dd">cards</a>.cbegin()) &amp;&amp;</div>
-<div class="line"><span class="lineno">  188</span>        std::equal(config.cachedRfid.levels.cbegin(), config.cachedRfid.levels.cend(), <a class="code hl_variable" href="classfabomatic_1_1_auth_provider.xhtml#a0db2e829ff5db93ecddf4279ce61fe31">cache</a>.<a class="code hl_variable" href="structfabomatic_1_1_cached_cards.xhtml#a3fdcaa4338d567cde40f9631bb11bc44">levels</a>.cbegin()))</div>
-<div class="line"><span class="lineno">  189</span>    {</div>
-<div class="line"><span class="lineno">  190</span>      ESP_LOGD(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <span class="stringliteral">&quot;Cache is the same, not saving&quot;</span>);</div>
-<div class="line"><span class="lineno">  191</span>      <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">  192</span>    }</div>
-<div class="line"><span class="lineno">  193</span> </div>
-<div class="line"><span class="lineno">  194</span>    std::copy(<a class="code hl_variable" href="classfabomatic_1_1_auth_provider.xhtml#a0db2e829ff5db93ecddf4279ce61fe31">cache</a>.<a class="code hl_variable" href="structfabomatic_1_1_cached_cards.xhtml#a1d33c066725fe6ef09e8bee7743e14dd">cards</a>.cbegin(), <a class="code hl_variable" href="classfabomatic_1_1_auth_provider.xhtml#a0db2e829ff5db93ecddf4279ce61fe31">cache</a>.<a class="code hl_variable" href="structfabomatic_1_1_cached_cards.xhtml#a1d33c066725fe6ef09e8bee7743e14dd">cards</a>.cend(), config.cachedRfid.cards.begin());</div>
-<div class="line"><span class="lineno">  195</span>    std::copy(<a class="code hl_variable" href="classfabomatic_1_1_auth_provider.xhtml#a0db2e829ff5db93ecddf4279ce61fe31">cache</a>.<a class="code hl_variable" href="structfabomatic_1_1_cached_cards.xhtml#a3fdcaa4338d567cde40f9631bb11bc44">levels</a>.cbegin(), <a class="code hl_variable" href="classfabomatic_1_1_auth_provider.xhtml#a0db2e829ff5db93ecddf4279ce61fe31">cache</a>.<a class="code hl_variable" href="structfabomatic_1_1_cached_cards.xhtml#a3fdcaa4338d567cde40f9631bb11bc44">levels</a>.cend(), config.cachedRfid.levels.begin());</div>
-<div class="line"><span class="lineno">  196</span> </div>
-<div class="line"><span class="lineno">  197</span>    <span class="keywordflow">return</span> config.SaveToEEPROM();</div>
-<div class="line"><span class="lineno">  198</span>  }</div>
+<p class="definition">Definition at line <a class="el" href="_auth_provider_8cpp_source.xhtml#l00188">188</a> of file <a class="el" href="_auth_provider_8cpp_source.xhtml">AuthProvider.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  189</span>  {</div>
+<div class="line"><span class="lineno">  190</span>    SavedConfig config = <a class="code hl_function" href="classfabomatic_1_1_saved_config.xhtml#aca3fe97dfa74c005d47ffef700392d99">SavedConfig::LoadFromEEPROM</a>().value_or(<a class="code hl_function" href="classfabomatic_1_1_saved_config.xhtml#a3a6f62510c34ed7a4491022e4e43b9c2">SavedConfig::DefaultConfig</a>());</div>
+<div class="line"><span class="lineno">  191</span> </div>
+<div class="line"><span class="lineno">  192</span>    <span class="keywordflow">if</span> (std::equal(config.cachedRfid.cards.cbegin(), config.cachedRfid.cards.cend(), <a class="code hl_variable" href="classfabomatic_1_1_auth_provider.xhtml#a0db2e829ff5db93ecddf4279ce61fe31">cache</a>.<a class="code hl_variable" href="structfabomatic_1_1_cached_cards.xhtml#a1d33c066725fe6ef09e8bee7743e14dd">cards</a>.cbegin()) &amp;&amp;</div>
+<div class="line"><span class="lineno">  193</span>        std::equal(config.cachedRfid.levels.cbegin(), config.cachedRfid.levels.cend(), <a class="code hl_variable" href="classfabomatic_1_1_auth_provider.xhtml#a0db2e829ff5db93ecddf4279ce61fe31">cache</a>.<a class="code hl_variable" href="structfabomatic_1_1_cached_cards.xhtml#a3fdcaa4338d567cde40f9631bb11bc44">levels</a>.cbegin()))</div>
+<div class="line"><span class="lineno">  194</span>    {</div>
+<div class="line"><span class="lineno">  195</span>      ESP_LOGD(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <span class="stringliteral">&quot;Cache is the same, not saving&quot;</span>);</div>
+<div class="line"><span class="lineno">  196</span>      <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  197</span>    }</div>
+<div class="line"><span class="lineno">  198</span> </div>
+<div class="line"><span class="lineno">  199</span>    std::copy(<a class="code hl_variable" href="classfabomatic_1_1_auth_provider.xhtml#a0db2e829ff5db93ecddf4279ce61fe31">cache</a>.<a class="code hl_variable" href="structfabomatic_1_1_cached_cards.xhtml#a1d33c066725fe6ef09e8bee7743e14dd">cards</a>.cbegin(), <a class="code hl_variable" href="classfabomatic_1_1_auth_provider.xhtml#a0db2e829ff5db93ecddf4279ce61fe31">cache</a>.<a class="code hl_variable" href="structfabomatic_1_1_cached_cards.xhtml#a1d33c066725fe6ef09e8bee7743e14dd">cards</a>.cend(), config.cachedRfid.cards.begin());</div>
+<div class="line"><span class="lineno">  200</span>    std::copy(<a class="code hl_variable" href="classfabomatic_1_1_auth_provider.xhtml#a0db2e829ff5db93ecddf4279ce61fe31">cache</a>.<a class="code hl_variable" href="structfabomatic_1_1_cached_cards.xhtml#a3fdcaa4338d567cde40f9631bb11bc44">levels</a>.cbegin(), <a class="code hl_variable" href="classfabomatic_1_1_auth_provider.xhtml#a0db2e829ff5db93ecddf4279ce61fe31">cache</a>.<a class="code hl_variable" href="structfabomatic_1_1_cached_cards.xhtml#a3fdcaa4338d567cde40f9631bb11bc44">levels</a>.cend(), config.cachedRfid.levels.begin());</div>
+<div class="line"><span class="lineno">  201</span> </div>
+<div class="line"><span class="lineno">  202</span>    <span class="keywordflow">return</span> config.SaveToEEPROM();</div>
+<div class="line"><span class="lineno">  203</span>  }</div>
 <div class="ttc" id="a_logging_8hpp_xhtml_a4ef5b5f197804a60836ab1e8907d8301"><div class="ttname"><a href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a></div><div class="ttdeci">static const char *const TAG</div><div class="ttdef"><b>Definition</b> <a href="_logging_8hpp_source.xhtml#l00009">Logging.hpp:9</a></div></div>
 <div class="ttc" id="aclassfabomatic_1_1_saved_config_xhtml_a3a6f62510c34ed7a4491022e4e43b9c2"><div class="ttname"><a href="classfabomatic_1_1_saved_config.xhtml#a3a6f62510c34ed7a4491022e4e43b9c2">fabomatic::SavedConfig::DefaultConfig</a></div><div class="ttdeci">static auto DefaultConfig() -&gt; SavedConfig</div><div class="ttdoc">Returns the default configuration built from conf.hpp and secrets.hpp.</div><div class="ttdef"><b>Definition</b> <a href="_saved_config_8cpp_source.xhtml#l00028">SavedConfig.cpp:28</a></div></div>
 </div><!-- fragment -->
 <p class="reference">References <a class="el" href="_auth_provider_8hpp_source.xhtml#l00022">cache</a>, <a class="el" href="_saved_config_8hpp_source.xhtml#l00044">fabomatic::SavedConfig::cachedRfid</a>, <a class="el" href="_cached_cards_8hpp_source.xhtml#l00026">fabomatic::CachedCards::cards</a>, <a class="el" href="_saved_config_8cpp_source.xhtml#l00028">fabomatic::SavedConfig::DefaultConfig()</a>, <a class="el" href="_cached_cards_8hpp_source.xhtml#l00027">fabomatic::CachedCards::levels</a>, <a class="el" href="_saved_config_8cpp_source.xhtml#l00052">fabomatic::SavedConfig::LoadFromEEPROM()</a>, <a class="el" href="_saved_config_8cpp_source.xhtml#l00172">fabomatic::SavedConfig::SaveToEEPROM()</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00009">TAG</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="test__mqtt_8cpp_source.xhtml#l00133">fabomatic::tests::test_fabserver_calls()</a>, and <a class="el" href="test__savedconfig_8cpp_source.xhtml#l00094">fabomatic::tests::test_rfid_cache()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="test__mqtt_8cpp_source.xhtml#l00274">fabomatic::tests::test_degraded_use()</a>, <a class="el" href="test__mqtt_8cpp_source.xhtml#l00186">fabomatic::tests::test_fabserver_calls()</a>, and <a class="el" href="test__savedconfig_8cpp_source.xhtml#l00094">fabomatic::tests::test_rfid_cache()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -285,7 +285,7 @@ Here is the call graph for this function:</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classfabomatic_1_1_auth_provider_acb92a9381bc8e14bd57b819fc9162750_icgraph.svg" width="462" height="118"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classfabomatic_1_1_auth_provider_acb92a9381bc8e14bd57b819fc9162750_icgraph.svg" width="462" height="183"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -340,10 +340,10 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_auth_provider_8cpp_source.xhtml#l00177">177</a> of file <a class="el" href="_auth_provider_8cpp_source.xhtml">AuthProvider.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  178</span>  {</div>
-<div class="line"><span class="lineno">  179</span>    <a class="code hl_variable" href="classfabomatic_1_1_auth_provider.xhtml#a52f8cf328edafb65b42c3117d06afaf7">whitelist</a> = list;</div>
-<div class="line"><span class="lineno">  180</span>  }</div>
+<p class="definition">Definition at line <a class="el" href="_auth_provider_8cpp_source.xhtml#l00182">182</a> of file <a class="el" href="_auth_provider_8cpp_source.xhtml">AuthProvider.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  183</span>  {</div>
+<div class="line"><span class="lineno">  184</span>    <a class="code hl_variable" href="classfabomatic_1_1_auth_provider.xhtml#a52f8cf328edafb65b42c3117d06afaf7">whitelist</a> = list;</div>
+<div class="line"><span class="lineno">  185</span>  }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -392,88 +392,94 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">   60</span>    ESP_LOGD(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <span class="stringliteral">&quot;tryLogin called for %s&quot;</span>, <a class="code hl_function" href="namespacefabomatic_1_1card.xhtml#aef091ec171625c69f9d4eab20ebaefec">uid_str</a>.c_str());</div>
 <div class="line"><span class="lineno">   61</span> </div>
 <div class="line"><span class="lineno">   62</span>    <span class="keywordflow">if</span> (!<a class="code hl_variable" href="namespacefabomatic_1_1_board.xhtml#a57517d1e4e586f81a847e56fc92678bc">server</a>.<a class="code hl_function" href="classfabomatic_1_1_fab_backend.xhtml#aef092e0e1db0c3539d5474fad2456255">isOnline</a>())</div>
-<div class="line"><span class="lineno">   63</span>      <a class="code hl_variable" href="namespacefabomatic_1_1_board.xhtml#a57517d1e4e586f81a847e56fc92678bc">server</a>.<a class="code hl_function" href="classfabomatic_1_1_fab_backend.xhtml#a1a45f556aadcbc428d14b7c7577ed43d">connect</a>();</div>
-<div class="line"><span class="lineno">   64</span> </div>
-<div class="line"><span class="lineno">   65</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="namespacefabomatic_1_1_board.xhtml#a57517d1e4e586f81a847e56fc92678bc">server</a>.<a class="code hl_function" href="classfabomatic_1_1_fab_backend.xhtml#aef092e0e1db0c3539d5474fad2456255">isOnline</a>())</div>
-<div class="line"><span class="lineno">   66</span>    {</div>
-<div class="line"><span class="lineno">   67</span>      <span class="keyword">const</span> <span class="keyword">auto</span> response = <a class="code hl_variable" href="namespacefabomatic_1_1_board.xhtml#a57517d1e4e586f81a847e56fc92678bc">server</a>.<a class="code hl_function" href="classfabomatic_1_1_fab_backend.xhtml#a0e4d6d289b03582bf6ea9e78e15dd79e">checkCard</a>(uid);</div>
-<div class="line"><span class="lineno">   68</span>      <span class="keywordflow">if</span> (response-&gt;request_ok)</div>
-<div class="line"><span class="lineno">   69</span>      {</div>
-<div class="line"><span class="lineno">   70</span>        user.card_uid = uid;</div>
-<div class="line"><span class="lineno">   71</span> </div>
-<div class="line"><span class="lineno">   72</span>        <span class="keywordflow">if</span> (response-&gt;getResult() == UserResult::Authorized)</div>
-<div class="line"><span class="lineno">   73</span>        {</div>
-<div class="line"><span class="lineno">   74</span>          user.authenticated = <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">   75</span>          user.holder_name = response-&gt;holder_name;</div>
-<div class="line"><span class="lineno">   76</span>          user.user_level = response-&gt;user_level;</div>
-<div class="line"><span class="lineno">   77</span>          <span class="comment">// Cache the positive result</span></div>
-<div class="line"><span class="lineno">   78</span>          <a class="code hl_function" href="classfabomatic_1_1_auth_provider.xhtml#a402ef003255e1f0cc0892ef5dae2ac9b">updateCache</a>(uid, response-&gt;user_level);</div>
-<div class="line"><span class="lineno">   79</span> </div>
-<div class="line"><span class="lineno">   80</span>          ESP_LOGD(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <span class="stringliteral">&quot; -&gt; online check OK (%s)&quot;</span>, user.toString().c_str());</div>
-<div class="line"><span class="lineno">   81</span> </div>
-<div class="line"><span class="lineno">   82</span>          <span class="keywordflow">return</span> user;</div>
-<div class="line"><span class="lineno">   83</span>        }</div>
+<div class="line"><span class="lineno">   63</span>    {</div>
+<div class="line"><span class="lineno">   64</span>      <span class="keywordflow">if</span> (!<a class="code hl_variable" href="namespacefabomatic_1_1_board.xhtml#a57517d1e4e586f81a847e56fc92678bc">server</a>.<a class="code hl_function" href="classfabomatic_1_1_fab_backend.xhtml#a205b60a81c493f6fbdc695846be5d2ef">shouldFailFast</a>())</div>
+<div class="line"><span class="lineno">   65</span>      {</div>
+<div class="line"><span class="lineno">   66</span>        <a class="code hl_variable" href="namespacefabomatic_1_1_board.xhtml#a57517d1e4e586f81a847e56fc92678bc">server</a>.<a class="code hl_function" href="classfabomatic_1_1_fab_backend.xhtml#a1a45f556aadcbc428d14b7c7577ed43d">connect</a>();</div>
+<div class="line"><span class="lineno">   67</span>      }</div>
+<div class="line"><span class="lineno">   68</span>    }</div>
+<div class="line"><span class="lineno">   69</span> </div>
+<div class="line"><span class="lineno">   70</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="namespacefabomatic_1_1_board.xhtml#a57517d1e4e586f81a847e56fc92678bc">server</a>.<a class="code hl_function" href="classfabomatic_1_1_fab_backend.xhtml#aef092e0e1db0c3539d5474fad2456255">isOnline</a>())</div>
+<div class="line"><span class="lineno">   71</span>    {</div>
+<div class="line"><span class="lineno">   72</span>      <span class="keyword">const</span> <span class="keyword">auto</span> response = <a class="code hl_variable" href="namespacefabomatic_1_1_board.xhtml#a57517d1e4e586f81a847e56fc92678bc">server</a>.<a class="code hl_function" href="classfabomatic_1_1_fab_backend.xhtml#a0e4d6d289b03582bf6ea9e78e15dd79e">checkCard</a>(uid);</div>
+<div class="line"><span class="lineno">   73</span>      <span class="keywordflow">if</span> (response-&gt;request_ok)</div>
+<div class="line"><span class="lineno">   74</span>      {</div>
+<div class="line"><span class="lineno">   75</span>        user.card_uid = uid;</div>
+<div class="line"><span class="lineno">   76</span> </div>
+<div class="line"><span class="lineno">   77</span>        <span class="keywordflow">if</span> (response-&gt;getResult() == UserResult::Authorized)</div>
+<div class="line"><span class="lineno">   78</span>        {</div>
+<div class="line"><span class="lineno">   79</span>          user.authenticated = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">   80</span>          user.holder_name = response-&gt;holder_name;</div>
+<div class="line"><span class="lineno">   81</span>          user.user_level = response-&gt;user_level;</div>
+<div class="line"><span class="lineno">   82</span>          <span class="comment">// Cache the positive result</span></div>
+<div class="line"><span class="lineno">   83</span>          <a class="code hl_function" href="classfabomatic_1_1_auth_provider.xhtml#a402ef003255e1f0cc0892ef5dae2ac9b">updateCache</a>(uid, response-&gt;user_level);</div>
 <div class="line"><span class="lineno">   84</span> </div>
-<div class="line"><span class="lineno">   85</span>        <span class="comment">// Invalidate the cache entries</span></div>
-<div class="line"><span class="lineno">   86</span>        <a class="code hl_function" href="classfabomatic_1_1_auth_provider.xhtml#a402ef003255e1f0cc0892ef5dae2ac9b">updateCache</a>(uid, <a class="code hl_enumvalue" href="structfabomatic_1_1_fab_user.xhtml#a75deeb54124600e0387550735c7a0ca0a88183b946cc5f0e8c96b2e66e1c74a7e">FabUser::UserLevel::Unknown</a>);</div>
-<div class="line"><span class="lineno">   87</span> </div>
-<div class="line"><span class="lineno">   88</span>      } <span class="comment">// if (response-&gt;request_ok)</span></div>
+<div class="line"><span class="lineno">   85</span>          ESP_LOGD(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <span class="stringliteral">&quot; -&gt; online check OK (%s)&quot;</span>, user.toString().c_str());</div>
+<div class="line"><span class="lineno">   86</span> </div>
+<div class="line"><span class="lineno">   87</span>          <span class="keywordflow">return</span> user;</div>
+<div class="line"><span class="lineno">   88</span>        }</div>
 <div class="line"><span class="lineno">   89</span> </div>
-<div class="line"><span class="lineno">   90</span>      ESP_LOGD(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <span class="stringliteral">&quot; -&gt; online check NOT OK&quot;</span>);</div>
-<div class="line"><span class="lineno">   91</span> </div>
-<div class="line"><span class="lineno">   92</span>      user.authenticated = <span class="keyword">false</span>;</div>
-<div class="line"><span class="lineno">   93</span> </div>
-<div class="line"><span class="lineno">   94</span>      <span class="keywordflow">if</span> (response-&gt;request_ok) <span class="comment">// Server replied but user is not valid</span></div>
-<div class="line"><span class="lineno">   95</span>      {</div>
-<div class="line"><span class="lineno">   96</span>        <span class="keywordflow">return</span> user;</div>
-<div class="line"><span class="lineno">   97</span>      }</div>
-<div class="line"><span class="lineno">   98</span>    }</div>
-<div class="line"><span class="lineno">   99</span>    <span class="comment">// Check whitelist if offline</span></div>
-<div class="line"><span class="lineno">  100</span>    <span class="keywordflow">if</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;result = <a class="code hl_function" href="classfabomatic_1_1_auth_provider.xhtml#a9f07c23e632c8d0d61b9d338c1c3c74b">uidInWhitelist</a>(uid); result.has_value())</div>
-<div class="line"><span class="lineno">  101</span>    {</div>
-<div class="line"><span class="lineno">  102</span>      <span class="keyword">const</span> <span class="keyword">auto</span> &amp;[card, level, name] = result.value();</div>
-<div class="line"><span class="lineno">  103</span>      user.card_uid = card;</div>
-<div class="line"><span class="lineno">  104</span>      user.authenticated = <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">  105</span>      user.user_level = level;</div>
-<div class="line"><span class="lineno">  106</span>      user.holder_name = name;</div>
-<div class="line"><span class="lineno">  107</span>      ESP_LOGD(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <span class="stringliteral">&quot; -&gt; whilelist check OK (%s)&quot;</span>, user.toString().c_str());</div>
-<div class="line"><span class="lineno">  108</span> </div>
-<div class="line"><span class="lineno">  109</span>      <span class="keywordflow">return</span> user;</div>
-<div class="line"><span class="lineno">  110</span>    }</div>
-<div class="line"><span class="lineno">  111</span> </div>
-<div class="line"><span class="lineno">  112</span>    <span class="comment">// Finally check the cached values</span></div>
-<div class="line"><span class="lineno">  113</span>    <span class="keywordflow">if</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;result = <a class="code hl_function" href="classfabomatic_1_1_auth_provider.xhtml#a2e2ed5bccaf98333a125b7d376a39261">uidInCache</a>(uid); result.has_value())</div>
-<div class="line"><span class="lineno">  114</span>    {</div>
-<div class="line"><span class="lineno">  115</span>      <span class="keyword">const</span> <span class="keyword">auto</span> &amp;cached = result.value();</div>
-<div class="line"><span class="lineno">  116</span>      user.card_uid = cached.uid;</div>
-<div class="line"><span class="lineno">  117</span>      user.authenticated = (cached.level != <a class="code hl_enumvalue" href="structfabomatic_1_1_fab_user.xhtml#a75deeb54124600e0387550735c7a0ca0a88183b946cc5f0e8c96b2e66e1c74a7e">FabUser::UserLevel::Unknown</a>);</div>
-<div class="line"><span class="lineno">  118</span>      user.user_level = cached.level;</div>
-<div class="line"><span class="lineno">  119</span>      user.holder_name = <a class="code hl_function" href="namespacefabomatic_1_1card.xhtml#aef091ec171625c69f9d4eab20ebaefec">card::uid_str</a>(uid);</div>
-<div class="line"><span class="lineno">  120</span>      ESP_LOGD(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <span class="stringliteral">&quot; -&gt; cache check OK (%s)&quot;</span>, user.toString().c_str());</div>
-<div class="line"><span class="lineno">  121</span>      <span class="keywordflow">return</span> user;</div>
-<div class="line"><span class="lineno">  122</span>    }</div>
-<div class="line"><span class="lineno">  123</span> </div>
-<div class="line"><span class="lineno">  124</span>    ESP_LOGD(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <span class="stringliteral">&quot; -&gt; whilelist check NOK&quot;</span>);</div>
-<div class="line"><span class="lineno">  125</span>    <span class="keywordflow">return</span> std::nullopt;</div>
-<div class="line"><span class="lineno">  126</span>  }</div>
-<div class="ttc" id="aclassfabomatic_1_1_auth_provider_xhtml_a2e2ed5bccaf98333a125b7d376a39261"><div class="ttname"><a href="classfabomatic_1_1_auth_provider.xhtml#a2e2ed5bccaf98333a125b7d376a39261">fabomatic::AuthProvider::uidInCache</a></div><div class="ttdeci">constexpr auto uidInCache(card::uid_t uid) const -&gt; std::optional&lt; CachedCard &gt;</div><div class="ttdoc">Checks if the card ID is whitelisted.</div><div class="ttdef"><b>Definition</b> <a href="_auth_provider_8cpp_source.xhtml#l00157">AuthProvider.cpp:157</a></div></div>
+<div class="line"><span class="lineno">   90</span>        <span class="comment">// Invalidate the cache entries</span></div>
+<div class="line"><span class="lineno">   91</span>        <a class="code hl_function" href="classfabomatic_1_1_auth_provider.xhtml#a402ef003255e1f0cc0892ef5dae2ac9b">updateCache</a>(uid, <a class="code hl_enumvalue" href="structfabomatic_1_1_fab_user.xhtml#a75deeb54124600e0387550735c7a0ca0a88183b946cc5f0e8c96b2e66e1c74a7e">FabUser::UserLevel::Unknown</a>);</div>
+<div class="line"><span class="lineno">   92</span> </div>
+<div class="line"><span class="lineno">   93</span>      } <span class="comment">// if (response-&gt;request_ok)</span></div>
+<div class="line"><span class="lineno">   94</span> </div>
+<div class="line"><span class="lineno">   95</span>      ESP_LOGD(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <span class="stringliteral">&quot; -&gt; online check NOT OK&quot;</span>);</div>
+<div class="line"><span class="lineno">   96</span> </div>
+<div class="line"><span class="lineno">   97</span>      user.authenticated = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">   98</span> </div>
+<div class="line"><span class="lineno">   99</span>      <span class="keywordflow">if</span> (response-&gt;request_ok) <span class="comment">// Server replied but user is not valid</span></div>
+<div class="line"><span class="lineno">  100</span>      {</div>
+<div class="line"><span class="lineno">  101</span>        <span class="keywordflow">return</span> user;</div>
+<div class="line"><span class="lineno">  102</span>      }</div>
+<div class="line"><span class="lineno">  103</span>    }</div>
+<div class="line"><span class="lineno">  104</span>    <span class="comment">// Check whitelist if offline</span></div>
+<div class="line"><span class="lineno">  105</span>    <span class="keywordflow">if</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;result = <a class="code hl_function" href="classfabomatic_1_1_auth_provider.xhtml#a9f07c23e632c8d0d61b9d338c1c3c74b">uidInWhitelist</a>(uid); result.has_value())</div>
+<div class="line"><span class="lineno">  106</span>    {</div>
+<div class="line"><span class="lineno">  107</span>      <span class="keyword">const</span> <span class="keyword">auto</span> &amp;[card, level, name] = result.value();</div>
+<div class="line"><span class="lineno">  108</span>      user.card_uid = card;</div>
+<div class="line"><span class="lineno">  109</span>      user.authenticated = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  110</span>      user.user_level = level;</div>
+<div class="line"><span class="lineno">  111</span>      user.holder_name = name;</div>
+<div class="line"><span class="lineno">  112</span>      ESP_LOGD(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <span class="stringliteral">&quot; -&gt; whilelist check OK (%s)&quot;</span>, user.toString().c_str());</div>
+<div class="line"><span class="lineno">  113</span> </div>
+<div class="line"><span class="lineno">  114</span>      <span class="keywordflow">return</span> user;</div>
+<div class="line"><span class="lineno">  115</span>    }</div>
+<div class="line"><span class="lineno">  116</span> </div>
+<div class="line"><span class="lineno">  117</span>    <span class="comment">// Finally check the cached values</span></div>
+<div class="line"><span class="lineno">  118</span>    <span class="keywordflow">if</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;result = <a class="code hl_function" href="classfabomatic_1_1_auth_provider.xhtml#a2e2ed5bccaf98333a125b7d376a39261">uidInCache</a>(uid); result.has_value())</div>
+<div class="line"><span class="lineno">  119</span>    {</div>
+<div class="line"><span class="lineno">  120</span>      <span class="keyword">const</span> <span class="keyword">auto</span> &amp;cached = result.value();</div>
+<div class="line"><span class="lineno">  121</span>      user.card_uid = cached.uid;</div>
+<div class="line"><span class="lineno">  122</span>      user.authenticated = (cached.level != <a class="code hl_enumvalue" href="structfabomatic_1_1_fab_user.xhtml#a75deeb54124600e0387550735c7a0ca0a88183b946cc5f0e8c96b2e66e1c74a7e">FabUser::UserLevel::Unknown</a>);</div>
+<div class="line"><span class="lineno">  123</span>      user.user_level = cached.level;</div>
+<div class="line"><span class="lineno">  124</span>      user.holder_name = <a class="code hl_function" href="namespacefabomatic_1_1card.xhtml#aef091ec171625c69f9d4eab20ebaefec">card::uid_str</a>(uid);</div>
+<div class="line"><span class="lineno">  125</span>      ESP_LOGD(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <span class="stringliteral">&quot; -&gt; cache check OK (%s)&quot;</span>, user.toString().c_str());</div>
+<div class="line"><span class="lineno">  126</span>      <span class="keywordflow">return</span> user;</div>
+<div class="line"><span class="lineno">  127</span>    }</div>
+<div class="line"><span class="lineno">  128</span> </div>
+<div class="line"><span class="lineno">  129</span>    ESP_LOGD(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <span class="stringliteral">&quot; -&gt; whilelist check NOK&quot;</span>);</div>
+<div class="line"><span class="lineno">  130</span>    <span class="keywordflow">return</span> std::nullopt;</div>
+<div class="line"><span class="lineno">  131</span>  }</div>
+<div class="ttc" id="aclassfabomatic_1_1_auth_provider_xhtml_a2e2ed5bccaf98333a125b7d376a39261"><div class="ttname"><a href="classfabomatic_1_1_auth_provider.xhtml#a2e2ed5bccaf98333a125b7d376a39261">fabomatic::AuthProvider::uidInCache</a></div><div class="ttdeci">constexpr auto uidInCache(card::uid_t uid) const -&gt; std::optional&lt; CachedCard &gt;</div><div class="ttdoc">Checks if the card ID is whitelisted.</div><div class="ttdef"><b>Definition</b> <a href="_auth_provider_8cpp_source.xhtml#l00162">AuthProvider.cpp:162</a></div></div>
 <div class="ttc" id="aclassfabomatic_1_1_auth_provider_xhtml_a402ef003255e1f0cc0892ef5dae2ac9b"><div class="ttname"><a href="classfabomatic_1_1_auth_provider.xhtml#a402ef003255e1f0cc0892ef5dae2ac9b">fabomatic::AuthProvider::updateCache</a></div><div class="ttdeci">constexpr auto updateCache(card::uid_t candidate_uid, FabUser::UserLevel level) const -&gt; void</div><div class="ttdoc">Cache the user request.</div><div class="ttdef"><b>Definition</b> <a href="_auth_provider_8cpp_source.xhtml#l00024">AuthProvider.cpp:24</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_auth_provider_xhtml_a9f07c23e632c8d0d61b9d338c1c3c74b"><div class="ttname"><a href="classfabomatic_1_1_auth_provider.xhtml#a9f07c23e632c8d0d61b9d338c1c3c74b">fabomatic::AuthProvider::uidInWhitelist</a></div><div class="ttdeci">constexpr auto uidInWhitelist(card::uid_t uid) const -&gt; std::optional&lt; WhiteListEntry &gt;</div><div class="ttdoc">Checks if the card ID is whitelisted.</div><div class="ttdef"><b>Definition</b> <a href="_auth_provider_8cpp_source.xhtml#l00131">AuthProvider.cpp:131</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_fab_backend_xhtml_a0e4d6d289b03582bf6ea9e78e15dd79e"><div class="ttname"><a href="classfabomatic_1_1_fab_backend.xhtml#a0e4d6d289b03582bf6ea9e78e15dd79e">fabomatic::FabBackend::checkCard</a></div><div class="ttdeci">auto checkCard(const card::uid_t uid) -&gt; std::unique_ptr&lt; MQTTInterface::UserResponse &gt;</div><div class="ttdoc">Checks if the card ID is known to the server.</div><div class="ttdef"><b>Definition</b> <a href="_fab_backend_8cpp_source.xhtml#l00505">FabBackend.cpp:505</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_fab_backend_xhtml_a1a45f556aadcbc428d14b7c7577ed43d"><div class="ttname"><a href="classfabomatic_1_1_fab_backend.xhtml#a1a45f556aadcbc428d14b7c7577ed43d">fabomatic::FabBackend::connect</a></div><div class="ttdeci">auto connect() -&gt; bool</div><div class="ttdoc">Establishes a connection to the WiFi network and the MQTT server.</div><div class="ttdef"><b>Definition</b> <a href="_fab_backend_8cpp_source.xhtml#l00291">FabBackend.cpp:291</a></div></div>
-<div class="ttc" id="aclassfabomatic_1_1_fab_backend_xhtml_aef092e0e1db0c3539d5474fad2456255"><div class="ttname"><a href="classfabomatic_1_1_fab_backend.xhtml#aef092e0e1db0c3539d5474fad2456255">fabomatic::FabBackend::isOnline</a></div><div class="ttdeci">auto isOnline() const -&gt; bool</div><div class="ttdoc">Checks if the client is online.</div><div class="ttdef"><b>Definition</b> <a href="_fab_backend_8cpp_source.xhtml#l00235">FabBackend.cpp:235</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_auth_provider_xhtml_a9f07c23e632c8d0d61b9d338c1c3c74b"><div class="ttname"><a href="classfabomatic_1_1_auth_provider.xhtml#a9f07c23e632c8d0d61b9d338c1c3c74b">fabomatic::AuthProvider::uidInWhitelist</a></div><div class="ttdeci">constexpr auto uidInWhitelist(card::uid_t uid) const -&gt; std::optional&lt; WhiteListEntry &gt;</div><div class="ttdoc">Checks if the card ID is whitelisted.</div><div class="ttdef"><b>Definition</b> <a href="_auth_provider_8cpp_source.xhtml#l00136">AuthProvider.cpp:136</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_fab_backend_xhtml_a0e4d6d289b03582bf6ea9e78e15dd79e"><div class="ttname"><a href="classfabomatic_1_1_fab_backend.xhtml#a0e4d6d289b03582bf6ea9e78e15dd79e">fabomatic::FabBackend::checkCard</a></div><div class="ttdeci">auto checkCard(const card::uid_t uid) -&gt; std::unique_ptr&lt; MQTTInterface::UserResponse &gt;</div><div class="ttdoc">Checks if the card ID is known to the server.</div><div class="ttdef"><b>Definition</b> <a href="_fab_backend_8cpp_source.xhtml#l00564">FabBackend.cpp:564</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_fab_backend_xhtml_a1a45f556aadcbc428d14b7c7577ed43d"><div class="ttname"><a href="classfabomatic_1_1_fab_backend.xhtml#a1a45f556aadcbc428d14b7c7577ed43d">fabomatic::FabBackend::connect</a></div><div class="ttdeci">auto connect() -&gt; bool</div><div class="ttdoc">Establishes a connection to the WiFi network and the MQTT server.</div><div class="ttdef"><b>Definition</b> <a href="_fab_backend_8cpp_source.xhtml#l00317">FabBackend.cpp:317</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_fab_backend_xhtml_a205b60a81c493f6fbdc695846be5d2ef"><div class="ttname"><a href="classfabomatic_1_1_fab_backend.xhtml#a205b60a81c493f6fbdc695846be5d2ef">fabomatic::FabBackend::shouldFailFast</a></div><div class="ttdeci">auto shouldFailFast() const -&gt; bool</div><div class="ttdoc">when server is unresponsive, wait for a configurable time before to try again</div><div class="ttdef"><b>Definition</b> <a href="_fab_backend_8cpp_source.xhtml#l00740">FabBackend.cpp:740</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_fab_backend_xhtml_aef092e0e1db0c3539d5474fad2456255"><div class="ttname"><a href="classfabomatic_1_1_fab_backend.xhtml#aef092e0e1db0c3539d5474fad2456255">fabomatic::FabBackend::isOnline</a></div><div class="ttdeci">auto isOnline() const -&gt; bool</div><div class="ttdoc">Indicates if the MQTT client is connected to the broker and backend is responsive.</div><div class="ttdef"><b>Definition</b> <a href="_fab_backend_8cpp_source.xhtml#l00238">FabBackend.cpp:238</a></div></div>
 <div class="ttc" id="anamespacefabomatic_1_1_board_xhtml_a57517d1e4e586f81a847e56fc92678bc"><div class="ttname"><a href="namespacefabomatic_1_1_board.xhtml#a57517d1e4e586f81a847e56fc92678bc">fabomatic::Board::server</a></div><div class="ttdeci">FabBackend server</div></div>
 <div class="ttc" id="anamespacefabomatic_1_1_m_q_t_t_interface_xhtml_aae6b9bbbb914df1bded5c53773eb17fa"><div class="ttname"><a href="namespacefabomatic_1_1_m_q_t_t_interface.xhtml#aae6b9bbbb914df1bded5c53773eb17fa">fabomatic::MQTTInterface::UserResult</a></div><div class="ttdeci">UserResult</div><div class="ttdoc">Result code for user authentication result.</div><div class="ttdef"><b>Definition</b> <a href="_m_q_t_ttypes_8hpp_source.xhtml#l00136">MQTTtypes.hpp:137</a></div></div>
 <div class="ttc" id="anamespacefabomatic_1_1card_xhtml_aef091ec171625c69f9d4eab20ebaefec"><div class="ttname"><a href="namespacefabomatic_1_1card.xhtml#aef091ec171625c69f9d4eab20ebaefec">fabomatic::card::uid_str</a></div><div class="ttdeci">auto uid_str(const card::uid_t uid) -&gt; const std::string</div><div class="ttdoc">Returns a string representation of the UID.</div><div class="ttdef"><b>Definition</b> <a href="card_8hpp_source.xhtml#l00022">card.hpp:22</a></div></div>
 <div class="ttc" id="astructfabomatic_1_1_fab_user_xhtml_a75deeb54124600e0387550735c7a0ca0a88183b946cc5f0e8c96b2e66e1c74a7e"><div class="ttname"><a href="structfabomatic_1_1_fab_user.xhtml#a75deeb54124600e0387550735c7a0ca0a88183b946cc5f0e8c96b2e66e1c74a7e">fabomatic::FabUser::UserLevel::Unknown</a></div><div class="ttdeci">@ Unknown</div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_fab_user_8hpp_source.xhtml#l00027">fabomatic::FabUser::authenticated</a>, <a class="el" href="_fab_user_8hpp_source.xhtml#l00025">fabomatic::FabUser::card_uid</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00505">fabomatic::FabBackend::checkCard()</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00291">fabomatic::FabBackend::connect()</a>, <a class="el" href="_fab_user_8hpp_source.xhtml#l00026">fabomatic::FabUser::holder_name</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00235">fabomatic::FabBackend::isOnline()</a>, <a class="el" href="_logging_8hpp_source.xhtml#l00009">TAG</a>, <a class="el" href="_fab_user_8hpp_source.xhtml#l00054">fabomatic::FabUser::toString()</a>, <a class="el" href="card_8hpp_source.xhtml#l00022">fabomatic::card::uid_str()</a>, <a class="el" href="structfabomatic_1_1_fab_user.xhtml#a75deeb54124600e0387550735c7a0ca0a88183b946cc5f0e8c96b2e66e1c74a7e">fabomatic::FabUser::Unknown</a>, and <a class="el" href="_fab_user_8hpp_source.xhtml#l00028">fabomatic::FabUser::user_level</a>.</p>
+<p class="reference">References <a class="el" href="_fab_user_8hpp_source.xhtml#l00027">fabomatic::FabUser::authenticated</a>, <a class="el" href="_fab_user_8hpp_source.xhtml#l00025">fabomatic::FabUser::card_uid</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00564">fabomatic::FabBackend::checkCard()</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00317">fabomatic::FabBackend::connect()</a>, <a class="el" href="_fab_user_8hpp_source.xhtml#l00026">fabomatic::FabUser::holder_name</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00238">fabomatic::FabBackend::isOnline()</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00740">fabomatic::FabBackend::shouldFailFast()</a>, <a class="el" href="_logging_8hpp_source.xhtml#l00009">TAG</a>, <a class="el" href="_fab_user_8hpp_source.xhtml#l00054">fabomatic::FabUser::toString()</a>, <a class="el" href="card_8hpp_source.xhtml#l00022">fabomatic::card::uid_str()</a>, <a class="el" href="structfabomatic_1_1_fab_user.xhtml#a75deeb54124600e0387550735c7a0ca0a88183b946cc5f0e8c96b2e66e1c74a7e">fabomatic::FabUser::Unknown</a>, and <a class="el" href="_fab_user_8hpp_source.xhtml#l00028">fabomatic::FabUser::user_level</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00158">fabomatic::BoardLogic::authorize()</a>, <a class="el" href="test__mqtt_8cpp_source.xhtml#l00133">fabomatic::tests::test_fabserver_calls()</a>, and <a class="el" href="test__savedconfig_8cpp_source.xhtml#l00094">fabomatic::tests::test_rfid_cache()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00157">fabomatic::BoardLogic::authorize()</a>, <a class="el" href="test__mqtt_8cpp_source.xhtml#l00274">fabomatic::tests::test_degraded_use()</a>, <a class="el" href="test__mqtt_8cpp_source.xhtml#l00186">fabomatic::tests::test_fabserver_calls()</a>, and <a class="el" href="test__savedconfig_8cpp_source.xhtml#l00094">fabomatic::tests::test_rfid_cache()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classfabomatic_1_1_auth_provider_aeae9923535dcf6cfa9eaf9e5f90e5e64_cgraph.svg" width="100%" height="539"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
+<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classfabomatic_1_1_auth_provider_aeae9923535dcf6cfa9eaf9e5f90e5e64_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
 </div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
@@ -516,10 +522,10 @@ Here is the caller graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a whitelistentry object if the card is found in whitelist </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_auth_provider_8cpp_source.xhtml#l00157">157</a> of file <a class="el" href="_auth_provider_8cpp_source.xhtml">AuthProvider.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  158</span>  {</div>
-<div class="line"><span class="lineno">  159</span>    <span class="keywordflow">return</span> <a class="code hl_variable" href="classfabomatic_1_1_auth_provider.xhtml#a0db2e829ff5db93ecddf4279ce61fe31">cache</a>.<a class="code hl_function" href="structfabomatic_1_1_cached_cards.xhtml#a131e3778696847fdf4da636015a8e76a">find_uid</a>(candidate_uid);</div>
-<div class="line"><span class="lineno">  160</span>  }</div>
+<p class="definition">Definition at line <a class="el" href="_auth_provider_8cpp_source.xhtml#l00162">162</a> of file <a class="el" href="_auth_provider_8cpp_source.xhtml">AuthProvider.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  163</span>  {</div>
+<div class="line"><span class="lineno">  164</span>    <span class="keywordflow">return</span> <a class="code hl_variable" href="classfabomatic_1_1_auth_provider.xhtml#a0db2e829ff5db93ecddf4279ce61fe31">cache</a>.<a class="code hl_function" href="structfabomatic_1_1_cached_cards.xhtml#a131e3778696847fdf4da636015a8e76a">find_uid</a>(candidate_uid);</div>
+<div class="line"><span class="lineno">  165</span>  }</div>
 <div class="ttc" id="astructfabomatic_1_1_cached_cards_xhtml_a131e3778696847fdf4da636015a8e76a"><div class="ttname"><a href="structfabomatic_1_1_cached_cards.xhtml#a131e3778696847fdf4da636015a8e76a">fabomatic::CachedCards::find_uid</a></div><div class="ttdeci">constexpr auto find_uid(const card::uid_t &amp;search_uid) const -&gt; const std::optional&lt; CachedCard &gt;</div><div class="ttdef"><b>Definition</b> <a href="_cached_cards_8hpp_source.xhtml#l00036">CachedCards.hpp:36</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -557,28 +563,28 @@ Here is the caller graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a whitelistentry object if the card is found in whitelist </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_auth_provider_8cpp_source.xhtml#l00131">131</a> of file <a class="el" href="_auth_provider_8cpp_source.xhtml">AuthProvider.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  132</span>  {</div>
-<div class="line"><span class="lineno">  133</span>    <span class="keywordflow">if</span> (candidate_uid == <a class="code hl_variable" href="namespacefabomatic_1_1card.xhtml#a9ef4a9f5f43c63cf872a2d52a7af11cf">card::INVALID</a>)</div>
-<div class="line"><span class="lineno">  134</span>    {</div>
-<div class="line"><span class="lineno">  135</span>      <span class="keywordflow">return</span> std::nullopt;</div>
-<div class="line"><span class="lineno">  136</span>    }</div>
-<div class="line"><span class="lineno">  137</span> </div>
-<div class="line"><span class="lineno">  138</span>    <span class="keyword">const</span> <span class="keyword">auto</span> &amp;elem = std::find_if(<a class="code hl_variable" href="classfabomatic_1_1_auth_provider.xhtml#a52f8cf328edafb65b42c3117d06afaf7">whitelist</a>.cbegin(), <a class="code hl_variable" href="classfabomatic_1_1_auth_provider.xhtml#a52f8cf328edafb65b42c3117d06afaf7">whitelist</a>.cend(),</div>
-<div class="line"><span class="lineno">  139</span>                                    [candidate_uid](<span class="keyword">const</span> <span class="keyword">auto</span> &amp;input)</div>
-<div class="line"><span class="lineno">  140</span>                                    {</div>
-<div class="line"><span class="lineno">  141</span>                                      const auto &amp;[w_uid, w_level, w_name] = input;</div>
-<div class="line"><span class="lineno">  142</span>                                      return w_uid == candidate_uid;</div>
-<div class="line"><span class="lineno">  143</span>                                    });</div>
-<div class="line"><span class="lineno">  144</span> </div>
-<div class="line"><span class="lineno">  145</span>    <span class="keywordflow">if</span> (elem == <a class="code hl_variable" href="classfabomatic_1_1_auth_provider.xhtml#a52f8cf328edafb65b42c3117d06afaf7">whitelist</a>.cend())</div>
-<div class="line"><span class="lineno">  146</span>    {</div>
-<div class="line"><span class="lineno">  147</span>      ESP_LOGD(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <span class="stringliteral">&quot;%s not found in whitelist&quot;</span>, <a class="code hl_function" href="namespacefabomatic_1_1card.xhtml#aef091ec171625c69f9d4eab20ebaefec">card::uid_str</a>(candidate_uid).c_str());</div>
-<div class="line"><span class="lineno">  148</span>      <span class="keywordflow">return</span> std::nullopt;</div>
-<div class="line"><span class="lineno">  149</span>    }</div>
-<div class="line"><span class="lineno">  150</span> </div>
-<div class="line"><span class="lineno">  151</span>    <span class="keywordflow">return</span> {*elem};</div>
-<div class="line"><span class="lineno">  152</span>  }</div>
+<p class="definition">Definition at line <a class="el" href="_auth_provider_8cpp_source.xhtml#l00136">136</a> of file <a class="el" href="_auth_provider_8cpp_source.xhtml">AuthProvider.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  137</span>  {</div>
+<div class="line"><span class="lineno">  138</span>    <span class="keywordflow">if</span> (candidate_uid == <a class="code hl_variable" href="namespacefabomatic_1_1card.xhtml#a9ef4a9f5f43c63cf872a2d52a7af11cf">card::INVALID</a>)</div>
+<div class="line"><span class="lineno">  139</span>    {</div>
+<div class="line"><span class="lineno">  140</span>      <span class="keywordflow">return</span> std::nullopt;</div>
+<div class="line"><span class="lineno">  141</span>    }</div>
+<div class="line"><span class="lineno">  142</span> </div>
+<div class="line"><span class="lineno">  143</span>    <span class="keyword">const</span> <span class="keyword">auto</span> &amp;elem = std::find_if(<a class="code hl_variable" href="classfabomatic_1_1_auth_provider.xhtml#a52f8cf328edafb65b42c3117d06afaf7">whitelist</a>.cbegin(), <a class="code hl_variable" href="classfabomatic_1_1_auth_provider.xhtml#a52f8cf328edafb65b42c3117d06afaf7">whitelist</a>.cend(),</div>
+<div class="line"><span class="lineno">  144</span>                                    [candidate_uid](<span class="keyword">const</span> <span class="keyword">auto</span> &amp;input)</div>
+<div class="line"><span class="lineno">  145</span>                                    {</div>
+<div class="line"><span class="lineno">  146</span>                                      const auto &amp;[w_uid, w_level, w_name] = input;</div>
+<div class="line"><span class="lineno">  147</span>                                      return w_uid == candidate_uid;</div>
+<div class="line"><span class="lineno">  148</span>                                    });</div>
+<div class="line"><span class="lineno">  149</span> </div>
+<div class="line"><span class="lineno">  150</span>    <span class="keywordflow">if</span> (elem == <a class="code hl_variable" href="classfabomatic_1_1_auth_provider.xhtml#a52f8cf328edafb65b42c3117d06afaf7">whitelist</a>.cend())</div>
+<div class="line"><span class="lineno">  151</span>    {</div>
+<div class="line"><span class="lineno">  152</span>      ESP_LOGD(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <span class="stringliteral">&quot;%s not found in whitelist&quot;</span>, <a class="code hl_function" href="namespacefabomatic_1_1card.xhtml#aef091ec171625c69f9d4eab20ebaefec">card::uid_str</a>(candidate_uid).c_str());</div>
+<div class="line"><span class="lineno">  153</span>      <span class="keywordflow">return</span> std::nullopt;</div>
+<div class="line"><span class="lineno">  154</span>    }</div>
+<div class="line"><span class="lineno">  155</span> </div>
+<div class="line"><span class="lineno">  156</span>    <span class="keywordflow">return</span> {*elem};</div>
+<div class="line"><span class="lineno">  157</span>  }</div>
 <div class="ttc" id="anamespacefabomatic_1_1card_xhtml_a9ef4a9f5f43c63cf872a2d52a7af11cf"><div class="ttname"><a href="namespacefabomatic_1_1card.xhtml#a9ef4a9f5f43c63cf872a2d52a7af11cf">fabomatic::card::INVALID</a></div><div class="ttdeci">static constexpr uid_t INVALID</div><div class="ttdef"><b>Definition</b> <a href="card_8hpp_source.xhtml#l00015">card.hpp:15</a></div></div>
 </div><!-- fragment -->
 <p class="reference">References <a class="el" href="card_8hpp_source.xhtml#l00015">fabomatic::card::INVALID</a>, <a class="el" href="_logging_8hpp_source.xhtml#l00009">TAG</a>, and <a class="el" href="card_8hpp_source.xhtml#l00022">fabomatic::card::uid_str()</a>.</p>
@@ -696,7 +702,7 @@ Here is the call graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="_auth_provider_8hpp_source.xhtml#l00022">22</a> of file <a class="el" href="_auth_provider_8hpp_source.xhtml">AuthProvider.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_auth_provider_8cpp_source.xhtml#l00183">saveCache()</a>, and <a class="el" href="_auth_provider_8cpp_source.xhtml#l00024">updateCache()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_auth_provider_8cpp_source.xhtml#l00188">saveCache()</a>, and <a class="el" href="_auth_provider_8cpp_source.xhtml#l00024">updateCache()</a>.</p>
 
 </div>
 </div>
@@ -758,7 +764,7 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Aug 12 2024 08:05:20 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Nov 30 2024 15:35:28 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

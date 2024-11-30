@@ -91,12 +91,12 @@ $(function() {
 <div class="dynheader">
 Inheritance diagram for fabomatic::MockMQTTBroker:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classfabomatic_1_1_mock_m_q_t_t_broker__inherit__graph.svg" width="194" height="430"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classfabomatic_1_1_mock_m_q_t_t_broker__inherit__graph.svg" width="194" height="470"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 <div class="dynheader">
 Collaboration diagram for fabomatic::MockMQTTBroker:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classfabomatic_1_1_mock_m_q_t_t_broker__coll__graph.svg" width="591" height="552"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classfabomatic_1_1_mock_m_q_t_t_broker__coll__graph.svg" width="591" height="592"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
@@ -123,6 +123,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a119e59001d5ce25708aa2198623505c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1f95b4450ad044afe005accb69ab3ac9" id="r_a1f95b4450ad044afe005accb69ab3ac9"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_mock_m_q_t_t_broker.xhtml#a1f95b4450ad044afe005accb69ab3ac9">mainLoop</a> () -&gt; void</td></tr>
 <tr class="separator:a1f95b4450ad044afe005accb69ab3ac9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7ca6a3d8b5de0f04e0085a287127a31" id="r_ab7ca6a3d8b5de0f04e0085a287127a31"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_mock_m_q_t_t_broker.xhtml#ab7ca6a3d8b5de0f04e0085a287127a31">generateReplies</a> (bool enabled) -&gt; void</td></tr>
+<tr class="separator:ab7ca6a3d8b5de0f04e0085a287127a31"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -138,6 +140,8 @@ Private Attributes</h2></td></tr>
 <tr class="separator:af85cd98d1c8f18ab1b74be039a9e03d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaee749f4bebf96f67e62da34998ab900" id="r_aaee749f4bebf96f67e62da34998ab900"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_mock_m_q_t_t_broker.xhtml#aaee749f4bebf96f67e62da34998ab900">is_running</a> {false}</td></tr>
 <tr class="separator:aaee749f4bebf96f67e62da34998ab900"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30bb0de905d4c9f65b65e128ee501a51" id="r_a30bb0de905d4c9f65b65e128ee501a51"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfabomatic_1_1_mock_m_q_t_t_broker.xhtml#a30bb0de905d4c9f65b65e128ee501a51">generate_replies</a> {true}</td></tr>
+<tr class="separator:a30bb0de905d4c9f65b65e128ee501a51"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This class implements an MQTT broker with predefined responses to <a class="el" href="classfabomatic_1_1_fab_backend.xhtml" title="This class is used to exchange messages with the MQTT broker and the backend.">FabBackend</a> requests. </p>
@@ -214,6 +218,31 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="ab7ca6a3d8b5de0f04e0085a287127a31" name="ab7ca6a3d8b5de0f04e0085a287127a31"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab7ca6a3d8b5de0f04e0085a287127a31">&#9670;&#160;</a></span>generateReplies()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto fabomatic::MockMQTTBroker::generateReplies </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enabled</em></td><td>)</td>
+          <td> -&gt;  void</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="reference">Referenced by <a class="el" href="test__mqtt_8cpp_source.xhtml#l00274">fabomatic::tests::test_degraded_use()</a>.</p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classfabomatic_1_1_mock_m_q_t_t_broker_ab7ca6a3d8b5de0f04e0085a287127a31_icgraph.svg" width="494" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
 <a id="a78a57e64b156c6d6d93104fec142740d" name="a78a57e64b156c6d6d93104fec142740d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a78a57e64b156c6d6d93104fec142740d">&#9670;&#160;</a></span>isRunning()</h2>
 
@@ -229,7 +258,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="reference">Referenced by <a class="el" href="test__mqtt_8cpp_source.xhtml#l00097">fabomatic::tests::test_start_broker()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="test__mqtt_8cpp_source.xhtml#l00150">fabomatic::tests::test_start_broker()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -253,7 +282,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="reference">Referenced by <a class="el" href="test__mqtt_8cpp_source.xhtml#l00039">fabomatic::tests::threadMQTTServer()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="test__mqtt_8cpp_source.xhtml#l00092">fabomatic::tests::threadMQTTServer()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -344,11 +373,36 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">= [<span class="keyword">this</span>](<span class="keyword">const</span> std::string &amp;<a class="code hl_variable" href="classfabomatic_1_1_mock_m_q_t_t_broker.xhtml#acd83148966b7a81bf0961c0e61bfb504">topic</a>, <span class="keyword">const</span> std::string &amp;query)</div>
 <div class="line">    { <span class="keywordflow">return</span> <a class="code hl_function" href="classfabomatic_1_1_mock_m_q_t_t_broker.xhtml#aeb5eadd85f359d48e3871bfede5ee19d">defaultReplies</a>(query); }</div>
-<div class="ttc" id="aclassfabomatic_1_1_mock_m_q_t_t_broker_xhtml_acd83148966b7a81bf0961c0e61bfb504"><div class="ttname"><a href="classfabomatic_1_1_mock_m_q_t_t_broker.xhtml#acd83148966b7a81bf0961c0e61bfb504">fabomatic::MockMQTTBroker::topic</a></div><div class="ttdeci">std::string topic</div><div class="ttdef"><b>Definition</b> <a href="_mock_m_q_t_t_broker_8hpp_source.xhtml#l00035">MockMQTTBroker.hpp:35</a></div></div>
+<div class="ttc" id="aclassfabomatic_1_1_mock_m_q_t_t_broker_xhtml_acd83148966b7a81bf0961c0e61bfb504"><div class="ttname"><a href="classfabomatic_1_1_mock_m_q_t_t_broker.xhtml#acd83148966b7a81bf0961c0e61bfb504">fabomatic::MockMQTTBroker::topic</a></div><div class="ttdeci">std::string topic</div><div class="ttdef"><b>Definition</b> <a href="_mock_m_q_t_t_broker_8hpp_source.xhtml#l00036">MockMQTTBroker.hpp:36</a></div></div>
 <div class="ttc" id="aclassfabomatic_1_1_mock_m_q_t_t_broker_xhtml_aeb5eadd85f359d48e3871bfede5ee19d"><div class="ttname"><a href="classfabomatic_1_1_mock_m_q_t_t_broker.xhtml#aeb5eadd85f359d48e3871bfede5ee19d">fabomatic::MockMQTTBroker::defaultReplies</a></div><div class="ttdeci">auto defaultReplies(const std::string &amp;query) const -&gt; const std::string</div></div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="_mock_m_q_t_t_broker_8hpp_source.xhtml#l00045">45</a> of file <a class="el" href="_mock_m_q_t_t_broker_8hpp_source.xhtml">MockMQTTBroker.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   46</span>    { <span class="keywordflow">return</span> <a class="code hl_function" href="classfabomatic_1_1_mock_m_q_t_t_broker.xhtml#aeb5eadd85f359d48e3871bfede5ee19d">defaultReplies</a>(query); };</div>
+<p class="definition">Definition at line <a class="el" href="_mock_m_q_t_t_broker_8hpp_source.xhtml#l00046">46</a> of file <a class="el" href="_mock_m_q_t_t_broker_8hpp_source.xhtml">MockMQTTBroker.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   47</span>    { <span class="keywordflow">return</span> <a class="code hl_function" href="classfabomatic_1_1_mock_m_q_t_t_broker.xhtml#aeb5eadd85f359d48e3871bfede5ee19d">defaultReplies</a>(query); };</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a30bb0de905d4c9f65b65e128ee501a51" name="a30bb0de905d4c9f65b65e128ee501a51"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a30bb0de905d4c9f65b65e128ee501a51">&#9670;&#160;</a></span>generate_replies</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool fabomatic::MockMQTTBroker::generate_replies {true}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_mock_m_q_t_t_broker_8hpp_source.xhtml#l00050">50</a> of file <a class="el" href="_mock_m_q_t_t_broker_8hpp_source.xhtml">MockMQTTBroker.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   50</span>{<span class="keyword">true</span>};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -372,8 +426,8 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_mock_m_q_t_t_broker_8hpp_source.xhtml#l00048">48</a> of file <a class="el" href="_mock_m_q_t_t_broker_8hpp_source.xhtml">MockMQTTBroker.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   48</span>{<span class="keyword">false</span>};</div>
+<p class="definition">Definition at line <a class="el" href="_mock_m_q_t_t_broker_8hpp_source.xhtml#l00049">49</a> of file <a class="el" href="_mock_m_q_t_t_broker_8hpp_source.xhtml">MockMQTTBroker.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   49</span>{<span class="keyword">false</span>};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -397,7 +451,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_mock_m_q_t_t_broker_8hpp_source.xhtml#l00034">34</a> of file <a class="el" href="_mock_m_q_t_t_broker_8hpp_source.xhtml">MockMQTTBroker.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_mock_m_q_t_t_broker_8hpp_source.xhtml#l00035">35</a> of file <a class="el" href="_mock_m_q_t_t_broker_8hpp_source.xhtml">MockMQTTBroker.hpp</a>.</p>
 
 </div>
 </div>
@@ -421,8 +475,8 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_mock_m_q_t_t_broker_8hpp_source.xhtml#l00036">36</a> of file <a class="el" href="_mock_m_q_t_t_broker_8hpp_source.xhtml">MockMQTTBroker.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   36</span>{<span class="stringliteral">&quot;&quot;</span>};</div>
+<p class="definition">Definition at line <a class="el" href="_mock_m_q_t_t_broker_8hpp_source.xhtml#l00037">37</a> of file <a class="el" href="_mock_m_q_t_t_broker_8hpp_source.xhtml">MockMQTTBroker.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   37</span>{<span class="stringliteral">&quot;&quot;</span>};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -446,8 +500,8 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_mock_m_q_t_t_broker_8hpp_source.xhtml#l00043">43</a> of file <a class="el" href="_mock_m_q_t_t_broker_8hpp_source.xhtml">MockMQTTBroker.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   43</span>{};</div>
+<p class="definition">Definition at line <a class="el" href="_mock_m_q_t_t_broker_8hpp_source.xhtml#l00044">44</a> of file <a class="el" href="_mock_m_q_t_t_broker_8hpp_source.xhtml">MockMQTTBroker.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   44</span>{};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -471,8 +525,8 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_mock_m_q_t_t_broker_8hpp_source.xhtml#l00035">35</a> of file <a class="el" href="_mock_m_q_t_t_broker_8hpp_source.xhtml">MockMQTTBroker.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   35</span>{<span class="stringliteral">&quot;&quot;</span>};</div>
+<p class="definition">Definition at line <a class="el" href="_mock_m_q_t_t_broker_8hpp_source.xhtml#l00036">36</a> of file <a class="el" href="_mock_m_q_t_t_broker_8hpp_source.xhtml">MockMQTTBroker.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   36</span>{<span class="stringliteral">&quot;&quot;</span>};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -482,7 +536,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Aug 12 2024 08:05:20 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Nov 30 2024 15:35:28 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

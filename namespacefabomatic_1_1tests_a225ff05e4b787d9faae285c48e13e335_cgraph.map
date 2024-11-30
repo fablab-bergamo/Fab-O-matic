@@ -1,0 +1,13 @@
+<map id="fabomatic::tests::busyWait" name="fabomatic::tests::busyWait">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,41,178,67"/>
+<area shape="rect" id="Node000002" href="$namespacefabomatic_1_1_tasks.xhtml#adc67d1313c6695d813feb935eafdaf60" title=" " alt="" coords="662,12,858,37"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="138,38,225,19,334,7,419,3,614,10,647,12,646,17,614,15,419,8,335,12,226,25,139,43"/>
+<area shape="rect" id="Node000003" href="$classfabomatic_1_1_tasks_1_1_scheduler.xhtml#aff9b0c44cc0bef222932a681ace0d406" title="Execute all tasks that are ready to run." alt="" coords="226,34,410,74"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="178,51,210,51,210,57,178,57"/>
+<area shape="rect" id="Node000005" href="$classfabomatic_1_1_fab_backend.xhtml#aaf05998bb9dec17ae98283969109bb2d" title="Main loop for the MQTT client." alt="" coords="239,99,397,140"/>
+<area shape="poly" id="edge6_Node000001_Node000005" title=" " alt="" coords="139,65,231,91,229,97,138,70"/>
+<area shape="rect" id="Node000004" href="$namespacefabomatic_1_1_tasks.xhtml#a5c20f560f5934822d39ba116a16f3ab6" title="Wait for a delay, allowing OTA updates." alt="" coords="458,49,614,75"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="411,55,442,56,442,61,411,60"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="614,46,663,38,664,43,615,51"/>
+<area shape="poly" id="edge5_Node000004_Node000004" title=" " alt="" coords="500,50,493,40,497,31,512,25,536,22,563,25,577,32,574,37,561,30,536,28,513,30,501,34,498,40,504,47"/>
+</map>

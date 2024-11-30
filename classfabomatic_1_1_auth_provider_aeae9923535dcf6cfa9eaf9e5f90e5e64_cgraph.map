@@ -1,25 +1,31 @@
 <map id="fabomatic::AuthProvider::tryLogin" name="fabomatic::AuthProvider::tryLogin">
-<area shape="rect" id="Node000001" title="Verifies the card ID against the server (if available) or the whitelist." alt="" coords="5,157,165,198"/>
-<area shape="rect" id="Node000002" href="$classfabomatic_1_1_fab_backend.xhtml#a0e4d6d289b03582bf6ea9e78e15dd79e" title="Checks if the card ID is known to the server." alt="" coords="213,27,370,67"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="108,155,154,117,211,78,222,72,225,77,214,83,158,121,111,159"/>
-<area shape="rect" id="Node000003" href="$classfabomatic_1_1_fab_backend.xhtml#a1a45f556aadcbc428d14b7c7577ed43d" title="Establishes a connection to the WiFi network and the MQTT server." alt="" coords="213,92,370,133"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="151,154,209,135,211,141,152,159"/>
-<area shape="rect" id="Node000009" href="$classfabomatic_1_1_fab_backend.xhtml#aef092e0e1db0c3539d5474fad2456255" title="Checks if the client is online." alt="" coords="213,157,370,198"/>
-<area shape="poly" id="edge10_Node000001_Node000009" title=" " alt="" coords="165,175,197,175,197,180,165,180"/>
-<area shape="rect" id="Node000010" href="$structfabomatic_1_1_fab_user.xhtml#ab4b54f1830f1536824583e973d670582" title=" " alt="" coords="224,223,359,263"/>
-<area shape="poly" id="edge11_Node000001_Node000010" title=" " alt="" coords="152,196,211,215,209,220,151,201"/>
-<area shape="rect" id="Node000011" href="$namespacefabomatic_1_1card.xhtml#aef091ec171625c69f9d4eab20ebaefec" title="Returns a string representation of the UID." alt="" coords="214,288,369,313"/>
-<area shape="poly" id="edge12_Node000001_Node000011" title=" " alt="" coords="110,196,156,235,214,273,228,279,225,284,211,277,153,239,107,201"/>
-<area shape="rect" id="Node000004" href="$classfabomatic_1_1_fab_backend.xhtml#ad928751b2f967feaac0f2cb708c0d6e9" title="Connects to the WiFi network." alt="" coords="418,5,575,46"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="341,89,431,50,434,55,343,94"/>
-<area shape="rect" id="Node000005" href="$namespacefabomatic_1_1_tasks.xhtml#a5c20f560f5934822d39ba116a16f3ab6" title="Wait for a delay, allowing OTA updates." alt="" coords="623,42,780,68"/>
-<area shape="poly" id="edge7_Node000003_Node000005" title=" " alt="" coords="370,99,608,65,608,71,371,104"/>
-<area shape="rect" id="Node000007" href="$classfabomatic_1_1_fab_backend.xhtml#a3ab102598ee93269de90a0170e024619" title="Callback function for received MQTT messages." alt="" coords="418,120,575,161"/>
-<area shape="poly" id="edge8_Node000003_Node000007" title=" " alt="" coords="371,120,403,125,402,130,370,126"/>
-<area shape="rect" id="Node000008" href="$classfabomatic_1_1_fab_backend.xhtml#aee0cf549bea2daebc3e08742853d36c1" title="Publishes a query on the MQTT server." alt="" coords="418,185,575,226"/>
-<area shape="poly" id="edge9_Node000003_Node000008" title=" " alt="" coords="344,131,371,143,419,170,432,176,430,181,417,175,369,148,342,136"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="576,34,608,39,607,44,575,40"/>
-<area shape="poly" id="edge6_Node000005_Node000005" title=" " alt="" coords="667,43,661,34,665,24,679,18,702,16,727,18,739,25,737,30,725,23,701,21,680,23,668,28,666,33,672,40"/>
-<area shape="rect" id="Node000006" href="$namespacefabomatic_1_1_tasks.xhtml#adc67d1313c6695d813feb935eafdaf60" title=" " alt="" coords="828,42,1023,68"/>
-<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="780,52,812,52,812,58,780,58"/>
+<area shape="rect" id="Node000001" title="Verifies the card ID against the server (if available) or the whitelist." alt="" coords="5,334,165,375"/>
+<area shape="rect" id="Node000002" href="$classfabomatic_1_1_fab_backend.xhtml#a0e4d6d289b03582bf6ea9e78e15dd79e" title="Checks if the card ID is known to the server." alt="" coords="213,109,370,150"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="93,333,110,297,136,251,170,203,211,161,217,156,220,160,214,165,174,207,141,254,115,299,97,335"/>
+<area shape="rect" id="Node000003" href="$classfabomatic_1_1_fab_backend.xhtml#a1a45f556aadcbc428d14b7c7577ed43d" title="Establishes a connection to the WiFi network and the MQTT server." alt="" coords="213,174,370,215"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="111,332,250,223,253,227,115,336"/>
+<area shape="rect" id="Node000009" href="$classfabomatic_1_1_fab_backend.xhtml#aef092e0e1db0c3539d5474fad2456255" title="Indicates if the MQTT client is connected to the broker and backend is responsive." alt="" coords="213,305,370,346"/>
+<area shape="poly" id="edge11_Node000001_Node000009" title=" " alt="" coords="165,341,197,336,198,341,165,346"/>
+<area shape="rect" id="Node000011" href="$classfabomatic_1_1_fab_backend.xhtml#a205b60a81c493f6fbdc695846be5d2ef" title="when server is unresponsive, wait for a configurable time before to try again" alt="" coords="623,248,781,288"/>
+<area shape="poly" id="edge13_Node000001_Node000011" title=" " alt="" coords="166,367,252,378,355,384,466,378,521,369,574,355,601,344,626,329,668,297,671,301,629,334,603,349,576,360,522,374,467,383,355,389,251,383,165,373"/>
+<area shape="rect" id="Node000012" href="$structfabomatic_1_1_fab_user.xhtml#ab4b54f1830f1536824583e973d670582" title=" " alt="" coords="224,420,359,460"/>
+<area shape="poly" id="edge15_Node000001_Node000012" title=" " alt="" coords="137,373,227,411,225,416,135,378"/>
+<area shape="rect" id="Node000013" href="$namespacefabomatic_1_1card.xhtml#aef091ec171625c69f9d4eab20ebaefec" title="Returns a string representation of the UID." alt="" coords="214,485,369,510"/>
+<area shape="poly" id="edge16_Node000001_Node000013" title=" " alt="" coords="105,374,152,422,182,447,214,470,226,476,223,481,211,474,178,452,148,426,102,377"/>
+<area shape="rect" id="Node000004" href="$namespacefabomatic_1_1_tasks.xhtml#adc67d1313c6695d813feb935eafdaf60" title=" " alt="" coords="829,105,1024,130"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="352,172,368,160,379,145,385,131,389,101,394,72,402,58,416,46,446,29,477,17,542,5,610,5,677,15,741,32,799,53,889,95,887,99,797,58,739,37,676,20,609,10,543,10,478,22,448,34,420,50,406,62,399,74,394,102,390,132,384,148,372,163,355,176"/>
+<area shape="rect" id="Node000005" href="$classfabomatic_1_1_fab_backend.xhtml#ad928751b2f967feaac0f2cb708c0d6e9" title="Connects to the WiFi network." alt="" coords="418,60,575,100"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="346,172,368,159,392,138,416,117,434,106,437,110,420,121,396,142,372,164,348,176"/>
+<area shape="rect" id="Node000006" href="$namespacefabomatic_1_1_tasks.xhtml#a5c20f560f5934822d39ba116a16f3ab6" title="Wait for a delay, allowing OTA updates." alt="" coords="624,105,780,130"/>
+<area shape="poly" id="edge8_Node000003_Node000006" title=" " alt="" coords="370,171,417,160,608,127,609,133,419,165,371,176"/>
+<area shape="rect" id="Node000007" href="$classfabomatic_1_1_fab_backend.xhtml#a3ab102598ee93269de90a0170e024619" title="Callback function for received MQTT messages." alt="" coords="418,174,575,215"/>
+<area shape="poly" id="edge9_Node000003_Node000007" title=" " alt="" coords="370,192,402,192,402,197,370,197"/>
+<area shape="rect" id="Node000008" href="$classfabomatic_1_1_fab_backend.xhtml#aee0cf549bea2daebc3e08742853d36c1" title="Publishes a query on the MQTT server." alt="" coords="418,240,575,280"/>
+<area shape="poly" id="edge10_Node000003_Node000008" title=" " alt="" coords="358,213,417,232,415,237,357,218"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="576,92,613,99,612,104,575,97"/>
+<area shape="poly" id="edge6_Node000006_Node000004" title=" " alt="" coords="780,115,813,115,813,120,780,120"/>
+<area shape="poly" id="edge7_Node000006_Node000006" title=" " alt="" coords="668,106,661,96,665,86,679,80,702,78,727,81,740,88,738,92,726,86,702,83,680,85,669,90,666,95,672,103"/>
+<area shape="rect" id="Node000010" href="$classfabomatic_1_1_fab_backend.xhtml#aacd5dfac21bd4b6ed71912198a038529" title="Indicates if backend answers are received." alt="" coords="418,305,575,346"/>
+<area shape="poly" id="edge12_Node000009_Node000010" title=" " alt="" coords="370,323,402,323,402,328,370,328"/>
+<area shape="poly" id="edge14_Node000011_Node000004" title=" " alt="" coords="733,245,891,137,894,141,736,249"/>
 </map>

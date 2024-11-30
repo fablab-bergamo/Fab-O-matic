@@ -253,20 +253,22 @@ var sectionId = 'dynsection-0';
 <g id="Node000006" class="node">
 <title>Node6</title>
 <g id="a_Node000006"><a xlink:href="structfabomatic_1_1_board_info.xhtml" target="_top" xlink:title="Helper struct representing the display state.">
-<polygon fill="white" stroke="none" points="462,-604.5 363,-604.5 363,-525.5 462,-525.5 462,-604.5"/>
-<text text-anchor="start" x="367.88" y="-591" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::BoardInfo</text>
-<text text-anchor="start" x="368" y="-576" font-family="Helvetica,sans-Serif" font-size="10.00">+</text>
-<text text-anchor="start" x="379" y="-576" font-family="Helvetica,sans-Serif" font-size="10.00">server_connected</text>
-<text text-anchor="start" x="368" y="-561" font-family="Helvetica,sans-Serif" font-size="10.00">+</text>
-<text text-anchor="start" x="379" y="-561" font-family="Helvetica,sans-Serif" font-size="10.00">power_state</text>
-<text text-anchor="start" x="368" y="-546" font-family="Helvetica,sans-Serif" font-size="10.00">+</text>
-<text text-anchor="start" x="379" y="-546" font-family="Helvetica,sans-Serif" font-size="10.00">power_warning</text>
-<text text-anchor="start" x="368" y="-531" font-family="Helvetica,sans-Serif" font-size="10.00">+</text>
-<text text-anchor="start" x="379" y="-531" font-family="Helvetica,sans-Serif" font-size="10.00">operator==()</text>
-<polygon fill="#666666" stroke="#666666" points="363,-587.5 363,-587.5 462,-587.5 462,-587.5 363,-587.5"/>
-<polygon fill="#666666" stroke="#666666" points="363,-542.5 363,-542.5 377,-542.5 377,-542.5 363,-542.5"/>
-<polygon fill="#666666" stroke="#666666" points="377,-542.5 377,-542.5 462,-542.5 462,-542.5 377,-542.5"/>
-<polygon fill="none" stroke="#666666" points="363,-525.5 363,-604.5 462,-604.5 462,-525.5 363,-525.5"/>
+<polygon fill="white" stroke="none" points="462,-612 363,-612 363,-518 462,-518 462,-612"/>
+<text text-anchor="start" x="367.88" y="-598.5" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::BoardInfo</text>
+<text text-anchor="start" x="370" y="-583.5" font-family="Helvetica,sans-Serif" font-size="10.00">+</text>
+<text text-anchor="start" x="383" y="-583.5" font-family="Helvetica,sans-Serif" font-size="10.00">mqtt_connected</text>
+<text text-anchor="start" x="370" y="-568.5" font-family="Helvetica,sans-Serif" font-size="10.00">+</text>
+<text text-anchor="start" x="383" y="-568.5" font-family="Helvetica,sans-Serif" font-size="10.00">power_state</text>
+<text text-anchor="start" x="370" y="-553.5" font-family="Helvetica,sans-Serif" font-size="10.00">+</text>
+<text text-anchor="start" x="383" y="-553.5" font-family="Helvetica,sans-Serif" font-size="10.00">power_warning</text>
+<text text-anchor="start" x="370" y="-538.5" font-family="Helvetica,sans-Serif" font-size="10.00">+</text>
+<text text-anchor="start" x="383" y="-538.5" font-family="Helvetica,sans-Serif" font-size="10.00">unresponsive</text>
+<text text-anchor="start" x="370" y="-523.5" font-family="Helvetica,sans-Serif" font-size="10.00">+</text>
+<text text-anchor="start" x="383" y="-523.5" font-family="Helvetica,sans-Serif" font-size="10.00">operator==()</text>
+<polygon fill="#666666" stroke="#666666" points="363,-595 363,-595 462,-595 462,-595 363,-595"/>
+<polygon fill="#666666" stroke="#666666" points="363,-535 363,-535 381,-535 381,-535 363,-535"/>
+<polygon fill="#666666" stroke="#666666" points="381,-535 381,-535 462,-535 462,-535 381,-535"/>
+<polygon fill="none" stroke="#666666" points="363,-518 363,-612 462,-612 462,-518 363,-518"/>
 </a>
 </g>
 </g>
@@ -274,8 +276,8 @@ var sectionId = 'dynsection-0';
 <g id="edge6_Node000001_Node000006" class="edge">
 <title>Node6&#45;&gt;Node1</title>
 <g id="a_edge6_Node000001_Node000006"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M396.85,-525.78C382.87,-491.66 361.26,-438.92 339.29,-385.29"/>
-<polygon fill="none" stroke="#63b8ff" points="339.35,-385.42 333.37,-381.38 334.8,-374.31 340.77,-378.35 339.35,-385.42"/>
+<path fill="none" stroke="#63b8ff" d="M393.74,-518.2C379.78,-484.12 359.68,-435.06 339.27,-385.24"/>
+<polygon fill="none" stroke="#63b8ff" points="339.25,-385.19 333.28,-381.15 334.7,-374.08 340.68,-378.12 339.25,-385.19"/>
 </a>
 </g>
 <text text-anchor="middle" x="393.38" y="-426.88" font-family="Helvetica,sans-Serif" font-size="10.00" fill="grey"> &#45;boardInfo</text>

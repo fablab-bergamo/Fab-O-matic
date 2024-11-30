@@ -1,0 +1,130 @@
+<map id="fabomatic::FabBackend::isResponsive" name="fabomatic::FabBackend::isResponsive">
+<area shape="rect" id="Node000001" title="Indicates if backend answers are received." alt="" coords="2150,647,2307,688"/>
+<area shape="rect" id="Node000002" href="$classfabomatic_1_1_fab_backend.xhtml#aef092e0e1db0c3539d5474fad2456255" title="Indicates if the MQTT client is connected to the broker and backend is responsive." alt="" coords="1944,675,2102,716"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="2135,683,2103,687,2102,682,2134,678"/>
+<area shape="rect" id="Node000010" href="$classfabomatic_1_1_board_logic.xhtml#a420a0d05a91a02c27ad3b63a030738a0" title="Asks the user to keep the RFID tag on the reader as confirmation." alt="" coords="1717,459,1867,500"/>
+<area shape="poly" id="edge81_Node000001_Node000010" title=" " alt="" coords="2168,643,2043,585,1895,521,1850,503,1852,498,1897,516,2046,580,2170,638"/>
+<area shape="rect" id="Node000033" href="$namespacefabomatic_1_1tests.xhtml#ae0c2cd74b089905fbdebeca807403606" title="sends the MQTT alive message" alt="" coords="1722,1006,1863,1047"/>
+<area shape="poly" id="edge82_Node000001_Node000033" title=" " alt="" coords="2205,702,2156,765,2084,845,1997,928,1948,966,1898,999,1864,1014,1862,1009,1895,995,1945,962,1993,924,2081,842,2152,762,2201,699"/>
+<area shape="rect" id="Node000037" href="$classfabomatic_1_1_board_logic.xhtml#a47b4d515c0d3488eceb49769036bce8b" title="Updates the LCD screen as per the current status." alt="" coords="1717,394,1867,435"/>
+<area shape="poly" id="edge83_Node000001_Node000037" title=" " alt="" coords="2195,639,2152,598,2100,556,2046,521,2002,496,1895,450,1862,438,1864,433,1897,445,2004,491,2049,516,2103,552,2155,593,2199,635"/>
+<area shape="rect" id="Node000003" href="$classfabomatic_1_1_board_logic.xhtml#ad05b4db308773e56d866fe87d34022d9" title="Blinks the LED." alt="" coords="1263,446,1413,487"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="1962,671,1895,643,1763,597,1631,554,1413,489,1414,484,1632,549,1765,592,1897,638,1964,666"/>
+<area shape="poly" id="edge9_Node000002_Node000010" title=" " alt="" coords="1997,664,1939,578,1895,520,1865,503,1867,498,1898,516,1943,574,2002,661"/>
+<area shape="rect" id="Node000026" href="$classfabomatic_1_1_fab_backend.xhtml#aaa691642839e9196217684949621f2a4" title="Processes a query and returns the response." alt="" coords="1714,675,1871,716"/>
+<area shape="poly" id="edge38_Node000002_Node000026" title=" " alt="" coords="1929,698,1871,698,1871,693,1929,693"/>
+<area shape="rect" id="Node000027" href="$namespacefabomatic.xhtml#ae7de89faffd3bb8805727b8a1092a198" title="Opens WiFi and server connection and updates board state accordingly." alt="" coords="1259,44,1417,70"/>
+<area shape="poly" id="edge39_Node000002_Node000027" title=" " alt="" coords="1991,666,1947,626,1895,589,1865,574,1837,566,1786,559,1762,555,1737,548,1712,535,1686,513,1672,497,1664,482,1656,451,1651,420,1638,383,1600,327,1565,287,1528,247,1487,192,1474,164,1467,140,1458,118,1440,96,1420,83,1398,73,1400,68,1423,78,1443,92,1463,116,1472,138,1479,162,1492,189,1532,244,1569,283,1604,324,1642,381,1657,418,1661,450,1669,480,1677,494,1690,510,1715,530,1739,543,1763,550,1787,554,1838,561,1867,569,1898,584,1951,622,1994,662"/>
+<area shape="rect" id="Node000028" href="$namespacefabomatic.xhtml#a77b0a5de55b2f507f610f1d0c5196bc2" title=" " alt="" coords="1718,805,1867,831"/>
+<area shape="poly" id="edge41_Node000002_Node000028" title=" " alt="" coords="1992,728,1949,763,1898,795,1866,807,1864,802,1895,790,1946,759,1988,724"/>
+<area shape="rect" id="Node000029" href="$namespacefabomatic.xhtml#a710739974eb0b1c5b53ffd75580ab54d" title="sends the MQTT alive message" alt="" coords="1688,855,1896,880"/>
+<area shape="poly" id="edge42_Node000002_Node000029" title=" " alt="" coords="2004,731,1961,790,1931,821,1898,846,1875,857,1873,852,1895,841,1928,817,1957,787,2000,728"/>
+<area shape="rect" id="Node000030" href="$namespacefabomatic_1_1tests.xhtml#a24369d35ba4a370e236b987ff7cb5637" title=" " alt="" coords="1494,962,1636,1003"/>
+<area shape="poly" id="edge43_Node000002_Node000030" title=" " alt="" coords="2008,731,1950,854,1920,911,1898,940,1867,959,1834,972,1765,989,1696,995,1636,993,1636,988,1696,989,1764,984,1833,967,1865,954,1895,936,1915,908,1945,852,2004,729"/>
+<area shape="rect" id="Node000031" href="$namespacefabomatic_1_1tests.xhtml#a438b9060c27d36e89506199205b342cb" title=" " alt="" coords="1494,897,1636,937"/>
+<area shape="poly" id="edge45_Node000002_Node000031" title=" " alt="" coords="2013,732,1997,771,1972,817,1940,860,1920,879,1898,895,1866,911,1833,922,1763,935,1695,936,1636,932,1636,926,1695,931,1763,929,1831,917,1864,906,1895,891,1916,875,1936,857,1968,814,1992,769,2008,730"/>
+<area shape="rect" id="Node000032" href="$namespacefabomatic_1_1tests.xhtml#a88a4242d48bfa4a0337df522d303c367" title="Opens WiFi and server connection and updates board state accordingly." alt="" coords="1267,686,1409,727"/>
+<area shape="poly" id="edge47_Node000002_Node000032" title=" " alt="" coords="1937,674,1896,666,1829,660,1761,659,1627,665,1506,679,1409,695,1409,689,1505,673,1627,659,1761,653,1830,655,1897,661,1938,668"/>
+<area shape="poly" id="edge48_Node000002_Node000033" title=" " alt="" coords="2008,731,1947,871,1936,906,1930,934,1920,961,1898,990,1865,1011,1862,1007,1895,986,1915,959,1925,933,1931,904,1942,869,2004,729"/>
+<area shape="rect" id="Node000034" href="$classfabomatic_1_1_auth_provider.xhtml#aeae9923535dcf6cfa9eaf9e5f90e5e64" title="Verifies the card ID against the server (if available) or the whitelist." alt="" coords="1713,741,1872,781"/>
+<area shape="poly" id="edge49_Node000002_Node000034" title=" " alt="" coords="1935,723,1868,742,1866,737,1934,718"/>
+<area shape="poly" id="edge55_Node000002_Node000037" title=" " alt="" coords="2011,661,1996,613,1972,556,1939,499,1918,473,1895,450,1866,433,1869,428,1898,445,1922,469,1943,496,1977,554,2001,611,2016,659"/>
+<area shape="rect" id="Node000004" href="$main_8cpp.xhtml#a4fc01d736fe50cf5b977f755b675f11d" title=" " alt="" coords="836,183,890,208"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="1247,447,1233,436,1221,423,1213,409,1208,382,1202,356,1196,343,1185,331,1162,314,1141,303,1100,294,1056,289,1003,274,937,242,884,211,887,207,940,237,1005,269,1057,284,1101,289,1143,298,1165,309,1188,327,1200,340,1207,354,1213,381,1218,407,1225,420,1236,432,1250,442"/>
+<area shape="rect" id="Node000005" href="$namespacefabomatic.xhtml#a9bb86caf0357ce1dd9ffe2945dcfc6e4" title="blink led" alt="" coords="1026,385,1164,411"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="1248,444,1186,426,1143,414,1145,409,1187,421,1249,439"/>
+<area shape="rect" id="Node000006" href="$namespacefabomatic.xhtml#a2c7ad2690e92eb8ab98b6fadaa4df2bd" title=" " alt="" coords="770,284,956,310"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="1247,445,1233,436,1217,421,1208,404,1200,389,1185,375,1143,357,1083,340,948,313,950,308,1084,335,1145,352,1188,371,1204,386,1213,402,1221,417,1236,432,1250,441"/>
+<area shape="rect" id="Node000007" href="$namespacefabomatic_1_1tests.xhtml#aec03a7ee459718d314b930fdd75d3cee" title=" " alt="" coords="1025,17,1166,57"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="1247,449,1232,436,1206,396,1195,358,1194,320,1198,283,1204,245,1206,206,1201,165,1184,121,1158,86,1127,60,1130,56,1162,83,1189,118,1206,164,1212,206,1209,246,1203,284,1199,321,1200,357,1211,394,1236,432,1251,445"/>
+<area shape="rect" id="Node000009" href="$namespacefabomatic_1_1tests.xhtml#a7cd22311b16fc7c256a30ba4c2f6f387" title="blink led" alt="" coords="1025,435,1166,476"/>
+<area shape="poly" id="edge8_Node000003_Node000009" title=" " alt="" coords="1247,465,1166,461,1166,456,1248,460"/>
+<area shape="rect" id="Node000008" href="$test__logic_8cpp.xhtml#a4fc01d736fe50cf5b977f755b675f11d" title=" " alt="" coords="5,551,59,576"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="1010,56,839,81,739,90,639,94,408,94,365,98,324,111,287,130,253,155,221,184,192,218,141,294,102,373,71,447,39,551,34,550,66,446,97,371,137,291,187,215,217,181,249,150,284,125,322,106,364,93,408,89,639,89,739,85,838,76,1009,51"/>
+<area shape="rect" id="Node000011" href="$classfabomatic_1_1_board_logic.xhtml#a51390e6bf10c4de427abd7f175a2e6a8" title="Checks if the card UID is valid, and tries to check the user in to the machine." alt="" coords="1263,751,1413,792"/>
+<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="1759,512,1702,561,1626,622,1537,685,1443,741,1414,753,1412,748,1440,736,1534,680,1623,618,1699,557,1755,508"/>
+<area shape="rect" id="Node000012" href="$classfabomatic_1_1_board_logic.xhtml#a983c8de8b9c8881fc0a4e60dddc7f0c6" title="Called when a RFID tag has been detected." alt="" coords="1020,753,1170,793"/>
+<area shape="poly" id="edge11_Node000011_Node000012" title=" " alt="" coords="1248,775,1171,775,1171,770,1248,769"/>
+<area shape="rect" id="Node000020" href="$namespacefabomatic_1_1tests.xhtml#aab0f4e1439b281ffef8be51db9a81f9d" title=" " alt="" coords="111,403,261,444"/>
+<area shape="poly" id="edge37_Node000011_Node000020" title=" " alt="" coords="1248,797,1187,808,1094,821,1053,820,1003,807,953,785,914,759,883,730,857,700,803,638,767,607,720,578,696,567,674,562,634,558,594,552,574,542,552,527,540,514,534,501,528,475,522,450,516,440,504,430,476,415,446,405,382,396,319,398,262,407,261,401,318,393,382,391,447,400,478,410,507,425,520,436,527,448,533,474,539,499,545,511,555,523,576,538,596,546,634,553,675,557,698,562,723,573,770,603,806,634,861,697,887,727,917,755,955,780,1005,802,1054,815,1093,816,1186,802,1247,792"/>
+<area shape="rect" id="Node000013" href="$classfabomatic_1_1_board_logic.xhtml#a25bdc3a49d850aa49f92faf951b68efb" title="Checks if a new card is present." alt="" coords="788,507,938,548"/>
+<area shape="poly" id="edge12_Node000012_Node000013" title=" " alt="" coords="1062,743,882,550,886,547,1066,739"/>
+<area shape="rect" id="Node000014" href="$namespacefabomatic_1_1tests.xhtml#a2600320f41c9fa343c66058ecb12b5ee" title="Simulates RFID card tap." alt="" coords="553,587,722,628"/>
+<area shape="poly" id="edge13_Node000013_Node000014" title=" " alt="" coords="790,556,698,589,696,584,788,551"/>
+<area shape="poly" id="edge36_Node000013_Node000020" title=" " alt="" coords="822,499,768,455,745,431,735,421,720,413,663,388,613,371,567,361,523,357,478,358,430,363,314,382,273,392,235,405,234,400,272,387,312,377,429,358,477,353,523,352,567,356,614,366,665,383,723,408,739,417,749,427,771,451,825,495"/>
+<area shape="rect" id="Node000024" href="$namespacefabomatic.xhtml#a3e5c190499522bddad3f3cc69274f16c" title="periodic check for new RFID card" alt="" coords="553,423,722,448"/>
+<area shape="poly" id="edge34_Node000013_Node000024" title=" " alt="" coords="807,502,721,463,686,451,688,446,723,458,809,497"/>
+<area shape="rect" id="Node000025" href="$namespacefabomatic_1_1tests.xhtml#a294b4767ecf1e1d11cc31dafb2541d23" title="periodic check for new RFID card" alt="" coords="567,473,708,513"/>
+<area shape="poly" id="edge35_Node000013_Node000025" title=" " alt="" coords="772,516,708,506,709,501,773,511"/>
+<area shape="rect" id="Node000015" href="$namespacefabomatic_1_1tests.xhtml#a6a7645a865dc822746f972ea6f43224d" title="Resets machine to initial state, clearing flags." alt="" coords="313,652,505,678"/>
+<area shape="poly" id="edge14_Node000014_Node000015" title=" " alt="" coords="540,635,464,654,463,649,539,630"/>
+<area shape="rect" id="Node000016" href="$namespacefabomatic_1_1tests.xhtml#a558e2287db01a4622581246a19dac397" title=" " alt="" coords="115,674,257,715"/>
+<area shape="poly" id="edge27_Node000014_Node000016" title=" " alt="" coords="602,640,558,669,506,693,441,706,375,712,312,711,257,707,257,701,312,706,375,706,441,701,505,688,556,665,599,635"/>
+<area shape="rect" id="Node000017" href="$namespacefabomatic_1_1tests.xhtml#a9a34631c2dc01cbdbbce146895c94e12" title=" " alt="" coords="107,739,265,780"/>
+<area shape="poly" id="edge28_Node000014_Node000017" title=" " alt="" coords="609,641,563,682,536,701,506,717,445,738,382,751,320,759,266,763,265,757,320,754,381,746,444,733,504,712,533,696,560,677,605,637"/>
+<area shape="rect" id="Node000018" href="$namespacefabomatic_1_1tests.xhtml#a6f3dff17fd964aba76c35c514957a0a5" title=" " alt="" coords="113,543,259,584"/>
+<area shape="poly" id="edge31_Node000014_Node000018" title=" " alt="" coords="538,601,259,573,259,568,538,595"/>
+<area shape="rect" id="Node000019" href="$namespacefabomatic_1_1tests.xhtml#afa92fef9250d918ee02c79dbf2de2546" title=" " alt="" coords="115,609,257,649"/>
+<area shape="poly" id="edge32_Node000014_Node000019" title=" " alt="" coords="538,615,257,628,257,623,538,610"/>
+<area shape="poly" id="edge33_Node000014_Node000020" title=" " alt="" coords="564,581,551,571,534,545,528,520,522,497,515,487,504,476,476,459,446,446,382,428,319,421,261,420,261,415,319,415,383,423,448,441,479,454,507,472,519,483,527,495,533,519,539,543,555,567,567,577"/>
+<area shape="rect" id="Node000021" href="$namespacefabomatic_1_1tests.xhtml#a0b99fa5582e6b0ecb416f4ed348e5606" title=" " alt="" coords="335,854,483,895"/>
+<area shape="poly" id="edge25_Node000014_Node000021" title=" " alt="" coords="627,643,609,687,583,739,549,791,507,838,479,856,477,851,504,834,545,788,579,736,604,685,622,641"/>
+<area shape="rect" id="Node000023" href="$namespacefabomatic_1_1tests.xhtml#af8fa7ace86309b5f699540d8898660c7" title=" " alt="" coords="339,486,480,527"/>
+<area shape="poly" id="edge29_Node000014_Node000023" title=" " alt="" coords="576,583,552,571,504,547,463,530,465,525,506,542,555,566,579,578"/>
+<area shape="poly" id="edge15_Node000015_Node000016" title=" " alt="" coords="298,682,257,688,256,682,297,677"/>
+<area shape="poly" id="edge17_Node000015_Node000017" title=" " alt="" coords="364,687,266,729,237,741,235,736,264,724,362,682"/>
+<area shape="poly" id="edge19_Node000015_Node000018" title=" " alt="" coords="366,647,264,599,236,587,238,582,266,594,368,643"/>
+<area shape="poly" id="edge21_Node000015_Node000019" title=" " alt="" coords="310,652,257,643,258,638,311,646"/>
+<area shape="poly" id="edge23_Node000015_Node000020" title=" " alt="" coords="384,643,204,446,208,443,388,639"/>
+<area shape="poly" id="edge16_Node000016_Node000008" title=" " alt="" coords="111,668,105,663,83,642,64,619,38,578,43,576,69,616,87,639,108,659,115,663"/>
+<area shape="poly" id="edge18_Node000017_Node000008" title=" " alt="" coords="109,732,105,728,76,690,55,648,41,608,33,577,38,576,46,606,60,646,80,687,109,724,113,728"/>
+<area shape="poly" id="edge20_Node000018_Node000008" title=" " alt="" coords="98,566,59,566,59,561,98,561"/>
+<area shape="poly" id="edge22_Node000019_Node000008" title=" " alt="" coords="120,604,106,598,58,577,60,572,108,593,122,599"/>
+<area shape="poly" id="edge24_Node000020_Node000008" title=" " alt="" coords="148,456,108,490,47,552,43,548,105,486,144,452"/>
+<area shape="rect" id="Node000022" href="$test__mqtt_8cpp.xhtml#a4fc01d736fe50cf5b977f755b675f11d" title=" " alt="" coords="159,919,213,944"/>
+<area shape="poly" id="edge26_Node000021_Node000022" title=" " alt="" coords="321,900,214,927,212,922,319,895"/>
+<area shape="poly" id="edge30_Node000023_Node000008" title=" " alt="" coords="323,509,219,515,163,523,107,534,59,553,57,548,106,529,162,518,219,510,323,503"/>
+<area shape="poly" id="edge40_Node000027_Node000004" title=" " alt="" coords="1244,69,1128,89,1066,103,1005,122,938,153,885,184,883,180,936,148,1003,117,1064,98,1127,83,1244,64"/>
+<area shape="poly" id="edge44_Node000030_Node000022" title=" " alt="" coords="1479,985,1097,985,636,985,511,980,389,967,212,939,213,934,390,962,512,974,636,980,1097,980,1479,980"/>
+<area shape="poly" id="edge46_Node000031_Node000022" title=" " alt="" coords="1479,924,1303,931,1097,934,636,934,213,934,213,929,636,929,1096,929,1302,925,1478,919"/>
+<area shape="poly" id="edge50_Node000034_Node000011" title=" " alt="" coords="1697,766,1414,772,1414,767,1697,760"/>
+<area shape="poly" id="edge51_Node000034_Node000030" title=" " alt="" coords="1701,786,1690,795,1676,813,1668,832,1665,870,1663,909,1656,930,1642,951,1627,963,1624,959,1638,947,1651,927,1658,908,1660,870,1663,831,1671,811,1686,791,1697,782"/>
+<area shape="poly" id="edge52_Node000034_Node000031" title=" " alt="" coords="1700,789,1690,795,1674,810,1665,826,1656,842,1642,861,1599,898,1595,894,1638,858,1652,840,1660,823,1669,807,1686,791,1697,784"/>
+<area shape="rect" id="Node000035" href="$namespacefabomatic_1_1tests.xhtml#aeb3e51f6d2841cd2869df4c0629f694d" title=" " alt="" coords="1494,807,1636,848"/>
+<area shape="poly" id="edge53_Node000034_Node000035" title=" " alt="" coords="1707,789,1637,809,1635,804,1705,783"/>
+<area shape="rect" id="Node000036" href="$test__savedconfig_8cpp.xhtml#a4fc01d736fe50cf5b977f755b675f11d" title=" " alt="" coords="1311,816,1365,842"/>
+<area shape="poly" id="edge54_Node000035_Node000036" title=" " alt="" coords="1479,831,1365,831,1365,826,1479,825"/>
+<area shape="poly" id="edge80_Node000037_Node000007" title=" " alt="" coords="1771,381,1724,304,1651,205,1606,155,1556,108,1500,67,1441,34,1407,22,1371,14,1298,8,1228,12,1167,22,1166,17,1227,7,1298,3,1372,8,1408,17,1443,29,1503,62,1559,104,1610,151,1655,202,1728,301,1775,379"/>
+<area shape="rect" id="Node000038" href="$classfabomatic_1_1_board_logic.xhtml#a3c38d7a3ed7952c6d6297efdf50ea4dd" title="Sets the board in the state given." alt="" coords="1490,394,1640,435"/>
+<area shape="poly" id="edge56_Node000037_Node000038" title=" " alt="" coords="1701,417,1641,417,1641,412,1701,412"/>
+<area shape="poly" id="edge72_Node000038_Node000004" title=" " alt="" coords="1497,387,1488,377,1475,359,1469,340,1466,305,1462,272,1454,257,1440,243,1421,232,1396,222,1332,207,1255,198,1170,193,1006,192,890,197,890,191,1006,187,1171,188,1255,192,1333,202,1398,217,1423,227,1443,239,1459,254,1467,271,1472,304,1474,339,1480,356,1492,374,1501,383"/>
+<area shape="poly" id="edge78_Node000038_Node000007" title=" " alt="" coords="1496,386,1488,377,1470,345,1463,315,1463,285,1466,256,1469,228,1468,200,1459,172,1440,144,1416,123,1394,110,1371,102,1348,99,1296,96,1266,93,1234,85,1158,60,1159,55,1235,80,1267,87,1296,91,1348,94,1372,97,1396,105,1419,118,1444,140,1464,170,1473,199,1474,228,1471,257,1468,285,1468,314,1475,343,1492,374,1499,382"/>
+<area shape="poly" id="edge57_Node000038_Node000011" title=" " alt="" coords="1527,447,1508,467,1492,490,1478,525,1473,558,1477,619,1478,649,1476,678,1465,709,1444,740,1430,752,1415,760,1412,756,1427,747,1440,736,1461,706,1471,677,1473,648,1471,619,1468,558,1473,524,1487,488,1503,464,1523,443"/>
+<area shape="poly" id="edge70_Node000038_Node000012" title=" " alt="" coords="1555,451,1539,492,1516,539,1484,586,1443,626,1415,642,1389,651,1340,654,1290,655,1264,662,1236,676,1221,690,1212,705,1203,720,1188,736,1158,754,1155,750,1185,732,1199,717,1207,702,1216,687,1233,672,1262,657,1289,650,1339,648,1388,646,1413,638,1440,621,1480,583,1511,536,1534,489,1550,449"/>
+<area shape="poly" id="edge58_Node000038_Node000013" title=" " alt="" coords="1532,447,1491,477,1443,501,1376,520,1306,533,1237,542,1168,546,1040,546,938,539,939,534,1040,541,1167,541,1236,536,1306,528,1375,515,1441,496,1489,472,1529,442"/>
+<area shape="poly" id="edge75_Node000038_Node000027" title=" " alt="" coords="1495,386,1487,377,1467,338,1459,301,1461,264,1466,229,1472,195,1472,160,1463,126,1440,91,1415,72,1418,68,1444,87,1467,124,1477,160,1477,195,1472,230,1466,265,1465,300,1472,336,1492,374,1499,382"/>
+<area shape="poly" id="edge79_Node000038_Node000032" title=" " alt="" coords="1528,447,1508,467,1492,490,1481,515,1475,539,1474,582,1469,625,1460,647,1444,669,1428,683,1411,692,1408,688,1425,678,1440,666,1456,644,1464,623,1468,582,1470,538,1476,514,1487,488,1504,464,1524,443"/>
+<area shape="rect" id="Node000039" href="$namespacefabomatic.xhtml#aaa30fd4002cc95e50c035f2d3dcdb44d" title=" " alt="" coords="1238,297,1438,323"/>
+<area shape="poly" id="edge59_Node000038_Node000039" title=" " alt="" coords="1505,388,1488,378,1464,356,1455,346,1440,337,1414,326,1416,321,1443,332,1458,342,1468,352,1491,373,1508,384"/>
+<area shape="rect" id="Node000040" href="$namespacefabomatic.xhtml#a8374c0d1cef777c26dc13b4abc9c52b6" title="Open the ArduinoOTA configuration portal." alt="" coords="1004,233,1186,259"/>
+<area shape="poly" id="edge71_Node000038_Node000040" title=" " alt="" coords="1499,387,1488,377,1471,353,1465,329,1458,307,1440,287,1411,270,1380,257,1314,241,1248,236,1187,237,1187,232,1248,230,1315,236,1382,252,1414,266,1443,283,1463,304,1470,327,1476,350,1492,374,1503,383"/>
+<area shape="rect" id="Node000041" href="$classfabomatic_1_1_board_logic.xhtml#a98a15cc323f97adc394c29e897afc12d" title="Removes the current machine user and changes the status to LoggedOut." alt="" coords="1263,571,1413,612"/>
+<area shape="poly" id="edge63_Node000038_Node000041" title=" " alt="" coords="1532,448,1492,491,1470,524,1460,539,1443,555,1412,573,1409,568,1440,551,1456,536,1465,522,1488,487,1528,444"/>
+<area shape="rect" id="Node000043" href="$namespacefabomatic.xhtml#a53440db527e478f13eaa71bbd46120c3" title="Initialization of the Arduino OTA library with settings for fabomatic." alt="" coords="1024,132,1167,158"/>
+<area shape="poly" id="edge73_Node000038_Node000043" title=" " alt="" coords="1497,387,1488,377,1473,352,1466,327,1467,279,1468,256,1466,234,1458,213,1440,192,1410,171,1377,155,1342,143,1305,136,1232,132,1167,136,1167,130,1232,126,1306,131,1343,138,1379,150,1413,166,1443,188,1462,210,1471,233,1474,256,1472,279,1471,326,1477,350,1492,374,1500,383"/>
+<area shape="rect" id="Node000044" href="$namespacefabomatic.xhtml#a86a02975f3cc660ebccdde8f217aa035" title="periodic check if the machine must be powered off" alt="" coords="1234,347,1442,372"/>
+<area shape="poly" id="edge76_Node000038_Node000044" title=" " alt="" coords="1474,394,1441,386,1397,376,1398,370,1442,381,1476,389"/>
+<area shape="rect" id="Node000045" href="$namespacefabomatic.xhtml#a525d1f233a2f797801a9a659c5044cb7" title="checks the RFID chip status and re&#45;init it if necessary." alt="" coords="1243,396,1433,422"/>
+<area shape="poly" id="edge77_Node000038_Node000045" title=" " alt="" coords="1474,415,1433,414,1433,408,1475,409"/>
+<area shape="poly" id="edge60_Node000039_Node000040" title=" " alt="" coords="1271,296,1146,262,1147,257,1272,290"/>
+<area shape="poly" id="edge61_Node000040_Node000004" title=" " alt="" coords="1018,232,889,204,890,199,1019,227"/>
+<area shape="poly" id="edge62_Node000040_Node000006" title=" " alt="" coords="1019,266,926,286,924,281,1017,260"/>
+<area shape="poly" id="edge67_Node000041_Node000009" title=" " alt="" coords="1294,564,1243,530,1185,497,1148,479,1150,474,1188,492,1245,526,1297,560"/>
+<area shape="poly" id="edge65_Node000041_Node000012" title=" " alt="" coords="1250,621,1236,632,1225,645,1219,657,1213,683,1206,709,1188,736,1163,754,1159,750,1184,732,1202,707,1207,681,1214,655,1221,642,1233,628,1247,617"/>
+<area shape="poly" id="edge64_Node000041_Node000015" title=" " alt="" coords="1270,620,1187,642,1094,656,999,666,810,676,640,677,506,673,506,668,640,671,810,670,998,660,1093,650,1186,637,1269,615"/>
+<area shape="poly" id="edge68_Node000041_Node000019" title=" " alt="" coords="1261,620,1236,632,1213,651,1202,660,1187,669,1101,700,1030,715,957,718,864,718,636,718,472,722,401,715,312,693,287,680,264,665,238,652,240,647,266,660,290,675,314,688,402,710,472,716,636,713,864,713,957,713,1029,709,1099,695,1185,664,1199,656,1209,647,1233,628,1258,616"/>
+<area shape="poly" id="edge69_Node000041_Node000020" title=" " alt="" coords="1247,569,1131,534,1003,490,923,456,863,424,803,395,721,369,662,357,614,353,505,352,408,342,366,342,314,351,286,362,259,375,214,405,211,401,256,371,284,357,312,346,366,336,408,336,505,346,615,348,662,352,722,364,805,390,866,419,926,451,1005,485,1132,528,1249,564"/>
+<area shape="rect" id="Node000042" href="$namespacefabomatic.xhtml#af8ee1c3cd4edf1a1ba27899da63b611a" title="periodic check if the user shall be logged off" alt="" coords="1004,601,1186,627"/>
+<area shape="poly" id="edge66_Node000041_Node000042" title=" " alt="" coords="1248,603,1187,608,1187,603,1247,597"/>
+<area shape="poly" id="edge74_Node000043_Node000004" title=" " alt="" coords="1019,164,890,193,889,187,1018,159"/>
+</map>

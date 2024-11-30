@@ -230,12 +230,18 @@ Variables</h2></td></tr>
 <tr class="memitem:a606e6b5c7c411ba632b27c92882edb32" id="r_a606e6b5c7c411ba632b27c92882edb32"><td class="memItemLeft" align="right" valign="top">static constexpr std::string_view&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefabomatic_1_1conf_1_1mqtt.xhtml#a606e6b5c7c411ba632b27c92882edb32">fabomatic::conf::mqtt::response_topic</a> {&quot;/reply&quot;}</td></tr>
 <tr class="memdesc:a606e6b5c7c411ba632b27c92882edb32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Backend reply (sub-topic of the full machine topic)  <br /></td></tr>
 <tr class="separator:a606e6b5c7c411ba632b27c92882edb32"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9385c322eb16f7f09992855dec71df20" id="r_a9385c322eb16f7f09992855dec71df20"><td class="memItemLeft" align="right" valign="top">static constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefabomatic_1_1conf_1_1mqtt.xhtml#a9385c322eb16f7f09992855dec71df20">fabomatic::conf::mqtt::MAX_TRIES</a> {2}</td></tr>
+<tr class="memitem:a21f3096bd332e313f6e3e51a0c429aad" id="r_a21f3096bd332e313f6e3e51a0c429aad"><td class="memItemLeft" align="right" valign="top">static constexpr std::string_view&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefabomatic_1_1conf_1_1mqtt.xhtml#a21f3096bd332e313f6e3e51a0c429aad">fabomatic::conf::mqtt::request_topic</a> {&quot;/request&quot;}</td></tr>
+<tr class="memdesc:a21f3096bd332e313f6e3e51a0c429aad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Backend requests (sub-topic of the full machine topic)  <br /></td></tr>
+<tr class="separator:a21f3096bd332e313f6e3e51a0c429aad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9385c322eb16f7f09992855dec71df20" id="r_a9385c322eb16f7f09992855dec71df20"><td class="memItemLeft" align="right" valign="top">static constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefabomatic_1_1conf_1_1mqtt.xhtml#a9385c322eb16f7f09992855dec71df20">fabomatic::conf::mqtt::MAX_TRIES</a> {1}</td></tr>
 <tr class="memdesc:a9385c322eb16f7f09992855dec71df20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of tries to get a reply from the backend.  <br /></td></tr>
 <tr class="separator:a9385c322eb16f7f09992855dec71df20"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8418761ec7353545c7130692339b9cc6" id="r_a8418761ec7353545c7130692339b9cc6"><td class="memItemLeft" align="right" valign="top">static constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefabomatic_1_1conf_1_1mqtt.xhtml#a8418761ec7353545c7130692339b9cc6">fabomatic::conf::mqtt::TIMEOUT_REPLY_SERVER</a> {2s}</td></tr>
 <tr class="memdesc:a8418761ec7353545c7130692339b9cc6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timeout for a single backend reply request.  <br /></td></tr>
 <tr class="separator:a8418761ec7353545c7130692339b9cc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5fc8686e6f5fbec38ef7ca2654461cc0" id="r_a5fc8686e6f5fbec38ef7ca2654461cc0"><td class="memItemLeft" align="right" valign="top">static constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefabomatic_1_1conf_1_1mqtt.xhtml#a5fc8686e6f5fbec38ef7ca2654461cc0">fabomatic::conf::mqtt::FAIL_FAST_PERIOD</a> {45s}</td></tr>
+<tr class="memdesc:a5fc8686e6f5fbec38ef7ca2654461cc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Once backend is unresponsive, wait at least this period before to try again.  <br /></td></tr>
+<tr class="separator:a5fc8686e6f5fbec38ef7ca2654461cc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac26a2c6d2866b19ee035b735bdfaff54" id="r_ac26a2c6d2866b19ee035b735bdfaff54"><td class="memItemLeft" align="right" valign="top">static constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefabomatic_1_1conf_1_1mqtt.xhtml#ac26a2c6d2866b19ee035b735bdfaff54">fabomatic::conf::mqtt::PORT_NUMBER</a> {1883}</td></tr>
 <tr class="memdesc:ac26a2c6d2866b19ee035b735bdfaff54"><td class="mdescLeft">&#160;</td><td class="mdescRight">MQTT port for broker.  <br /></td></tr>
 <tr class="separator:ac26a2c6d2866b19ee035b735bdfaff54"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -261,7 +267,7 @@ Variables</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Aug 12 2024 08:05:20 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Nov 30 2024 15:35:28 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

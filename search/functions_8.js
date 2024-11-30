@@ -13,6 +13,7 @@ var searchData=
   ['ismaintenanceneeded_10',['isMaintenanceNeeded',['../classfabomatic_1_1_machine.xhtml#a34b0deb04494137cf321e94d50dedf90',1,'fabomatic::Machine']]],
   ['isnewcardpresent_11',['isnewcardpresent',['../classfabomatic_1_1_base_r_f_i_d_wrapper.xhtml#a3742fa985037cb9794a39f293849bea3',1,'fabomatic::BaseRFIDWrapper::isNewCardPresent()'],['../classfabomatic_1_1_r_f_i_d_wrapper.xhtml#ada9684dd15933a28d3e44c7a76a75595',1,'fabomatic::RFIDWrapper::isNewCardPresent()']]],
   ['isonline_12',['isOnline',['../classfabomatic_1_1_fab_backend.xhtml#aef092e0e1db0c3539d5474fad2456255',1,'fabomatic::FabBackend']]],
-  ['isrunning_13',['isRunning',['../classfabomatic_1_1_mock_m_q_t_t_broker.xhtml#a78a57e64b156c6d6d93104fec142740d',1,'fabomatic::MockMQTTBroker']]],
-  ['isshutdownimminent_14',['isShutdownImminent',['../classfabomatic_1_1_machine.xhtml#a871958cc57845c8651cf1058ed9b30e4',1,'fabomatic::Machine']]]
+  ['isresponsive_13',['isResponsive',['../classfabomatic_1_1_fab_backend.xhtml#aacd5dfac21bd4b6ed71912198a038529',1,'fabomatic::FabBackend']]],
+  ['isrunning_14',['isRunning',['../classfabomatic_1_1_mock_m_q_t_t_broker.xhtml#a78a57e64b156c6d6d93104fec142740d',1,'fabomatic::MockMQTTBroker']]],
+  ['isshutdownimminent_15',['isShutdownImminent',['../classfabomatic_1_1_machine.xhtml#a871958cc57845c8651cf1058ed9b30e4',1,'fabomatic::Machine']]]
 ];

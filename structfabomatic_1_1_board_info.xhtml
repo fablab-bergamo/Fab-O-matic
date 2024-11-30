@@ -90,7 +90,7 @@ $(function() {
 <div class="dynheader">
 Collaboration diagram for fabomatic::BoardInfo:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="structfabomatic_1_1_board_info__coll__graph.svg" width="143" height="116"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="structfabomatic_1_1_board_info__coll__graph.svg" width="143" height="136"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
@@ -100,12 +100,14 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a51fc86bf0f5919a4ac0911bd9a9dbedb" id="r_a51fc86bf0f5919a4ac0911bd9a9dbedb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfabomatic_1_1_board_info.xhtml#a51fc86bf0f5919a4ac0911bd9a9dbedb">server_connected</a></td></tr>
-<tr class="separator:a51fc86bf0f5919a4ac0911bd9a9dbedb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1b469e101a86ce94e184d205525488a9" id="r_a1b469e101a86ce94e184d205525488a9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfabomatic_1_1_machine.xhtml#a409acc0089d7cfe849b2e775840e5838">Machine::PowerState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfabomatic_1_1_board_info.xhtml#a1b469e101a86ce94e184d205525488a9">power_state</a></td></tr>
+<tr class="memitem:a4019ecc4bf265757e255c29f529d91e6" id="r_a4019ecc4bf265757e255c29f529d91e6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfabomatic_1_1_board_info.xhtml#a4019ecc4bf265757e255c29f529d91e6">mqtt_connected</a> {false}</td></tr>
+<tr class="separator:a4019ecc4bf265757e255c29f529d91e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b469e101a86ce94e184d205525488a9" id="r_a1b469e101a86ce94e184d205525488a9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfabomatic_1_1_machine.xhtml#a409acc0089d7cfe849b2e775840e5838">Machine::PowerState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfabomatic_1_1_board_info.xhtml#a1b469e101a86ce94e184d205525488a9">power_state</a> {<a class="el" href="classfabomatic_1_1_machine.xhtml#a409acc0089d7cfe849b2e775840e5838a88183b946cc5f0e8c96b2e66e1c74a7e">Machine::PowerState::Unknown</a>}</td></tr>
 <tr class="separator:a1b469e101a86ce94e184d205525488a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0dc9d91453196e161f4ec01b8642f831" id="r_a0dc9d91453196e161f4ec01b8642f831"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfabomatic_1_1_board_info.xhtml#a0dc9d91453196e161f4ec01b8642f831">power_warning</a></td></tr>
+<tr class="memitem:a0dc9d91453196e161f4ec01b8642f831" id="r_a0dc9d91453196e161f4ec01b8642f831"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfabomatic_1_1_board_info.xhtml#a0dc9d91453196e161f4ec01b8642f831">power_warning</a> {false}</td></tr>
 <tr class="separator:a0dc9d91453196e161f4ec01b8642f831"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a242cbbf77e31bfcd2edc7b0b0f1505c1" id="r_a242cbbf77e31bfcd2edc7b0b0f1505c1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfabomatic_1_1_board_info.xhtml#a242cbbf77e31bfcd2edc7b0b0f1505c1">unresponsive</a> {true}</td></tr>
+<tr class="separator:a242cbbf77e31bfcd2edc7b0b0f1505c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Helper struct representing the display state. </p>
@@ -137,21 +139,42 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_board_info_8hpp_source.xhtml#l00015">15</a> of file <a class="el" href="_board_info_8hpp_source.xhtml">BoardInfo.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   16</span>    {</div>
-<div class="line"><span class="lineno">   17</span>      <span class="keywordflow">return</span> <a class="code hl_variable" href="structfabomatic_1_1_board_info.xhtml#a51fc86bf0f5919a4ac0911bd9a9dbedb">server_connected</a> == other.server_connected &amp;&amp;</div>
-<div class="line"><span class="lineno">   18</span>             <a class="code hl_variable" href="structfabomatic_1_1_board_info.xhtml#a1b469e101a86ce94e184d205525488a9">power_state</a> == other.power_state &amp;&amp;</div>
-<div class="line"><span class="lineno">   19</span>             <a class="code hl_variable" href="structfabomatic_1_1_board_info.xhtml#a0dc9d91453196e161f4ec01b8642f831">power_warning</a> == other.power_warning;</div>
-<div class="line"><span class="lineno">   20</span>    };</div>
+<p class="definition">Definition at line <a class="el" href="_board_info_8hpp_source.xhtml#l00016">16</a> of file <a class="el" href="_board_info_8hpp_source.xhtml">BoardInfo.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   17</span>    {</div>
+<div class="line"><span class="lineno">   18</span>      <span class="keywordflow">return</span> <a class="code hl_variable" href="structfabomatic_1_1_board_info.xhtml#a4019ecc4bf265757e255c29f529d91e6">mqtt_connected</a> == other.mqtt_connected &amp;&amp;</div>
+<div class="line"><span class="lineno">   19</span>             <a class="code hl_variable" href="structfabomatic_1_1_board_info.xhtml#a1b469e101a86ce94e184d205525488a9">power_state</a> == other.power_state &amp;&amp;</div>
+<div class="line"><span class="lineno">   20</span>             <a class="code hl_variable" href="structfabomatic_1_1_board_info.xhtml#a0dc9d91453196e161f4ec01b8642f831">power_warning</a> == other.power_warning &amp;&amp;</div>
+<div class="line"><span class="lineno">   21</span>             <a class="code hl_variable" href="structfabomatic_1_1_board_info.xhtml#a242cbbf77e31bfcd2edc7b0b0f1505c1">unresponsive</a> == other.unresponsive;</div>
+<div class="line"><span class="lineno">   22</span>    };</div>
 <div class="ttc" id="astructfabomatic_1_1_board_info_xhtml_a0dc9d91453196e161f4ec01b8642f831"><div class="ttname"><a href="structfabomatic_1_1_board_info.xhtml#a0dc9d91453196e161f4ec01b8642f831">fabomatic::BoardInfo::power_warning</a></div><div class="ttdeci">bool power_warning</div><div class="ttdef"><b>Definition</b> <a href="_board_info_8hpp_source.xhtml#l00013">BoardInfo.hpp:13</a></div></div>
 <div class="ttc" id="astructfabomatic_1_1_board_info_xhtml_a1b469e101a86ce94e184d205525488a9"><div class="ttname"><a href="structfabomatic_1_1_board_info.xhtml#a1b469e101a86ce94e184d205525488a9">fabomatic::BoardInfo::power_state</a></div><div class="ttdeci">Machine::PowerState power_state</div><div class="ttdef"><b>Definition</b> <a href="_board_info_8hpp_source.xhtml#l00012">BoardInfo.hpp:12</a></div></div>
-<div class="ttc" id="astructfabomatic_1_1_board_info_xhtml_a51fc86bf0f5919a4ac0911bd9a9dbedb"><div class="ttname"><a href="structfabomatic_1_1_board_info.xhtml#a51fc86bf0f5919a4ac0911bd9a9dbedb">fabomatic::BoardInfo::server_connected</a></div><div class="ttdeci">bool server_connected</div><div class="ttdef"><b>Definition</b> <a href="_board_info_8hpp_source.xhtml#l00011">BoardInfo.hpp:11</a></div></div>
+<div class="ttc" id="astructfabomatic_1_1_board_info_xhtml_a242cbbf77e31bfcd2edc7b0b0f1505c1"><div class="ttname"><a href="structfabomatic_1_1_board_info.xhtml#a242cbbf77e31bfcd2edc7b0b0f1505c1">fabomatic::BoardInfo::unresponsive</a></div><div class="ttdeci">bool unresponsive</div><div class="ttdef"><b>Definition</b> <a href="_board_info_8hpp_source.xhtml#l00014">BoardInfo.hpp:14</a></div></div>
+<div class="ttc" id="astructfabomatic_1_1_board_info_xhtml_a4019ecc4bf265757e255c29f529d91e6"><div class="ttname"><a href="structfabomatic_1_1_board_info.xhtml#a4019ecc4bf265757e255c29f529d91e6">fabomatic::BoardInfo::mqtt_connected</a></div><div class="ttdeci">bool mqtt_connected</div><div class="ttdef"><b>Definition</b> <a href="_board_info_8hpp_source.xhtml#l00011">BoardInfo.hpp:11</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_board_info_8hpp_source.xhtml#l00012">power_state</a>, <a class="el" href="_board_info_8hpp_source.xhtml#l00013">power_warning</a>, and <a class="el" href="_board_info_8hpp_source.xhtml#l00011">server_connected</a>.</p>
+<p class="reference">References <a class="el" href="_board_info_8hpp_source.xhtml#l00011">mqtt_connected</a>, <a class="el" href="_board_info_8hpp_source.xhtml#l00012">power_state</a>, <a class="el" href="_board_info_8hpp_source.xhtml#l00013">power_warning</a>, and <a class="el" href="_board_info_8hpp_source.xhtml#l00014">unresponsive</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
+<a id="a4019ecc4bf265757e255c29f529d91e6" name="a4019ecc4bf265757e255c29f529d91e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4019ecc4bf265757e255c29f529d91e6">&#9670;&#160;</a></span>mqtt_connected</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool fabomatic::BoardInfo::mqtt_connected {false}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_board_info_8hpp_source.xhtml#l00011">11</a> of file <a class="el" href="_board_info_8hpp_source.xhtml">BoardInfo.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   11</span>{<span class="keyword">false</span>};</div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="_board_info_8hpp_source.xhtml#l00016">operator==()</a>, <a class="el" href="_l_c_d_wrapper_8cpp_source.xhtml#l00166">fabomatic::LCDWrapper::prettyPrint()</a>, and <a class="el" href="_l_c_d_wrapper_8cpp_source.xhtml#l00066">fabomatic::LCDWrapper::update()</a>.</p>
+
+</div>
+</div>
 <a id="a1b469e101a86ce94e184d205525488a9" name="a1b469e101a86ce94e184d205525488a9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1b469e101a86ce94e184d205525488a9">&#9670;&#160;</a></span>power_state</h2>
 
@@ -159,14 +182,16 @@ Public Attributes</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classfabomatic_1_1_machine.xhtml#a409acc0089d7cfe849b2e775840e5838">Machine::PowerState</a> fabomatic::BoardInfo::power_state</td>
+          <td class="memname"><a class="el" href="classfabomatic_1_1_machine.xhtml#a409acc0089d7cfe849b2e775840e5838">Machine::PowerState</a> fabomatic::BoardInfo::power_state {<a class="el" href="classfabomatic_1_1_machine.xhtml#a409acc0089d7cfe849b2e775840e5838a88183b946cc5f0e8c96b2e66e1c74a7e">Machine::PowerState::Unknown</a>}</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_board_info_8hpp_source.xhtml#l00012">12</a> of file <a class="el" href="_board_info_8hpp_source.xhtml">BoardInfo.hpp</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="_board_info_8hpp_source.xhtml#l00015">operator==()</a>, <a class="el" href="_l_c_d_wrapper_8cpp_source.xhtml#l00155">fabomatic::LCDWrapper::prettyPrint()</a>, and <a class="el" href="_l_c_d_wrapper_8cpp_source.xhtml#l00066">fabomatic::LCDWrapper::update()</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   12</span>{<a class="code hl_enumvalue" href="classfabomatic_1_1_machine.xhtml#a409acc0089d7cfe849b2e775840e5838a88183b946cc5f0e8c96b2e66e1c74a7e">Machine::PowerState::Unknown</a>};</div>
+<div class="ttc" id="aclassfabomatic_1_1_machine_xhtml_a409acc0089d7cfe849b2e775840e5838a88183b946cc5f0e8c96b2e66e1c74a7e"><div class="ttname"><a href="classfabomatic_1_1_machine.xhtml#a409acc0089d7cfe849b2e775840e5838a88183b946cc5f0e8c96b2e66e1c74a7e">fabomatic::Machine::PowerState::Unknown</a></div><div class="ttdeci">@ Unknown</div></div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="_board_info_8hpp_source.xhtml#l00016">operator==()</a>, <a class="el" href="_l_c_d_wrapper_8cpp_source.xhtml#l00166">fabomatic::LCDWrapper::prettyPrint()</a>, and <a class="el" href="_l_c_d_wrapper_8cpp_source.xhtml#l00066">fabomatic::LCDWrapper::update()</a>.</p>
 
 </div>
 </div>
@@ -177,32 +202,34 @@ Public Attributes</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool fabomatic::BoardInfo::power_warning</td>
+          <td class="memname">bool fabomatic::BoardInfo::power_warning {false}</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_board_info_8hpp_source.xhtml#l00013">13</a> of file <a class="el" href="_board_info_8hpp_source.xhtml">BoardInfo.hpp</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="_board_info_8hpp_source.xhtml#l00015">operator==()</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   13</span>{<span class="keyword">false</span>};</div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="_board_info_8hpp_source.xhtml#l00016">operator==()</a>.</p>
 
 </div>
 </div>
-<a id="a51fc86bf0f5919a4ac0911bd9a9dbedb" name="a51fc86bf0f5919a4ac0911bd9a9dbedb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a51fc86bf0f5919a4ac0911bd9a9dbedb">&#9670;&#160;</a></span>server_connected</h2>
+<a id="a242cbbf77e31bfcd2edc7b0b0f1505c1" name="a242cbbf77e31bfcd2edc7b0b0f1505c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a242cbbf77e31bfcd2edc7b0b0f1505c1">&#9670;&#160;</a></span>unresponsive</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool fabomatic::BoardInfo::server_connected</td>
+          <td class="memname">bool fabomatic::BoardInfo::unresponsive {true}</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_board_info_8hpp_source.xhtml#l00011">11</a> of file <a class="el" href="_board_info_8hpp_source.xhtml">BoardInfo.hpp</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="_board_info_8hpp_source.xhtml#l00015">operator==()</a>, <a class="el" href="_l_c_d_wrapper_8cpp_source.xhtml#l00155">fabomatic::LCDWrapper::prettyPrint()</a>, and <a class="el" href="_l_c_d_wrapper_8cpp_source.xhtml#l00066">fabomatic::LCDWrapper::update()</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_board_info_8hpp_source.xhtml#l00014">14</a> of file <a class="el" href="_board_info_8hpp_source.xhtml">BoardInfo.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   14</span>{<span class="keyword">true</span>};</div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="_board_info_8hpp_source.xhtml#l00016">operator==()</a>, <a class="el" href="_l_c_d_wrapper_8cpp_source.xhtml#l00166">fabomatic::LCDWrapper::prettyPrint()</a>, and <a class="el" href="_l_c_d_wrapper_8cpp_source.xhtml#l00066">fabomatic::LCDWrapper::update()</a>.</p>
 
 </div>
 </div>
@@ -212,7 +239,7 @@ Public Attributes</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Aug 12 2024 08:05:20 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Nov 30 2024 15:35:28 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

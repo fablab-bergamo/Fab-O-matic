@@ -1,25 +1,28 @@
 <map id="fabomatic::CachedCards::size" name="fabomatic::CachedCards::size">
-<area shape="rect" id="Node000001" title=" " alt="" coords="916,107,1078,148"/>
-<area shape="rect" id="Node000002" href="$classfabomatic_1_1_saved_config.xhtml#ae0af7670707ed5a51c69197eb6fadbe5" title="Serialize the current configuration into a JsonDocument." alt="" coords="710,74,867,115"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="900,115,867,109,868,104,901,109"/>
-<area shape="rect" id="Node000011" href="$classfabomatic_1_1_auth_provider.xhtml#a402ef003255e1f0cc0892ef5dae2ac9b" title="Cache the user request." alt="" coords="709,139,868,180"/>
-<area shape="poly" id="edge12_Node000001_Node000011" title=" " alt="" coords="901,145,869,150,868,145,900,140"/>
-<area shape="rect" id="Node000003" href="$classfabomatic_1_1_saved_config.xhtml#a312c74363068192ae80df24140f82874" title="Saves the configuration to EEPROM." alt="" coords="503,41,661,81"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="694,82,661,76,661,71,695,76"/>
-<area shape="rect" id="Node000010" href="$classfabomatic_1_1_saved_config.xhtml#ad1d484179f439b28d608a9c6737bdc26" title="Returns a json&#45;prettified fragment for logging." alt="" coords="503,106,661,147"/>
-<area shape="poly" id="edge11_Node000002_Node000010" title=" " alt="" coords="695,111,661,117,661,111,694,106"/>
-<area shape="rect" id="Node000004" href="$classfabomatic_1_1_auth_provider.xhtml#acb92a9381bc8e14bd57b819fc9162750" title="Saves the cache of RFID to EEPROM." alt="" coords="296,41,455,81"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="488,64,456,64,456,58,488,58"/>
-<area shape="rect" id="Node000006" href="$test__mqtt_8cpp.xhtml#a4fc01d736fe50cf5b977f755b675f11d" title=" " alt="" coords="5,5,59,31"/>
-<area shape="poly" id="edge8_Node000003_Node000006" title=" " alt="" coords="493,39,455,31,340,19,227,15,59,19,59,14,227,9,340,14,456,26,494,34"/>
-<area shape="rect" id="Node000009" href="$namespacefabomatic_1_1tests.xhtml#a0bbb6cee5561bf8ac1c4a9117d9d01b8" title=" " alt="" coords="305,134,446,175"/>
-<area shape="poly" id="edge9_Node000003_Node000009" title=" " alt="" coords="519,90,504,97,421,136,419,131,502,92,517,85"/>
-<area shape="rect" id="Node000005" href="$namespacefabomatic_1_1tests.xhtml#a438b9060c27d36e89506199205b342cb" title=" " alt="" coords="107,26,248,67"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="280,56,248,54,248,49,281,51"/>
-<area shape="rect" id="Node000007" href="$namespacefabomatic_1_1tests.xhtml#aeb3e51f6d2841cd2869df4c0629f694d" title=" " alt="" coords="107,91,248,132"/>
-<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="282,87,249,96,248,91,281,82"/>
-<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="91,32,59,26,60,21,92,27"/>
-<area shape="rect" id="Node000008" href="$test__savedconfig_8cpp.xhtml#a4fc01d736fe50cf5b977f755b675f11d" title=" " alt="" coords="5,127,59,152"/>
-<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="92,131,60,137,59,132,91,125"/>
-<area shape="poly" id="edge10_Node000009_Node000008" title=" " alt="" coords="289,154,107,146,59,144,59,138,107,141,289,148"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="916,157,1078,198"/>
+<area shape="rect" id="Node000002" href="$classfabomatic_1_1_saved_config.xhtml#ae0af7670707ed5a51c69197eb6fadbe5" title="Serialize the current configuration into a JsonDocument." alt="" coords="710,124,867,165"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="900,165,867,160,868,154,901,160"/>
+<area shape="rect" id="Node000012" href="$classfabomatic_1_1_auth_provider.xhtml#a402ef003255e1f0cc0892ef5dae2ac9b" title="Cache the user request." alt="" coords="709,189,868,230"/>
+<area shape="poly" id="edge14_Node000001_Node000012" title=" " alt="" coords="901,195,869,200,868,195,900,190"/>
+<area shape="rect" id="Node000003" href="$classfabomatic_1_1_saved_config.xhtml#a312c74363068192ae80df24140f82874" title="Saves the configuration to EEPROM." alt="" coords="503,91,661,131"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="694,132,661,126,661,121,695,127"/>
+<area shape="rect" id="Node000011" href="$classfabomatic_1_1_saved_config.xhtml#ad1d484179f439b28d608a9c6737bdc26" title="Returns a json&#45;prettified fragment for logging." alt="" coords="503,156,661,197"/>
+<area shape="poly" id="edge13_Node000002_Node000011" title=" " alt="" coords="695,162,661,167,661,162,694,156"/>
+<area shape="rect" id="Node000004" href="$classfabomatic_1_1_auth_provider.xhtml#acb92a9381bc8e14bd57b819fc9162750" title="Saves the cache of RFID to EEPROM." alt="" coords="296,91,455,131"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="488,114,456,114,456,108,488,108"/>
+<area shape="rect" id="Node000006" href="$test__mqtt_8cpp.xhtml#a4fc01d736fe50cf5b977f755b675f11d" title=" " alt="" coords="5,33,59,59"/>
+<area shape="poly" id="edge10_Node000003_Node000006" title=" " alt="" coords="512,87,390,48,319,30,248,16,177,8,146,10,107,16,81,24,58,35,56,30,80,19,106,11,146,4,177,3,248,11,320,25,391,43,513,82"/>
+<area shape="rect" id="Node000010" href="$namespacefabomatic_1_1tests.xhtml#a0bbb6cee5561bf8ac1c4a9117d9d01b8" title=" " alt="" coords="305,184,446,225"/>
+<area shape="poly" id="edge11_Node000003_Node000010" title=" " alt="" coords="519,140,504,147,421,186,419,181,502,142,517,136"/>
+<area shape="rect" id="Node000005" href="$namespacefabomatic_1_1tests.xhtml#a24369d35ba4a370e236b987ff7cb5637" title=" " alt="" coords="107,25,248,66"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="296,88,241,69,242,64,298,83"/>
+<area shape="rect" id="Node000007" href="$namespacefabomatic_1_1tests.xhtml#a438b9060c27d36e89506199205b342cb" title=" " alt="" coords="107,91,248,131"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="281,114,248,114,248,108,281,108"/>
+<area shape="rect" id="Node000008" href="$namespacefabomatic_1_1tests.xhtml#aeb3e51f6d2841cd2869df4c0629f694d" title=" " alt="" coords="107,156,248,197"/>
+<area shape="poly" id="edge8_Node000004_Node000008" title=" " alt="" coords="298,139,242,158,241,153,296,134"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="91,48,59,48,59,43,91,43"/>
+<area shape="poly" id="edge7_Node000007_Node000006" title=" " alt="" coords="116,86,58,60,60,55,118,82"/>
+<area shape="rect" id="Node000009" href="$test__savedconfig_8cpp.xhtml#a4fc01d736fe50cf5b977f755b675f11d" title=" " alt="" coords="5,192,59,217"/>
+<area shape="poly" id="edge9_Node000008_Node000009" title=" " alt="" coords="92,196,60,202,59,197,91,190"/>
+<area shape="poly" id="edge12_Node000010_Node000009" title=" " alt="" coords="289,210,107,211,59,209,59,203,107,206,289,205"/>
 </map>

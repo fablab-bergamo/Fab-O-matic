@@ -1,8 +1,9 @@
 <map id="fabomatic::FabBackend::publishWithReply" name="fabomatic::FabBackend::publishWithReply">
-<area shape="rect" id="Node000001" title="Posts a query to the MQTT server and waits for a reply." alt="" coords="5,22,163,63"/>
-<area shape="rect" id="Node000002" href="$namespacefabomatic_1_1_tasks.xhtml#a5c20f560f5934822d39ba116a16f3ab6" title="Wait for a delay, allowing OTA updates." alt="" coords="211,29,367,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="163,40,195,40,195,45,163,45"/>
-<area shape="poly" id="edge3_Node000002_Node000002" title=" " alt="" coords="255,31,248,21,252,11,266,5,289,3,314,5,327,12,324,17,312,10,289,8,267,10,256,15,253,20,259,27"/>
-<area shape="rect" id="Node000003" href="$namespacefabomatic_1_1_tasks.xhtml#adc67d1313c6695d813feb935eafdaf60" title=" " alt="" coords="415,29,610,55"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="368,40,399,40,399,45,368,45"/>
+<area shape="rect" id="Node000001" title="Posts a query to the MQTT server and waits for a reply." alt="" coords="5,5,163,46"/>
+<area shape="rect" id="Node000002" href="$namespacefabomatic_1_1_tasks.xhtml#adc67d1313c6695d813feb935eafdaf60" title=" " alt="" coords="415,13,610,39"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="163,14,211,11,289,9,367,11,399,13,399,18,367,16,289,14,211,16,163,20"/>
+<area shape="rect" id="Node000003" href="$namespacefabomatic_1_1_tasks.xhtml#a5c20f560f5934822d39ba116a16f3ab6" title="Wait for a delay, allowing OTA updates." alt="" coords="211,50,367,76"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="163,37,200,44,199,49,162,43"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="367,47,416,39,417,44,368,53"/>
+<area shape="poly" id="edge4_Node000003_Node000003" title=" " alt="" coords="255,51,248,42,252,32,266,26,289,24,314,26,327,33,324,38,312,31,289,29,267,31,256,36,253,41,259,48"/>
 </map>

@@ -6,16 +6,18 @@
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="95,233,139,179,169,149,202,122,211,117,213,121,205,126,173,153,143,182,99,236"/>
 <area shape="rect" id="Node000004" href="$classfabomatic_1_1_machine.xhtml#a34b0deb04494137cf321e94d50dedf90" title=" " alt="" coords="206,136,362,177"/>
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="117,232,202,187,216,181,218,186,205,192,120,236"/>
-<area shape="rect" id="Node000005" href="$classfabomatic_1_1_fab_backend.xhtml#aef092e0e1db0c3539d5474fad2456255" title="Checks if the client is online." alt="" coords="205,201,363,242"/>
+<area shape="rect" id="Node000005" href="$classfabomatic_1_1_fab_backend.xhtml#aef092e0e1db0c3539d5474fad2456255" title="Indicates if the MQTT client is connected to the broker and backend is responsive." alt="" coords="205,201,363,242"/>
 <area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="156,240,189,234,190,240,156,245"/>
-<area shape="rect" id="Node000006" href="$classfabomatic_1_1_machine.xhtml#a871958cc57845c8651cf1058ed9b30e4" title="Indicates if the machine will power down in less than BEEP_REMAINING_MINUTES." alt="" coords="209,267,359,307"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="156,264,194,270,193,275,156,269"/>
-<area shape="rect" id="Node000008" href="$classfabomatic_1_1_led.xhtml#ae7fd966ebaea3198dfe49b73e963e9cb" title=" " alt="" coords="219,332,349,357"/>
-<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="118,273,205,317,223,324,221,328,203,321,116,278"/>
-<area shape="rect" id="Node000009" href="$classfabomatic_1_1_led.xhtml#afe933127b5e25e5972e3120bc276b599" title=" " alt="" coords="204,381,364,407"/>
-<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="101,274,145,321,174,346,205,367,214,372,212,377,202,372,170,350,141,325,97,278"/>
-<area shape="rect" id="Node000010" href="$classfabomatic_1_1_led.xhtml#a959b8bbb2fe1acb5cbffba251bcb8c4c" title=" " alt="" coords="208,430,360,456"/>
-<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="94,275,136,345,168,384,205,417,211,421,209,425,202,421,164,387,132,348,90,277"/>
-<area shape="rect" id="Node000007" href="$namespacefabomatic_1_1_tasks.xhtml#adc67d1313c6695d813feb935eafdaf60" title=" " alt="" coords="412,274,607,300"/>
-<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="359,284,397,284,397,290,359,290"/>
+<area shape="rect" id="Node000007" href="$classfabomatic_1_1_machine.xhtml#a871958cc57845c8651cf1058ed9b30e4" title="Indicates if the machine will power down in less than BEEP_REMAINING_MINUTES." alt="" coords="209,267,359,307"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="156,264,194,270,193,275,156,269"/>
+<area shape="rect" id="Node000009" href="$classfabomatic_1_1_led.xhtml#ae7fd966ebaea3198dfe49b73e963e9cb" title=" " alt="" coords="219,332,349,357"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="118,273,205,317,223,324,221,328,203,321,116,278"/>
+<area shape="rect" id="Node000010" href="$classfabomatic_1_1_led.xhtml#afe933127b5e25e5972e3120bc276b599" title=" " alt="" coords="204,381,364,407"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="101,274,145,321,174,346,205,367,214,372,212,377,202,372,170,350,141,325,97,278"/>
+<area shape="rect" id="Node000011" href="$classfabomatic_1_1_led.xhtml#a959b8bbb2fe1acb5cbffba251bcb8c4c" title=" " alt="" coords="208,430,360,456"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="94,275,136,345,168,384,205,417,211,421,209,425,202,421,164,387,132,348,90,277"/>
+<area shape="rect" id="Node000006" href="$classfabomatic_1_1_fab_backend.xhtml#aacd5dfac21bd4b6ed71912198a038529" title="Indicates if backend answers are received." alt="" coords="431,201,588,242"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="363,219,415,219,415,224,363,224"/>
+<area shape="rect" id="Node000008" href="$namespacefabomatic_1_1_tasks.xhtml#adc67d1313c6695d813feb935eafdaf60" title=" " alt="" coords="412,274,607,300"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="359,284,397,284,397,290,359,290"/>
 </map>

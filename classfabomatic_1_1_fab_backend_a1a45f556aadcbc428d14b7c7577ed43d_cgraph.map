@@ -1,15 +1,16 @@
 <map id="fabomatic::FabBackend::connect" name="fabomatic::FabBackend::connect">
-<area shape="rect" id="Node000001" title="Establishes a connection to the WiFi network and the MQTT server." alt="" coords="5,92,163,133"/>
-<area shape="rect" id="Node000002" href="$classfabomatic_1_1_fab_backend.xhtml#ad928751b2f967feaac0f2cb708c0d6e9" title="Connects to the WiFi network." alt="" coords="211,5,368,46"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="133,89,224,50,226,55,135,94"/>
-<area shape="rect" id="Node000003" href="$namespacefabomatic_1_1_tasks.xhtml#a5c20f560f5934822d39ba116a16f3ab6" title="Wait for a delay, allowing OTA updates." alt="" coords="416,42,572,68"/>
-<area shape="poly" id="edge5_Node000001_Node000003" title=" " alt="" coords="163,99,400,65,401,71,163,104"/>
-<area shape="rect" id="Node000005" href="$classfabomatic_1_1_fab_backend.xhtml#a3ab102598ee93269de90a0170e024619" title="Callback function for received MQTT messages." alt="" coords="211,120,368,161"/>
-<area shape="poly" id="edge6_Node000001_Node000005" title=" " alt="" coords="163,120,195,125,195,130,163,126"/>
-<area shape="rect" id="Node000006" href="$classfabomatic_1_1_fab_backend.xhtml#aee0cf549bea2daebc3e08742853d36c1" title="Publishes a query on the MQTT server." alt="" coords="211,185,368,226"/>
-<area shape="poly" id="edge7_Node000001_Node000006" title=" " alt="" coords="129,131,212,170,226,176,224,181,210,175,127,136"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="369,34,401,39,400,44,368,40"/>
-<area shape="poly" id="edge4_Node000003_Node000003" title=" " alt="" coords="460,43,453,34,457,24,471,18,494,16,519,18,532,25,530,30,518,23,494,21,473,23,461,28,459,33,464,40"/>
-<area shape="rect" id="Node000004" href="$namespacefabomatic_1_1_tasks.xhtml#adc67d1313c6695d813feb935eafdaf60" title=" " alt="" coords="620,42,816,68"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="573,52,605,52,605,58,573,58"/>
+<area shape="rect" id="Node000001" title="Establishes a connection to the WiFi network and the MQTT server." alt="" coords="5,102,163,143"/>
+<area shape="rect" id="Node000002" href="$namespacefabomatic_1_1_tasks.xhtml#adc67d1313c6695d813feb935eafdaf60" title=" " alt="" coords="620,32,816,58"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="104,100,150,62,179,44,210,31,267,16,326,7,386,3,445,3,555,12,644,26,643,31,554,17,445,9,386,9,327,12,268,21,212,36,181,49,153,66,107,104"/>
+<area shape="rect" id="Node000003" href="$classfabomatic_1_1_fab_backend.xhtml#ad928751b2f967feaac0f2cb708c0d6e9" title="Connects to the WiFi network." alt="" coords="211,45,368,85"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="158,99,199,88,200,93,160,104"/>
+<area shape="rect" id="Node000004" href="$namespacefabomatic_1_1_tasks.xhtml#a5c20f560f5934822d39ba116a16f3ab6" title="Wait for a delay, allowing OTA updates." alt="" coords="416,70,572,95"/>
+<area shape="poly" id="edge6_Node000001_Node000004" title=" " alt="" coords="163,113,368,95,400,91,401,96,368,100,163,119"/>
+<area shape="rect" id="Node000005" href="$classfabomatic_1_1_fab_backend.xhtml#a3ab102598ee93269de90a0170e024619" title="Callback function for received MQTT messages." alt="" coords="211,159,368,200"/>
+<area shape="poly" id="edge7_Node000001_Node000005" title=" " alt="" coords="160,141,200,152,199,157,158,146"/>
+<area shape="rect" id="Node000006" href="$classfabomatic_1_1_fab_backend.xhtml#aee0cf549bea2daebc3e08742853d36c1" title="Publishes a query on the MQTT server." alt="" coords="211,225,368,265"/>
+<area shape="poly" id="edge8_Node000001_Node000006" title=" " alt="" coords="113,141,158,175,212,210,223,215,220,220,209,214,155,179,110,146"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="368,69,401,72,400,77,368,74"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="572,67,621,59,622,64,573,72"/>
+<area shape="poly" id="edge5_Node000004_Node000004" title=" " alt="" coords="460,71,453,61,457,51,471,45,494,43,519,46,532,53,530,57,518,51,494,48,473,50,461,55,459,60,464,68"/>
 </map>

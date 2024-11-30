@@ -115,54 +115,68 @@ $(document).ready(function() { init_codefold(0); });
 </div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
 <div class="foldopen" id="foldopen00039" data-start="{" data-end="}">
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="namespacefabomatic_1_1card.xhtml#ad5c485067b0f1e9a846089e20a4db1ce">   39</a></span>  [[nodiscard]] <span class="keyword">constexpr</span> <span class="keyword">inline</span> <span class="keyword">auto</span> <a class="code hl_function" href="namespacefabomatic_1_1card.xhtml#ad5c485067b0f1e9a846089e20a4db1ce">from_array</a>(<span class="keyword">const</span> std::array&lt;uint8_t, conf::rfid_tags::UID_BYTE_LEN&gt; &amp;uid) -&gt; <a class="code hl_typedef" href="namespacefabomatic_1_1card.xhtml#aa36a4f716561b5c72d144ad55bc3e53b">uid_t</a></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="namespacefabomatic_1_1card.xhtml#a82afacacfdcde374c971a908f5b3a92d">   39</a></span>  [[nodiscard]] <span class="keyword">inline</span> <span class="keyword">auto</span> <a class="code hl_function" href="namespacefabomatic_1_1card.xhtml#a82afacacfdcde374c971a908f5b3a92d">str_uid</a>(<span class="keyword">const</span> std::string &amp;str) -&gt; <a class="code hl_typedef" href="namespacefabomatic_1_1card.xhtml#aa36a4f716561b5c72d144ad55bc3e53b">card::uid_t</a></div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>  {</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <a class="code hl_typedef" href="namespacefabomatic_1_1card.xhtml#aa36a4f716561b5c72d144ad55bc3e53b">card::uid_t</a> result = 0;</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> i = (<a class="code hl_variable" href="namespacefabomatic_1_1conf_1_1rfid__tags.xhtml#a07d7f786a627fc7427ce123621423222">conf::rfid_tags::UID_BYTE_LEN</a> - 1); i &gt;= 0; i--)</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    {</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>      result &lt;&lt;= 8;</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>      result |= uid[i];</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    }</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="keywordflow">return</span> result;</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    uint64_t ll_value;</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    std::stringstream ss{};</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    ss &lt;&lt; std::hex &lt;&lt; str;</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    ss &gt;&gt; ll_value;</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="keywordflow">return</span> ll_value;</div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>  }</div>
 </div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
-<div class="foldopen" id="foldopen00053" data-start="{" data-end="}">
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="namespacefabomatic_1_1card.xhtml#a9a05432556bd8ae825f9adaab9ee8492">   53</a></span>  [[nodiscard]] <span class="keyword">constexpr</span> <span class="keyword">inline</span> <span class="keyword">auto</span> <a class="code hl_function" href="namespacefabomatic_1_1card.xhtml#a9a05432556bd8ae825f9adaab9ee8492">to_array</a>(<span class="keyword">const</span> <a class="code hl_typedef" href="namespacefabomatic_1_1card.xhtml#aa36a4f716561b5c72d144ad55bc3e53b">uid_t</a> uid) -&gt; <span class="keyword">const</span> std::array&lt;uint8_t, conf::rfid_tags::UID_BYTE_LEN&gt;</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>  {</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    std::array&lt;uint8_t, conf::rfid_tags::UID_BYTE_LEN&gt; retVal{0};</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> i = (<a class="code hl_variable" href="namespacefabomatic_1_1conf_1_1rfid__tags.xhtml#a07d7f786a627fc7427ce123621423222">conf::rfid_tags::UID_BYTE_LEN</a> - 1); i &gt;= 0; i--)</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    {</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>      retVal[i] = (uid &gt;&gt; (i * 8)) &amp; 0xFF;</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    }</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    <span class="keywordflow">return</span> retVal;</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>  }</div>
+<div class="foldopen" id="foldopen00055" data-start="{" data-end="}">
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno"><a class="line" href="namespacefabomatic_1_1card.xhtml#ad5c485067b0f1e9a846089e20a4db1ce">   55</a></span>  [[nodiscard]] <span class="keyword">constexpr</span> <span class="keyword">inline</span> <span class="keyword">auto</span> <a class="code hl_function" href="namespacefabomatic_1_1card.xhtml#ad5c485067b0f1e9a846089e20a4db1ce">from_array</a>(<span class="keyword">const</span> std::array&lt;uint8_t, conf::rfid_tags::UID_BYTE_LEN&gt; &amp;uid) -&gt; <a class="code hl_typedef" href="namespacefabomatic_1_1card.xhtml#aa36a4f716561b5c72d144ad55bc3e53b">uid_t</a></div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>  {</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    <a class="code hl_typedef" href="namespacefabomatic_1_1card.xhtml#aa36a4f716561b5c72d144ad55bc3e53b">card::uid_t</a> result = 0;</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> i = (<a class="code hl_variable" href="namespacefabomatic_1_1conf_1_1rfid__tags.xhtml#a07d7f786a627fc7427ce123621423222">conf::rfid_tags::UID_BYTE_LEN</a> - 1); i &gt;= 0; i--)</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    {</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>      result &lt;&lt;= 8;</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>      result |= uid[i];</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    }</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    <span class="keywordflow">return</span> result;</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>  }</div>
 </div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
-<div class="foldopen" id="foldopen00063" data-start="{" data-end="}">
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno"><a class="line" href="namespacefabomatic_1_1card.xhtml#adc7e60eb73b943f32b5ca61a6c81f45f">   63</a></span>  <span class="keyword">inline</span> <span class="keyword">auto</span> <a class="code hl_function" href="namespacefabomatic_1_1card.xhtml#adc7e60eb73b943f32b5ca61a6c81f45f">print</a>(uint64_t uid) -&gt; <span class="keywordtype">void</span></div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>  {</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    ESP_LOGI(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <span class="stringliteral">&quot;Card UID = %s&quot;</span>, <a class="code hl_function" href="namespacefabomatic_1_1card.xhtml#aef091ec171625c69f9d4eab20ebaefec">card::uid_str</a>(uid).c_str());</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>  }</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
+<div class="foldopen" id="foldopen00069" data-start="{" data-end="}">
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno"><a class="line" href="namespacefabomatic_1_1card.xhtml#a9a05432556bd8ae825f9adaab9ee8492">   69</a></span>  [[nodiscard]] <span class="keyword">constexpr</span> <span class="keyword">inline</span> <span class="keyword">auto</span> <a class="code hl_function" href="namespacefabomatic_1_1card.xhtml#a9a05432556bd8ae825f9adaab9ee8492">to_array</a>(<span class="keyword">const</span> <a class="code hl_typedef" href="namespacefabomatic_1_1card.xhtml#aa36a4f716561b5c72d144ad55bc3e53b">uid_t</a> uid) -&gt; <span class="keyword">const</span> std::array&lt;uint8_t, conf::rfid_tags::UID_BYTE_LEN&gt;</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>  {</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    std::array&lt;uint8_t, conf::rfid_tags::UID_BYTE_LEN&gt; retVal{0};</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> i = (<a class="code hl_variable" href="namespacefabomatic_1_1conf_1_1rfid__tags.xhtml#a07d7f786a627fc7427ce123621423222">conf::rfid_tags::UID_BYTE_LEN</a> - 1); i &gt;= 0; i--)</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    {</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>      retVal[i] = (uid &gt;&gt; (i * 8)) &amp; 0xFF;</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    }</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    <span class="keywordflow">return</span> retVal;</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>  }</div>
 </div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>} <span class="comment">// namespace fabomatic::card</span></div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
+<div class="foldopen" id="foldopen00079" data-start="{" data-end="}">
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno"><a class="line" href="namespacefabomatic_1_1card.xhtml#adc7e60eb73b943f32b5ca61a6c81f45f">   79</a></span>  <span class="keyword">inline</span> <span class="keyword">auto</span> <a class="code hl_function" href="namespacefabomatic_1_1card.xhtml#adc7e60eb73b943f32b5ca61a6c81f45f">print</a>(uint64_t uid) -&gt; <span class="keywordtype">void</span></div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>  {</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    ESP_LOGI(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <span class="stringliteral">&quot;Card UID = %s&quot;</span>, <a class="code hl_function" href="namespacefabomatic_1_1card.xhtml#aef091ec171625c69f9d4eab20ebaefec">card::uid_str</a>(uid).c_str());</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>  }</div>
 </div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="preprocessor">#endif </span><span class="comment">// CARD_HPP_</span></div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>} <span class="comment">// namespace fabomatic::card</span></div>
+</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span><span class="preprocessor">#endif </span><span class="comment">// CARD_HPP_</span></div>
 <div class="ttc" id="a_logging_8hpp_xhtml"><div class="ttname"><a href="_logging_8hpp.xhtml">Logging.hpp</a></div></div>
 <div class="ttc" id="a_logging_8hpp_xhtml_a4ef5b5f197804a60836ab1e8907d8301"><div class="ttname"><a href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a></div><div class="ttdeci">static const char *const TAG</div><div class="ttdef"><b>Definition</b> <a href="_logging_8hpp_source.xhtml#l00009">Logging.hpp:9</a></div></div>
 <div class="ttc" id="aconf_8hpp_xhtml"><div class="ttname"><a href="conf_8hpp.xhtml">conf.hpp</a></div></div>
 <div class="ttc" id="anamespacefabomatic_1_1card_xhtml"><div class="ttname"><a href="namespacefabomatic_1_1card.xhtml">fabomatic::card</a></div><div class="ttdef"><b>Definition</b> <a href="card_8hpp_source.xhtml#l00012">card.hpp:13</a></div></div>
-<div class="ttc" id="anamespacefabomatic_1_1card_xhtml_a9a05432556bd8ae825f9adaab9ee8492"><div class="ttname"><a href="namespacefabomatic_1_1card.xhtml#a9a05432556bd8ae825f9adaab9ee8492">fabomatic::card::to_array</a></div><div class="ttdeci">constexpr auto to_array(const uid_t uid) -&gt; const std::array&lt; uint8_t, conf::rfid_tags::UID_BYTE_LEN &gt;</div><div class="ttdoc">Converts a UID from an array of bytes to a number.</div><div class="ttdef"><b>Definition</b> <a href="card_8hpp_source.xhtml#l00053">card.hpp:53</a></div></div>
+<div class="ttc" id="anamespacefabomatic_1_1card_xhtml_a82afacacfdcde374c971a908f5b3a92d"><div class="ttname"><a href="namespacefabomatic_1_1card.xhtml#a82afacacfdcde374c971a908f5b3a92d">fabomatic::card::str_uid</a></div><div class="ttdeci">auto str_uid(const std::string &amp;str) -&gt; card::uid_t</div><div class="ttdoc">Returns an UID from its string representation.</div><div class="ttdef"><b>Definition</b> <a href="card_8hpp_source.xhtml#l00039">card.hpp:39</a></div></div>
+<div class="ttc" id="anamespacefabomatic_1_1card_xhtml_a9a05432556bd8ae825f9adaab9ee8492"><div class="ttname"><a href="namespacefabomatic_1_1card.xhtml#a9a05432556bd8ae825f9adaab9ee8492">fabomatic::card::to_array</a></div><div class="ttdeci">constexpr auto to_array(const uid_t uid) -&gt; const std::array&lt; uint8_t, conf::rfid_tags::UID_BYTE_LEN &gt;</div><div class="ttdoc">Converts a UID from an array of bytes to a number.</div><div class="ttdef"><b>Definition</b> <a href="card_8hpp_source.xhtml#l00069">card.hpp:69</a></div></div>
 <div class="ttc" id="anamespacefabomatic_1_1card_xhtml_a9ef4a9f5f43c63cf872a2d52a7af11cf"><div class="ttname"><a href="namespacefabomatic_1_1card.xhtml#a9ef4a9f5f43c63cf872a2d52a7af11cf">fabomatic::card::INVALID</a></div><div class="ttdeci">static constexpr uid_t INVALID</div><div class="ttdef"><b>Definition</b> <a href="card_8hpp_source.xhtml#l00015">card.hpp:15</a></div></div>
 <div class="ttc" id="anamespacefabomatic_1_1card_xhtml_aa36a4f716561b5c72d144ad55bc3e53b"><div class="ttname"><a href="namespacefabomatic_1_1card.xhtml#aa36a4f716561b5c72d144ad55bc3e53b">fabomatic::card::uid_t</a></div><div class="ttdeci">u_int64_t uid_t</div><div class="ttdef"><b>Definition</b> <a href="card_8hpp_source.xhtml#l00014">card.hpp:14</a></div></div>
-<div class="ttc" id="anamespacefabomatic_1_1card_xhtml_ad5c485067b0f1e9a846089e20a4db1ce"><div class="ttname"><a href="namespacefabomatic_1_1card.xhtml#ad5c485067b0f1e9a846089e20a4db1ce">fabomatic::card::from_array</a></div><div class="ttdeci">constexpr auto from_array(const std::array&lt; uint8_t, conf::rfid_tags::UID_BYTE_LEN &gt; &amp;uid) -&gt; uid_t</div><div class="ttdoc">Converts a UID from an array of bytes to a number.</div><div class="ttdef"><b>Definition</b> <a href="card_8hpp_source.xhtml#l00039">card.hpp:39</a></div></div>
-<div class="ttc" id="anamespacefabomatic_1_1card_xhtml_adc7e60eb73b943f32b5ca61a6c81f45f"><div class="ttname"><a href="namespacefabomatic_1_1card.xhtml#adc7e60eb73b943f32b5ca61a6c81f45f">fabomatic::card::print</a></div><div class="ttdeci">auto print(uint64_t uid) -&gt; void</div><div class="ttdef"><b>Definition</b> <a href="card_8hpp_source.xhtml#l00063">card.hpp:63</a></div></div>
+<div class="ttc" id="anamespacefabomatic_1_1card_xhtml_ad5c485067b0f1e9a846089e20a4db1ce"><div class="ttname"><a href="namespacefabomatic_1_1card.xhtml#ad5c485067b0f1e9a846089e20a4db1ce">fabomatic::card::from_array</a></div><div class="ttdeci">constexpr auto from_array(const std::array&lt; uint8_t, conf::rfid_tags::UID_BYTE_LEN &gt; &amp;uid) -&gt; uid_t</div><div class="ttdoc">Converts a UID from an array of bytes to a number.</div><div class="ttdef"><b>Definition</b> <a href="card_8hpp_source.xhtml#l00055">card.hpp:55</a></div></div>
+<div class="ttc" id="anamespacefabomatic_1_1card_xhtml_adc7e60eb73b943f32b5ca61a6c81f45f"><div class="ttname"><a href="namespacefabomatic_1_1card.xhtml#adc7e60eb73b943f32b5ca61a6c81f45f">fabomatic::card::print</a></div><div class="ttdeci">auto print(uint64_t uid) -&gt; void</div><div class="ttdef"><b>Definition</b> <a href="card_8hpp_source.xhtml#l00079">card.hpp:79</a></div></div>
 <div class="ttc" id="anamespacefabomatic_1_1card_xhtml_aef091ec171625c69f9d4eab20ebaefec"><div class="ttname"><a href="namespacefabomatic_1_1card.xhtml#aef091ec171625c69f9d4eab20ebaefec">fabomatic::card::uid_str</a></div><div class="ttdeci">auto uid_str(const card::uid_t uid) -&gt; const std::string</div><div class="ttdoc">Returns a string representation of the UID.</div><div class="ttdef"><b>Definition</b> <a href="card_8hpp_source.xhtml#l00022">card.hpp:22</a></div></div>
 <div class="ttc" id="anamespacefabomatic_1_1conf_1_1rfid__tags_xhtml_a07d7f786a627fc7427ce123621423222"><div class="ttname"><a href="namespacefabomatic_1_1conf_1_1rfid__tags.xhtml#a07d7f786a627fc7427ce123621423222">fabomatic::conf::rfid_tags::UID_BYTE_LEN</a></div><div class="ttdeci">static constexpr uint8_t UID_BYTE_LEN</div><div class="ttdoc">Number of bytes in RFID cards UID, may depend on specific RFID chip.</div><div class="ttdef"><b>Definition</b> <a href="conf_8hpp_source.xhtml#l00035">conf.hpp:35</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Aug 12 2024 08:05:20 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Sat Nov 30 2024 15:35:28 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>
