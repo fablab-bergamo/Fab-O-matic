@@ -274,4 +274,5 @@ upload_port = IP_ADDRESS_HERE or mDNS_NAME.local
 |0.7.x | April 2024 | Maintenance operation is displayed on LCD, JSON is now used for data persistence in Flash |
 |0.8.x | May 2024 | Added localization with English & Italian language builds, sizes reports for firmware |
 |0.9.x | June 2024 | Added buffering of important events when network is down. Espressif Arduino Core 3.0 testing. |
+|1.0.x | November 2024 | Release after 7 months of testing in FabLab Bergamo. Moved to PIO Tasmota Arduino |
 
