@@ -493,9 +493,9 @@ namespace fabomatic::tests
       delay(15);
     }
     // Check that all tasks ran at least once
-    for (const auto tp : test_scheduler.getTasks())
+    for (const auto task_ref : test_scheduler.getTasks())
     {
-      const auto t = *tp;
+      const auto t = task_ref.get();
       ESP_LOGD(TAG3, "Task %s: %lu runs, %llu ms total runtime, %llu ms avg tardiness", t.getId().c_str(), t.getRunCounter(), t.getTotalRuntime().count(), t.getAvgTardiness().count());
       TEST_ASSERT_GREATER_OR_EQUAL_MESSAGE(1, t.getRunCounter(), "Task did not run");
     }
