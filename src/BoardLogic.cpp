@@ -418,11 +418,6 @@ namespace fabomatic
       lcd.setRow(0, strings::S_OTA_ERROR);
       lcd.setRow(1, "");
       break;
-    default:
-      lcd.setRow(0, strings::S_STATUS_ERROR_1);
-      buffer << strings::S_STATUS_ERROR_2 << static_cast<int>(status);
-      lcd.setRow(1, buffer.str());
-      break;
     }
     BoardInfo bi = {server.isOnline(), machine.getPowerState(), machine.isShutdownImminent(), !server.isResponsive()};
     lcd.update(bi, false);

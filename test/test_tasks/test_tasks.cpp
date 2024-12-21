@@ -31,7 +31,7 @@ namespace fabomatic::tests
     {
       if (t != nullptr)
       {
-        scheduler.removeTask(t); // Because Task adds itself on creation
+        scheduler.removeTask(*t); // Because Task adds itself on creation
         delete t;
       }
     }
@@ -103,18 +103,18 @@ namespace fabomatic::tests
     create_tasks(scheduler, 150ms);
     TEST_ASSERT_EQUAL_MESSAGE(NB_TASKS, scheduler.taskCount(), "Scheduler does not contain all tasks");
 
-    for (auto &t : tasks)
+    for (auto *task : tasks)
     {
-      t->disable();
+      task->disable();
     }
 
     task_counter = 0;
     run_for_duration(execute, 150ms);
     TEST_ASSERT_EQUAL_MESSAGE(0, task_counter, "Stopped tasks has been executed");
 
-    for (auto &t : tasks)
+    for (auto *task : tasks)
     {
-      t->enable();
+      task->enable();
     }
 
     task_counter = 0;
@@ -122,9 +122,9 @@ namespace fabomatic::tests
     TEST_ASSERT_EQUAL_MESSAGE(NB_TASKS, task_counter, "Started tasks have not all been executed");
 
     task_counter = 0;
-    for (auto &t : tasks)
+    for (auto *task : tasks)
     {
-      t->updateSchedule();
+      task->updateSchedule();
     }
     execute();
     TEST_ASSERT_EQUAL_MESSAGE(NB_TASKS, task_counter, "Restarted tasks did not run immediately");

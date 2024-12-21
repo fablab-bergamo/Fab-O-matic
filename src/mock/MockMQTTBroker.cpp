@@ -96,9 +96,6 @@ namespace fabomatic
       ESP_LOGD(TAG2, "MQTT BROKER: got unsubscribe from %s", e->Topic().c_str());
     }
     break;
-    default:
-      ESP_LOGD(TAG2, "MQTT BROKER: unhandled event %d", event->Type());
-      break;
     }
     return true;
   }

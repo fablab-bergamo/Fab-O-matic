@@ -12,7 +12,7 @@
 namespace fabomatic::card
 {
   using uid_t = u_int64_t;
-  static constexpr uid_t INVALID = 0ULL;
+  inline constexpr uid_t INVALID = 0ULL;
 
   /**
    * @brief Returns a string representation of the UID
