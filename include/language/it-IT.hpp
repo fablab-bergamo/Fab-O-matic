@@ -47,8 +47,6 @@ namespace fabomatic::strings::it_IT
   inline constexpr auto S_HW_ERROR = "Errore HW";
   inline constexpr auto S_PORTAL_ERROR = "Errore portale";
   inline constexpr auto S_OTA_ERROR = "Errore OTA";
-  inline constexpr auto S_STATUS_ERROR_1 = "Unhandled status";
-  inline constexpr auto S_STATUS_ERROR_2 = "value";
 
   inline constexpr auto S_PORTAL_SUCCESS = "Conf. WiFi OK";
   inline constexpr auto S_OPEN_PORTAL = "Apri portale";
