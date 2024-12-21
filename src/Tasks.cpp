@@ -15,25 +15,24 @@ namespace fabomatic::Tasks
 
   using namespace std::chrono_literals;
 
-  auto Scheduler::addTask(Task *task) -> void
+  auto Scheduler::addTask(Task &task) -> void
   {
-    if (task != nullptr)
-      tasks.push_back(task);
+    tasks.push_back(task);
   }
 
-  auto Scheduler::removeTask(const Task *task) -> void
+  auto Scheduler::removeTask(const Task &task) -> void
   {
     tasks.erase(std::remove_if(tasks.begin(), tasks.end(),
                                [&task](const auto &t)
-                               { return t->getId() == task->getId(); }),
+                               { return t.get().getId() == task.getId(); }),
                 tasks.end());
   }
 
   auto Scheduler::updateSchedules() const -> void
   {
-    for (const auto &task : tasks)
+    for (auto &task : tasks)
     {
-      task->updateSchedule();
+      task.get().updateSchedule();
     }
   }
 
@@ -42,10 +41,11 @@ namespace fabomatic::Tasks
     milliseconds avg_delay = 0ms;
     auto nb_runs = 0;
 
-    for (const auto &task : tasks)
+    for (const auto &taskref : tasks)
     {
-      avg_delay += task->getAvgTardiness() * task->getRunCounter();
-      nb_runs += task->getRunCounter();
+      const auto task = taskref.get();
+      avg_delay += task.getAvgTardiness() * task.getRunCounter();
+      nb_runs += task.getRunCounter();
     }
     if (nb_runs > 0)
     {
@@ -54,28 +54,29 @@ namespace fabomatic::Tasks
 
     ESP_LOGD(TAG, "Scheduler::execute complete: %d tasks total, %d runs, avg delay/run: %llu ms\r\n", tasks.size(), nb_runs, avg_delay.count());
 
-    for (const auto &task : tasks)
+    for (const auto &taskref : tasks)
     {
-      if (task->isActive())
+      const auto task = taskref.get();
+      if (task.isActive())
       {
-        if (task->getRunCounter() > 0)
+        if (task.getRunCounter() > 0)
         {
           ESP_LOGD(TAG, "\t Task: %s, %lu runs, avg tardiness/run: %llu ms, period %llu ms, delay %llu ms, average task duration %llu ms\r\n",
-                   task->getId().c_str(), task->getRunCounter(),
-                   task->getAvgTardiness().count(), task->getPeriod().count(),
-                   task->getDelay().count(),
-                   task->getTotalRuntime().count() / task->getRunCounter());
+                   task.getId().c_str(), task.getRunCounter(),
+                   task.getAvgTardiness().count(), task.getPeriod().count(),
+                   task.getDelay().count(),
+                   task.getTotalRuntime().count() / task.getRunCounter());
         }
         else
         {
           ESP_LOGD(TAG, "\t Task: %s, never ran, period %llu ms, delay %llu ms\r\n",
-                   task->getId().c_str(), task->getPeriod().count(),
-                   task->getDelay().count());
+                   task.getId().c_str(), task.getPeriod().count(),
+                   task.getDelay().count());
         }
       }
       else
       {
-        ESP_LOGD(TAG, "\t Task: %s, inactive\r\n", task->getId().c_str());
+        ESP_LOGD(TAG, "\t Task: %s, inactive\r\n", task.getId().c_str());
       }
     }
   }
@@ -83,11 +84,11 @@ namespace fabomatic::Tasks
   auto Scheduler::execute() -> void
   {
     std::sort(tasks.begin(), tasks.end(), [](const auto &x, const auto &y)
-              { return x->getNextRun() < y->getNextRun(); });
+              { return x.get().getNextRun() < y.get().getNextRun(); });
 
     for (const auto &t : tasks)
     {
-      t->run();
+      t.get().run();
     }
 
     if (conf::debug::ENABLE_TASK_LOGS && millis() % 1024 == 0)
@@ -107,7 +108,7 @@ namespace fabomatic::Tasks
     return tasks.size();
   }
 
-  auto Scheduler::getTasks() const -> const std::vector<Task *>
+  auto Scheduler::getTasks() const -> const std::vector<std::reference_wrapper<Task>>
   {
     return {tasks};
   }
@@ -128,7 +129,7 @@ namespace fabomatic::Tasks
                                                                       callback{callback}, run_counter{0}
   {
     last_run = arduinoNow() + period;
-    scheduler.addTask(this);
+    scheduler.addTask(*this);
     if constexpr (conf::debug::ENABLE_TASK_LOGS)
     {
       ESP_LOGD(TAG, "Constructor(%s)\r\n", toString().c_str());
