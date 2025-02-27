@@ -243,7 +243,7 @@ namespace fabomatic
 #endif
   }
 
-  static constexpr pins_config pins = configure_pins();
+  inline constexpr pins_config pins = configure_pins();
 
   static_assert(no_duplicates(pins), "Duplicate pin definition, check pins.hpp");
   static_assert(!(pins.led.is_neopixel && pins.led.is_rgb), "Neopixel and RGB led cannot be used at the same time");

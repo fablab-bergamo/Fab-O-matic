@@ -35,7 +35,6 @@ namespace fabomatic::Tasks
     /// @param active if false, scheduler will ignore the task until start()/restart() are called on the task
     /// @param delay initial delay before considering the task for execution
     Task(const std::string &id, milliseconds period, std::function<void()> callback, Scheduler &scheduler, bool active = true, milliseconds delay = 0ms);
-    ~Task() = default;
 
     Task(const Task &other) = default;
     Task(Task &&other) = default;
@@ -116,9 +115,9 @@ namespace fabomatic::Tasks
   class Scheduler
   {
   public:
-    constexpr Scheduler(){};
-    auto addTask(Task *task) -> void;
-    auto removeTask(const Task *task) -> void;
+    constexpr Scheduler() {};
+    auto addTask(Task &task) -> void;
+    auto removeTask(const Task &task) -> void;
 
     /// @brief Execute all tasks that are ready to run
     /// @details Tasks will be ordered by next_run time ascending, then run sequentially
@@ -131,10 +130,10 @@ namespace fabomatic::Tasks
     [[nodiscard]] auto taskCount() const -> size_t;
 
     /// @brief Get a copy vector of task pointers
-    [[nodiscard]] auto getTasks() const -> const std::vector<Task *>;
+    [[nodiscard]] auto getTasks() const -> const std::vector<std::reference_wrapper<Task>>;
 
   private:
-    std::vector<Task *> tasks;
+    std::vector<std::reference_wrapper<Task>> tasks;
 
     auto printStats() const -> void;
   };
