@@ -224,7 +224,7 @@ Private Attributes</h2></td></tr>
 </div><!-- fragment -->
 <p class="reference">References <a class="el" href="_saved_config_8cpp_source.xhtml#l00052">fabomatic::SavedConfig::LoadFromEEPROM()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00457">fabomatic::BoardLogic::reconfigure()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_board_logic_8cpp_source.xhtml#l00452">fabomatic::BoardLogic::reconfigure()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -585,7 +585,7 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  155</span> </div>
 <div class="line"><span class="lineno">  156</span>    <span class="keywordflow">return</span> {*elem};</div>
 <div class="line"><span class="lineno">  157</span>  }</div>
-<div class="ttc" id="anamespacefabomatic_1_1card_xhtml_a9ef4a9f5f43c63cf872a2d52a7af11cf"><div class="ttname"><a href="namespacefabomatic_1_1card.xhtml#a9ef4a9f5f43c63cf872a2d52a7af11cf">fabomatic::card::INVALID</a></div><div class="ttdeci">static constexpr uid_t INVALID</div><div class="ttdef"><b>Definition</b> <a href="card_8hpp_source.xhtml#l00015">card.hpp:15</a></div></div>
+<div class="ttc" id="anamespacefabomatic_1_1card_xhtml_a9ef4a9f5f43c63cf872a2d52a7af11cf"><div class="ttname"><a href="namespacefabomatic_1_1card.xhtml#a9ef4a9f5f43c63cf872a2d52a7af11cf">fabomatic::card::INVALID</a></div><div class="ttdeci">constexpr uid_t INVALID</div><div class="ttdef"><b>Definition</b> <a href="card_8hpp_source.xhtml#l00015">card.hpp:15</a></div></div>
 </div><!-- fragment -->
 <p class="reference">References <a class="el" href="card_8hpp_source.xhtml#l00015">fabomatic::card::INVALID</a>, <a class="el" href="_logging_8hpp_source.xhtml#l00009">TAG</a>, and <a class="el" href="card_8hpp_source.xhtml#l00022">fabomatic::card::uid_str()</a>.</p>
 <div class="dynheader">
@@ -666,7 +666,7 @@ Here is the call graph for this function:</div>
 <div class="line"><span class="lineno">   47</span>    <a class="code hl_variable" href="classfabomatic_1_1_auth_provider.xhtml#aff7ea2388179e603ba65e88dea0fe5de">cache_idx</a> = (<a class="code hl_variable" href="classfabomatic_1_1_auth_provider.xhtml#aff7ea2388179e603ba65e88dea0fe5de">cache_idx</a> + 1) % <a class="code hl_variable" href="namespacefabomatic_1_1conf_1_1rfid__tags.xhtml#a786cf57e36da88ed2d6c153e3b6fdc30">conf::rfid_tags::CACHE_LEN</a>;</div>
 <div class="line"><span class="lineno">   48</span>  }</div>
 <div class="ttc" id="aclassfabomatic_1_1_auth_provider_xhtml_aff7ea2388179e603ba65e88dea0fe5de"><div class="ttname"><a href="classfabomatic_1_1_auth_provider.xhtml#aff7ea2388179e603ba65e88dea0fe5de">fabomatic::AuthProvider::cache_idx</a></div><div class="ttdeci">size_t cache_idx</div><div class="ttdef"><b>Definition</b> <a href="_auth_provider_8hpp_source.xhtml#l00023">AuthProvider.hpp:23</a></div></div>
-<div class="ttc" id="anamespacefabomatic_1_1conf_1_1rfid__tags_xhtml_a786cf57e36da88ed2d6c153e3b6fdc30"><div class="ttname"><a href="namespacefabomatic_1_1conf_1_1rfid__tags.xhtml#a786cf57e36da88ed2d6c153e3b6fdc30">fabomatic::conf::rfid_tags::CACHE_LEN</a></div><div class="ttdeci">static constexpr uint8_t CACHE_LEN</div><div class="ttdoc">Number of cached UID, persisted in flash.</div><div class="ttdef"><b>Definition</b> <a href="conf_8hpp_source.xhtml#l00037">conf.hpp:37</a></div></div>
+<div class="ttc" id="anamespacefabomatic_1_1conf_1_1rfid__tags_xhtml_a786cf57e36da88ed2d6c153e3b6fdc30"><div class="ttname"><a href="namespacefabomatic_1_1conf_1_1rfid__tags.xhtml#a786cf57e36da88ed2d6c153e3b6fdc30">fabomatic::conf::rfid_tags::CACHE_LEN</a></div><div class="ttdeci">constexpr uint8_t CACHE_LEN</div><div class="ttdoc">Number of cached UID, persisted in flash.</div><div class="ttdef"><b>Definition</b> <a href="conf_8hpp_source.xhtml#l00037">conf.hpp:37</a></div></div>
 <div class="ttc" id="astructfabomatic_1_1_cached_cards_xhtml_a128c3db6758b1e630855e673a44c585f"><div class="ttname"><a href="structfabomatic_1_1_cached_cards.xhtml#a128c3db6758b1e630855e673a44c585f">fabomatic::CachedCards::size</a></div><div class="ttdeci">constexpr auto size() const -&gt; size_t</div><div class="ttdef"><b>Definition</b> <a href="_cached_cards_8hpp_source.xhtml#l00057">CachedCards.hpp:57</a></div></div>
 <div class="ttc" id="astructfabomatic_1_1_cached_cards_xhtml_a7d802081604574a8a905b5f98e80746b"><div class="ttname"><a href="structfabomatic_1_1_cached_cards.xhtml#a7d802081604574a8a905b5f98e80746b">fabomatic::CachedCards::set_at</a></div><div class="ttdeci">constexpr auto set_at(int idx, const card::uid_t &amp;uid, const FabUser::UserLevel &amp;level) -&gt; void</div><div class="ttdef"><b>Definition</b> <a href="_cached_cards_8hpp_source.xhtml#l00051">CachedCards.hpp:51</a></div></div>
 </div><!-- fragment -->
@@ -764,7 +764,7 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Nov 30 2024 15:35:28 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Thu Feb 27 2025 22:22:29 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

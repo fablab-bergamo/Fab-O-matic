@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['userlevel_0',['UserLevel',['../structfabomatic_1_1_fab_user.xhtml#a75deeb54124600e0387550735c7a0ca0',1,'fabomatic::FabUser']]],
-  ['userresult_1',['UserResult',['../namespacefabomatic_1_1_m_q_t_t_interface.xhtml#aae6b9bbbb914df1bded5c53773eb17fa',1,'fabomatic::MQTTInterface']]]
+  ['powerstate_0',['PowerState',['../classfabomatic_1_1_machine.xhtml#a409acc0089d7cfe849b2e775840e5838',1,'fabomatic::Machine']]],
+  ['publishresult_1',['PublishResult',['../classfabomatic_1_1_fab_backend.xhtml#af3e533d72406fdddc602359fdb9a5ae3',1,'fabomatic::FabBackend']]]
 ];

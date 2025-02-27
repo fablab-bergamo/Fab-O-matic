@@ -6,16 +6,6 @@
 <!-- Title: fabomatic::getConfig Pages: 1 -->
 <svg width="460pt" height="64pt"
  viewBox="0.00 0.00 460.25 64.25" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-
-<svg id="main" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" onload="init(evt)">
-<style type="text/css"><![CDATA[
-.node, .edge {opacity: 0.7;}
-.node.selected, .edge.selected {opacity: 1;}
-.edge:hover path { stroke: red; }
-.edge:hover polygon { stroke: red; fill: red; }
-]]></style>
-<script type="application/ecmascript" xlink:href="svg.min.js"/>
-<svg id="graph" class="graph">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 60.25)">
 <title>fabomatic::getConfig</title>
 <!-- Node1 -->
@@ -30,7 +20,7 @@
 <!-- Node2 -->
 <g id="Node000002" class="node">
 <title>Node2</title>
-<g id="a_Node000002"><a xlink:href="namespacefabomatic.xhtml#a8374c0d1cef777c26dc13b4abc9c52b6" target="_top" xlink:title="Open the ArduinoOTA configuration portal.">
+<g id="a_Node000002"><a xlink:href="namespacefabomatic.xhtml#abb6b42355a3cffaa13e06fd3fea763b2" target="_top" xlink:title="Open the ArduinoOTA configuration portal.">
 <polygon fill="white" stroke="#666666" points="312.5,-37.25 175.75,-37.25 175.75,-18 312.5,-18 312.5,-37.25"/>
 <text text-anchor="middle" x="244.12" y="-23.75" font-family="Helvetica,sans-Serif" font-size="10.00">fabomatic::openConfigPortal</text>
 </a>
@@ -82,19 +72,4 @@
 </g>
 </g>
 </g>
-</svg>
-</svg>
-
-<style type='text/css'>
-<![CDATA[
-[data-mouse-over-selected='false'] { opacity: 0.7; }
-[data-mouse-over-selected='true']  { opacity: 1.0; }
-]]>
-</style>
-<script type="application/ecmascript"><![CDATA[
-document.addEventListener('DOMContentLoaded', (event) => {
-  highlightEdges();
-  highlightAdjacentNodes();
-});
-]]></script>
 </svg>

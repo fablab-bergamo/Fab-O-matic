@@ -75,6 +75,7 @@ $(function() {
 <a href="#namespaces">Namespaces</a> &#124;
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">fabomatic Namespace Reference</div></div>
@@ -188,6 +189,17 @@ Typedefs</h2></td></tr>
 <tr class="memitem:a626fe6fe3dcf9b459c45e9f769f7b8e7" id="r_a626fe6fe3dcf9b459c45e9f769f7b8e7"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefabomatic.xhtml#a626fe6fe3dcf9b459c45e9f769f7b8e7">WhiteList</a> = std::array&lt; <a class="el" href="namespacefabomatic.xhtml#a23bf7a1d8cf94adbb1df8f8edd882501">WhiteListEntry</a>, <a class="el" href="namespacefabomatic_1_1conf_1_1cards.xhtml#a5401dcd8f6389e447f42a7658fb1d485">conf::cards::LEN</a> &gt;</td></tr>
 <tr class="separator:a626fe6fe3dcf9b459c45e9f769f7b8e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:a746cf42961062ecd5bdca3dd0e55ba56" id="r_a746cf42961062ecd5bdca3dd0e55ba56"><td class="memItemLeft" align="right" valign="top">enum struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefabomatic.xhtml#a746cf42961062ecd5bdca3dd0e55ba56">ForceReset</a> { <a class="el" href="namespacefabomatic.xhtml#a746cf42961062ecd5bdca3dd0e55ba56af827cf462f62848df37c5e1e94a4da74">True</a>
+, <a class="el" href="namespacefabomatic.xhtml#a746cf42961062ecd5bdca3dd0e55ba56af8320b26d30ab433c5a54546d21f414c">False</a>
+ }</td></tr>
+<tr class="separator:a746cf42961062ecd5bdca3dd0e55ba56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7fd67386e07b7542211b6b0dc3eb1742" id="r_a7fd67386e07b7542211b6b0dc3eb1742"><td class="memItemLeft" align="right" valign="top">enum struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefabomatic.xhtml#a7fd67386e07b7542211b6b0dc3eb1742">DisablePortal</a> { <a class="el" href="namespacefabomatic.xhtml#a7fd67386e07b7542211b6b0dc3eb1742af827cf462f62848df37c5e1e94a4da74">True</a>
+, <a class="el" href="namespacefabomatic.xhtml#a7fd67386e07b7542211b6b0dc3eb1742af8320b26d30ab433c5a54546d21f414c">False</a>
+ }</td></tr>
+<tr class="separator:a7fd67386e07b7542211b6b0dc3eb1742"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ae7de89faffd3bb8805727b8a1092a198" id="r_ae7de89faffd3bb8805727b8a1092a198"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefabomatic.xhtml#ae7de89faffd3bb8805727b8a1092a198">taskConnect</a> ()</td></tr>
@@ -227,11 +239,11 @@ Functions</h2></td></tr>
 <tr class="separator:a4fdef03704e4c9526605a43b8dd6549e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaa30fd4002cc95e50c035f2d3dcdb44d" id="r_aaa30fd4002cc95e50c035f2d3dcdb44d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefabomatic.xhtml#aaa30fd4002cc95e50c035f2d3dcdb44d">configModeCallback</a> (WiFiManager *myWiFiManager)</td></tr>
 <tr class="separator:aaa30fd4002cc95e50c035f2d3dcdb44d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a412fca06536dbae1da1e3018a4fd03c6" id="r_a412fca06536dbae1da1e3018a4fd03c6"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefabomatic.xhtml#a412fca06536dbae1da1e3018a4fd03c6">getConfig</a> (bool force_reset) -&gt; <a class="el" href="classfabomatic_1_1_saved_config.xhtml">SavedConfig</a></td></tr>
-<tr class="separator:a412fca06536dbae1da1e3018a4fd03c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8374c0d1cef777c26dc13b4abc9c52b6" id="r_a8374c0d1cef777c26dc13b4abc9c52b6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefabomatic.xhtml#a8374c0d1cef777c26dc13b4abc9c52b6">openConfigPortal</a> (bool force_reset, bool disable_portal) -&gt; void</td></tr>
-<tr class="memdesc:a8374c0d1cef777c26dc13b4abc9c52b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Open the ArduinoOTA configuration portal.  <br /></td></tr>
-<tr class="separator:a8374c0d1cef777c26dc13b4abc9c52b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac96861b9b9e14b7ed59f1e8f1589f41e" id="r_ac96861b9b9e14b7ed59f1e8f1589f41e"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefabomatic.xhtml#ac96861b9b9e14b7ed59f1e8f1589f41e">getConfig</a> (<a class="el" href="namespacefabomatic.xhtml#a746cf42961062ecd5bdca3dd0e55ba56">ForceReset</a> force_reset) -&gt; <a class="el" href="classfabomatic_1_1_saved_config.xhtml">SavedConfig</a></td></tr>
+<tr class="separator:ac96861b9b9e14b7ed59f1e8f1589f41e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb6b42355a3cffaa13e06fd3fea763b2" id="r_abb6b42355a3cffaa13e06fd3fea763b2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefabomatic.xhtml#abb6b42355a3cffaa13e06fd3fea763b2">openConfigPortal</a> (<a class="el" href="namespacefabomatic.xhtml#a746cf42961062ecd5bdca3dd0e55ba56">ForceReset</a> force_reset, <a class="el" href="namespacefabomatic.xhtml#a7fd67386e07b7542211b6b0dc3eb1742">DisablePortal</a> disable_portal) -&gt; void</td></tr>
+<tr class="memdesc:abb6b42355a3cffaa13e06fd3fea763b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Open the ArduinoOTA configuration portal.  <br /></td></tr>
+<tr class="separator:abb6b42355a3cffaa13e06fd3fea763b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a77e12974f277568ed32e1f793c89326c" id="r_a77e12974f277568ed32e1f793c89326c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefabomatic.xhtml#a77e12974f277568ed32e1f793c89326c">OTAComplete</a> ()</td></tr>
 <tr class="separator:a77e12974f277568ed32e1f793c89326c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a53440db527e478f13eaa71bbd46120c3" id="r_a53440db527e478f13eaa71bbd46120c3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefabomatic.xhtml#a53440db527e478f13eaa71bbd46120c3">setupOTA</a> () -&gt; void</td></tr>
@@ -285,9 +297,9 @@ Variables</h2></td></tr>
 <tr class="separator:a836ff5da9f16608b37915998ed449bf1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a52ae622725c801d2f8d66840738bc5f8" id="r_a52ae622725c801d2f8d66840738bc5f8"><td class="memItemLeft" align="right" valign="top">std::atomic&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefabomatic.xhtml#a52ae622725c801d2f8d66840738bc5f8">shouldSaveConfig</a> {false}</td></tr>
 <tr class="separator:a52ae622725c801d2f8d66840738bc5f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a90e4180ab5a1ffd3393b4f0d6b01f2b3" id="r_a90e4180ab5a1ffd3393b4f0d6b01f2b3"><td class="memItemLeft" align="right" valign="top">static constexpr <a class="el" href="structfabomatic_1_1pins__config.xhtml">pins_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a> = <a class="el" href="namespacefabomatic.xhtml#a0cc836ff46f9b7fee6b8df16257344bb">configure_pins</a>()</td></tr>
+<tr class="memitem:a90e4180ab5a1ffd3393b4f0d6b01f2b3" id="r_a90e4180ab5a1ffd3393b4f0d6b01f2b3"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="structfabomatic_1_1pins__config.xhtml">pins_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a> = <a class="el" href="namespacefabomatic.xhtml#a0cc836ff46f9b7fee6b8df16257344bb">configure_pins</a>()</td></tr>
 <tr class="separator:a90e4180ab5a1ffd3393b4f0d6b01f2b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a01a9e2e5f9e92f6f3fa9204ba3d946b9" id="r_a01a9e2e5f9e92f6f3fa9204ba3d946b9"><td class="memItemLeft" align="right" valign="top">static constexpr uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefabomatic.xhtml#a01a9e2e5f9e92f6f3fa9204ba3d946b9">NO_PIN</a> = -1</td></tr>
+<tr class="memitem:a01a9e2e5f9e92f6f3fa9204ba3d946b9" id="r_a01a9e2e5f9e92f6f3fa9204ba3d946b9"><td class="memItemLeft" align="right" valign="top">constexpr uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefabomatic.xhtml#a01a9e2e5f9e92f6f3fa9204ba3d946b9">NO_PIN</a> = -1</td></tr>
 <tr class="memdesc:a01a9e2e5f9e92f6f3fa9204ba3d946b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constant used to indicate the pin is not used.  <br /></td></tr>
 <tr class="separator:a01a9e2e5f9e92f6f3fa9204ba3d946b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -386,6 +398,73 @@ Variables</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="_white_list_8hpp_source.xhtml#l00019">19</a> of file <a class="el" href="_white_list_8hpp_source.xhtml">WhiteList.hpp</a>.</p>
 
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="a7fd67386e07b7542211b6b0dc3eb1742" name="a7fd67386e07b7542211b6b0dc3eb1742"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7fd67386e07b7542211b6b0dc3eb1742">&#9670;&#160;</a></span>DisablePortal</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum struct <a class="el" href="namespacefabomatic.xhtml#a7fd67386e07b7542211b6b0dc3eb1742">fabomatic::DisablePortal</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a7fd67386e07b7542211b6b0dc3eb1742af827cf462f62848df37c5e1e94a4da74" name="a7fd67386e07b7542211b6b0dc3eb1742af827cf462f62848df37c5e1e94a4da74"></a>True&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a7fd67386e07b7542211b6b0dc3eb1742af8320b26d30ab433c5a54546d21f414c" name="a7fd67386e07b7542211b6b0dc3eb1742af8320b26d30ab433c5a54546d21f414c"></a>False&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+<p class="definition">Definition at line <a class="el" href="_o_t_a_8hpp_source.xhtml#l00020">20</a> of file <a class="el" href="_o_t_a_8hpp_source.xhtml">OTA.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   20</span>                            { </div>
+<div class="line"><span class="lineno">   21</span>    <a class="code hl_enumvalue" href="namespacefabomatic.xhtml#a746cf42961062ecd5bdca3dd0e55ba56af827cf462f62848df37c5e1e94a4da74">True</a>,</div>
+<div class="line"><span class="lineno">   22</span>    <a class="code hl_enumvalue" href="namespacefabomatic.xhtml#a746cf42961062ecd5bdca3dd0e55ba56af8320b26d30ab433c5a54546d21f414c">False</a> </div>
+<div class="line"><span class="lineno">   23</span>  };</div>
+<div class="ttc" id="anamespacefabomatic_xhtml_a746cf42961062ecd5bdca3dd0e55ba56af827cf462f62848df37c5e1e94a4da74"><div class="ttname"><a href="namespacefabomatic.xhtml#a746cf42961062ecd5bdca3dd0e55ba56af827cf462f62848df37c5e1e94a4da74">fabomatic::ForceReset::True</a></div><div class="ttdeci">@ True</div></div>
+<div class="ttc" id="anamespacefabomatic_xhtml_a746cf42961062ecd5bdca3dd0e55ba56af8320b26d30ab433c5a54546d21f414c"><div class="ttname"><a href="namespacefabomatic.xhtml#a746cf42961062ecd5bdca3dd0e55ba56af8320b26d30ab433c5a54546d21f414c">fabomatic::ForceReset::False</a></div><div class="ttdeci">@ False</div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a746cf42961062ecd5bdca3dd0e55ba56" name="a746cf42961062ecd5bdca3dd0e55ba56"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a746cf42961062ecd5bdca3dd0e55ba56">&#9670;&#160;</a></span>ForceReset</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum struct <a class="el" href="namespacefabomatic.xhtml#a746cf42961062ecd5bdca3dd0e55ba56">fabomatic::ForceReset</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a746cf42961062ecd5bdca3dd0e55ba56af827cf462f62848df37c5e1e94a4da74" name="a746cf42961062ecd5bdca3dd0e55ba56af827cf462f62848df37c5e1e94a4da74"></a>True&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a746cf42961062ecd5bdca3dd0e55ba56af8320b26d30ab433c5a54546d21f414c" name="a746cf42961062ecd5bdca3dd0e55ba56af8320b26d30ab433c5a54546d21f414c"></a>False&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+<p class="definition">Definition at line <a class="el" href="_o_t_a_8hpp_source.xhtml#l00015">15</a> of file <a class="el" href="_o_t_a_8hpp_source.xhtml">OTA.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   16</span>  {</div>
+<div class="line"><span class="lineno">   17</span>    <a class="code hl_enumvalue" href="namespacefabomatic.xhtml#a746cf42961062ecd5bdca3dd0e55ba56af827cf462f62848df37c5e1e94a4da74">True</a>,</div>
+<div class="line"><span class="lineno">   18</span>    <a class="code hl_enumvalue" href="namespacefabomatic.xhtml#a746cf42961062ecd5bdca3dd0e55ba56af8320b26d30ab433c5a54546d21f414c">False</a></div>
+<div class="line"><span class="lineno">   19</span>  };</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
@@ -549,14 +628,15 @@ Here is the call graph for this function:</div>
 <div class="line"><span class="lineno">   41</span>            .is_neopixel = <span class="keyword">true</span>,</div>
 <div class="line"><span class="lineno">   42</span>            .neopixel_config = NEO_RGB + NEO_KHZ800,</div>
 <div class="line"><span class="lineno">   43</span>            .is_rgb = <span class="keyword">false</span>,</div>
-<div class="line"><span class="lineno">   44</span>            .green_pin = NO_PIN,</div>
-<div class="line"><span class="lineno">   45</span>            .blue_pin = NO_PIN,</div>
+<div class="line"><span class="lineno">   44</span>            .green_pin = <a class="code hl_variable" href="namespacefabomatic.xhtml#a01a9e2e5f9e92f6f3fa9204ba3d946b9">NO_PIN</a>,</div>
+<div class="line"><span class="lineno">   45</span>            .blue_pin = <a class="code hl_variable" href="namespacefabomatic.xhtml#a01a9e2e5f9e92f6f3fa9204ba3d946b9">NO_PIN</a>,</div>
 <div class="line"><span class="lineno">   46</span>        }, <span class="comment">// LED config</span></div>
 <div class="line"><span class="lineno">   47</span>        {</div>
-<div class="line"><span class="lineno">   48</span>            .factory_defaults_pin = NO_PIN,</div>
+<div class="line"><span class="lineno">   48</span>            .factory_defaults_pin = <a class="code hl_variable" href="namespacefabomatic.xhtml#a01a9e2e5f9e92f6f3fa9204ba3d946b9">NO_PIN</a>,</div>
 <div class="line"><span class="lineno">   49</span>        } <span class="comment">// Factory defaults button</span></div>
 <div class="line"><span class="lineno">   50</span>    };</div>
 <div class="line"><span class="lineno">   51</span>  }</div>
+<div class="ttc" id="anamespacefabomatic_xhtml_a01a9e2e5f9e92f6f3fa9204ba3d946b9"><div class="ttname"><a href="namespacefabomatic.xhtml#a01a9e2e5f9e92f6f3fa9204ba3d946b9">fabomatic::NO_PIN</a></div><div class="ttdeci">constexpr uint8_t NO_PIN</div><div class="ttdoc">Constant used to indicate the pin is not used.</div><div class="ttdef"><b>Definition</b> <a href="_pins_config_8hpp_source.xhtml#l00010">PinsConfig.hpp:10</a></div></div>
 <div class="ttc" id="astructfabomatic_1_1pins__config_xhtml"><div class="ttname"><a href="structfabomatic_1_1pins__config.xhtml">fabomatic::pins_config</a></div><div class="ttdef"><b>Definition</b> <a href="_pins_config_8hpp_source.xhtml#l00012">PinsConfig.hpp:13</a></div></div>
 </div><!-- fragment -->
 <p class="reference">References <a class="el" href="_pins_config_8hpp_source.xhtml#l00010">NO_PIN</a>.</p>
@@ -629,11 +709,11 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  127</span>            .is_neopixel = <span class="keyword">true</span>,</div>
 <div class="line"><span class="lineno">  128</span>            .neopixel_config = NEO_GRB + NEO_KHZ800,</div>
 <div class="line"><span class="lineno">  129</span>            .is_rgb = <span class="keyword">false</span>,</div>
-<div class="line"><span class="lineno">  130</span>            .green_pin = NO_PIN,</div>
-<div class="line"><span class="lineno">  131</span>            .blue_pin = NO_PIN,</div>
+<div class="line"><span class="lineno">  130</span>            .green_pin = <a class="code hl_variable" href="namespacefabomatic.xhtml#a01a9e2e5f9e92f6f3fa9204ba3d946b9">NO_PIN</a>,</div>
+<div class="line"><span class="lineno">  131</span>            .blue_pin = <a class="code hl_variable" href="namespacefabomatic.xhtml#a01a9e2e5f9e92f6f3fa9204ba3d946b9">NO_PIN</a>,</div>
 <div class="line"><span class="lineno">  132</span>        }, <span class="comment">// LED config</span></div>
 <div class="line"><span class="lineno">  133</span>        {</div>
-<div class="line"><span class="lineno">  134</span>            .factory_defaults_pin = NO_PIN,</div>
+<div class="line"><span class="lineno">  134</span>            .factory_defaults_pin = <a class="code hl_variable" href="namespacefabomatic.xhtml#a01a9e2e5f9e92f6f3fa9204ba3d946b9">NO_PIN</a>,</div>
 <div class="line"><span class="lineno">  135</span>        } <span class="comment">// Factory defaults button</span></div>
 <div class="line"><span class="lineno">  136</span>    };</div>
 <div class="line"><span class="lineno">  137</span>  }</div>
@@ -708,8 +788,8 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  170</span>            .is_neopixel = <span class="keyword">true</span>,</div>
 <div class="line"><span class="lineno">  171</span>            .neopixel_config = NEO_GRB + NEO_KHZ800,</div>
 <div class="line"><span class="lineno">  172</span>            .is_rgb = <span class="keyword">false</span>,</div>
-<div class="line"><span class="lineno">  173</span>            .green_pin = NO_PIN,</div>
-<div class="line"><span class="lineno">  174</span>            .blue_pin = NO_PIN,</div>
+<div class="line"><span class="lineno">  173</span>            .green_pin = <a class="code hl_variable" href="namespacefabomatic.xhtml#a01a9e2e5f9e92f6f3fa9204ba3d946b9">NO_PIN</a>,</div>
+<div class="line"><span class="lineno">  174</span>            .blue_pin = <a class="code hl_variable" href="namespacefabomatic.xhtml#a01a9e2e5f9e92f6f3fa9204ba3d946b9">NO_PIN</a>,</div>
 <div class="line"><span class="lineno">  175</span>        }, <span class="comment">// LED config</span></div>
 <div class="line"><span class="lineno">  176</span>        {</div>
 <div class="line"><span class="lineno">  177</span>            .factory_defaults_pin = 8U,</div>
@@ -787,8 +867,8 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">   84</span>            .is_neopixel = <span class="keyword">true</span>,</div>
 <div class="line"><span class="lineno">   85</span>            .neopixel_config = NEO_GRB + NEO_KHZ800,</div>
 <div class="line"><span class="lineno">   86</span>            .is_rgb = <span class="keyword">false</span>,</div>
-<div class="line"><span class="lineno">   87</span>            .green_pin = NO_PIN,</div>
-<div class="line"><span class="lineno">   88</span>            .blue_pin = NO_PIN,</div>
+<div class="line"><span class="lineno">   87</span>            .green_pin = <a class="code hl_variable" href="namespacefabomatic.xhtml#a01a9e2e5f9e92f6f3fa9204ba3d946b9">NO_PIN</a>,</div>
+<div class="line"><span class="lineno">   88</span>            .blue_pin = <a class="code hl_variable" href="namespacefabomatic.xhtml#a01a9e2e5f9e92f6f3fa9204ba3d946b9">NO_PIN</a>,</div>
 <div class="line"><span class="lineno">   89</span>        }, <span class="comment">// LED config</span></div>
 <div class="line"><span class="lineno">   90</span>        {</div>
 <div class="line"><span class="lineno">   91</span>            .factory_defaults_pin = 21U,</div>
@@ -870,7 +950,7 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  217</span>            .blue_pin = 4U,</div>
 <div class="line"><span class="lineno">  218</span>        }, <span class="comment">// LED configuration</span></div>
 <div class="line"><span class="lineno">  219</span>        {</div>
-<div class="line"><span class="lineno">  220</span>            .factory_defaults_pin = NO_PIN,</div>
+<div class="line"><span class="lineno">  220</span>            .factory_defaults_pin = <a class="code hl_variable" href="namespacefabomatic.xhtml#a01a9e2e5f9e92f6f3fa9204ba3d946b9">NO_PIN</a>,</div>
 <div class="line"><span class="lineno">  221</span>        } <span class="comment">// Factory defaults button</span></div>
 <div class="line"><span class="lineno">  222</span>    };</div>
 <div class="line"><span class="lineno">  223</span>  }</div>
@@ -886,8 +966,8 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a id="a412fca06536dbae1da1e3018a4fd03c6" name="a412fca06536dbae1da1e3018a4fd03c6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a412fca06536dbae1da1e3018a4fd03c6">&#9670;&#160;</a></span>getConfig()</h2>
+<a id="ac96861b9b9e14b7ed59f1e8f1589f41e" name="ac96861b9b9e14b7ed59f1e8f1589f41e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac96861b9b9e14b7ed59f1e8f1589f41e">&#9670;&#160;</a></span>getConfig()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -895,7 +975,7 @@ Here is the caller graph for this function:</div>
         <tr>
           <td class="memname">auto fabomatic::getConfig </td>
           <td>(</td>
-          <td class="paramtype">bool&#160;</td>
+          <td class="paramtype"><a class="el" href="namespacefabomatic.xhtml#a746cf42961062ecd5bdca3dd0e55ba56">ForceReset</a>&#160;</td>
           <td class="paramname"><em>force_reset</em></td><td>)</td>
           <td> -&gt; <a class="el" href="classfabomatic_1_1_saved_config.xhtml">SavedConfig</a>
   </td>
@@ -906,7 +986,7 @@ Here is the caller graph for this function:</div>
 <p class="definition">Definition at line <a class="el" href="_o_t_a_8cpp_source.xhtml#l00033">33</a> of file <a class="el" href="_o_t_a_8cpp_source.xhtml">OTA.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   34</span>  {</div>
 <div class="line"><span class="lineno">   35</span>    <span class="keyword">const</span> <span class="keyword">auto</span> &amp;opt_settings = SavedConfig::LoadFromEEPROM();</div>
-<div class="line"><span class="lineno">   36</span>    <span class="keywordflow">if</span> (force_reset || !opt_settings)</div>
+<div class="line"><span class="lineno">   36</span>    <span class="keywordflow">if</span> (force_reset == ForceReset::True || !opt_settings)</div>
 <div class="line"><span class="lineno">   37</span>    {</div>
 <div class="line"><span class="lineno">   38</span>      <span class="keywordflow">return</span> SavedConfig::DefaultConfig();</div>
 <div class="line"><span class="lineno">   39</span>    }</div>
@@ -914,18 +994,18 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">   41</span>    <span class="keywordflow">return</span> opt_settings.value();</div>
 <div class="line"><span class="lineno">   42</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_saved_config_8cpp_source.xhtml#l00028">fabomatic::SavedConfig::DefaultConfig()</a>, and <a class="el" href="_saved_config_8cpp_source.xhtml#l00052">fabomatic::SavedConfig::LoadFromEEPROM()</a>.</p>
+<p class="reference">References <a class="el" href="_saved_config_8cpp_source.xhtml#l00028">fabomatic::SavedConfig::DefaultConfig()</a>, <a class="el" href="_saved_config_8cpp_source.xhtml#l00052">fabomatic::SavedConfig::LoadFromEEPROM()</a>, and <a class="el" href="namespacefabomatic.xhtml#a746cf42961062ecd5bdca3dd0e55ba56af827cf462f62848df37c5e1e94a4da74">True</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="_o_t_a_8cpp_source.xhtml#l00047">openConfigPortal()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="namespacefabomatic_a412fca06536dbae1da1e3018a4fd03c6_cgraph.svg" width="560" height="118"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="namespacefabomatic_ac96861b9b9e14b7ed59f1e8f1589f41e_cgraph.svg" width="560" height="118"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="namespacefabomatic_a412fca06536dbae1da1e3018a4fd03c6_icgraph.svg" width="614" height="86"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="namespacefabomatic_ac96861b9b9e14b7ed59f1e8f1589f41e_icgraph.svg" width="614" height="86"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -959,24 +1039,24 @@ Here is the caller graph for this function:</div>
 <p class="definition">Definition at line <a class="el" href="_pins_config_8hpp_source.xhtml#l00077">77</a> of file <a class="el" href="_pins_config_8hpp_source.xhtml">PinsConfig.hpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   78</span>  {</div>
 <div class="line"><span class="lineno">   79</span>    std::array pin_nums{</div>
-<div class="line"><span class="lineno">   80</span>        pins.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#a56e9af80959f84e6c9483996009c5620">mfrc522</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1mfrc522__config.xhtml#a175be0691c7c28ed93120bf059fbeaa8">sda_pin</a>,</div>
-<div class="line"><span class="lineno">   81</span>        pins.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#a56e9af80959f84e6c9483996009c5620">mfrc522</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1mfrc522__config.xhtml#a19ad1728d7526f56baeb3d1fe687c582">mosi_pin</a>,</div>
-<div class="line"><span class="lineno">   82</span>        pins.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#a56e9af80959f84e6c9483996009c5620">mfrc522</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1mfrc522__config.xhtml#ae1ee8ccf4d0434da7900347ca5b929cc">miso_pin</a>,</div>
-<div class="line"><span class="lineno">   83</span>        pins.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#a56e9af80959f84e6c9483996009c5620">mfrc522</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1mfrc522__config.xhtml#aff74af5a27c6eed2369365bf06c57495">sck_pin</a>,</div>
-<div class="line"><span class="lineno">   84</span>        pins.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#a56e9af80959f84e6c9483996009c5620">mfrc522</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1mfrc522__config.xhtml#a62db3302c573adaafa4c031c5512c652">reset_pin</a>,</div>
-<div class="line"><span class="lineno">   85</span>        pins.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#abd0d35daf6efede38501593182b6d574">lcd</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1lcd__config.xhtml#ab01700e546f2f4eeda250ca6bcb574d2">rs_pin</a>,</div>
-<div class="line"><span class="lineno">   86</span>        pins.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#abd0d35daf6efede38501593182b6d574">lcd</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1lcd__config.xhtml#a1213d1161a9e3220271355440db4546a">en_pin</a>,</div>
-<div class="line"><span class="lineno">   87</span>        pins.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#abd0d35daf6efede38501593182b6d574">lcd</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1lcd__config.xhtml#abf3ff78e86490e5c70c72849f65818d5">d0_pin</a>,</div>
-<div class="line"><span class="lineno">   88</span>        pins.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#abd0d35daf6efede38501593182b6d574">lcd</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1lcd__config.xhtml#a1ab6a17e914d2267f9cedd085e126871">d1_pin</a>,</div>
-<div class="line"><span class="lineno">   89</span>        pins.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#abd0d35daf6efede38501593182b6d574">lcd</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1lcd__config.xhtml#af533fe4d11b8c90e3c8a849e07f0a14e">d2_pin</a>,</div>
-<div class="line"><span class="lineno">   90</span>        pins.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#abd0d35daf6efede38501593182b6d574">lcd</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1lcd__config.xhtml#ad9cd9645af26937062d2ad1c323b07e3">d3_pin</a>,</div>
-<div class="line"><span class="lineno">   91</span>        pins.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#abd0d35daf6efede38501593182b6d574">lcd</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1lcd__config.xhtml#a350521ea33a6ab39885e4cab1ebf7ac2">bl_pin</a>,</div>
-<div class="line"><span class="lineno">   92</span>        pins.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#a310be8cfdd1f9617522c2eb0dd02f252">relay</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1relay__config.xhtml#a3cfbcbcee8f3bb2aa8a2c6fc1246f27e">ch1_pin</a>,</div>
-<div class="line"><span class="lineno">   93</span>        pins.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#a43cea4034bd725f649b61d3a78805eb2">buzzer</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1buzzer__config.xhtml#a733e4c811983bf63e73035ab885ffc65">pin</a>,</div>
-<div class="line"><span class="lineno">   94</span>        pins.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#a5d85a2cde0f38b6fa413d40fb871c01f">led</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1led__config.xhtml#a77f7c0b888321527f09d6f5c9a73d613">pin</a>,</div>
-<div class="line"><span class="lineno">   95</span>        pins.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#a5d85a2cde0f38b6fa413d40fb871c01f">led</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1led__config.xhtml#a75763c073c851328dd89841ef6a9c089">green_pin</a>,</div>
-<div class="line"><span class="lineno">   96</span>        pins.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#a5d85a2cde0f38b6fa413d40fb871c01f">led</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1led__config.xhtml#a6f9e13764567a00b91ca452070ac5d8e">blue_pin</a>,</div>
-<div class="line"><span class="lineno">   97</span>        pins.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#ad95db725b088bb4db1c202d0d8a9660b">buttons</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1buttons__config.xhtml#a2b6b4bff992be0fb804412d51eed5484">factory_defaults_pin</a>};</div>
+<div class="line"><span class="lineno">   80</span>        <a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#a56e9af80959f84e6c9483996009c5620">mfrc522</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1mfrc522__config.xhtml#a175be0691c7c28ed93120bf059fbeaa8">sda_pin</a>,</div>
+<div class="line"><span class="lineno">   81</span>        <a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#a56e9af80959f84e6c9483996009c5620">mfrc522</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1mfrc522__config.xhtml#a19ad1728d7526f56baeb3d1fe687c582">mosi_pin</a>,</div>
+<div class="line"><span class="lineno">   82</span>        <a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#a56e9af80959f84e6c9483996009c5620">mfrc522</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1mfrc522__config.xhtml#ae1ee8ccf4d0434da7900347ca5b929cc">miso_pin</a>,</div>
+<div class="line"><span class="lineno">   83</span>        <a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#a56e9af80959f84e6c9483996009c5620">mfrc522</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1mfrc522__config.xhtml#aff74af5a27c6eed2369365bf06c57495">sck_pin</a>,</div>
+<div class="line"><span class="lineno">   84</span>        <a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#a56e9af80959f84e6c9483996009c5620">mfrc522</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1mfrc522__config.xhtml#a62db3302c573adaafa4c031c5512c652">reset_pin</a>,</div>
+<div class="line"><span class="lineno">   85</span>        <a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#abd0d35daf6efede38501593182b6d574">lcd</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1lcd__config.xhtml#ab01700e546f2f4eeda250ca6bcb574d2">rs_pin</a>,</div>
+<div class="line"><span class="lineno">   86</span>        <a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#abd0d35daf6efede38501593182b6d574">lcd</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1lcd__config.xhtml#a1213d1161a9e3220271355440db4546a">en_pin</a>,</div>
+<div class="line"><span class="lineno">   87</span>        <a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#abd0d35daf6efede38501593182b6d574">lcd</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1lcd__config.xhtml#abf3ff78e86490e5c70c72849f65818d5">d0_pin</a>,</div>
+<div class="line"><span class="lineno">   88</span>        <a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#abd0d35daf6efede38501593182b6d574">lcd</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1lcd__config.xhtml#a1ab6a17e914d2267f9cedd085e126871">d1_pin</a>,</div>
+<div class="line"><span class="lineno">   89</span>        <a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#abd0d35daf6efede38501593182b6d574">lcd</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1lcd__config.xhtml#af533fe4d11b8c90e3c8a849e07f0a14e">d2_pin</a>,</div>
+<div class="line"><span class="lineno">   90</span>        <a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#abd0d35daf6efede38501593182b6d574">lcd</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1lcd__config.xhtml#ad9cd9645af26937062d2ad1c323b07e3">d3_pin</a>,</div>
+<div class="line"><span class="lineno">   91</span>        <a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#abd0d35daf6efede38501593182b6d574">lcd</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1lcd__config.xhtml#a350521ea33a6ab39885e4cab1ebf7ac2">bl_pin</a>,</div>
+<div class="line"><span class="lineno">   92</span>        <a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#a310be8cfdd1f9617522c2eb0dd02f252">relay</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1relay__config.xhtml#a3cfbcbcee8f3bb2aa8a2c6fc1246f27e">ch1_pin</a>,</div>
+<div class="line"><span class="lineno">   93</span>        <a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#a43cea4034bd725f649b61d3a78805eb2">buzzer</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1buzzer__config.xhtml#a733e4c811983bf63e73035ab885ffc65">pin</a>,</div>
+<div class="line"><span class="lineno">   94</span>        <a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#a5d85a2cde0f38b6fa413d40fb871c01f">led</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1led__config.xhtml#a77f7c0b888321527f09d6f5c9a73d613">pin</a>,</div>
+<div class="line"><span class="lineno">   95</span>        <a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#a5d85a2cde0f38b6fa413d40fb871c01f">led</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1led__config.xhtml#a75763c073c851328dd89841ef6a9c089">green_pin</a>,</div>
+<div class="line"><span class="lineno">   96</span>        <a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#a5d85a2cde0f38b6fa413d40fb871c01f">led</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1led__config.xhtml#a6f9e13764567a00b91ca452070ac5d8e">blue_pin</a>,</div>
+<div class="line"><span class="lineno">   97</span>        <a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#ad95db725b088bb4db1c202d0d8a9660b">buttons</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1buttons__config.xhtml#a2b6b4bff992be0fb804412d51eed5484">factory_defaults_pin</a>};</div>
 <div class="line"><span class="lineno">   98</span> </div>
 <div class="line"><span class="lineno">   99</span>    <span class="comment">// C++20 provides constexpr sorting</span></div>
 <div class="line"><span class="lineno">  100</span>    std::sort(pin_nums.begin(), pin_nums.end());</div>
@@ -1002,6 +1082,7 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  120</span> </div>
 <div class="line"><span class="lineno">  121</span>    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
 <div class="line"><span class="lineno">  122</span>  }</div>
+<div class="ttc" id="anamespacefabomatic_xhtml_a90e4180ab5a1ffd3393b4f0d6b01f2b3"><div class="ttname"><a href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">fabomatic::pins</a></div><div class="ttdeci">constexpr pins_config pins</div><div class="ttdef"><b>Definition</b> <a href="pins_8hpp_source.xhtml#l00246">pins.hpp:246</a></div></div>
 <div class="ttc" id="astructfabomatic_1_1pins__config_1_1buttons__config_xhtml_a2b6b4bff992be0fb804412d51eed5484"><div class="ttname"><a href="structfabomatic_1_1pins__config_1_1buttons__config.xhtml#a2b6b4bff992be0fb804412d51eed5484">fabomatic::pins_config::buttons_config::factory_defaults_pin</a></div><div class="ttdeci">uint8_t factory_defaults_pin</div><div class="ttdef"><b>Definition</b> <a href="_pins_config_8hpp_source.xhtml#l00065">PinsConfig.hpp:65</a></div></div>
 <div class="ttc" id="astructfabomatic_1_1pins__config_1_1buzzer__config_xhtml_a733e4c811983bf63e73035ab885ffc65"><div class="ttname"><a href="structfabomatic_1_1pins__config_1_1buzzer__config.xhtml#a733e4c811983bf63e73035ab885ffc65">fabomatic::pins_config::buzzer_config::pin</a></div><div class="ttdeci">uint8_t pin</div><div class="ttdef"><b>Definition</b> <a href="_pins_config_8hpp_source.xhtml#l00050">PinsConfig.hpp:50</a></div></div>
 <div class="ttc" id="astructfabomatic_1_1pins__config_1_1lcd__config_xhtml_a1213d1161a9e3220271355440db4546a"><div class="ttname"><a href="structfabomatic_1_1pins__config_1_1lcd__config.xhtml#a1213d1161a9e3220271355440db4546a">fabomatic::pins_config::lcd_config::en_pin</a></div><div class="ttdeci">uint8_t en_pin</div><div class="ttdoc">enable pin</div><div class="ttdef"><b>Definition</b> <a href="_pins_config_8hpp_source.xhtml#l00030">PinsConfig.hpp:30</a></div></div>
@@ -1031,8 +1112,8 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a id="a8374c0d1cef777c26dc13b4abc9c52b6" name="a8374c0d1cef777c26dc13b4abc9c52b6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8374c0d1cef777c26dc13b4abc9c52b6">&#9670;&#160;</a></span>openConfigPortal()</h2>
+<a id="abb6b42355a3cffaa13e06fd3fea763b2" name="abb6b42355a3cffaa13e06fd3fea763b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abb6b42355a3cffaa13e06fd3fea763b2">&#9670;&#160;</a></span>openConfigPortal()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1040,13 +1121,13 @@ Here is the caller graph for this function:</div>
         <tr>
           <td class="memname">auto fabomatic::openConfigPortal </td>
           <td>(</td>
-          <td class="paramtype">bool&#160;</td>
+          <td class="paramtype"><a class="el" href="namespacefabomatic.xhtml#a746cf42961062ecd5bdca3dd0e55ba56">ForceReset</a>&#160;</td>
           <td class="paramname"><em>force_reset</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">bool&#160;</td>
+          <td class="paramtype"><a class="el" href="namespacefabomatic.xhtml#a7fd67386e07b7542211b6b0dc3eb1742">DisablePortal</a>&#160;</td>
           <td class="paramname"><em>disable_portal</em>&#160;</td>
         </tr>
         <tr>
@@ -1071,7 +1152,7 @@ Here is the caller graph for this function:</div>
 <p class="definition">Definition at line <a class="el" href="_o_t_a_8cpp_source.xhtml#l00047">47</a> of file <a class="el" href="_o_t_a_8cpp_source.xhtml">OTA.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   48</span>  {</div>
 <div class="line"><span class="lineno">   49</span>    WiFiManager wifiManager;</div>
-<div class="line"><span class="lineno">   50</span>    <span class="keyword">auto</span> config = <a class="code hl_function" href="namespacefabomatic.xhtml#a412fca06536dbae1da1e3018a4fd03c6">getConfig</a>(force_reset);</div>
+<div class="line"><span class="lineno">   50</span>    <span class="keyword">auto</span> config = <a class="code hl_function" href="namespacefabomatic.xhtml#ac96861b9b9e14b7ed59f1e8f1589f41e">getConfig</a>(force_reset);</div>
 <div class="line"><span class="lineno">   51</span> </div>
 <div class="line"><span class="lineno">   52</span>    <span class="comment">// We are using config as a buffer for the WiFiManager parameters, make sure it can hold the content</span></div>
 <div class="line"><span class="lineno">   53</span>    config.mqtt_server.resize(conf::common::STR_MAX_LENGTH);</div>
@@ -1095,7 +1176,7 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">   71</span>    wifiManager.setAPCallback(configModeCallback);</div>
 <div class="line"><span class="lineno">   72</span>    wifiManager.setSaveConfigCallback(saveConfigCallback);</div>
 <div class="line"><span class="lineno">   73</span> </div>
-<div class="line"><span class="lineno">   74</span>    <span class="keywordflow">if</span> (force_reset)</div>
+<div class="line"><span class="lineno">   74</span>    <span class="keywordflow">if</span> (force_reset == ForceReset::True)</div>
 <div class="line"><span class="lineno">   75</span>    {</div>
 <div class="line"><span class="lineno">   76</span>      wifiManager.resetSettings();</div>
 <div class="line"><span class="lineno">   77</span>    }</div>
@@ -1105,7 +1186,7 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">   81</span>    wifiManager.resetSettings();</div>
 <div class="line"><span class="lineno">   82</span>    wifiManager.setTimeout(10); <span class="comment">// fail fast for debugging</span></div>
 <div class="line"><span class="lineno">   83</span><span class="preprocessor">#endif</span></div>
-<div class="line"><span class="lineno">   84</span>    <span class="keyword">auto</span> must_skip = disable_portal || config.disablePortal;</div>
+<div class="line"><span class="lineno">   84</span>    <span class="keyword">auto</span> must_skip = (disable_portal == DisablePortal::True) || config.disablePortal;</div>
 <div class="line"><span class="lineno">   85</span>    <span class="keywordflow">if</span> (must_skip)</div>
 <div class="line"><span class="lineno">   86</span>    {</div>
 <div class="line"><span class="lineno">   87</span>      wifiManager.setTimeout(1);</div>
@@ -1152,21 +1233,21 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  128</span>      Board::logic.setRebootRequest(<span class="keyword">true</span>);</div>
 <div class="line"><span class="lineno">  129</span>    }</div>
 <div class="line"><span class="lineno">  130</span>  }</div>
-<div class="ttc" id="anamespacefabomatic_1_1_tasks_xhtml_a5c20f560f5934822d39ba116a16f3ab6"><div class="ttname"><a href="namespacefabomatic_1_1_tasks.xhtml#a5c20f560f5934822d39ba116a16f3ab6">fabomatic::Tasks::delay</a></div><div class="ttdeci">auto delay(const milliseconds duration) -&gt; void</div><div class="ttdoc">Wait for a delay, allowing OTA updates.</div><div class="ttdef"><b>Definition</b> <a href="_tasks_8cpp_source.xhtml#l00265">Tasks.cpp:265</a></div></div>
-<div class="ttc" id="anamespacefabomatic_xhtml_a412fca06536dbae1da1e3018a4fd03c6"><div class="ttname"><a href="namespacefabomatic.xhtml#a412fca06536dbae1da1e3018a4fd03c6">fabomatic::getConfig</a></div><div class="ttdeci">auto getConfig(bool force_reset) -&gt; SavedConfig</div><div class="ttdef"><b>Definition</b> <a href="_o_t_a_8cpp_source.xhtml#l00033">OTA.cpp:33</a></div></div>
+<div class="ttc" id="anamespacefabomatic_1_1_tasks_xhtml_a5c20f560f5934822d39ba116a16f3ab6"><div class="ttname"><a href="namespacefabomatic_1_1_tasks.xhtml#a5c20f560f5934822d39ba116a16f3ab6">fabomatic::Tasks::delay</a></div><div class="ttdeci">auto delay(const milliseconds duration) -&gt; void</div><div class="ttdoc">Wait for a delay, allowing OTA updates.</div><div class="ttdef"><b>Definition</b> <a href="_tasks_8cpp_source.xhtml#l00266">Tasks.cpp:266</a></div></div>
+<div class="ttc" id="anamespacefabomatic_xhtml_ac96861b9b9e14b7ed59f1e8f1589f41e"><div class="ttname"><a href="namespacefabomatic.xhtml#ac96861b9b9e14b7ed59f1e8f1589f41e">fabomatic::getConfig</a></div><div class="ttdeci">auto getConfig(ForceReset force_reset) -&gt; SavedConfig</div><div class="ttdef"><b>Definition</b> <a href="_o_t_a_8cpp_source.xhtml#l00033">OTA.cpp:33</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_board_logic_8cpp_source.xhtml#l00266">fabomatic::BoardLogic::changeStatus()</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00025">configModeCallback()</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00033">getConfig()</a>, <a class="el" href="conf_8hpp_source.xhtml#l00182">fabomatic::conf::common::INT_MAX_LENGTH</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>, <a class="el" href="conf_8hpp_source.xhtml#l00131">fabomatic::conf::tasks::PORTAL_CONFIG_TIMEOUT</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00019">saveConfigCallback()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00632">fabomatic::BoardLogic::setRebootRequest()</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00011">shouldSaveConfig</a>, <a class="el" href="conf_8hpp_source.xhtml#l00179">fabomatic::conf::common::STR_MAX_LENGTH</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00009">TAG</a>.</p>
+<p class="reference">References <a class="el" href="_board_logic_8cpp_source.xhtml#l00266">fabomatic::BoardLogic::changeStatus()</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00025">configModeCallback()</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00033">getConfig()</a>, <a class="el" href="conf_8hpp_source.xhtml#l00182">fabomatic::conf::common::INT_MAX_LENGTH</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>, <a class="el" href="conf_8hpp_source.xhtml#l00131">fabomatic::conf::tasks::PORTAL_CONFIG_TIMEOUT</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00019">saveConfigCallback()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00627">fabomatic::BoardLogic::setRebootRequest()</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00011">shouldSaveConfig</a>, <a class="el" href="conf_8hpp_source.xhtml#l00179">fabomatic::conf::common::STR_MAX_LENGTH</a>, <a class="el" href="_logging_8hpp_source.xhtml#l00009">TAG</a>, and <a class="el" href="namespacefabomatic.xhtml#a746cf42961062ecd5bdca3dd0e55ba56af827cf462f62848df37c5e1e94a4da74">True</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="main_8cpp_source.xhtml#l00433">setup()</a>, and <a class="el" href="main_8cpp_source.xhtml#l00222">taskFactoryReset()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="namespacefabomatic_a8374c0d1cef777c26dc13b4abc9c52b6_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
+<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="namespacefabomatic_abb6b42355a3cffaa13e06fd3fea763b2_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
 </div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="namespacefabomatic_a8374c0d1cef777c26dc13b4abc9c52b6_icgraph.svg" width="428" height="86"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="namespacefabomatic_abb6b42355a3cffaa13e06fd3fea763b2_icgraph.svg" width="428" height="86"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -1192,7 +1273,7 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  135</span>    Board::logic.setRebootRequest(<span class="keyword">true</span>);</div>
 <div class="line"><span class="lineno">  136</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00632">fabomatic::BoardLogic::setRebootRequest()</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00009">TAG</a>.</p>
+<p class="reference">References <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00627">fabomatic::BoardLogic::setRebootRequest()</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00009">TAG</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="_o_t_a_8cpp_source.xhtml#l00138">setupOTA()</a>.</p>
 <div class="dynheader">
@@ -1291,30 +1372,35 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  404</span>    <span class="comment">// Now dump all pins.hpp settings</span></div>
 <div class="line"><span class="lineno">  405</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;Hardware settings:&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"><span class="lineno">  406</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;\tLED:&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line"><span class="lineno">  407</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;\t\tPin:&quot;</span> &lt;&lt; +pins.led.pin &lt;&lt; <span class="stringliteral">&quot; (G:&quot;</span> &lt;&lt; +pins.led.green_pin &lt;&lt; <span class="stringliteral">&quot;, B:&quot;</span> &lt;&lt; +pins.led.blue_pin &lt;&lt; <span class="stringliteral">&quot;)&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line"><span class="lineno">  408</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;\t\tType is neopixel:&quot;</span> &lt;&lt; pins.led.is_neopixel &lt;&lt; <span class="stringliteral">&quot;, is rgb:&quot;</span> &lt;&lt; pins.led.is_rgb &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line"><span class="lineno">  409</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;\t\tNeopixel config flags:&quot;</span> &lt;&lt; pins.led.neopixel_config &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line"><span class="lineno">  407</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;\t\tPin:&quot;</span> &lt;&lt; +<a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#a5d85a2cde0f38b6fa413d40fb871c01f">led</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1led__config.xhtml#a77f7c0b888321527f09d6f5c9a73d613">pin</a> &lt;&lt; <span class="stringliteral">&quot; (G:&quot;</span> &lt;&lt; +<a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#a5d85a2cde0f38b6fa413d40fb871c01f">led</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1led__config.xhtml#a75763c073c851328dd89841ef6a9c089">green_pin</a> &lt;&lt; <span class="stringliteral">&quot;, B:&quot;</span> &lt;&lt; +<a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#a5d85a2cde0f38b6fa413d40fb871c01f">led</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1led__config.xhtml#a6f9e13764567a00b91ca452070ac5d8e">blue_pin</a> &lt;&lt; <span class="stringliteral">&quot;)&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line"><span class="lineno">  408</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;\t\tType is neopixel:&quot;</span> &lt;&lt; <a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#a5d85a2cde0f38b6fa413d40fb871c01f">led</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1led__config.xhtml#a39f3d50f092e000bde262c85ba0944fc">is_neopixel</a> &lt;&lt; <span class="stringliteral">&quot;, is rgb:&quot;</span> &lt;&lt; <a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#a5d85a2cde0f38b6fa413d40fb871c01f">led</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1led__config.xhtml#abdb2f44be336d8c219be23a7ff4911fb">is_rgb</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line"><span class="lineno">  409</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;\t\tNeopixel config flags:&quot;</span> &lt;&lt; <a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#a5d85a2cde0f38b6fa413d40fb871c01f">led</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1led__config.xhtml#abcb9f08ec0d07153bdafb39845164672">neopixel_config</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"><span class="lineno">  410</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;\tMfrc522 chip:&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line"><span class="lineno">  411</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;\t\tSPI settings: MISO: &quot;</span> &lt;&lt; +pins.mfrc522.miso_pin &lt;&lt; <span class="stringliteral">&quot;,&quot;</span></div>
-<div class="line"><span class="lineno">  412</span>              &lt;&lt; <span class="stringliteral">&quot; MOSI: &quot;</span> &lt;&lt; +pins.mfrc522.mosi_pin &lt;&lt; <span class="stringliteral">&quot;,&quot;</span></div>
-<div class="line"><span class="lineno">  413</span>              &lt;&lt; <span class="stringliteral">&quot; SCK: &quot;</span> &lt;&lt; +pins.mfrc522.sck_pin &lt;&lt; <span class="stringliteral">&quot;,&quot;</span></div>
-<div class="line"><span class="lineno">  414</span>              &lt;&lt; <span class="stringliteral">&quot; SDA: &quot;</span> &lt;&lt; +pins.mfrc522.sda_pin &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line"><span class="lineno">  415</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;\t\tRESET pin:&quot;</span> &lt;&lt; +pins.mfrc522.reset_pin &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line"><span class="lineno">  411</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;\t\tSPI settings: MISO: &quot;</span> &lt;&lt; +<a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#a56e9af80959f84e6c9483996009c5620">mfrc522</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1mfrc522__config.xhtml#ae1ee8ccf4d0434da7900347ca5b929cc">miso_pin</a> &lt;&lt; <span class="stringliteral">&quot;,&quot;</span></div>
+<div class="line"><span class="lineno">  412</span>              &lt;&lt; <span class="stringliteral">&quot; MOSI: &quot;</span> &lt;&lt; +<a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#a56e9af80959f84e6c9483996009c5620">mfrc522</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1mfrc522__config.xhtml#a19ad1728d7526f56baeb3d1fe687c582">mosi_pin</a> &lt;&lt; <span class="stringliteral">&quot;,&quot;</span></div>
+<div class="line"><span class="lineno">  413</span>              &lt;&lt; <span class="stringliteral">&quot; SCK: &quot;</span> &lt;&lt; +<a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#a56e9af80959f84e6c9483996009c5620">mfrc522</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1mfrc522__config.xhtml#aff74af5a27c6eed2369365bf06c57495">sck_pin</a> &lt;&lt; <span class="stringliteral">&quot;,&quot;</span></div>
+<div class="line"><span class="lineno">  414</span>              &lt;&lt; <span class="stringliteral">&quot; SDA: &quot;</span> &lt;&lt; +<a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#a56e9af80959f84e6c9483996009c5620">mfrc522</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1mfrc522__config.xhtml#a175be0691c7c28ed93120bf059fbeaa8">sda_pin</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line"><span class="lineno">  415</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;\t\tRESET pin:&quot;</span> &lt;&lt; +<a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#a56e9af80959f84e6c9483996009c5620">mfrc522</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1mfrc522__config.xhtml#a62db3302c573adaafa4c031c5512c652">reset_pin</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"><span class="lineno">  416</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;\tLCD module:&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line"><span class="lineno">  417</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;\t\tParallel interface D0:&quot;</span> &lt;&lt; +pins.lcd.d0_pin &lt;&lt; <span class="stringliteral">&quot;, D1:&quot;</span> &lt;&lt; +pins.lcd.d1_pin &lt;&lt; <span class="stringliteral">&quot;, D2:&quot;</span> &lt;&lt; +pins.lcd.d2_pin &lt;&lt; <span class="stringliteral">&quot;, D3:&quot;</span> &lt;&lt; +pins.lcd.d3_pin &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line"><span class="lineno">  418</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;\t\tReset pin:&quot;</span> &lt;&lt; +pins.lcd.rs_pin &lt;&lt; <span class="stringliteral">&quot;, Enable pin:&quot;</span> &lt;&lt; +pins.lcd.en_pin &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line"><span class="lineno">  419</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;\t\tBacklight pin:&quot;</span> &lt;&lt; +pins.lcd.bl_pin &lt;&lt; <span class="stringliteral">&quot; (active low:&quot;</span> &lt;&lt; pins.lcd.active_low &lt;&lt; <span class="stringliteral">&quot;)&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line"><span class="lineno">  417</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;\t\tParallel interface D0:&quot;</span> &lt;&lt; +<a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#abd0d35daf6efede38501593182b6d574">lcd</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1lcd__config.xhtml#abf3ff78e86490e5c70c72849f65818d5">d0_pin</a> &lt;&lt; <span class="stringliteral">&quot;, D1:&quot;</span> &lt;&lt; +<a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#abd0d35daf6efede38501593182b6d574">lcd</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1lcd__config.xhtml#a1ab6a17e914d2267f9cedd085e126871">d1_pin</a> &lt;&lt; <span class="stringliteral">&quot;, D2:&quot;</span> &lt;&lt; +<a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#abd0d35daf6efede38501593182b6d574">lcd</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1lcd__config.xhtml#af533fe4d11b8c90e3c8a849e07f0a14e">d2_pin</a> &lt;&lt; <span class="stringliteral">&quot;, D3:&quot;</span> &lt;&lt; +<a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#abd0d35daf6efede38501593182b6d574">lcd</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1lcd__config.xhtml#ad9cd9645af26937062d2ad1c323b07e3">d3_pin</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line"><span class="lineno">  418</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;\t\tReset pin:&quot;</span> &lt;&lt; +<a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#abd0d35daf6efede38501593182b6d574">lcd</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1lcd__config.xhtml#ab01700e546f2f4eeda250ca6bcb574d2">rs_pin</a> &lt;&lt; <span class="stringliteral">&quot;, Enable pin:&quot;</span> &lt;&lt; +<a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#abd0d35daf6efede38501593182b6d574">lcd</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1lcd__config.xhtml#a1213d1161a9e3220271355440db4546a">en_pin</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line"><span class="lineno">  419</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;\t\tBacklight pin:&quot;</span> &lt;&lt; +<a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#abd0d35daf6efede38501593182b6d574">lcd</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1lcd__config.xhtml#a350521ea33a6ab39885e4cab1ebf7ac2">bl_pin</a> &lt;&lt; <span class="stringliteral">&quot; (active low:&quot;</span> &lt;&lt; <a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#abd0d35daf6efede38501593182b6d574">lcd</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1lcd__config.xhtml#a7338933f52e5f0b6eabfb831edf4b11c">active_low</a> &lt;&lt; <span class="stringliteral">&quot;)&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"><span class="lineno">  420</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;\tRelay:&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line"><span class="lineno">  421</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;\t\tControl pin:&quot;</span> &lt;&lt; +pins.relay.ch1_pin &lt;&lt; <span class="stringliteral">&quot; (active low:&quot;</span> &lt;&lt; pins.relay.active_low &lt;&lt; <span class="stringliteral">&quot;)&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line"><span class="lineno">  421</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;\t\tControl pin:&quot;</span> &lt;&lt; +<a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#a310be8cfdd1f9617522c2eb0dd02f252">relay</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1relay__config.xhtml#a3cfbcbcee8f3bb2aa8a2c6fc1246f27e">ch1_pin</a> &lt;&lt; <span class="stringliteral">&quot; (active low:&quot;</span> &lt;&lt; <a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#a310be8cfdd1f9617522c2eb0dd02f252">relay</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1relay__config.xhtml#a97aba51a660e5576caa17fa2cd798bcf">active_low</a> &lt;&lt; <span class="stringliteral">&quot;)&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"><span class="lineno">  422</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;\tBuzzer:&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line"><span class="lineno">  423</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;\t\tPin:&quot;</span> &lt;&lt; +pins.buzzer.pin &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line"><span class="lineno">  423</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;\t\tPin:&quot;</span> &lt;&lt; +<a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#a43cea4034bd725f649b61d3a78805eb2">buzzer</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1buzzer__config.xhtml#a733e4c811983bf63e73035ab885ffc65">pin</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"><span class="lineno">  424</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;\tButtons:&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line"><span class="lineno">  425</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;\t\tFactory defaults pin:&quot;</span> &lt;&lt; +pins.buttons.factory_defaults_pin &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line"><span class="lineno">  425</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;\t\tFactory defaults pin:&quot;</span> &lt;&lt; +<a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#ad95db725b088bb4db1c202d0d8a9660b">buttons</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1buttons__config.xhtml#a2b6b4bff992be0fb804412d51eed5484">factory_defaults_pin</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"><span class="lineno">  426</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;---\n&quot;</span>;</div>
 <div class="line"><span class="lineno">  427</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;ESP32 serial: &quot;</span> &lt;&lt; esp32::esp_serial_str() &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"><span class="lineno">  428</span>    std::cout &lt;&lt; std::endl;</div>
 <div class="line"><span class="lineno">  429</span>  }</div>
 <div class="ttc" id="amain_8cpp_xhtml_aef0b5124fcadf80db529fcb6df42808a"><div class="ttname"><a href="main_8cpp.xhtml#aef0b5124fcadf80db529fcb6df42808a">GIT_VERSION</a></div><div class="ttdeci">#define GIT_VERSION</div><div class="ttdef"><b>Definition</b> <a href="main_8cpp_source.xhtml#l00022">main.cpp:22</a></div></div>
+<div class="ttc" id="astructfabomatic_1_1pins__config_1_1lcd__config_xhtml_a7338933f52e5f0b6eabfb831edf4b11c"><div class="ttname"><a href="structfabomatic_1_1pins__config_1_1lcd__config.xhtml#a7338933f52e5f0b6eabfb831edf4b11c">fabomatic::pins_config::lcd_config::active_low</a></div><div class="ttdeci">bool active_low</div><div class="ttdoc">Backlight active low.</div><div class="ttdef"><b>Definition</b> <a href="_pins_config_8hpp_source.xhtml#l00038">PinsConfig.hpp:38</a></div></div>
+<div class="ttc" id="astructfabomatic_1_1pins__config_1_1led__config_xhtml_a39f3d50f092e000bde262c85ba0944fc"><div class="ttname"><a href="structfabomatic_1_1pins__config_1_1led__config.xhtml#a39f3d50f092e000bde262c85ba0944fc">fabomatic::pins_config::led_config::is_neopixel</a></div><div class="ttdeci">bool is_neopixel</div><div class="ttdef"><b>Definition</b> <a href="_pins_config_8hpp_source.xhtml#l00056">PinsConfig.hpp:56</a></div></div>
+<div class="ttc" id="astructfabomatic_1_1pins__config_1_1led__config_xhtml_abcb9f08ec0d07153bdafb39845164672"><div class="ttname"><a href="structfabomatic_1_1pins__config_1_1led__config.xhtml#abcb9f08ec0d07153bdafb39845164672">fabomatic::pins_config::led_config::neopixel_config</a></div><div class="ttdeci">uint32_t neopixel_config</div><div class="ttdef"><b>Definition</b> <a href="_pins_config_8hpp_source.xhtml#l00057">PinsConfig.hpp:57</a></div></div>
+<div class="ttc" id="astructfabomatic_1_1pins__config_1_1led__config_xhtml_abdb2f44be336d8c219be23a7ff4911fb"><div class="ttname"><a href="structfabomatic_1_1pins__config_1_1led__config.xhtml#abdb2f44be336d8c219be23a7ff4911fb">fabomatic::pins_config::led_config::is_rgb</a></div><div class="ttdeci">bool is_rgb</div><div class="ttdef"><b>Definition</b> <a href="_pins_config_8hpp_source.xhtml#l00058">PinsConfig.hpp:58</a></div></div>
+<div class="ttc" id="astructfabomatic_1_1pins__config_1_1relay__config_xhtml_a97aba51a660e5576caa17fa2cd798bcf"><div class="ttname"><a href="structfabomatic_1_1pins__config_1_1relay__config.xhtml#a97aba51a660e5576caa17fa2cd798bcf">fabomatic::pins_config::relay_config::active_low</a></div><div class="ttdeci">bool active_low</div><div class="ttdef"><b>Definition</b> <a href="_pins_config_8hpp_source.xhtml#l00045">PinsConfig.hpp:45</a></div></div>
 </div><!-- fragment -->
 <p class="reference">References <a class="el" href="_pins_config_8hpp_source.xhtml#l00038">fabomatic::pins_config::lcd_config::active_low</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00045">fabomatic::pins_config::relay_config::active_low</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00036">fabomatic::pins_config::lcd_config::bl_pin</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00060">fabomatic::pins_config::led_config::blue_pin</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00073">fabomatic::pins_config::buttons</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00071">fabomatic::pins_config::buzzer</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00044">fabomatic::pins_config::relay_config::ch1_pin</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00031">fabomatic::pins_config::lcd_config::d0_pin</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00032">fabomatic::pins_config::lcd_config::d1_pin</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00033">fabomatic::pins_config::lcd_config::d2_pin</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00034">fabomatic::pins_config::lcd_config::d3_pin</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00030">fabomatic::pins_config::lcd_config::en_pin</a>, <a class="el" href="_espressif_8cpp_source.xhtml#l00067">fabomatic::esp32::esp_serial_str()</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00065">fabomatic::pins_config::buttons_config::factory_defaults_pin</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00021">GIT_VERSION</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00059">fabomatic::pins_config::led_config::green_pin</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00056">fabomatic::pins_config::led_config::is_neopixel</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00058">fabomatic::pins_config::led_config::is_rgb</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00069">fabomatic::pins_config::lcd</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00072">fabomatic::pins_config::led</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00068">fabomatic::pins_config::mfrc522</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00019">fabomatic::pins_config::mfrc522_config::miso_pin</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00018">fabomatic::pins_config::mfrc522_config::mosi_pin</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00057">fabomatic::pins_config::led_config::neopixel_config</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00050">fabomatic::pins_config::buzzer_config::pin</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00055">fabomatic::pins_config::led_config::pin</a>, <a class="el" href="pins_8hpp_source.xhtml#l00246">pins</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00070">fabomatic::pins_config::relay</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00021">fabomatic::pins_config::mfrc522_config::reset_pin</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00028">fabomatic::pins_config::lcd_config::rs_pin</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00020">fabomatic::pins_config::mfrc522_config::sck_pin</a>, and <a class="el" href="_pins_config_8hpp_source.xhtml#l00017">fabomatic::pins_config::mfrc522_config::sda_pin</a>.</p>
 
@@ -1433,7 +1519,7 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">   99</span>    Board::logic.blinkLed();</div>
 <div class="line"><span class="lineno">  100</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_board_logic_8cpp_source.xhtml#l00492">fabomatic::BoardLogic::blinkLed()</a>, and <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>.</p>
+<p class="reference">References <a class="el" href="_board_logic_8cpp_source.xhtml#l00487">fabomatic::BoardLogic::blinkLed()</a>, and <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1465,7 +1551,7 @@ Here is the call graph for this function:</div>
 <div class="line"><span class="lineno">   93</span>    Board::logic.processBackendRequests();</div>
 <div class="line"><span class="lineno">   94</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_board_logic_8cpp_source.xhtml#l00542">fabomatic::BoardLogic::checkRfid()</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>, and <a class="el" href="_board_logic_8cpp_source.xhtml#l00654">fabomatic::BoardLogic::processBackendRequests()</a>.</p>
+<p class="reference">References <a class="el" href="_board_logic_8cpp_source.xhtml#l00537">fabomatic::BoardLogic::checkRfid()</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>, and <a class="el" href="_board_logic_8cpp_source.xhtml#l00649">fabomatic::BoardLogic::processBackendRequests()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1538,7 +1624,7 @@ Here is the call graph for this function:</div>
 <div class="ttc" id="aclassfabomatic_1_1_fab_backend_xhtml_aef092e0e1db0c3539d5474fad2456255"><div class="ttname"><a href="classfabomatic_1_1_fab_backend.xhtml#aef092e0e1db0c3539d5474fad2456255">fabomatic::FabBackend::isOnline</a></div><div class="ttdeci">auto isOnline() const -&gt; bool</div><div class="ttdoc">Indicates if the MQTT client is connected to the broker and backend is responsive.</div><div class="ttdef"><b>Definition</b> <a href="_fab_backend_8cpp_source.xhtml#l00238">FabBackend.cpp:238</a></div></div>
 <div class="ttc" id="anamespacefabomatic_1_1_board_xhtml_a57517d1e4e586f81a847e56fc92678bc"><div class="ttname"><a href="namespacefabomatic_1_1_board.xhtml#a57517d1e4e586f81a847e56fc92678bc">fabomatic::Board::server</a></div><div class="ttdeci">FabBackend server</div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_board_logic_8cpp_source.xhtml#l00266">fabomatic::BoardLogic::changeStatus()</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00317">fabomatic::FabBackend::connect()</a>, <a class="el" href="_tasks_8cpp_source.xhtml#l00265">fabomatic::Tasks::delay()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00627">fabomatic::BoardLogic::getServer()</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00238">fabomatic::FabBackend::isOnline()</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00041">fabomatic::BoardLogic::refreshFromServer()</a>, <a class="el" href="conf_8hpp_source.xhtml#l00051">fabomatic::conf::lcd::SHORT_MESSAGE_DELAY</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00740">fabomatic::FabBackend::shouldFailFast()</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00009">TAG</a>.</p>
+<p class="reference">References <a class="el" href="_board_logic_8cpp_source.xhtml#l00266">fabomatic::BoardLogic::changeStatus()</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00317">fabomatic::FabBackend::connect()</a>, <a class="el" href="_tasks_8cpp_source.xhtml#l00266">fabomatic::Tasks::delay()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00622">fabomatic::BoardLogic::getServer()</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00238">fabomatic::FabBackend::isOnline()</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00041">fabomatic::BoardLogic::refreshFromServer()</a>, <a class="el" href="conf_8hpp_source.xhtml#l00051">fabomatic::conf::lcd::SHORT_MESSAGE_DELAY</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00740">fabomatic::FabBackend::shouldFailFast()</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00009">TAG</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="main_8cpp_source.xhtml#l00433">setup()</a>.</p>
 <div class="dynheader">
@@ -1617,7 +1703,7 @@ Here is the call graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="main_8cpp_source.xhtml#l00222">222</a> of file <a class="el" href="main_8cpp_source.xhtml">main.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  223</span>  {</div>
-<div class="line"><span class="lineno">  224</span>    <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (pins.buttons.factory_defaults_pin == NO_PIN)</div>
+<div class="line"><span class="lineno">  224</span>    <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (<a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#ad95db725b088bb4db1c202d0d8a9660b">buttons</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1buttons__config.xhtml#a2b6b4bff992be0fb804412d51eed5484">factory_defaults_pin</a> == <a class="code hl_variable" href="namespacefabomatic.xhtml#a01a9e2e5f9e92f6f3fa9204ba3d946b9">NO_PIN</a>)</div>
 <div class="line"><span class="lineno">  225</span>    {</div>
 <div class="line"><span class="lineno">  226</span>      <span class="keywordflow">return</span>;</div>
 <div class="line"><span class="lineno">  227</span>    }</div>
@@ -1625,11 +1711,11 @@ Here is the call graph for this function:</div>
 <div class="line"><span class="lineno">  229</span>    <span class="comment">// Skip factory reset for this specific board because Factory Reset is soldered under the MCU with the reset pin.</span></div>
 <div class="line"><span class="lineno">  230</span>    <span class="keywordflow">if</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;serial = esp32::esp_serial_str(); serial == <span class="stringliteral">&quot;dcda0c419794&quot;</span>)</div>
 <div class="line"><span class="lineno">  231</span>    {</div>
-<div class="line"><span class="lineno">  232</span>      pinMode(pins.buttons.factory_defaults_pin, INPUT); <span class="comment">// Disable pull-up/pull-downs</span></div>
+<div class="line"><span class="lineno">  232</span>      pinMode(pins.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#ad95db725b088bb4db1c202d0d8a9660b">buttons</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1buttons__config.xhtml#a2b6b4bff992be0fb804412d51eed5484">factory_defaults_pin</a>, INPUT); <span class="comment">// Disable pull-up/pull-downs</span></div>
 <div class="line"><span class="lineno">  233</span>      <span class="keywordflow">return</span>;</div>
 <div class="line"><span class="lineno">  234</span>    }</div>
 <div class="line"><span class="lineno">  235</span> </div>
-<div class="line"><span class="lineno">  236</span>    pinMode(pins.buttons.factory_defaults_pin, INPUT_PULLUP);</div>
+<div class="line"><span class="lineno">  236</span>    pinMode(<a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#ad95db725b088bb4db1c202d0d8a9660b">buttons</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1buttons__config.xhtml#a2b6b4bff992be0fb804412d51eed5484">factory_defaults_pin</a>, INPUT_PULLUP);</div>
 <div class="line"><span class="lineno">  237</span> </div>
 <div class="line"><span class="lineno">  238</span>    <span class="keywordflow">if</span> (Board::logic.getRebootRequest())</div>
 <div class="line"><span class="lineno">  239</span>    {</div>
@@ -1638,7 +1724,7 @@ Here is the call graph for this function:</div>
 <div class="line"><span class="lineno">  242</span>      <span class="keywordflow">return</span>;</div>
 <div class="line"><span class="lineno">  243</span>    }</div>
 <div class="line"><span class="lineno">  244</span> </div>
-<div class="line"><span class="lineno">  245</span>    <span class="keywordflow">if</span> (digitalRead(pins.buttons.factory_defaults_pin) == LOW)</div>
+<div class="line"><span class="lineno">  245</span>    <span class="keywordflow">if</span> (digitalRead(<a class="code hl_variable" href="namespacefabomatic.xhtml#a90e4180ab5a1ffd3393b4f0d6b01f2b3">pins</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config.xhtml#ad95db725b088bb4db1c202d0d8a9660b">buttons</a>.<a class="code hl_variable" href="structfabomatic_1_1pins__config_1_1buttons__config.xhtml#a2b6b4bff992be0fb804412d51eed5484">factory_defaults_pin</a>) == LOW)</div>
 <div class="line"><span class="lineno">  246</span>    {</div>
 <div class="line"><span class="lineno">  247</span>      ESP_LOGI(<a class="code hl_variable" href="_logging_8hpp.xhtml#a4ef5b5f197804a60836ab1e8907d8301">TAG</a>, <span class="stringliteral">&quot;Factory reset button pressed&quot;</span>);</div>
 <div class="line"><span class="lineno">  248</span>      <span class="keywordflow">if</span> (!SavedConfig::DefaultConfig().SaveToEEPROM())</div>
@@ -1652,12 +1738,12 @@ Here is the call graph for this function:</div>
 <div class="line"><span class="lineno">  256</span>      }</div>
 <div class="line"><span class="lineno">  257</span> </div>
 <div class="line"><span class="lineno">  258</span>      esp32::removeWatchdog();</div>
-<div class="line"><span class="lineno">  259</span>      <a class="code hl_function" href="namespacefabomatic.xhtml#a8374c0d1cef777c26dc13b4abc9c52b6">openConfigPortal</a>(<span class="keyword">true</span>, <span class="keyword">false</span>); <span class="comment">// Network configuration setup</span></div>
+<div class="line"><span class="lineno">  259</span>      <a class="code hl_function" href="namespacefabomatic.xhtml#abb6b42355a3cffaa13e06fd3fea763b2">openConfigPortal</a>(ForceReset::True, DisablePortal::False); <span class="comment">// Network configuration setup</span></div>
 <div class="line"><span class="lineno">  260</span>    }</div>
 <div class="line"><span class="lineno">  261</span>  }</div>
-<div class="ttc" id="anamespacefabomatic_xhtml_a8374c0d1cef777c26dc13b4abc9c52b6"><div class="ttname"><a href="namespacefabomatic.xhtml#a8374c0d1cef777c26dc13b4abc9c52b6">fabomatic::openConfigPortal</a></div><div class="ttdeci">void openConfigPortal(bool force_reset, bool disable_portal)</div><div class="ttdoc">Open the ArduinoOTA configuration portal.</div><div class="ttdef"><b>Definition</b> <a href="_o_t_a_8cpp_source.xhtml#l00047">OTA.cpp:47</a></div></div>
+<div class="ttc" id="anamespacefabomatic_xhtml_abb6b42355a3cffaa13e06fd3fea763b2"><div class="ttname"><a href="namespacefabomatic.xhtml#abb6b42355a3cffaa13e06fd3fea763b2">fabomatic::openConfigPortal</a></div><div class="ttdeci">void openConfigPortal(ForceReset force_reset, DisablePortal disable_portal)</div><div class="ttdoc">Open the ArduinoOTA configuration portal.</div><div class="ttdef"><b>Definition</b> <a href="_o_t_a_8cpp_source.xhtml#l00047">OTA.cpp:47</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_board_logic_8cpp_source.xhtml#l00492">fabomatic::BoardLogic::blinkLed()</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00073">fabomatic::pins_config::buttons</a>, <a class="el" href="_saved_config_8cpp_source.xhtml#l00028">fabomatic::SavedConfig::DefaultConfig()</a>, <a class="el" href="_espressif_8cpp_source.xhtml#l00067">fabomatic::esp32::esp_serial_str()</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00065">fabomatic::pins_config::buttons_config::factory_defaults_pin</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00010">NO_PIN</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00047">openConfigPortal()</a>, <a class="el" href="pins_8hpp_source.xhtml#l00246">pins</a>, <a class="el" href="_espressif_8cpp_source.xhtml#l00061">fabomatic::esp32::removeWatchdog()</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00009">TAG</a>.</p>
+<p class="reference">References <a class="el" href="_board_logic_8cpp_source.xhtml#l00487">fabomatic::BoardLogic::blinkLed()</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00073">fabomatic::pins_config::buttons</a>, <a class="el" href="_saved_config_8cpp_source.xhtml#l00028">fabomatic::SavedConfig::DefaultConfig()</a>, <a class="el" href="_espressif_8cpp_source.xhtml#l00067">fabomatic::esp32::esp_serial_str()</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00065">fabomatic::pins_config::buttons_config::factory_defaults_pin</a>, <a class="el" href="namespacefabomatic.xhtml#a7fd67386e07b7542211b6b0dc3eb1742af8320b26d30ab433c5a54546d21f414c">False</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00010">NO_PIN</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00047">openConfigPortal()</a>, <a class="el" href="pins_8hpp_source.xhtml#l00246">pins</a>, <a class="el" href="_espressif_8cpp_source.xhtml#l00061">fabomatic::esp32::removeWatchdog()</a>, <a class="el" href="_logging_8hpp_source.xhtml#l00009">TAG</a>, and <a class="el" href="namespacefabomatic.xhtml#a746cf42961062ecd5bdca3dd0e55ba56af827cf462f62848df37c5e1e94a4da74">True</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1713,7 +1799,7 @@ Here is the call graph for this function:</div>
 <div class="ttc" id="aclassfabomatic_1_1_fab_backend_xhtml_abb44b529c858ddc1006592e9bac8a815"><div class="ttname"><a href="classfabomatic_1_1_fab_backend.xhtml#abb44b529c858ddc1006592e9bac8a815">fabomatic::FabBackend::alive</a></div><div class="ttdeci">auto alive() -&gt; bool</div><div class="ttdoc">Sends a ping to the server.</div><div class="ttdef"><b>Definition</b> <a href="_fab_backend_8cpp_source.xhtml#l00630">FabBackend.cpp:630</a></div></div>
 <div class="ttc" id="anamespacefabomatic_1_1esp32_xhtml_a5f5bb4a72418870dbcddd266b5bb0fcd"><div class="ttname"><a href="namespacefabomatic_1_1esp32.xhtml#a5f5bb4a72418870dbcddd266b5bb0fcd">fabomatic::esp32::showHeapStats</a></div><div class="ttdeci">void showHeapStats()</div><div class="ttdef"><b>Definition</b> <a href="_espressif_8cpp_source.xhtml#l00015">Espressif.cpp:15</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_fab_backend_8cpp_source.xhtml#l00630">fabomatic::FabBackend::alive()</a>, <a class="el" href="conf_8hpp_source.xhtml#l00082">fabomatic::conf::debug::ENABLE_LOGS</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00627">fabomatic::BoardLogic::getServer()</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00238">fabomatic::FabBackend::isOnline()</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00690">fabomatic::FabBackend::saveBuffer()</a>, <a class="el" href="_espressif_8cpp_source.xhtml#l00015">fabomatic::esp32::showHeapStats()</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00009">TAG</a>.</p>
+<p class="reference">References <a class="el" href="_fab_backend_8cpp_source.xhtml#l00630">fabomatic::FabBackend::alive()</a>, <a class="el" href="conf_8hpp_source.xhtml#l00082">fabomatic::conf::debug::ENABLE_LOGS</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00622">fabomatic::BoardLogic::getServer()</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00238">fabomatic::FabBackend::isOnline()</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00690">fabomatic::FabBackend::saveBuffer()</a>, <a class="el" href="_espressif_8cpp_source.xhtml#l00015">fabomatic::esp32::showHeapStats()</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00009">TAG</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1751,7 +1837,7 @@ Here is the call graph for this function:</div>
 <div class="line"><span class="lineno">  139</span>    }</div>
 <div class="line"><span class="lineno">  140</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_board_logic_8cpp_source.xhtml#l00443">fabomatic::BoardLogic::beepFail()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00594">fabomatic::BoardLogic::getMachine()</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00105">fabomatic::BoardLogic::logout()</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00009">TAG</a>.</p>
+<p class="reference">References <a class="el" href="_board_logic_8cpp_source.xhtml#l00438">fabomatic::BoardLogic::beepFail()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00589">fabomatic::BoardLogic::getMachine()</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00105">fabomatic::BoardLogic::logout()</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00009">TAG</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1787,7 +1873,7 @@ Here is the call graph for this function:</div>
 <div class="line"><span class="lineno">  191</span>  }</div>
 <div class="ttc" id="aclassfabomatic_1_1_fab_backend_xhtml_aaf05998bb9dec17ae98283969109bb2d"><div class="ttname"><a href="classfabomatic_1_1_fab_backend.xhtml#aaf05998bb9dec17ae98283969109bb2d">fabomatic::FabBackend::loop</a></div><div class="ttdeci">auto loop() -&gt; bool</div><div class="ttdoc">Main loop for the MQTT client.</div><div class="ttdef"><b>Definition</b> <a href="_fab_backend_8cpp_source.xhtml#l00186">FabBackend.cpp:186</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_board_logic_8cpp_source.xhtml#l00627">fabomatic::BoardLogic::getServer()</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00238">fabomatic::FabBackend::isOnline()</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>, and <a class="el" href="_fab_backend_8cpp_source.xhtml#l00186">fabomatic::FabBackend::loop()</a>.</p>
+<p class="reference">References <a class="el" href="_board_logic_8cpp_source.xhtml#l00622">fabomatic::BoardLogic::getServer()</a>, <a class="el" href="_fab_backend_8cpp_source.xhtml#l00238">fabomatic::FabBackend::isOnline()</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>, and <a class="el" href="_fab_backend_8cpp_source.xhtml#l00186">fabomatic::FabBackend::loop()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1818,7 +1904,7 @@ Here is the call graph for this function:</div>
 <div class="line"><span class="lineno">  105</span>    Board::logic.checkPowerOff();</div>
 <div class="line"><span class="lineno">  106</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_board_logic_8cpp_source.xhtml#l00570">fabomatic::BoardLogic::checkPowerOff()</a>, and <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>.</p>
+<p class="reference">References <a class="el" href="_board_logic_8cpp_source.xhtml#l00565">fabomatic::BoardLogic::checkPowerOff()</a>, and <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1864,7 +1950,7 @@ Here is the call graph for this function:</div>
 <div class="line"><span class="lineno">  126</span>    }</div>
 <div class="line"><span class="lineno">  127</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_board_logic_8cpp_source.xhtml#l00443">fabomatic::BoardLogic::beepFail()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00266">fabomatic::BoardLogic::changeStatus()</a>, <a class="el" href="conf_8hpp_source.xhtml#l00082">fabomatic::conf::debug::ENABLE_LOGS</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>, <a class="el" href="classfabomatic_1_1_machine.xhtml#a409acc0089d7cfe849b2e775840e5838ab161cc0f80e1c236e1f0816a42c4a00c">fabomatic::Machine::PoweredOff</a>, <a class="el" href="_espressif_8cpp_source.xhtml#l00093">fabomatic::esp32::restart()</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00009">TAG</a>.</p>
+<p class="reference">References <a class="el" href="_board_logic_8cpp_source.xhtml#l00438">fabomatic::BoardLogic::beepFail()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00266">fabomatic::BoardLogic::changeStatus()</a>, <a class="el" href="conf_8hpp_source.xhtml#l00082">fabomatic::conf::debug::ENABLE_LOGS</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>, <a class="el" href="classfabomatic_1_1_machine.xhtml#a409acc0089d7cfe849b2e775840e5838ab161cc0f80e1c236e1f0816a42c4a00c">fabomatic::Machine::PoweredOff</a>, <a class="el" href="_espressif_8cpp_source.xhtml#l00093">fabomatic::esp32::restart()</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00009">TAG</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1908,7 +1994,7 @@ Here is the call graph for this function:</div>
 <div class="line"><span class="lineno">  180</span>    }</div>
 <div class="line"><span class="lineno">  181</span>  }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_board_logic_8cpp_source.xhtml#l00266">fabomatic::BoardLogic::changeStatus()</a>, <a class="el" href="_tasks_8cpp_source.xhtml#l00265">fabomatic::Tasks::delay()</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>, <a class="el" href="globals_8hpp_source.xhtml#l00033">fabomatic::Board::rfid</a>, <a class="el" href="conf_8hpp_source.xhtml#l00116">fabomatic::conf::tasks::RFID_CHECK_PERIOD</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00009">TAG</a>.</p>
+<p class="reference">References <a class="el" href="_board_logic_8cpp_source.xhtml#l00266">fabomatic::BoardLogic::changeStatus()</a>, <a class="el" href="_tasks_8cpp_source.xhtml#l00266">fabomatic::Tasks::delay()</a>, <a class="el" href="_o_t_a_8cpp_source.xhtml#l00015">fabomatic::Board::logic</a>, <a class="el" href="globals_8hpp_source.xhtml#l00033">fabomatic::Board::rfid</a>, <a class="el" href="conf_8hpp_source.xhtml#l00116">fabomatic::conf::tasks::RFID_CHECK_PERIOD</a>, and <a class="el" href="_logging_8hpp_source.xhtml#l00009">TAG</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1933,7 +2019,7 @@ Here is the call graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -1942,7 +2028,7 @@ Here is the call graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="_pins_config_8hpp_source.xhtml#l00010">10</a> of file <a class="el" href="_pins_config_8hpp_source.xhtml">PinsConfig.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_buzzer_8cpp_source.xhtml#l00027">fabomatic::Buzzer::beepFail()</a>, <a class="el" href="_buzzer_8cpp_source.xhtml#l00016">fabomatic::Buzzer::beepOk()</a>, <a class="el" href="_buzzer_8cpp_source.xhtml#l00009">fabomatic::Buzzer::configure()</a>, <a class="el" href="pins_8hpp_source.xhtml#l00012">configure_pins_esp32()</a>, <a class="el" href="pins_8hpp_source.xhtml#l00098">configure_pins_esp32s3()</a>, <a class="el" href="pins_8hpp_source.xhtml#l00141">configure_pins_hwrev0()</a>, <a class="el" href="pins_8hpp_source.xhtml#l00055">configure_pins_wokwi()</a>, <a class="el" href="pins_8hpp_source.xhtml#l00184">configure_pins_wrover()</a>, <a class="el" href="_machine_config_8cpp_source.xhtml#l00023">fabomatic::MachineConfig::hasRelay()</a>, <a class="el" href="_led_8cpp_source.xhtml#l00006">fabomatic::Led::init()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00245">fabomatic::BoardLogic::initBoard()</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00077">no_duplicates()</a>, <a class="el" href="main_8cpp_source.xhtml#l00222">taskFactoryReset()</a>, and <a class="el" href="test__logic_8cpp_source.xhtml#l00035">fabomatic::tests::test_machine_defaults()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_l_c_d_wrapper_8cpp_source.xhtml#l00240">fabomatic::LCDWrapper::backlightOff()</a>, <a class="el" href="_l_c_d_wrapper_8cpp_source.xhtml#l00234">fabomatic::LCDWrapper::backlightOn()</a>, <a class="el" href="_buzzer_8cpp_source.xhtml#l00027">fabomatic::Buzzer::beepFail()</a>, <a class="el" href="_buzzer_8cpp_source.xhtml#l00016">fabomatic::Buzzer::beepOk()</a>, <a class="el" href="_l_c_d_wrapper_8cpp_source.xhtml#l00035">fabomatic::LCDWrapper::begin()</a>, <a class="el" href="_buzzer_8cpp_source.xhtml#l00009">fabomatic::Buzzer::configure()</a>, <a class="el" href="pins_8hpp_source.xhtml#l00012">configure_pins_esp32()</a>, <a class="el" href="pins_8hpp_source.xhtml#l00098">configure_pins_esp32s3()</a>, <a class="el" href="pins_8hpp_source.xhtml#l00141">configure_pins_hwrev0()</a>, <a class="el" href="pins_8hpp_source.xhtml#l00055">configure_pins_wokwi()</a>, <a class="el" href="pins_8hpp_source.xhtml#l00184">configure_pins_wrover()</a>, <a class="el" href="_machine_config_8cpp_source.xhtml#l00023">fabomatic::MachineConfig::hasRelay()</a>, <a class="el" href="_led_8cpp_source.xhtml#l00006">fabomatic::Led::init()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00245">fabomatic::BoardLogic::initBoard()</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00077">no_duplicates()</a>, <a class="el" href="main_8cpp_source.xhtml#l00222">taskFactoryReset()</a>, and <a class="el" href="test__logic_8cpp_source.xhtml#l00035">fabomatic::tests::test_machine_defaults()</a>.</p>
 
 </div>
 </div>
@@ -1961,14 +2047,14 @@ Here is the call graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="pins_8hpp_source.xhtml#l00246">246</a> of file <a class="el" href="pins_8hpp_source.xhtml">pins.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_buzzer_8cpp_source.xhtml#l00027">fabomatic::Buzzer::beepFail()</a>, <a class="el" href="_buzzer_8cpp_source.xhtml#l00016">fabomatic::Buzzer::beepOk()</a>, <a class="el" href="_buzzer_8cpp_source.xhtml#l00009">fabomatic::Buzzer::configure()</a>, <a class="el" href="_mrfc522_driver_8cpp_source.xhtml#l00026">fabomatic::Mrfc522Driver::hardReset()</a>, <a class="el" href="_led_8cpp_source.xhtml#l00006">fabomatic::Led::init()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00245">fabomatic::BoardLogic::initBoard()</a>, <a class="el" href="_mrfc522_driver_8cpp_source.xhtml#l00013">fabomatic::Mrfc522Driver::Mrfc522Driver()</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00077">no_duplicates()</a>, <a class="el" href="_led_8cpp_source.xhtml#l00044">fabomatic::Led::outputColor()</a>, <a class="el" href="main_8cpp_source.xhtml#l00339">printCompileSettings()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00457">fabomatic::BoardLogic::reconfigure()</a>, <a class="el" href="main_8cpp_source.xhtml#l00222">taskFactoryReset()</a>, and <a class="el" href="test__logic_8cpp_source.xhtml#l00035">fabomatic::tests::test_machine_defaults()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_buzzer_8cpp_source.xhtml#l00027">fabomatic::Buzzer::beepFail()</a>, <a class="el" href="_buzzer_8cpp_source.xhtml#l00016">fabomatic::Buzzer::beepOk()</a>, <a class="el" href="_buzzer_8cpp_source.xhtml#l00009">fabomatic::Buzzer::configure()</a>, <a class="el" href="_mrfc522_driver_8cpp_source.xhtml#l00026">fabomatic::Mrfc522Driver::hardReset()</a>, <a class="el" href="_led_8cpp_source.xhtml#l00006">fabomatic::Led::init()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00245">fabomatic::BoardLogic::initBoard()</a>, <a class="el" href="_mrfc522_driver_8cpp_source.xhtml#l00013">fabomatic::Mrfc522Driver::Mrfc522Driver()</a>, <a class="el" href="_pins_config_8hpp_source.xhtml#l00077">no_duplicates()</a>, <a class="el" href="_led_8cpp_source.xhtml#l00044">fabomatic::Led::outputColor()</a>, <a class="el" href="main_8cpp_source.xhtml#l00339">printCompileSettings()</a>, <a class="el" href="_board_logic_8cpp_source.xhtml#l00452">fabomatic::BoardLogic::reconfigure()</a>, <a class="el" href="main_8cpp_source.xhtml#l00222">taskFactoryReset()</a>, and <a class="el" href="test__logic_8cpp_source.xhtml#l00035">fabomatic::tests::test_machine_defaults()</a>.</p>
 
 </div>
 </div>
@@ -2514,7 +2600,7 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Nov 30 2024 15:35:28 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Thu Feb 27 2025 22:22:29 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

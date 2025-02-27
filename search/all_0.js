@@ -2,7 +2,7 @@ var searchData=
 [
   ['active_0',['active',['../classfabomatic_1_1_machine.xhtml#a7b30e014bf3166b1f6692d3e64d18827',1,'fabomatic::Machine::active'],['../classfabomatic_1_1_tasks_1_1_task.xhtml#a195917ecd47b52f9e924a220cbd812e5',1,'fabomatic::Tasks::Task::active']]],
   ['active_5flow_1',['active_low',['../structfabomatic_1_1pins__config_1_1lcd__config.xhtml#a7338933f52e5f0b6eabfb831edf4b11c',1,'fabomatic::pins_config::lcd_config::active_low'],['../structfabomatic_1_1pins__config_1_1relay__config.xhtml#a97aba51a660e5576caa17fa2cd798bcf',1,'fabomatic::pins_config::relay_config::active_low']]],
-  ['addtask_2',['addTask',['../classfabomatic_1_1_tasks_1_1_scheduler.xhtml#a8d19a5ae935d924c4c145ed07721e5db',1,'fabomatic::Tasks::Scheduler']]],
+  ['addtask_2',['addTask',['../classfabomatic_1_1_tasks_1_1_scheduler.xhtml#a36f6c3f66951bd53e6873459bed0b76e',1,'fabomatic::Tasks::Scheduler']]],
   ['alive_3',['alive',['../classfabomatic_1_1_fab_backend.xhtml#abb44b529c858ddc1006592e9bac8a815',1,'fabomatic::FabBackend']]],
   ['alivequery_4',['alivequery',['../classfabomatic_1_1_m_q_t_t_interface_1_1_alive_query.xhtml',1,'fabomatic::MQTTInterface::AliveQuery'],['../classfabomatic_1_1_m_q_t_t_interface_1_1_alive_query.xhtml#a4af5802dd112ae3530447540affd0348',1,'fabomatic::MQTTInterface::AliveQuery::AliveQuery()']]],
   ['allowed_5',['allowed',['../classfabomatic_1_1_machine.xhtml#a503004fad0cb04f4e525b60f8e7e9e0c',1,'fabomatic::Machine::allowed'],['../classfabomatic_1_1_m_q_t_t_interface_1_1_machine_response.xhtml#a07a6f536fb975ccee5aa78fd02bced4f',1,'fabomatic::MQTTInterface::MachineResponse::allowed']]],

@@ -131,7 +131,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <a class="code hl_variable" href="test__logic_8cpp.xhtml#afaf1857dab1bf829c9be096238cf2de5">lcd</a>.<a class="code hl_function" href="classfabomatic_1_1_l_c_d_wrapper.xhtml#a279d34136417cd56737d34b2a1033c1c">createChar</a>(CHAR_POWERED_ON, powered_on_char.data());</div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    <a class="code hl_variable" href="test__logic_8cpp.xhtml#afaf1857dab1bf829c9be096238cf2de5">lcd</a>.<a class="code hl_function" href="classfabomatic_1_1_l_c_d_wrapper.xhtml#a279d34136417cd56737d34b2a1033c1c">createChar</a>(CHAR_POWERING_OFF, powering_off_char.data());</div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    <span class="keywordflow">if</span> (config.bl_pin != NO_PIN)</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    <span class="keywordflow">if</span> (config.bl_pin != <a class="code hl_variable" href="namespacefabomatic.xhtml#a01a9e2e5f9e92f6f3fa9204ba3d946b9">NO_PIN</a>)</div>
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>      pinMode(config.bl_pin, OUTPUT);</div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    backlightOn();</div>
@@ -331,7 +331,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="foldopen" id="foldopen00234" data-start="{" data-end="}">
 <div class="line"><a id="l00234" name="l00234"></a><span class="lineno"><a class="line" href="classfabomatic_1_1_l_c_d_wrapper.xhtml#ad533e8941ba390c5581da579751c0f12">  234</a></span>  <span class="keywordtype">void</span> LCDWrapper::backlightOn()<span class="keyword"> const</span></div>
 <div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span><span class="keyword">  </span>{</div>
-<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>    <span class="keywordflow">if</span> (config.bl_pin != NO_PIN)</div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>    <span class="keywordflow">if</span> (config.bl_pin != <a class="code hl_variable" href="namespacefabomatic.xhtml#a01a9e2e5f9e92f6f3fa9204ba3d946b9">NO_PIN</a>)</div>
 <div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>      digitalWrite(config.bl_pin, config.active_low ? LOW : HIGH);</div>
 <div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>  }</div>
 </div>
@@ -339,7 +339,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="foldopen" id="foldopen00240" data-start="{" data-end="}">
 <div class="line"><a id="l00240" name="l00240"></a><span class="lineno"><a class="line" href="classfabomatic_1_1_l_c_d_wrapper.xhtml#a2236d7db392685d58c994db9d8ee09ab">  240</a></span>  <span class="keywordtype">void</span> LCDWrapper::backlightOff()<span class="keyword"> const</span></div>
 <div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span><span class="keyword">  </span>{</div>
-<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>    <span class="keywordflow">if</span> (config.bl_pin != NO_PIN)</div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>    <span class="keywordflow">if</span> (config.bl_pin != <a class="code hl_variable" href="namespacefabomatic.xhtml#a01a9e2e5f9e92f6f3fa9204ba3d946b9">NO_PIN</a>)</div>
 <div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>      digitalWrite(config.bl_pin, config.active_low ? HIGH : LOW);</div>
 <div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>  }</div>
 </div>
@@ -371,6 +371,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="ttc" id="aclassfabomatic_1_1_l_c_d_wrapper_xhtml_abb92cdf331ae1c2e9f8035be589608c0"><div class="ttname"><a href="classfabomatic_1_1_l_c_d_wrapper.xhtml#abb92cdf331ae1c2e9f8035be589608c0">fabomatic::LCDWrapper::config</a></div><div class="ttdeci">const pins_config::lcd_config &amp; config</div><div class="ttdef"><b>Definition</b> <a href="_l_c_d_wrapper_8hpp_source.xhtml#l00046">LCDWrapper.hpp:46</a></div></div>
 <div class="ttc" id="aclassfabomatic_1_1_l_c_d_wrapper_xhtml_aff380f2e5bc928353ed7ef1bd09c8905"><div class="ttname"><a href="classfabomatic_1_1_l_c_d_wrapper.xhtml#aff380f2e5bc928353ed7ef1bd09c8905">fabomatic::LCDWrapper::begin</a></div><div class="ttdeci">auto begin() -&gt; bool</div><div class="ttdef"><b>Definition</b> <a href="_l_c_d_wrapper_8cpp_source.xhtml#l00035">LCDWrapper.cpp:35</a></div></div>
 <div class="ttc" id="anamespacefabomatic_xhtml"><div class="ttname"><a href="namespacefabomatic.xhtml">fabomatic</a></div><div class="ttdef"><b>Definition</b> <a href="_auth_provider_8cpp_source.xhtml#l00010">AuthProvider.cpp:11</a></div></div>
+<div class="ttc" id="anamespacefabomatic_xhtml_a01a9e2e5f9e92f6f3fa9204ba3d946b9"><div class="ttname"><a href="namespacefabomatic.xhtml#a01a9e2e5f9e92f6f3fa9204ba3d946b9">fabomatic::NO_PIN</a></div><div class="ttdeci">constexpr uint8_t NO_PIN</div><div class="ttdoc">Constant used to indicate the pin is not used.</div><div class="ttdef"><b>Definition</b> <a href="_pins_config_8hpp_source.xhtml#l00010">PinsConfig.hpp:10</a></div></div>
 <div class="ttc" id="astructfabomatic_1_1_board_info_xhtml"><div class="ttname"><a href="structfabomatic_1_1_board_info.xhtml">fabomatic::BoardInfo</a></div><div class="ttdoc">Helper struct representing the display state.</div><div class="ttdef"><b>Definition</b> <a href="_board_info_8hpp_source.xhtml#l00009">BoardInfo.hpp:10</a></div></div>
 <div class="ttc" id="astructfabomatic_1_1_board_info_xhtml_a1b469e101a86ce94e184d205525488a9"><div class="ttname"><a href="structfabomatic_1_1_board_info.xhtml#a1b469e101a86ce94e184d205525488a9">fabomatic::BoardInfo::power_state</a></div><div class="ttdeci">Machine::PowerState power_state</div><div class="ttdef"><b>Definition</b> <a href="_board_info_8hpp_source.xhtml#l00012">BoardInfo.hpp:12</a></div></div>
 <div class="ttc" id="astructfabomatic_1_1_board_info_xhtml_a242cbbf77e31bfcd2edc7b0b0f1505c1"><div class="ttname"><a href="structfabomatic_1_1_board_info.xhtml#a242cbbf77e31bfcd2edc7b0b0f1505c1">fabomatic::BoardInfo::unresponsive</a></div><div class="ttdeci">bool unresponsive</div><div class="ttdef"><b>Definition</b> <a href="_board_info_8hpp_source.xhtml#l00014">BoardInfo.hpp:14</a></div></div>
@@ -386,7 +387,7 @@ $(document).ready(function() { init_codefold(0); });
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Nov 30 2024 15:35:28 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+Generated on Thu Feb 27 2025 22:22:28 for Fab-O-Matic by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

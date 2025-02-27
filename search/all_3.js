@@ -15,10 +15,10 @@ var searchData=
   ['description_12',['description',['../classfabomatic_1_1_m_q_t_t_interface_1_1_machine_response.xhtml#a2e4f83c22b3b6107db71ff7435b72002',1,'fabomatic::MQTTInterface::MachineResponse']]],
   ['disable_13',['disable',['../classfabomatic_1_1_tasks_1_1_task.xhtml#a10175ec4fc2f54f444850b01426c95f7',1,'fabomatic::Tasks::Task']]],
   ['disableduntil_14',['disabledUntil',['../classfabomatic_1_1_r_f_i_d_wrapper.xhtml#a2523df6cac98f046cc0705c717155889',1,'fabomatic::RFIDWrapper']]],
-  ['disableportal_15',['disablePortal',['../classfabomatic_1_1_saved_config.xhtml#a6510074227a78d4f5093b7aed88bdbef',1,'fabomatic::SavedConfig']]],
+  ['disableportal_15',['disableportal',['../namespacefabomatic.xhtml#a7fd67386e07b7542211b6b0dc3eb1742',1,'fabomatic::DisablePortal'],['../classfabomatic_1_1_saved_config.xhtml#a6510074227a78d4f5093b7aed88bdbef',1,'fabomatic::SavedConfig::disablePortal']]],
   ['disconnect_16',['disconnect',['../classfabomatic_1_1_fab_backend.xhtml#ad558116614ee45601f4665d395838727',1,'fabomatic::FabBackend']]],
   ['displaybuffer_17',['DisplayBuffer',['../classfabomatic_1_1_l_c_d_wrapper.xhtml#a33031e81d3859551ea8f69aa4e226ae8',1,'fabomatic::LCDWrapper']]],
   ['doc_18',['doc',['../classfabomatic_1_1_fab_backend.xhtml#a1218ae004e0146262801967ee50ec17a',1,'fabomatic::FabBackend']]],
   ['driver_19',['driver',['../classfabomatic_1_1_r_f_i_d_wrapper.xhtml#a414c071efd649a809be405eadf7022b8',1,'fabomatic::RFIDWrapper']]],
-  ['duration_5fs_20',['duration_s',['../classfabomatic_1_1_m_q_t_t_interface_1_1_stop_use_query.xhtml#a24bc0f921908e5aa11b4144571c2d983',1,'fabomatic::MQTTInterface::StopUseQuery::duration_s'],['../classfabomatic_1_1_m_q_t_t_interface_1_1_in_use_query.xhtml#a1e7254e7128aaef602245a8b1aec21c7',1,'fabomatic::MQTTInterface::InUseQuery::duration_s']]]
+  ['duration_5fs_20',['duration_s',['../classfabomatic_1_1_m_q_t_t_interface_1_1_in_use_query.xhtml#a1e7254e7128aaef602245a8b1aec21c7',1,'fabomatic::MQTTInterface::InUseQuery::duration_s'],['../classfabomatic_1_1_m_q_t_t_interface_1_1_stop_use_query.xhtml#a24bc0f921908e5aa11b4144571c2d983',1,'fabomatic::MQTTInterface::StopUseQuery::duration_s']]]
 ];

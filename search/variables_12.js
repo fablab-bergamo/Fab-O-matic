@@ -21,7 +21,7 @@ var searchData=
   ['tag3_18',['tag3',['../test__logic_8cpp.xhtml#a61fc6209a48e9414bc6f6dff41c34f09',1,'TAG3:&#160;test_logic.cpp'],['../test__mqtt_8cpp.xhtml#a61fc6209a48e9414bc6f6dff41c34f09',1,'TAG3:&#160;test_mqtt.cpp'],['../test__savedconfig_8cpp.xhtml#a61fc6209a48e9414bc6f6dff41c34f09',1,'TAG3:&#160;test_savedconfig.cpp']]],
   ['tag4_19',['TAG4',['../test__chrono_8cpp.xhtml#a8d86b08c6f07a1f85ba1ee2eeb214e9c',1,'test_chrono.cpp']]],
   ['task_5fcounter_20',['task_counter',['../namespacefabomatic_1_1tests.xhtml#ae44a848faed425990c1a0e33a85c587c',1,'fabomatic::tests']]],
-  ['tasks_21',['tasks',['../namespacefabomatic_1_1tests.xhtml#ad0120073d4ac1eb75d3f13dd4c3e9341',1,'fabomatic::tests::tasks'],['../classfabomatic_1_1_tasks_1_1_scheduler.xhtml#ac20ffce827e83acedd4181876e99b569',1,'fabomatic::Tasks::Scheduler::tasks']]],
+  ['tasks_21',['tasks',['../namespacefabomatic_1_1tests.xhtml#ad0120073d4ac1eb75d3f13dd4c3e9341',1,'fabomatic::tests::tasks'],['../classfabomatic_1_1_tasks_1_1_scheduler.xhtml#a043c88e634de4f46d380b22baf202273',1,'fabomatic::Tasks::Scheduler::tasks']]],
   ['tasks_5fstatus_22',['tasks_status',['../namespacefabomatic_1_1tests.xhtml#a5c6753fd10922d922982e420e92f9b7f',1,'fabomatic::tests']]],
   ['test_5fscheduler_23',['test_scheduler',['../namespacefabomatic_1_1tests.xhtml#a6404b5d30ab37f8b12de788296e2b92c',1,'fabomatic::tests']]],
   ['test_5fwhitelist_24',['test_whitelist',['../namespacefabomatic_1_1tests.xhtml#af9a30e2db3fbfa479b6512cfd428aab1',1,'fabomatic::tests']]],
