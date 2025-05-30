@@ -256,7 +256,7 @@ namespace fabomatic
       }
 
       esp32::removeWatchdog();
-      openConfigPortal(true, false); // Network configuration setup
+      openConfigPortal(ForceReset::True, DisablePortal::False); // Network configuration setup
     }
   }
 
@@ -481,8 +481,8 @@ void setup()
     logic.blinkLed(0, 64, 0);
   }
 
-  fabomatic::openConfigPortal(fabomatic::conf::debug::LOAD_EEPROM_DEFAULTS,
-                              !fabomatic::conf::debug::FORCE_PORTAL);
+  fabomatic::openConfigPortal(fabomatic::conf::debug::LOAD_EEPROM_DEFAULTS ? fabomatic::ForceReset::True : fabomatic::ForceReset::False,
+                              fabomatic::conf::debug::FORCE_PORTAL ? fabomatic::DisablePortal::False : fabomatic::DisablePortal::True);
 
 #if (MQTT_SIMULATION)
   fabomatic::startMQTTBrocker();

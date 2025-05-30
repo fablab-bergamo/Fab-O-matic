@@ -13,7 +13,7 @@ namespace fabomatic
 {
   namespace conf::cards
   {
-    static constexpr auto LEN = 10U; /* Number of whitelisted cards */
+    inline constexpr auto LEN = 10U; /* Number of whitelisted cards */
   } // namespace conf::cards
 
   using WhiteListEntry = std::tuple<card::uid_t, FabUser::UserLevel, std::string_view>;

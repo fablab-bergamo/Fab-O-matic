@@ -27,7 +27,6 @@ namespace fabomatic
     };
 
     Machine() = default;
-    ~Machine() = default;
     Machine(const Machine &) = delete;             // copy constructor
     Machine &operator=(const Machine &x) = delete; // copy assignment
     Machine(Machine &&) = delete;                  // move constructor

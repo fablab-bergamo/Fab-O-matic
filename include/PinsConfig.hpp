@@ -7,7 +7,7 @@
 namespace fabomatic
 {
   /// @brief Constant used to indicate the pin is not used
-  static constexpr uint8_t NO_PIN = -1;
+  inline constexpr uint8_t NO_PIN = -1;
 
   struct pins_config
   {

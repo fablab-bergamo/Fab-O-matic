@@ -30,10 +30,10 @@ namespace fabomatic
     Board::logic.changeStatus(Status::PortalStarting);
   }
 
-  auto getConfig(bool force_reset) -> SavedConfig
+  auto getConfig(ForceReset force_reset) -> SavedConfig
   {
     const auto &opt_settings = SavedConfig::LoadFromEEPROM();
-    if (force_reset || !opt_settings)
+    if (force_reset == ForceReset::True || !opt_settings)
     {
       return SavedConfig::DefaultConfig();
     }
@@ -44,7 +44,7 @@ namespace fabomatic
   // Starts the WiFi and possibly open the config portal in a blocking manner
   /// @param force_reset if true, the portal will be reset to factory defaults
   /// @param disable_portal if true, the portal will be disabled (useful at boot-time)
-  void openConfigPortal(bool force_reset, bool disable_portal)
+  void openConfigPortal(ForceReset force_reset, DisablePortal disable_portal)
   {
     WiFiManager wifiManager;
     auto config = getConfig(force_reset);
@@ -71,7 +71,7 @@ namespace fabomatic
     wifiManager.setAPCallback(configModeCallback);
     wifiManager.setSaveConfigCallback(saveConfigCallback);
 
-    if (force_reset)
+    if (force_reset == ForceReset::True)
     {
       wifiManager.resetSettings();
     }
@@ -81,7 +81,7 @@ namespace fabomatic
     wifiManager.resetSettings();
     wifiManager.setTimeout(10); // fail fast for debugging
 #endif
-    auto must_skip = disable_portal || config.disablePortal;
+    auto must_skip = (disable_portal == DisablePortal::True) || config.disablePortal;
     if (must_skip)
     {
       wifiManager.setTimeout(1);
