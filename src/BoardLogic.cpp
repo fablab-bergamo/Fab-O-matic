@@ -639,6 +639,11 @@ namespace fabomatic
     return this->auth.saveCache();
   }
 
+  auto BoardLogic::syncRfidCache() -> bool
+  {
+    return this->auth.syncCacheFromServer(this->server);
+  }
+
   auto BoardLogic::getHostname() const -> const std::string
   {
     // Hostname is BOARD + machine_id (which shall be unique) e.g. BOARD1

@@ -122,6 +122,16 @@ namespace fabomatic::MQTTInterface
     [[nodiscard]] auto buffered() const -> bool override { return true; };
   };
 
+  /// @brief Cache synchronization query
+  class SyncCacheQuery final : public Query
+  {
+  public:
+    constexpr SyncCacheQuery() = default;
+    [[nodiscard]] auto payload() const -> const std::string override;
+    [[nodiscard]] auto waitForReply() const -> bool override { return true; };
+    [[nodiscard]] auto buffered() const -> bool override { return false; };
+  };
+
   /// @brief Base class for server replies
   class Response
   {
@@ -187,6 +197,19 @@ namespace fabomatic::MQTTInterface
     constexpr SimpleResponse(bool rok) : Response(rok) {};
 
     [[nodiscard]] static auto fromJson(JsonDocument &doc) -> std::unique_ptr<SimpleResponse>;
+  };
+
+  /// @brief Backend response for cache synchronization query
+  class SyncCacheResponse final : public Response
+  {
+  public:
+    std::vector<card::uid_t> authorized_cards{}; /* List of authorized card UIDs */
+    std::vector<FabUser::UserLevel> card_levels{}; /* Corresponding privilege levels */
+
+    SyncCacheResponse() = delete;
+    SyncCacheResponse(bool rok) : Response(rok) {};
+
+    [[nodiscard]] static auto fromJson(JsonDocument &doc) -> std::unique_ptr<SyncCacheResponse>;
   };
 
   /// @brief Class for server request

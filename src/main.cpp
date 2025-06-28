@@ -219,6 +219,28 @@ namespace fabomatic
     }
   }
 
+  /// @brief Synchronizes RFID cache with server
+  void taskSyncCache()
+  {
+    auto &server = Board::logic.getServer();
+    
+    if (server.isOnline())
+    {
+      if (Board::logic.syncRfidCache())
+      {
+        ESP_LOGI(TAG, "Cache synchronized successfully");
+      }
+      else
+      {
+        ESP_LOGW(TAG, "Cache synchronization failed");
+      }
+    }
+    else
+    {
+      ESP_LOGD(TAG, "Skipping cache sync: server offline");
+    }
+  }
+
   void taskFactoryReset()
   {
     if constexpr (pins.buttons.factory_defaults_pin == NO_PIN)
@@ -332,6 +354,7 @@ namespace fabomatic
   const Task t_led("LED", 1s, &taskBlink, Board::scheduler, true);
   const Task t_rst("FactoryReset", 500ms, &taskFactoryReset, Board::scheduler, pins.buttons.factory_defaults_pin != NO_PIN);
   const Task t_alive("IsAlive", conf::tasks::MQTT_ALIVE_PERIOD, &taskIsAlive, Board::scheduler, true, conf::tasks::MQTT_ALIVE_PERIOD);
+  const Task t_sync("SyncCache", conf::rfid_tags::SYNC_INTERVAL, &taskSyncCache, Board::scheduler, true, conf::rfid_tags::SYNC_INTERVAL);
 #if (RFID_SIMULATION)
   const Task t_sim("RFIDCardsSim", 1s, &taskRFIDCardSim, Board::scheduler, true, 30s);
 #endif
