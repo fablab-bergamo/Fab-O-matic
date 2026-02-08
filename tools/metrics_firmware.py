@@ -27,7 +27,7 @@ def firm_metrics(source, target, env):
             pathlib.Path(firmware_file).parent.resolve() / "firmware_metrics.txt"
         )
         env.Execute(
-            '$PYTHONEXE -m esp_idf_size --format=json "'
+            '$PYTHONEXE -m esp_idf_size --format=json2 "'
             + str(firmware_file)
             + '" -o "'
             + str(report_file)
