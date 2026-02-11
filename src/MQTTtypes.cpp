@@ -88,6 +88,14 @@ namespace fabomatic::MQTTInterface
     return ss.str();
   }
 
+  auto SyncCacheQuery::payload() const -> const std::string
+  {
+    std::stringstream ss{};
+    ss << "{\"action\":\"synccache\""
+       << "}";
+    return ss.str();
+  }
+
   auto UserResponse::getResult() const -> UserResult
   {
     return static_cast<UserResult>(result);
@@ -146,6 +154,32 @@ namespace fabomatic::MQTTInterface
   auto SimpleResponse::fromJson(JsonDocument &doc) -> std::unique_ptr<SimpleResponse>
   {
     auto response = std::make_unique<SimpleResponse>(doc["request_ok"].as<bool>());
+    return response;
+  }
+
+  auto SyncCacheResponse::fromJson(JsonDocument &doc) -> std::unique_ptr<SyncCacheResponse>
+  {
+    auto response = std::make_unique<SyncCacheResponse>(doc["request_ok"].as<bool>());
+    
+    if (response->request_ok && doc.containsKey("cards"))
+    {
+      JsonArray cards_array = doc["cards"];
+      response->authorized_cards.reserve(cards_array.size());
+      response->card_levels.reserve(cards_array.size());
+      
+      for (JsonObject card_obj : cards_array)
+      {
+        if (card_obj.containsKey("uid") && card_obj.containsKey("level"))
+        {
+          auto uid_str = card_obj["uid"].as<std::string>();
+          auto level = static_cast<FabUser::UserLevel>(card_obj["level"].as<uint8_t>());
+          
+          response->authorized_cards.push_back(card::str_uid(uid_str));
+          response->card_levels.push_back(level);
+        }
+      }
+    }
+    
     return response;
   }
 

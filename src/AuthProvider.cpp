@@ -201,4 +201,53 @@ namespace fabomatic
 
     return config.SaveToEEPROM();
   }
+
+  /// @brief Synchronizes the cache with authorized cards from the server
+  /// @param server the backend server
+  /// @return true if synchronization was successful
+  auto AuthProvider::syncCacheFromServer(FabBackend &server) -> bool
+  {
+    if (!server.isOnline())
+    {
+      ESP_LOGW(TAG, "Cannot sync cache: server offline");
+      return false;
+    }
+
+    const auto response = server.syncCache();
+    if (!response || !response->request_ok)
+    {
+      ESP_LOGW(TAG, "Cache sync failed: server error");
+      return false;
+    }
+
+    if (response->authorized_cards.size() > conf::rfid_tags::SYNC_CACHE_MAX_SIZE)
+    {
+      ESP_LOGW(TAG, "Cache sync: server returned %zu cards, limiting to %d", 
+               response->authorized_cards.size(), conf::rfid_tags::SYNC_CACHE_MAX_SIZE);
+    }
+
+    // Clear current cache
+    clearCache();
+
+    // Add cards from server response up to maximum cache size
+    const auto max_cards = std::min(response->authorized_cards.size(), 
+                                   static_cast<size_t>(conf::rfid_tags::SYNC_CACHE_MAX_SIZE));
+    
+    for (size_t i = 0; i < max_cards && i < cache.size(); ++i)
+    {
+      cache.set_at(i, response->authorized_cards[i], response->card_levels[i]);
+    }
+
+    ESP_LOGI(TAG, "Cache synchronized with %zu cards from server", max_cards);
+    return true;
+  }
+
+  /// @brief Clears the entire cache
+  auto AuthProvider::clearCache() -> void
+  {
+    std::fill(cache.cards.begin(), cache.cards.end(), card::INVALID);
+    std::fill(cache.levels.begin(), cache.levels.end(), FabUser::UserLevel::Unknown);
+    cache_idx = 0;
+    ESP_LOGD(TAG, "Cache cleared");
+  }
 } // namespace fabomatic

@@ -35,6 +35,10 @@ namespace fabomatic
     inline constexpr uint8_t UID_BYTE_LEN{4};
     /// @brief Number of cached UID, persisted in flash
     inline constexpr uint8_t CACHE_LEN{10};
+    /// @brief Maximum number of cards in synchronized cache
+    inline constexpr uint16_t SYNC_CACHE_MAX_SIZE{200};
+    /// @brief Cache synchronization interval in minutes
+    inline constexpr auto SYNC_INTERVAL{30min};
 
   } // namespace conf::rfid_tags
 
