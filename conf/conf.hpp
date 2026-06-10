@@ -9,7 +9,10 @@
 
 namespace fabomatic
 {
-  using namespace std::chrono_literals;
+  using std::chrono_literals::operator""ms;
+  using std::chrono_literals::operator""s;
+  using std::chrono_literals::operator""min;
+  using std::chrono_literals::operator""h;
 
   /// @brief Machine-related default settings
   namespace conf::default_config
@@ -154,7 +157,7 @@ namespace fabomatic
     inline constexpr auto TIMEOUT_REPLY_SERVER{2s};
 
     /// @brief Once backend is unresponsive, wait at least this period before to try again
-    inline constexpr auto FAIL_FAST_PERIOD {45s};
+    inline constexpr auto FAIL_FAST_PERIOD{45s};
 
     /// @brief MQTT port for broker
     inline constexpr auto PORT_NUMBER{1883};

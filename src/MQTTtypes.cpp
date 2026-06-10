@@ -17,7 +17,7 @@
 
 namespace fabomatic::MQTTInterface
 {
-  auto UserQuery::payload() const -> const std::string
+  auto UserQuery::payload() const -> std::string
   {
     std::stringstream ss{};
     ss << "{\"action\":\"checkuser\","
@@ -26,7 +26,7 @@ namespace fabomatic::MQTTInterface
     return ss.str();
   }
 
-  auto MachineQuery::payload() const -> const std::string
+  auto MachineQuery::payload() const -> std::string
   {
     std::stringstream ss{};
     ss << "{\"action\":\"checkmachine\""
@@ -34,7 +34,7 @@ namespace fabomatic::MQTTInterface
     return ss.str();
   }
 
-  auto AliveQuery::payload() const -> const std::string
+  auto AliveQuery::payload() const -> std::string
   {
     std::stringstream ss{};
 
@@ -50,7 +50,7 @@ namespace fabomatic::MQTTInterface
     return ss.str();
   }
 
-  auto StartUseQuery::payload() const -> const std::string
+  auto StartUseQuery::payload() const -> std::string
   {
     std::stringstream ss{};
     ss << "{\"action\":\"startuse\", "
@@ -59,7 +59,7 @@ namespace fabomatic::MQTTInterface
     return ss.str();
   }
 
-  auto StopUseQuery::payload() const -> const std::string
+  auto StopUseQuery::payload() const -> std::string
   {
     std::stringstream ss{};
     ss << "{\"action\":\"stopuse\", "
@@ -69,7 +69,7 @@ namespace fabomatic::MQTTInterface
     return ss.str();
   }
 
-  auto InUseQuery::payload() const -> const std::string
+  auto InUseQuery::payload() const -> std::string
   {
     std::stringstream ss{};
     ss << "{\"action\":\"inuse\", "
@@ -79,7 +79,7 @@ namespace fabomatic::MQTTInterface
     return ss.str();
   }
 
-  auto RegisterMaintenanceQuery::payload() const -> const std::string
+  auto RegisterMaintenanceQuery::payload() const -> std::string
   {
     std::stringstream ss{};
     ss << "{\"action\":\"maintenance\", "
@@ -103,7 +103,7 @@ namespace fabomatic::MQTTInterface
     return response;
   }
 
-  auto UserResponse::toString() const -> const std::string
+  auto UserResponse::toString() const -> std::string
   {
     std::stringstream ss{};
     ss << "UserResponse: "

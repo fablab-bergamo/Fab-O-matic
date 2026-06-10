@@ -579,9 +579,9 @@ namespace fabomatic
 
   /// @brief returns a modificable machine for testing only
   /// @return a non-null Buzzer*
-  auto BoardLogic::getBuzzerForTesting() -> Buzzer *
+  auto BoardLogic::getBuzzerForTesting() -> Buzzer &
   {
-    return &buzzer;
+    return buzzer;
   }
 
   /// @brief Gets the current machine
@@ -639,7 +639,7 @@ namespace fabomatic
     return this->auth.saveCache();
   }
 
-  auto BoardLogic::getHostname() const -> const std::string
+  auto BoardLogic::getHostname() const -> std::string
   {
     // Hostname is BOARD + machine_id (which shall be unique) e.g. BOARD1
     return conf::default_config::hostname.data() +

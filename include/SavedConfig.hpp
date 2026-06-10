@@ -87,7 +87,7 @@ namespace fabomatic
     [[nodiscard]] auto getMachineID() const -> MachineID;
 
     /// @brief Returns a json-prettified fragment for logging
-    [[nodiscard]] auto toString() const -> const std::string;
+    [[nodiscard]] auto toString() const -> std::string;
 
     /// @brief Loads the configuration from EEPROM if available and matching revision number
     /// @return std::nullopt if not valid, SavedConfig otherwise

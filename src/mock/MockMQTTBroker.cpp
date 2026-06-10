@@ -116,7 +116,7 @@ namespace fabomatic
    * @param query The query string to determine the appropriate response.
    * @return The JSON payload response as a string.
    */
-  auto MockMQTTBroker::defaultReplies(const std::string &query) const -> const std::string
+  auto MockMQTTBroker::defaultReplies(const std::string &query) const -> std::string
   {
     if (query.find("checkmachine") != std::string::npos)
     {

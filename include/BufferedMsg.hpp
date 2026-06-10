@@ -61,7 +61,7 @@ namespace fabomatic
                                          mqtt_topic(topic),
                                          wait_for_answer{wait} {};
 
-    [[nodiscard]] auto payload() const -> const std::string override
+    [[nodiscard]] auto payload() const -> std::string override
     {
       auto value = std::string{mqtt_value};
       if (value.find("}") == value.size() - 1 &&

@@ -1,0 +1,99 @@
+name: Release firmware
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'New release version tag (e.g. 1.1.0)'
+        required: true
+        type: string
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate version
+        run: |
+          if ! echo "${{ inputs.version }}" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$'; then
+            echo "::error::Version '${{ inputs.version }}' must be semver like 1.2.3"
+            exit 1
+          fi
+          if git ls-remote --exit-code --tags origin "refs/tags/${{ inputs.version }}" >/dev/null 2>&1; then
+            echo "::error::Tag ${{ inputs.version }} already exists"
+            exit 1
+          fi
+      # Annotated tag: git_version.py uses 'git describe --tags' to embed
+      # GIT_VERSION in the firmware, so the tag must exist before the build
+      - name: Create and push tag
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -a "${{ inputs.version }}" -m "Release ${{ inputs.version }}"
+          git push origin "refs/tags/${{ inputs.version }}"
+
+  build:
+    needs: tag
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        variant:
+          - hardware-rev0-it_IT
+          - hardware-rev0-en_US
+          - wokwi
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: refs/tags/${{ inputs.version }}
+          fetch-depth: 0
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.platformio/.cache
+            ~/.platformio/packages
+            .pio/build_cache
+          key: ${{ runner.os }}-build-${{ matrix.variant }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install PlatformIO Core
+        run: pip install --upgrade platformio
+      - name: Use secrets.hpp.example as base for the build
+        run: cp conf/secrets.hpp.example conf/secrets.hpp
+      - name: Build PlatformIO Project ${{ matrix.variant }}
+        run: pio run --environment ${{ matrix.variant }}
+      - name: Package firmware
+        run: |
+          cd .pio/build/${{ matrix.variant }}
+          zip "$GITHUB_WORKSPACE/FW-${{ matrix.variant }}-${{ inputs.version }}.zip" firmware.bin firmware_metrics.txt
+      - name: Upload firmware package
+        uses: actions/upload-artifact@v4
+        with:
+          name: FW-${{ matrix.variant }}-${{ inputs.version }}
+          path: FW-${{ matrix.variant }}-${{ inputs.version }}.zip
+          retention-days: 90
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${{ inputs.version }}" dist/*.zip \
+            --repo "${{ github.repository }}" \
+            --title "${{ inputs.version }}" \
+            --generate-notes
