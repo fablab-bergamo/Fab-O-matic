@@ -17,7 +17,7 @@ namespace fabomatic::MQTTInterface
   {
   public:
     virtual auto waitForReply() const -> bool = 0;
-    virtual auto payload() const -> const std::string = 0;
+    virtual auto payload() const -> std::string = 0;
     virtual auto buffered() const -> bool = 0;
     virtual ~Query() = default;
   };
@@ -32,7 +32,7 @@ namespace fabomatic::MQTTInterface
     constexpr UserQuery(card::uid_t card_uid) : uid(card_uid) {};
 
     [[nodiscard]] auto waitForReply() const -> bool override { return true; };
-    [[nodiscard]] auto payload() const -> const std::string override;
+    [[nodiscard]] auto payload() const -> std::string override;
     [[nodiscard]] auto buffered() const -> bool override { return false; };
   };
 
@@ -41,7 +41,7 @@ namespace fabomatic::MQTTInterface
   {
   public:
     constexpr MachineQuery() = default;
-    [[nodiscard]] auto payload() const -> const std::string override;
+    [[nodiscard]] auto payload() const -> std::string override;
     [[nodiscard]] auto waitForReply() const -> bool override { return true; };
     [[nodiscard]] auto buffered() const -> bool override { return false; };
   };
@@ -51,7 +51,7 @@ namespace fabomatic::MQTTInterface
   {
   public:
     constexpr AliveQuery() = default;
-    [[nodiscard]] auto payload() const -> const std::string override;
+    [[nodiscard]] auto payload() const -> std::string override;
     [[nodiscard]] auto waitForReply() const -> bool override { return false; };
     [[nodiscard]] auto buffered() const -> bool override { return false; };
   };
@@ -65,7 +65,7 @@ namespace fabomatic::MQTTInterface
     StartUseQuery() = delete;
     constexpr StartUseQuery(card::uid_t card_uid) : uid(card_uid) {};
 
-    [[nodiscard]] auto payload() const -> const std::string override;
+    [[nodiscard]] auto payload() const -> std::string override;
     [[nodiscard]] auto waitForReply() const -> bool override { return true; };
     [[nodiscard]] auto buffered() const -> bool override { return true; };
   };
@@ -84,7 +84,7 @@ namespace fabomatic::MQTTInterface
     /// @param mid machine id
     /// @param duration duration of usage, in seconds
     constexpr StopUseQuery(card::uid_t card_uid, std::chrono::seconds duration) : uid(card_uid), duration_s(duration) {};
-    [[nodiscard]] auto payload() const -> const std::string override;
+    [[nodiscard]] auto payload() const -> std::string override;
     [[nodiscard]] auto waitForReply() const -> bool override { return true; };
     [[nodiscard]] auto buffered() const -> bool override { return true; };
   };
@@ -103,7 +103,7 @@ namespace fabomatic::MQTTInterface
     /// @param mid machine id
     /// @param duration duration of usage, in seconds
     constexpr InUseQuery(card::uid_t card_uid, std::chrono::seconds duration) : uid(card_uid), duration_s(duration) {};
-    [[nodiscard]] auto payload() const -> const std::string override;
+    [[nodiscard]] auto payload() const -> std::string override;
     [[nodiscard]] auto waitForReply() const -> bool override { return true; };
     [[nodiscard]] auto buffered() const -> bool override { return false; };
   };
@@ -117,7 +117,7 @@ namespace fabomatic::MQTTInterface
     RegisterMaintenanceQuery() = delete;
     constexpr RegisterMaintenanceQuery(card::uid_t card_uid) : uid(card_uid) {};
 
-    [[nodiscard]] auto payload() const -> const std::string override;
+    [[nodiscard]] auto payload() const -> std::string override;
     [[nodiscard]] auto waitForReply() const -> bool override { return true; };
     [[nodiscard]] auto buffered() const -> bool override { return true; };
   };
@@ -130,6 +130,7 @@ namespace fabomatic::MQTTInterface
 
     Response() = delete;
     constexpr Response(bool result) : request_ok(result) {};
+    virtual ~Response() = default;
   };
 
   /// @brief Result code for user authentication result
@@ -146,7 +147,7 @@ namespace fabomatic::MQTTInterface
   {
   public:
     uint8_t result{static_cast<uint8_t>(UserResult::Invalid)};  /* Result of the user check */
-    std::string holder_name{""};                                /* Name of the user from server DB */
+    std::string holder_name;                                    /* Name of the user from server DB */
     FabUser::UserLevel user_level{FabUser::UserLevel::Unknown}; /* User priviledges */
 
     UserResponse() = delete;
@@ -158,7 +159,7 @@ namespace fabomatic::MQTTInterface
     [[nodiscard]] static auto fromJson(JsonDocument &doc) -> std::unique_ptr<UserResponse>;
 
     [[nodiscard]] auto getResult() const -> UserResult;
-    [[nodiscard]] auto toString() const -> const std::string;
+    [[nodiscard]] auto toString() const -> std::string;
   };
 
   /// @brief Backend response for machine status query

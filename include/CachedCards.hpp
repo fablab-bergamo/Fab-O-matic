@@ -28,7 +28,7 @@ namespace fabomatic
 
     constexpr CachedCards() : cards{card::INVALID}, levels{FabUser::UserLevel::Unknown} {};
 
-    constexpr auto operator[](int i) const -> const CachedCard
+    constexpr auto operator[](size_t i) const -> const CachedCard
     {
       return {cards[i], levels[i]};
     }
@@ -48,7 +48,7 @@ namespace fabomatic
       return std::nullopt;
     }
 
-    constexpr auto set_at(int idx, const card::uid_t &uid, const FabUser::UserLevel &level) -> void
+    constexpr auto set_at(size_t idx, const card::uid_t &uid, const FabUser::UserLevel &level) -> void
     {
       cards[idx] = uid;
       levels[idx] = level;

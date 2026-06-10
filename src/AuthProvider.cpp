@@ -9,12 +9,6 @@
 
 namespace fabomatic
 {
-  namespace Board
-  {
-    // Only main.cpp instanciates the variables through Board.h file
-    extern FabBackend server;
-  } // namespace Board
-
   AuthProvider::AuthProvider(WhiteList list) : whitelist{list}, cache{} {}
 
   /// @brief Cache the user request

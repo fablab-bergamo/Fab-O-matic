@@ -19,7 +19,7 @@ namespace fabomatic::card
    * @param uid number to convert
    * @return an hex string representation of the UID (e.g. "123456ADCD")
    */
-  [[nodiscard]] inline auto uid_str(const card::uid_t uid) -> const std::string
+  [[nodiscard]] inline auto uid_str(const card::uid_t uid) -> std::string
   {
     uint64_t number = static_cast<uint64_t>(uid);
     uint32_t long1 = static_cast<uint32_t>(number & 0xFFFF0000) >> 16;

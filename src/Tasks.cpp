@@ -136,7 +136,7 @@ namespace fabomatic::Tasks
     }
   }
 
-  auto Task::toString() const -> const std::string
+  auto Task::toString() const -> std::string
   {
     std::stringstream ss{};
     ss << "Task " << getId() << ", active=" << active
@@ -212,7 +212,7 @@ namespace fabomatic::Tasks
     return active;
   }
 
-  auto Task::getPeriod() const -> const milliseconds
+  auto Task::getPeriod() const -> milliseconds
   {
     return period;
   }
@@ -222,12 +222,12 @@ namespace fabomatic::Tasks
     return callback;
   }
 
-  auto Task::getId() const -> const std::string
+  auto Task::getId() const -> std::string
   {
     return id;
   }
 
-  auto Task::getAvgTardiness() const -> const milliseconds
+  auto Task::getAvgTardiness() const -> milliseconds
   {
     if (average_tardiness > period)
     {
@@ -241,7 +241,7 @@ namespace fabomatic::Tasks
     return run_counter;
   }
 
-  auto Task::getDelay() const -> const milliseconds
+  auto Task::getDelay() const -> milliseconds
   {
     return delay;
   }
@@ -251,7 +251,7 @@ namespace fabomatic::Tasks
     delay = new_delay;
   }
 
-  auto Task::getTotalRuntime() const -> const milliseconds
+  auto Task::getTotalRuntime() const -> milliseconds
   {
     return total_runtime;
   }

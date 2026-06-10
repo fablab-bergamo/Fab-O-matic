@@ -20,7 +20,7 @@ namespace fabomatic
     auto isRunning() const -> bool;
     auto start() -> void;
     auto onEvent(sMQTTEvent *event) -> bool override;
-    auto defaultReplies(const std::string &query) const -> const std::string;
+    auto defaultReplies(const std::string &query) const -> std::string;
 
     /// @brief set the reply generation function. May be called from a different thread
     /// @param callback

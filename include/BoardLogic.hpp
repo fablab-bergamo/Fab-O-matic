@@ -75,10 +75,10 @@ namespace fabomatic
     [[nodiscard]] auto getRebootRequest() const -> bool;
     [[nodiscard]] auto getServer() -> FabBackend &;
     [[nodiscard]] auto getMachineForTesting() -> Machine &;
-    [[nodiscard]] auto getBuzzerForTesting() -> Buzzer *;
+    [[nodiscard]] auto getBuzzerForTesting() -> Buzzer &;
     [[nodiscard]] auto getMachine() const -> const Machine &;
     [[nodiscard]] auto authorize(const card::uid_t uid) -> bool;
-    [[nodiscard]] auto getHostname() const -> const std::string;
+    [[nodiscard]] auto getHostname() const -> std::string;
     auto processBackendRequests() -> void;
 
     // copy reference

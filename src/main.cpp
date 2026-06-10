@@ -320,20 +320,20 @@ namespace fabomatic
   // They will be executed at the required frequency during loop()->scheduler.execute() call
   // The scheduler will take care of the timing and will call the task callback
 
-  const Task t_rfid("RFIDChip", conf::tasks::RFID_CHECK_PERIOD, &taskCheckRfid, Board::scheduler, true);
-  const Task t_network("Wifi/MQTT", conf::tasks::MQTT_REFRESH_PERIOD, &taskConnect, Board::scheduler, true, conf::tasks::MQTT_REFRESH_PERIOD);
-  const Task t_powoff("Poweroff", 1s, &taskPoweroffCheck, Board::scheduler, true);
-  const Task t_log("Logoff", 1s, &taskLogoffCheck, Board::scheduler, true);
+  Task t_rfid("RFIDChip", conf::tasks::RFID_CHECK_PERIOD, &taskCheckRfid, Board::scheduler, true);
+  Task t_network("Wifi/MQTT", conf::tasks::MQTT_REFRESH_PERIOD, &taskConnect, Board::scheduler, true, conf::tasks::MQTT_REFRESH_PERIOD);
+  Task t_powoff("Poweroff", 1s, &taskPoweroffCheck, Board::scheduler, true);
+  Task t_log("Logoff", 1s, &taskLogoffCheck, Board::scheduler, true);
   // Hardware watchdog will run at one third the frequency
   Task t_wdg("Watchdog", conf::tasks::WATCHDOG_PERIOD, &taskEspWatchdog, Board::scheduler, false);
-  const Task t_test("Selftest", conf::tasks::RFID_SELFTEST_PERIOD, &taskRfidWatchdog, Board::scheduler, true);
-  const Task t_warn("PoweroffWarning", conf::machine::DELAY_BETWEEN_BEEPS, &taskPoweroffWarning, Board::scheduler, true);
-  const Task t_mqtt("MQTT client loop", 1s, &taskMQTTClientLoop, Board::scheduler, true);
-  const Task t_led("LED", 1s, &taskBlink, Board::scheduler, true);
-  const Task t_rst("FactoryReset", 500ms, &taskFactoryReset, Board::scheduler, pins.buttons.factory_defaults_pin != NO_PIN);
-  const Task t_alive("IsAlive", conf::tasks::MQTT_ALIVE_PERIOD, &taskIsAlive, Board::scheduler, true, conf::tasks::MQTT_ALIVE_PERIOD);
+  Task t_test("Selftest", conf::tasks::RFID_SELFTEST_PERIOD, &taskRfidWatchdog, Board::scheduler, true);
+  Task t_warn("PoweroffWarning", conf::machine::DELAY_BETWEEN_BEEPS, &taskPoweroffWarning, Board::scheduler, true);
+  Task t_mqtt("MQTT client loop", 1s, &taskMQTTClientLoop, Board::scheduler, true);
+  Task t_led("LED", 1s, &taskBlink, Board::scheduler, true);
+  Task t_rst("FactoryReset", 500ms, &taskFactoryReset, Board::scheduler, pins.buttons.factory_defaults_pin != NO_PIN);
+  Task t_alive("IsAlive", conf::tasks::MQTT_ALIVE_PERIOD, &taskIsAlive, Board::scheduler, true, conf::tasks::MQTT_ALIVE_PERIOD);
 #if (RFID_SIMULATION)
-  const Task t_sim("RFIDCardsSim", 1s, &taskRFIDCardSim, Board::scheduler, true, 30s);
+  Task t_sim("RFIDCardsSim", 1s, &taskRFIDCardSim, Board::scheduler, true, 30s);
 #endif
 
   void printCompileSettings()
