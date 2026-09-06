@@ -24,10 +24,10 @@ jobs:
           - esp32-devboard
           - wokwi
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 2
-      - uses: actions/cache@v4
+      - uses: actions/cache@v6
         with:
           path: |
             ~/.cache/pip
@@ -35,7 +35,7 @@ jobs:
             ~/.platformio/packages
             .pio/build_cache
           key: ${{ runner.os }}-build-${{ matrix.variant }}
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.11'
       - name: Install PlatformIO Core
@@ -48,7 +48,7 @@ jobs:
         id: vars
         run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT        
       - name: Upload firmware image for ${{ matrix.variant }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: FW-${{ matrix.variant }}-${{ steps.vars.outputs.sha_short }}
           path: |
