@@ -146,6 +146,7 @@ namespace fabomatic
     ArduinoOTA.setMdnsEnabled(true);
     ArduinoOTA.setRebootOnSuccess(false);
     ArduinoOTA.setTimeout(45000);
+    ArduinoOTA.setPassword(ota_password);
     ArduinoOTA.begin();
   }
 } // namespace fabomatic

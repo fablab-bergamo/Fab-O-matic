@@ -64,15 +64,15 @@ namespace fabomatic::tests
   void test_simple_methods()
   {
     {
-      auto cpt = logic.getBuzzerForTesting()->getBeepCount();
+      auto cpt = logic.getBuzzerForTesting().getBeepCount();
       logic.beepFail();
-      auto beeps = logic.getBuzzerForTesting()->getBeepCount() - cpt;
+      auto beeps = logic.getBuzzerForTesting().getBeepCount() - cpt;
       TEST_ASSERT_EQUAL_UINT16_MESSAGE(conf::buzzer::NB_BEEPS, beeps, "Buzzer FAIL has been beeped");
     }
     {
-      auto cpt = logic.getBuzzerForTesting()->getBeepCount();
+      auto cpt = logic.getBuzzerForTesting().getBeepCount();
       logic.beepOk();
-      auto beeps = logic.getBuzzerForTesting()->getBeepCount() - cpt;
+      auto beeps = logic.getBuzzerForTesting().getBeepCount() - cpt;
       TEST_ASSERT_EQUAL_UINT16_MESSAGE(1, beeps, "Buzzer OK has been beeped");
     }
 
