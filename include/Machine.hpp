@@ -38,7 +38,7 @@ namespace fabomatic
     void configure(const MachineConfig &new_config, FabBackend &serv);
 
     [[nodiscard]] auto getMachineId() const -> MachineID;
-    [[nodiscard]] auto getMachineName() const -> const std::string;
+    [[nodiscard]] auto getMachineName() const -> std::string;
 
     /// @brief Duration of the current usage, or 0s
     [[nodiscard]] auto getUsageDuration() const -> std::chrono::seconds;
@@ -82,7 +82,7 @@ namespace fabomatic
     /// @brief Indicates if POWEROFF_DELAY_MINUTES delay has expired,and the machine is still idle
     [[nodiscard]] auto canPowerOff() const -> bool;
 
-    [[nodiscard]] auto toString() const -> const std::string;
+    [[nodiscard]] auto toString() const -> std::string;
 
     /// @brief Indicates ff the user shall be logged off automatically
     [[nodiscard]] auto isAutologoffExpired() const -> bool;
@@ -98,7 +98,7 @@ namespace fabomatic
     auto isMaintenanceNeeded() const -> bool;
     auto setMaintenanceNeeded(bool new_maintenance_needed) -> void;
 
-    [[nodiscard]] auto getMaintenanceInfo() const -> const std::string;
+    [[nodiscard]] auto getMaintenanceInfo() const -> std::string;
     auto setMaintenanceInfo(const std::string &new_description) -> void;
 
   private:

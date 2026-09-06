@@ -37,7 +37,7 @@ namespace fabomatic
                                                        autologoff(autologoff),
                                                        grace_period{grace_period} {};
 
-    [[nodiscard]] auto toString() const -> const std::string;
+    [[nodiscard]] auto toString() const -> std::string;
 
     /// @brief Indicates if the machine is controller by hard-wired relay
     [[nodiscard]] auto hasRelay() const -> bool;
@@ -46,10 +46,9 @@ namespace fabomatic
     [[nodiscard]] auto hasMqttSwitch() const -> bool;
 
     MachineConfig() = delete;
-    MachineConfig(const MachineConfig &) = default;             // copy constructor
-    MachineConfig &operator=(const MachineConfig &x) = default; // copy assignment
-    MachineConfig(MachineConfig &&) = delete;                   // move constructor
-    MachineConfig &operator=(MachineConfig &&) = delete;        // move assignment
+    MachineConfig(const MachineConfig &) = default;      // copy constructor
+    MachineConfig(MachineConfig &&) = delete;            // move constructor
+    MachineConfig &operator=(MachineConfig &&) = delete; // move assignment
   };
 } // namespace fabomatic
 

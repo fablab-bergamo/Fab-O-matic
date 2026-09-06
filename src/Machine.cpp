@@ -169,7 +169,7 @@ namespace fabomatic
     const auto &sw_topic = config.value().mqtt_switch_topic;
 
     String topic{sw_topic.data()};
-    String payload = value ? conf::mqtt::mqtt_switch_on_message.data() : conf::mqtt::mqtt_switch_on_message.data();
+    String payload = value ? conf::mqtt::mqtt_switch_on_message.data() : conf::mqtt::mqtt_switch_off_message.data();
 
     auto retries = 0;
     while (!mqtt_server.publish(topic, payload, false))
@@ -229,13 +229,13 @@ namespace fabomatic
     return 0s;
   }
 
-  auto Machine::getMachineName() const -> const std::string
+  auto Machine::getMachineName() const -> std::string
   {
     CHECK_CONFIGURED(std::string);
     return std::string{config.value().machine_name.data()};
   }
 
-  auto Machine::toString() const -> const std::string
+  auto Machine::toString() const -> std::string
   {
     std::stringstream sstream{};
 
@@ -362,7 +362,7 @@ namespace fabomatic
     config.value().grace_period = new_delay;
   }
 
-  [[nodiscard]] auto Machine::getMaintenanceInfo() const -> const std::string
+  [[nodiscard]] auto Machine::getMaintenanceInfo() const -> std::string
   {
     return maintenanceInfo;
   }

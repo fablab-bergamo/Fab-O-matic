@@ -243,7 +243,7 @@ namespace fabomatic
       digitalWrite(config.bl_pin, config.active_low ? HIGH : LOW);
   }
 
-  auto LCDWrapper::convertSecondsToHHMMSS(std::chrono::seconds duration) const -> const std::string
+  auto LCDWrapper::convertSecondsToHHMMSS(std::chrono::seconds duration) const -> std::string
   {
     std::stringstream ss{};
     const auto hrs = std::chrono::duration_cast<std::chrono::hours>(duration);

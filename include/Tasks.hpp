@@ -10,9 +10,8 @@
 namespace fabomatic::Tasks
 {
   using milliseconds = std::chrono::milliseconds;
-  using namespace std::chrono_literals;
-
-  typedef std::chrono::steady_clock::time_point time_point;
+  using std::chrono_literals::operator""ms;
+  using time_point = std::chrono::steady_clock::time_point;
 
   [[nodiscard]] inline auto arduinoNow() -> const time_point
   {
@@ -70,33 +69,33 @@ namespace fabomatic::Tasks
     [[nodiscard]] auto isActive() const -> bool;
 
     /// @brief Current period of the task
-    [[nodiscard]] auto getPeriod() const -> const milliseconds;
+    [[nodiscard]] auto getPeriod() const -> milliseconds;
 
     /// @brief Function to be called when task is run
     /// @return Callback function
     [[nodiscard]] auto getCallback() const -> std::function<void()>;
 
     /// @brief Get the Task Identifier
-    [[nodiscard]] auto getId() const -> const std::string;
+    [[nodiscard]] auto getId() const -> std::string;
 
     /// @brief Get the initial delay before the task is run at given period
     /// @return Delay in milliseconds
-    [[nodiscard]] auto getDelay() const -> const milliseconds;
+    [[nodiscard]] auto getDelay() const -> milliseconds;
 
     /// @brief Get the average tardiness, i.e. the average period between scheduled start and actual start of execution.
-    [[nodiscard]] auto getAvgTardiness() const -> const milliseconds;
+    [[nodiscard]] auto getAvgTardiness() const -> milliseconds;
 
     /// @brief Gets the number of times the task has been run.
     [[nodiscard]] auto getRunCounter() const -> unsigned long;
 
     /// @brief Gets the total execution time of the task. Useful to spot slowest tasks
-    [[nodiscard]] auto getTotalRuntime() const -> const milliseconds;
+    [[nodiscard]] auto getTotalRuntime() const -> milliseconds;
 
     /// @brief When shall the task be run again
     /// @return time_point of the next run or time_point::max() if the task will not run.
     [[nodiscard]] auto getNextRun() const -> const Tasks::time_point &;
 
-    [[nodiscard]] auto toString() const -> const std::string;
+    [[nodiscard]] auto toString() const -> std::string;
 
   private:
     bool active;
@@ -115,7 +114,7 @@ namespace fabomatic::Tasks
   class Scheduler
   {
   public:
-    constexpr Scheduler() {};
+    Scheduler() = default;
     auto addTask(Task &task) -> void;
     auto removeTask(const Task &task) -> void;
 

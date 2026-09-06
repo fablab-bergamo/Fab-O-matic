@@ -579,9 +579,9 @@ namespace fabomatic
 
   /// @brief returns a modificable machine for testing only
   /// @return a non-null Buzzer*
-  auto BoardLogic::getBuzzerForTesting() -> Buzzer *
+  auto BoardLogic::getBuzzerForTesting() -> Buzzer &
   {
-    return &buzzer;
+    return buzzer;
   }
 
   /// @brief Gets the current machine

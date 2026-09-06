@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:isocpp.github.io)",
+      "Bash(git remote *)"
+    ]
+  }
+}

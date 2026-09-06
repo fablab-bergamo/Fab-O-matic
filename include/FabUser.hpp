@@ -23,7 +23,7 @@ namespace fabomatic
     };
 
     card::uid_t card_uid{card::INVALID};
-    std::string holder_name{""};
+    std::string holder_name;
     bool authenticated{false};
     UserLevel user_level{UserLevel::Unknown};
 
@@ -34,7 +34,7 @@ namespace fabomatic
                                                                                           authenticated(auth),
                                                                                           user_level(level) {}
 
-    FabUser(std::array<uint8_t, conf::rfid_tags::UID_BYTE_LEN> &uid,
+    FabUser(const std::array<uint8_t, conf::rfid_tags::UID_BYTE_LEN> &uid,
             const std::string &name, bool auth,
             UserLevel level) : card_uid(card::from_array(uid)),
                                holder_name(name),
@@ -51,7 +51,7 @@ namespace fabomatic
       return card_uid < t.card_uid;
     }
 
-    auto toString() const -> const std::string
+    auto toString() const -> std::string
     {
       std::stringstream sstream{};
 

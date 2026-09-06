@@ -208,7 +208,7 @@ namespace fabomatic
     return false;
   }
 
-  auto SavedConfig::toString() const -> const std::string
+  auto SavedConfig::toString() const -> std::string
   {
     const auto &doc = toJsonDocument();
     std::string result;

@@ -3,7 +3,7 @@
 
 namespace fabomatic
 {
-  auto MachineConfig::toString() const -> const std::string
+  auto MachineConfig::toString() const -> std::string
   {
     std::stringstream sstream{};
 

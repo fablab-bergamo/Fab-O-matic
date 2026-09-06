@@ -1,9 +1,8 @@
 {
-    // See http://go.microsoft.com/fwlink/?LinkId=827846
-    // for the documentation about the extensions.json format
     "recommendations": [
         "espressif.esp-idf-extension",
         "ms-vscode.cpptools",
+        "pioarduino.pioarduino-ide",
         "platformio.platformio-ide",
         "wokwi.wokwi-vscode"
     ],

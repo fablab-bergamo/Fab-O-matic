@@ -64,7 +64,7 @@ namespace fabomatic::esp32
   }
 
   /// @brief Returns the ESP32 serial number as a string
-  [[nodiscard]] auto esp_serial_str() -> const std::string_view
+  [[nodiscard]] auto esp_serial_str() -> std::string_view
   {
     static std::array<char, 13> result; // +1 for null termination
 
@@ -95,7 +95,7 @@ namespace fabomatic::esp32
     esp_restart();
   }
 
-  auto esp_reset_reason_str() -> const std::string_view
+  auto esp_reset_reason_str() -> std::string_view
   {
     switch (esp_reset_reason())
     {

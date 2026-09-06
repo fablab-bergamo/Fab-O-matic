@@ -25,7 +25,7 @@ namespace fabomatic
     auto setRow(uint8_t row, const std::string_view &text) -> void;
     auto update(const BoardInfo &boardinfo, bool forced = false) -> void;
 
-    [[nodiscard]] auto convertSecondsToHHMMSS(std::chrono::seconds duration) const -> const std::string;
+    [[nodiscard]] auto convertSecondsToHHMMSS(std::chrono::seconds duration) const -> std::string;
 
   private:
     static constexpr auto HEIGHT_PX = 8;
