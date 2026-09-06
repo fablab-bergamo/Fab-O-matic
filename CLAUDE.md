@@ -20,6 +20,8 @@ pio check --environment wokwi --fail-on-defect=high                     # clang-
 
 Tests (Unity framework, in `test/test_*`) cannot run on the host: they execute either on real hardware over USB, or in the Wokwi ESP32 emulator. CI (tests.yml) builds each test image with `pio test -e wokwi --without-testing --without-uploading -f <test_name>` and runs it with wokwi-cli (requires a Wokwi token). Test suites: test_mqtt, test_logic, test_savedconfig, test_tasks, test_chrono.
 
+Releases are semver-tagged (currently up to `1.0.1`); the `release.yml` workflow (manual `workflow_dispatch`) tags, builds `hardware-rev0-it_IT`/`hardware-rev0-en_US`/`wokwi`, and publishes a GitHub release with the firmware zips. Other CI: `build.yml` (matrix build + firmware artifact upload on every PR), `linter.yml` (clang-tidy via `pio check` on tag push), `sizes.yml`/`tags_sizes.yml` (firmware size diff vs. previous commit/tag, posted as a PR comment), `docs.yml` (Doxygen → GitHub Pages on release).
+
 ## PlatformIO environments
 
 Each environment selects GPIO pins via a `PINS_xx` define (mapped in `conf/pins.hpp`) and language via `FABOMATIC_LANG_xx_xx`. Key environments:
@@ -42,6 +44,8 @@ When `RFID_SIMULATION` is set, `RFIDWrapper<MockMrfc522>` replaces the real driv
 - **Configuration** is compile-time in `conf/`: `conf.hpp` (timeouts, behaviours), `pins.hpp` (per-board GPIO tables), `secrets.hpp` (credentials + RFID whitelist; gitignored). Some settings (grace period, autologoff) can be overridden at runtime by the backend, and WiFi/MQTT-broker/machine-id by the WiFiManager captive portal (CONFIG button long-press).
 - **Localization**: `include/language/` has one header per locale selected by `FABOMATIC_LANG_xx_xx`; to add a language, add a header and update `lang.hpp`.
 - **Build scripts**: `tools/git_version.py` (pre) injects the git version; `tools/metrics_firmware.py` (post) produces firmware size metrics.
+- **Platform**: uses a Tasmota-maintained fork of `platform-espressif32` (pinned release zip URL in `platformio.ini`, not the upstream Espressif platform) — relevant when bumping the ESP-IDF/Arduino-core version.
+- **Network security model**: MQTT to the backend is plaintext (`WiFiClient`, port 1883, username/password only — no TLS), so it is only as safe as the local network it runs on; the WiFiManager config portal (CONFIG button long-press) also opens an unprotected AP. ArduinoOTA (`src/OTA.cpp`) requires the password in `secrets::credentials::ota_password` (`conf/secrets.hpp`) since it can otherwise be used to push arbitrary firmware from anyone on the same Wi-Fi. Flag before changing OTA/MQTT auth so the intended threat model is confirmed.
 
 ## Gotchas
 
