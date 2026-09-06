@@ -622,6 +622,11 @@ namespace fabomatic
     return processQuery<MQTTInterface::SimpleResponse, MQTTInterface::RegisterMaintenanceQuery>(maintainer);
   }
 
+  std::unique_ptr<MQTTInterface::SyncCacheResponse> FabBackend::syncCache()
+  {
+    return processQuery<MQTTInterface::SyncCacheResponse, MQTTInterface::SyncCacheQuery>();
+  }
+
   /**
    * @brief Sends a ping to the server.
    *

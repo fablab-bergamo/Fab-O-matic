@@ -33,6 +33,8 @@ namespace fabomatic
     auto setWhitelist(WhiteList list) -> void;
     auto saveCache() const -> bool;
     auto loadCache() -> void;
+    auto syncCacheFromServer(FabBackend &server) -> bool;
+    auto clearCache() -> void;
   };
 } // namespace fabomatic
 #endif // AUTHPROVIDER_HPP_

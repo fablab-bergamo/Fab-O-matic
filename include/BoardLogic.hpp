@@ -70,6 +70,7 @@ namespace fabomatic
     auto configure(BaseRFIDWrapper &rfid, LCDWrapper &lcd) -> bool;
     auto reconfigure() -> bool;
     auto saveRfidCache() -> bool;
+    auto syncRfidCache() -> bool;
 
     [[nodiscard]] auto getStatus() const -> Status;
     [[nodiscard]] auto getRebootRequest() const -> bool;
