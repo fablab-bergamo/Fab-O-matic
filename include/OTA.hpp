@@ -9,6 +9,7 @@
 // For ArduinoOTA
 const char *const ssid = fabomatic::secrets::credentials::ssid.data();
 const char *const password = fabomatic::secrets::credentials::password.data();
+const char *const ota_password = fabomatic::secrets::credentials::ota_password.data();
 
 namespace fabomatic
 {
