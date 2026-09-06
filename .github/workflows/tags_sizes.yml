@@ -28,7 +28,7 @@ jobs:
         uses: actions/setup-python@v7
         with:
           python-version: '3.11'
-      - run: pip install --upgrade platformio
+      - run: pip install --upgrade platformio esp-idf-size
 
       - name: Use secrets.hpp.example as base for the build
         run: cp conf/secrets.hpp.example conf/secrets.hpp
